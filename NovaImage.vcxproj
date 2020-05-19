@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Document.cpp" />
+    <ClCompile Include="GlobalFunc.cpp" />
+    <ClCompile Include="GraphicsScene.cpp" />
+    <ClCompile Include="GraphicsView.cpp" />
+    <ClCompile Include="Image\BaseImage.cpp" />
+    <ClCompile Include="Image\BaseProcessor.cpp" />
+    <ClCompile Include="Image\GeneralImage.cpp" />
+    <ClCompile Include="Image\ScanImage.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="View.cpp" />
+    <ClCompile Include="Widget\BaseWidget.cpp" />
+    <ClCompile Include="Widget\ColorButton.cpp" />
+    <ClCompile Include="Widget\CommonProcessor.cpp" />
+    <ClCompile Include="Widget\CommonWidget.cpp" />
+    <ClCompile Include="Widget\CurvesProcessor.cpp" />
+    <ClCompile Include="Widget\CurveSquare.cpp" />
+    <ClCompile Include="Widget\CurvesWidget.cpp" />
+    <ClCompile Include="Widget\DiagramItem.cpp" />
+    <ClCompile Include="Widget\DiagramLineItem.cpp" />
+    <ClCompile Include="Widget\DiagramTextItem.cpp" />
+    <ClCompile Include="Widget\HistogramProcessor.cpp" />
+    <ClCompile Include="Widget\HistogramWidget.cpp" />
+    <ClCompile Include="Widget\LevelsProcessor.cpp" />
+    <ClCompile Include="Widget\LevelsWidget.cpp" />
+    <ClCompile Include="Widget\Peg.cpp" />
+    <ClCompile Include="Widget\ToolBoxWidget.cpp" />
+    <ClCompile Include="Widget\WidgetManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="mainwindow.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <QtMoc Include="View.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Document.h" />
+    <ClInclude Include="GlobalFunc.h" />
+    <QtMoc Include="GraphicsScene.h" />
+    <QtMoc Include="Widget\ColorButton.h" />
+    <ClInclude Include="Widget\CommonProcessor.h" />
+    <ClInclude Include="Widget\CurvesProcessor.h" />
+    <QtMoc Include="Widget\DiagramItem.h" />
+    <QtMoc Include="Widget\DiagramTextItem.h" />
+    <QtMoc Include="Widget\DiagramLineItem.h" />
+    <ClInclude Include="Widget\HistogramProcessor.h" />
+    <ClInclude Include="Widget\LevelsProcessor.h" />
+    <ClInclude Include="Widget\Peg.h" />
+    <QtMoc Include="Widget\ToolBoxWidget.h" />
+    <ClInclude Include="Widget\WidgetManager.h" />
+    <QtMoc Include="Widget\LevelsWidget.h" />
+    <QtMoc Include="Widget\HistogramWidget.h" />
+    <QtMoc Include="Widget\CurvesWidget.h" />
+    <QtMoc Include="Widget\CurveSquare.h" />
+    <QtMoc Include="Widget\CommonWidget.h" />
+    <QtMoc Include="Widget\BaseWidget.h" />
+    <QtMoc Include="GraphicsView.h" />
+    <ClInclude Include="Image\BaseImage.h" />
+    <ClInclude Include="Image\BaseProcessor.h" />
+    <ClInclude Include="Image\Dataheader.h" />
+    <ClInclude Include="Image\GeneralImage.h" />
+    <ClInclude Include="Image\ScanImage.h" />
+    <ClInclude Include="Image\TemplateImage.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="novaimage_zh.ts" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{E3637189-40AF-4D2B-8191-6484026FF1A7}</ProjectGuid>
+    <Keyword>QtVS_v302</Keyword>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  </Target>
+  <ImportGroup Label="ExtensionSettings" />
+  <ImportGroup Label="Shared" />
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
+    <Import Project="$(QtMsBuild)\qt_defaults.props" />
+  </ImportGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <QtInstall>msvc2017_64</QtInstall>
+    <QtModules>core;gui;widgets</QtModules>
+  </PropertyGroup>
+  <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <QtInstall>msvc2017_64</QtInstall>
+    <QtModules>core;gui;widgets</QtModules>
+  </PropertyGroup>
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.props')">
+    <Import Project="$(QtMsBuild)\qt.props" />
+  </ImportGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <Optimization>Disabled</Optimization>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <DebugInformationFormat />
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <TreatWChar_tAsBuiltInType>true</TreatWChar_tAsBuiltInType>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
+    <Import Project="$(QtMsBuild)\qt.targets" />
+  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
