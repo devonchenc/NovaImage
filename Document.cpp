@@ -1,16 +1,16 @@
 ﻿#include "document.h"
 #include "mainwindow.h"
 #include "view.h"
-#include "Image/baseimage.h"
-#include "Image/generalimage.h"
-#include "Image/scanimage.h"
+#include "Image/BaseImage.h"
+#include "Image/GeneralImage.h"
+#include "Image/ScanImage.h"
+#include "Image/DicomImage.h"
 
-Document::Document(MainWindow* pWindow) :
-	pMainWindow(pWindow),
-	_image(nullptr),
-	_zoomFactor(1.0f)
+Document::Document(MainWindow* pWindow)
+	: pMainWindow(pWindow)
+	, _image(nullptr)
 {
-	int a = 5;
+
 }
 
 Document::~Document()
@@ -29,6 +29,14 @@ bool Document::openFile(const QString& fileName)
 	if (type == IMAGE_FORMAT_NDR || type == IMAGE_FORMAT_NCT)
 	{
 		_image = std::make_shared<ScanImage>(fileName);
+	}
+	else if (type == IMAGE_FORMAT_DICOM)
+	{
+		_image = std::make_shared<DICOMImage>(fileName);
+	}
+	else if (type == IMAGE_FORMAT_DAT || type == IMAGE_FORMAT_RAW)
+	{
+
 	}
 	else if (type != IMAGE_FORMAT_UNKNOWN)
 	{
@@ -95,6 +103,10 @@ int Document::findType(const QString &fileName)
 	else if (str.endsWith(".dat"))
 	{
 		return IMAGE_FORMAT_DAT;
+	}
+	else if (str.endsWith(".dcm"))
+	{
+		return IMAGE_FORMAT_DICOM;
 	}
 
 	return IMAGE_FORMAT_UNKNOWN;

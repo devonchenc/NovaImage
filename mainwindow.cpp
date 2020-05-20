@@ -136,7 +136,6 @@ void MainWindow::createActions()
 	_engAction->setChecked(true);
 	_chsAction = new QAction(tr("&Chinese"), this);
 	_chsAction->setCheckable(true);
-//	connect(chsAction, &QAction::triggered, this, &MainWindow::selectChinese);
 	QActionGroup* languageGroup = new QActionGroup(this);
 	languageGroup->addAction(_engAction);
 	languageGroup->addAction(_chsAction);
@@ -212,11 +211,14 @@ void MainWindow::openImage()
     QFileDialog dialog(this);
     dialog.setWindowTitle(tr("Open Image"));
     dialog.setFileMode(QFileDialog::ExistingFile);
-    dialog.setNameFilter(tr("Images (*.png *.bmp *.jpg)"));
-    QStringList filePaths;
+	QStringList filters;
+	filters << tr("DICOM files (*.dcm)")
+		<< tr("Image files (*.png *.bmp *.jpg)")
+		<< tr("Any files (*)");
+	dialog.setNameFilters(filters);
     if (dialog.exec())
 	{
-        filePaths = dialog.selectedFiles();
+		QStringList filePaths = dialog.selectedFiles();
 		pDoc->openFile(filePaths.at(0));
 
 		if (getGlobalImage())
@@ -288,15 +290,6 @@ void MainWindow::slectLanguage(QAction* action)
 	{
 		qApp->removeTranslator(_translator);
 	}
-//	ui.retranslateUi(this);
-
-/*	if (translator != NULL)
-	{
-		qApp->removeTranslator(translator);
-		delete translator;
-		translator = NULL;
-	}
-	ui.retranslateUi(this);*/
 }
 
 void MainWindow::changeEvent(QEvent* event)

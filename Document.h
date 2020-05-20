@@ -20,6 +20,7 @@ enum ENUM_IMAGE_FORMAT
 	IMAGE_FORMAT_NCT = 7,
 	IMAGE_FORMAT_RAW = 8,
 	IMAGE_FORMAT_DAT = 9,
+	IMAGE_FORMAT_DICOM = 10,
 };
 
 class Document
@@ -39,9 +40,6 @@ public:
 
 	void copyImage(const std::shared_ptr<BaseImage>& image);
 
-	float getZoomFactor() const { return _zoomFactor; }
-	void setZoomFactor(float factor);
-
 	// Repaint view
 	void repaintView();
 
@@ -53,5 +51,4 @@ private:
 private:
 	MainWindow* pMainWindow;
 	std::shared_ptr<BaseImage> _image;
-	float _zoomFactor;
 };

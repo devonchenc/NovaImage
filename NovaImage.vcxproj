@@ -17,6 +17,7 @@
     <ClCompile Include="GraphicsView.cpp" />
     <ClCompile Include="Image\BaseImage.cpp" />
     <ClCompile Include="Image\BaseProcessor.cpp" />
+    <ClCompile Include="Image\DicomImage.cpp" />
     <ClCompile Include="Image\GeneralImage.cpp" />
     <ClCompile Include="Image\ScanImage.cpp" />
     <ClCompile Include="main.cpp" />
@@ -51,6 +52,7 @@
     <ClInclude Include="GlobalFunc.h" />
     <QtMoc Include="GraphicsScene.h" />
     <QtMoc Include="Widget\ColorButton.h" />
+    <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Widget\CommonProcessor.h" />
     <ClInclude Include="Widget\CurvesProcessor.h" />
     <QtMoc Include="Widget\DiagramItem.h" />
@@ -82,11 +84,13 @@
     <ProjectGuid>{E3637189-40AF-4D2B-8191-6484026FF1A7}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>
     <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -105,6 +109,10 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>C:\Program Files %28x86%29\DCMTK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files %28x86%29\DCMTK\lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
   </ImportGroup>
@@ -131,6 +139,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>dcmtk.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
