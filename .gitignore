@@ -1,3 +1,5 @@
+/x64/
+
 # Prerequisites
 *.d
 
@@ -10,11 +12,20 @@
 # Precompiled Headers
 *.gch
 *.pch
+*.ipch
 
 # Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
+*.suo
+*.log
+*.tlog
+*.pdb
+*.db
+*.user
+*.props
+*.ilk
 
 # Fortran module files
 *.mod
