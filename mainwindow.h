@@ -51,6 +51,7 @@ private slots:
     void zoomIn();
     void zoomOut();
     void saveAs();
+	void close();
 
 	void slectLanguage(QAction* action);
 
@@ -68,6 +69,7 @@ private:
 
 	QAction* _openAction;
 	QAction* _saveAsAction;
+	QAction* _closeAction;
 	QAction* _exitAction;
     QAction* _zoomInAction;
 	QAction* _zoomOutAction;

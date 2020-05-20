@@ -107,6 +107,15 @@ void View::showImage(const QImage* image)
 	emit showInfo(strInfo);
 }
 
+void View::resetImage()
+{
+	if (_currentImage)
+		_scene->removeItem(_currentImage);
+
+	_view->resetMatrix();
+	_scene->update();
+}
+
 void View::setSceneMode(int mode)
 {
 	if (mode == MOVE_ITEM)

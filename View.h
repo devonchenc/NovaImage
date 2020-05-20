@@ -23,6 +23,8 @@ public:
 
 	QGraphicsPixmapItem* getPixmapItem() { return _currentImage; }
 
+	void resetImage();
+
 signals:
 	void showInfo(const QString& str);
 

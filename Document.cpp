@@ -128,7 +128,7 @@ void Document::closeFile()
 {
 	_image.reset();
 
-//	getView()->resetImageCenter();
+	getView()->resetImage();
 	getView()->repaint();
 }
 

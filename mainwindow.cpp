@@ -56,9 +56,9 @@ MainWindow::~MainWindow()
 
 void MainWindow::initUI()
 {
-    // setup toolbar
-    fileToolBar = addToolBar("File");
-    viewToolBar = addToolBar("View");
+	// setup toolbar
+	fileToolBar = addToolBar("File");
+	viewToolBar = addToolBar("View");
 
 	createStatusBar();
 
@@ -71,7 +71,7 @@ void MainWindow::createStatusBar()
 {
 	// setup status bar
 	QStatusBar* mainStatusBar = statusBar();
-	
+
 	QLabel* infoLabel = new QLabel(mainStatusBar);
 	infoLabel->setMinimumWidth(160);
 	infoLabel->setAlignment(Qt::AlignHCenter);
@@ -124,12 +124,13 @@ void MainWindow::createStatusBar()
 
 void MainWindow::createActions()
 {
-    // create actions, add them to menus
+	// create actions, add them to menus
 	_openAction = new QAction(tr("&Open..."), this);
 	_saveAsAction = new QAction(tr("&Save as..."), this);
+	_closeAction = new QAction(tr("&Close"), this);
 	_exitAction = new QAction(tr("E&xit"), this);
-    _zoomInAction = new QAction(tr("Zoom &in"), this);
-    _zoomOutAction = new QAction(tr("Zoom &out"), this);
+	_zoomInAction = new QAction(tr("Zoom &in"), this);
+	_zoomOutAction = new QAction(tr("Zoom &out"), this);
 
 	_engAction = new QAction("&English", this);
 	_engAction->setCheckable(true);
@@ -146,6 +147,7 @@ void MainWindow::createActions()
 	_fileMenu = menuBar()->addMenu(tr("&File"));
 	_fileMenu->addAction(_openAction);
 	_fileMenu->addAction(_saveAsAction);
+	_fileMenu->addAction(_closeAction);
 	_fileMenu->addSeparator();
 	_fileMenu->addAction(_exitAction);
 
@@ -157,19 +159,20 @@ void MainWindow::createActions()
 	languageMenu->addAction(_engAction);
 	languageMenu->addAction(_chsAction);
 
-    // add actions to toolbars
-    fileToolBar->addAction(_openAction);
-    viewToolBar->addAction(_zoomInAction);
-    viewToolBar->addAction(_zoomOutAction);
+	// add actions to toolbars
+	fileToolBar->addAction(_openAction);
+	viewToolBar->addAction(_zoomInAction);
+	viewToolBar->addAction(_zoomOutAction);
 
-    // connect the signals and slots
-    connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
+	// connect the signals and slots
+	connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
 	connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
+	connect(_closeAction, &QAction::triggered, this, &MainWindow::close);
 	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
-    connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
-    connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
+	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
+	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
 
-    setupShortcuts();
+	setupShortcuts();
 }
 
 void MainWindow::createToolWidget()
@@ -208,15 +211,15 @@ void MainWindow::createDockWidget(BaseWidget* widget)
 
 void MainWindow::openImage()
 {
-    QFileDialog dialog(this);
-    dialog.setWindowTitle(tr("Open Image"));
-    dialog.setFileMode(QFileDialog::ExistingFile);
+	QFileDialog dialog(this);
+	dialog.setWindowTitle(tr("Open Image"));
+	dialog.setFileMode(QFileDialog::ExistingFile);
 	QStringList filters;
 	filters << tr("DICOM files (*.dcm)")
 		<< tr("Image files (*.png *.bmp *.jpg)")
 		<< tr("Any files (*)");
 	dialog.setNameFilters(filters);
-    if (dialog.exec())
+	if (dialog.exec())
 	{
 		QStringList filePaths = dialog.selectedFiles();
 		pDoc->openFile(filePaths.at(0));
@@ -230,50 +233,59 @@ void MainWindow::openImage()
 
 void MainWindow::zoomIn()
 {
-    imageView->view()->zoomIn();
+	imageView->view()->zoomIn();
 }
 
 void MainWindow::zoomOut()
 {
-    imageView->view()->zoomOut();
+	imageView->view()->zoomOut();
 }
 
 void MainWindow::saveAs()
 {
-/*    if (currentImage == nullptr)
-	{
-        QMessageBox::information(this, "Information", "Nothing to save.");
-        return;
-    }
-    QFileDialog dialog(this);
-    dialog.setWindowTitle("Save Image As ...");
-    dialog.setFileMode(QFileDialog::AnyFile);
-    dialog.setAcceptMode(QFileDialog::AcceptSave);
-    dialog.setNameFilter(tr("Images (*.png *.bmp *.jpg)"));
-    QStringList fileNames;
-    if (dialog.exec())
-	{
-        fileNames = dialog.selectedFiles();
-        if (QRegExp(".+\\.(png|bmp|jpg)").exactMatch(fileNames.at(0)))
+	if (getGlobalImage() == nullptr)
+		return;
+
+	QFileDialog dialog(this);
+	dialog.setWindowTitle(tr("Save Image As ..."));
+	dialog.setFileMode(QFileDialog::AnyFile);
+	dialog.setAcceptMode(QFileDialog::AcceptSave);
+	dialog.setNameFilter(tr("Images (*.png *.bmp *.jpg)"));
+	QStringList filters;
+	filters << tr("DICOM files (*.dcm)")
+		<< tr("Image files (*.png *.bmp *.jpg)");
+	dialog.setNameFilters(filters);
+	/*    QStringList fileNames;
+		if (dialog.exec())
 		{
-            currentImage->pixmap().save(fileNames.at(0));
-        }
-		else
-		{
-            QMessageBox::information(this, "Information", "Save error: bad format or filename.");
-        }
-    }*/
+			fileNames = dialog.selectedFiles();
+			if (QRegExp(".+\\.(png|bmp|jpg)").exactMatch(fileNames.at(0)))
+			{
+				currentImage->pixmap().save(fileNames.at(0));
+			}
+			else
+			{
+				QMessageBox::information(this, "Information", "Save error: bad format or filename.");
+			}
+		}*/
+}
+
+void MainWindow::close()
+{
+	pDoc->closeFile();
+
+	WidgetManager::getInstance()->reset();
 }
 
 void MainWindow::setupShortcuts()
 {
-    QList<QKeySequence> shortcuts;
-    shortcuts << Qt::Key_Plus << Qt::Key_Equal;
-    _zoomInAction->setShortcuts(shortcuts);
+	QList<QKeySequence> shortcuts;
+	shortcuts << Qt::Key_Plus << Qt::Key_Equal;
+	_zoomInAction->setShortcuts(shortcuts);
 
-    shortcuts.clear();
-    shortcuts << Qt::Key_Minus << Qt::Key_Underscore;
-    _zoomOutAction->setShortcuts(shortcuts);
+	shortcuts.clear();
+	shortcuts << Qt::Key_Minus << Qt::Key_Underscore;
+	_zoomOutAction->setShortcuts(shortcuts);
 }
 
 void MainWindow::slectLanguage(QAction* action)

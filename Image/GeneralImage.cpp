@@ -16,7 +16,10 @@ GeneralImage::GeneralImage(const QString& pathName)
 	_height = _pImage->height();
 
 	// Backup origin QImage
-	backupImage();
+	if (_openSucceed)
+	{
+		backupImage();
+	}
 }
 
 GeneralImage::~GeneralImage()
