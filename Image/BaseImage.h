@@ -23,6 +23,11 @@ public:
 	virtual float getMinValue() = 0;
 	virtual float getMaxValue() = 0;
 
+	// Histogram statistic
+	virtual void histogramStatistic() = 0;
+
+    virtual float getValue(const QPoint& position) const = 0;
+
 	bool isOpenSucceed()			{ return _openSucceed; }
 
 	// Get each channel's pixel array
@@ -31,14 +36,10 @@ public:
 	uint* getGreenPixelArray()		{ return _greenPixelNumber; }
 	uint* getBluePixelArray()		{ return _bluePixelNumber; }
 
-	// Histogram statistic
-	virtual void histogramStatistic() = 0;
+	QRgb getPixel(const QPoint& position) const;
 
-    QRgb getPixel(const QPoint& position) const;
-
-    virtual float getValue(const QPoint& position) const = 0;
-
-	// TODO
+	bool save(const QString& fileName);
+	
     void copyToArray(uchar* array);
 	
     bool copyFromArray(uchar* byteImage, int width, int height);

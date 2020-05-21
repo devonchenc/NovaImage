@@ -36,7 +36,8 @@ MainWindow::MainWindow(QWidget* parent)
 	initUI();
 
 	// For test
-	pDoc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");//D:/Qt/Class_3_malocclusion/DICOM/I0.dcm//D:/Qt/series-00000/image-00000.dcm
+//	pDoc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");//D:/Qt/Class_3_malocclusion/DICOM/I0.dcm//D:/Qt/series-00000/image-00000.dcm
+	pDoc->openFile("D:/test.png");
 
 //	showMaximized();
 //	setWindowState(Qt::WindowMaximized);
@@ -216,7 +217,7 @@ void MainWindow::openImage()
 	dialog.setFileMode(QFileDialog::ExistingFile);
 	QStringList filters;
 	filters << tr("DICOM files (*.dcm)")
-		<< tr("Image files (*.png *.bmp *.jpg)")
+		<< tr("Image files (*.png *.bmp *.jpg *.tif)")
 		<< tr("Any files (*)");
 	dialog.setNameFilters(filters);
 	if (dialog.exec())
@@ -246,28 +247,12 @@ void MainWindow::saveAs()
 	if (getGlobalImage() == nullptr)
 		return;
 
-	QFileDialog dialog(this);
-	dialog.setWindowTitle(tr("Save Image As ..."));
-	dialog.setFileMode(QFileDialog::AnyFile);
-	dialog.setAcceptMode(QFileDialog::AcceptSave);
-	dialog.setNameFilter(tr("Images (*.png *.bmp *.jpg)"));
-	QStringList filters;
-	filters << tr("DICOM files (*.dcm)")
-		<< tr("Image files (*.png *.bmp *.jpg)");
-	dialog.setNameFilters(filters);
-	/*    QStringList fileNames;
-		if (dialog.exec())
-		{
-			fileNames = dialog.selectedFiles();
-			if (QRegExp(".+\\.(png|bmp|jpg)").exactMatch(fileNames.at(0)))
-			{
-				currentImage->pixmap().save(fileNames.at(0));
-			}
-			else
-			{
-				QMessageBox::information(this, "Information", "Save error: bad format or filename.");
-			}
-		}*/
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
+		"/", tr("JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm)"));
+	if (!fileName.isEmpty())
+	{
+		pDoc->saveAs(fileName);
+	}
 }
 
 void MainWindow::close()

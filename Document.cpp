@@ -116,7 +116,7 @@ bool Document::saveAs(const QString& fileName)
 {
 	if (_image)
 	{
-		return _image->getImageEntity()->save(fileName);
+		return _image->save(fileName);
 	}
 	else
 	{

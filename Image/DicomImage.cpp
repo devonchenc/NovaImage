@@ -92,5 +92,7 @@ bool DICOMImage::readData()
 	_originalData = new ushort[_width * _height];
 	memcpy(_originalData, pixelData, sizeof(ushort) * _width * _height);
 
+	DJDecoderRegistration::cleanup();
+
 	return true;
 }
