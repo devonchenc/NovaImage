@@ -1,6 +1,7 @@
 ﻿#include "BaseImage.h"
 
 #include <dcmtk/dcmdata/dctk.h>
+#include <dcmtk/dcmjpeg/djdecode.h>
 #include <string>
 #include <QDebug>
 
@@ -41,58 +42,6 @@ bool BaseImage::save(const QString& fileName)
 {
 	if (fileName.endsWith("dcm", Qt::CaseInsensitive))
 	{
-		DcmFileFormat fileformat;
-		DcmDataset* dataset = fileformat.getDataset();
-	/*	dataset->putAndInsertString(DCM_SOPClassUID, UID_SecondaryCaptureImageStorage);
-	//	dataset->putAndInsertString(DCM_SOPInstanceUID, dcmGenerateUniqueIdentifier(uid, SITE_INSTANCE_UID_ROOT));
-		dataset->putAndInsertString(DCM_PatientName, "Doe^John");
-		dataset->putAndInsertString(DCM_WindowCenter, "0");
-		dataset->putAndInsertString(DCM_WindowWidth, "200");
-
-		Uint8* buffer = new Uint8[_width * _height];
-		for (int j = 0; j < _height; j++)
-		{
-			for (int i = 0; i < _width; i++)
-			{
-				QRgb value = getPixel(QPoint(i, j));
-				buffer[j * _width + i] = qRed(value);
-			}
-		}
-
-		dataset->putAndInsertUint8Array(DCM_PixelData, buffer, _width * _height);
-		OFCondition condition = fileformat.saveFile("D:/test.dcm", EXS_LittleEndianExplicit);
-		if (condition.bad())
-			qDebug() << "Error: cannot write DICOM file (" << condition.text() << ")";
-		*/
-		OFString strTagValue;
-		if (dataset->putAndInsertString(DCM_PatientName, "John Doe").good())
-		{
-			dataset->findAndGetOFString(DCM_PatientName, strTagValue);
-		}
-		
-		std::string str = std::to_string(_width);
-		if (dataset->putAndInsertString(DCM_Columns, str.c_str()).good())
-		{
-			dataset->findAndGetOFString(DCM_Columns, strTagValue);
-		}
-		str = std::to_string(_height);
-		if (dataset->putAndInsertString(DCM_Rows, str.c_str()).good())
-		{
-			dataset->findAndGetOFString(DCM_Rows, strTagValue);
-		}
-
-		dataset->putAndInsertString(DCM_PhotometricInterpretation, "MONOCHROME2");
-		dataset->findAndGetOFString(DCM_PhotometricInterpretation, strTagValue);
-		// 修改窗宽窗位
-		if (dataset->putAndInsertString(DCM_WindowCenter, "0").good())
-		{
-			dataset->findAndGetOFString(DCM_WindowCenter, strTagValue);
-		}
-		if (dataset->putAndInsertString(DCM_WindowWidth, "2000").good())
-		{
-			dataset->findAndGetOFString(DCM_WindowWidth, strTagValue);
-		}
-
 		Uint16* buffer = new Uint16[_width * _height];
 		for (int j = 0; j < _height; j++)
 		{
@@ -103,6 +52,8 @@ bool BaseImage::save(const QString& fileName)
 			}
 		}
 
+		DcmFileFormat fileformat;
+		DcmDataset* dataset = fileformat.getDataset();
 		OFCondition condition = dataset->putAndInsertUint16Array(DCM_PixelData, buffer, _width * _height, true);
 		if (condition.bad())
 		{
@@ -117,24 +68,13 @@ bool BaseImage::save(const QString& fileName)
 			return false;
 		}
 
-		dataset->putAndInsertString(DCM_BitsStored, "12");
-		dataset->findAndGetOFString(DCM_BitsStored, strTagValue);
-
-		dataset->putAndInsertString(DCM_HighBit, "11");
-		dataset->findAndGetOFString(DCM_HighBit, strTagValue);
-
-		dataset->putAndInsertString(DCM_PixelRepresentation, "0");
-		dataset->findAndGetOFString(DCM_PixelRepresentation, strTagValue);
-
-		dataset->putAndInsertString(DCM_RescaleIntercept, "-1000");
-		dataset->findAndGetOFString(DCM_RescaleIntercept, strTagValue);
-
-		dataset->putAndInsertString(DCM_SamplesPerPixel, "1");
-		dataset->findAndGetOFString(DCM_SamplesPerPixel, strTagValue);
-
+		dataset->putAndInsertString(DCM_Modality, "CT");
+		dataset->putAndInsertUint16(DCM_Columns, _width);
+		dataset->putAndInsertUint16(DCM_Rows, _height);
+		dataset->putAndInsertString(DCM_PhotometricInterpretation, "MONOCHROME2");
 		dataset->putAndInsertString(DCM_BitsAllocated, "16");
-		dataset->findAndGetOFString(DCM_BitsAllocated, strTagValue);
-
+		dataset->putAndInsertString(DCM_BitsStored, "16");
+		dataset->putAndInsertString(DCM_HighBit, "15");
 		condition = dataset->saveFile(fileName.toStdString().c_str(), EXS_LittleEndianExplicit);
 		return condition.good();
 	}
