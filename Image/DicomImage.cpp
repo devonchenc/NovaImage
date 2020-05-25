@@ -58,24 +58,22 @@ bool DICOMImage::readData()
 {
 	DJDecoderRegistration::registerCodecs();
 
-	std::string str = _pathName.toStdString();
-
 	DcmFileFormat fileformat;
-	OFCondition condition = fileformat.loadFile(str.c_str());
+	OFCondition condition = fileformat.loadFile(_pathName.toStdString().c_str());
 	if (!condition.good())
 	{
 		qDebug() << "Load Dimcom File Error: " << condition.text();
 		return false;
 	}
 
-	DcmDataset* pDataset = fileformat.getDataset();
-	E_TransferSyntax xfer = pDataset->getOriginalXfer();
+	DcmDataset* dataset = fileformat.getDataset();
+	E_TransferSyntax xfer = dataset->getOriginalXfer();
 	if (xfer == EXS_JPEG2000)
 	{
 		qDebug() << "Do not support JPEG2000 transfer syntax";
 		return false;
 	}
-	DicomImage* pDicomImg = new DicomImage(pDataset, xfer);
+	DicomImage* pDicomImg = new DicomImage(dataset, xfer);
 	if (pDicomImg->getStatus() != EIS_Normal)
 	{
 		qDebug() << pDicomImg->getStatus();

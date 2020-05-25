@@ -37,7 +37,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 	// For test
 //	pDoc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");//D:/Qt/Class_3_malocclusion/DICOM/I0.dcm//D:/Qt/series-00000/image-00000.dcm
-	pDoc->openFile("D:/test.png");
+//	pDoc->openFile("D:/test.png");
 
 //	showMaximized();
 //	setWindowState(Qt::WindowMaximized);

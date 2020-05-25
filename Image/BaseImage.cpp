@@ -42,7 +42,7 @@ bool BaseImage::save(const QString& fileName)
 {
 	if (fileName.endsWith("dcm", Qt::CaseInsensitive))
 	{
-		Uint16* buffer = new Uint16[_width * _height];
+		Uint8* buffer = new Uint8[_width * _height];
 		for (int j = 0; j < _height; j++)
 		{
 			for (int i = 0; i < _width; i++)
@@ -54,7 +54,7 @@ bool BaseImage::save(const QString& fileName)
 
 		DcmFileFormat fileformat;
 		DcmDataset* dataset = fileformat.getDataset();
-		OFCondition condition = dataset->putAndInsertUint16Array(DCM_PixelData, buffer, _width * _height, true);
+		OFCondition condition = dataset->putAndInsertUint8Array(DCM_PixelData, buffer, _width * _height, true);
 		if (condition.bad())
 		{
 			qDebug() << "Error: cannot insert array (" << condition.text() << ")";
@@ -71,10 +71,12 @@ bool BaseImage::save(const QString& fileName)
 		dataset->putAndInsertString(DCM_Modality, "CT");
 		dataset->putAndInsertUint16(DCM_Columns, _width);
 		dataset->putAndInsertUint16(DCM_Rows, _height);
+		dataset->putAndInsertString(DCM_NumberOfFrames, "1");
 		dataset->putAndInsertString(DCM_PhotometricInterpretation, "MONOCHROME2");
-		dataset->putAndInsertString(DCM_BitsAllocated, "16");
-		dataset->putAndInsertString(DCM_BitsStored, "16");
-		dataset->putAndInsertString(DCM_HighBit, "15");
+		dataset->putAndInsertString(DCM_BitsAllocated, "8");
+		dataset->putAndInsertString(DCM_BitsStored, "8");
+		dataset->putAndInsertString(DCM_HighBit, "7");
+		dataset->putAndInsertString(DCM_PixelRepresentation, "0");
 		condition = dataset->saveFile(fileName.toStdString().c_str(), EXS_LittleEndianExplicit);
 		return condition.good();
 	}
