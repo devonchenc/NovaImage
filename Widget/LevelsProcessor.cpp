@@ -58,9 +58,9 @@ void LevelsProcessor::processGeneralImage(GeneralImage* image)
 		}
 	}
 }
-
+/*
 template<typename Type>
-void LevelsProcessor::processTemplate(TemplateImage<Type>* image)
+void LevelsProcessor::processTemplate(ImageDataTemplate<Type>* image)
 {
 	assert(image);
 
@@ -183,14 +183,13 @@ void LevelsProcessor::processTemplate(TemplateImage<Type>* image)
 
 	image->copyToImage();
 }
-
+*/
 // Process float array
 void LevelsProcessor::processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
 	assert(pArray && pByte);
 
 	int channel = 0;
-
 
 /*	float variable1 = 255.0f / (float)(_top - _bottom);
 	int midColor = round(255 * _mid / (1 + _mid));

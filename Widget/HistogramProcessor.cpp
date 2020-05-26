@@ -86,9 +86,9 @@ void HistogramProcessor::processGeneralImage(GeneralImage* image)
 		}
 	}
 }
-
+/*
 template<typename Type>
-void HistogramProcessor::processTemplate(TemplateImage<Type>* image)
+void HistogramProcessor::processTemplate(ImageDataTemplate<Type>* image)
 {
 	assert(image);
 
@@ -156,7 +156,7 @@ void HistogramProcessor::processTemplate(TemplateImage<Type>* image)
 
 	image->copyToImage();
 }
-
+*/
 // Process float array
 void HistogramProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {

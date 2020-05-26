@@ -1,14 +1,14 @@
 ﻿#pragma once
 
-#include "TemplateImage.h"
+#include "MonoImage.h"
 #include "Dataheader.h"
 
-class ScanImage : public TemplateImage<float>
+class ScanImage : public MonoImage
 {
 public:
 	ScanImage();
 	ScanImage(const QString& pathName);
-	~ScanImage();
+	virtual ~ScanImage();
 
 public:
 	// Get reference of DataHeader
@@ -19,7 +19,7 @@ private:
 	bool readDataHeader();
 
 	// Read data
-	bool readData();
+	bool readData();	
 
 private:
 	DataHeader _dh;

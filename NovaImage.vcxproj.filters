@@ -123,6 +123,12 @@
     <ClCompile Include="Image\DicomImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
+    <ClCompile Include="Image\ImageData.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
+    <ClCompile Include="Image\MonoImage.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="View.h">
@@ -190,9 +196,6 @@
     <ClInclude Include="Image\ScanImage.h">
       <Filter>Image</Filter>
     </ClInclude>
-    <ClInclude Include="Image\TemplateImage.h">
-      <Filter>Image</Filter>
-    </ClInclude>
     <ClInclude Include="GlobalFunc.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -215,6 +218,15 @@
       <Filter>Widget</Filter>
     </ClInclude>
     <ClInclude Include="Image\DicomImage.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\ImageDataTemplate.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\ImageData.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\MonoImage.h">
       <Filter>Image</Filter>
     </ClInclude>
   </ItemGroup>

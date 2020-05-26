@@ -33,48 +33,48 @@ void BaseProcessor::process(BaseImage* pImage)
 		GeneralImage* pGeneralImage = dynamic_cast<GeneralImage*>(pImage);
 		processGeneralImage(pGeneralImage);
 	}
-	else if (dynamic_cast<TemplateImage<float>*>(pImage))
+/*	else if (dynamic_cast<ImageDataTemplate<float>*>(pImage))
 	{
-		TemplateImage<float>* pFloatImage = dynamic_cast<TemplateImage<float>*>(pImage);
+		ImageDataTemplate<float>* pFloatImage = dynamic_cast<ImageDataTemplate<float>*>(pImage);
 		assert(pFloatImage);
 		processFloatImage(pFloatImage);
 	}
-	else if (dynamic_cast<TemplateImage<ushort>*>(pImage))
+	else if (dynamic_cast<ImageDataTemplate<ushort>*>(pImage))
 	{
-		TemplateImage<ushort>* pUShortImage = dynamic_cast<TemplateImage<ushort>*>(pImage);
+		ImageDataTemplate<ushort>* pUShortImage = dynamic_cast<ImageDataTemplate<ushort>*>(pImage);
 		assert(pUShortImage);
 		processUShortImage(pUShortImage);
 	}
-	else if (dynamic_cast<TemplateImage<uchar>*>(pImage))
+	else if (dynamic_cast<ImageDataTemplate<uchar>*>(pImage))
 	{
-		TemplateImage<uchar>* pUCharImage = dynamic_cast<TemplateImage<uchar>*>(pImage);
+		ImageDataTemplate<uchar>* pUCharImage = dynamic_cast<ImageDataTemplate<uchar>*>(pImage);
 		assert(pUCharImage);
 		processUCharImage(pUCharImage);
 	}
-	else if (dynamic_cast<TemplateImage<short>*>(pImage))
+	else if (dynamic_cast<ImageDataTemplate<short>*>(pImage))
 	{
-		TemplateImage<short>* pShortImage = dynamic_cast<TemplateImage<short>*>(pImage);
+		ImageDataTemplate<short>* pShortImage = dynamic_cast<ImageDataTemplate<short>*>(pImage);
 		assert(pShortImage);
 		processShortImage(pShortImage);
 	}
-	else if (dynamic_cast<TemplateImage<int>*>(pImage))
+	else if (dynamic_cast<ImageDataTemplate<int>*>(pImage))
 	{
-		TemplateImage<int>* pIntImage = dynamic_cast<TemplateImage<int>*>(pImage);
+		ImageDataTemplate<int>* pIntImage = dynamic_cast<ImageDataTemplate<int>*>(pImage);
 		assert(pIntImage);
 		processIntImage(pIntImage);
 	}
-	else if (dynamic_cast<TemplateImage<unsigned int>*>(pImage))
+	else if (dynamic_cast<ImageDataTemplate<unsigned int>*>(pImage))
 	{
-		TemplateImage<unsigned int>* pUIntImage = dynamic_cast<TemplateImage<unsigned int>*>(pImage);
+		ImageDataTemplate<unsigned int>* pUIntImage = dynamic_cast<ImageDataTemplate<unsigned int>*>(pImage);
 		assert(pUIntImage);
 		processUIntImage(pUIntImage);
 	}
-	else if (dynamic_cast<TemplateImage<double>*>(pImage))
+	else if (dynamic_cast<ImageDataTemplate<double>*>(pImage))
 	{
-		TemplateImage<double>* pDoubleImage = dynamic_cast<TemplateImage<double>*>(pImage);
+		ImageDataTemplate<double>* pDoubleImage = dynamic_cast<ImageDataTemplate<double>*>(pImage);
 		assert(pDoubleImage);
 		processDoubleImage(pDoubleImage);
-	}
+	}*/
 /*	else if (typeid(*pImage) == typeid(RegionImage))
 	{
 		RegionImage* pRegionImage = dynamic_cast<RegionImage*>(pImage);

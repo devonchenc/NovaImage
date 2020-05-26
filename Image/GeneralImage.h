@@ -19,14 +19,15 @@ public:
 	// Calculate new color
 	uchar calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor);
 
+public:
 	// Histogram statistic
-	virtual void histogramStatistic();
+	void histogramStatistic() override;
 
-    virtual float getValue(const QPoint& position) const;
+    float getValue(const QPoint& position) const override;
 
-	virtual float getMinValue() { return 0.0f; }
+	float getMinValue() const override { return 0.0f; }
 
-	virtual float getMaxValue() { return 255.0f; }
+	float getMaxValue() const override { return 255.0f; }
 
 private:
 	// 得到图像中最大最小的像素值

@@ -57,9 +57,9 @@ void CommonProcessor::processGeneralImage(GeneralImage* image)
 
 //	PIProgressDone();
 }
-
+/*
 template<typename Type>
-void CommonProcessor::processTemplate(TemplateImage<Type>* image)
+void CommonProcessor::processTemplate(ImageDataTemplate<Type>* image)
 {
 	assert(image);
 
@@ -102,7 +102,7 @@ void CommonProcessor::processTemplate(TemplateImage<Type>* image)
 	// Copy to image
 	image->copyToImage();
 }
-
+*/
 // Process float array
 void CommonProcessor::processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)
 {

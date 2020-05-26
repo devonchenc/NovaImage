@@ -12,7 +12,7 @@
 
 class CurvesProcessor : public BaseProcessor
 {
-	DECLARE_TEMPLATE_INTERFACE
+//	DECLARE_TEMPLATE_INTERFACE
 
 public:
 	CurvesProcessor();
@@ -21,8 +21,8 @@ public:
 protected:
 	virtual void processGeneralImage(GeneralImage* image);
 
-	template<typename Type>
-	void processTemplate(TemplateImage<Type>* image);
+//	template<typename Type>
+//	void processTemplate(ImageDataTemplate<Type>* image);
 
 	// Process float array
 	virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte);

@@ -1,13 +1,15 @@
 ﻿#include "ScanImage.h"
+
 #include <QFile>
+#include "ImageDataTemplate.h"
 
 ScanImage::ScanImage()
 {
 
 }
 
-ScanImage::ScanImage(const QString& pathName) :
-	TemplateImage(pathName)
+ScanImage::ScanImage(const QString& pathName)
+	: MonoImage(pathName)
 {
 	// Read data header
 	if (readDataHeader() == false)
@@ -28,13 +30,13 @@ ScanImage::ScanImage(const QString& pathName) :
 		return;
 	}
 	// Find top and bottom value in data
-	if (findTopAndBottom(_originalData, _width * _height) == false)
+	if (_imageData->findTopAndBottom() == false)
 	{
 		_openSucceed = false;
 		return;
 	}
 	// Convert float data to uchar data
-	if (convertToByte() == false)
+	if (_imageData->convertToByte() == false)
 	{
 		_openSucceed = false;
 		return;
@@ -86,14 +88,16 @@ bool ScanImage::readDataHeader()
 // Read data
 bool ScanImage::readData()
 {
-	_originalData = new float[_width * _height];
+	_imageData = new ImageDataTemplate<float>(_width * _height);
+
+	float* originalData = static_cast<float*>(_imageData->getOriginalData());
 
 	QFile file(_pathName);
 	if (!file.open(QFile::ReadOnly))
 		return false;
 
 	file.seek(DATA_HEADER_SIZE);
-	qint64 readSize = file.read((char*)_originalData, sizeof(float) * _width * _height);
+	qint64 readSize = file.read((char*)originalData, sizeof(float) * _width * _height);
 	file.close();
 
 	if (readSize != sizeof(float) * _width * _height)

@@ -20,8 +20,8 @@ public:
 	virtual int slice() const		{ return 1; }
 
 	// Get min and max value of image
-	virtual float getMinValue() = 0;
-	virtual float getMaxValue() = 0;
+	virtual float getMinValue() const = 0;
+	virtual float getMaxValue() const = 0;
 
 	// Histogram statistic
 	virtual void histogramStatistic() = 0;

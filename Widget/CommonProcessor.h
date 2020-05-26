@@ -4,7 +4,7 @@
 
 class CommonProcessor : public BaseProcessor
 {
-	DECLARE_TEMPLATE_INTERFACE
+//	DECLARE_TEMPLATE_INTERFACE
 
 public:
 	CommonProcessor();
@@ -13,8 +13,8 @@ public:
 protected:
 	virtual void processGeneralImage(GeneralImage* pImage);
 
-	template<typename Type>
-	void processTemplate(TemplateImage<Type>* pImage);
+//	template<typename Type>
+//	void processTemplate(ImageDataTemplate<Type>* pImage);
 
 	// Process float array
 	virtual void processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte);

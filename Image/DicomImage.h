@@ -1,15 +1,16 @@
 ﻿#pragma once
 
-#include "TemplateImage.h"
+#include "MonoImage.h"
 
-class DICOMImage : public TemplateImage<ushort>
+class DICOMImage : public MonoImage
 {
 public:
 	DICOMImage();
 	DICOMImage(const QString& pathName);
-	~DICOMImage();
+	virtual ~DICOMImage();
 
 public:
+
 
 private:
 	// Read data

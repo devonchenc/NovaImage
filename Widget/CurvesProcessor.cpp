@@ -61,9 +61,9 @@ void CurvesProcessor::processGeneralImage(GeneralImage* image)
 
 //	PIProgressDone();
 }
-
+/*
 template<typename Type>
-void CurvesProcessor::processTemplate(TemplateImage<Type>* image)
+void CurvesProcessor::processTemplate(ImageDataTemplate<Type>* image)
 {
 	assert(image);
 
@@ -112,7 +112,7 @@ void CurvesProcessor::processTemplate(TemplateImage<Type>* image)
 
 //	PIProgressDone();
 }
-
+*/
 // Process float array
 void CurvesProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {

@@ -9,6 +9,7 @@
 #include <QEvent>
 
 #include "CurvesProcessor.h"
+#include "../GlobalFunc.h"
 
 CurvesWidget::CurvesWidget(QWidget* parent)
 	: BaseWidget(parent)

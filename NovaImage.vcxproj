@@ -19,6 +19,8 @@
     <ClCompile Include="Image\BaseProcessor.cpp" />
     <ClCompile Include="Image\DicomImage.cpp" />
     <ClCompile Include="Image\GeneralImage.cpp" />
+    <ClCompile Include="Image\ImageData.cpp" />
+    <ClCompile Include="Image\MonoImage.cpp" />
     <ClCompile Include="Image\ScanImage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -53,6 +55,8 @@
     <QtMoc Include="GraphicsScene.h" />
     <QtMoc Include="Widget\ColorButton.h" />
     <ClInclude Include="Image\DicomImage.h" />
+    <ClInclude Include="Image\ImageData.h" />
+    <ClInclude Include="Image\MonoImage.h" />
     <ClInclude Include="Widget\CommonProcessor.h" />
     <ClInclude Include="Widget\CurvesProcessor.h" />
     <QtMoc Include="Widget\DiagramItem.h" />
@@ -75,7 +79,7 @@
     <ClInclude Include="Image\Dataheader.h" />
     <ClInclude Include="Image\GeneralImage.h" />
     <ClInclude Include="Image\ScanImage.h" />
-    <ClInclude Include="Image\TemplateImage.h" />
+    <ClInclude Include="Image\ImageDataTemplate.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="novaimage_zh.ts" />
