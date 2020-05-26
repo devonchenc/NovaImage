@@ -3,6 +3,7 @@
 
 #include <typeinfo.h>
 #include "GeneralImage.h"
+#include "MonoImage.h"
 //#include "FloatScanImage.h"
 //#include "ShortScanImage.h"
 //#include "RegionImage.h"
@@ -24,57 +25,20 @@ BaseProcessor* BaseProcessor::getProcessor()
 	return _currentProcessor;
 }
 
-void BaseProcessor::process(BaseImage* pImage)
+void BaseProcessor::process(BaseImage* image)
 {
 	setCurrentProcessor();
 	
-	if (typeid(*pImage) == typeid(GeneralImage))
+	if (typeid(*image) == typeid(GeneralImage))
 	{
-		GeneralImage* pGeneralImage = dynamic_cast<GeneralImage*>(pImage);
-		processGeneralImage(pGeneralImage);
+		GeneralImage* generalImage = dynamic_cast<GeneralImage*>(image);
+		processGeneralImage(generalImage);
 	}
-/*	else if (dynamic_cast<ImageDataTemplate<float>*>(pImage))
+	else if (dynamic_cast<MonoImage*>(image))
 	{
-		ImageDataTemplate<float>* pFloatImage = dynamic_cast<ImageDataTemplate<float>*>(pImage);
-		assert(pFloatImage);
-		processFloatImage(pFloatImage);
+		MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
+		processMonoImage(monoImage);
 	}
-	else if (dynamic_cast<ImageDataTemplate<ushort>*>(pImage))
-	{
-		ImageDataTemplate<ushort>* pUShortImage = dynamic_cast<ImageDataTemplate<ushort>*>(pImage);
-		assert(pUShortImage);
-		processUShortImage(pUShortImage);
-	}
-	else if (dynamic_cast<ImageDataTemplate<uchar>*>(pImage))
-	{
-		ImageDataTemplate<uchar>* pUCharImage = dynamic_cast<ImageDataTemplate<uchar>*>(pImage);
-		assert(pUCharImage);
-		processUCharImage(pUCharImage);
-	}
-	else if (dynamic_cast<ImageDataTemplate<short>*>(pImage))
-	{
-		ImageDataTemplate<short>* pShortImage = dynamic_cast<ImageDataTemplate<short>*>(pImage);
-		assert(pShortImage);
-		processShortImage(pShortImage);
-	}
-	else if (dynamic_cast<ImageDataTemplate<int>*>(pImage))
-	{
-		ImageDataTemplate<int>* pIntImage = dynamic_cast<ImageDataTemplate<int>*>(pImage);
-		assert(pIntImage);
-		processIntImage(pIntImage);
-	}
-	else if (dynamic_cast<ImageDataTemplate<unsigned int>*>(pImage))
-	{
-		ImageDataTemplate<unsigned int>* pUIntImage = dynamic_cast<ImageDataTemplate<unsigned int>*>(pImage);
-		assert(pUIntImage);
-		processUIntImage(pUIntImage);
-	}
-	else if (dynamic_cast<ImageDataTemplate<double>*>(pImage))
-	{
-		ImageDataTemplate<double>* pDoubleImage = dynamic_cast<ImageDataTemplate<double>*>(pImage);
-		assert(pDoubleImage);
-		processDoubleImage(pDoubleImage);
-	}*/
 /*	else if (typeid(*pImage) == typeid(RegionImage))
 	{
 		RegionImage* pRegionImage = dynamic_cast<RegionImage*>(pImage);

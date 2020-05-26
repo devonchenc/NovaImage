@@ -5,8 +5,10 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QApplication>
+
 #include "../GlobalFunc.h"
 #include "HistogramProcessor.h"
+#include "../Image/BaseImage.h"
 
 #define DRAG_NONE		-1
 #define DRAG_CURSOR0	0

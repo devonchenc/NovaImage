@@ -19,7 +19,6 @@
     <ClCompile Include="Image\BaseProcessor.cpp" />
     <ClCompile Include="Image\DicomImage.cpp" />
     <ClCompile Include="Image\GeneralImage.cpp" />
-    <ClCompile Include="Image\ImageData.cpp" />
     <ClCompile Include="Image\MonoImage.cpp" />
     <ClCompile Include="Image\ScanImage.cpp" />
     <ClCompile Include="main.cpp" />

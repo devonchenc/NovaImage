@@ -4,20 +4,17 @@
 
 class CommonProcessor : public BaseProcessor
 {
-//	DECLARE_TEMPLATE_INTERFACE
-
 public:
 	CommonProcessor();
 	~CommonProcessor();
 
 protected:
-	virtual void processGeneralImage(GeneralImage* pImage);
+	void processGeneralImage(GeneralImage* image) override;
 
-//	template<typename Type>
-//	void processTemplate(ImageDataTemplate<Type>* pImage);
+	void processMonoImage(MonoImage* image) override;
 
 	// Process float array
-	virtual void processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte);
+	void processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte) override;
 
 public:
 	void setBrightnessAndContrast(int brightness, int contrast);

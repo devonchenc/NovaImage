@@ -4,17 +4,14 @@
 
 class LevelsProcessor : public BaseProcessor
 {
-//	DECLARE_TEMPLATE_INTERFACE
-
 public:
 	LevelsProcessor();
 	~LevelsProcessor();
 
 protected:
-	virtual void processGeneralImage(GeneralImage* pImage);
+	void processGeneralImage(GeneralImage* image) override;
 
-//	template<typename Type>
-//	void processTemplate(ImageDataTemplate<Type>* pImage);
+	void processMonoImage(MonoImage* image) override;
 
 	// Process float array
 	virtual void processArray(float* pArray, int width, int height, float fMinValue, float fMaxValue, uchar* pByte);

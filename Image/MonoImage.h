@@ -18,6 +18,7 @@ public:
 	void histogramStatistic() override;
 
 	float getValue(const QPoint& position) const override;
+	float getValue(int index) const override;
 
 	int slice() const override { return _slice; }
 
@@ -25,11 +26,18 @@ public:
 
 	float getMaxValue() const override;
 
+	// get uchar data
+	uchar* getBYTEImage() { return _byteImage; }
+
+	bool convertToByte();
+
 protected:
 	bool allocateMemory();
 
 protected:
 	ImageData* _imageData;
+
+	uchar* _byteImage;
 
 	int _slice;
 

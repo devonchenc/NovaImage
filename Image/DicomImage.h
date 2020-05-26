@@ -9,9 +9,6 @@ public:
 	DICOMImage(const QString& pathName);
 	virtual ~DICOMImage();
 
-public:
-
-
 private:
 	// Read data
 	bool readData();

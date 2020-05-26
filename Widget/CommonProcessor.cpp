@@ -1,7 +1,7 @@
-
 #include "CommonProcessor.h"
 
-//#include "../Image/BaseImage.h"
+#include "../Image/GeneralImage.h"
+#include "../Image/MonoImage.h"
 
 CommonProcessor::CommonProcessor()
 	: _brightness(0)
@@ -57,18 +57,16 @@ void CommonProcessor::processGeneralImage(GeneralImage* image)
 
 //	PIProgressDone();
 }
-/*
-template<typename Type>
-void CommonProcessor::processTemplate(ImageDataTemplate<Type>* image)
+
+void CommonProcessor::processMonoImage(MonoImage* image)
 {
 	assert(image);
 
 	int width = image->width();
 	int height = image->height();
-	Type* pProcessingData = image->getProcessingData();
 	uchar* pBYTEImage = image->getBYTEImage();
-	Type maxValue = image->getMaximumValue();
-	Type minValue = image->getMinimumValue();
+	float maxValue = image->getMaxValue();
+	float minValue = image->getMinValue();
 
 	float average = float(minValue + maxValue) / 2.0f;
 	float variable;
@@ -83,7 +81,7 @@ void CommonProcessor::processTemplate(ImageDataTemplate<Type>* image)
 
 	for (int i = 0; i < width * height; i++)
 	{
-		float result = float(pProcessingData[i] - average) * (_contrast + 100) / 100.0f + average;
+		float result = float(image->getValue(i) - average) * (_contrast + 100) / 100.0f + average;
 		result *= (100.0f + _brightness / 2.0f) / 100.0f;
 		if (result >= maxValue)
 		{
@@ -102,7 +100,7 @@ void CommonProcessor::processTemplate(ImageDataTemplate<Type>* image)
 	// Copy to image
 	image->copyToImage();
 }
-*/
+
 // Process float array
 void CommonProcessor::processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)
 {

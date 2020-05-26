@@ -26,7 +26,8 @@ public:
 	// Histogram statistic
 	virtual void histogramStatistic() = 0;
 
-    virtual float getValue(const QPoint& position) const = 0;
+	virtual float getValue(const QPoint& position) const = 0;
+	virtual float getValue(int index) const = 0;
 
 	bool isOpenSucceed()			{ return _openSucceed; }
 

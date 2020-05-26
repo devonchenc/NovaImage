@@ -123,9 +123,6 @@
     <ClCompile Include="Image\DicomImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="Image\ImageData.cpp">
-      <Filter>Image</Filter>
-    </ClCompile>
     <ClCompile Include="Image\MonoImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>

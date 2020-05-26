@@ -10,6 +10,7 @@
 
 #include "CurvesProcessor.h"
 #include "../GlobalFunc.h"
+#include "../Image/BaseImage.h"
 
 CurvesWidget::CurvesWidget(QWidget* parent)
 	: BaseWidget(parent)

@@ -23,7 +23,8 @@ public:
 	// Histogram statistic
 	void histogramStatistic() override;
 
-    float getValue(const QPoint& position) const override;
+	float getValue(const QPoint& position) const override;
+	float getValue(int index) const override;
 
 	float getMinValue() const override { return 0.0f; }
 

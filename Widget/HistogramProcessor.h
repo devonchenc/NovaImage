@@ -4,20 +4,17 @@
 
 class HistogramProcessor : public BaseProcessor
 {
-//	DECLARE_TEMPLATE_INTERFACE
-
 public:
 	HistogramProcessor();
 	~HistogramProcessor();
 
 protected:
-	virtual void processGeneralImage(GeneralImage* image);
+	void processGeneralImage(GeneralImage* image) override;
 
-//	template<typename Type>
-//	void processTemplate(ImageDataTemplate<Type>* image);
+	void processMonoImage(MonoImage* image) override;
 
 	// Process float array
-	virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte);
+	void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
 
 public:
 	void setWindowArray(bool* array, int arrayNum);

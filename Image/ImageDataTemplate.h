@@ -1,8 +1,8 @@
 ﻿#pragma once
 
 #include "ImageData.h"
+
 #include <QMessageBox>
-#include <QObject>
 #include <cmath>
 #include <iostream>
 
@@ -10,7 +10,6 @@ template <class Type>
 class ImageDataTemplate : public ImageData
 {
 public:
-	ImageDataTemplate();
 	ImageDataTemplate(unsigned long pixelCount);
 	virtual ~ImageDataTemplate();
 
@@ -41,7 +40,7 @@ public:
 	bool allocateMemory() override;
 
 	// Convert float data to uchar data
-	bool convertToByte() override;
+	bool convertToByte(uchar* byteImage) override;
 
 protected:
 	Type* _originalData;
@@ -52,14 +51,6 @@ protected:
 
 	int _currentSlice;
 };
-
-template <class Type>
-ImageDataTemplate<Type>::ImageDataTemplate()
-	: _originalData(nullptr)
-	, _processingData(nullptr)
-{
-
-}
 
 template <class Type>
 ImageDataTemplate<Type>::ImageDataTemplate(unsigned long pixelCount)
@@ -118,8 +109,6 @@ bool ImageDataTemplate<Type>::allocateMemory()
 	{
 		_processingData = new Type[_pixelCount];
 		memcpy(_processingData, _originalData, sizeof(Type) * _pixelCount);
-
-		ImageData::allocateMemory();
 	}
 	catch (const std::bad_alloc& e)
 	{
@@ -131,7 +120,7 @@ bool ImageDataTemplate<Type>::allocateMemory()
 
 // Convert data to byte
 template <class Type>
-bool ImageDataTemplate<Type>::convertToByte()
+bool ImageDataTemplate<Type>::convertToByte(uchar* byteImage)
 {
 	if (_processingData == nullptr)
 		return false;
@@ -148,7 +137,7 @@ bool ImageDataTemplate<Type>::convertToByte()
 
 	for (int i = 0; i < _pixelCount; i++)
 	{
-		_byteImage[3 * i] = _byteImage[3 * i + 1] = _byteImage[3 * i + 2] =
+		byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =
 				uchar((_processingData[i] - _minValue) * variable);
 	}
 

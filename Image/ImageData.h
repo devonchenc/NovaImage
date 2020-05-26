@@ -5,11 +5,13 @@ typedef unsigned char uchar;
 class ImageData
 {
 public:
-	ImageData();
+	ImageData(unsigned long pixelCount)
+		: _pixelCount(pixelCount)
+	{
 
-	ImageData(unsigned long pixelCount);
+	}
 
-	virtual ~ImageData();
+	virtual ~ImageData() {}
 
 public:
 	// Get original data pointer
@@ -22,13 +24,13 @@ public:
 	virtual float getProcessingValue(int index) = 0;
 
 	// Allocate memory
-	virtual bool allocateMemory();
+	virtual bool allocateMemory() = 0;
 
 	// Find top and bottom value in data
 	virtual bool findTopAndBottom() = 0;
 
 	// Allocate data to byte
-	virtual bool convertToByte() = 0;
+	virtual bool convertToByte(uchar* byteImage) = 0;
 
 public:
 	float getMinimumValue() const { return _minValue; }
@@ -39,12 +41,7 @@ public:
 
 	void setMaximumValue(float maxValue) { _maxValue = maxValue; }
 
-	// get uchar data
-	uchar* getBYTEImage() { return _byteImage; }
-
 protected:
-	uchar* _byteImage;
-
 	unsigned long _pixelCount;
 
 	float _minValue, _maxValue;

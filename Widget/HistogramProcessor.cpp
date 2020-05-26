@@ -1,5 +1,7 @@
-
 #include "HistogramProcessor.h"
+
+#include "../Image/GeneralImage.h"
+#include "../Image/MonoImage.h"
 
 HistogramProcessor::HistogramProcessor()
 	: _array(nullptr)
@@ -86,18 +88,16 @@ void HistogramProcessor::processGeneralImage(GeneralImage* image)
 		}
 	}
 }
-/*
-template<typename Type>
-void HistogramProcessor::processTemplate(ImageDataTemplate<Type>* image)
+
+void HistogramProcessor::processMonoImage(MonoImage* image)
 {
 	assert(image);
 
 	int width = image->width();
 	int height = image->height();
-	Type* pProcessingData = image->getProcessingData();
 	uchar* pBYTEImage = image->getBYTEImage();
-	Type maxValue = image->getMaximumValue();
-	Type minValue = image->getMinimumValue();
+	float maxValue = image->getMaxValue();
+	float minValue = image->getMinValue();
 
 	// Statistical non-zero number
 	int count = 0;
@@ -131,21 +131,21 @@ void HistogramProcessor::processTemplate(ImageDataTemplate<Type>* image)
 
 	for (int i = 0; i < width * height; i++)
 	{
-		if (pProcessingData[i] >= actualMax)
+		if (image->getValue(i) >= actualMax)
 		{
 			pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 255;
 		}
-		else if (pProcessingData[i] <= actualMin)
+		else if (image->getValue(i) <= actualMin)
 		{
 			pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 0;
 		}
 		else
 		{
-			int index = round(float(pProcessingData[i] - minValue) * (_arrayNum - 1) / float(maxValue - minValue));
+			int index = round(float(image->getValue(i) - minValue) * (_arrayNum - 1) / float(maxValue - minValue));
 			if (_array[index])
 			{
 				pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] =
-					round(float((pProcessingData[i] - actualMin) * 255.0f / (actualMax - actualMin)));
+					round((image->getValue(i) - actualMin) * 255.0f / (actualMax - actualMin));
 			}
 			else
 			{
@@ -156,7 +156,7 @@ void HistogramProcessor::processTemplate(ImageDataTemplate<Type>* image)
 
 	image->copyToImage();
 }
-*/
+
 // Process float array
 void HistogramProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {

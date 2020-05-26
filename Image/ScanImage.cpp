@@ -36,7 +36,7 @@ ScanImage::ScanImage(const QString& pathName)
 		return;
 	}
 	// Convert float data to uchar data
-	if (_imageData->convertToByte() == false)
+	if (convertToByte() == false)
 	{
 		_openSucceed = false;
 		return;

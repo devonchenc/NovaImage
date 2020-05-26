@@ -6,6 +6,7 @@
 MonoImage::MonoImage()
 	: BaseImage()
 	, _imageData(nullptr)
+	, _byteImage(nullptr)
 	, _slice(1)
 	, _currentSlice(0)
 {
@@ -15,6 +16,7 @@ MonoImage::MonoImage()
 MonoImage::MonoImage(const QString& pathName)
 	: BaseImage(pathName)
 	, _imageData(nullptr)
+	, _byteImage(nullptr)
 	, _slice(1)
 	, _currentSlice(0)
 {
@@ -28,12 +30,17 @@ MonoImage::~MonoImage()
 		delete _imageData;
 		_imageData = nullptr;
 	}
+
+	if (_byteImage)
+	{
+		delete[] _byteImage;
+		_byteImage = nullptr;
+	}
 }
 
 bool MonoImage::copyToImage()
 {
-	uchar* data = _imageData->getBYTEImage();
-	return copyByteToImage(data, _width, _height, _pImage);
+	return copyByteToImage(_byteImage, _width, _height, _pImage);
 }
 
 void MonoImage::histogramStatistic()
@@ -72,6 +79,11 @@ float MonoImage::getValue(const QPoint& position) const
 	return _imageData->getProcessingValue(index);
 }
 
+float MonoImage::getValue(int index) const
+{
+	return _imageData->getProcessingValue(index);
+}
+
 float MonoImage::getMinValue() const
 {
 	return static_cast<float>(_imageData->getMinimumValue());
@@ -82,9 +94,16 @@ float MonoImage::getMaxValue() const
 	return static_cast<float>(_imageData->getMaximumValue());
 }
 
+bool MonoImage::convertToByte()
+{
+	return _imageData->convertToByte(_byteImage);
+}
+
 bool MonoImage::allocateMemory()
 {
 	_imageData->allocateMemory();
+
+	_byteImage = new uchar[_width * _height * 3];
 
 	_pImage = new QImage(_width, _height, QImage::Format_RGB888);
 

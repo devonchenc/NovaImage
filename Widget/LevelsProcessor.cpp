@@ -1,5 +1,7 @@
-
 #include "LevelsProcessor.h"
+
+#include "../Image/GeneralImage.h"
+#include "../Image/MonoImage.h"
 
 LevelsProcessor::LevelsProcessor()
 	: _bottom(0)
@@ -58,18 +60,16 @@ void LevelsProcessor::processGeneralImage(GeneralImage* image)
 		}
 	}
 }
-/*
-template<typename Type>
-void LevelsProcessor::processTemplate(ImageDataTemplate<Type>* image)
+
+void LevelsProcessor::processMonoImage(MonoImage* image)
 {
 	assert(image);
 
 	int width = image->width();
 	int height = image->height();
-	Type* pProcessingData = image->getProcessingData();
 	uchar* pBYTEImage = image->getBYTEImage();
-	Type maxValue = image->getMaximumValue();
-	Type minValue = image->getMinimumValue();
+	float maxValue = image->getMaxValue();
+	float minValue = image->getMinValue();
 
 	int channel = 0;
 
@@ -80,7 +80,7 @@ void LevelsProcessor::processTemplate(ImageDataTemplate<Type>* image)
 
 	for (int i = 0; i < width * height; i++)
 	{
-		if (pProcessingData[i] <= _bottom)
+		if (image->getValue(i) <= _bottom)
 		{
 			switch (channel)
 			{
@@ -98,7 +98,7 @@ void LevelsProcessor::processTemplate(ImageDataTemplate<Type>* image)
 				break;
 			}
 		}
-		else if (pProcessingData[i] >= _top)
+		else if (image->getValue(i) >= _top)
 		{
 			switch (channel)
 			{
@@ -120,60 +120,60 @@ void LevelsProcessor::processTemplate(ImageDataTemplate<Type>* image)
 		{
 			if (_mid == 1)
 			{
+				uchar value = uchar((image->getValue(i) - _bottom) * variable1);
 				switch (channel)
 				{
 				case 0:
-					pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] =
-						uchar((pProcessingData[i] - _bottom) * variable1);
+					pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = value;
 					break;
 				case 1:
-					pBYTEImage[3 * i + 2] = uchar((pProcessingData[i] - _bottom) * variable1);
+					pBYTEImage[3 * i + 2] = value;
 					break;
 				case 2:
-					pBYTEImage[3 * i + 1] = uchar((pProcessingData[i] - _bottom) * variable1);
+					pBYTEImage[3 * i + 1] = value;
 					break;
 				case 3:
-					pBYTEImage[3 * i] = uchar((pProcessingData[i] - _bottom) * variable1);
+					pBYTEImage[3 * i] = value;
 					break;
 				}
 			}
 			else	// if mid is not equal to 1
 			{
-				if (pProcessingData[i] < (_bottom + _top) / 2)
+				if (image->getValue(i) < (_bottom + _top) / 2)
 				{
+					uchar value = uchar((image->getValue(i) - _bottom) * variable2);
 					switch (channel)
 					{
 					case 0:
-						pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] =
-							uchar((pProcessingData[i] - _bottom) * variable2);
+						pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = value;
 						break;
 					case 1:
-						pBYTEImage[3 * i + 2] = uchar((pProcessingData[i] - _bottom) * variable2);
+						pBYTEImage[3 * i + 2] = value;
 						break;
 					case 2:
-						pBYTEImage[3 * i + 1] = uchar((pProcessingData[i] - _bottom) * variable2);
+						pBYTEImage[3 * i + 1] = value;
 						break;
 					case 3:
-						pBYTEImage[3 * i] = uchar((pProcessingData[i] - _bottom) * variable2);
+						pBYTEImage[3 * i] = value;
 						break;
 					}
 				}
 				else
 				{
+					uchar value = uchar((image->getValue(i) - (_bottom + _top) / 2) * variable3 + midColor);
 					switch (channel)
 					{
 					case 0:
-						pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] =
-							uchar((pProcessingData[i] - (_bottom + _top) / 2) * variable3 + midColor);
+						pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = value;
 						break;
 					case 1:
-						pBYTEImage[3 * i + 2] = uchar((pProcessingData[i] - (_bottom + _top) / 2) * variable3 + midColor);
+						pBYTEImage[3 * i + 2] = value;
 						break;
 					case 2:
-						pBYTEImage[3 * i + 1] = uchar((pProcessingData[i] - (_bottom + _top) / 2) * variable3 + midColor);
+						pBYTEImage[3 * i + 1] = value;
 						break;
 					case 3:
-						pBYTEImage[3 * i] = uchar((pProcessingData[i] - (_bottom + _top) / 2) * variable3 + midColor);
+						pBYTEImage[3 * i] = value;
 						break;
 					}
 				}
@@ -183,7 +183,7 @@ void LevelsProcessor::processTemplate(ImageDataTemplate<Type>* image)
 
 	image->copyToImage();
 }
-*/
+
 // Process float array
 void LevelsProcessor::processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
@@ -238,19 +238,20 @@ void LevelsProcessor::processArray(float* pArray, int width, int height, float m
 		{
 			if (_mid == 1)
 			{
+				uchar value = uchar((pArray[i] - fBottom) * fVariable1);
 				switch (channel)
 				{
 				case 0:
-					pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = uchar((pArray[i] - fBottom) * fVariable1);
+					pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = value;
 					break;
 				case 1:
-					pByte[3 * i + 2] = uchar((pArray[i] - fBottom) * fVariable1);
+					pByte[3 * i + 2] = value;
 					break;
 				case 2:
-					pByte[3 * i + 1] = uchar((pArray[i] - fBottom) * fVariable1);
+					pByte[3 * i + 1] = value;
 					break;
 				case 3:
-					pByte[3 * i] = uchar((pArray[i] - fBottom) * fVariable1);
+					pByte[3 * i] = value;
 					break;
 				}
 			}
@@ -258,38 +259,39 @@ void LevelsProcessor::processArray(float* pArray, int width, int height, float m
 			{
 				if (pArray[i] < (_bottom + _top) / 2)
 				{
+					uchar value = uchar((pArray[i] - fBottom) * fVariable2);
 					switch (channel)
 					{
 					case 0:
-						pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = uchar((pArray[i] - fBottom) * fVariable2);
+						pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = value;
 						break;
 					case 1:
-						pByte[3 * i + 2] = uchar((pArray[i] - fBottom) * fVariable2);
+						pByte[3 * i + 2] = value;
 						break;
 					case 2:
-						pByte[3 * i + 1] = uchar((pArray[i] - fBottom) * fVariable2);
+						pByte[3 * i + 1] = value;
 						break;
 					case 3:
-						pByte[3 * i] = uchar((pArray[i] - fBottom) * fVariable2);
+						pByte[3 * i] = value;
 						break;
 					}
 				}
 				else
 				{
+					uchar value = uchar((pArray[i] - (fBottom + fTop) / 2) * fVariable3 + nMidColor)
 					switch (nChannel)
 					{
 					case 0:
-						pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] =
-							BYTE((pArray[i] - (fBottom + fTop) / 2) * fVariable3 + nMidColor);
+						pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = value;
 						break;
 					case 1:
-						pByte[3 * i + 2] = BYTE((pArray[i] - (fBottom + fTop) / 2) * fVariable3 + nMidColor);
+						pByte[3 * i + 2] = value;
 						break;
 					case 2:
-						pByte[3 * i + 1] = BYTE((pArray[i] - (fBottom + fTop) / 2) * fVariable3 + nMidColor);
+						pByte[3 * i + 1] = value;
 						break;
 					case 3:
-						pByte[3 * i] = BYTE((pArray[i] - (fBottom + fTop) / 2) * fVariable3 + nMidColor);
+						pByte[3 * i] = value;
 						break;
 					}
 				}
