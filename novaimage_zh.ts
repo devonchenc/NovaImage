@@ -141,94 +141,105 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.cpp" line="129"/>
-        <location filename="mainwindow.cpp" line="299"/>
+        <location filename="mainwindow.cpp" line="309"/>
         <source>&amp;Open...</source>
         <oldsource>&amp;Open</oldsource>
         <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="130"/>
-        <location filename="mainwindow.cpp" line="300"/>
+        <location filename="mainwindow.cpp" line="310"/>
         <source>&amp;Save as...</source>
         <oldsource>&amp;Save as</oldsource>
         <translation type="unfinished">另存为(&amp;A)...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="131"/>
+        <location filename="mainwindow.cpp" line="311"/>
         <source>&amp;Close</source>
         <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="132"/>
-        <location filename="mainwindow.cpp" line="301"/>
+        <location filename="mainwindow.cpp" line="312"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">退出(&amp;X)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="133"/>
-        <location filename="mainwindow.cpp" line="302"/>
+        <location filename="mainwindow.cpp" line="313"/>
         <source>Zoom &amp;in</source>
         <oldsource>Zoom &amp;In</oldsource>
         <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="134"/>
-        <location filename="mainwindow.cpp" line="303"/>
+        <location filename="mainwindow.cpp" line="314"/>
         <source>Zoom &amp;out</source>
         <oldsource>Zoom &amp;Out</oldsource>
         <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="139"/>
-        <location filename="mainwindow.cpp" line="304"/>
+        <location filename="mainwindow.cpp" line="135"/>
+        <source>&amp;Prev image</source>
+        <translation type="unfinished">前一张图像(&amp;P)</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="136"/>
+        <source>&amp;Next image</source>
+        <translation type="unfinished">后一张图像(&amp;N)</translation>
+    </message>
+    <message>
+        <location filename="mainwindow.cpp" line="141"/>
+        <location filename="mainwindow.cpp" line="315"/>
         <source>&amp;Chinese</source>
         <translation type="unfinished">中文简体(&amp;C)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="148"/>
-        <location filename="mainwindow.cpp" line="296"/>
+        <location filename="mainwindow.cpp" line="150"/>
+        <location filename="mainwindow.cpp" line="306"/>
         <source>&amp;File</source>
         <translation type="unfinished">文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="155"/>
-        <location filename="mainwindow.cpp" line="297"/>
+        <location filename="mainwindow.cpp" line="157"/>
+        <location filename="mainwindow.cpp" line="307"/>
         <source>&amp;View</source>
         <translation type="unfinished">视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="159"/>
+        <location filename="mainwindow.cpp" line="164"/>
         <source>&amp;Language</source>
         <oldsource>Language</oldsource>
         <translation type="unfinished">语言Language(&amp;L)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="216"/>
+        <location filename="mainwindow.cpp" line="221"/>
         <source>Open Image</source>
         <translation type="unfinished">打开图像</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="219"/>
+        <location filename="mainwindow.cpp" line="224"/>
         <source>DICOM files (*.dcm)</source>
         <translation type="unfinished">DICOM 文件 (*.dcm)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="220"/>
+        <location filename="mainwindow.cpp" line="225"/>
         <source>Image files (*.png *.bmp *.jpg *.tif)</source>
         <translation type="unfinished">图像文件 (*.png *.bmp *.jpg *.tif)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="221"/>
+        <location filename="mainwindow.cpp" line="226"/>
         <source>Any files (*)</source>
         <translation type="unfinished">所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="250"/>
+        <location filename="mainwindow.cpp" line="255"/>
         <source>Save Image As ...</source>
         <translation type="unfinished">图像另存为...</translation>
     </message>
     <message>
-        <location filename="mainwindow.cpp" line="251"/>
+        <location filename="mainwindow.cpp" line="256"/>
         <source>JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm)</source>
         <translation type="unfinished">JPG 图像 (*.jpg);;PNG 图像 (*.png);;BMP 图像 (*.bmp);;TIFF 图像 (*.tif);;DICOM 图像 (*.dcm)</translation>
     </message>

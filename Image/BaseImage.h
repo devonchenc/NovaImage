@@ -31,6 +31,8 @@ public:
 
 	bool isOpenSucceed()			{ return _openSucceed; }
 
+	QString getPathName() const		{ return _pathName; }
+
 	// Get each channel's pixel array
 	uint* getGrayPixelArray()		{ return _grayPixelNumber; }
 	uint* getRedPixelArray()		{ return _redPixelNumber; }

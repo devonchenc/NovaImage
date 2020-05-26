@@ -17,6 +17,7 @@
 #include "Document.h"
 #include "GlobalFunc.h"
 #include "GraphicsView.h"
+#include "Image/BaseImage.h"
 #include "Widget/ToolBoxWidget.h"
 #include "Widget/WidgetManager.h"
 #include "Widget/CommonWidget.h"
@@ -132,6 +133,8 @@ void MainWindow::createActions()
 	_exitAction = new QAction(tr("E&xit"), this);
 	_zoomInAction = new QAction(tr("Zoom &in"), this);
 	_zoomOutAction = new QAction(tr("Zoom &out"), this);
+	_prevImageAction = new QAction(tr("&Prev image"), this);
+	_nextImageAction = new QAction(tr("&Next image"), this);
 
 	_engAction = new QAction("&English", this);
 	_engAction->setCheckable(true);
@@ -156,6 +159,9 @@ void MainWindow::createActions()
 	_viewMenu->addAction(_zoomOutAction);
 	_viewMenu->addAction(_zoomInAction);
 	_viewMenu->addSeparator();
+	_viewMenu->addAction(_prevImageAction);
+	_viewMenu->addAction(_nextImageAction);
+	_viewMenu->addSeparator();
 	QMenu* languageMenu = _viewMenu->addMenu(tr("&Language"));
 	languageMenu->addAction(_engAction);
 	languageMenu->addAction(_chsAction);
@@ -172,6 +178,8 @@ void MainWindow::createActions()
 	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
 	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
 	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
+	connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
+	connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
 
 	setupShortcuts();
 }
@@ -224,11 +232,17 @@ void MainWindow::openImage()
 	{
 		QStringList filePaths = dialog.selectedFiles();
 		pDoc->openFile(filePaths.at(0));
+	}
+}
 
-		if (getGlobalImage())
-		{
-			WidgetManager::getInstance()->init();
-		}
+void MainWindow::imageOpened()
+{
+	if (getGlobalImage())
+	{
+		WidgetManager::getInstance()->init();
+
+		QString title = QString("%1 - NovaImage").arg(getGlobalImage()->getPathName());
+		setWindowTitle(title);
 	}
 }
 
@@ -264,6 +278,8 @@ void MainWindow::close()
 
 void MainWindow::setupShortcuts()
 {
+	_openAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+
 	QList<QKeySequence> shortcuts;
 	shortcuts << Qt::Key_Plus << Qt::Key_Equal;
 	_zoomInAction->setShortcuts(shortcuts);
@@ -271,6 +287,50 @@ void MainWindow::setupShortcuts()
 	shortcuts.clear();
 	shortcuts << Qt::Key_Minus << Qt::Key_Underscore;
 	_zoomOutAction->setShortcuts(shortcuts);
+
+	_prevImageAction->setShortcut(QKeySequence(Qt::Key_PageUp));
+	_nextImageAction->setShortcut(QKeySequence(Qt::Key_PageDown));
+}
+
+void MainWindow::prevImage()
+{
+	BaseImage* image = getGlobalImage();
+	if (!image)
+		return;
+
+	QString imagePath = image->getPathName();
+
+	QFileInfo current(imagePath);
+	QString strTemp = current.fileName();
+	QDir dir = current.absoluteDir();
+	QStringList nameFilters;
+	nameFilters << "*.png" << "*.bmp" << "*.jpg" << "*.dcm";
+	QStringList fileNames = dir.entryList(nameFilters, QDir::Files, QDir::Name);
+	int index = fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
+	if (index == 0)
+		index = fileNames.size();
+	pDoc->openFile(dir.absoluteFilePath(fileNames.at(index - 1)));
+}
+
+void MainWindow::nextImage()
+{
+	BaseImage* image = getGlobalImage();
+	if (!image)
+		return;
+
+	QString imagePath = image->getPathName();
+
+	QFileInfo current(imagePath);
+	QString strTemp = current.fileName();
+	QDir dir = current.absoluteDir();
+	QStringList nameFilters;
+	nameFilters << "*.png" << "*.bmp" << "*.jpg" << "*.dcm";
+	QStringList fileNames = dir.entryList(nameFilters, QDir::Files, QDir::Name);
+	int index = fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
+	if (index == fileNames.size() - 1)
+		index = -1;
+
+	pDoc->openFile(dir.absoluteFilePath(fileNames.at(index + 1)));
 }
 
 void MainWindow::slectLanguage(QAction* action)
@@ -302,6 +362,8 @@ void MainWindow::changeEvent(QEvent* event)
 		_exitAction->setText(tr("E&xit"));
 		_zoomInAction->setText(tr("Zoom &in"));
 		_zoomOutAction->setText(tr("Zoom &out"));
+		_prevImageAction->setText(tr("&Prev image"));
+		_nextImageAction->setText(tr("&Next image"));
 		_chsAction->setText(tr("&Chinese"));
 	}
 

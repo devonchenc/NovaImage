@@ -62,6 +62,8 @@ bool Document::openFile(const QString& fileName)
 	
 	getView()->showImage(_image->getImageEntity());
 
+	pMainWindow->imageOpened();
+
 	return true;
 }
 

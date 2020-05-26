@@ -31,6 +31,8 @@ public:
 	Document* getDocument() { return pDoc; }
 	View* getView() { return imageView; }
 
+	void imageOpened();
+
 protected:
 	void changeEvent(QEvent* event) override;
 
@@ -53,6 +55,9 @@ private slots:
     void saveAs();
 	void close();
 
+	void prevImage();
+	void nextImage();
+
 	void slectLanguage(QAction* action);
 
 private:
@@ -73,6 +78,8 @@ private:
 	QAction* _exitAction;
     QAction* _zoomInAction;
 	QAction* _zoomOutAction;
+	QAction* _prevImageAction;
+	QAction* _nextImageAction;
 	QAction* _engAction;
 	QAction* _chsAction;
 
