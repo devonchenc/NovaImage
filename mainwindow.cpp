@@ -298,6 +298,7 @@ void MainWindow::changeEvent(QEvent* event)
 
 		_openAction->setText(tr("&Open..."));
 		_saveAsAction->setText(tr("&Save as..."));
+		_closeAction->setText(tr("&Close"));
 		_exitAction->setText(tr("E&xit"));
 		_zoomInAction->setText(tr("Zoom &in"));
 		_zoomOutAction->setText(tr("Zoom &out"));
