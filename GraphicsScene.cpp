@@ -140,7 +140,10 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	{
 	case MOVE_ITEM:
 		break;
-
+	case MOVE_SCENE:
+		_startPoint = mouseEvent->scenePos();
+		qDebug() << "now: " << mouseEvent->scenePos();
+		break;
 	case INSERT_ITEM:
 		if (_itemType <= DiagramItem::Parallelogram)
 		{
@@ -192,8 +195,16 @@ void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		QLineF newLine(_line->line().p1(), mouseEvent->scenePos());
 		_line->setLine(newLine);
 	}
-	else
-		QGraphicsScene::mouseMoveEvent(mouseEvent);
+	else if (_mode == MOVE_SCENE)
+	{
+		QPointF disPointF = mouseEvent->scenePos() - _startPoint;
+		qDebug() << "now: " << mouseEvent->scenePos() << "  start: " << _startPoint;
+		_startPoint = mouseEvent->scenePos();
+		setSceneRect(sceneRect().x() + disPointF.x(), sceneRect().y() + disPointF.y(), sceneRect().width(), sceneRect().height());
+		update();
+	}
+
+	QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
 void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)

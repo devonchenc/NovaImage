@@ -71,6 +71,7 @@ void GraphicsView::applyValue()
 
 void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
+//	qDebug() << "GraphicsView: " << event->pos();
 	QGraphicsPixmapItem* pixmapItem = _view->getPixmapItem();
 	if (pixmapItem)
 	{

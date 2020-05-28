@@ -118,7 +118,11 @@ void View::resetImage()
 
 void View::setSceneMode(int mode)
 {
-	if (mode == MOVE_ITEM)
+	if (mode == MOVE_SCENE)
+	{
+		_view->setDragMode(QGraphicsView::ScrollHandDrag);
+	}
+	else if (mode == MOVE_ITEM)
 	{
 		_view->setDragMode(QGraphicsView::NoDrag);
 	}

@@ -7,10 +7,11 @@
 class DiagramLineItem;
 
 #define MOVE_ITEM		0
-#define SELECT_ITEM		1
-#define INSERT_ITEM		2
-#define INSERT_TEXT		3
-#define INSERT_LINE		4
+#define MOVE_SCENE		1
+#define SELECT_ITEM		2
+#define INSERT_ITEM		3
+#define INSERT_TEXT		4
+#define INSERT_LINE		5
 
 class GraphicsScene : public QGraphicsScene
 {
@@ -53,7 +54,7 @@ private:
 	DiagramItem::DiagramType _itemType;
 	QMenu* _itemMenu;
 	int _mode;
-	QPointF startPoint;
+	QPointF _startPoint;
 	QColor _textColor;
 	QColor _itemColor;
 	QColor _lineColor;

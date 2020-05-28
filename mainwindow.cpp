@@ -28,18 +28,18 @@
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
 {
-	pDoc = new Document(this);
+	_doc = new Document(this);
 
 	// main area for image display
-	imageView = new View(this);
-	imageView->setStyleSheet("background-color:black");
-	setCentralWidget(imageView);
+	_view = new View(this);
+	_view->setStyleSheet("background-color:black");
+	setCentralWidget(_view);
 
 	initUI();
 
 	// For test
-//	pDoc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");//D:/Qt/Class_3_malocclusion/DICOM/I0.dcm//D:/Qt/series-00000/image-00000.dcm
-//	pDoc->openFile("D:/test.png");
+	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
+//	_doc->openFile("D:/test.png");
 
 //	showMaximized();
 //	setWindowState(Qt::WindowMaximized);
@@ -47,13 +47,13 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-	if (pDoc)
+	if (_doc)
 	{
-		delete pDoc;
+		delete _doc;
 	}
-	if (imageView)
+	if (_view)
 	{
-		delete imageView;
+		delete _view;
 	}
 }
 
@@ -78,6 +78,30 @@ void MainWindow::createActions()
 	_saveAsAction = new QAction(tr("&Save as..."), this);
 	_closeAction = new QAction(tr("&Close"), this);
 	_exitAction = new QAction(tr("E&xit"), this);
+	_showMenuAction = new QAction(tr("Menu"), this);
+	_showMenuAction->setCheckable(true);
+	_showMenuAction->setChecked(true);
+	_showDockWidgetAction = new QAction(tr("Dock widgets"), this);
+	_showDockWidgetAction->setCheckable(true);
+	_showDockWidgetAction->setChecked(true);
+	_annotationAction = new QAction(tr("Annotations"), this);
+	_annotationAction->setCheckable(true);
+	_annotationAction->setChecked(true);
+	_crossAction = new QAction(tr("Cross reference line"), this);
+	_crossAction->setCheckable(true);
+	_crossAction->setChecked(true);
+	_scaleAction = new QAction(tr("Image scale"), this);
+	_scaleAction->setCheckable(true);
+	_scaleAction->setChecked(true);
+	_cursorAction = new QAction(tr("Select"), this);
+	_cursorAction->setIcon(QIcon("Resources/svg/cursor.svg"));
+	_moveAction = new QAction(tr("Move"), this);
+	_moveAction->setIcon(QIcon("Resources/svg/move.svg"));
+	_rulerAction = new QAction(tr("Length"), this);
+	_rulerAction->setIcon(QIcon("Resources/svg/ruler.svg"));
+	_angleAction = new QAction(tr("Angle"), this);
+	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
+	_fullScreenAction = new QAction(tr("Full screen mode"), this);
 	_zoomInAction = new QAction(tr("Zoom &in"), this);
 	_zoomOutAction = new QAction(tr("Zoom &out"), this);
 	_prevImageAction = new QAction(tr("&Prev image"), this);
@@ -121,6 +145,18 @@ void MainWindow::createActions()
 	connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
 	connect(_closeAction, &QAction::triggered, this, &MainWindow::close);
 	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
+	connect(_showMenuAction, &QAction::triggered, this, &MainWindow::showMenu);
+	connect(_showDockWidgetAction, &QAction::triggered, this, &MainWindow::showDockWidget);
+	connect(_fullScreenAction, &QAction::triggered, this, &MainWindow::fullScreen);
+	connect(_annotationAction, &QAction::triggered, this, &MainWindow::showAnnotation);
+	connect(_crossAction, &QAction::triggered, this, &MainWindow::showCrossLine);
+	connect(_scaleAction, &QAction::triggered, this, &MainWindow::showScale);
+
+	connect(_cursorAction, &QAction::triggered, this, &MainWindow::selectItem);
+	connect(_moveAction, &QAction::triggered, this, &MainWindow::moveScene);
+	connect(_rulerAction, &QAction::triggered, this, &MainWindow::measurementChanged);
+	connect(_angleAction, &QAction::triggered, this, &MainWindow::measurementChanged);
+
 	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
 	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
 	connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
@@ -131,7 +167,7 @@ void MainWindow::createActions()
 
 void MainWindow::createToolbar()
 {
-	setIconSize(QSize(32, 32));
+	setIconSize(QSize(42, 32));
 
 	_fileToolBar = addToolBar("File");
 
@@ -155,15 +191,73 @@ void MainWindow::createToolbar()
 	_layoutToolButton = new QToolButton;
 	_layoutToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_openDicomAction);
+	menu->addAction(_showMenuAction);
+	menu->addAction(_showDockWidgetAction);
+	menu->addSeparator();
+	menu->addAction(_fullScreenAction);
 	_layoutToolButton->setMenu(menu);
 	_layoutToolButton->setIcon(QIcon("Resources/svg/layout.svg"));
 	connect(_layoutToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
+
+	_annotationToolButton = new QToolButton;
+	_annotationToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	menu = new QMenu(this);
+	menu->addAction(_annotationAction);
+	menu->addAction(_crossAction);
+	menu->addAction(_scaleAction);
+	_annotationToolButton->setMenu(menu);
+	_annotationToolButton->setIcon(QIcon("Resources/svg/annotation.svg"));
+	connect(_annotationToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
+
+	_imageWindowToolButton = new QToolButton;
+	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+/*	menu = new QMenu(this);
+	menu->addAction(_annotationAction);
+	menu->addAction(_crossAction);
+	menu->addAction(_scaleAction);
+	_annotationToolButton->setMenu(menu);*/
+	_imageWindowToolButton->setIcon(QIcon("Resources/svg/imagewindow.svg"));
+	connect(_imageWindowToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
+
+	_zoomButton = new QToolButton;
+	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
+	/*	menu = new QMenu(this);
+		menu->addAction(_annotationAction);
+		menu->addAction(_crossAction);
+		menu->addAction(_scaleAction);
+		_zoomButton->setMenu(menu);*/
+	_zoomButton->setIcon(QIcon("Resources/svg/zoom.svg"));
+	connect(_zoomButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
+
+	_cursorButton = new QToolButton;
+	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
+	menu = new QMenu(this);
+	menu->addAction(_cursorAction);
+	menu->addAction(_moveAction);
+	_cursorButton->setMenu(menu);
+	_cursorButton->setIcon(QIcon("Resources/svg/cursor.svg"));
+	connect(_cursorButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
+
+	_measurementButton = new QToolButton;
+//	_measurementButton->setMinimumSize(QSize(40, 32));
+	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
+	menu = new QMenu(this);
+	menu->addAction(_rulerAction);
+	menu->addAction(_angleAction);
+	_measurementButton->setMenu(menu);
+	_measurementButton->setIcon(QIcon("Resources/svg/ruler.svg"));
+	connect(_measurementButton, &QToolButton::clicked, this, &MainWindow::measurementChanged);
 
 	_fileToolBar->addWidget(_openToolButton);
 	_fileToolBar->addWidget(_saveToolButton);
 	_fileToolBar->addSeparator();
 	_fileToolBar->addWidget(_layoutToolButton);
+	_fileToolBar->addWidget(_annotationToolButton);
+	_fileToolBar->addWidget(_imageWindowToolButton);
+	_fileToolBar->addWidget(_zoomButton);
+	_fileToolBar->addSeparator();
+	_fileToolBar->addWidget(_cursorButton);
+	_fileToolBar->addWidget(_measurementButton);
 
 	_viewToolBar = addToolBar("View");
 	// add actions to toolbars
@@ -179,31 +273,31 @@ void MainWindow::createStatusBar()
 	QLabel* infoLabel = new QLabel(mainStatusBar);
 	infoLabel->setMinimumWidth(160);
 	infoLabel->setAlignment(Qt::AlignHCenter);
-	connect(imageView, &View::showInfo, infoLabel, &QLabel::setText);
+	connect(_view, &View::showInfo, infoLabel, &QLabel::setText);
 
 	QLabel* coordinateLabel = new QLabel(mainStatusBar);
 	coordinateLabel->setMinimumWidth(100);
 	coordinateLabel->setAlignment(Qt::AlignHCenter);
-	connect(imageView->view(), &GraphicsView::showCoordinate, coordinateLabel, &QLabel::setText);
+	connect(_view->view(), &GraphicsView::showCoordinate, coordinateLabel, &QLabel::setText);
 
 	QLabel* pixelValueLabel = new QLabel(mainStatusBar);
 	pixelValueLabel->setMinimumWidth(120);
 	pixelValueLabel->setAlignment(Qt::AlignHCenter);
-	connect(imageView->view(), &GraphicsView::showPixelValue, pixelValueLabel, &QLabel::setText);
+	connect(_view->view(), &GraphicsView::showPixelValue, pixelValueLabel, &QLabel::setText);
 
 	QToolButton* fitScreenButton = new QToolButton(mainStatusBar);
 	fitScreenButton->setText("FitScreen");
-	connect(fitScreenButton, &QToolButton::clicked, imageView, &View::fitScreen);
+	connect(fitScreenButton, &QToolButton::clicked, _view, &View::fitScreen);
 	QToolButton* normalButton = new QToolButton(mainStatusBar);
 	normalButton->setText("Normal");
-	connect(normalButton, &QToolButton::clicked, imageView->view(), &GraphicsView::zoomNormal);
+	connect(normalButton, &QToolButton::clicked, _view->view(), &GraphicsView::zoomNormal);
 
 	QToolButton* zoomOutButton = new QToolButton(mainStatusBar);
 	zoomOutButton->setText("-");
-	connect(zoomOutButton, &QToolButton::clicked, imageView->view(), &GraphicsView::zoomOut);
+	connect(zoomOutButton, &QToolButton::clicked, _view->view(), &GraphicsView::zoomOut);
 	QToolButton* zoomInButton = new QToolButton(mainStatusBar);
 	zoomInButton->setText("+");
-	connect(zoomInButton, &QToolButton::clicked, imageView->view(), &GraphicsView::zoomIn);
+	connect(zoomInButton, &QToolButton::clicked, _view->view(), &GraphicsView::zoomIn);
 
 	_slider = new QSlider(mainStatusBar);
 	_slider->setOrientation(Qt::Horizontal);
@@ -213,8 +307,8 @@ void MainWindow::createStatusBar()
 	_slider->setValue(150);
 	_slider->setMaximumWidth(200);
 	_slider->setTickPosition(QSlider::TicksBelow);
-	connect(imageView->view(), &GraphicsView::valueChanged, _slider, &QSlider::setValue);
-	connect(_slider, &QSlider::valueChanged, imageView->view(), &GraphicsView::setValue);
+	connect(_view->view(), &GraphicsView::valueChanged, _slider, &QSlider::setValue);
+	connect(_slider, &QSlider::valueChanged, _view->view(), &GraphicsView::setValue);
 
 	mainStatusBar->addPermanentWidget(infoLabel);
 	mainStatusBar->addPermanentWidget(coordinateLabel);
@@ -230,16 +324,16 @@ void MainWindow::createToolWidget()
 {
 	ToolBoxWidget* toolbox = new ToolBoxWidget();
 	createDockWidget(toolbox);
-	connect(toolbox, &ToolBoxWidget::setSceneMode, imageView, &View::setSceneMode);
-	connect(toolbox, &ToolBoxWidget::setItemType, imageView->scene(), &GraphicsScene::setItemType);
-	connect(toolbox, &ToolBoxWidget::setLineColor, imageView->scene(), &GraphicsScene::setLineColor);
-	connect(toolbox, &ToolBoxWidget::setFillColor, imageView->scene(), &GraphicsScene::setFillColor);
-	connect(toolbox, &ToolBoxWidget::setTextColor, imageView->scene(), &GraphicsScene::setTextColor);
-	connect(toolbox, &ToolBoxWidget::setTextFont, imageView->scene(), &GraphicsScene::setTextFont);
+	connect(toolbox, &ToolBoxWidget::setSceneMode, _view, &View::setSceneMode);
+	connect(toolbox, &ToolBoxWidget::setItemType, _view->scene(), &GraphicsScene::setItemType);
+	connect(toolbox, &ToolBoxWidget::setLineColor, _view->scene(), &GraphicsScene::setLineColor);
+	connect(toolbox, &ToolBoxWidget::setFillColor, _view->scene(), &GraphicsScene::setFillColor);
+	connect(toolbox, &ToolBoxWidget::setTextColor, _view->scene(), &GraphicsScene::setTextColor);
+	connect(toolbox, &ToolBoxWidget::setTextFont, _view->scene(), &GraphicsScene::setTextFont);
 
-	connect(imageView->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
-	connect(imageView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
-	connect(imageView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
+	connect(_view->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
+	connect(_view->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
+	connect(_view->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
 
 	CommonWidget* common = new CommonWidget();
 	createDockWidget(common);
@@ -256,6 +350,7 @@ void MainWindow::createDockWidget(BaseWidget* widget)
 	QDockWidget* dockWidget = new QDockWidget(widget->getName(), this);
 	dockWidget->setWidget(widget);
 	addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dockWidget);
+	_vecDockWidget.append(dockWidget);
 
 	WidgetManager::getInstance()->addWidget(widget);
 }
@@ -273,7 +368,7 @@ void MainWindow::openImage()
 	if (dialog.exec())
 	{
 		QStringList filePaths = dialog.selectedFiles();
-		pDoc->openFile(filePaths.at(0));
+		_doc->openFile(filePaths.at(0));
 	}
 }
 
@@ -283,7 +378,7 @@ void MainWindow::openDicomImage()
 		"/", QStringLiteral("DICOM files (*.dcm)"));
 	if (!fileName.isEmpty())
 	{
-		pDoc->openFile(fileName);
+		_doc->openFile(fileName);
 	}
 }
 
@@ -293,7 +388,7 @@ void MainWindow::openRawImage()
 		"/", QStringLiteral("Raw files (*.raw *.dat)"));
 	if (!fileName.isEmpty())
 	{
-		pDoc->openFile(fileName);
+		_doc->openFile(fileName);
 	}
 }
 
@@ -308,14 +403,80 @@ void MainWindow::imageOpened()
 	}
 }
 
+void MainWindow::showMenu()
+{
+	menuBar()->setVisible(menuBar()->isVisible() == false);
+}
+
+void MainWindow::showDockWidget()
+{
+	for (int i = 0; i < _vecDockWidget.size(); i++)
+	{
+		QDockWidget* dockWidget = _vecDockWidget[i];
+		dockWidget->setVisible(dockWidget->isVisible() == false);
+	}
+}
+
+void MainWindow::fullScreen()
+{
+	if (isFullScreen())
+	{
+		showMaximized();
+	}
+	else
+	{
+		showFullScreen();
+	}
+}
+
+void MainWindow::showAnnotation()
+{
+
+}
+
+void MainWindow::showCrossLine()
+{
+
+}
+
+void MainWindow::showScale()
+{
+
+}
+
+void MainWindow::selectItem()
+{
+	_cursorButton->setIcon(QIcon("Resources/svg/cursor.svg"));
+	_view->setSceneMode(SELECT_ITEM);
+}
+
+void MainWindow::moveScene()
+{
+	_cursorButton->setIcon(QIcon("Resources/svg/move.svg"));
+	_view->setSceneMode(MOVE_SCENE);
+}
+
+void MainWindow::measurementChanged()
+{
+	QAction* action = qobject_cast<QAction *>(sender());
+	if (action == _rulerAction)
+	{
+		_measurementButton->setIcon(QIcon("Resources/svg/ruler.svg"));
+	}
+	else if (action == _angleAction)
+	{
+		_measurementButton->setIcon(QIcon("Resources/svg/angle.svg"));
+	}
+}
+
 void MainWindow::zoomIn()
 {
-	imageView->view()->zoomIn();
+	_view->view()->zoomIn();
 }
 
 void MainWindow::zoomOut()
 {
-	imageView->view()->zoomOut();
+	_view->view()->zoomOut();
 }
 
 void MainWindow::saveAs()
@@ -327,13 +488,13 @@ void MainWindow::saveAs()
 		"/", tr("JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm)"));
 	if (!fileName.isEmpty())
 	{
-		pDoc->saveAs(fileName);
+		_doc->saveAs(fileName);
 	}
 }
 
 void MainWindow::close()
 {
-	pDoc->closeFile();
+	_doc->closeFile();
 
 	WidgetManager::getInstance()->reset();
 }
@@ -371,7 +532,7 @@ void MainWindow::prevImage()
 	int index = fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
 	if (index == 0)
 		index = fileNames.size();
-	pDoc->openFile(dir.absoluteFilePath(fileNames.at(index - 1)));
+	_doc->openFile(dir.absoluteFilePath(fileNames.at(index - 1)));
 }
 
 void MainWindow::nextImage()
@@ -392,7 +553,7 @@ void MainWindow::nextImage()
 	if (index == fileNames.size() - 1)
 		index = -1;
 
-	pDoc->openFile(dir.absoluteFilePath(fileNames.at(index + 1)));
+	_doc->openFile(dir.absoluteFilePath(fileNames.at(index + 1)));
 }
 
 void MainWindow::slectLanguage(QAction* action)

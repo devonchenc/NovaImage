@@ -28,8 +28,8 @@ public:
     ~MainWindow();
 
 public:
-	Document* getDocument() { return pDoc; }
-	View* getView() { return imageView; }
+	Document* getDocument() { return _doc; }
+	View* getView() { return _view; }
 
 	void imageOpened();
 
@@ -54,6 +54,15 @@ private slots:
     void openImage();
 	void openDicomImage();
 	void openRawImage();
+	void showMenu();
+	void showDockWidget();
+	void fullScreen();
+	void showAnnotation();
+	void showCrossLine();
+	void showScale();
+	void selectItem();
+	void moveScene();
+	void measurementChanged();
     void zoomIn();
     void zoomOut();
     void saveAs();
@@ -70,8 +79,8 @@ private:
     QToolBar* _fileToolBar;
     QToolBar* _viewToolBar;
 
-    View* imageView;
-	Document* pDoc;
+    View* _view;
+	Document* _doc;
 
 	QSlider* _slider;
 
@@ -84,8 +93,21 @@ private:
 	QAction* _saveAsAction;
 	QAction* _closeAction;
 	QAction* _exitAction;
+	QAction* _showMenuAction;
+	QAction* _showDockWidgetAction;
+	QAction* _fullScreenAction;
     QAction* _zoomInAction;
 	QAction* _zoomOutAction;
+	QAction* _annotationAction;
+	QAction* _crossAction;
+	QAction* _scaleAction;
+	QAction* _imageWindowAction;
+
+	QAction* _cursorAction;
+	QAction* _moveAction;
+
+	QAction* _rulerAction;
+	QAction* _angleAction;
 	QAction* _prevImageAction;
 	QAction* _nextImageAction;
 	QAction* _engAction;
@@ -94,6 +116,13 @@ private:
 	QToolButton* _openToolButton;
 	QToolButton* _saveToolButton;
 	QToolButton* _layoutToolButton;
+	QToolButton* _annotationToolButton;
+	QToolButton* _imageWindowToolButton;
+	QToolButton* _zoomButton;
+	QToolButton* _cursorButton;
+	QToolButton* _measurementButton;
 
 	QTranslator* _translator;
+
+	QVector<QDockWidget*> _vecDockWidget;
 };
