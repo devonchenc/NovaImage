@@ -32,6 +32,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 	// main area for image display
 	imageView = new View(this);
+	imageView->setStyleSheet("background-color:black");
 	setCentralWidget(imageView);
 
 	initUI();
@@ -58,15 +59,116 @@ MainWindow::~MainWindow()
 
 void MainWindow::initUI()
 {
+	createActions();
+
 	// setup toolbar
-	fileToolBar = addToolBar("File");
-	viewToolBar = addToolBar("View");
+	createToolbar();
 
 	createStatusBar();
 
-	createActions();
-
 	createToolWidget();
+}
+
+void MainWindow::createActions()
+{
+	// create actions, add them to menus
+	_openAction = new QAction(tr("&Open..."), this);
+	_openDicomAction = new QAction(tr("Open &DICOM file..."), this);
+	_openRawAction = new QAction(tr("Open &Raw file..."), this);
+	_saveAsAction = new QAction(tr("&Save as..."), this);
+	_closeAction = new QAction(tr("&Close"), this);
+	_exitAction = new QAction(tr("E&xit"), this);
+	_zoomInAction = new QAction(tr("Zoom &in"), this);
+	_zoomOutAction = new QAction(tr("Zoom &out"), this);
+	_prevImageAction = new QAction(tr("&Prev image"), this);
+	_nextImageAction = new QAction(tr("&Next image"), this);
+
+	_engAction = new QAction("&English", this);
+	_engAction->setCheckable(true);
+	_engAction->setChecked(true);
+	_chsAction = new QAction(tr("&Chinese"), this);
+	_chsAction->setCheckable(true);
+	QActionGroup* languageGroup = new QActionGroup(this);
+	languageGroup->addAction(_engAction);
+	languageGroup->addAction(_chsAction);
+	languageGroup->setExclusive(true);
+	connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
+
+	// setup menubar
+	_fileMenu = menuBar()->addMenu(tr("&File"));
+	_fileMenu->addAction(_openDicomAction);
+	_fileMenu->addAction(_openRawAction);
+	_fileMenu->addAction(_saveAsAction);
+	_fileMenu->addAction(_closeAction);
+	_fileMenu->addSeparator();
+	_fileMenu->addAction(_exitAction);
+
+	_viewMenu = menuBar()->addMenu(tr("&View"));
+	_viewMenu->addAction(_zoomOutAction);
+	_viewMenu->addAction(_zoomInAction);
+	_viewMenu->addSeparator();
+	_viewMenu->addAction(_prevImageAction);
+	_viewMenu->addAction(_nextImageAction);
+	_viewMenu->addSeparator();
+	QMenu* languageMenu = _viewMenu->addMenu(tr("&Language"));
+	languageMenu->addAction(_engAction);
+	languageMenu->addAction(_chsAction);
+
+	// connect the signals and slots
+	connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
+	connect(_openDicomAction, &QAction::triggered, this, &MainWindow::openDicomImage);
+	connect(_openRawAction, &QAction::triggered, this, &MainWindow::openRawImage);
+	connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
+	connect(_closeAction, &QAction::triggered, this, &MainWindow::close);
+	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
+	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
+	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
+	connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
+	connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
+
+	setupShortcuts();
+}
+
+void MainWindow::createToolbar()
+{
+	setIconSize(QSize(32, 32));
+
+	_fileToolBar = addToolBar("File");
+
+	_openToolButton = new QToolButton;
+	_openToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	QMenu* menu = new QMenu(this);
+	menu->addAction(_openDicomAction);
+	menu->addAction(_openRawAction);
+	_openToolButton->setMenu(menu);
+	_openToolButton->setIcon(QIcon("Resources/svg/open.svg"));
+	connect(_openToolButton, &QToolButton::clicked, _openAction, &QAction::triggered);
+
+	_saveToolButton = new QToolButton;
+	_saveToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	menu = new QMenu(this);
+	menu->addAction(_openDicomAction);
+	_saveToolButton->setMenu(menu);
+	_saveToolButton->setIcon(QIcon("Resources/svg/save.svg"));
+	connect(_saveToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
+
+	_layoutToolButton = new QToolButton;
+	_layoutToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	menu = new QMenu(this);
+	menu->addAction(_openDicomAction);
+	_layoutToolButton->setMenu(menu);
+	_layoutToolButton->setIcon(QIcon("Resources/svg/layout.svg"));
+	connect(_layoutToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
+
+	_fileToolBar->addWidget(_openToolButton);
+	_fileToolBar->addWidget(_saveToolButton);
+	_fileToolBar->addSeparator();
+	_fileToolBar->addWidget(_layoutToolButton);
+
+	_viewToolBar = addToolBar("View");
+	// add actions to toolbars
+	_viewToolBar->addAction(_zoomInAction);
+	_viewToolBar->addAction(_zoomOutAction);
 }
 
 void MainWindow::createStatusBar()
@@ -124,66 +226,6 @@ void MainWindow::createStatusBar()
 	mainStatusBar->addPermanentWidget(zoomInButton);
 }
 
-void MainWindow::createActions()
-{
-	// create actions, add them to menus
-	_openAction = new QAction(tr("&Open..."), this);
-	_saveAsAction = new QAction(tr("&Save as..."), this);
-	_closeAction = new QAction(tr("&Close"), this);
-	_exitAction = new QAction(tr("E&xit"), this);
-	_zoomInAction = new QAction(tr("Zoom &in"), this);
-	_zoomOutAction = new QAction(tr("Zoom &out"), this);
-	_prevImageAction = new QAction(tr("&Prev image"), this);
-	_nextImageAction = new QAction(tr("&Next image"), this);
-
-	_engAction = new QAction("&English", this);
-	_engAction->setCheckable(true);
-	_engAction->setChecked(true);
-	_chsAction = new QAction(tr("&Chinese"), this);
-	_chsAction->setCheckable(true);
-	QActionGroup* languageGroup = new QActionGroup(this);
-	languageGroup->addAction(_engAction);
-	languageGroup->addAction(_chsAction);
-	languageGroup->setExclusive(true);
-	connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
-
-	// setup menubar
-	_fileMenu = menuBar()->addMenu(tr("&File"));
-	_fileMenu->addAction(_openAction);
-	_fileMenu->addAction(_saveAsAction);
-	_fileMenu->addAction(_closeAction);
-	_fileMenu->addSeparator();
-	_fileMenu->addAction(_exitAction);
-
-	_viewMenu = menuBar()->addMenu(tr("&View"));
-	_viewMenu->addAction(_zoomOutAction);
-	_viewMenu->addAction(_zoomInAction);
-	_viewMenu->addSeparator();
-	_viewMenu->addAction(_prevImageAction);
-	_viewMenu->addAction(_nextImageAction);
-	_viewMenu->addSeparator();
-	QMenu* languageMenu = _viewMenu->addMenu(tr("&Language"));
-	languageMenu->addAction(_engAction);
-	languageMenu->addAction(_chsAction);
-
-	// add actions to toolbars
-	fileToolBar->addAction(_openAction);
-	viewToolBar->addAction(_zoomInAction);
-	viewToolBar->addAction(_zoomOutAction);
-
-	// connect the signals and slots
-	connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
-	connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
-	connect(_closeAction, &QAction::triggered, this, &MainWindow::close);
-	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
-	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
-	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
-	connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
-	connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
-
-	setupShortcuts();
-}
-
 void MainWindow::createToolWidget()
 {
 	ToolBoxWidget* toolbox = new ToolBoxWidget();
@@ -232,6 +274,26 @@ void MainWindow::openImage()
 	{
 		QStringList filePaths = dialog.selectedFiles();
 		pDoc->openFile(filePaths.at(0));
+	}
+}
+
+void MainWindow::openDicomImage()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open DICOM Image"),
+		"/", QStringLiteral("DICOM files (*.dcm)"));
+	if (!fileName.isEmpty())
+	{
+		pDoc->openFile(fileName);
+	}
+}
+
+void MainWindow::openRawImage()
+{
+	QString fileName = QFileDialog::getOpenFileName(this, tr("Open Raw Image"),
+		"/", QStringLiteral("Raw files (*.raw *.dat)"));
+	if (!fileName.isEmpty())
+	{
+		pDoc->openFile(fileName);
 	}
 }
 
@@ -357,6 +419,8 @@ void MainWindow::changeEvent(QEvent* event)
 		_viewMenu->setTitle(tr("&View"));
 
 		_openAction->setText(tr("&Open..."));
+		_openDicomAction->setText(tr("Open &DICOM file..."));
+		_openRawAction->setText(tr("Open &Raw file..."));
 		_saveAsAction->setText(tr("&Save as..."));
 		_closeAction->setText(tr("&Close"));
 		_exitAction->setText(tr("E&xit"));

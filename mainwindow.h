@@ -43,6 +43,8 @@ private:
 
 	void createDockWidget(BaseWidget* widget);
 
+	void createToolbar();
+
 	void createStatusBar();
 
     void createActions();
@@ -50,6 +52,8 @@ private:
 
 private slots:
     void openImage();
+	void openDicomImage();
+	void openRawImage();
     void zoomIn();
     void zoomOut();
     void saveAs();
@@ -58,11 +62,13 @@ private slots:
 	void prevImage();
 	void nextImage();
 
+//	void openButtonTriggered();
+
 	void slectLanguage(QAction* action);
 
 private:
-    QToolBar* fileToolBar;
-    QToolBar* viewToolBar;
+    QToolBar* _fileToolBar;
+    QToolBar* _viewToolBar;
 
     View* imageView;
 	Document* pDoc;
@@ -73,6 +79,8 @@ private:
 	QMenu* _viewMenu;
 
 	QAction* _openAction;
+	QAction* _openDicomAction;
+	QAction* _openRawAction;
 	QAction* _saveAsAction;
 	QAction* _closeAction;
 	QAction* _exitAction;
@@ -82,6 +90,10 @@ private:
 	QAction* _nextImageAction;
 	QAction* _engAction;
 	QAction* _chsAction;
+
+	QToolButton* _openToolButton;
+	QToolButton* _saveToolButton;
+	QToolButton* _layoutToolButton;
 
 	QTranslator* _translator;
 };
