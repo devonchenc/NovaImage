@@ -17,6 +17,7 @@
 #include "Document.h"
 #include "GlobalFunc.h"
 #include "GraphicsView.h"
+#include "ToolBar.h"
 #include "Image/BaseImage.h"
 #include "Widget/ToolBoxWidget.h"
 #include "Widget/WidgetManager.h"
@@ -73,35 +74,10 @@ void MainWindow::createActions()
 {
 	// create actions, add them to menus
 	_openAction = new QAction(tr("&Open..."), this);
-	_openDicomAction = new QAction(tr("Open &DICOM file..."), this);
-	_openRawAction = new QAction(tr("Open &Raw file..."), this);
 	_saveAsAction = new QAction(tr("&Save as..."), this);
 	_closeAction = new QAction(tr("&Close"), this);
 	_exitAction = new QAction(tr("E&xit"), this);
-	_showMenuAction = new QAction(tr("Menu"), this);
-	_showMenuAction->setCheckable(true);
-	_showMenuAction->setChecked(true);
-	_showDockWidgetAction = new QAction(tr("Dock widgets"), this);
-	_showDockWidgetAction->setCheckable(true);
-	_showDockWidgetAction->setChecked(true);
-	_annotationAction = new QAction(tr("Annotations"), this);
-	_annotationAction->setCheckable(true);
-	_annotationAction->setChecked(true);
-	_crossAction = new QAction(tr("Cross reference line"), this);
-	_crossAction->setCheckable(true);
-	_crossAction->setChecked(true);
-	_scaleAction = new QAction(tr("Image scale"), this);
-	_scaleAction->setCheckable(true);
-	_scaleAction->setChecked(true);
-	_cursorAction = new QAction(tr("Select"), this);
-	_cursorAction->setIcon(QIcon("Resources/svg/cursor.svg"));
-	_moveAction = new QAction(tr("Move"), this);
-	_moveAction->setIcon(QIcon("Resources/svg/move.svg"));
-	_rulerAction = new QAction(tr("Length"), this);
-	_rulerAction->setIcon(QIcon("Resources/svg/ruler.svg"));
-	_angleAction = new QAction(tr("Angle"), this);
-	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
-	_fullScreenAction = new QAction(tr("Full screen mode"), this);
+
 	_zoomInAction = new QAction(tr("Zoom &in"), this);
 	_zoomOutAction = new QAction(tr("Zoom &out"), this);
 	_prevImageAction = new QAction(tr("&Prev image"), this);
@@ -120,8 +96,7 @@ void MainWindow::createActions()
 
 	// setup menubar
 	_fileMenu = menuBar()->addMenu(tr("&File"));
-	_fileMenu->addAction(_openDicomAction);
-	_fileMenu->addAction(_openRawAction);
+	_fileMenu->addAction(_openAction);
 	_fileMenu->addAction(_saveAsAction);
 	_fileMenu->addAction(_closeAction);
 	_fileMenu->addSeparator();
@@ -140,22 +115,9 @@ void MainWindow::createActions()
 
 	// connect the signals and slots
 	connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
-	connect(_openDicomAction, &QAction::triggered, this, &MainWindow::openDicomImage);
-	connect(_openRawAction, &QAction::triggered, this, &MainWindow::openRawImage);
 	connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
 	connect(_closeAction, &QAction::triggered, this, &MainWindow::close);
 	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
-	connect(_showMenuAction, &QAction::triggered, this, &MainWindow::showMenu);
-	connect(_showDockWidgetAction, &QAction::triggered, this, &MainWindow::showDockWidget);
-	connect(_fullScreenAction, &QAction::triggered, this, &MainWindow::fullScreen);
-	connect(_annotationAction, &QAction::triggered, this, &MainWindow::showAnnotation);
-	connect(_crossAction, &QAction::triggered, this, &MainWindow::showCrossLine);
-	connect(_scaleAction, &QAction::triggered, this, &MainWindow::showScale);
-
-	connect(_cursorAction, &QAction::triggered, this, &MainWindow::selectItem);
-	connect(_moveAction, &QAction::triggered, this, &MainWindow::moveScene);
-	connect(_rulerAction, &QAction::triggered, this, &MainWindow::measurementChanged);
-	connect(_angleAction, &QAction::triggered, this, &MainWindow::measurementChanged);
 
 	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
 	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
@@ -169,100 +131,8 @@ void MainWindow::createToolbar()
 {
 	setIconSize(QSize(42, 32));
 
-	_fileToolBar = addToolBar("File");
-
-	_openToolButton = new QToolButton;
-	_openToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-	QMenu* menu = new QMenu(this);
-	menu->addAction(_openDicomAction);
-	menu->addAction(_openRawAction);
-	_openToolButton->setMenu(menu);
-	_openToolButton->setIcon(QIcon("Resources/svg/open.svg"));
-	connect(_openToolButton, &QToolButton::clicked, _openAction, &QAction::triggered);
-
-	_saveToolButton = new QToolButton;
-	_saveToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-	menu = new QMenu(this);
-	menu->addAction(_openDicomAction);
-	_saveToolButton->setMenu(menu);
-	_saveToolButton->setIcon(QIcon("Resources/svg/save.svg"));
-	connect(_saveToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
-
-	_layoutToolButton = new QToolButton;
-	_layoutToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-	menu = new QMenu(this);
-	menu->addAction(_showMenuAction);
-	menu->addAction(_showDockWidgetAction);
-	menu->addSeparator();
-	menu->addAction(_fullScreenAction);
-	_layoutToolButton->setMenu(menu);
-	_layoutToolButton->setIcon(QIcon("Resources/svg/layout.svg"));
-	connect(_layoutToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
-
-	_annotationToolButton = new QToolButton;
-	_annotationToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-	menu = new QMenu(this);
-	menu->addAction(_annotationAction);
-	menu->addAction(_crossAction);
-	menu->addAction(_scaleAction);
-	_annotationToolButton->setMenu(menu);
-	_annotationToolButton->setIcon(QIcon("Resources/svg/annotation.svg"));
-	connect(_annotationToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
-
-	_imageWindowToolButton = new QToolButton;
-	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
-/*	menu = new QMenu(this);
-	menu->addAction(_annotationAction);
-	menu->addAction(_crossAction);
-	menu->addAction(_scaleAction);
-	_annotationToolButton->setMenu(menu);*/
-	_imageWindowToolButton->setIcon(QIcon("Resources/svg/imagewindow.svg"));
-	connect(_imageWindowToolButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
-
-	_zoomButton = new QToolButton;
-	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
-	/*	menu = new QMenu(this);
-		menu->addAction(_annotationAction);
-		menu->addAction(_crossAction);
-		menu->addAction(_scaleAction);
-		_zoomButton->setMenu(menu);*/
-	_zoomButton->setIcon(QIcon("Resources/svg/zoom.svg"));
-	connect(_zoomButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
-
-	_cursorButton = new QToolButton;
-	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
-	menu = new QMenu(this);
-	menu->addAction(_cursorAction);
-	menu->addAction(_moveAction);
-	_cursorButton->setMenu(menu);
-	_cursorButton->setIcon(QIcon("Resources/svg/cursor.svg"));
-	connect(_cursorButton, &QToolButton::clicked, _saveAsAction, &QAction::triggered);
-
-	_measurementButton = new QToolButton;
-//	_measurementButton->setMinimumSize(QSize(40, 32));
-	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
-	menu = new QMenu(this);
-	menu->addAction(_rulerAction);
-	menu->addAction(_angleAction);
-	_measurementButton->setMenu(menu);
-	_measurementButton->setIcon(QIcon("Resources/svg/ruler.svg"));
-	connect(_measurementButton, &QToolButton::clicked, this, &MainWindow::measurementChanged);
-
-	_fileToolBar->addWidget(_openToolButton);
-	_fileToolBar->addWidget(_saveToolButton);
-	_fileToolBar->addSeparator();
-	_fileToolBar->addWidget(_layoutToolButton);
-	_fileToolBar->addWidget(_annotationToolButton);
-	_fileToolBar->addWidget(_imageWindowToolButton);
-	_fileToolBar->addWidget(_zoomButton);
-	_fileToolBar->addSeparator();
-	_fileToolBar->addWidget(_cursorButton);
-	_fileToolBar->addWidget(_measurementButton);
-
-	_viewToolBar = addToolBar("View");
-	// add actions to toolbars
-	_viewToolBar->addAction(_zoomInAction);
-	_viewToolBar->addAction(_zoomOutAction);
+	_toolBar = new ToolBar(tr("Toolbar"), this);
+	addToolBar(_toolBar);
 }
 
 void MainWindow::createStatusBar()
@@ -403,7 +273,7 @@ void MainWindow::imageOpened()
 	}
 }
 
-void MainWindow::showMenu()
+void MainWindow::showMenuBar()
 {
 	menuBar()->setVisible(menuBar()->isVisible() == false);
 }
@@ -442,31 +312,6 @@ void MainWindow::showCrossLine()
 void MainWindow::showScale()
 {
 
-}
-
-void MainWindow::selectItem()
-{
-	_cursorButton->setIcon(QIcon("Resources/svg/cursor.svg"));
-	_view->setSceneMode(SELECT_ITEM);
-}
-
-void MainWindow::moveScene()
-{
-	_cursorButton->setIcon(QIcon("Resources/svg/move.svg"));
-	_view->setSceneMode(MOVE_SCENE);
-}
-
-void MainWindow::measurementChanged()
-{
-	QAction* action = qobject_cast<QAction *>(sender());
-	if (action == _rulerAction)
-	{
-		_measurementButton->setIcon(QIcon("Resources/svg/ruler.svg"));
-	}
-	else if (action == _angleAction)
-	{
-		_measurementButton->setIcon(QIcon("Resources/svg/angle.svg"));
-	}
 }
 
 void MainWindow::zoomIn()
@@ -580,8 +425,6 @@ void MainWindow::changeEvent(QEvent* event)
 		_viewMenu->setTitle(tr("&View"));
 
 		_openAction->setText(tr("&Open..."));
-		_openDicomAction->setText(tr("Open &DICOM file..."));
-		_openRawAction->setText(tr("Open &Raw file..."));
 		_saveAsAction->setText(tr("&Save as..."));
 		_closeAction->setText(tr("&Close"));
 		_exitAction->setText(tr("E&xit"));

@@ -17,8 +17,6 @@
 
 const QSize iconSize = QSize(32, 32);
 
-using namespace Qt;
-
 ToolBoxWidget::ToolBoxWidget(QWidget* parent)
 	: BaseWidget(parent)
 {

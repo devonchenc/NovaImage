@@ -23,6 +23,7 @@
     <ClCompile Include="Image\ScanImage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="ToolBar.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="Widget\BaseWidget.cpp" />
     <ClCompile Include="Widget\ColorButton.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
     <ClInclude Include="Image\MonoImage.h" />
+    <QtMoc Include="ToolBar.h" />
     <ClInclude Include="Widget\CommonProcessor.h" />
     <ClInclude Include="Widget\CurvesProcessor.h" />
     <QtMoc Include="Widget\DiagramItem.h" />

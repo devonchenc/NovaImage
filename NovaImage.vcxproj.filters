@@ -126,6 +126,9 @@
     <ClCompile Include="Image\MonoImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
+    <ClCompile Include="ToolBar.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="View.h">
@@ -172,6 +175,9 @@
     </QtMoc>
     <QtMoc Include="Widget\DiagramLineItem.h">
       <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="ToolBar.h">
+      <Filter>Header Files</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

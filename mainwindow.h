@@ -18,6 +18,7 @@ QT_END_NAMESPACE
 class View;
 class Document;
 class BaseWidget;
+class ToolBar;
 
 class MainWindow : public QMainWindow
 {
@@ -50,22 +51,19 @@ private:
     void createActions();
     void setupShortcuts();
 
-private slots:
+public slots:
     void openImage();
 	void openDicomImage();
 	void openRawImage();
-	void showMenu();
+	void saveAs();
+	void showMenuBar();
 	void showDockWidget();
 	void fullScreen();
 	void showAnnotation();
 	void showCrossLine();
 	void showScale();
-	void selectItem();
-	void moveScene();
-	void measurementChanged();
     void zoomIn();
     void zoomOut();
-    void saveAs();
 	void close();
 
 	void prevImage();
@@ -76,8 +74,7 @@ private slots:
 	void slectLanguage(QAction* action);
 
 private:
-    QToolBar* _fileToolBar;
-    QToolBar* _viewToolBar;
+    ToolBar* _toolBar;
 
     View* _view;
 	Document* _doc;
@@ -88,39 +85,15 @@ private:
 	QMenu* _viewMenu;
 
 	QAction* _openAction;
-	QAction* _openDicomAction;
-	QAction* _openRawAction;
 	QAction* _saveAsAction;
 	QAction* _closeAction;
 	QAction* _exitAction;
-	QAction* _showMenuAction;
-	QAction* _showDockWidgetAction;
-	QAction* _fullScreenAction;
-    QAction* _zoomInAction;
+	QAction* _zoomInAction;
 	QAction* _zoomOutAction;
-	QAction* _annotationAction;
-	QAction* _crossAction;
-	QAction* _scaleAction;
-	QAction* _imageWindowAction;
-
-	QAction* _cursorAction;
-	QAction* _moveAction;
-
-	QAction* _rulerAction;
-	QAction* _angleAction;
 	QAction* _prevImageAction;
 	QAction* _nextImageAction;
 	QAction* _engAction;
 	QAction* _chsAction;
-
-	QToolButton* _openToolButton;
-	QToolButton* _saveToolButton;
-	QToolButton* _layoutToolButton;
-	QToolButton* _annotationToolButton;
-	QToolButton* _imageWindowToolButton;
-	QToolButton* _zoomButton;
-	QToolButton* _cursorButton;
-	QToolButton* _measurementButton;
 
 	QTranslator* _translator;
 
