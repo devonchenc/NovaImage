@@ -36,12 +36,19 @@ public slots:
 	void zoomNormal();
 
 protected:
+	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
+	void mouseReleaseEvent(QMouseEvent* event) override;
+
+//	QPointF getCenter() { return _currentCenter; }
 
 private:
 	void applyValue();
 
 private:
-	int _value;
 	View* _view;
+	int _zoomFactor;
+	bool _isLBtnDown;
+	QPoint _mouseLBtnDown;
+//	QPointF _currentCenter;
 };

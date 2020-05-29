@@ -7,9 +7,15 @@
 GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView(scene, parent)
 	, _view(view)
-	, _value(MAX_ZOOM / 2)
+	, _zoomFactor(MAX_ZOOM / 2)
+	, _isLBtnDown(false)
 {
-	setDragMode(QGraphicsView::NoDrag);//ScrollHandDrag
+//	setDragMode(QGraphicsView::NoDrag);//ScrollHandDrag
+	setDragMode(QGraphicsView::ScrollHandDrag);
+
+	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
 	setMouseTracking(true);
 }
 
@@ -34,39 +40,51 @@ void GraphicsView::wheelEvent(QWheelEvent* e)
 
 void GraphicsView::setValue(int value)
 {
-	_value = value;
+	_zoomFactor = value;
 	applyValue();
 }
 
 void GraphicsView::zoomIn()
 {
-	_value += 5;
-	_value = qMin(_value, MAX_ZOOM);
-	emit valueChanged(_value);
+	_zoomFactor += 5;
+	_zoomFactor = qMin(_zoomFactor, MAX_ZOOM);
+	emit valueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoomOut()
 {
-	_value -= 5;
-	_value = qMax(0, _value);
-	emit valueChanged(_value);
+	_zoomFactor -= 5;
+	_zoomFactor = qMax(0, _zoomFactor);
+	emit valueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoomNormal()
 {
-	_value = MAX_ZOOM / 2;
-	emit valueChanged(_value);
+	_zoomFactor = MAX_ZOOM / 2;
+	emit valueChanged(_zoomFactor);
 }
 
 void GraphicsView::applyValue()
 {
-	_value = qMax(0, _value);
-	_value = qMin(_value, MAX_ZOOM);
-	qreal scale = qPow(qreal(2), (_value - MAX_ZOOM / 2) / qreal(50));
+	_zoomFactor = qMax(0, _zoomFactor);
+	_zoomFactor = qMin(_zoomFactor, MAX_ZOOM);
+	qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(50));
 
 	QMatrix matrix;
 	matrix.scale(scale, scale);
 	setMatrix(matrix);
+}
+
+void GraphicsView::mousePressEvent(QMouseEvent* event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		_mouseLBtnDown = event->pos();
+		qDebug() << "GraphicsView: " << event->pos();
+		_isLBtnDown = true;
+	}
+
+	QGraphicsView::mousePressEvent(event);
 }
 
 void GraphicsView::mouseMoveEvent(QMouseEvent* event)
@@ -91,5 +109,24 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 		emit showPixelValue(strValue);
 	}
 
+	if (_isLBtnDown) 
+	{
+		QPointF delta = mapToScene(_mouseLBtnDown) - mapToScene(event->pos());
+		_mouseLBtnDown = event->pos();
+
+		setSceneRect(sceneRect().x() + delta.x(), sceneRect().y() + delta.y(), sceneRect().width(), sceneRect().height());
+	//	centerOn(getCenter() + delta);
+	}
+
 	QGraphicsView::mouseMoveEvent(event);
+}
+
+void GraphicsView::mouseReleaseEvent(QMouseEvent* event)
+{
+	if (event->button() == Qt::LeftButton)
+	{
+		_isLBtnDown = false;
+	}
+
+	QGraphicsView::mouseReleaseEvent(event);
 }
