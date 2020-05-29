@@ -17,7 +17,6 @@ ToolBar::ToolBar(QWidget* parent)
 {
 	createAction();
 	createButton();
-	setContextMenuPolicy(Qt::NoContextMenu);
 }
 
 ToolBar::ToolBar(const QString& title, QWidget* parent)
@@ -27,7 +26,6 @@ ToolBar::ToolBar(const QString& title, QWidget* parent)
 {
 	createAction();
 	createButton();
-	setContextMenuPolicy(Qt::NoContextMenu);
 }
 
 ToolBar::~ToolBar()

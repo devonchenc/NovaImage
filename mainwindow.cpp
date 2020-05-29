@@ -68,6 +68,8 @@ void MainWindow::initUI()
 	createStatusBar();
 
 	createToolWidget();
+
+	setContextMenuPolicy(Qt::NoContextMenu);
 }
 
 void MainWindow::createActions()
