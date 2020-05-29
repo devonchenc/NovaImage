@@ -2,18 +2,16 @@
 
 #include <QAction>
 #include <QMenu>
-#include <QToolButton>
 #include <QEvent>
 #include <QMouseEvent>
-#include <QPainter>
+#include <QDebug>
 
 #include "GlobalFunc.h"
 #include "mainwindow.h"
+#include "ToolButton.h"
 
 ToolBar::ToolBar(QWidget* parent)
 	: QToolBar(parent)
-	, _leftMouseButton(nullptr)
-	, _rightMouseButton(nullptr)
 {
 	createAction();
 	createButton();
@@ -21,8 +19,6 @@ ToolBar::ToolBar(QWidget* parent)
 
 ToolBar::ToolBar(const QString& title, QWidget* parent)
 	: QToolBar(title, parent)
-	, _leftMouseButton(nullptr)
-	, _rightMouseButton(nullptr)
 {
 	createAction();
 	createButton();
@@ -138,15 +134,14 @@ void ToolBar::createButton()
 	_annotationToolButton->setIcon(QIcon("Resources/svg/annotation.svg"));
 	connect(_annotationToolButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
-	_imageWindowToolButton = new QToolButton;
+	_imageWindowToolButton = new ToolButton;
 	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_imageNegativeAction);
 	_imageWindowToolButton->setMenu(menu);
-	_imageWindowToolButton->setIcon(QIcon("Resources/svg/imagewindow.svg"));
-	_imageWindowToolButton->installEventFilter(this);
+	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
 
-	_zoomButton = new QToolButton;
+	_zoomButton = new ToolButton;
 	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_fitWindowAction);
@@ -159,37 +154,33 @@ void ToolBar::createButton()
 	menu->addAction(_zoomInAction);
 	menu->addAction(_zoomOutAction);
 	_zoomButton->setMenu(menu);
-	_zoomButton->setIcon(QIcon("Resources/svg/zoom.svg"));
-	_zoomButton->installEventFilter(this);
+	_zoomButton->setIconByName("Resources/svg/zoom.svg");
 
-	_cursorButton = new QToolButton;
+	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_cursorAction);
 	menu->addAction(_moveAction);
 	_cursorButton->setMenu(menu);
-	_cursorButton->setIcon(QIcon("Resources/svg/cursor.svg"));
-	_cursorButton->installEventFilter(this);
+	_cursorButton->setIconByName("Resources/svg/cursor.svg");
 
-	_measurementButton = new QToolButton;
-	//	_measurementButton->setMinimumSize(QSize(40, 32));
+	_measurementButton = new ToolButton;
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_rulerAction);
 	menu->addAction(_angleAction);
 	_measurementButton->setMenu(menu);
-	_measurementButton->setIcon(QIcon("Resources/svg/ruler.svg"));
+	_measurementButton->setIconByName("Resources/svg/ruler.svg");
 	connect(_measurementButton, &QToolButton::clicked, this, &ToolBar::measurementChanged);
-	_measurementButton->installEventFilter(this);
 
 	addWidget(_openToolButton);
 	addWidget(_saveToolButton);
 	addSeparator();
 	addWidget(_layoutToolButton);
 	addWidget(_annotationToolButton);
+	addSeparator();
 	addWidget(_imageWindowToolButton);
 	addWidget(_zoomButton);
-	addSeparator();
 	addWidget(_cursorButton);
 	addWidget(_measurementButton);
 }
@@ -203,43 +194,15 @@ void ToolBar::changeEvent(QEvent* event)
 	}
 }
 
-bool ToolBar::eventFilter(QObject* obj, QEvent* event)
-{
-	if (obj == _imageWindowToolButton || obj == _zoomButton || obj == _cursorButton || obj == _measurementButton)
-	{
-		if (event->type() == QEvent::MouseButtonPress)
-		{
-			QToolButton* toolButton = static_cast<QToolButton*>(obj);
-			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
-			if (mouseEvent->button() == Qt::LeftButton)
-			{
-				_leftMouseButton = toolButton;
-			}
-			else if (mouseEvent->button() == Qt::RightButton)
-			{
-				_rightMouseButton = toolButton;
-			}
-			updateToolButtonIcon();
-			return false;
-		}
-		else
-			return false;
-	}
-	else
-	{
-		return QToolBar::eventFilter(obj, event);
-	}
-}
-
 void ToolBar::selectItem()
 {
-	_cursorButton->setIcon(QIcon("Resources/svg/cursor.svg"));
+	_cursorButton->setIconByName("Resources/svg/cursor.svg");
 //	_view->setSceneMode(SELECT_ITEM);
 }
 
 void ToolBar::moveScene()
 {
-	_cursorButton->setIcon(QIcon("Resources/svg/move.svg"));
+	_cursorButton->setIconByName("Resources/svg/move.svg");
 //	_view->setSceneMode(MOVE_SCENE);
 }
 
@@ -248,51 +211,10 @@ void ToolBar::measurementChanged()
 	QAction* action = qobject_cast<QAction *>(sender());
 	if (action == _rulerAction)
 	{
-		_measurementButton->setIcon(QIcon("Resources/svg/ruler.svg"));
+		_measurementButton->setIconByName("Resources/svg/ruler.svg");
 	}
 	else if (action == _angleAction)
 	{
-		_measurementButton->setIcon(QIcon("Resources/svg/angle.svg"));
+		_measurementButton->setIconByName("Resources/svg/angle.svg");
 	}
-}
-
-void ToolBar::updateToolButtonIcon()
-{
-	_imageWindowToolButton->setIcon(createToolButtonIcon("Resources/svg/imagewindow.svg", _imageWindowToolButton == _leftMouseButton, _imageWindowToolButton == _rightMouseButton));
-	_zoomButton->setIcon(createToolButtonIcon("Resources/svg/zoom.svg", _zoomButton == _leftMouseButton, _zoomButton == _rightMouseButton));
-	_cursorButton->setIcon(createToolButtonIcon("Resources/svg/cursor.svg", _cursorButton == _leftMouseButton, _cursorButton == _rightMouseButton));
-	_measurementButton->setIcon(createToolButtonIcon("Resources/svg/ruler.svg", _measurementButton == _leftMouseButton, _measurementButton == _rightMouseButton));
-}
-
-QIcon ToolBar::createToolButtonIcon(const QString& imageFile, bool left, bool right)
-{
-	int width = 32;
-	int height = 32;
-	QIcon icon = QIcon(imageFile);
-	QPixmap pixmap = icon.pixmap(width, height);
-
-	if (left || right)
-	{
-		QPainter painter(&pixmap);
-		QPen newPen(qRgb(96, 96, 96));
-		painter.setPen(QPen(qRgb(96, 96, 96)));
-		painter.setBrush(QBrush(qRgb(224, 224, 224)));
-
-		int offset = 1;
-		painter.drawRect(QRect(0, 16 + offset, 10, 15 - offset));
-		painter.drawRect(QRect(0, 16 + offset, 5, 6));
-		painter.drawRect(QRect(5, 16 + offset, 5, 6));
-		
-		if (left)
-		{
-			painter.fillRect(QRect(1, 17 + offset, 4, 5), qRgb(255, 216, 0));
-		}
-		if (right)
-		{
-			painter.fillRect(QRect(6, 17 + offset, 4, 5), qRgb(255, 148, 166));
-		}
-	}
-
-	
-	return QIcon(pixmap);
 }

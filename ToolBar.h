@@ -7,6 +7,8 @@ class QAction;
 class QToolButton;
 QT_END_NAMESPACE
 
+class ToolButton;
+
 class ToolBar : public QToolBar
 {
 	Q_OBJECT
@@ -14,21 +16,15 @@ class ToolBar : public QToolBar
 public:
 	ToolBar(QWidget* parent = nullptr);
 	ToolBar(const QString& title, QWidget* parent = nullptr);
-	~ToolBar();
+	virtual ~ToolBar();
 
 private:
 	void createAction();
 
 	void createButton();
 
-	void updateToolButtonIcon();
-
-	QIcon createToolButtonIcon(const QString& imageFile, bool left, bool right);
-
 protected:
 	void changeEvent(QEvent* event) override;
-
-	bool eventFilter(QObject* obj, QEvent* event) override;
 
 private slots:
 	void selectItem();
@@ -64,16 +60,14 @@ private:
 	QAction* _rulerAction;
 	QAction* _angleAction;
 
-	QToolButton* _leftMouseButton;
-	QToolButton* _rightMouseButton;
-
 	QToolButton* _openToolButton;
 	QToolButton* _saveToolButton;
 	QToolButton* _layoutToolButton;
 	QToolButton* _annotationToolButton;
-	QToolButton* _imageWindowToolButton;
-	QToolButton* _zoomButton;
-	QToolButton* _cursorButton;
-	QToolButton* _measurementButton;
+
+	ToolButton* _imageWindowToolButton;
+	ToolButton* _zoomButton;
+	ToolButton* _cursorButton;
+	ToolButton* _measurementButton;
 };
 

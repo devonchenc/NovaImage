@@ -73,15 +73,15 @@ signals:
 	void updateLabelText(QString input, QString output);
 
 protected:
-	virtual void resizeEvent(QResizeEvent* event);
+	void resizeEvent(QResizeEvent* event) override;
 
-	virtual void paintEvent(QPaintEvent* event);
+	void paintEvent(QPaintEvent* event) override;
 
-	virtual void mousePressEvent(QMouseEvent* event);
+	void mousePressEvent(QMouseEvent* event) override;
 
-	virtual void mouseMoveEvent(QMouseEvent* event);
+	void mouseMoveEvent(QMouseEvent* event) override;
 
-	virtual void mouseReleaseEvent(QMouseEvent* event);
+	void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
 	void paintHistogram();
