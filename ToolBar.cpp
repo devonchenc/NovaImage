@@ -69,6 +69,12 @@ void ToolBar::createAction()
 	_rulerAction->setIcon(QIcon("Resources/svg/ruler.svg"));
 	_angleAction = new QAction(tr("Angle"), this);
 	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
+	_rectAction = new QAction(tr("Rectangle"), this);
+	_rectAction->setIcon(QIcon("Resources/svg/rectangle.svg"));
+	_ellipseAction = new QAction(tr("Ellipse"), this);
+	_ellipseAction->setIcon(QIcon("Resources/svg/ellipse.svg"));
+	_arrowAction = new QAction(tr("Arrow"), this);
+	_arrowAction->setIcon(QIcon("Resources/svg/arrow.svg"));
 
 	MainWindow* mainWindow = getGlobalWindow();
 	connect(_openDicomAction, &QAction::triggered, mainWindow, &MainWindow::openDicomImage);
@@ -89,6 +95,9 @@ void ToolBar::createAction()
 	connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);
 	connect(_rulerAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_angleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_rectAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_ellipseAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_arrowAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 }
 
 void ToolBar::createButton()
@@ -102,6 +111,7 @@ void ToolBar::createButton()
 	menu->addAction(_openRawAction);
 	_openToolButton->setMenu(menu);
 	_openToolButton->setIcon(QIcon("Resources/svg/open.svg"));
+	_openToolButton->setToolTip(tr("Open image file"));
 	connect(_openToolButton, &QToolButton::clicked, mainWindow, &MainWindow::openImage);
 
 	_saveToolButton = new QToolButton;
@@ -110,6 +120,7 @@ void ToolBar::createButton()
 	menu->addAction(_openDicomAction);
 	_saveToolButton->setMenu(menu);
 	_saveToolButton->setIcon(QIcon("Resources/svg/save.svg"));
+	_saveToolButton->setToolTip(tr("Save image file"));
 	connect(_saveToolButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
 	_layoutToolButton = new QToolButton;
@@ -121,6 +132,7 @@ void ToolBar::createButton()
 	menu->addAction(_fullScreenAction);
 	_layoutToolButton->setMenu(menu);
 	_layoutToolButton->setIcon(QIcon("Resources/svg/layout.svg"));
+	_layoutToolButton->setToolTip(tr("Change layout"));
 	connect(_layoutToolButton, &QToolButton::clicked, mainWindow, &MainWindow::showMenuBar);
 	connect(_layoutToolButton, &QToolButton::clicked, mainWindow, &MainWindow::showDockWidget);
 
@@ -132,6 +144,7 @@ void ToolBar::createButton()
 	menu->addAction(_scaleAction);
 	_annotationToolButton->setMenu(menu);
 	_annotationToolButton->setIcon(QIcon("Resources/svg/annotation.svg"));
+	_annotationToolButton->setToolTip(tr("Toggle annotations"));
 	connect(_annotationToolButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
 	_imageWindowToolButton = new ToolButton;
@@ -140,6 +153,7 @@ void ToolBar::createButton()
 	menu->addAction(_imageNegativeAction);
 	_imageWindowToolButton->setMenu(menu);
 	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
+	_imageWindowToolButton->setToolTip(tr("Adjust image window"));
 
 	_zoomButton = new ToolButton;
 	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -155,6 +169,7 @@ void ToolBar::createButton()
 	menu->addAction(_zoomOutAction);
 	_zoomButton->setMenu(menu);
 	_zoomButton->setIconByName("Resources/svg/zoom.svg");
+	_zoomButton->setToolTip(tr("Zoom image"));
 
 	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -163,14 +178,19 @@ void ToolBar::createButton()
 	menu->addAction(_moveAction);
 	_cursorButton->setMenu(menu);
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
+	_cursorButton->setToolTip(tr("Select item/Move image"));
 
 	_measurementButton = new ToolButton;
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_rulerAction);
 	menu->addAction(_angleAction);
+	menu->addAction(_rectAction);
+	menu->addAction(_ellipseAction);
+	menu->addAction(_arrowAction);
 	_measurementButton->setMenu(menu);
 	_measurementButton->setIconByName("Resources/svg/ruler.svg");
+	_measurementButton->setToolTip(tr("Measurements and tools"));
 	connect(_measurementButton, &QToolButton::clicked, this, &ToolBar::measurementChanged);
 
 	addWidget(_openToolButton);
@@ -197,13 +217,11 @@ void ToolBar::changeEvent(QEvent* event)
 void ToolBar::selectItem()
 {
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
-//	_view->setSceneMode(SELECT_ITEM);
 }
 
 void ToolBar::moveScene()
 {
 	_cursorButton->setIconByName("Resources/svg/move.svg");
-//	_view->setSceneMode(MOVE_SCENE);
 }
 
 void ToolBar::measurementChanged()
@@ -216,5 +234,17 @@ void ToolBar::measurementChanged()
 	else if (action == _angleAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/angle.svg");
+	}
+	else if (action == _rectAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/rectangle.svg");
+	}
+	else if (action == _ellipseAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/ellipse.svg");
+	}
+	else if (action == _arrowAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/arrow.svg");
 	}
 }

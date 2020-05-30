@@ -31,7 +31,8 @@ ToolButton::~ToolButton()
 void ToolButton::setIconByName(const QString& fileName)
 {
 	_fileName = fileName;
-	setIcon(QIcon(fileName));
+//	setIcon(QIcon(fileName));
+	updateIcon();
 }
 
 void ToolButton::setLeftMouseButton(ToolButton* toolButton)
@@ -58,6 +59,7 @@ void ToolButton::mousePressEvent(QMouseEvent* event)
 		}
 		updateAllButtonsIcon();
 	}
+	QToolButton::mousePressEvent(event);
 }
 
 void ToolButton::updateAllButtonsIcon()

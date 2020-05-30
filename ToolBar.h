@@ -59,6 +59,9 @@ private:
 
 	QAction* _rulerAction;
 	QAction* _angleAction;
+	QAction* _rectAction;
+	QAction* _ellipseAction;
+	QAction* _arrowAction;
 
 	QToolButton* _openToolButton;
 	QToolButton* _saveToolButton;
