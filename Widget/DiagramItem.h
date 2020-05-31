@@ -16,7 +16,7 @@ public:
 	{
 		None, Rect, RoundRect, Circle, Ellipse, Rhombus, Parallelogram, Text, Line
 	};
-    enum Direction {TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
+	enum Direction { TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
 
     DiagramItem(DiagramType diagramType, QMenu* contextMenu = nullptr, QGraphicsItem* parent = nullptr);
 	~DiagramItem();
@@ -27,6 +27,8 @@ public:
     QPixmap image() const;
     int type() const override { return Type;}
     DiagramItem* clone();
+
+	void setRectF(const QRectF& rect);
 
 signals:
 	void itemSelectedChange(QGraphicsItem* item);

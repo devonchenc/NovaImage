@@ -10,16 +10,14 @@
 
 DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsPolygonItem(parent)
+	, _diagramType(diagramType)
+	, _contextMenu(contextMenu)
 {
-	_diagramType = diagramType;
-	_contextMenu = contextMenu;
-
 	QPainterPath path;
 	switch (_diagramType)
 	{
 	case Rect:
 		_polygon << QPointF(-90, -60) << QPointF(90, -60) << QPointF(90, 60) << QPointF(-90, 60) << QPointF(-90, -60);
-	//	_polygon << QPointF(0, 0) << QPointF(90, 0) << QPointF(90, 60) << QPointF(0, 60) << QPointF(0, 0);
 		break;
 	case RoundRect:
 		path.moveTo(85, 0);
@@ -52,13 +50,57 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsI
 	setAcceptHoverEvents(true);
 
 	_effect = new QGraphicsOpacityEffect;
-	_effect->setOpacity(0.3);
+	_effect->setOpacity(1.0);
 	setGraphicsEffect(_effect);
 }
 
 DiagramItem::~DiagramItem()
 {
 	delete _effect;
+}
+
+void DiagramItem::setRectF(const QRectF& rect)
+{
+	_polygon.clear();
+
+	int width = rect.width();
+	int height = rect.height();
+
+	QPainterPath path;
+	switch (_diagramType)
+	{
+	case Rect:
+		_polygon << rect.topLeft() << rect.topRight() << rect.bottomRight() << rect.bottomLeft() << rect.topLeft();
+		break;
+	case RoundRect:
+		path.moveTo(rect.right(), rect.center().y());
+		path.arcTo(rect.right() - width / 4, rect.top(), width / 4, height / 4, 0, 90);
+		path.arcTo(rect.left(), rect.top(), width / 4, height / 4, 90, 90);
+		path.arcTo(rect.left(), rect.bottom() - height / 4, width / 4, height / 4, 180, 90);
+		path.arcTo(rect.right() - width / 4, rect.bottom() - height / 4, width / 4, height / 4, 270, 90);
+		path.lineTo(rect.right(), rect.center().y());
+		_polygon = path.toFillPolygon();
+		break;
+	case Circle:
+		path.addEllipse(rect.left(), rect.top(), qMin(width, height), qMin(width, height));
+		_polygon = path.toFillPolygon();
+		break;
+	case Ellipse:
+		path.addEllipse(rect);
+		_polygon = path.toFillPolygon();
+		break;
+	case Rhombus:
+		_polygon << QPointF(rect.left(), rect.center().y()) << QPointF(rect.center().x(), rect.bottom())
+			<< QPointF(rect.right(), rect.center().y()) << QPointF(rect.center().x(), rect.top())
+			<< QPointF(rect.left(), rect.center().y());
+		break;
+	case Parallelogram:
+		_polygon << QPointF(rect.topLeft()) << QPointF(rect.left() + width / 4, rect.bottom())
+			<< QPointF(rect.bottomRight()) << QPointF(rect.right() - width / 4, rect.top())
+			<< QPointF(rect.topLeft());
+		break;
+	}
+	setPolygon(_polygon);
 }
 
 QPixmap DiagramItem::image() const

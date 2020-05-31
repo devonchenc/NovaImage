@@ -21,7 +21,7 @@ public:
 	explicit GraphicsScene(QMenu* itemMenu, QObject* parent = nullptr);
 	QFont font() const { return _font; }
 	QColor textColor() const { return _textColor; }
-	QColor itemColor() const { return _itemColor; }
+	QColor itemColor() const { return _fillColor; }
 	QColor lineColor() const { return _lineColor; }
 
 	// utilities
@@ -33,6 +33,7 @@ public slots:
 	void setItemType(DiagramItem::DiagramType type);
 	void editorLostFocus(DiagramTextItem* item);
 	void setLineColor(const QColor& color);
+	void enableFillColor(bool enable);
 	void setFillColor(const QColor& color);
 	void setTextColor(const QColor& color);
 	void setTextFont(const QFont& font);
@@ -55,10 +56,13 @@ private:
 	QMenu* _itemMenu;
 	int _mode;
 	QPointF _startPoint;
-	QColor _textColor;
-	QColor _itemColor;
+	bool _enableFill;
 	QColor _lineColor;
+	QColor _fillColor;
+	QColor _textColor;
 	QFont _font;
 
 	DiagramLineItem* _line;
+
+	DiagramItem* _currentItem;
 };

@@ -4,20 +4,23 @@
 #include <QDebug>
 #include <QTextCursor>
 #include <QKeyEvent>
+#include <QBrush>
 #include "Widget/DiagramTextItem.h"
 #include "Widget/DiagramLineItem.h"
 
 GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	: QGraphicsScene(parent)
+	, _itemMenu(itemMenu)
+	, _mode(MOVE_ITEM)
+	, _itemType(DiagramItem::Rect)
+	, _enableFill(false)
+	, _lineColor(Qt::blue)
+	, _fillColor(Qt::white)
+	, _textColor(Qt::green)
+	, _line(nullptr)
+	, _currentItem(nullptr)
 {
-	_itemMenu = itemMenu;
-	_mode = MOVE_ITEM;
-	_itemType = DiagramItem::Rect;
-	_itemColor = Qt::white;
-	_textColor = Qt::green;
-	_lineColor = Qt::blue;
 	_font.setPointSize(16);
-	_line = nullptr;
 }
 
 void GraphicsScene::setLineColor(const QColor& color)
@@ -42,15 +45,37 @@ void GraphicsScene::setLineColor(const QColor& color)
 	}
 }
 
-void GraphicsScene::setFillColor(const QColor& color)
+void GraphicsScene::enableFillColor(bool enable)
 {
-	_itemColor = color;
+	_enableFill = enable;
 	foreach (QGraphicsItem* p, selectedItems())
 	{
 		if (p->type() == DiagramItem::Type)
 		{
 			DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(p);
-			item->setBrush(_itemColor);
+			QBrush brush = item->brush();
+			brush.setStyle(_enableFill ? Qt::SolidPattern : Qt::NoBrush);
+			item->setBrush(brush);
+		}
+		else if (p->type() == DiagramLineItem::Type)
+		{
+		//	DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(p);
+		//	item->setPointPen(QPen(color));
+		}
+	}
+}
+
+void GraphicsScene::setFillColor(const QColor& color)
+{
+	_fillColor = color;
+	foreach (QGraphicsItem* p, selectedItems())
+	{
+		if (p->type() == DiagramItem::Type)
+		{
+			DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(p);
+			QBrush brush(_fillColor);
+			brush.setStyle(_enableFill ? Qt::SolidPattern : Qt::NoBrush);
+			item->setBrush(brush);
 		}
 		else if (p->type() == DiagramLineItem::Type)
 		{
@@ -132,6 +157,8 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	if (mouseEvent->button() != Qt::LeftButton)
 		return;
 
+	_startPoint = mouseEvent->scenePos();
+
 	DiagramItem* item;
 	DiagramTextItem* textItem;
 	QGraphicsItem* p = nullptr;
@@ -141,19 +168,22 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	case MOVE_ITEM:
 		break;
 	case MOVE_SCENE:
-	//	_startPoint = mouseEvent->scenePos();
 	//	qDebug() << "now: " << mouseEvent->scenePos();
 		break;
 	case INSERT_ITEM:
 		if (_itemType <= DiagramItem::Parallelogram)
 		{
 			item = new DiagramItem(_itemType, _itemMenu);
-			item->setBrush(_itemColor);
+
+			_currentItem = item;
+			item->setRectF(QRectF(_startPoint, _startPoint));
+
+			QBrush brush(_fillColor);
+			brush.setStyle(_enableFill ? Qt::SolidPattern : Qt::NoBrush);
+			item->setBrush(brush);
 			item->setPen(QPen(_lineColor, 2));
 			connect(item, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
 			addItem(item);
-			item->setPos(mouseEvent->scenePos());
-			qDebug() << "insert item at: " << mouseEvent->scenePos();
 			emit itemInserted(item);
 		}
 		else if (_itemType == DiagramItem::Text)
@@ -175,7 +205,7 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		{
 			_line = new DiagramLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()), _itemMenu);
 			_line->setPen(QPen(_lineColor, 2));
-			_line->setPointPen(QPen(_itemColor, 2));
+			_line->setPointPen(QPen(_fillColor, 2));
 			_line->setFlag(QGraphicsItem::ItemIsMovable, true);
 			_line->setFlag(QGraphicsItem::ItemIsSelectable, true);
 			connect(_line, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
@@ -190,10 +220,30 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 
 void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
 {
+
 	if (_itemType == DiagramItem::Line && _line != nullptr)
 	{
 		QLineF newLine(_line->line().p1(), mouseEvent->scenePos());
 		_line->setLine(newLine);
+	}
+	else if (_itemType <= DiagramItem::Parallelogram)
+	{
+	//	QList<QGraphicsItem*> list = selectedItems();
+	//	for (int i = 0; i < list.size(); i++)
+	//	{
+	//		QGraphicsItem* item = list.at(i);
+	//		DiagramItem* lineItem = static_cast<DiagramItem*>(item);
+	//		lineItem->setRectF(QRectF(_startPoint, end));
+	//		qDebug() << "Rect: " << _startPoint << end;
+		//	item->setRect(QRect(_startPoint, end));
+	//	}
+		// For test
+		if (_currentItem)
+		{
+			QPointF end = mouseEvent->scenePos();
+			_currentItem->setRectF(QRectF(_startPoint, end));
+			qDebug() << "Rect: " << _startPoint << end;
+		}
 	}
 	else if (_mode == MOVE_SCENE)
 	{
@@ -213,6 +263,18 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	{
 		p->setFlag(QGraphicsItem::ItemIsMovable);
 	}
+
+	// For test
+	if (_itemType <= DiagramItem::Parallelogram)
+	{
+		if (_currentItem)
+		{
+			QPointF end = mouseEvent->scenePos();
+			_currentItem->setRectF(QRectF(_startPoint, end));
+			_currentItem = nullptr;
+		}
+	}
+
 
 	if (_itemType == DiagramItem::Line && _line != nullptr)
 	{
@@ -248,13 +310,13 @@ void GraphicsScene::itemSelectedChange(QGraphicsItem* item)
 	{
 		DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);
 		_lineColor = diagramitem->pen().color();
-		_itemColor = diagramitem->brush().color();
+		_fillColor = diagramitem->brush().color();
 	}
 	else if (item->type() == DiagramLineItem::Type)
 	{
 		DiagramLineItem* lineitem = qgraphicsitem_cast<DiagramLineItem*>(item);
 		_lineColor = lineitem->pen().color();
-		_itemColor = lineitem->pointPen().color();
+		_fillColor = lineitem->pointPen().color();
 	}
 
 	emit itemSelected(item);

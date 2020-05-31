@@ -9,6 +9,7 @@ class QColorButton;
 class QGridLayout;
 class QFrame;
 class QLabel;
+class QCheckBox;
 class QFontComboBox;
 class QComboBox;
 class QToolButton;
@@ -32,6 +33,7 @@ signals:
 	void setItemType(DiagramItem::DiagramType type);
 
 	void setLineColor(const QColor& color);
+	void setEnableFillColor(bool enable);
 	void setFillColor(const QColor& color);
 	void setTextColor(const QColor& color);
 	void setTextFont(const QFont& font);
@@ -41,6 +43,7 @@ public slots:
 
 	//	void textButtonTriggered();
 	void lineColorButtonTriggered();
+	void enableFillColor(int state);
 	void fillColorButtonTriggered();
 	void textColorButtonTriggered();
 
@@ -70,29 +73,29 @@ private:
 private:
 	QButtonGroup* _buttonGroup;
 
-	QWidget* pointWidget;
-	QWidget* rectangle;
-	QWidget* roundRect;
-	QWidget* circle;
-	QWidget* ellipse;
-	QWidget* rhombus;
-	QWidget* parallelogram;
-	QWidget* textWidget;
-	QWidget* lineWidget;
+	QWidget* _pointWidget;
+	QWidget* _rectangleWidget;
+	QWidget* _roundRectWidget;
+	QWidget* _circleWidget;
+	QWidget* _ellipseWidget;
+	QWidget* _rhombusWidget;
+	QWidget* _parallelogramWidget;
+	QWidget* _textWidget;
+	QWidget* _lineWidget;
 
 	QFrame* _lineFrame;
 	QLabel* _labelLine;
-	QLabel* _labelFill;
-	QColorButton* _buttonLineColor;
-	QColorButton* _buttonFillColor;
-	QLabel* _labelFont;
-	QLabel* _labelSize;
-	QLabel* _labelStyle;
+	QCheckBox* _fillCheckBox;
+	QColorButton* _lineColorButton;
+	QColorButton* _fillColorButton;
+	QLabel* _fontLabel;
+	QLabel* _sizeLabel;
+	QLabel* _styleLabel;
 	QFontComboBox* _fontCombo;
 	QComboBox* _fontSizeCombo;
-	QToolButton* _buttonBold;
-	QToolButton* _buttonItalic;
-	QToolButton* _buttonUnderline;
-	QLabel* _labelText;
-	QColorButton* _buttonTextColor;
+	QToolButton* _boldButton;
+	QToolButton* _italicButton;
+	QToolButton* _underlineButton;
+	QLabel* _textLabel;
+	QColorButton* _textColorButton;
 };

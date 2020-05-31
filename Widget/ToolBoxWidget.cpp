@@ -6,6 +6,7 @@
 #include <QButtonGroup>
 #include <QFrame>
 #include <QLabel>
+#include <QCheckBox>
 #include <QComboBox>
 #include <QFontComboBox>
 #include <QButtonGroup>
@@ -50,29 +51,30 @@ void ToolBoxWidget::initUI()
 	_lineFrame->setFrameShadow(QFrame::Sunken);
 
 	_labelLine = new QLabel(tr("Line:"));
-	_labelFill = new QLabel(tr("Fill:"));
-	_buttonLineColor = new QColorButton(Qt::blue);
-	connect(_buttonLineColor, &QColorButton::clicked, this, &ToolBoxWidget::lineColorButtonTriggered);
-	_buttonFillColor = new QColorButton(Qt::white);
-	connect(_buttonFillColor, &QColorButton::clicked, this, &ToolBoxWidget::fillColorButtonTriggered);
+	_lineColorButton = new QColorButton(Qt::blue);
+	connect(_lineColorButton, &QColorButton::clicked, this, &ToolBoxWidget::lineColorButtonTriggered);
+	_fillCheckBox = new QCheckBox(tr("Fill:"));
+	connect(_fillCheckBox, &QCheckBox::stateChanged, this, &ToolBoxWidget::enableFillColor);
+	_fillColorButton = new QColorButton(Qt::white);
+	connect(_fillColorButton, &QColorButton::clicked, this, &ToolBoxWidget::fillColorButtonTriggered);
 	QHBoxLayout* hLayout = new QHBoxLayout;
 	hLayout->addWidget(_labelLine);
-	hLayout->addWidget(_buttonLineColor);
+	hLayout->addWidget(_lineColorButton);
 	hLayout->addStretch();
-	hLayout->addWidget(_labelFill);
-	hLayout->addWidget(_buttonFillColor);
+	hLayout->addWidget(_fillCheckBox);
+	hLayout->addWidget(_fillColorButton);
 	hLayout->addStretch();
 
-	_labelFont = new QLabel("Font:");
+	_fontLabel = new QLabel("Font:");
 	_fontCombo = new QFontComboBox();
 	connect(_fontCombo, &QFontComboBox::currentFontChanged, this, &ToolBoxWidget::currentFontChanged);
 	_fontCombo->setEditable(false);
 	QHBoxLayout* h2Layout = new QHBoxLayout;
-	h2Layout->addWidget(_labelFont);
+	h2Layout->addWidget(_fontLabel);
 	h2Layout->addWidget(_fontCombo);
 	h2Layout->addStretch();
 
-	_labelSize = new QLabel("Size:");
+	_sizeLabel = new QLabel("Size:");
 	_fontSizeCombo = new QComboBox;
 	_fontSizeCombo->setEditable(true);
 	for (int i = 8; i <= 80; i = i + 4)
@@ -81,35 +83,35 @@ void ToolBoxWidget::initUI()
 	_fontSizeCombo->setValidator(validator);
 	connect(_fontSizeCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(fontSizeChanged(QString)));
 	QHBoxLayout* h3Layout = new QHBoxLayout;
-	h3Layout->addWidget(_labelSize);
+	h3Layout->addWidget(_sizeLabel);
 	h3Layout->addWidget(_fontSizeCombo);
 	h3Layout->addStretch();
 
-	_labelStyle = new QLabel("Style:");
-	_buttonBold = new QToolButton;
-	_buttonBold->setCheckable(true);
-	_buttonBold->setIcon(QIcon(QPixmap("Resources/bold.png")));
-	connect(_buttonBold, SIGNAL(clicked()), this, SLOT(handleFontChange()));
-	_buttonItalic = new QToolButton;
-	_buttonItalic->setCheckable(true);
-	_buttonItalic->setIcon(QIcon(QPixmap("Resources/italic.png")));
-	connect(_buttonItalic, SIGNAL(clicked()), this, SLOT(handleFontChange()));
-	_buttonUnderline = new QToolButton;
-	_buttonUnderline->setCheckable(true);
-	_buttonUnderline->setIcon(QIcon(QPixmap("Resources/underline.png")));
-	connect(_buttonUnderline, SIGNAL(clicked()), this, SLOT(handleFontChange()));
-	h3Layout->addWidget(_labelStyle);
-	h3Layout->addWidget(_buttonBold);
-	h3Layout->addWidget(_buttonItalic);
-	h3Layout->addWidget(_buttonUnderline);
+	_styleLabel = new QLabel("Style:");
+	_boldButton = new QToolButton;
+	_boldButton->setCheckable(true);
+	_boldButton->setIcon(QIcon(QPixmap("Resources/bold.png")));
+	connect(_boldButton, SIGNAL(clicked()), this, SLOT(handleFontChange()));
+	_italicButton = new QToolButton;
+	_italicButton->setCheckable(true);
+	_italicButton->setIcon(QIcon(QPixmap("Resources/italic.png")));
+	connect(_italicButton, SIGNAL(clicked()), this, SLOT(handleFontChange()));
+	_underlineButton = new QToolButton;
+	_underlineButton->setCheckable(true);
+	_underlineButton->setIcon(QIcon(QPixmap("Resources/underline.png")));
+	connect(_underlineButton, SIGNAL(clicked()), this, SLOT(handleFontChange()));
+	h3Layout->addWidget(_styleLabel);
+	h3Layout->addWidget(_boldButton);
+	h3Layout->addWidget(_italicButton);
+	h3Layout->addWidget(_underlineButton);
 	h3Layout->addStretch();
 
-	_labelText = new QLabel("Color:");
-	_buttonTextColor = new QColorButton(Qt::green);
-	connect(_buttonTextColor, SIGNAL(clicked()), this, SLOT(textColorButtonTriggered()));
+	_textLabel = new QLabel("Color:");
+	_textColorButton = new QColorButton(Qt::green);
+	connect(_textColorButton, SIGNAL(clicked()), this, SLOT(textColorButtonTriggered()));
 	QHBoxLayout* h4Layout = new QHBoxLayout;
-	h4Layout->addWidget(_labelText);
-	h4Layout->addWidget(_buttonTextColor);
+	h4Layout->addWidget(_textLabel);
+	h4Layout->addWidget(_textColorButton);
 	h4Layout->addStretch();
 
 	QGridLayout* gridLayout = createToolButton();
@@ -133,18 +135,18 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 	{
 		parentWidget()->setWindowTitle(tr("ToolBox"));
 
-		getLabel(pointWidget)->setText(tr("Point"));
-		getLabel(rectangle)->setText(tr("Rectangle"));
-		getLabel(roundRect)->setText(tr("RoundRect"));
-		getLabel(circle)->setText(tr("Circle"));
-		getLabel(ellipse)->setText(tr("Ellipse"));
-		getLabel(rhombus)->setText(tr("Rhombus"));
-		getLabel(parallelogram)->setText(tr("Parallelogram"));
-		getLabel(textWidget)->setText(tr("Text"));
-		getLabel(lineWidget)->setText(tr("Line"));
+		getLabel(_pointWidget)->setText(tr("Point"));
+		getLabel(_rectangleWidget)->setText(tr("Rectangle"));
+		getLabel(_roundRectWidget)->setText(tr("RoundRect"));
+		getLabel(_circleWidget)->setText(tr("Circle"));
+		getLabel(_ellipseWidget)->setText(tr("Ellipse"));
+		getLabel(_rhombusWidget)->setText(tr("Rhombus"));
+		getLabel(_parallelogramWidget)->setText(tr("Parallelogram"));
+		getLabel(_textWidget)->setText(tr("Text"));
+		getLabel(_lineWidget)->setText(tr("Line"));
 
 		_labelLine->setText(tr("Line:"));
-		_labelFill->setText(tr("Fill:"));
+		_fillCheckBox->setText(tr("Fill:"));
 	}
 
 	BaseWidget::changeEvent(event);
@@ -177,22 +179,22 @@ QGridLayout* ToolBoxWidget::createToolButton()
 	QGridLayout* pointLayout = new QGridLayout;
 	pointLayout->addWidget(pointButton, 0, 0, Qt::AlignHCenter);
 	pointLayout->addWidget(new QLabel(tr("Point")), 1, 0, Qt::AlignCenter);
-	pointWidget = new QWidget;
-	pointWidget->setLayout(pointLayout);
-	gridLayout->addWidget(pointWidget, 0, 0);
+	_pointWidget = new QWidget;
+	_pointWidget->setLayout(pointLayout);
+	gridLayout->addWidget(_pointWidget, 0, 0);
 
-	rectangle = createCellWidget(tr("Rectangle"), DiagramItem::Rect);
-	roundRect = createCellWidget(tr("RoundRect"), DiagramItem::RoundRect);
-	circle = createCellWidget(tr("Circle"), DiagramItem::Circle);
-	ellipse = createCellWidget(tr("Ellipse"), DiagramItem::Ellipse);
-	rhombus = createCellWidget(tr("Rhombus"), DiagramItem::Rhombus);
-	parallelogram = createCellWidget(tr("Parallelogram"), DiagramItem::Parallelogram);
-	gridLayout->addWidget(rectangle, 0, 1);
-	gridLayout->addWidget(roundRect, 0, 2);
-	gridLayout->addWidget(circle, 0, 3);
-	gridLayout->addWidget(ellipse, 0, 4);
-	gridLayout->addWidget(rhombus, 1, 0);
-	gridLayout->addWidget(parallelogram, 1, 1);
+	_rectangleWidget = createCellWidget(tr("Rectangle"), DiagramItem::Rect);
+	_roundRectWidget = createCellWidget(tr("RoundRect"), DiagramItem::RoundRect);
+	_circleWidget = createCellWidget(tr("Circle"), DiagramItem::Circle);
+	_ellipseWidget = createCellWidget(tr("Ellipse"), DiagramItem::Ellipse);
+	_rhombusWidget = createCellWidget(tr("Rhombus"), DiagramItem::Rhombus);
+	_parallelogramWidget = createCellWidget(tr("Parallelogram"), DiagramItem::Parallelogram);
+	gridLayout->addWidget(_rectangleWidget, 0, 1);
+	gridLayout->addWidget(_roundRectWidget, 0, 2);
+	gridLayout->addWidget(_circleWidget, 0, 3);
+	gridLayout->addWidget(_ellipseWidget, 0, 4);
+	gridLayout->addWidget(_rhombusWidget, 1, 0);
+	gridLayout->addWidget(_parallelogramWidget, 1, 1);
 
 	QToolButton* textButton = new QToolButton;
 	textButton->setCheckable(true);
@@ -202,9 +204,9 @@ QGridLayout* ToolBoxWidget::createToolButton()
 	QGridLayout* textLayout = new QGridLayout;
 	textLayout->addWidget(textButton, 0, 0, Qt::AlignHCenter);
 	textLayout->addWidget(new QLabel(tr("Text")), 1, 0, Qt::AlignCenter);
-	textWidget = new QWidget;
-	textWidget->setLayout(textLayout);
-	gridLayout->addWidget(textWidget, 1, 2);
+	_textWidget = new QWidget;
+	_textWidget->setLayout(textLayout);
+	gridLayout->addWidget(_textWidget, 1, 2);
 
 	QToolButton* lineButton = new QToolButton;
 	lineButton->setCheckable(true);
@@ -214,9 +216,9 @@ QGridLayout* ToolBoxWidget::createToolButton()
 	QGridLayout* lineLayout = new QGridLayout;
 	lineLayout->addWidget(lineButton, 0, 0, Qt::AlignHCenter);
 	lineLayout->addWidget(new QLabel(tr("Line")), 1, 0, Qt::AlignCenter);
-	lineWidget = new QWidget;
-	lineWidget->setLayout(lineLayout);
-	gridLayout->addWidget(lineWidget, 1, 3);
+	_lineWidget = new QWidget;
+	_lineWidget->setLayout(lineLayout);
+	gridLayout->addWidget(_lineWidget, 1, 3);
 
 	return gridLayout;
 }
@@ -247,20 +249,20 @@ void ToolBoxWidget::setWidgetVisible(bool line, bool text)
 	_lineFrame->setVisible(line || text);
 
 	_labelLine->setVisible(line);
-	_labelFill->setVisible(line);
-	_buttonLineColor->setVisible(line);
-	_buttonFillColor->setVisible(line);
+	_fillCheckBox->setVisible(line);
+	_lineColorButton->setVisible(line);
+	_fillColorButton->setVisible(line);
 
-	_labelFont->setVisible(text);
+	_fontLabel->setVisible(text);
 	_fontCombo->setVisible(text);
-	_labelSize->setVisible(text);
+	_sizeLabel->setVisible(text);
 	_fontSizeCombo->setVisible(text);
-	_labelStyle->setVisible(text);
-	_buttonBold->setVisible(text);
-	_buttonItalic->setVisible(text);
-	_buttonUnderline->setVisible(text);
-	_labelText->setVisible(text);
-	_buttonTextColor->setVisible(text);
+	_styleLabel->setVisible(text);
+	_boldButton->setVisible(text);
+	_italicButton->setVisible(text);
+	_underlineButton->setVisible(text);
+	_textLabel->setVisible(text);
+	_textColorButton->setVisible(text);
 }
 
 void ToolBoxWidget::buttonGroupClicked(int id)
@@ -300,19 +302,24 @@ void ToolBoxWidget::buttonGroupClicked(int id)
 
 void ToolBoxWidget::lineColorButtonTriggered()
 {
-	QColor color = _buttonLineColor->getColor();
+	QColor color = _lineColorButton->getColor();
 	emit setLineColor(color);
+}
+
+void ToolBoxWidget::enableFillColor(int state)
+{
+	emit setEnableFillColor(state == Qt::Checked);
 }
 
 void ToolBoxWidget::fillColorButtonTriggered()
 {
-	QColor color = _buttonFillColor->getColor();
+	QColor color = _fillColorButton->getColor();
 	emit setFillColor(color);
 }
 
 void ToolBoxWidget::textColorButtonTriggered()
 {
-	QColor color = _buttonTextColor->getColor();
+	QColor color = _textColorButton->getColor();
 	emit setTextColor(color);
 }
 
@@ -351,8 +358,8 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
 		fillColor = lineitem->pointPen().color();
 		setWidgetVisible(true, false);
 	}
-	_buttonLineColor->setColor(lineColor);
-	_buttonFillColor->setColor(fillColor);
+	_lineColorButton->setColor(lineColor);
+	_fillColorButton->setColor(fillColor);
 }
 
 void ToolBoxWidget::textSelected(QGraphicsItem* item)
@@ -365,12 +372,12 @@ void ToolBoxWidget::textSelected(QGraphicsItem* item)
 	QFont font = textItem->font();
 //	_fontCombo->setCurrentFont(font);
 	_fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
-	_buttonBold->setChecked(font.weight() == QFont::Bold);
-	_buttonItalic->setChecked(font.italic());
-	_buttonUnderline->setChecked(font.underline());
+	_boldButton->setChecked(font.weight() == QFont::Bold);
+	_italicButton->setChecked(font.italic());
+	_underlineButton->setChecked(font.underline());
 
 	QColor color = textItem->defaultTextColor();
-	_buttonTextColor->setColor(color);
+	_textColorButton->setColor(color);
 }
 
 void ToolBoxWidget::currentFontChanged(const QFont& font)
@@ -387,9 +394,9 @@ void ToolBoxWidget::handleFontChange()
 {
 	QFont font = _fontCombo->currentFont();
 	font.setPointSize(_fontSizeCombo->currentText().toInt());
-	font.setWeight(_buttonBold->isChecked() ? QFont::Bold : QFont::Normal);
-	font.setItalic(_buttonItalic->isChecked());
-	font.setUnderline(_buttonUnderline->isChecked());
+	font.setWeight(_boldButton->isChecked() ? QFont::Bold : QFont::Normal);
+	font.setItalic(_italicButton->isChecked());
+	font.setUnderline(_underlineButton->isChecked());
 
 	emit setTextFont(font);
 }

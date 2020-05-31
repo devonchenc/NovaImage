@@ -10,8 +10,8 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	, _zoomFactor(MAX_ZOOM / 2)
 	, _isLBtnDown(false)
 {
-//	setDragMode(QGraphicsView::NoDrag);//ScrollHandDrag
-	setDragMode(QGraphicsView::ScrollHandDrag);
+	setDragMode(QGraphicsView::NoDrag);//ScrollHandDrag
+//	setDragMode(QGraphicsView::ScrollHandDrag);
 
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -80,7 +80,7 @@ void GraphicsView::mousePressEvent(QMouseEvent* event)
 	if (event->button() == Qt::LeftButton)
 	{
 		_mouseLBtnDown = event->pos();
-		qDebug() << "GraphicsView: " << event->pos();
+		qDebug() << "GraphicsView pos: " << event->pos();
 		_isLBtnDown = true;
 	}
 
@@ -114,7 +114,7 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 		QPointF delta = mapToScene(_mouseLBtnDown) - mapToScene(event->pos());
 		_mouseLBtnDown = event->pos();
 
-		setSceneRect(sceneRect().x() + delta.x(), sceneRect().y() + delta.y(), sceneRect().width(), sceneRect().height());
+	//	setSceneRect(sceneRect().x() + delta.x(), sceneRect().y() + delta.y(), sceneRect().width(), sceneRect().height());
 	//	centerOn(getCenter() + delta);
 	}
 
