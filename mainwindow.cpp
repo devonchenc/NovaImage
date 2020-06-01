@@ -157,12 +157,12 @@ void MainWindow::createStatusBar()
 	pixelValueLabel->setAlignment(Qt::AlignHCenter);
 	connect(_view->view(), &GraphicsView::showPixelValue, pixelValueLabel, &QLabel::setText);
 
-	QToolButton* fitScreenButton = new QToolButton(mainStatusBar);
-	fitScreenButton->setText("FitScreen");
-	connect(fitScreenButton, &QToolButton::clicked, _view, &View::fitScreen);
+	QToolButton* fitWindowButton = new QToolButton(mainStatusBar);
+	fitWindowButton->setText("FitWindow");
+	connect(fitWindowButton, &QToolButton::clicked, _view, &View::fitWindow);
 	QToolButton* normalButton = new QToolButton(mainStatusBar);
 	normalButton->setText("Normal");
-	connect(normalButton, &QToolButton::clicked, _view->view(), &GraphicsView::zoomNormal);
+	connect(normalButton, &QToolButton::clicked, _view, &View::zoomNormal);
 
 	QToolButton* zoomOutButton = new QToolButton(mainStatusBar);
 	zoomOutButton->setText("-");
@@ -185,7 +185,7 @@ void MainWindow::createStatusBar()
 	mainStatusBar->addPermanentWidget(infoLabel);
 	mainStatusBar->addPermanentWidget(coordinateLabel);
 	mainStatusBar->addPermanentWidget(pixelValueLabel);
-	mainStatusBar->addPermanentWidget(fitScreenButton);
+	mainStatusBar->addPermanentWidget(fitWindowButton);
 	mainStatusBar->addPermanentWidget(normalButton);
 	mainStatusBar->addPermanentWidget(zoomOutButton);
 	mainStatusBar->addPermanentWidget(_slider);
@@ -309,7 +309,7 @@ void MainWindow::showAnnotation()
 
 void MainWindow::showCrossLine()
 {
-
+	_view->scene()->showCrossLine();
 }
 
 void MainWindow::showScale()

@@ -19,6 +19,9 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	, _textColor(Qt::green)
 	, _line(nullptr)
 	, _currentItem(nullptr)
+	, _showCrossLine(false)
+	, _refHorzLine(nullptr)
+	, _refVertLine(nullptr)
 {
 	_font.setPointSize(16);
 }
@@ -132,6 +135,23 @@ void GraphicsScene::deleteItems(QList<QGraphicsItem*> const& items)
 void GraphicsScene::setMode(int mode)
 {
 	_mode = mode;
+}
+
+void GraphicsScene::showCrossLine()
+{
+	if (_showCrossLine)
+	{
+		_showCrossLine = false;
+		removeItem(_refHorzLine);
+		removeItem(_refVertLine);
+	}
+	else
+	{
+		_showCrossLine = true;
+		QRectF rect = sceneRect();
+		_refHorzLine = addLine(rect.left(), rect.center().y(), rect.right(), rect.center().y(), QPen(Qt::red));
+		_refVertLine = addLine(rect.center().x(), rect.top(), rect.center().x(), rect.bottom(), QPen(Qt::red));
+	}
 }
 
 void GraphicsScene::setItemType(DiagramItem::DiagramType type)

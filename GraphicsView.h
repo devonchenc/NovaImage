@@ -29,11 +29,12 @@ signals:
 public slots:
 	void setValue(int value);
 
-	void zoomIn();
-
-	void zoomOut();
-
 	void zoomNormal();
+	void zoom2x();
+	void zoom4x();
+	void zoom8x();
+	void zoomIn();
+	void zoomOut();
 
 protected:
 	void mousePressEvent(QMouseEvent* event) override;

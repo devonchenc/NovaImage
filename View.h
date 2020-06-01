@@ -31,7 +31,13 @@ signals:
 public slots:
 	void setSceneMode(int mode);
 
-	void fitScreen();
+	void fitWindow();
+	void zoomNormal();
+	void zoom2x();
+	void zoom4x();
+	void zoom8x();
+	void zoomIn();
+	void zoomOut();
 
 private slots:
 	void cutItem();

@@ -40,7 +40,7 @@ void View::createItemMenus()
 {
 	_cutAction = new QAction(QIcon("cut.png"), tr("Cu&t"), this);
 	_cutAction->setShortcut(tr("Ctrl+X"));
-	connect(_cutAction, SIGNAL(triggered()), this, SLOT(cutItem()));
+	connect(_cutAction, &QAction::triggered, this, &View::cutItem);
 
 	_copyAction = new QAction(QIcon("copy.png"), tr("&Copy"), this);
 	_copyAction->setShortcut(tr("Ctrl+C"));
@@ -133,7 +133,7 @@ void View::setSceneMode(int mode)
 	_scene->setMode(mode);
 }
 
-void View::fitScreen()
+void View::fitWindow()
 {
 	QRectF rect = this->rect();
 	qreal imageWidth = _currentImage->pixmap().width();
@@ -144,6 +144,36 @@ void View::fitScreen()
 	int value = log2(ratio) * 50 + MAX_ZOOM / 2;
 	_view->setValue(value);
 	emit _view->valueChanged(value);
+}
+
+void View::zoomNormal()
+{
+	view()->zoomNormal();
+}
+
+void View::zoom2x()
+{
+	view()->zoom2x();
+}
+
+void View::zoom4x()
+{
+	view()->zoom4x();
+}
+
+void View::zoom8x()
+{
+	view()->zoom8x();
+}
+
+void View::zoomIn()
+{
+	view()->zoomIn();
+}
+
+void View::zoomOut()
+{
+	view()->zoomOut();
 }
 
 void View::cutItem()

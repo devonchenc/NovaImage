@@ -9,6 +9,7 @@
 #include "GlobalFunc.h"
 #include "mainwindow.h"
 #include "ToolButton.h"
+#include "View.h"
 
 ToolBar::ToolBar(QWidget* parent)
 	: QToolBar(parent)
@@ -45,7 +46,6 @@ void ToolBar::createAction()
 	_annotationAction->setChecked(true);
 	_crossAction = new QAction(tr("Cross reference line"), this);
 	_crossAction->setCheckable(true);
-	_crossAction->setChecked(true);
 	_scaleAction = new QAction(tr("Image scale"), this);
 	_scaleAction->setCheckable(true);
 	_scaleAction->setChecked(true);
@@ -88,8 +88,13 @@ void ToolBar::createAction()
 	connect(_imageWindowAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
 
-	connect(_zoomInAction, &QAction::triggered, mainWindow, &MainWindow::zoomIn);
-	connect(_zoomOutAction, &QAction::triggered, mainWindow, &MainWindow::zoomOut);
+	connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
+	connect(_1xAction, &QAction::triggered, mainWindow->getView(), &View::zoomNormal);
+	connect(_2xAction, &QAction::triggered, mainWindow->getView(), &View::zoom2x);
+	connect(_4xAction, &QAction::triggered, mainWindow->getView(), &View::zoom4x);
+	connect(_8xAction, &QAction::triggered, mainWindow->getView(), &View::zoom8x);
+	connect(_zoomInAction, &QAction::triggered, mainWindow->getView(), &View::zoomIn);
+	connect(_zoomOutAction, &QAction::triggered, mainWindow->getView(), &View::zoomOut);
 
 	connect(_cursorAction, &QAction::triggered, this, &ToolBar::selectItem);
 	connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);

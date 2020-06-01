@@ -29,6 +29,8 @@ public:
 
 	void setMode(int mode);
 
+	void showCrossLine();
+
 public slots:
 	void setItemType(DiagramItem::DiagramType type);
 	void editorLostFocus(DiagramTextItem* item);
@@ -65,4 +67,8 @@ private:
 	DiagramLineItem* _line;
 
 	DiagramItem* _currentItem;
+
+	bool _showCrossLine;
+	QGraphicsLineItem* _refHorzLine;
+	QGraphicsLineItem* _refVertLine;
 };

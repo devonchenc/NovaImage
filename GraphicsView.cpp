@@ -44,6 +44,30 @@ void GraphicsView::setValue(int value)
 	applyValue();
 }
 
+void GraphicsView::zoomNormal()
+{
+	_zoomFactor = MAX_ZOOM / 2;
+	emit valueChanged(_zoomFactor);
+}
+
+void GraphicsView::zoom2x()
+{
+	_zoomFactor = MAX_ZOOM / 2 + 50;
+	emit valueChanged(_zoomFactor);
+}
+
+void GraphicsView::zoom4x()
+{
+	_zoomFactor = MAX_ZOOM / 2 + 100;
+	emit valueChanged(_zoomFactor);
+}
+
+void GraphicsView::zoom8x()
+{
+	_zoomFactor = MAX_ZOOM / 2 + 150;
+	emit valueChanged(_zoomFactor);
+}
+
 void GraphicsView::zoomIn()
 {
 	_zoomFactor += 5;
@@ -55,12 +79,6 @@ void GraphicsView::zoomOut()
 {
 	_zoomFactor -= 5;
 	_zoomFactor = qMax(0, _zoomFactor);
-	emit valueChanged(_zoomFactor);
-}
-
-void GraphicsView::zoomNormal()
-{
-	_zoomFactor = MAX_ZOOM / 2;
 	emit valueChanged(_zoomFactor);
 }
 
