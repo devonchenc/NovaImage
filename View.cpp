@@ -44,15 +44,15 @@ void View::createItemMenus()
 
 	_copyAction = new QAction(QIcon("copy.png"), tr("&Copy"), this);
 	_copyAction->setShortcut(tr("Ctrl+C"));
-	connect(_copyAction, SIGNAL(triggered()), this, SLOT(copyItem()));
+	connect(_copyAction, &QAction::triggered, this, &View::copyItem);
 
 	_pasteAction = new QAction(QIcon("paste.png"), tr("&Paste"), this);
 	_pasteAction->setShortcut(tr("Ctrl+V"));
-	connect(_pasteAction, SIGNAL(triggered()), this, SLOT(pasteItem()));
+	connect(_pasteAction, &QAction::triggered, this, &View::pasteItem);
 
 	_deleteAction = new QAction(QIcon("delete.png"), tr("&Delete"), this);
 	_deleteAction->setShortcut(tr("Delete"));
-	connect(_deleteAction, SIGNAL(triggered()), this, SLOT(deleteItem()));
+	connect(_deleteAction, &QAction::triggered, this, &View::deleteItem);
 
 	_itemMenu = new QMenu;
 	_itemMenu->addAction(_cutAction);
