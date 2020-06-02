@@ -2,7 +2,9 @@
 
 #include <QtMath>
 #include <QDebug>
+
 #include "View.h"
+#include "MouseHandler.h"
 
 GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView(scene, parent)
@@ -101,15 +103,7 @@ void GraphicsView::mousePressEvent(QMouseEvent* event)
 		_isLBtnDown = true;
 	}
 
-	// TODO 写个类来封装鼠标事件处理
-	if (event->button() == Qt::LeftButton)
-	{
-		// 调用和鼠标左键绑定的功能
-	}
-	else if (event->button() == Qt::RightButton)
-	{
-		// 调用和鼠标右键绑定的功能
-	}
+	MouseHandler::handlePress(event);
 
 	QGraphicsView::mousePressEvent(event);
 }

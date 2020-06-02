@@ -23,6 +23,7 @@
     <ClCompile Include="Image\ScanImage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
+    <ClCompile Include="MouseHandler.cpp" />
     <ClCompile Include="ToolBar.cpp" />
     <ClCompile Include="ToolButton.cpp" />
     <ClCompile Include="View.cpp" />
@@ -60,6 +61,7 @@
     <ClInclude Include="Image\MonoImage.h" />
     <QtMoc Include="ToolBar.h" />
     <QtMoc Include="ToolButton.h" />
+    <ClInclude Include="MouseHandler.h" />
     <ClInclude Include="Widget\CommonProcessor.h" />
     <ClInclude Include="Widget\CurvesProcessor.h" />
     <QtMoc Include="Widget\DiagramItem.h" />

@@ -132,6 +132,9 @@
     <ClCompile Include="ToolButton.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="MouseHandler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="View.h">
@@ -236,6 +239,9 @@
       <Filter>Image</Filter>
     </ClInclude>
     <ClInclude Include="Document.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MouseHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
