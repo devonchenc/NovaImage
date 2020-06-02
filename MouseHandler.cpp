@@ -76,7 +76,7 @@ void ZoomMouseHandler::release(QMouseEvent* event)
 
 void SelectMouseHandler::press(QMouseEvent* event)
 {
-
+	getGlobalView()->setSceneMode(MOVE_ITEM);
 }
 
 void SelectMouseHandler::move(QMouseEvent* event)
@@ -93,7 +93,7 @@ void SelectMouseHandler::release(QMouseEvent* event)
 
 void MoveMouseHandler::press(QMouseEvent* event)
 {
-	int a = 5;
+
 }
 
 void MoveMouseHandler::move(QMouseEvent* event)

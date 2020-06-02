@@ -182,26 +182,31 @@ void ToolBar::createButton()
 	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_cursorAction);
 	menu->addAction(_moveAction);
+	menu->addAction(_cursorAction);
 	_cursorButton->setMenu(menu);
-	_cursorButton->setIconByName("Resources/svg/cursor.svg");
+	_cursorButton->setIconByName("Resources/svg/move.svg");
 	_cursorButton->setToolTip(tr("Select item/Move image"));
 	_cursorButton->installEventFilter(this);
+	// TODO 需要实现toolButton事件响应
+	_cursorButton->setMouseHandler(new MoveMouseHandler());
 
 	_measurementButton = new ToolButton;
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
+	menu->addAction(_rectAction);
 	menu->addAction(_rulerAction);
 	menu->addAction(_angleAction);
-	menu->addAction(_rectAction);
 	menu->addAction(_ellipseAction);
 	menu->addAction(_arrowAction);
 	_measurementButton->setMenu(menu);
-	_measurementButton->setIconByName("Resources/svg/ruler.svg");
+	_measurementButton->setIconByName("Resources/svg/rectangle.svg");//ruler.svg
 	_measurementButton->setToolTip(tr("Measurements and tools"));
 	_measurementButton->installEventFilter(this);
-	connect(_measurementButton, &QToolButton::clicked, this, &ToolBar::measurementChanged);
+	// TODO 需要实现toolButton事件响应
+//	getGlobalView()->setItemType(DiagramItem::Rect);
+//	_measurementButton->setMouseHandler(new DrawMouseHandler());
+//	connect(_measurementButton, &QToolButton::clicked, this, &ToolBar::measurementChanged);
 
 	addWidget(_openToolButton);
 	addWidget(_saveToolButton);
@@ -263,20 +268,32 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 
 void ToolBar::selectItem()
 {
+	_cursorButton->setCurrentAction(_cursorAction);
+
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
 	_cursorButton->setMouseHandler(new SelectMouseHandler());
 
 	ToolButton::setLeftMouseButton(_cursorButton);
 	MouseHandler::setLeftHandler(_cursorButton->mouseHandler());
+	if (_cursorButton == ToolButton::rightMouseButton())
+	{
+		MouseHandler::setRightHandler(_cursorButton->mouseHandler());
+	}
 }
 
 void ToolBar::moveScene()
 {
+	_cursorButton->setCurrentAction(_moveAction);
+
 	_cursorButton->setIconByName("Resources/svg/move.svg");
 	_cursorButton->setMouseHandler(new MoveMouseHandler());
 
 	ToolButton::setLeftMouseButton(_cursorButton);
 	MouseHandler::setLeftHandler(_cursorButton->mouseHandler());
+	if (_cursorButton == ToolButton::rightMouseButton())
+	{
+		MouseHandler::setRightHandler(_cursorButton->mouseHandler());
+	}
 }
 
 void ToolBar::measurementChanged()

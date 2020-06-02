@@ -18,7 +18,7 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	, _fillColor(Qt::white)
 	, _textColor(Qt::green)
 	, _line(nullptr)
-	, _currentItem(nullptr)
+	, _currentDrawingItem(nullptr)
 	, _showCrossLine(false)
 	, _refHorzLine(nullptr)
 	, _refVertLine(nullptr)
@@ -149,6 +149,8 @@ void GraphicsScene::showCrossLine()
 		_showCrossLine = false;
 		removeItem(_refHorzLine);
 		removeItem(_refVertLine);
+		delete _refHorzLine;
+		delete _refVertLine;
 	}
 	else
 	{
@@ -191,8 +193,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 		if (_itemType <= DiagramItem::Parallelogram)
 		{
 			item = new DiagramItem(_itemType, _itemMenu);
-
-			_currentItem = item;
+			_currentDrawingItem = item;
 			item->setRectF(QRectF(_startPoint, _startPoint));
 
 			QBrush brush(_fillColor);
@@ -243,9 +244,9 @@ void GraphicsScene::mouseMove(const QPointF& point)
 	else if (_itemType <= DiagramItem::Parallelogram)
 	{
 		// For test
-		if (_currentItem)
+		if (_currentDrawingItem)
 		{
-			_currentItem->setRectF(QRectF(_startPoint, point));
+			_currentDrawingItem->setRectF(QRectF(_startPoint, point));
 		}
 	}
 }
@@ -257,14 +258,12 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 		p->setFlag(QGraphicsItem::ItemIsMovable);
 	}
 
-	// For test
 	if (_itemType <= DiagramItem::Parallelogram)
 	{
-		if (_currentItem)
+		if (_currentDrawingItem)
 		{
-			QPointF end = point;
-			_currentItem->setRectF(QRectF(_startPoint, end));
-			_currentItem = nullptr;
+			_currentDrawingItem->setRectF(QRectF(_startPoint, point));
+			_currentDrawingItem = nullptr;
 		}
 	}
 

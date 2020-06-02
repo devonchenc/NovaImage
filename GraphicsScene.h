@@ -33,6 +33,8 @@ public:
 
 	void setMode(int mode);
 
+	int mode() { return _mode; }
+
 	void setItemType(DiagramItem::DiagramType type);
 
 	void showCrossLine();
@@ -74,7 +76,7 @@ private:
 
 	DiagramLineItem* _line;
 
-	DiagramItem* _currentItem;
+	DiagramItem* _currentDrawingItem;
 
 	bool _showCrossLine;
 	QGraphicsLineItem* _refHorzLine;

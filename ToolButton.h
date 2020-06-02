@@ -15,13 +15,21 @@ public:
 public:
 	void setIconByName(const QString& fileName);
 
+	void setCurrentAction(QAction* action);
+
+	QAction* currentAction()		{ return _currentAction; }
+
 	void setMouseHandler(MouseHandler* handler);
 
-	MouseHandler* mouseHandler();
+	MouseHandler* mouseHandler()	{ return _handler; }
 
 	static void setLeftMouseButton(ToolButton* toolButton);
 
+	static ToolButton* leftMouseButton();
+
 	static void setRightMouseButton(ToolButton* toolButton);
+
+	static ToolButton* rightMouseButton();
 
 private:
 	static void updateAllButtonsIcon();
@@ -30,6 +38,8 @@ private:
 
 private:
 	QString _fileName;
+
+	QAction* _currentAction;
 
 	MouseHandler* _handler;
 

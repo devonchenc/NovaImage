@@ -8,6 +8,8 @@
 #include <QGraphicsOpacityEffect>
 #include <QDebug>
 
+#include "../GraphicsScene.h"
+
 DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsPolygonItem(parent)
 	, _diagramType(diagramType)
@@ -138,12 +140,6 @@ QList<QPointF> DiagramItem::resizeHandlePoints()
 	}
 }
 
-bool DiagramItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
-{
-    qreal delta = std::abs(p1.x() - p2.x()) + std::abs(p1.y() - p2.y());
-    return delta < closeEnoughDistance;
-}
-
 DiagramItem* DiagramItem::clone()
 {
     DiagramItem* cloned = new DiagramItem(_diagramType, _contextMenu, nullptr);
@@ -158,6 +154,10 @@ DiagramItem* DiagramItem::clone()
 
 void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	if (scene->mode() != MOVE_ITEM)
+		return;
+
     _resizeMode = false;
     int index = 0;
     foreach (QPointF const& p, resizeHandlePoints())
@@ -182,30 +182,12 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     }
 }
 
-int DiagramItem::changeIndex(int index)
-{
-	int newIndex = index;
-	if (_diagramType == Circle || _diagramType == Ellipse || _diagramType == Rhombus)
-	{
-		if (index == 0)
-			newIndex = 1;
-		else if (index == 1)
-			newIndex = 3;
-		else
-			newIndex *= 2;
-	}
-	else if (_diagramType == Parallelogram)
-	{
-		if (index == 2)
-			newIndex = 6;
-		else if (index == 3)
-			newIndex = 7;
-	}
-	return newIndex;
-}
-
 void DiagramItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	if (scene->mode() != MOVE_ITEM)
+		return;
+
     if (_resizeMode)
 	{
         prepareGeometryChange();
@@ -217,6 +199,10 @@ void DiagramItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	if (scene->mode() != MOVE_ITEM)
+		return;
+
     _resizeMode = false;
     QGraphicsItem::mouseReleaseEvent(event);
 }
@@ -366,4 +352,32 @@ QPolygonF DiagramItem::scaledPolygon(const QPolygonF& old, DiagramItem::Directio
 	trans.scale(scaleWidth, scaleHeight);
 	trans.translate(-fixPoint.x(), -fixPoint.y());
 	return trans.map(old);
+}
+
+int DiagramItem::changeIndex(int index)
+{
+	int newIndex = index;
+	if (_diagramType == Circle || _diagramType == Ellipse || _diagramType == Rhombus)
+	{
+		if (index == 0)
+			newIndex = 1;
+		else if (index == 1)
+			newIndex = 3;
+		else
+			newIndex *= 2;
+	}
+	else if (_diagramType == Parallelogram)
+	{
+		if (index == 2)
+			newIndex = 6;
+		else if (index == 3)
+			newIndex = 7;
+	}
+	return newIndex;
+}
+
+bool DiagramItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
+{
+	qreal delta = std::abs(p1.x() - p2.x()) + std::abs(p1.y() - p2.y());
+	return delta < closeEnoughDistance;
 }
