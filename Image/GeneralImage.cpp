@@ -24,7 +24,11 @@ GeneralImage::GeneralImage(const QString& pathName)
 
 GeneralImage::~GeneralImage()
 {
-
+	if (_backupImage)
+	{
+		delete _backupImage;
+		_backupImage = nullptr;
+	}
 }
 
 void GeneralImage::restoreImage()

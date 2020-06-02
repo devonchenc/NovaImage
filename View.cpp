@@ -78,7 +78,10 @@ void View::changeEvent(QEvent* event)
 void View::showImage(const QPixmap& image)
 {
 	if (_currentImage)
-		_scene->removeItem(_currentImage);
+	{
+		_scene->clear();
+		_currentImage = nullptr;
+	}
 
 	_scene->clear();
 	_view->resetMatrix();
@@ -94,7 +97,10 @@ void View::showImage(const QPixmap& image)
 void View::showImage(const QImage* image)
 {
 	if (_currentImage)
-		_scene->removeItem(_currentImage);
+	{
+		_scene->clear();
+		_currentImage = nullptr;
+	}
 
 	_view->resetMatrix();
 	QPixmap pixmap = QPixmap::fromImage(*image);
@@ -110,7 +116,10 @@ void View::showImage(const QImage* image)
 void View::resetImage()
 {
 	if (_currentImage)
-		_scene->removeItem(_currentImage);
+	{
+		_scene->clear();
+		_currentImage = nullptr;
+	}
 
 	_view->resetMatrix();
 	_scene->update();

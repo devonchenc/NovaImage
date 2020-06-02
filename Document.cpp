@@ -131,7 +131,6 @@ void Document::closeFile()
 	_image.reset();
 
 	getView()->resetImage();
-	getView()->repaint();
 }
 
 void Document::copyImage(const std::shared_ptr<BaseImage>& image)
