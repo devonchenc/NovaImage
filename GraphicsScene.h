@@ -4,6 +4,10 @@
 #include "Widget/DiagramItem.h"
 #include "Widget/DiagramTextItem.h"
 
+QT_BEGIN_NAMESPACE
+class QMouseEvent;
+QT_END_NAMESPACE
+
 class DiagramLineItem;
 
 #define MOVE_ITEM		0
@@ -29,10 +33,17 @@ public:
 
 	void setMode(int mode);
 
+	void setItemType(DiagramItem::DiagramType type);
+
 	void showCrossLine();
 
+	void mousePress(const QPointF& point);
+
+	void mouseMove(const QPointF& point);
+
+	void mouseRelease(const QPointF& point);
+
 public slots:
-	void setItemType(DiagramItem::DiagramType type);
 	void editorLostFocus(DiagramTextItem* item);
 	void setLineColor(const QColor& color);
 	void enableFillColor(bool enable);
@@ -48,9 +59,6 @@ signals:
 	void textSelected(QGraphicsItem* item);
 
 protected:
-	void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
-	void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent) override;
 	void keyPressEvent(QKeyEvent* keyEvent) override;
 
 private:

@@ -8,6 +8,7 @@ class QToolButton;
 QT_END_NAMESPACE
 
 class ToolButton;
+class MouseHandler;
 
 class ToolBar : public QToolBar
 {
@@ -25,6 +26,8 @@ private:
 
 protected:
 	void changeEvent(QEvent* event) override;
+
+	bool eventFilter(QObject* obj, QEvent* event) override;
 
 private slots:
 	void selectItem();
@@ -73,4 +76,3 @@ private:
 	ToolButton* _cursorButton;
 	ToolButton* _measurementButton;
 };
-

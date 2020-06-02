@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "ToolButton.h"
 #include "View.h"
+#include "MouseHandler.h"
 
 ToolBar::ToolBar(QWidget* parent)
 	: QToolBar(parent)
@@ -159,6 +160,7 @@ void ToolBar::createButton()
 	_imageWindowToolButton->setMenu(menu);
 	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
 	_imageWindowToolButton->setToolTip(tr("Adjust image window"));
+	_imageWindowToolButton->installEventFilter(this);
 
 	_zoomButton = new ToolButton;
 	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -175,6 +177,7 @@ void ToolBar::createButton()
 	_zoomButton->setMenu(menu);
 	_zoomButton->setIconByName("Resources/svg/zoom.svg");
 	_zoomButton->setToolTip(tr("Zoom image"));
+	_zoomButton->installEventFilter(this);
 
 	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -184,6 +187,7 @@ void ToolBar::createButton()
 	_cursorButton->setMenu(menu);
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
 	_cursorButton->setToolTip(tr("Select item/Move image"));
+	_cursorButton->installEventFilter(this);
 
 	_measurementButton = new ToolButton;
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -196,6 +200,7 @@ void ToolBar::createButton()
 	_measurementButton->setMenu(menu);
 	_measurementButton->setIconByName("Resources/svg/ruler.svg");
 	_measurementButton->setToolTip(tr("Measurements and tools"));
+	_measurementButton->installEventFilter(this);
 	connect(_measurementButton, &QToolButton::clicked, this, &ToolBar::measurementChanged);
 
 	addWidget(_openToolButton);
@@ -219,18 +224,65 @@ void ToolBar::changeEvent(QEvent* event)
 	}
 }
 
+bool ToolBar::eventFilter(QObject* obj, QEvent* event)
+{
+	if (obj == _imageWindowToolButton || obj == _zoomButton || obj == _cursorButton || obj == _measurementButton)
+	{
+		if (event->type() == QEvent::MouseButtonPress)
+		{
+			ToolButton* toolButton = static_cast<ToolButton*>(obj);
+			if (toolButton == nullptr)
+				return false;
+
+			QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+			// Make sure the clicked location is on the button not the menu area
+			if (mouseEvent->pos().x() < toolButton->size().width() - 12)
+			{
+				if (mouseEvent->button() == Qt::LeftButton)
+				{
+					ToolButton::setLeftMouseButton(toolButton);
+					MouseHandler::setLeftHandler(toolButton->mouseHandler());
+				}
+				else if (mouseEvent->button() == Qt::RightButton)
+				{
+					ToolButton::setRightMouseButton(toolButton);
+					MouseHandler::setRightHandler(toolButton->mouseHandler());
+				}
+			}
+
+			return false;
+		}
+		else
+			return false;
+	}
+	else
+	{
+		return QToolBar::eventFilter(obj, event);
+	}
+}
+
 void ToolBar::selectItem()
 {
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
+	_cursorButton->setMouseHandler(new SelectMouseHandler());
+
+	ToolButton::setLeftMouseButton(_cursorButton);
+	MouseHandler::setLeftHandler(_cursorButton->mouseHandler());
 }
 
 void ToolBar::moveScene()
 {
 	_cursorButton->setIconByName("Resources/svg/move.svg");
+	_cursorButton->setMouseHandler(new MoveMouseHandler());
+
+	ToolButton::setLeftMouseButton(_cursorButton);
+	MouseHandler::setLeftHandler(_cursorButton->mouseHandler());
 }
 
 void ToolBar::measurementChanged()
 {
+	getGlobalView()->setSceneMode(INSERT_ITEM);
+
 	QAction* action = qobject_cast<QAction *>(sender());
 	if (action == _rulerAction)
 	{
@@ -243,13 +295,20 @@ void ToolBar::measurementChanged()
 	else if (action == _rectAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/rectangle.svg");
+		getGlobalView()->setItemType(DiagramItem::Rect);
 	}
 	else if (action == _ellipseAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/ellipse.svg");
+		getGlobalView()->setItemType(DiagramItem::Ellipse);
 	}
 	else if (action == _arrowAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/arrow.svg");
+		getGlobalView()->setItemType(DiagramItem::Line);
 	}
+	_measurementButton->setMouseHandler(new DrawMouseHandler());
+
+	ToolButton::setLeftMouseButton(_measurementButton);
+	MouseHandler::setLeftHandler(_measurementButton->mouseHandler());
 }

@@ -31,6 +31,8 @@ signals:
 public slots:
 	void setSceneMode(int mode);
 
+	void setItemType(DiagramItem::DiagramType type);
+
 	void fitWindow();
 	void zoomNormal();
 	void zoom2x();

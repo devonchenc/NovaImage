@@ -97,12 +97,6 @@ void GraphicsView::applyValue()
 
 void GraphicsView::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton)
-	{
-		_mouseLBtnDown = event->pos();
-		_isLBtnDown = true;
-	}
-
 	MouseHandler::handlePress(event);
 
 	QGraphicsView::mousePressEvent(event);
@@ -129,35 +123,14 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 		emit showPixelValue(strValue);
 	}
 
-//	if (_isLBtnDown)
-	if (event->buttons() & Qt::LeftButton)
-	{
-		QPointF delta = mapToScene(_mouseLBtnDown) - mapToScene(event->pos());
-		_mouseLBtnDown = event->pos();
-
-		setSceneRect(sceneRect().x() + delta.x(), sceneRect().y() + delta.y(), sceneRect().width(), sceneRect().height());
-	//	centerOn(getCenter() + delta);
-	}
-
-	// TODO 写个类来封装鼠标事件处理
-	if (event->buttons() & Qt::LeftButton)
-	{
-		// 调用和鼠标左键绑定的功能
-	}
-	else if (event->buttons() & Qt::RightButton)
-	{
-		// 调用和鼠标右键绑定的功能
-	}
+	MouseHandler::handleMove(event);
 
 	QGraphicsView::mouseMoveEvent(event);
 }
 
 void GraphicsView::mouseReleaseEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton)
-	{
-		_isLBtnDown = false;
-	}
+	MouseHandler::handleRelease(event);
 
 	QGraphicsView::mouseReleaseEvent(event);
 }

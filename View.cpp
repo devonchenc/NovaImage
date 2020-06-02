@@ -133,6 +133,11 @@ void View::setSceneMode(int mode)
 	_scene->setMode(mode);
 }
 
+void View::setItemType(DiagramItem::DiagramType type)
+{
+	_scene->setItemType(type);
+}
+
 void View::fitWindow()
 {
 	QRectF rect = this->rect();

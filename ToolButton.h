@@ -2,6 +2,8 @@
 
 #include <QToolButton>
 
+class MouseHandler;
+
 class ToolButton : public QToolButton
 {
 	Q_OBJECT
@@ -13,12 +15,13 @@ public:
 public:
 	void setIconByName(const QString& fileName);
 
+	void setMouseHandler(MouseHandler* handler);
+
+	MouseHandler* mouseHandler();
+
 	static void setLeftMouseButton(ToolButton* toolButton);
 
 	static void setRightMouseButton(ToolButton* toolButton);
-
-protected:
-	void mousePressEvent(QMouseEvent* event) override;
 
 private:
 	static void updateAllButtonsIcon();
@@ -27,6 +30,8 @@ private:
 
 private:
 	QString _fileName;
+
+	MouseHandler* _handler;
 
 	static ToolButton* _leftMouseButton;
 	static ToolButton* _rightMouseButton;

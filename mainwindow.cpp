@@ -197,7 +197,7 @@ void MainWindow::createToolWidget()
 	ToolBoxWidget* toolbox = new ToolBoxWidget();
 	createDockWidget(toolbox);
 	connect(toolbox, &ToolBoxWidget::setSceneMode, _view, &View::setSceneMode);
-	connect(toolbox, &ToolBoxWidget::setItemType, _view->scene(), &GraphicsScene::setItemType);
+	connect(toolbox, &ToolBoxWidget::setItemType, _view, &View::setItemType);
 	connect(toolbox, &ToolBoxWidget::setLineColor, _view->scene(), &GraphicsScene::setLineColor);
 	connect(toolbox, &ToolBoxWidget::setEnableFillColor, _view->scene(), &GraphicsScene::enableFillColor);
 	connect(toolbox, &ToolBoxWidget::setFillColor, _view->scene(), &GraphicsScene::setFillColor);

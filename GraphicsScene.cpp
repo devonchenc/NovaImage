@@ -137,6 +137,11 @@ void GraphicsScene::setMode(int mode)
 	_mode = mode;
 }
 
+void GraphicsScene::setItemType(DiagramItem::DiagramType type)
+{
+	_itemType = type;
+}
+
 void GraphicsScene::showCrossLine()
 {
 	if (_showCrossLine)
@@ -154,11 +159,6 @@ void GraphicsScene::showCrossLine()
 	}
 }
 
-void GraphicsScene::setItemType(DiagramItem::DiagramType type)
-{
-	_itemType = type;
-}
-
 void GraphicsScene::editorLostFocus(DiagramTextItem* item)
 {
 	QTextCursor cursor = item->textCursor();
@@ -172,12 +172,9 @@ void GraphicsScene::editorLostFocus(DiagramTextItem* item)
 	}
 }
 
-void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
+void GraphicsScene::mousePress(const QPointF& point)
 {
-	if (mouseEvent->button() != Qt::LeftButton)
-		return;
-
-	_startPoint = mouseEvent->scenePos();
+	_startPoint = point;
 
 	DiagramItem* item;
 	DiagramTextItem* textItem;
@@ -188,7 +185,7 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	case MOVE_ITEM:
 		break;
 	case MOVE_SCENE:
-	//	qDebug() << "now: " << mouseEvent->scenePos();
+		//	qDebug() << "now: " << mouseEvent->scenePos();
 		break;
 	case INSERT_ITEM:
 		if (_itemType <= DiagramItem::Parallelogram)
@@ -217,13 +214,13 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 			connect(textItem, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
 			addItem(textItem);
 			textItem->setDefaultTextColor(_textColor);
-			textItem->setPos(mouseEvent->scenePos());
+			textItem->setPos(_startPoint);
 			qDebug() << "text inserted at" << textItem->scenePos();
 			emit itemInserted(textItem);
 		}
 		else if (_itemType == DiagramItem::Line)
 		{
-			_line = new DiagramLineItem(QLineF(mouseEvent->scenePos(), mouseEvent->scenePos()), _itemMenu);
+			_line = new DiagramLineItem(QLineF(_startPoint, _startPoint), _itemMenu);
 			_line->setPen(QPen(_lineColor, 2));
 			_line->setPointPen(QPen(_fillColor, 2));
 			_line->setFlag(QGraphicsItem::ItemIsMovable, true);
@@ -232,52 +229,28 @@ void GraphicsScene::mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)
 			addItem(_line);
 			emit itemInserted(_line);
 		}
-		setMode(MOVE_ITEM);
 		break;
 	}
-	QGraphicsScene::mousePressEvent(mouseEvent);
 }
 
-void GraphicsScene::mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)
+void GraphicsScene::mouseMove(const QPointF& point)
 {
-
 	if (_itemType == DiagramItem::Line && _line != nullptr)
 	{
-		QLineF newLine(_line->line().p1(), mouseEvent->scenePos());
+		QLineF newLine(_line->line().p1(), point);
 		_line->setLine(newLine);
 	}
 	else if (_itemType <= DiagramItem::Parallelogram)
 	{
-	//	QList<QGraphicsItem*> list = selectedItems();
-	//	for (int i = 0; i < list.size(); i++)
-	//	{
-	//		QGraphicsItem* item = list.at(i);
-	//		DiagramItem* lineItem = static_cast<DiagramItem*>(item);
-	//		lineItem->setRectF(QRectF(_startPoint, end));
-	//		qDebug() << "Rect: " << _startPoint << end;
-		//	item->setRect(QRect(_startPoint, end));
-	//	}
 		// For test
 		if (_currentItem)
 		{
-			QPointF end = mouseEvent->scenePos();
-			_currentItem->setRectF(QRectF(_startPoint, end));
-			qDebug() << "Rect: " << _startPoint << end;
+			_currentItem->setRectF(QRectF(_startPoint, point));
 		}
 	}
-	else if (_mode == MOVE_SCENE)
-	{
-	/*	QPointF disPointF = mouseEvent->scenePos() - _startPoint;
-		qDebug() << "now: " << mouseEvent->scenePos() << "  start: " << _startPoint;
-		_startPoint = mouseEvent->scenePos();
-		setSceneRect(sceneRect().x() + disPointF.x(), sceneRect().y() + disPointF.y(), sceneRect().width(), sceneRect().height());
-		update();*/
-	}
-
-	QGraphicsScene::mouseMoveEvent(mouseEvent);
 }
 
-void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
+void GraphicsScene::mouseRelease(const QPointF& point)
 {
 	foreach (QGraphicsItem* p, selectedItems())
 	{
@@ -289,12 +262,11 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 	{
 		if (_currentItem)
 		{
-			QPointF end = mouseEvent->scenePos();
+			QPointF end = point;
 			_currentItem->setRectF(QRectF(_startPoint, end));
 			_currentItem = nullptr;
 		}
 	}
-
 
 	if (_itemType == DiagramItem::Line && _line != nullptr)
 	{
@@ -306,8 +278,6 @@ void GraphicsScene::mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)
 		}
 		_line = nullptr;
 	}
-
-	QGraphicsScene::mouseReleaseEvent(mouseEvent);
 }
 
 void GraphicsScene::keyPressEvent(QKeyEvent* keyEvent)

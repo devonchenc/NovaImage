@@ -338,7 +338,7 @@ void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 	{
 		_buttonGroup->button(int(DiagramItem::Line))->setChecked(false);
 	}
-	emit setSceneMode(MOVE_ITEM);
+//	emit setSceneMode(MOVE_ITEM);
 }
 
 void ToolBoxWidget::itemSelected(QGraphicsItem* item)

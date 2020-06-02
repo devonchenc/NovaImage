@@ -12,6 +12,7 @@ QVector<ToolButton*> ToolButton::_vec;
 
 ToolButton::ToolButton(QWidget* parent)
 	: QToolButton(parent)
+	, _handler(nullptr)
 {
 	_vec.append(this);
 }
@@ -31,35 +32,33 @@ ToolButton::~ToolButton()
 void ToolButton::setIconByName(const QString& fileName)
 {
 	_fileName = fileName;
-//	setIcon(QIcon(fileName));
 	updateIcon();
+}
+
+void ToolButton::setMouseHandler(MouseHandler* handler)
+{
+	if (_handler)
+	{
+		delete _handler;
+	}
+	_handler = handler;
+}
+
+MouseHandler* ToolButton::mouseHandler()
+{
+	return _handler;
 }
 
 void ToolButton::setLeftMouseButton(ToolButton* toolButton)
 {
 	_leftMouseButton = toolButton;
+	updateAllButtonsIcon();
 }
 
 void ToolButton::setRightMouseButton(ToolButton* toolButton)
 {
 	_rightMouseButton = toolButton;
-}
-
-void ToolButton::mousePressEvent(QMouseEvent* event)
-{
-	if (event->pos().x() < size().width() - 12)
-	{
-		if (event->button() == Qt::LeftButton)
-		{
-			setLeftMouseButton(this);
-		}
-		else if (event->button() == Qt::RightButton)
-		{
-			setRightMouseButton(this);
-		}
-		updateAllButtonsIcon();
-	}
-	QToolButton::mousePressEvent(event);
+	updateAllButtonsIcon();
 }
 
 void ToolButton::updateAllButtonsIcon()
