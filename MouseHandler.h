@@ -2,6 +2,8 @@
 
 #include <QMouseEvent>
 
+class ToolButton;
+
 class MouseHandler
 {
 public:
@@ -15,9 +17,9 @@ public:
 
 	static void handleRelease(QMouseEvent* event);
 
-	static void setLeftHandler(MouseHandler* handler);
+	static void setLeftButton(ToolButton* button);
 
-	static void setRightHandler(MouseHandler* handler);
+	static void setRightButton(ToolButton* button);
 
 protected:
 	virtual void press(QMouseEvent* event) = 0;
@@ -30,8 +32,8 @@ protected:
 	static QPoint _mousePos;
 
 private:
-	static MouseHandler* _leftHandler;
-	static MouseHandler* _rightHandler;
+	static ToolButton* _leftButton;
+	static ToolButton* _rightButton;
 };
 
 class ZoomMouseHandler : public MouseHandler

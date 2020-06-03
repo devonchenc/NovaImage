@@ -7,10 +7,14 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 
+#include "../GraphicsScene.h"
+
 DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
 {
 	_contextMenu = contextMenu;
+	setFlag(QGraphicsItem::ItemIsMovable, true);
+	setFlag(QGraphicsItem::ItemIsSelectable, true);
 }
 
 DiagramLineItem::~DiagramLineItem()
@@ -52,6 +56,10 @@ DiagramLineItem* DiagramLineItem::clone()
 
 void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	if (scene->mode() != MOVE_ITEM)
+		return;
+
 	_resizeMode = false;
 	int index = 0;
 	foreach (QPointF const& p, resizeHandlePoints())
@@ -73,6 +81,10 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	if (scene->mode() != MOVE_ITEM)
+		return;
+
 	if (_resizeMode)
 	{
 		prepareGeometryChange();
@@ -93,6 +105,8 @@ void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+	_resizeMode = false;
+
 	QGraphicsLineItem::mouseReleaseEvent(event);
 }
 

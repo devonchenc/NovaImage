@@ -182,31 +182,29 @@ void ToolBar::createButton()
 	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_moveAction);
 	menu->addAction(_cursorAction);
+	menu->addAction(_moveAction);
 	_cursorButton->setMenu(menu);
-	_cursorButton->setIconByName("Resources/svg/move.svg");
+	_cursorButton->setIconByName("Resources/svg/cursor.svg");
 	_cursorButton->setToolTip(tr("Select item/Move image"));
 	_cursorButton->installEventFilter(this);
-	// TODO 需要实现toolButton事件响应
-	_cursorButton->setMouseHandler(new MoveMouseHandler());
+	_cursorButton->setCurrentAction(_cursorAction);
+	connect(_cursorButton, &QToolButton::triggered, this, &ToolBar::cursorButtonTriggered);
 
 	_measurementButton = new ToolButton;
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_rectAction);
 	menu->addAction(_rulerAction);
 	menu->addAction(_angleAction);
+	menu->addAction(_rectAction);
 	menu->addAction(_ellipseAction);
 	menu->addAction(_arrowAction);
 	_measurementButton->setMenu(menu);
-	_measurementButton->setIconByName("Resources/svg/rectangle.svg");//ruler.svg
+	_measurementButton->setIconByName("Resources/svg/ruler.svg");//ruler.svg
 	_measurementButton->setToolTip(tr("Measurements and tools"));
 	_measurementButton->installEventFilter(this);
-	// TODO 需要实现toolButton事件响应
-//	getGlobalView()->setItemType(DiagramItem::Rect);
-//	_measurementButton->setMouseHandler(new DrawMouseHandler());
-//	connect(_measurementButton, &QToolButton::clicked, this, &ToolBar::measurementChanged);
+	_measurementButton->setCurrentAction(_rulerAction);
+	connect(_measurementButton, &QToolButton::triggered, this, &ToolBar::measurementButtonTriggered);
 
 	addWidget(_openToolButton);
 	addWidget(_saveToolButton);
@@ -243,15 +241,17 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 			// Make sure the clicked location is on the button not the menu area
 			if (mouseEvent->pos().x() < toolButton->size().width() - 12)
 			{
+				toolButton->currentAction()->trigger();
+
 				if (mouseEvent->button() == Qt::LeftButton)
 				{
 					ToolButton::setLeftMouseButton(toolButton);
-					MouseHandler::setLeftHandler(toolButton->mouseHandler());
+					MouseHandler::setLeftButton(toolButton);
 				}
 				else if (mouseEvent->button() == Qt::RightButton)
 				{
 					ToolButton::setRightMouseButton(toolButton);
-					MouseHandler::setRightHandler(toolButton->mouseHandler());
+					MouseHandler::setRightButton(toolButton);
 				}
 			}
 
@@ -268,42 +268,30 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 
 void ToolBar::selectItem()
 {
-	_cursorButton->setCurrentAction(_cursorAction);
-
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
 	_cursorButton->setMouseHandler(new SelectMouseHandler());
-
-	ToolButton::setLeftMouseButton(_cursorButton);
-	MouseHandler::setLeftHandler(_cursorButton->mouseHandler());
-	if (_cursorButton == ToolButton::rightMouseButton())
-	{
-		MouseHandler::setRightHandler(_cursorButton->mouseHandler());
-	}
 }
 
 void ToolBar::moveScene()
 {
-	_cursorButton->setCurrentAction(_moveAction);
-
 	_cursorButton->setIconByName("Resources/svg/move.svg");
 	_cursorButton->setMouseHandler(new MoveMouseHandler());
+}
 
+void ToolBar::cursorButtonTriggered(QAction* action)
+{
+	_cursorButton->setCurrentAction(action);
 	ToolButton::setLeftMouseButton(_cursorButton);
-	MouseHandler::setLeftHandler(_cursorButton->mouseHandler());
-	if (_cursorButton == ToolButton::rightMouseButton())
-	{
-		MouseHandler::setRightHandler(_cursorButton->mouseHandler());
-	}
+	MouseHandler::setLeftButton(_cursorButton);
 }
 
 void ToolBar::measurementChanged()
 {
-	getGlobalView()->setSceneMode(INSERT_ITEM);
-
-	QAction* action = qobject_cast<QAction *>(sender());
+	QAction* action = qobject_cast<QAction*>(sender());
 	if (action == _rulerAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/ruler.svg");
+		getGlobalView()->setItemType(DiagramItem::Line);
 	}
 	else if (action == _angleAction)
 	{
@@ -325,7 +313,11 @@ void ToolBar::measurementChanged()
 		getGlobalView()->setItemType(DiagramItem::Line);
 	}
 	_measurementButton->setMouseHandler(new DrawMouseHandler());
+}
 
+void ToolBar::measurementButtonTriggered(QAction* action)
+{
+	_measurementButton->setCurrentAction(action);
 	ToolButton::setLeftMouseButton(_measurementButton);
-	MouseHandler::setLeftHandler(_measurementButton->mouseHandler());
+	MouseHandler::setLeftButton(_measurementButton);
 }

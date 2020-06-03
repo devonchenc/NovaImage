@@ -3,56 +3,57 @@
 #include "GlobalFunc.h"
 #include "View.h"
 #include "GraphicsView.h"
+#include "ToolButton.h"
 
 QPoint MouseHandler::_mousePos;
-MouseHandler* MouseHandler::_leftHandler = nullptr;
-MouseHandler* MouseHandler::_rightHandler = nullptr;
+ToolButton* MouseHandler::_leftButton = nullptr;
+ToolButton* MouseHandler::_rightButton = nullptr;
 
 void MouseHandler::handlePress(QMouseEvent* event)
 {
 	_mousePos = event->pos();
-	if (event->button() == Qt::LeftButton && _leftHandler)
+	if (event->button() == Qt::LeftButton && _leftButton)
 	{
-		_leftHandler->press(event);
+		_leftButton->mouseHandler()->press(event);
 	}
-	else if(event->button() == Qt::RightButton && _rightHandler)
+	else if(event->button() == Qt::RightButton && _rightButton)
 	{
-		_rightHandler->press(event);
+		_rightButton->mouseHandler()->press(event);
 	}
 }
 
 void MouseHandler::handleMove(QMouseEvent* event)
 {
-	if (event->buttons() & Qt::LeftButton && _leftHandler)
+	if (event->buttons() & Qt::LeftButton && _leftButton)
 	{
-		_leftHandler->move(event);
+		_leftButton->mouseHandler()->move(event);
 	}
-	else if (event->buttons() & Qt::RightButton && _rightHandler)
+	else if (event->buttons() & Qt::RightButton && _rightButton)
 	{
-		_rightHandler->move(event);
+		_rightButton->mouseHandler()->move(event);
 	}
 }
 
 void MouseHandler::handleRelease(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton && _leftHandler)
+	if (event->button() == Qt::LeftButton && _leftButton)
 	{
-		_leftHandler->release(event);
+		_leftButton->mouseHandler()->release(event);
 	}
-	else if (event->button() == Qt::RightButton && _rightHandler)
+	else if (event->button() == Qt::RightButton && _rightButton)
 	{
-		_rightHandler->release(event);
+		_rightButton->mouseHandler()->release(event);
 	}
 }
 
-void MouseHandler::setLeftHandler(MouseHandler* handler)
+void MouseHandler::setLeftButton(ToolButton* button)
 {
-	_leftHandler = handler;
+	_leftButton = button;
 }
 
-void MouseHandler::setRightHandler(MouseHandler* handler)
+void MouseHandler::setRightButton(ToolButton* button)
 {
-	_rightHandler = handler;
+	_rightButton = button;
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -114,6 +115,8 @@ void MoveMouseHandler::release(QMouseEvent* event)
 
 void DrawMouseHandler::press(QMouseEvent* event)
 {
+	getGlobalView()->setSceneMode(INSERT_ITEM);
+
 	QPointF point = getGlobalView()->view()->mapToScene(event->pos());
 	getGlobalView()->scene()->mousePress(point);
 }

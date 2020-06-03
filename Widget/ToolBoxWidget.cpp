@@ -344,11 +344,13 @@ void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 void ToolBoxWidget::itemSelected(QGraphicsItem* item)
 {
 	QColor lineColor, fillColor;
+	bool hasBrush;
 	if (item->type() == DiagramItem::Type)
 	{
 		DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);
 		lineColor = diagramitem->pen().color();
 		fillColor = diagramitem->brush().color();
+		hasBrush = diagramitem->brush().style() != Qt::NoBrush ? true : false;
 		setWidgetVisible(true, false);
 	}
 	else if (item->type() == DiagramLineItem::Type)
@@ -356,10 +358,12 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
 		DiagramLineItem* lineitem = qgraphicsitem_cast<DiagramLineItem*>(item);
 		lineColor = lineitem->pen().color();
 		fillColor = lineitem->pointPen().color();
+		hasBrush = true;
 		setWidgetVisible(true, false);
 	}
 	_lineColorButton->setColor(lineColor);
 	_fillColorButton->setColor(fillColor);
+	_fillCheckBox->setChecked(hasBrush);
 }
 
 void ToolBoxWidget::textSelected(QGraphicsItem* item)

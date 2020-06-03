@@ -32,7 +32,9 @@ protected:
 private slots:
 	void selectItem();
 	void moveScene();
+	void cursorButtonTriggered(QAction* action);
 	void measurementChanged();
+	void measurementButtonTriggered(QAction* action);
 
 private:
 	QAction* _openDicomAction;

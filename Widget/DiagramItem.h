@@ -14,7 +14,7 @@ public:
     enum { Type = UserType + 15 };
 	enum DiagramType
 	{
-		None, Rect, RoundRect, Circle, Ellipse, Rhombus, Parallelogram, Text, Line
+		None, Rect, RoundRect, Circle, Ellipse, Rhombus, Parallelogram, Text, Line, Arrow
 	};
 	enum Direction { TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
 

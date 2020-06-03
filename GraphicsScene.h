@@ -74,7 +74,7 @@ private:
 	QColor _textColor;
 	QFont _font;
 
-	DiagramLineItem* _line;
+	DiagramLineItem* _currentDrawingLine;
 
 	DiagramItem* _currentDrawingItem;
 

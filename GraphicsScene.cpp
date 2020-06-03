@@ -8,6 +8,8 @@
 #include "Widget/DiagramTextItem.h"
 #include "Widget/DiagramLineItem.h"
 
+#define MIN_SIZE		10
+
 GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	: QGraphicsScene(parent)
 	, _itemMenu(itemMenu)
@@ -17,7 +19,7 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	, _lineColor(Qt::blue)
 	, _fillColor(Qt::white)
 	, _textColor(Qt::green)
-	, _line(nullptr)
+	, _currentDrawingLine(nullptr)
 	, _currentDrawingItem(nullptr)
 	, _showCrossLine(false)
 	, _refHorzLine(nullptr)
@@ -178,6 +180,9 @@ void GraphicsScene::mousePress(const QPointF& point)
 {
 	_startPoint = point;
 
+	// Clear all selected items
+	clearSelection();
+
 	DiagramItem* item;
 	DiagramTextItem* textItem;
 	QGraphicsItem* p = nullptr;
@@ -221,14 +226,13 @@ void GraphicsScene::mousePress(const QPointF& point)
 		}
 		else if (_itemType == DiagramItem::Line)
 		{
-			_line = new DiagramLineItem(QLineF(_startPoint, _startPoint), _itemMenu);
-			_line->setPen(QPen(_lineColor, 2));
-			_line->setPointPen(QPen(_fillColor, 2));
-			_line->setFlag(QGraphicsItem::ItemIsMovable, true);
-			_line->setFlag(QGraphicsItem::ItemIsSelectable, true);
-			connect(_line, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
-			addItem(_line);
-			emit itemInserted(_line);
+			_currentDrawingLine = new DiagramLineItem(QLineF(_startPoint, _startPoint), _itemMenu);
+			_currentDrawingLine->setPen(QPen(_lineColor, 2));
+			_currentDrawingLine->setPointPen(QPen(_fillColor, 2));
+			qDebug() << "Line start: " << _startPoint;
+			connect(_currentDrawingLine, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+			addItem(_currentDrawingLine);
+			emit itemInserted(_currentDrawingLine);
 		}
 		break;
 	}
@@ -236,14 +240,13 @@ void GraphicsScene::mousePress(const QPointF& point)
 
 void GraphicsScene::mouseMove(const QPointF& point)
 {
-	if (_itemType == DiagramItem::Line && _line != nullptr)
+	if (_itemType == DiagramItem::Line && _currentDrawingLine != nullptr)
 	{
-		QLineF newLine(_line->line().p1(), point);
-		_line->setLine(newLine);
+		_currentDrawingLine->setLine(QLineF(_currentDrawingLine->line().p1(), point));
+		qDebug() << "Line continue: " << _currentDrawingLine->line().p1() << point;
 	}
 	else if (_itemType <= DiagramItem::Parallelogram)
 	{
-		// For test
 		if (_currentDrawingItem)
 		{
 			_currentDrawingItem->setRectF(QRectF(_startPoint, point));
@@ -253,29 +256,39 @@ void GraphicsScene::mouseMove(const QPointF& point)
 
 void GraphicsScene::mouseRelease(const QPointF& point)
 {
-	foreach (QGraphicsItem* p, selectedItems())
+/*	foreach (QGraphicsItem* p, selectedItems())
 	{
 		p->setFlag(QGraphicsItem::ItemIsMovable);
-	}
+	}*/
 
 	if (_itemType <= DiagramItem::Parallelogram)
 	{
 		if (_currentDrawingItem)
 		{
-			_currentDrawingItem->setRectF(QRectF(_startPoint, point));
+			QRectF rect(_startPoint, point);
+			_currentDrawingItem->setRectF(rect);
+			if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
+			{
+				removeItem(_currentDrawingItem);
+				delete _currentDrawingItem;
+			}
+			else
+			{
+				_currentDrawingItem->setSelected(true);
+			}
 			_currentDrawingItem = nullptr;
 		}
 	}
-
-	if (_itemType == DiagramItem::Line && _line != nullptr)
+	else if (_itemType == DiagramItem::Line && _currentDrawingLine != nullptr)
 	{
-		QRectF rect = _line->boundingRect();
-		if (rect.width() < 10 && rect.height() < 10)
+		qDebug() << "Line end: " << point;
+		QRectF rect = _currentDrawingLine->boundingRect();
+		if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
 		{
-			removeItem(_line);
-			delete _line;
+			removeItem(_currentDrawingLine);
+			delete _currentDrawingLine;
 		}
-		_line = nullptr;
+		_currentDrawingLine = nullptr;
 	}
 }
 
