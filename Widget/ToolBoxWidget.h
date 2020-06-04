@@ -56,6 +56,8 @@ public slots:
 
 	void handleFontChange();
 
+	void setWidgetVisible(bool line, bool text);
+
 protected:
 	void changeEvent(QEvent* event) override;
 
@@ -65,8 +67,6 @@ private:
 	QGridLayout* createToolButton();
 
 	QWidget* createCellWidget(const QString &text, DiagramItem::DiagramType type);
-
-	void setWidgetVisible(bool line, bool text);
 
 	QLabel* getLabel(QWidget* widget);
 

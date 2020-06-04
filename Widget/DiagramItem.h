@@ -56,7 +56,7 @@ private:
     QPolygonF _polygon;
 	QGraphicsOpacityEffect* _effect;
     QMenu* _contextMenu;
-    static constexpr qreal resizeHandlePointWidth = 5;
+    static constexpr qreal resizePointWidth = 5;
     static constexpr qreal closeEnoughDistance = 7;
     bool _resizeMode = false;
     Direction _scaleDirection;

@@ -207,6 +207,7 @@ void MainWindow::createToolWidget()
 	connect(_view->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
 	connect(_view->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
 	connect(_view->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
+	connect(this, &MainWindow::setToolBoxVisible, toolbox, &ToolBoxWidget::setWidgetVisible);
 
 	CommonWidget* common = new CommonWidget();
 	createDockWidget(common);
@@ -274,6 +275,11 @@ void MainWindow::imageOpened()
 		QString title = QString("%1 - NovaImage").arg(getGlobalImage()->getPathName());
 		setWindowTitle(title);
 	}
+}
+
+void MainWindow::setToolBoxWidgetVisible(bool line, bool text)
+{
+	emit setToolBoxVisible(line, text);
 }
 
 void MainWindow::showMenuBar()

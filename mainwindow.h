@@ -34,6 +34,8 @@ public:
 
 	void imageOpened();
 
+	void setToolBoxWidgetVisible(bool line, bool text);
+
 protected:
 	void changeEvent(QEvent* event) override;
 
@@ -50,6 +52,9 @@ private:
 
     void createActions();
     void setupShortcuts();
+
+signals:
+	void setToolBoxVisible(bool line, bool text);
 
 public slots:
     void openImage();

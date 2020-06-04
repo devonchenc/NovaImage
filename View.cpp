@@ -133,12 +133,9 @@ void View::setSceneMode(int mode)
 	}
 	else if (mode == MOVE_ITEM)
 	{
-		_view->setDragMode(QGraphicsView::NoDrag);
-	}
-	else if (mode == SELECT_ITEM)
-	{
 		_view->setDragMode(QGraphicsView::RubberBandDrag);
 	}
+
 	_scene->setMode(mode);
 }
 

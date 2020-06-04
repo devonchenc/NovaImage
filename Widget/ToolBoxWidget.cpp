@@ -51,7 +51,7 @@ void ToolBoxWidget::initUI()
 	_lineFrame->setFrameShadow(QFrame::Sunken);
 
 	_labelLine = new QLabel(tr("Line:"));
-	_lineColorButton = new QColorButton(Qt::blue);
+	_lineColorButton = new QColorButton(qRgb(0, 255, 55));
 	connect(_lineColorButton, &QColorButton::clicked, this, &ToolBoxWidget::lineColorButtonTriggered);
 	_fillCheckBox = new QCheckBox(tr("Fill:"));
 	connect(_fillCheckBox, &QCheckBox::stateChanged, this, &ToolBoxWidget::enableFillColor);
@@ -287,7 +287,7 @@ void ToolBoxWidget::buttonGroupClicked(int id)
 	if (id == DiagramItem::None)
 	{
 		setWidgetVisible(false, false);
-		emit setSceneMode(SELECT_ITEM);
+		emit setSceneMode(MOVE_ITEM);
 	}
 	else
 	{
@@ -358,7 +358,7 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
 		DiagramLineItem* lineitem = qgraphicsitem_cast<DiagramLineItem*>(item);
 		lineColor = lineitem->pen().color();
 		fillColor = lineitem->pointPen().color();
-		hasBrush = true;
+		hasBrush = false;
 		setWidgetVisible(true, false);
 	}
 	_lineColorButton->setColor(lineColor);

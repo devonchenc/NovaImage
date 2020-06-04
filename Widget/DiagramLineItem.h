@@ -30,6 +30,8 @@ protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
+	void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+	void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
@@ -42,8 +44,9 @@ private:
 private:
     QMenu* _contextMenu;
 	QPen _pointPen;
-	static constexpr qreal resizeHandlePointWidth = 7;
 	static constexpr qreal closeEnoughDistance = 20;
 	bool _resizeMode = false;
 	Index _dragIndex;
+public:
+	bool _drawingFinished = false;
 };

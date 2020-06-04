@@ -12,10 +12,7 @@ class DiagramLineItem;
 
 #define MOVE_ITEM		0
 #define MOVE_SCENE		1
-#define SELECT_ITEM		2
-#define INSERT_ITEM		3
-#define INSERT_TEXT		4
-#define INSERT_LINE		5
+#define INSERT_ITEM		2
 
 class GraphicsScene : public QGraphicsScene
 {

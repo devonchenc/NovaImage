@@ -119,7 +119,7 @@ QPixmap DiagramItem::image() const
 
 QList<QPointF> DiagramItem::resizeHandlePoints()
 {
-    qreal width = resizeHandlePointWidth;
+    qreal width = resizePointWidth;
     QRectF rf = QRectF(boundingRect().topLeft() + QPointF(width/2, width/2), boundingRect().bottomRight() - QPointF(width/2, width/2));
     qreal centerX = rf.center().x();
     qreal centerY = rf.center().y();
@@ -253,7 +253,7 @@ void DiagramItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
     // add resize handles
     if (isSelected())
 	{
-        qreal width = resizeHandlePointWidth;
+        qreal width = resizePointWidth;
         foreach (QPointF const& point, resizeHandlePoints())
 		{
             painter->drawEllipse(QRectF(point.x() - width/2, point.y() - width/2, width, width));

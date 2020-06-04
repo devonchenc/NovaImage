@@ -11,10 +11,11 @@
 
 DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
+	, _contextMenu(contextMenu)
 {
-	_contextMenu = contextMenu;
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
+	setAcceptHoverEvents(true);
 }
 
 DiagramLineItem::~DiagramLineItem()
@@ -63,7 +64,7 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 	_resizeMode = false;
 	int index = 0;
-	foreach (QPointF const& p, resizeHandlePoints())
+	foreach(QPointF const& p, resizeHandlePoints())
 	{
 		if (isCloseEnough(event->pos(), p))
 		{
@@ -76,8 +77,6 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	setFlag(GraphicsItemFlag::ItemIsMovable, !_resizeMode);
 
 	_dragIndex = static_cast<Index>(index);
-
-	qDebug() << "_dragIndex: " << _dragIndex;
 
 	QGraphicsLineItem::mousePressEvent(event);
 }
@@ -94,16 +93,16 @@ void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 		if (_dragIndex == Point1)
 		{
-			QLineF newLine(event->scenePos(), mapToScene(line().p2()));
-			setLine(newLine);
+			setLine(QLineF(event->pos(), line().p2()));
 		}
 		else
 		{
-			QLineF newLine(mapToScene(line().p1()), event->scenePos());
-			setLine(newLine);
+			setLine(QLineF(line().p1(), event->pos()));
 		}
 	}
-//	qDebug() << "Moving: " << mapToScene(line().p1()) << " " << mapToScene(line().p2());
+
+	scene->update();
+
 	QGraphicsLineItem::mouseMoveEvent(event);
 }
 
@@ -128,6 +127,43 @@ void DiagramLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 	QGraphicsLineItem::hoverMoveEvent(event);
 }
 
+void DiagramLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+{
+	setCursor(Qt::ArrowCursor);
+	QList<QPointF> pointList = resizeHandlePoints();
+	foreach(QPointF const& p, pointList)
+	{
+		if (isCloseEnough(p, event->pos()))
+		{
+			setCursor(Qt::SizeAllCursor);
+
+			// TODO
+			setPointPen(QPen(Qt::red));
+
+			if (_drawingFinished)
+			{
+				GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+				scene->setMode(MOVE_ITEM);
+			}
+			scene()->update();
+		}
+	}
+	QGraphicsLineItem::hoverEnterEvent(event);
+}
+
+void DiagramLineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
+{
+	setPointPen(QPen(Qt::blue));
+	if (_drawingFinished)
+	{
+		GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+		scene->setMode(INSERT_ITEM);
+	}
+	scene()->update();
+
+	QGraphicsLineItem::hoverLeaveEvent(event);
+}
+
 void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     // remove build-in selected state
@@ -135,12 +171,15 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
     myOption.state &= ~QStyle::State_Selected;
 	QGraphicsLineItem::paint(painter, &myOption, widget);
 
+	painter->setRenderHint(QPainter::Antialiasing, true);
+
     // add resize handles
-	qreal width = resizeHandlePointWidth;
+	qreal resizePointWidth = 6;
+	painter->setPen(_pointPen);
 	foreach (QPointF const& point, resizeHandlePoints())
 	{
-		painter->setPen(_pointPen);
-		painter->drawEllipse(QRectF(point.x() - width / 2, point.y() - width / 2, width, width));
+		painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
+		painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
 	}
 }
 

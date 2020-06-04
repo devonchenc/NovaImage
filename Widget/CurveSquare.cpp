@@ -165,8 +165,6 @@ void CurveSquare::resizeEvent(QResizeEvent* event)
 
 void CurveSquare::paintEvent(QPaintEvent* /*event*/)
 {
-	QPainter painter(this);
-
 	paintHistogram();
 	paintBackground();
 }
@@ -314,6 +312,7 @@ void CurveSquare::paintConnection(QColor color)
 	}
 
 	QPainter painter(this);
+	painter.setRenderHint(QPainter::Antialiasing, true);
 	QPen pen(color);
 	pen.setStyle(Qt::SolidLine);
 	painter.setPen(pen);

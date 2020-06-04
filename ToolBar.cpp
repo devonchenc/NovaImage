@@ -268,12 +268,14 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 
 void ToolBar::selectItem()
 {
+	getGlobalView()->setSceneMode(MOVE_ITEM);
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
 	_cursorButton->setMouseHandler(new SelectMouseHandler());
 }
 
 void ToolBar::moveScene()
 {
+	getGlobalView()->setSceneMode(MOVE_SCENE);
 	_cursorButton->setIconByName("Resources/svg/move.svg");
 	_cursorButton->setMouseHandler(new MoveMouseHandler());
 }
@@ -287,6 +289,9 @@ void ToolBar::cursorButtonTriggered(QAction* action)
 
 void ToolBar::measurementChanged()
 {
+	MainWindow* mainWindow = getGlobalWindow();
+	mainWindow->setToolBoxWidgetVisible(true, false);
+
 	QAction* action = qobject_cast<QAction*>(sender());
 	if (action == _rulerAction)
 	{
@@ -312,6 +317,7 @@ void ToolBar::measurementChanged()
 		_measurementButton->setIconByName("Resources/svg/arrow.svg");
 		getGlobalView()->setItemType(DiagramItem::Line);
 	}
+	getGlobalView()->setSceneMode(INSERT_ITEM);
 	_measurementButton->setMouseHandler(new DrawMouseHandler());
 }
 
