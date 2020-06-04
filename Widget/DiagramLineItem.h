@@ -43,7 +43,7 @@ private:
     QMenu* _contextMenu;
 	QPen _pointPen;
 	static constexpr qreal resizeHandlePointWidth = 7;
-	static constexpr qreal closeEnoughDistance = 11;
+	static constexpr qreal closeEnoughDistance = 20;
 	bool _resizeMode = false;
 	Index _dragIndex;
 };

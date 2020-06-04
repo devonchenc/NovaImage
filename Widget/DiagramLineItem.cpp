@@ -34,7 +34,8 @@ QPen DiagramLineItem::pointPen() const
 
 bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 {
-	qreal delta = std::abs(p1.x() - p2.x()) + std::abs(p1.y() - p2.y());
+//	qreal delta = std::abs(p1.x() - p2.x()) + std::abs(p1.y() - p2.y());
+	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
 }
 
@@ -76,6 +77,8 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 	_dragIndex = static_cast<Index>(index);
 
+	qDebug() << "_dragIndex: " << _dragIndex;
+
 	QGraphicsLineItem::mousePressEvent(event);
 }
 
@@ -91,15 +94,16 @@ void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 		if (_dragIndex == Point1)
 		{
-			QLineF newLine(event->scenePos(), line().p2());
+			QLineF newLine(event->scenePos(), mapToScene(line().p2()));
 			setLine(newLine);
 		}
 		else
 		{
-			QLineF newLine(line().p1(), event->scenePos());
+			QLineF newLine(mapToScene(line().p1()), event->scenePos());
 			setLine(newLine);
 		}
 	}
+//	qDebug() << "Moving: " << mapToScene(line().p1()) << " " << mapToScene(line().p2());
 	QGraphicsLineItem::mouseMoveEvent(event);
 }
 

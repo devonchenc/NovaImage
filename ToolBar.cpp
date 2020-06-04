@@ -200,7 +200,7 @@ void ToolBar::createButton()
 	menu->addAction(_ellipseAction);
 	menu->addAction(_arrowAction);
 	_measurementButton->setMenu(menu);
-	_measurementButton->setIconByName("Resources/svg/ruler.svg");//ruler.svg
+	_measurementButton->setIconByName("Resources/svg/ruler.svg");
 	_measurementButton->setToolTip(tr("Measurements and tools"));
 	_measurementButton->installEventFilter(this);
 	_measurementButton->setCurrentAction(_rulerAction);
