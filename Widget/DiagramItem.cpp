@@ -14,6 +14,7 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsI
 	: QGraphicsPolygonItem(parent)
 	, _diagramType(diagramType)
 	, _contextMenu(contextMenu)
+	, _previousMode(MOVE_ITEM)
 {
 	QPainterPath path;
 	switch (_diagramType)
@@ -105,6 +106,11 @@ void DiagramItem::setRectF(const QRectF& rect)
 	setPolygon(_polygon);
 }
 
+void DiagramItem::setDrawingFinished(bool finished)
+{
+	_drawingFinished = finished;
+}
+
 QPixmap DiagramItem::image() const
 {
     QPixmap pixmap(250, 250);
@@ -171,6 +177,7 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	}
 
 	index = changeIndex(index);
+	qDebug() << "Mouse click: " << index;
 
     _scaleDirection = static_cast<Direction>(index);
 
@@ -178,7 +185,7 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     if (!_resizeMode)
 	{
         qDebug() << "item type " << this->type() << " start moving from" << scenePos();
-        QGraphicsItem::mousePressEvent(event);
+		QGraphicsPolygonItem::mousePressEvent(event);
     }
 }
 
@@ -194,7 +201,7 @@ void DiagramItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
         _polygon = scaledPolygon(_polygon, _scaleDirection, event->pos());
         setPolygon(_polygon);
     }
-    QGraphicsItem::mouseMoveEvent(event);
+	QGraphicsPolygonItem::mouseMoveEvent(event);
 }
 
 void DiagramItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
@@ -204,13 +211,14 @@ void DiagramItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 		return;
 
     _resizeMode = false;
-    QGraphicsItem::mouseReleaseEvent(event);
+	QGraphicsPolygonItem::mouseReleaseEvent(event);
 }
 
 void DiagramItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 {
     setCursor(Qt::ArrowCursor);
     int index = 0;
+	bool closeToHandlerPoint = false;
 	QList<QPointF> pointList = resizeHandlePoints();
     foreach (QPointF const& p, pointList)
 	{
@@ -222,25 +230,61 @@ void DiagramItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
             case TopLeft:
             case BottomRight:
 				setCursor(Qt::SizeFDiagCursor);
+				closeToHandlerPoint = true;
 				break;
             case Top:
             case Bottom:
 				setCursor(Qt::SizeVerCursor);
+				closeToHandlerPoint = true;
 				break;
             case TopRight:
             case BottomLeft:
 				setCursor(Qt::SizeBDiagCursor);
+				closeToHandlerPoint = true;
 				break;
             case Left:
             case Right:
 				setCursor(Qt::SizeHorCursor);
+				closeToHandlerPoint = true;
 				break;
             }
             break;
         }
         index++;
     }
-    QGraphicsItem::hoverMoveEvent(event);
+
+	if (_drawingFinished)
+	{
+		GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+		if (closeToHandlerPoint)
+		{
+			// Close to handler points
+			scene->setMode(MOVE_ITEM);
+		}
+		else
+		{
+			scene->setMode(_previousMode);
+		}
+	}
+
+	QGraphicsPolygonItem::hoverMoveEvent(event);
+}
+
+void DiagramItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
+{
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	_previousMode = scene->mode();
+
+	QGraphicsPolygonItem::hoverEnterEvent(event);
+}
+
+void DiagramItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
+{
+	// Restore mode
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	scene->setMode(_previousMode);
+
+	QGraphicsPolygonItem::hoverLeaveEvent(event);
 }
 
 void DiagramItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
@@ -378,6 +422,6 @@ int DiagramItem::changeIndex(int index)
 
 bool DiagramItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 {
-	qreal delta = std::abs(p1.x() - p2.x()) + std::abs(p1.y() - p2.y());
+	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
 }

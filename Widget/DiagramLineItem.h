@@ -22,6 +22,8 @@ public:
 	void setPointPen(const QPen& pen);
 	QPen pointPen() const;
 
+	void setDrawingFinished(bool finished);
+
 signals:
 	void itemSelectedChange(QGraphicsItem* item);
 
@@ -44,9 +46,9 @@ private:
 private:
     QMenu* _contextMenu;
 	QPen _pointPen;
-	static constexpr qreal closeEnoughDistance = 20;
+	static constexpr qreal closeEnoughDistance = 12;
 	bool _resizeMode = false;
 	Index _dragIndex;
-public:
 	bool _drawingFinished = false;
+	int _previousMode;
 };

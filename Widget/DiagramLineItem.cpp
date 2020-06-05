@@ -12,6 +12,7 @@
 DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
 	, _contextMenu(contextMenu)
+	, _previousMode(MOVE_ITEM)
 {
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -33,9 +34,13 @@ QPen DiagramLineItem::pointPen() const
 	return _pointPen;
 }
 
+void DiagramLineItem::setDrawingFinished(bool finished)
+{
+	_drawingFinished = finished;
+}
+
 bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 {
-//	qreal delta = std::abs(p1.x() - p2.x()) + std::abs(p1.y() - p2.y());
 	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
 }
@@ -116,50 +121,47 @@ void DiagramLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 void DiagramLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 {
 	setCursor(Qt::ArrowCursor);
+	bool closeToHandlerPoint = false;
 	QList<QPointF> pointList = resizeHandlePoints();
 	foreach (QPointF const& p, pointList)
 	{
 		if (isCloseEnough(p, event->pos()))
 		{
 			setCursor(Qt::SizeAllCursor);
+			closeToHandlerPoint = true;
 		}
 	}
+
+	if (_drawingFinished)
+	{
+		GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+		if (closeToHandlerPoint)
+		{
+			// Close to handler points
+			scene->setMode(MOVE_ITEM);
+		}
+		else
+		{
+			scene->setMode(_previousMode);
+		}
+	}
+
 	QGraphicsLineItem::hoverMoveEvent(event);
 }
 
 void DiagramLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-	setCursor(Qt::ArrowCursor);
-	QList<QPointF> pointList = resizeHandlePoints();
-	foreach(QPointF const& p, pointList)
-	{
-		if (isCloseEnough(p, event->pos()))
-		{
-			setCursor(Qt::SizeAllCursor);
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	_previousMode = scene->mode();
 
-			// TODO
-			setPointPen(QPen(Qt::red));
-
-			if (_drawingFinished)
-			{
-				GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-				scene->setMode(MOVE_ITEM);
-			}
-			scene()->update();
-		}
-	}
 	QGraphicsLineItem::hoverEnterEvent(event);
 }
 
 void DiagramLineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
-	setPointPen(QPen(Qt::blue));
-	if (_drawingFinished)
-	{
-		GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-		scene->setMode(INSERT_ITEM);
-	}
-	scene()->update();
+	// Restore mode
+	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+	scene->setMode(_previousMode);
 
 	QGraphicsLineItem::hoverLeaveEvent(event);
 }

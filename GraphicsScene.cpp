@@ -183,7 +183,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 	// Clear all selected items
 	clearSelection();
 
-	qDebug() << "here:   " <<  _mode;
+	qDebug() << "Mode:   " << _mode;
 
 	if (_mode == INSERT_ITEM)
 	{
@@ -252,13 +252,14 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 		{
 			QRectF rect(_startPoint, point);
 			_currentDrawingItem->setRectF(rect);
-			if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
+			if (fabs(rect.width()) < MIN_SIZE && fabs(rect.height()) < MIN_SIZE)
 			{
 				removeItem(_currentDrawingItem);
 				delete _currentDrawingItem;
 			}
 			else
 			{
+				_currentDrawingItem->setDrawingFinished(true);
 				_currentDrawingItem->setSelected(true);
 			}
 			_currentDrawingItem = nullptr;
@@ -275,7 +276,7 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 		}
 		else
 		{
-			_currentDrawingLine->_drawingFinished = true;
+			_currentDrawingLine->setDrawingFinished(true);
 			_currentDrawingLine->setSelected(true);
 		}
 		_currentDrawingLine = nullptr;
