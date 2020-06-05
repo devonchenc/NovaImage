@@ -72,8 +72,16 @@ void ToolBar::createAction()
 	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
 	_rectAction = new QAction(tr("Rectangle"), this);
 	_rectAction->setIcon(QIcon("Resources/svg/rectangle.svg"));
+	_roundrectAction = new QAction(tr("Round Rectangle"), this);
+	_roundrectAction->setIcon(QIcon("Resources/svg/roundrectangle.svg"));
+	_circleAction = new QAction(tr("Circle"), this);
+	_circleAction->setIcon(QIcon("Resources/svg/circle.svg"));
 	_ellipseAction = new QAction(tr("Ellipse"), this);
 	_ellipseAction->setIcon(QIcon("Resources/svg/ellipse.svg"));
+	_rhombusAction = new QAction(tr("Rhombus"), this);
+	_rhombusAction->setIcon(QIcon("Resources/svg/rhombus.svg"));
+	_parallelogramAction = new QAction(tr("Parallelogram"), this);
+	_parallelogramAction->setIcon(QIcon("Resources/svg/parallelogram.svg"));
 	_arrowAction = new QAction(tr("Arrow"), this);
 	_arrowAction->setIcon(QIcon("Resources/svg/arrow.svg"));
 
@@ -102,7 +110,11 @@ void ToolBar::createAction()
 	connect(_rulerAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_angleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_rectAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_roundrectAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_circleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_ellipseAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_rhombusAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_parallelogramAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_arrowAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 }
 
@@ -196,9 +208,14 @@ void ToolBar::createButton()
 	menu = new QMenu(this);
 	menu->addAction(_rulerAction);
 	menu->addAction(_angleAction);
-	menu->addAction(_rectAction);
-	menu->addAction(_ellipseAction);
 	menu->addAction(_arrowAction);
+	menu->addSeparator();
+	menu->addAction(_rectAction);
+	menu->addAction(_roundrectAction);
+	menu->addAction(_circleAction);
+	menu->addAction(_ellipseAction);
+	menu->addAction(_rhombusAction);
+	menu->addAction(_parallelogramAction);
 	_measurementButton->setMenu(menu);
 	_measurementButton->setIconByName("Resources/svg/ruler.svg");
 	_measurementButton->setToolTip(tr("Measurements and tools"));
@@ -302,20 +319,40 @@ void ToolBar::measurementChanged()
 	{
 		_measurementButton->setIconByName("Resources/svg/angle.svg");
 	}
+	else if (action == _arrowAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/arrow.svg");
+		getGlobalView()->setItemType(DiagramItem::Line);
+	}
 	else if (action == _rectAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/rectangle.svg");
 		getGlobalView()->setItemType(DiagramItem::Rect);
+	}
+	else if (action == _roundrectAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/roundrectangle.svg");
+		getGlobalView()->setItemType(DiagramItem::RoundRect);
+	}
+	else if (action == _circleAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/circle.svg");
+		getGlobalView()->setItemType(DiagramItem::Circle);
 	}
 	else if (action == _ellipseAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/ellipse.svg");
 		getGlobalView()->setItemType(DiagramItem::Ellipse);
 	}
-	else if (action == _arrowAction)
+	else if (action == _rhombusAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/arrow.svg");
-		getGlobalView()->setItemType(DiagramItem::Line);
+		_measurementButton->setIconByName("Resources/svg/rhombus.svg");
+		getGlobalView()->setItemType(DiagramItem::Rhombus);
+	}
+	else if (action == _parallelogramAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/parallelogram.svg");
+		getGlobalView()->setItemType(DiagramItem::Parallelogram);
 	}
 	getGlobalView()->setSceneMode(INSERT_ITEM);
 	_measurementButton->setMouseHandler(new DrawMouseHandler());
