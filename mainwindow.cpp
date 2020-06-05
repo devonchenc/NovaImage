@@ -174,13 +174,13 @@ void MainWindow::createStatusBar()
 	_slider = new QSlider(mainStatusBar);
 	_slider->setOrientation(Qt::Horizontal);
 	_slider->setMinimum(0);
-	_slider->setMaximum(300);
-	_slider->setSingleStep(5);
-	_slider->setValue(150);
+	_slider->setMaximum(MAX_ZOOM);
+	_slider->setSingleStep(ZOOM_STEP / 5);
+	_slider->setValue(MAX_ZOOM / 2);
 	_slider->setMaximumWidth(200);
 	_slider->setTickPosition(QSlider::TicksBelow);
-	connect(_view->view(), &GraphicsView::valueChanged, _slider, &QSlider::setValue);
-	connect(_slider, &QSlider::valueChanged, _view->view(), &GraphicsView::setValue);
+	connect(_view->view(), &GraphicsView::zoomValueChanged, _slider, &QSlider::setValue);
+	connect(_slider, &QSlider::valueChanged, _view->view(), &GraphicsView::setZoomValue);
 
 	mainStatusBar->addPermanentWidget(infoLabel);
 	mainStatusBar->addPermanentWidget(coordinateLabel);

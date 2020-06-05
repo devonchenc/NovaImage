@@ -4,6 +4,7 @@
 #include "View.h"
 #include "GraphicsView.h"
 #include "ToolButton.h"
+#include <QDebug>
 
 QPoint MouseHandler::_mousePos;
 ToolButton* MouseHandler::_leftButton = nullptr;
@@ -65,7 +66,12 @@ void ZoomMouseHandler::press(QMouseEvent* event)
 
 void ZoomMouseHandler::move(QMouseEvent* event)
 {
+	QPoint delta = _mousePos - event->pos();
+	_mousePos = event->pos();
 
+	qDebug() << delta.y();
+
+	getGlobalView()->view()->setZoomValueOffset(delta.y());
 }
 
 void ZoomMouseHandler::release(QMouseEvent* event)

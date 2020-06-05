@@ -30,9 +30,11 @@ protected:
 	bool eventFilter(QObject* obj, QEvent* event) override;
 
 private slots:
+	void zoomButtonClicked();
 	void selectItem();
 	void moveScene();
 	void cursorButtonTriggered(QAction* action);
+	void cursorButtonUnbounded();
 	void measurementChanged();
 	void measurementButtonTriggered(QAction* action);
 

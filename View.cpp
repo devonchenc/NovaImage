@@ -127,7 +127,11 @@ void View::resetImage()
 
 void View::setSceneMode(int mode)
 {
-	if (mode == MOVE_SCENE)
+	if (mode == NO_DRAG)
+	{
+		_view->setDragMode(QGraphicsView::NoDrag);
+	}
+	else if (mode == MOVE_SCENE)
 	{
 		_view->setDragMode(QGraphicsView::ScrollHandDrag);
 	}
@@ -152,9 +156,9 @@ void View::fitWindow()
 	
 	qreal ratio = qMin(rect.width() / imageWidth, rect.height() / imageHeight);
 
-	int value = log2(ratio) * 50 + MAX_ZOOM / 2;
-	_view->setValue(value);
-	emit _view->valueChanged(value);
+	int value = log2(ratio) * ZOOM_STEP + MAX_ZOOM / 2;
+	_view->setZoomValue(value);
+	emit _view->zoomValueChanged(value);
 }
 
 void View::zoomNormal()

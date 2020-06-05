@@ -3,7 +3,8 @@
 #include <QGraphicsView>
 #include <QWheelEvent>
 
-#define MAX_ZOOM		300
+#define MAX_ZOOM		1200
+#define ZOOM_STEP		200
 
 class View;
 
@@ -20,14 +21,16 @@ protected:
 #endif
 
 signals:
-	void valueChanged(int value);
+	void zoomValueChanged(int value);
 
 	void showCoordinate(const QString& str);
 
 	void showPixelValue(const QString& str);
 
 public slots:
-	void setValue(int value);
+	void setZoomValue(int value);
+
+	void setZoomValueOffset(int offset);
 
 	void zoomNormal();
 	void zoom2x();
@@ -44,7 +47,7 @@ protected:
 //	QPointF getCenter() { return _currentCenter; }
 
 private:
-	void applyValue();
+	void applyZoomValue();
 
 private:
 	View* _view;

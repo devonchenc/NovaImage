@@ -12,8 +12,7 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	, _zoomFactor(MAX_ZOOM / 2)
 	, _isLBtnDown(false)
 {
-	setDragMode(QGraphicsView::NoDrag);//ScrollHandDrag
-//	setDragMode(QGraphicsView::ScrollHandDrag);
+	setDragMode(QGraphicsView::NoDrag);
 
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
@@ -40,55 +39,61 @@ void GraphicsView::wheelEvent(QWheelEvent* e)
 }
 #endif
 
-void GraphicsView::setValue(int value)
+void GraphicsView::setZoomValue(int value)
 {
 	_zoomFactor = value;
-	applyValue();
+	applyZoomValue();
+}
+
+void GraphicsView::setZoomValueOffset(int offset)
+{
+	_zoomFactor += offset;
+	emit zoomValueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoomNormal()
 {
 	_zoomFactor = MAX_ZOOM / 2;
-	emit valueChanged(_zoomFactor);
+	emit zoomValueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoom2x()
 {
-	_zoomFactor = MAX_ZOOM / 2 + 50;
-	emit valueChanged(_zoomFactor);
+	_zoomFactor = MAX_ZOOM / 2 + ZOOM_STEP;
+	emit zoomValueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoom4x()
 {
-	_zoomFactor = MAX_ZOOM / 2 + 100;
-	emit valueChanged(_zoomFactor);
+	_zoomFactor = MAX_ZOOM / 2 + ZOOM_STEP * 2;
+	emit zoomValueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoom8x()
 {
-	_zoomFactor = MAX_ZOOM / 2 + 150;
-	emit valueChanged(_zoomFactor);
+	_zoomFactor = MAX_ZOOM / 2 + ZOOM_STEP * 3;
+	emit zoomValueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoomIn()
 {
-	_zoomFactor += 5;
+	_zoomFactor += ZOOM_STEP / 10;
 	_zoomFactor = qMin(_zoomFactor, MAX_ZOOM);
-	emit valueChanged(_zoomFactor);
+	emit zoomValueChanged(_zoomFactor);
 }
 
 void GraphicsView::zoomOut()
 {
-	_zoomFactor -= 5;
+	_zoomFactor -= ZOOM_STEP / 10;
 	_zoomFactor = qMax(0, _zoomFactor);
-	emit valueChanged(_zoomFactor);
+	emit zoomValueChanged(_zoomFactor);
 }
 
-void GraphicsView::applyValue()
+void GraphicsView::applyZoomValue()
 {
 	_zoomFactor = qMax(0, _zoomFactor);
 	_zoomFactor = qMin(_zoomFactor, MAX_ZOOM);
-	qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(50));
+	qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
 
 	QMatrix matrix;
 	matrix.scale(scale, scale);

@@ -10,9 +10,10 @@ QT_END_NAMESPACE
 
 class DiagramLineItem;
 
-#define MOVE_ITEM		0
-#define MOVE_SCENE		1
-#define INSERT_ITEM		2
+#define NO_DRAG			0
+#define MOVE_ITEM		1
+#define MOVE_SCENE		2
+#define INSERT_ITEM		3
 
 class GraphicsScene : public QGraphicsScene
 {

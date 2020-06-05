@@ -190,6 +190,7 @@ void ToolBar::createButton()
 	_zoomButton->setIconByName("Resources/svg/zoom.svg");
 	_zoomButton->setToolTip(tr("Zoom image"));
 	_zoomButton->installEventFilter(this);
+	connect(_zoomButton, &QToolButton::clicked, this, &ToolBar::zoomButtonClicked);
 
 	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -202,6 +203,7 @@ void ToolBar::createButton()
 	_cursorButton->installEventFilter(this);
 	_cursorButton->setCurrentAction(_cursorAction);
 	connect(_cursorButton, &QToolButton::triggered, this, &ToolBar::cursorButtonTriggered);
+	connect(_cursorButton, &ToolButton::unbounded, this, &ToolBar::cursorButtonUnbounded);
 
 	_measurementButton = new ToolButton;
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -258,7 +260,14 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 			// Make sure the clicked location is on the button not the menu area
 			if (mouseEvent->pos().x() < toolButton->size().width() - 12)
 			{
-				toolButton->currentAction()->trigger();
+				if (toolButton->currentAction())
+				{
+					toolButton->currentAction()->trigger();
+				}
+				else
+				{
+					toolButton->click();
+				}
 
 				if (mouseEvent->button() == Qt::LeftButton)
 				{
@@ -283,6 +292,11 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 	}
 }
 
+void ToolBar::zoomButtonClicked()
+{
+	_zoomButton->setMouseHandler(new ZoomMouseHandler());
+}
+
 void ToolBar::selectItem()
 {
 	getGlobalView()->setSceneMode(MOVE_ITEM);
@@ -302,6 +316,11 @@ void ToolBar::cursorButtonTriggered(QAction* action)
 	_cursorButton->setCurrentAction(action);
 	ToolButton::setLeftMouseButton(_cursorButton);
 	MouseHandler::setLeftButton(_cursorButton);
+}
+
+void ToolBar::cursorButtonUnbounded()
+{
+	getGlobalView()->setSceneMode(NO_DRAG);
 }
 
 void ToolBar::measurementChanged()
