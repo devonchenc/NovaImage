@@ -39,6 +39,7 @@
     <ClCompile Include="Widget\DiagramTextItem.cpp" />
     <ClCompile Include="Widget\HistogramProcessor.cpp" />
     <ClCompile Include="Widget\HistogramWidget.cpp" />
+    <ClCompile Include="Widget\InverseProcessor.cpp" />
     <ClCompile Include="Widget\LevelsProcessor.cpp" />
     <ClCompile Include="Widget\LevelsWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
@@ -52,7 +53,7 @@
     <QtMoc Include="View.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Document.h" />
+    <QtMoc Include="Document.h" />
     <ClInclude Include="GlobalFunc.h" />
     <QtMoc Include="GraphicsScene.h" />
     <QtMoc Include="Widget\ColorButton.h" />
@@ -68,6 +69,7 @@
     <QtMoc Include="Widget\DiagramTextItem.h" />
     <QtMoc Include="Widget\DiagramLineItem.h" />
     <ClInclude Include="Widget\HistogramProcessor.h" />
+    <ClInclude Include="Widget\InverseProcessor.h" />
     <ClInclude Include="Widget\LevelsProcessor.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />

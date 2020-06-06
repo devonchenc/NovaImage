@@ -3,18 +3,7 @@
 typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
-/*#include "TemplateImage.h"
 
-#define DECLARE_TEMPLATE_INTERFACE \
-public: \
-	virtual void processUCharImage(TemplateImage<uchar>* image) { processTemplate<uchar>(image); } \
-	virtual void processShortImage(TemplateImage<short>* image) { processTemplate<short>(image); } \
-	virtual void processUShortImage(TemplateImage<ushort>* image) { processTemplate<ushort>(image); } \
-	virtual void processIntImage(TemplateImage<int>* image) { processTemplate<int>(image); } \
-	virtual void processUIntImage(TemplateImage<uint>* image) { processTemplate<uint>(image); } \
-	virtual void processFloatImage(TemplateImage<float>* image) { processTemplate<float>(image); } \
-	virtual void processDoubleImage(TemplateImage<double>* image) { processTemplate<double>(image); }
-	*/
 class BaseImage;
 class GeneralImage;
 class MonoImage;
@@ -23,8 +12,6 @@ class RegionImage;
 // Base class of image processing algorithm
 class BaseProcessor
 {
-//	DECLARE_TEMPLATE_INTERFACE
-
 public:
 	BaseProcessor();
 	~BaseProcessor();

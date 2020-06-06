@@ -3,6 +3,7 @@
 #include <QString>
 #include <QPair>
 #include <QVector>
+#include <QObject>
 
 class MainWindow;
 class View;
@@ -23,8 +24,10 @@ enum ENUM_IMAGE_FORMAT
 	IMAGE_FORMAT_DICOM = 10,
 };
 
-class Document
+class Document : public QObject
 {
+	Q_OBJECT
+
 public:
 	Document(MainWindow* pWindow);
 	~Document();
@@ -42,6 +45,9 @@ public:
 
 	// Repaint view
 	void repaintView();
+
+public:
+	void inverseImage();
 
 private:
 	View* getView() const;

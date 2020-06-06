@@ -10,6 +10,7 @@
 #include "mainwindow.h"
 #include "ToolButton.h"
 #include "View.h"
+#include "Document.h"
 #include "MouseHandler.h"
 
 ToolBar::ToolBar(QWidget* parent)
@@ -95,7 +96,7 @@ void ToolBar::createAction()
 	connect(_crossAction, &QAction::triggered, mainWindow, &MainWindow::showCrossLine);
 	connect(_scaleAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
 	connect(_imageWindowAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
-	connect(_imageNegativeAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
+	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
 	connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
 	connect(_1xAction, &QAction::triggered, mainWindow->getView(), &View::zoomNormal);

@@ -1,10 +1,13 @@
-﻿#include "document.h"
+﻿#include "Document.h"
+
 #include "mainwindow.h"
-#include "view.h"
+#include "View.h"
 #include "Image/BaseImage.h"
 #include "Image/GeneralImage.h"
 #include "Image/ScanImage.h"
 #include "Image/DicomImage.h"
+#include "Widget/LevelsProcessor.h"
+#include "Widget/InverseProcessor.h"
 
 Document::Document(MainWindow* pWindow)
 	: pMainWindow(pWindow)
@@ -55,12 +58,10 @@ bool Document::openFile(const QString& fileName)
 		return false;
 	}
 
-	// TODO
 	_image->histogramStatistic();
 
-//	getView()->zoomFitWindow();
-	
 	getView()->showImage(_image->getImageEntity());
+//	getView()->fitWindow();
 
 	pMainWindow->imageOpened();
 
@@ -148,13 +149,23 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
 	getView()->repaint();
 }
 
-View* Document::getView() const
-{
-	return pMainWindow->getView();
-}
-
 // Repaint view
 void Document::repaintView()
 {
 	getView()->showImage(_image->getImageEntity());
+}
+
+void Document::inverseImage()
+{
+	float maxValue = _image->getMaxValue();
+	float minValue = _image->getMinValue();
+	InverseProcessor processor;
+	processor.process(getImage());
+
+	repaintView();
+}
+
+View* Document::getView() const
+{
+	return pMainWindow->getView();
 }

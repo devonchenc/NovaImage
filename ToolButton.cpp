@@ -67,6 +67,10 @@ ToolButton* ToolButton::leftMouseButton()
 
 void ToolButton::setRightMouseButton(ToolButton* toolButton)
 {
+	if (_rightMouseButton)
+	{
+		_rightMouseButton->emit unbounded();
+	}
 	_rightMouseButton = toolButton;
 	updateAllButtonsIcon();
 }

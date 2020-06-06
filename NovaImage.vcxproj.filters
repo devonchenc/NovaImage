@@ -135,6 +135,9 @@
     <ClCompile Include="MouseHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\InverseProcessor.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="View.h">
@@ -188,6 +191,9 @@
     <QtMoc Include="ToolButton.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Document.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image\BaseImage.h">
@@ -238,11 +244,11 @@
     <ClInclude Include="Image\MonoImage.h">
       <Filter>Image</Filter>
     </ClInclude>
-    <ClInclude Include="Document.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MouseHandler.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget\InverseProcessor.h">
+      <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

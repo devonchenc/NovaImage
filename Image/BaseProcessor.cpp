@@ -4,8 +4,6 @@
 #include <typeinfo.h>
 #include "GeneralImage.h"
 #include "MonoImage.h"
-//#include "FloatScanImage.h"
-//#include "ShortScanImage.h"
 //#include "RegionImage.h"
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
