@@ -8,6 +8,7 @@
 CurveSquare::CurveSquare(QWidget* parent)
 	: QWidget(parent)
 	, _size(256)
+	, _arraySize(_size + 1)
 	, _rectSquare(30, 0, _size, _size)
 	, _curveOrLinear(true)
 	, _channel(0)
@@ -19,11 +20,11 @@ CurveSquare::CurveSquare(QWidget* parent)
 	initPegsArray();
 
 	// Initialize array
-	_arrayIntensity = new uint[_size];
-	_arrayRed = new uint[_size];
-	_arrayGreen = new uint[_size];
-	_arrayBlue = new uint[_size];
-	for (int i = 0; i < _size; i++)
+	_arrayIntensity = new uint[_arraySize];
+	_arrayRed = new uint[_arraySize];
+	_arrayGreen = new uint[_arraySize];
+	_arrayBlue = new uint[_arraySize];
+	for (int i = 0; i < _arraySize; i++)
 	{
 		_arrayIntensity[i] = _arrayRed[i] = _arrayGreen[i] = _arrayBlue[i] = i;
 	}
@@ -78,9 +79,9 @@ void CurveSquare::reverse()
 		_activePegs->operator[](i).setPoint(point);
 	}
 	// Reverse array
-	for (int i = 0; i < _size; i++)
+	for (int i = 0; i < _arraySize; i++)
 	{
-		_activeArray[i] = _size - _activeArray[i] - 1;
+		_activeArray[i] = _arraySize - _activeArray[i] - 1;
 	}
 	repaint();
 
@@ -135,10 +136,11 @@ void CurveSquare::resizeEvent(QResizeEvent* event)
 	{
 		delete[] _arrayBlue;
 	}
-	_arrayIntensity = new uint[_size];
-	_arrayRed = new uint[_size];
-	_arrayGreen = new uint[_size];
-	_arrayBlue = new uint[_size];
+	_arraySize = _size + 1;
+	_arrayIntensity = new uint[_arraySize];
+	_arrayRed = new uint[_arraySize];
+	_arrayGreen = new uint[_arraySize];
+	_arrayBlue = new uint[_arraySize];
 	if (_channel == CURVE_CHANNEL_GRAY)
 	{
 		_activeArray = _arrayIntensity;
@@ -306,7 +308,7 @@ void CurveSquare::paintConnection(QColor color)
 
 	// Connect all pegs
 	QVector<QLine> lines;
-	for (int i = 0; i < _size - 1; i++)
+	for (int i = 0; i < _arraySize - 1; i++)
 	{
 		lines.append(QLine(getCoordinate(i, _activeArray[i]), getCoordinate(i + 1, _activeArray[i + 1])));
 	}
@@ -654,7 +656,7 @@ void CurveSquare::setLinearArrayValue(int index, bool flag)
 	else if (index > _activePegs->size() - 1 && !flag)
 	{
 		QSize size = getCurrentValue(index - 1);
-		for (int i = _size - 1; i >= size.width(); i--)
+		for (int i = _arraySize - 1; i >= size.width(); i--)
 		{
 			_activeArray[i] = size.height();
 		}
@@ -664,7 +666,7 @@ void CurveSquare::setLinearArrayValue(int index, bool flag)
 		if (flag)
 		{
 			QSize size = getCurrentValue(index);
-			for (int i = _size - 1; i >= size.width(); i--)
+			for (int i = _arraySize - 1; i >= size.width(); i--)
 			{
 				_activeArray[i] = size.height();
 			}
@@ -766,7 +768,7 @@ void CurveSquare::setCurveArrayValue()
 	{
 		_activeArray[i] = (uint)getCurrentValue(0).height();
 	}
-	for (int i = 0; getCurrentValue(num - 1).width() + i < _size; i++)
+	for (int i = 0; getCurrentValue(num - 1).width() + i < _arraySize; i++)
 	{
 		_activeArray[getCurrentValue(num - 1).width() + i] = (uint)getCurrentValue(num - 1).height();
 	}
@@ -791,7 +793,7 @@ void CurveSquare::removeAllPegs()
 	_activePegs->append(Peg(_size, 0));
 	_activePegIndex = 0;
 	// Initialize array
-	for (int i = 0; i < _size; i++)
+	for (int i = 0; i < _arraySize; i++)
 	{
 		_activeArray[i] = i;
 	}
@@ -877,9 +879,9 @@ void CurveSquare::setChannel(int channel)
 		_pegsGreen = _pegsIntensity;
 		_pegsBlue = _pegsIntensity;
 
-		memcpy(_arrayRed, _arrayIntensity, sizeof(uint) * _size);
-		memcpy(_arrayGreen, _arrayIntensity, sizeof(uint) * _size);
-		memcpy(_arrayBlue, _arrayIntensity, sizeof(uint) * _size);
+		memcpy(_arrayRed, _arrayIntensity, sizeof(uint) * _arraySize);
+		memcpy(_arrayGreen, _arrayIntensity, sizeof(uint) * _arraySize);
+		memcpy(_arrayBlue, _arrayIntensity, sizeof(uint) * _arraySize);
 	}
 
 	repaint();

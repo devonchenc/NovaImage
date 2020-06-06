@@ -64,7 +64,7 @@ void CommonProcessor::processMonoImage(MonoImage* image)
 
 	int width = image->width();
 	int height = image->height();
-	uchar* pBYTEImage = image->getBYTEImage();
+	uchar* byteImage = image->getBYTEImage();
 	float maxValue = image->getMaxValue();
 	float minValue = image->getMinValue();
 
@@ -85,15 +85,15 @@ void CommonProcessor::processMonoImage(MonoImage* image)
 		result *= (100.0f + _brightness / 2.0f) / 100.0f;
 		if (result >= maxValue)
 		{
-			pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 255;
+			byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
 		}
 		else if (result <= minValue)
 		{
-			pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 0;
+			byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
 		}
 		else
 		{
-			pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = uchar((result - minValue) * variable);
+			byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = uchar((result - minValue) * variable);
 		}
 	}
 
@@ -102,9 +102,9 @@ void CommonProcessor::processMonoImage(MonoImage* image)
 }
 
 // Process float array
-void CommonProcessor::processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)
+void CommonProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
-	assert(pArray && pByte);
+	assert(array && pByte);
 
 /*	float fAverage = float(minValue + maxValue) / 2.0f;
 	float fVariable;

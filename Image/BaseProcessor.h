@@ -25,7 +25,7 @@ public:
 	void process(BaseImage* image);
 
 	// Process float array
-	virtual void processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)	{}
+	virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)	{}
 
 protected:
 	virtual void processGeneralImage(GeneralImage* image) {}
@@ -35,7 +35,7 @@ protected:
 //	virtual void ProcessRegionImage(RegionImage* pImage);
 
 	// Convert float data to uchar data
-	void convertToByte(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte);
+	void convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte);
 
 private:
 	static BaseProcessor* _currentProcessor;

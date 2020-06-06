@@ -14,7 +14,7 @@ protected:
 	void processMonoImage(MonoImage* image) override;
 
 	// Process float array
-	virtual void processArray(float* pArray, int width, int height, float fMinValue, float fMaxValue, uchar* pByte);
+	virtual void processArray(float* array, int width, int height, float fMinValue, float fMaxValue, uchar* pByte);
 
 public:
 	void setPara(float bottom, float mid, float top);

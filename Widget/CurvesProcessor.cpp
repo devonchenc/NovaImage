@@ -70,7 +70,7 @@ void CurvesProcessor::processMonoImage(MonoImage* image)
 
 	int width = image->width();
 	int height = image->height();;
-	uchar* pBYTEImage = image->getBYTEImage();
+	uchar* byteImage = image->getBYTEImage();
 	float maxValue = image->getMaxValue();
 	float minValue = image->getMinValue();
 
@@ -84,7 +84,7 @@ void CurvesProcessor::processMonoImage(MonoImage* image)
 			for (int i = 0; i < width; i++)
 			{
 				int n = j * width + i;
-				pBYTEImage[3 * n] = pBYTEImage[3 * n + 1] = pBYTEImage[3 * n + 2] =
+				byteImage[3 * n] = byteImage[3 * n + 1] = byteImage[3 * n + 2] =
 					interpolation(image->getValue(n) - minValue, _arrayIntensity, _arrayNum, fVariable1, fVariable2);
 			}
 
@@ -99,9 +99,9 @@ void CurvesProcessor::processMonoImage(MonoImage* image)
 			for (int i = 0; i < width; i++)
 			{
 				int n = j * width + i;
-				pBYTEImage[3 * n] = interpolation(image->getValue(n) - minValue, _arrayRed, _arrayNum, fVariable1, fVariable2);
-				pBYTEImage[3 * n + 1] = interpolation(image->getValue(n) - minValue, _arrayGreen, _arrayNum, fVariable1, fVariable2);
-				pBYTEImage[3 * n + 2] = interpolation(image->getValue(n) - minValue, _arrayBlue, _arrayNum, fVariable1, fVariable2);
+				byteImage[3 * n] = interpolation(image->getValue(n) - minValue, _arrayRed, _arrayNum, fVariable1, fVariable2);
+				byteImage[3 * n + 1] = interpolation(image->getValue(n) - minValue, _arrayGreen, _arrayNum, fVariable1, fVariable2);
+				byteImage[3 * n + 2] = interpolation(image->getValue(n) - minValue, _arrayBlue, _arrayNum, fVariable1, fVariable2);
 			}
 
 			//	PIProgressSetPercent(j + 1, height);

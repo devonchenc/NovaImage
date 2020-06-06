@@ -60,9 +60,9 @@ BaseProcessor* BaseProcessor::setCurrentProcessor()
 	return oldProcessor;
 }
 
-void BaseProcessor::convertToByte(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)
+void BaseProcessor::convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
-	assert(pArray && pByte);
+	assert(array && pByte);
 
 	float variable;
 	if (maxValue != minValue)
@@ -76,6 +76,6 @@ void BaseProcessor::convertToByte(float* pArray, int width, int height, float mi
 
 	for (int i = 0; i < width * height; i++)
 	{
-		pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = uchar((pArray[i] - minValue) * variable);
+		pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = uchar((array[i] - minValue) * variable);
 	}
 }

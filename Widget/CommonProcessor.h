@@ -14,7 +14,7 @@ protected:
 	void processMonoImage(MonoImage* image) override;
 
 	// Process float array
-	void processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte) override;
+	void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
 
 public:
 	void setBrightnessAndContrast(int brightness, int contrast);

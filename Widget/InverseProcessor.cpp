@@ -53,21 +53,21 @@ void InverseProcessor::processMonoImage(MonoImage* image)
 
 	int width = image->width();
 	int height = image->height();
-	uchar* pBYTEImage = image->getBYTEImage();
+	uchar* byteImage = image->getBYTEImage();
 	float maxValue = image->getMaxValue();
 	float minValue = image->getMinValue();
 
-	for (int i = 0; i < width * height; i++)
+	for (int i = 0; i < width * height * 3; i++)
 	{
-		pBYTEImage[i] = 255 - pBYTEImage[i];
+		byteImage[i] = 255 - byteImage[i];
 	}
 
 	image->copyToImage();
 }
 
 // Process float array
-void InverseProcessor::processArray(float* pArray, int width, int height, uchar* pByte)
+void InverseProcessor::processArray(float* array, int width, int height, uchar* pByte)
 {
-	assert(pArray && pByte);
+	assert(array && pByte);
 	
 }

@@ -95,7 +95,7 @@ void HistogramProcessor::processMonoImage(MonoImage* image)
 
 	int width = image->width();
 	int height = image->height();
-	uchar* pBYTEImage = image->getBYTEImage();
+	uchar* byteImage = image->getBYTEImage();
 	float maxValue = image->getMaxValue();
 	float minValue = image->getMinValue();
 
@@ -133,23 +133,23 @@ void HistogramProcessor::processMonoImage(MonoImage* image)
 	{
 		if (image->getValue(i) >= actualMax)
 		{
-			pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 255;
+			byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
 		}
 		else if (image->getValue(i) <= actualMin)
 		{
-			pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 0;
+			byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
 		}
 		else
 		{
 			int index = round(float(image->getValue(i) - minValue) * (_arrayNum - 1) / float(maxValue - minValue));
 			if (_array[index])
 			{
-				pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] =
+				byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =
 					round((image->getValue(i) - actualMin) * 255.0f / (actualMax - actualMin));
 			}
 			else
 			{
-				pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 0;
+				byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
 			}
 		}
 	}

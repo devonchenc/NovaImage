@@ -84,7 +84,7 @@ CurvesWidget::CurvesWidget(QWidget* parent)
 	setLayout(layout);
 
 	_processor = new CurvesProcessor;
-	_processor->setArray(_square->getSize(), _square->getIntensity(), _square->getRed(), _square->getGreen(), _square->getBlue());
+	_processor->setArray(_square->getArraySize(), _square->getIntensity(), _square->getRed(), _square->getGreen(), _square->getBlue());
 	_processor->setChannel(_square->getChannel());
 }
 
@@ -315,6 +315,6 @@ void CurvesWidget::generateHistogram()
 
 void CurvesWidget::connectSqureWithProcessor()
 {
-	_processor->setArray(_square->getSize(), _square->getIntensity(), _square->getRed(), _square->getGreen(), _square->getBlue());
+	_processor->setArray(_square->getArraySize(), _square->getIntensity(), _square->getRed(), _square->getGreen(), _square->getBlue());
 	_processor->setChannel(_square->getChannel());
 }

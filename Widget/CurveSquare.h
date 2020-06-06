@@ -38,9 +38,11 @@ public:
 	// Generate histogram
 	bool generateHistogram(uint* pArray);
 
-	int getSize() { return _size; }
+	int getSize()		{ return _size; }
 
-	int getChannel() { return _channel; }
+	int getArraySize()	{ return _arraySize; }
+
+	int getChannel()	{ return _channel; }
 
 	void setChannel(int channel);
 
@@ -143,6 +145,8 @@ private:
 
 private:
 	int _size;
+
+	int _arraySize;
 
 	// Square rect
 	QRect _rectSquare;

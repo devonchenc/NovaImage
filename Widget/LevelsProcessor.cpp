@@ -67,7 +67,7 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 
 	int width = image->width();
 	int height = image->height();
-	uchar* pBYTEImage = image->getBYTEImage();
+	uchar* byteImage = image->getBYTEImage();
 	float maxValue = image->getMaxValue();
 	float minValue = image->getMinValue();
 
@@ -85,16 +85,16 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 			switch (channel)
 			{
 			case 0:
-				pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 0;
+				byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
 				break;
 			case 1:
-				pBYTEImage[3 * i + 2] = 0;
+				byteImage[3 * i + 2] = 0;
 				break;
 			case 2:
-				pBYTEImage[3 * i + 1] = 0;
+				byteImage[3 * i + 1] = 0;
 				break;
 			case 3:
-				pBYTEImage[3 * i] = 0;
+				byteImage[3 * i] = 0;
 				break;
 			}
 		}
@@ -103,16 +103,16 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 			switch (channel)
 			{
 			case 0:
-				pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = 255;
+				byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
 				break;
 			case 1:
-				pBYTEImage[3 * i + 2] = 255;
+				byteImage[3 * i + 2] = 255;
 				break;
 			case 2:
-				pBYTEImage[3 * i + 1] = 255;
+				byteImage[3 * i + 1] = 255;
 				break;
 			case 3:
-				pBYTEImage[3 * i] = 255;
+				byteImage[3 * i] = 255;
 				break;
 			}
 		}
@@ -124,16 +124,16 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 				switch (channel)
 				{
 				case 0:
-					pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = value;
+					byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
 					break;
 				case 1:
-					pBYTEImage[3 * i + 2] = value;
+					byteImage[3 * i + 2] = value;
 					break;
 				case 2:
-					pBYTEImage[3 * i + 1] = value;
+					byteImage[3 * i + 1] = value;
 					break;
 				case 3:
-					pBYTEImage[3 * i] = value;
+					byteImage[3 * i] = value;
 					break;
 				}
 			}
@@ -145,16 +145,16 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 					switch (channel)
 					{
 					case 0:
-						pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = value;
+						byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
 						break;
 					case 1:
-						pBYTEImage[3 * i + 2] = value;
+						byteImage[3 * i + 2] = value;
 						break;
 					case 2:
-						pBYTEImage[3 * i + 1] = value;
+						byteImage[3 * i + 1] = value;
 						break;
 					case 3:
-						pBYTEImage[3 * i] = value;
+						byteImage[3 * i] = value;
 						break;
 					}
 				}
@@ -164,16 +164,16 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 					switch (channel)
 					{
 					case 0:
-						pBYTEImage[3 * i] = pBYTEImage[3 * i + 1] = pBYTEImage[3 * i + 2] = value;
+						byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
 						break;
 					case 1:
-						pBYTEImage[3 * i + 2] = value;
+						byteImage[3 * i + 2] = value;
 						break;
 					case 2:
-						pBYTEImage[3 * i + 1] = value;
+						byteImage[3 * i + 1] = value;
 						break;
 					case 3:
-						pBYTEImage[3 * i] = value;
+						byteImage[3 * i] = value;
 						break;
 					}
 				}
@@ -185,9 +185,9 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 }
 
 // Process float array
-void LevelsProcessor::processArray(float* pArray, int width, int height, float minValue, float maxValue, uchar* pByte)
+void LevelsProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
-	assert(pArray && pByte);
+	assert(array && pByte);
 
 	int channel = 0;
 
