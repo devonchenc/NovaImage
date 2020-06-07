@@ -8,7 +8,7 @@ class MouseHandler
 {
 public:
 	MouseHandler() {}
-	virtual ~MouseHandler(){}
+	virtual ~MouseHandler() {}
 
 public:
 	static void handlePress(QMouseEvent* event);
@@ -34,6 +34,25 @@ protected:
 private:
 	static ToolButton* _leftButton;
 	static ToolButton* _rightButton;
+};
+
+class ImageWindowMouseHandler : public MouseHandler
+{
+public:
+	ImageWindowMouseHandler();
+
+	void press(QMouseEvent* event) override;
+
+	void move(QMouseEvent* event) override;
+
+	void release(QMouseEvent* event) override;
+
+private:
+	bool CalcImageWindow(QPoint point, float& bottom, float& top);
+
+	int _horzOrVert = 0;
+	float _bottom;
+	float _top;
 };
 
 class ZoomMouseHandler : public MouseHandler

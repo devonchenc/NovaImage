@@ -20,6 +20,11 @@ ToolButton::ToolButton(QWidget* parent)
 
 ToolButton::~ToolButton()
 {
+	if (_handler)
+	{
+		delete _handler;
+		_handler = nullptr;
+	}
 	for (int i = 0; i < _vec.size(); i++)
 	{
 		if (this == _vec[i])

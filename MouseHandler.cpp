@@ -1,10 +1,13 @@
 #include "MouseHandler.h"
 
+#include <QDebug>
+
 #include "GlobalFunc.h"
 #include "View.h"
 #include "GraphicsView.h"
 #include "ToolButton.h"
-#include <QDebug>
+#include "Image/BaseImage.h"
+#include "Widget/LevelsProcessor.h"
 
 QPoint MouseHandler::_mousePos;
 ToolButton* MouseHandler::_leftButton = nullptr;
@@ -56,6 +59,92 @@ void MouseHandler::setRightButton(ToolButton* button)
 {
 	_rightButton = button;
 }
+//////////////////////////////////////////////////////////////////////////
+
+ImageWindowMouseHandler::ImageWindowMouseHandler()
+{
+	_bottom = getGlobalImage()->getMinValue();
+	_top = getGlobalImage()->getMaxValue();
+}
+
+void ImageWindowMouseHandler::press(QMouseEvent* event)
+{
+}
+
+void ImageWindowMouseHandler::move(QMouseEvent* event)
+{
+	QPoint delta = _mousePos - event->pos();
+	_mousePos = event->pos();
+
+	// Calculate image window
+	float bottom, top;
+	if (CalcImageWindow(delta, bottom, top))
+	{
+		LevelsProcessor processor;
+		processor.setPara(bottom, 1.0f, top);
+		processor.process(getGlobalImage());
+	}
+
+	repaintView();
+}
+
+void ImageWindowMouseHandler::release(QMouseEvent* event)
+{
+	_horzOrVert = 0;
+}
+
+bool ImageWindowMouseHandler::CalcImageWindow(QPoint point, float& bottom, float& top)
+{
+	BaseImage* image = getGlobalImage();
+	float minValue = image->getMinValue();
+	float maxValue = image->getMaxValue();
+
+	QRect rect = getGlobalView()->rect();
+	if (abs(point.x()) > abs(point.y()) * 1.5f && _horzOrVert != -1)			// 鼠标横向平移
+	{
+		// 缩小窗
+		_horzOrVert = 1;
+
+		float fRatio = float(point.x()) / rect.width() * 0.5f;
+
+		float tempBottom = _bottom + (maxValue - minValue) * fRatio;
+		float tempTop = _top - (maxValue - minValue) * fRatio;
+		// Define the minimum gap between bottom and top
+		float threshold = (maxValue - minValue) * 0.01f;
+		if (tempBottom < tempTop - threshold)
+		{
+			bottom = tempBottom;
+			top = tempTop;
+		}
+		else
+		{
+			bottom = (tempTop + tempBottom) / 2.0f - threshold / 2.0f;
+			top = (tempTop + tempBottom) / 2.0f + threshold / 2.0f;
+		}
+
+		_bottom = bottom;
+		_top = top;
+		return true;
+	}
+	else if(abs(point.y()) > abs(point.x()) * 1.5f && _horzOrVert != 1)	// 鼠标纵向平移
+	{
+		// 平移窗
+		_horzOrVert = -1;
+
+		float fRatio = float(point.y()) / rect.height() * 0.5f;
+		qDebug() << fRatio << (maxValue - minValue) * fRatio << bottom << top;
+
+		_bottom += (maxValue - minValue) * fRatio;
+		_top += (maxValue - minValue) * fRatio * 0.5f;
+
+		bottom = _bottom;
+		top = _top;
+
+		return true;
+	}
+
+	return false;
+}
 
 //////////////////////////////////////////////////////////////////////////
 
@@ -68,8 +157,6 @@ void ZoomMouseHandler::move(QMouseEvent* event)
 {
 	QPoint delta = _mousePos - event->pos();
 	_mousePos = event->pos();
-
-	qDebug() << delta.y();
 
 	getGlobalView()->view()->setZoomValueOffset(delta.y());
 }

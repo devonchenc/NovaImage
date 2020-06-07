@@ -52,7 +52,6 @@ void ToolBar::createAction()
 	_scaleAction->setCheckable(true);
 	_scaleAction->setChecked(true);
 
-	_imageWindowAction = new QAction(tr("Adjust image window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 
 	_fitWindowAction = new QAction(tr("Fit window"), this);
@@ -95,7 +94,6 @@ void ToolBar::createAction()
 	connect(_annotationAction, &QAction::triggered, mainWindow, &MainWindow::showAnnotation);
 	connect(_crossAction, &QAction::triggered, mainWindow, &MainWindow::showCrossLine);
 	connect(_scaleAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
-	connect(_imageWindowAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
 	connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
@@ -174,6 +172,7 @@ void ToolBar::createButton()
 	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
 	_imageWindowToolButton->setToolTip(tr("Adjust image window"));
 	_imageWindowToolButton->installEventFilter(this);
+	connect(_imageWindowToolButton, &QToolButton::clicked, this, &ToolBar::imageWindowToolButtonClicked);
 
 	_zoomButton = new ToolButton;
 	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -291,6 +290,11 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 	{
 		return QToolBar::eventFilter(obj, event);
 	}
+}
+
+void ToolBar::imageWindowToolButtonClicked()
+{
+	_imageWindowToolButton->setMouseHandler(new ImageWindowMouseHandler());
 }
 
 void ToolBar::zoomButtonClicked()

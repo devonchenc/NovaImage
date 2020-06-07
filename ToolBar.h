@@ -30,6 +30,7 @@ protected:
 	bool eventFilter(QObject* obj, QEvent* event) override;
 
 private slots:
+	void imageWindowToolButtonClicked();
 	void zoomButtonClicked();
 	void selectItem();
 	void moveScene();
@@ -50,7 +51,6 @@ private:
 	QAction* _crossAction;
 	QAction* _scaleAction;
 
-	QAction* _imageWindowAction;
 	QAction* _imageNegativeAction;
 
 	QAction* _fitWindowAction;
