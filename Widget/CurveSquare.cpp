@@ -2,7 +2,7 @@
 
 #include <QPainter>
 #include <QMouseEvent>
-//#include <QtGlobal>
+
 #include "../GlobalFunc.h"
 
 CurveSquare::CurveSquare(QWidget* parent)

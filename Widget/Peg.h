@@ -3,7 +3,7 @@
 #include <QPoint>
 #include <QRect>
 
-#define PEG_RADIUS	6
+#define PEG_RADIUS	7
 
 class Peg
 {
@@ -34,7 +34,7 @@ public:
 	// Get rect
 	QRect rect() const
 	{
-		return QRect(x() - PEG_RADIUS, y() - PEG_RADIUS, x() + PEG_RADIUS, y() + PEG_RADIUS);
+		return QRect(x() - PEG_RADIUS, y() - PEG_RADIUS, PEG_RADIUS * 2, PEG_RADIUS * 2);
 	}
 
 	void setPoint(const QPoint& point)	{ _point = QPointF(qreal(point.x()) / _size, qreal(point.y()) / _size); }
