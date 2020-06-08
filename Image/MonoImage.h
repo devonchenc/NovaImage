@@ -14,18 +14,24 @@ public:
 	bool copyToImage();
 
 public:
-	// Histogram statistic
-	void histogramStatistic() override;
-
-	float getValue(const QPoint& position) const override;
-	float getValue(int index) const override;
-
 	int slice() const override { return _slice; }
 
 	float getMinValue() const override;
 
 	float getMaxValue() const override;
 
+	// Histogram statistic
+	void histogramStatistic() override;
+
+	float getValue(const QPoint& position) const override;
+	float getValue(int index) const override;
+
+	bool hasPixelSpacing() override { return false; }
+
+	float horzPixelSpacing() override { return 0; }
+	float vertPixelSpacing() override { return 0; }
+
+public:
 	// get uchar data
 	uchar* getBYTEImage() { return _byteImage; }
 

@@ -8,6 +8,8 @@
 #include <QDebug>
 
 #include "../GraphicsScene.h"
+#include "../GlobalFunc.h"
+#include "../Image/BaseImage.h"
 
 DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
@@ -39,17 +41,35 @@ void DiagramLineItem::setDrawingFinished(bool finished)
 	_drawingFinished = finished;
 }
 
+QList<QPointF> DiagramLineItem::resizeHandlePoints()
+{
+	return QList<QPointF>{line().p1(), line().p2()};
+}
+
 bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 {
 	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
 }
 
-QList<QPointF> DiagramLineItem::resizeHandlePoints()
+float DiagramLineItem::length()
 {
-	return QList<QPointF>{line().p1(), line().p2()};
-}
+	float offsetX = line().p1().x() - line().p2().x();
+	float offsetY = line().p1().y() - line().p2().y();
+	float length;
 
+	BaseImage* image = getGlobalImage();
+	if (image->hasPixelSpacing())
+	{
+		float horzPixelSpacing = image->horzPixelSpacing();
+		float vertPixelSpacing = image->vertPixelSpacing();
+		offsetX *= horzPixelSpacing;
+		offsetY *= vertPixelSpacing;
+	}
+
+	length = sqrt(offsetX * offsetX + offsetY * offsetY);
+	return length;
+}
 /*
 DiagramLineItem* DiagramLineItem::clone()
 {
@@ -168,13 +188,14 @@ void DiagramLineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 
 void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    // remove build-in selected state
-    QStyleOptionGraphicsItem myOption(*option);
-    myOption.state &= ~QStyle::State_Selected;
-	QGraphicsLineItem::paint(painter, &myOption, widget);
-
 	painter->setRenderHint(QPainter::Antialiasing, true);
 
+    // remove build-in selected state
+    QStyleOptionGraphicsItem myOption(*option);
+	myOption.state &= ~QStyle::State_Selected;
+	QGraphicsLineItem::paint(painter, &myOption, widget);
+
+	painter->setRenderHint(QPainter::Antialiasing, false);
     // add resize handles
 	qreal resizePointWidth = 6;
 	painter->setPen(_pointPen);
@@ -183,6 +204,11 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 		painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
 		painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
 	}
+
+	painter->setFont(QFont("Arial", 10));
+	QString str = QString::number(length(), 'f', 2);
+	painter->setPen(QPen(Qt::yellow));
+	painter->drawText(line().p2().x() + 10, line().p2().y() + 5, str);
 }
 
 void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)

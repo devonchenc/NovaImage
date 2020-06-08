@@ -29,6 +29,12 @@ public:
 	virtual float getValue(const QPoint& position) const = 0;
 	virtual float getValue(int index) const = 0;
 
+	virtual bool hasPixelSpacing()	{ return false; }
+
+	virtual float horzPixelSpacing() { return 0; }
+	virtual float vertPixelSpacing() { return 0; }
+
+public:
 	bool isOpenSucceed()			{ return _openSucceed; }
 
 	QString getPathName() const		{ return _pathName; }

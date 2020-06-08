@@ -110,17 +110,17 @@ bool DICOMImage::readData()
 		return false;
 	}
 
-	if (depth <= 8)
-	{
-	}
-	else if (depth <= 16)
-	{
-	}
-	else if (depth <= 32)
-	{
-	}
+	readMoreInfo(dataset);
 
 	DJDecoderRegistration::cleanup();
 
 	return true;
+}
+
+void DICOMImage::readMoreInfo(DcmDataset* dataset)
+{
+	const char* tagValue = new char[30];
+	dataset->findAndGetString(DCM_PixelSpacing, tagValue);
+
+	_horzPixelSpacing = _vertPixelSpacing = atof(tagValue);
 }

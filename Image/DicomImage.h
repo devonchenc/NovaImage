@@ -2,6 +2,8 @@
 
 #include "MonoImage.h"
 
+class DcmDataset;
+
 class DICOMImage : public MonoImage
 {
 public:
@@ -9,10 +11,20 @@ public:
 	DICOMImage(const QString& pathName);
 	virtual ~DICOMImage();
 
+public:
+	bool hasPixelSpacing() override { return true; }
+
+	float horzPixelSpacing() override { return _horzPixelSpacing; }
+	float vertPixelSpacing() override { return _vertPixelSpacing; }
+
 private:
 	// Read data
 	bool readData();
 
-private:
+	void readMoreInfo(DcmDataset* dataset);
 
+private:
+	float _horzPixelSpacing;
+	float _vertPixelSpacing;
+	float _imagerPixelSpacing;		// Detector pixel size
 };
