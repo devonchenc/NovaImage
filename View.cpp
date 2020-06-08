@@ -9,6 +9,9 @@
 
 #include "GraphicsView.h"
 #include "GraphicsScene.h"
+#include "Widget/LevelsProcessor.h"
+#include "GlobalFunc.h"
+#include "Document.h"
 
 View::View(QWidget* parent)
 	: QFrame(parent)
@@ -123,6 +126,14 @@ void View::resetImage()
 
 	_view->resetMatrix();
 	_scene->update();
+}
+
+void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
+{
+	_windowWidth = windowWidth;
+	_windowLevel = windowLevel;
+
+	getGlobalDocument()->applyImageWidthAndLevel();
 }
 
 void View::setSceneMode(int mode)

@@ -39,8 +39,6 @@ private:
 class ImageWindowMouseHandler : public MouseHandler
 {
 public:
-	ImageWindowMouseHandler();
-
 	void press(QMouseEvent* event) override;
 
 	void move(QMouseEvent* event) override;
@@ -48,11 +46,9 @@ public:
 	void release(QMouseEvent* event) override;
 
 private:
-	bool CalcImageWindow(QPoint point, float& bottom, float& top);
+	void CalcImageWindow(QPoint point);
 
 	int _horzOrVert = 0;
-	float _bottom;
-	float _top;
 };
 
 class ZoomMouseHandler : public MouseHandler

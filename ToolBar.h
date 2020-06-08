@@ -51,6 +51,7 @@ private:
 	QAction* _crossAction;
 	QAction* _scaleAction;
 
+	QAction* _restoreImageWindow;
 	QAction* _imageNegativeAction;
 
 	QAction* _fitWindowAction;

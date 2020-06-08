@@ -52,6 +52,7 @@ void ToolBar::createAction()
 	_scaleAction->setCheckable(true);
 	_scaleAction->setChecked(true);
 
+	_restoreImageWindow = new QAction(tr("Default window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 
 	_fitWindowAction = new QAction(tr("Fit window"), this);
@@ -94,6 +95,7 @@ void ToolBar::createAction()
 	connect(_annotationAction, &QAction::triggered, mainWindow, &MainWindow::showAnnotation);
 	connect(_crossAction, &QAction::triggered, mainWindow, &MainWindow::showCrossLine);
 	connect(_scaleAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
+	connect(_restoreImageWindow, &QAction::triggered, mainWindow->getDocument(), &Document::restoreImageWindow);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
 	connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
@@ -167,6 +169,8 @@ void ToolBar::createButton()
 	_imageWindowToolButton = new ToolButton;
 	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
+	menu->addAction(_restoreImageWindow);
+	menu->addSeparator();
 	menu->addAction(_imageNegativeAction);
 	_imageWindowToolButton->setMenu(menu);
 	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");

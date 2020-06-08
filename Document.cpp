@@ -61,6 +61,7 @@ bool Document::openFile(const QString& fileName)
 	_image->histogramStatistic();
 
 	getView()->showImage(_image->getImageEntity());
+	getView()->setWindowWidthAndLevel(_image->getMaxValue() - _image->getMinValue(), (_image->getMaxValue() + _image->getMinValue()) / 2);
 //	getView()->fitWindow();
 
 	pMainWindow->imageOpened();
@@ -153,6 +154,26 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
 void Document::repaintView()
 {
 	getView()->showImage(_image->getImageEntity());
+}
+
+void Document::restoreImageWindow()
+{
+	float maxValue = _image->getMaxValue();
+	float minValue = _image->getMinValue();
+
+	getView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+}
+
+void Document::applyImageWidthAndLevel()
+{
+	float windowWidth = getView()->windowWidth();
+	float windowLevel = getView()->windowLevel();
+
+	LevelsProcessor processor;
+	processor.setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
+	processor.process(getImage());
+
+	repaintView();
 }
 
 void Document::inverseImage()

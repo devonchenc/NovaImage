@@ -47,6 +47,10 @@ public:
 	void repaintView();
 
 public:
+	void restoreImageWindow();
+
+	void applyImageWidthAndLevel();
+
 	void inverseImage();
 
 private:

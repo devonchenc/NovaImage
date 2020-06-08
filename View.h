@@ -25,6 +25,12 @@ public:
 
 	void resetImage();
 
+	void setWindowWidthAndLevel(float windowWidth, float windowLevel);
+
+	float windowWidth() { return _windowWidth; }
+
+	float windowLevel() { return _windowLevel; }
+
 signals:
 	void showInfo(const QString& str);
 
@@ -68,4 +74,8 @@ private:
 	QAction* _deleteAction;
 
 	QList<QGraphicsItem*> pasteBoard;
+
+	// Window width
+	float _windowWidth;
+	float _windowLevel;
 };
