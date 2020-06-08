@@ -44,6 +44,8 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
+	void paintEvent(QPaintEvent* event) override;
+
 //	QPointF getCenter() { return _currentCenter; }
 
 private:

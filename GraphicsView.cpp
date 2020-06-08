@@ -139,3 +139,13 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent* event)
 
 	QGraphicsView::mouseReleaseEvent(event);
 }
+
+void GraphicsView::paintEvent(QPaintEvent* event)
+{
+	QGraphicsView::paintEvent(event);
+
+	QPainter painter(viewport());
+	painter.setFont(QFont("Arial", 30));
+	painter.setPen(QPen(Qt::yellow));
+	painter.drawText(QPointF(100, 100), "tetatatata");
+}

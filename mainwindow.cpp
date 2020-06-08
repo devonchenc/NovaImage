@@ -218,14 +218,16 @@ void MainWindow::createToolWidget()
 	CommonWidget* common = new CommonWidget();
 	createDockWidget(common);
 
-	CurvesWidget* curves = new CurvesWidget();
-	createDockWidget(curves);
-
 	LevelsWidget* levels = new LevelsWidget();
-	createDockWidget(levels);
+	QDockWidget* levelDockWidget = createDockWidget(levels);
+
+	CurvesWidget* curves = new CurvesWidget();
+	QDockWidget* curveDockWidget = createDockWidget(curves);
+
+	tabifyDockWidget(levelDockWidget, curveDockWidget);
 }
 
-void MainWindow::createDockWidget(BaseWidget* widget)
+QDockWidget* MainWindow::createDockWidget(BaseWidget* widget)
 {
 	QDockWidget* dockWidget = new QDockWidget(widget->getName(), this);
 	dockWidget->setWidget(widget);
@@ -233,6 +235,8 @@ void MainWindow::createDockWidget(BaseWidget* widget)
 	_vecDockWidget.append(dockWidget);
 
 	WidgetManager::getInstance()->addWidget(widget);
+
+	return dockWidget;
 }
 
 void MainWindow::openImage()

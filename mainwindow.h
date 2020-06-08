@@ -44,7 +44,7 @@ private:
 
 	void createToolWidget();
 
-	void createDockWidget(BaseWidget* widget);
+	QDockWidget* createDockWidget(BaseWidget* widget);
 
 	void createToolbar();
 

@@ -21,7 +21,6 @@ View::View(QWidget* parent)
 
 	_scene = new GraphicsScene(_itemMenu, parent);
 	_view = new GraphicsView(this, _scene);
-	setMouseTracking(true);
 
 	QVBoxLayout* layout = new QVBoxLayout;
 	layout->addWidget(_view);
