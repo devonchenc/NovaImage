@@ -4,7 +4,7 @@
 #include <QHBoxLayout>
 #include <QEvent>
 
-#include "LevelsProcessor.h"
+#include "../Processor/LevelsProcessor.h"
 #include "HistogramWidget.h"
 #include "../GlobalFunc.h"
 #include "../Image/BaseImage.h"

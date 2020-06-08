@@ -18,8 +18,7 @@ public:
 
 	GraphicsScene* scene();
 
-	void showImage(const QPixmap& image);
-	void showImage(const QImage* image);
+	void showImage(const QImage* image, bool resetMatrix = false);
 
 	QGraphicsPixmapItem* getPixmapItem() { return _currentImage; }
 
@@ -38,6 +37,12 @@ public slots:
 	void setSceneMode(int mode);
 
 	void setItemType(DiagramItem::DiagramType type);
+
+	void flipHorizontal();
+	void flipVertical();
+	void rotate90CW();
+	void rotate90CCW();
+	void rotate180();
 
 	void fitWindow();
 	void zoomNormal();

@@ -51,6 +51,13 @@ private:
 	QAction* _crossAction;
 	QAction* _scaleAction;
 
+	QAction* _flipHorizontalAction;
+	QAction* _flipVerticalAction;
+
+	QAction* _rotate90CW;
+	QAction* _rotate90CCW;
+	QAction* _rotate180;
+
 	QAction* _restoreImageWindow;
 	QAction* _imageNegativeAction;
 

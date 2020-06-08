@@ -2,8 +2,8 @@
 #include "BaseProcessor.h"
 
 #include <typeinfo.h>
-#include "GeneralImage.h"
-#include "MonoImage.h"
+#include "../Image/GeneralImage.h"
+#include "../Image/MonoImage.h"
 //#include "RegionImage.h"
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;

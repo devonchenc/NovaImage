@@ -60,7 +60,7 @@ bool Document::openFile(const QString& fileName)
 
 	_image->histogramStatistic();
 
-	getView()->showImage(_image->getImageEntity());
+	getView()->showImage(_image->getImageEntity(), true);
 	getView()->setWindowWidthAndLevel(_image->getMaxValue() - _image->getMinValue(), (_image->getMaxValue() + _image->getMinValue()) / 2);
 //	getView()->fitWindow();
 

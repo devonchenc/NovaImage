@@ -5,6 +5,7 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QDebug>
+#include <QTextCodec>
 
 #include "GlobalFunc.h"
 #include "mainwindow.h"
@@ -52,6 +53,15 @@ void ToolBar::createAction()
 	_scaleAction->setCheckable(true);
 	_scaleAction->setChecked(true);
 
+	_flipHorizontalAction = new QAction(tr("Flip horizontal"), this);
+	_flipVerticalAction = new QAction(tr("Flip vertical"), this);
+
+	QTextCodec* cod = QTextCodec::codecForLocale();
+	QString degree = cod->toUnicode("бу");
+	_rotate90CW = new QAction(tr("Rotate 90 ") + degree + tr(" CW"), this);
+	_rotate90CCW = new QAction(tr("Rotate 90 ") + degree + tr(" CCW"), this);
+	_rotate180 = new QAction(tr("Rotate 180 ") + degree, this);
+
 	_restoreImageWindow = new QAction(tr("Default window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 
@@ -95,6 +105,14 @@ void ToolBar::createAction()
 	connect(_annotationAction, &QAction::triggered, mainWindow, &MainWindow::showAnnotation);
 	connect(_crossAction, &QAction::triggered, mainWindow, &MainWindow::showCrossLine);
 	connect(_scaleAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
+
+	connect(_flipHorizontalAction, &QAction::triggered, mainWindow->getView(), &View::flipHorizontal);
+	connect(_flipVerticalAction, &QAction::triggered, mainWindow->getView(), &View::flipVertical);
+
+	connect(_rotate90CW, &QAction::triggered, mainWindow->getView(), &View::rotate90CW);
+	connect(_rotate90CCW, &QAction::triggered, mainWindow->getView(), &View::rotate90CCW);
+	connect(_rotate180, &QAction::triggered, mainWindow->getView(), &View::rotate180);
+
 	connect(_restoreImageWindow, &QAction::triggered, mainWindow->getDocument(), &Document::restoreImageWindow);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
@@ -169,24 +187,25 @@ void ToolBar::createButton()
 	_flipToolButton = new QToolButton;
 	_flipToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_restoreImageWindow);
+	menu->addAction(_flipHorizontalAction);
 	menu->addSeparator();
-	menu->addAction(_imageNegativeAction);
+	menu->addAction(_flipVerticalAction);
 	_flipToolButton->setMenu(menu);
 	_flipToolButton->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
 	_flipToolButton->setToolTip(tr("Flip"));
-//	connect(_flipToolButton, &QToolButton::clicked, this, &ToolBar::imageWindowToolButtonClicked);
+	connect(_flipToolButton, &QToolButton::clicked, _flipHorizontalAction, &QAction::triggered);
 
 	_rotateToolButton = new QToolButton;
 	_rotateToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_restoreImageWindow);
+	menu->addAction(_rotate90CW);
+	menu->addAction(_rotate90CCW);
 	menu->addSeparator();
-	menu->addAction(_imageNegativeAction);
+	menu->addAction(_rotate180);
 	_rotateToolButton->setMenu(menu);
 	_rotateToolButton->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
 	_rotateToolButton->setToolTip(tr("Rotate"));
-//	connect(_rotateToolButton, &QToolButton::clicked, this, &ToolBar::imageWindowToolButtonClicked);
+	connect(_rotateToolButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
 
 	_imageWindowToolButton = new ToolButton;
 	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);

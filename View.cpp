@@ -9,7 +9,7 @@
 
 #include "GraphicsView.h"
 #include "GraphicsScene.h"
-#include "Widget/LevelsProcessor.h"
+#include "Processor/LevelsProcessor.h"
 #include "GlobalFunc.h"
 #include "Document.h"
 
@@ -78,39 +78,32 @@ void View::changeEvent(QEvent* event)
 	QFrame::changeEvent(event);
 }
 
-void View::showImage(const QPixmap& image)
+void View::showImage(const QImage* image, bool resetMatrix)
 {
 	if (_currentImage)
 	{
-		_scene->clear();
-		_currentImage = nullptr;
+		if (resetMatrix)
+		{
+			_scene->clear();
+			_currentImage = nullptr;
+		}
+		else
+		{
+			_scene->removeItem(_currentImage);
+			delete _currentImage;
+		}
 	}
 
-	_scene->clear();
-	_view->resetMatrix();
-	_currentImage = _scene->addPixmap(image);
-	_currentImage->setZValue(-1.0);
-	_scene->update();
-	_view->setSceneRect(image.rect());
-
-	QString strInfo = QString(tr("Image Size:%1 x %2")).arg(image.width(), 4).arg(image.height(), 4);
-	emit showInfo(strInfo);
-}
-
-void View::showImage(const QImage* image)
-{
-	if (_currentImage)
-	{
-		_scene->clear();
-		_currentImage = nullptr;
-	}
-
-	_view->resetMatrix();
 	QPixmap pixmap = QPixmap::fromImage(*image);
 	_currentImage = _scene->addPixmap(pixmap);
 	_currentImage->setZValue(-1.0);
 	_scene->update();
-	_view->setSceneRect(pixmap.rect());
+
+	if (resetMatrix)
+	{
+		_view->resetMatrix();
+		_view->setSceneRect(pixmap.rect());
+	}
 
 	QString strInfo = QString(tr("Image Size:%1 x %2")).arg(image->width(), 4).arg(image->height(), 4);
 	emit showInfo(strInfo);
@@ -157,6 +150,35 @@ void View::setSceneMode(int mode)
 void View::setItemType(DiagramItem::DiagramType type)
 {
 	_scene->setItemType(type);
+}
+
+void View::flipHorizontal()
+{
+	QTransform transform = _view->transform();
+	transform *= QTransform(-1, 0, 0, 1, 0, 0);
+	_view->setTransform(transform);
+}
+
+void View::flipVertical()
+{
+	QTransform transform = _view->transform();
+	transform *= QTransform(1, 0, 0, -1, 0, 0);
+	_view->setTransform(transform);
+}
+
+void View::rotate90CW()
+{
+	_view->rotate(90);
+}
+
+void View::rotate90CCW()
+{
+	_view->rotate(-90);
+}
+
+void View::rotate180()
+{
+	_view->rotate(180);
 }
 
 void View::fitWindow()

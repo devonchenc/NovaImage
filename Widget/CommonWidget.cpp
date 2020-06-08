@@ -3,7 +3,7 @@
 #include <QGridLayout>
 #include <QEvent>
 
-#include "CommonProcessor.h"
+#include "../Processor/CommonProcessor.h"
 #include "../GlobalFunc.h"
 
 CommonWidget::CommonWidget(QWidget* parent)

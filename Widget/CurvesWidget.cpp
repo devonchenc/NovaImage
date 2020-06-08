@@ -8,7 +8,7 @@
 #include <QTextStream>
 #include <QEvent>
 
-#include "CurvesProcessor.h"
+#include "../Processor/CurvesProcessor.h"
 #include "../GlobalFunc.h"
 #include "../Image/BaseImage.h"
 

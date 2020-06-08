@@ -7,7 +7,7 @@
 #include <QApplication>
 
 #include "../GlobalFunc.h"
-#include "HistogramProcessor.h"
+#include "../Processor/HistogramProcessor.h"
 #include "../Image/BaseImage.h"
 
 #define DRAG_NONE		-1

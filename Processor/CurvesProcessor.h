@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Image/BaseProcessor.h"
+#include "BaseProcessor.h"
 
 #ifndef CURVE_CHANNEL
 #define CURVE_CHANNEL
