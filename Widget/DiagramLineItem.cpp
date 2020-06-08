@@ -52,7 +52,7 @@ bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 	return delta < closeEnoughDistance;
 }
 
-float DiagramLineItem::length()
+QString DiagramLineItem::length() const
 {
 	float offsetX = line().p1().x() - line().p2().x();
 	float offsetY = line().p1().y() - line().p2().y();
@@ -66,9 +66,18 @@ float DiagramLineItem::length()
 		offsetX *= horzPixelSpacing;
 		offsetY *= vertPixelSpacing;
 	}
-
 	length = sqrt(offsetX * offsetX + offsetY * offsetY);
-	return length;
+
+	QString str = QString::number(length, 'f', 2);
+	if (image->hasPixelSpacing())
+	{
+		str += tr(" mm");
+	}
+	else
+	{
+		str += tr(" pixel");
+	}
+	return str;
 }
 /*
 DiagramLineItem* DiagramLineItem::clone()
@@ -206,9 +215,8 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 	}
 
 	painter->setFont(QFont("Arial", 10));
-	QString str = QString::number(length(), 'f', 2);
 	painter->setPen(QPen(Qt::yellow));
-	painter->drawText(line().p2().x() + 10, line().p2().y() + 5, str);
+	painter->drawText(line().p2().x() + 10, line().p2().y() + 5, length());
 }
 
 void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)

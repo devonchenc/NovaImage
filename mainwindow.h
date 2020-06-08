@@ -70,6 +70,7 @@ public slots:
     void zoomIn();
     void zoomOut();
 	void close();
+	void print();
 
 	void prevImage();
 	void nextImage();
@@ -92,6 +93,7 @@ private:
 	QAction* _openAction;
 	QAction* _saveAsAction;
 	QAction* _closeAction;
+	QAction* _printAction;
 	QAction* _exitAction;
 	QAction* _zoomInAction;
 	QAction* _zoomOutAction;

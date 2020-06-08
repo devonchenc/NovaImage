@@ -43,7 +43,7 @@ private:
 
 	bool isCloseEnough(QPointF const& p1, QPointF const& p2);
 
-	float length();
+	QString length() const;
 
 private:
     QMenu* _contextMenu;

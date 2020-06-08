@@ -11,6 +11,8 @@
 #include <QToolBar>
 #include <QStatusBar>
 #include <QTranslator>
+#include <QPrinter>
+#include <QPrintPreviewDialog>
 
 #include "mainwindow.h"
 #include "View.h"
@@ -78,6 +80,7 @@ void MainWindow::createActions()
 	_openAction = new QAction(tr("&Open..."), this);
 	_saveAsAction = new QAction(tr("&Save as..."), this);
 	_closeAction = new QAction(tr("&Close"), this);
+	_printAction = new QAction(tr("&Print"), this);
 	_exitAction = new QAction(tr("E&xit"), this);
 
 	_zoomInAction = new QAction(tr("Zoom &in"), this);
@@ -102,6 +105,8 @@ void MainWindow::createActions()
 	_fileMenu->addAction(_saveAsAction);
 	_fileMenu->addAction(_closeAction);
 	_fileMenu->addSeparator();
+	_fileMenu->addAction(_printAction);
+	_fileMenu->addSeparator();
 	_fileMenu->addAction(_exitAction);
 
 	_viewMenu = menuBar()->addMenu(tr("&View"));
@@ -119,6 +124,7 @@ void MainWindow::createActions()
 	connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
 	connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
 	connect(_closeAction, &QAction::triggered, this, &MainWindow::close);
+	connect(_printAction, &QAction::triggered, this, &MainWindow::print);
 	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
 
 	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
@@ -351,6 +357,23 @@ void MainWindow::close()
 	_doc->closeFile();
 
 	WidgetManager::getInstance()->reset();
+}
+
+void MainWindow::print()
+{
+	QPrinter printer(QPrinter::HighResolution);
+	printer.setPageSize(QPrinter::A4);
+
+	QPainter painter(&printer);
+	QRectF target(0, 0, printer.width(), printer.height());
+	GraphicsView* graphicsView = _view->view();
+	QRectF sceneRect(graphicsView->sceneRect());
+	QRect source(graphicsView->mapFromScene(sceneRect.topLeft()), graphicsView->mapFromScene(sceneRect.bottomRight()));
+	graphicsView->render(&painter, target, source);
+
+	// TODO
+//	QPrintPreviewDialog preview(&printer, this);
+//	preview.exec();
 }
 
 void MainWindow::setupShortcuts()
