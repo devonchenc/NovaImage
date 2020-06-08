@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../Image/BaseProcessor.h"
+#include "BaseProcessor.h"
 
 class LevelsProcessor : public BaseProcessor
 {

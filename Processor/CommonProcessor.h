@@ -1,12 +1,12 @@
 #pragma once
 
-#include "../Image/BaseProcessor.h"
+#include "BaseProcessor.h"
 
-class HistogramProcessor : public BaseProcessor
+class CommonProcessor : public BaseProcessor
 {
 public:
-	HistogramProcessor();
-	~HistogramProcessor();
+	CommonProcessor();
+	~CommonProcessor();
 
 protected:
 	void processGeneralImage(GeneralImage* image) override;
@@ -17,9 +17,9 @@ protected:
 	void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
 
 public:
-	void setWindowArray(bool* array, int arrayNum);
+	void setBrightnessAndContrast(int brightness, int contrast);
 
 private:
-	bool* _array;
-	int _arrayNum;
+	int _brightness;
+	int _contrast;
 };

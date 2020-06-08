@@ -166,6 +166,28 @@ void ToolBar::createButton()
 	_annotationToolButton->setToolTip(tr("Toggle annotations"));
 	connect(_annotationToolButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
+	_flipToolButton = new QToolButton;
+	_flipToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	menu = new QMenu(this);
+	menu->addAction(_restoreImageWindow);
+	menu->addSeparator();
+	menu->addAction(_imageNegativeAction);
+	_flipToolButton->setMenu(menu);
+	_flipToolButton->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
+	_flipToolButton->setToolTip(tr("Flip"));
+//	connect(_flipToolButton, &QToolButton::clicked, this, &ToolBar::imageWindowToolButtonClicked);
+
+	_rotateToolButton = new QToolButton;
+	_rotateToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	menu = new QMenu(this);
+	menu->addAction(_restoreImageWindow);
+	menu->addSeparator();
+	menu->addAction(_imageNegativeAction);
+	_rotateToolButton->setMenu(menu);
+	_rotateToolButton->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
+	_rotateToolButton->setToolTip(tr("Rotate"));
+//	connect(_rotateToolButton, &QToolButton::clicked, this, &ToolBar::imageWindowToolButtonClicked);
+
 	_imageWindowToolButton = new ToolButton;
 	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
@@ -234,6 +256,8 @@ void ToolBar::createButton()
 	addSeparator();
 	addWidget(_layoutToolButton);
 	addWidget(_annotationToolButton);
+	addWidget(_flipToolButton);
+	addWidget(_rotateToolButton);
 	addSeparator();
 	addWidget(_imageWindowToolButton);
 	addWidget(_zoomButton);

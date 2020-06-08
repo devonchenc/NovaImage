@@ -79,6 +79,8 @@ private:
 	QToolButton* _saveToolButton;
 	QToolButton* _layoutToolButton;
 	QToolButton* _annotationToolButton;
+	QToolButton* _flipToolButton;
+	QToolButton* _rotateToolButton;
 
 	ToolButton* _imageWindowToolButton;
 	ToolButton* _zoomButton;

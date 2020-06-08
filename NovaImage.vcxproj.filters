@@ -34,6 +34,9 @@
       <Extensions>ts</Extensions>
       <ParseFiles>false</ParseFiles>
     </Filter>
+    <Filter Include="Processor">
+      <UniqueIdentifier>{4f924b1a-fefc-4fe2-8fd5-83442f5aca8f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -51,9 +54,6 @@
     <ClCompile Include="Image\BaseImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="Image\BaseProcessor.cpp">
-      <Filter>Image</Filter>
-    </ClCompile>
     <ClCompile Include="Image\GeneralImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
@@ -69,13 +69,7 @@
     <ClCompile Include="Widget\BaseWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\CommonProcessor.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Widget\CommonWidget.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
-    <ClCompile Include="Widget\CurvesProcessor.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
     <ClCompile Include="Widget\CurveSquare.cpp">
@@ -84,13 +78,7 @@
     <ClCompile Include="Widget\CurvesWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\HistogramProcessor.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Widget\HistogramWidget.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
-    <ClCompile Include="Widget\LevelsProcessor.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
     <ClCompile Include="Widget\LevelsWidget.cpp">
@@ -135,8 +123,23 @@
     <ClCompile Include="MouseHandler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\InverseProcessor.cpp">
-      <Filter>Widget</Filter>
+    <ClCompile Include="Processor\BaseProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="Processor\CommonProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="Processor\CurvesProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="Processor\HistogramProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="Processor\InverseProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="Processor\LevelsProcessor.cpp">
+      <Filter>Processor</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -199,9 +202,6 @@
     <ClInclude Include="Image\BaseImage.h">
       <Filter>Image</Filter>
     </ClInclude>
-    <ClInclude Include="Image\BaseProcessor.h">
-      <Filter>Image</Filter>
-    </ClInclude>
     <ClInclude Include="Image\Dataheader.h">
       <Filter>Image</Filter>
     </ClInclude>
@@ -213,18 +213,6 @@
     </ClInclude>
     <ClInclude Include="GlobalFunc.h">
       <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget\CommonProcessor.h">
-      <Filter>Widget</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget\CurvesProcessor.h">
-      <Filter>Widget</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget\HistogramProcessor.h">
-      <Filter>Widget</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget\LevelsProcessor.h">
-      <Filter>Widget</Filter>
     </ClInclude>
     <ClInclude Include="Widget\Peg.h">
       <Filter>Widget</Filter>
@@ -247,8 +235,23 @@
     <ClInclude Include="MouseHandler.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Widget\InverseProcessor.h">
-      <Filter>Widget</Filter>
+    <ClInclude Include="Processor\BaseProcessor.h">
+      <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\CommonProcessor.h">
+      <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\CurvesProcessor.h">
+      <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\HistogramProcessor.h">
+      <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\InverseProcessor.h">
+      <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\LevelsProcessor.h">
+      <Filter>Processor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

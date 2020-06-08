@@ -6,8 +6,8 @@
 #include "Image/GeneralImage.h"
 #include "Image/ScanImage.h"
 #include "Image/DicomImage.h"
-#include "Widget/LevelsProcessor.h"
-#include "Widget/InverseProcessor.h"
+#include "Processor/LevelsProcessor.h"
+#include "Processor/InverseProcessor.h"
 
 Document::Document(MainWindow* pWindow)
 	: pMainWindow(pWindow)
