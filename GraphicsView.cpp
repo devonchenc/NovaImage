@@ -10,7 +10,6 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView(scene, parent)
 	, _view(view)
 	, _zoomFactor(MAX_ZOOM / 2)
-	, _isLBtnDown(false)
 {
 	setDragMode(QGraphicsView::NoDrag);
 
@@ -95,9 +94,9 @@ void GraphicsView::applyZoomValue()
 	_zoomFactor = qMin(_zoomFactor, MAX_ZOOM);
 	qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
 
-	QMatrix matrix;
-	matrix.scale(scale, scale);
-	setMatrix(matrix);
+	QTransform transform;
+	transform.scale(scale, scale);
+	setTransform(transform);
 }
 
 void GraphicsView::mousePressEvent(QMouseEvent* event)

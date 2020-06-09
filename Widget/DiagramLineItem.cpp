@@ -10,6 +10,8 @@
 #include "../GraphicsScene.h"
 #include "../GlobalFunc.h"
 #include "../Image/BaseImage.h"
+#include "../View.h"
+#include "../GraphicsView.h"
 
 DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
@@ -217,10 +219,20 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 	painter->setFont(QFont("Arial", 10));
 	painter->setPen(QPen(Qt::yellow));
 
-	QTransform transform;
-	transform.translate(line().p2().x() + 5, line().p2().y() + 5);
-	transform.rotate(90.0);
-	painter->setWorldTransform(transform, true);
+	QTransform transform = getGlobalView()->view()->transform();
+
+	QTransform transform2;
+	// The output text is always near the point on the right
+	if (line().p1().x() < line().p2().x())
+	{
+		transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
+	}
+	else
+	{
+		transform2.translate(line().p1().x() + 10, line().p1().y() + 5);
+	}
+
+	painter->setWorldTransform(transform.inverted() * transform2, true);
 	painter->drawText(0, 0, length());
 }
 

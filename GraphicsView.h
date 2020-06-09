@@ -46,15 +46,11 @@ protected:
 
 	void paintEvent(QPaintEvent* event) override;
 
-//	QPointF getCenter() { return _currentCenter; }
-
 private:
 	void applyZoomValue();
 
 private:
 	View* _view;
 	int _zoomFactor;
-	bool _isLBtnDown;
-	QPoint _mouseLBtnDown;
-//	QPointF _currentCenter;
+	QTransform _transform;
 };
