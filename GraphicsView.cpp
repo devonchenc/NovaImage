@@ -19,6 +19,12 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	setMouseTracking(true);
 }
 
+QPointF GraphicsView::mapImagePointToScene(qreal x, qreal y) const
+{
+	QGraphicsPixmapItem* pixmapItem = _view->getPixmapItem();
+	return pixmapItem->mapToScene(x, y);
+}
+
 #if QT_CONFIG(wheelevent)
 void GraphicsView::wheelEvent(QWheelEvent* e)
 {
@@ -112,16 +118,16 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 	if (pixmapItem)
 	{
 		QPointF pointScene = mapToScene(event->pos());
-		QPointF pointPixemap = pixmapItem->mapFromScene(pointScene);
+		QPointF pointPixmap = pixmapItem->mapFromScene(pointScene);
 
-		QString strCoord = QString("x:%1, y:%2").arg(QString::number(pointPixemap.x(), 'f', 0)).arg(QString::number(pointPixemap.y(), 'f', 0));
+		QString strCoord = QString("x:%1, y:%2").arg(QString::number(pointPixmap.x(), 'f', 0)).arg(QString::number(pointPixmap.y(), 'f', 0));
 		emit showCoordinate(strCoord);
 
 		QString strValue;
 		QImage image = pixmapItem->pixmap().toImage();
-		if (pointPixemap.x() >= 0 && pointPixemap.x() < image.width() && pointPixemap.y() >= 0 && pointPixemap.y() < image.height())
+		if (pointPixmap.x() >= 0 && pointPixmap.x() < image.width() && pointPixmap.y() >= 0 && pointPixmap.y() < image.height())
 		{
-			QRgb value = image.pixel(QPoint(pointPixemap.x(), pointPixemap.y()));
+			QRgb value = image.pixel(QPoint(pointPixmap.x(), pointPixmap.y()));
 			strValue = QString("R:%1, G:%2, B:%3").arg(qRed(value), 3).arg(qGreen(value), 3).arg(qBlue(value), 3);
 		}
 		emit showPixelValue(strValue);

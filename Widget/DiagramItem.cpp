@@ -8,7 +8,11 @@
 #include <QGraphicsOpacityEffect>
 #include <QDebug>
 
+#include "../GlobalFunc.h"
+#include "../View.h"
+#include "../GraphicsView.h"
 #include "../GraphicsScene.h"
+#include "../Image/BaseImage.h"
 
 DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsPolygonItem(parent)
@@ -177,14 +181,12 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 	}
 
 	index = changeIndex(index);
-	qDebug() << "Mouse click: " << index;
 
     _scaleDirection = static_cast<Direction>(index);
 
     setFlag(GraphicsItemFlag::ItemIsMovable, !_resizeMode);
     if (!_resizeMode)
 	{
-        qDebug() << "item type " << this->type() << " start moving from" << scenePos();
 		QGraphicsPolygonItem::mousePressEvent(event);
     }
 }
@@ -289,6 +291,8 @@ void DiagramItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 
 void DiagramItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
+	painter->setRenderHint(QPainter::Antialiasing, true);
+
     // remove build-in selected state
     QStyleOptionGraphicsItem myOption(*option);
     myOption.state &= ~QStyle::State_Selected;
@@ -303,6 +307,15 @@ void DiagramItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
             painter->drawEllipse(QRectF(point.x() - width/2, point.y() - width/2, width, width));
         }
     }
+
+	QTransform transform = getGlobalView()->view()->transform();
+	QTransform transform2;
+	transform2.translate(boundingRect().right() + 5, boundingRect().center().y() - 10);
+
+	painter->setWorldTransform(transform.inverted() * transform2, true);
+	painter->setFont(QFont("Arial", 10));
+	painter->setPen(QPen(Qt::yellow));
+	painter->drawText(QRectF(0, 0, 100, 50), Qt::TextWordWrap, statisticsInfo());
 }
 
 void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
@@ -424,4 +437,50 @@ bool DiagramItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 {
 	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
+}
+
+QString DiagramItem::statisticsInfo() const
+{
+	BaseImage* image = getGlobalImage();
+	for (int j = 0; j < image->width(); j++)
+	{
+		for (int i = 0; i < image->height(); i++)
+		{
+			QPointF imagePoint = getGlobalView()->view()->mapImagePointToScene(i, j);
+			if (isInsidePoly(imagePoint, _polygon))
+			{
+			//	qDebug() << i << ", " << j;
+			}
+		}
+	}
+
+	QString str = QString("afasdfas\nsdfsf\ntestsfsafadfa");
+	return str;
+}
+
+bool DiagramItem::isInsidePoly(const QPointF& point, const QPolygonF& polygon) const
+{
+	qreal x = point.x(), y = point.y();
+
+	int left = 0;
+	int right = 0;
+
+	int j = polygon.size() - 1;
+
+	for (int i = 0; i < polygon.size(); i++)
+	{
+		if ((polygon[i].y() < y && polygon[j].y() >= y) || (polygon[j].y() < y && polygon[i].y() >= y))
+		{
+			if ((y - polygon[i].y()) * (polygon[i].x() - polygon[j].x()) / (polygon[i].y() - polygon[j].y()) + polygon[i].x() < x)
+			{
+				left++;
+			}
+			else
+				right++;
+		}
+
+		j = i;
+	}
+
+	return left & right;
 }

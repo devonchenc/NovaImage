@@ -55,6 +55,10 @@ private:
 
 	bool isCloseEnough(QPointF const& p1, QPointF const& p2);
 
+	QString statisticsInfo() const;
+
+	bool isInsidePoly(const QPointF& iPoint, const QPolygonF& iMyPoly) const;
+
 private:
     DiagramType _diagramType;
     QPolygonF _polygon;

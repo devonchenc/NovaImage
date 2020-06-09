@@ -15,6 +15,8 @@ class GraphicsView : public QGraphicsView
 public:
 	GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent = nullptr);
 
+	QPointF mapImagePointToScene(qreal x, qreal y) const;
+
 protected:
 #if QT_CONFIG(wheelevent)
 	void wheelEvent(QWheelEvent*) override;

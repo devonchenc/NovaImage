@@ -7,11 +7,11 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 
-#include "../GraphicsScene.h"
 #include "../GlobalFunc.h"
-#include "../Image/BaseImage.h"
 #include "../View.h"
 #include "../GraphicsView.h"
+#include "../GraphicsScene.h"
+#include "../Image/BaseImage.h"
 
 DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
@@ -43,44 +43,6 @@ void DiagramLineItem::setDrawingFinished(bool finished)
 	_drawingFinished = finished;
 }
 
-QList<QPointF> DiagramLineItem::resizeHandlePoints()
-{
-	return QList<QPointF>{line().p1(), line().p2()};
-}
-
-bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
-{
-	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
-	return delta < closeEnoughDistance;
-}
-
-QString DiagramLineItem::length() const
-{
-	float offsetX = line().p1().x() - line().p2().x();
-	float offsetY = line().p1().y() - line().p2().y();
-	float length;
-
-	BaseImage* image = getGlobalImage();
-	if (image->hasPixelSpacing())
-	{
-		float horzPixelSpacing = image->horzPixelSpacing();
-		float vertPixelSpacing = image->vertPixelSpacing();
-		offsetX *= horzPixelSpacing;
-		offsetY *= vertPixelSpacing;
-	}
-	length = sqrt(offsetX * offsetX + offsetY * offsetY);
-
-	QString str = QString::number(length, 'f', 2);
-	if (image->hasPixelSpacing())
-	{
-		str += tr(" mm");
-	}
-	else
-	{
-		str += tr(" pixel");
-	}
-	return str;
-}
 /*
 DiagramLineItem* DiagramLineItem::clone()
 {
@@ -216,11 +178,7 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 		painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
 	}
 
-	painter->setFont(QFont("Arial", 10));
-	painter->setPen(QPen(Qt::yellow));
-
 	QTransform transform = getGlobalView()->view()->transform();
-
 	QTransform transform2;
 	// The output text is always near the point on the right
 	if (line().p1().x() < line().p2().x())
@@ -233,6 +191,8 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 	}
 
 	painter->setWorldTransform(transform.inverted() * transform2, true);
+	painter->setFont(QFont("Arial", 10));
+	painter->setPen(QPen(Qt::yellow));
 	painter->drawText(0, 0, length());
 }
 
@@ -249,4 +209,42 @@ QVariant DiagramLineItem::itemChange(GraphicsItemChange change, const QVariant& 
 		emit itemSelectedChange(this);
 
     return value;
+}
+
+QList<QPointF> DiagramLineItem::resizeHandlePoints()
+{
+	return QList<QPointF>{line().p1(), line().p2()};
+}
+
+bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
+{
+	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
+	return delta < closeEnoughDistance;
+}
+
+QString DiagramLineItem::length() const
+{
+	float offsetX = line().p1().x() - line().p2().x();
+	float offsetY = line().p1().y() - line().p2().y();
+
+	BaseImage* image = getGlobalImage();
+	if (image->hasPixelSpacing())
+	{
+		float horzPixelSpacing = image->horzPixelSpacing();
+		float vertPixelSpacing = image->vertPixelSpacing();
+		offsetX *= horzPixelSpacing;
+		offsetY *= vertPixelSpacing;
+	}
+	float length = sqrt(offsetX * offsetX + offsetY * offsetY);
+
+	QString str = QString::number(length, 'f', 2);
+	if (image->hasPixelSpacing())
+	{
+		str += tr(" mm");
+	}
+	else
+	{
+		str += tr(" pixel");
+	}
+	return str;
 }

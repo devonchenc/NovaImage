@@ -183,8 +183,6 @@ void GraphicsScene::mousePress(const QPointF& point)
 	// Clear all selected items
 	clearSelection();
 
-	qDebug() << "Mode:   " << _mode;
-
 	if (_mode == INSERT_ITEM)
 	{
 		if (_itemType <= DiagramItem::Parallelogram)
