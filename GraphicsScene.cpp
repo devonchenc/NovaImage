@@ -291,6 +291,7 @@ void GraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
 			removeItem(item);
 			delete item;
 		}
+		update();
 	}
 
 	QGraphicsScene::keyPressEvent(keyEvent);

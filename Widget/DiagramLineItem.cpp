@@ -240,11 +240,11 @@ QString DiagramLineItem::length() const
 	QString str = QString::number(length, 'f', 2);
 	if (image->hasPixelSpacing())
 	{
-		str += tr(" mm");
+		str += " mm";
 	}
 	else
 	{
-		str += tr(" pixel");
+		str += tr(" px");
 	}
 	return str;
 }

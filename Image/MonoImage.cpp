@@ -75,6 +75,9 @@ void MonoImage::histogramStatistic()
 
 float MonoImage::getValue(const QPoint& position) const
 {
+	if (position.x() < 0 || position.x() >= _width || position.y() < 0 || position.y() >= _height)
+		return 0;
+
 	int index = position.y() * _width + position.x();
 	return _imageData->getProcessingValue(index);
 }

@@ -315,7 +315,7 @@ void DiagramItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
 	painter->setWorldTransform(transform.inverted() * transform2, true);
 	painter->setFont(QFont("Arial", 10));
 	painter->setPen(QPen(Qt::yellow));
-	painter->drawText(QRectF(0, 0, 100, 50), Qt::TextWordWrap, statisticsInfo());
+	painter->drawText(QRectF(0, 0, 200, 50), Qt::TextWordWrap, statisticsInfo());
 }
 
 void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
@@ -441,20 +441,60 @@ bool DiagramItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 
 QString DiagramItem::statisticsInfo() const
 {
+	float sum = 0;
+	uint totalPixelCount = 0;
+	uint validPixelCount = 0;
+	float minValue = FLT_MAX;
+	float maxValue = -FLT_MAX;
+	float sumOfSquares = 0;
+
 	BaseImage* image = getGlobalImage();
-	for (int j = 0; j < image->width(); j++)
+	QRectF rect = sceneBoundingRect();
+	for (int j = 0; j < rect.height(); j++)
 	{
-		for (int i = 0; i < image->height(); i++)
+		for (int i = 0; i < rect.width(); i++)
 		{
-			QPointF imagePoint = getGlobalView()->view()->mapImagePointToScene(i, j);
-			if (isInsidePoly(imagePoint, _polygon))
+		//	if (isInsidePoly(imagePoint, _polygon))
+			if (true)
 			{
-			//	qDebug() << i << ", " << j;
+				int x = i + rect.left();
+				int y = j + rect.top();
+				if (x > 0 && x < image->width() && y > 0 && y < image->height())
+				{
+					float pixelValue = image->getValue(QPoint(x, y));
+					sum += pixelValue;
+					sumOfSquares += pixelValue * pixelValue;
+					if (pixelValue > maxValue)
+					{
+						maxValue = pixelValue;
+					}
+					if (pixelValue < minValue)
+					{
+						minValue = pixelValue;
+					}
+					validPixelCount++;
+				}
+				totalPixelCount++;
 			}
 		}
 	}
 
-	QString str = QString("afasdfas\nsdfsf\ntestsfsafadfa");
+	QString str;
+	if (image->hasPixelSpacing())
+	{
+		str = QString(tr("Area=%1 mm2")).arg(totalPixelCount * image->horzPixelSpacing() * image->vertPixelSpacing());
+	}
+	else
+	{
+		str = QString(tr("Area=%1 px2")).arg(totalPixelCount);
+	}
+
+	if (validPixelCount > 1)
+	{
+		float average = sum / validPixelCount;
+		float std = sqrt((sumOfSquares - (sum * sum) / validPixelCount) / (validPixelCount - 1));
+		str += QString("\nMean= %1 SD=%2\nMax=%3 Min=%4").arg(QString::number(average, 'f', 2)).arg(QString::number(std, 'f', 2)).arg(QString::number(maxValue, 'f', 1)).arg(QString::number(minValue, 'f', 1));
+	}
 	return str;
 }
 
