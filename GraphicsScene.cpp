@@ -267,7 +267,6 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 	}
 	else if (_itemType == DiagramItem::Line && _currentDrawingLine != nullptr)
 	{
-		qDebug() << "Line end: " << point;
 		QRectF rect = _currentDrawingLine->boundingRect();
 		if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
 		{

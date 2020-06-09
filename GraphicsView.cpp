@@ -147,5 +147,8 @@ void GraphicsView::paintEvent(QPaintEvent* event)
 	QPainter painter(viewport());
 	painter.setFont(QFont("Arial", 30));
 	painter.setPen(QPen(Qt::yellow));
-	painter.drawText(QPointF(100, 100), "tetatatata");
+//	painter.drawText(QPointF(10, 30), "tetatatata");
+
+	const QRect rectangle = QRect(0, 0, 100, 50);
+	painter.drawText(rectangle, Qt::AlignLeft, tr("Hello"));
 }

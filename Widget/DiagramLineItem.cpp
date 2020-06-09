@@ -216,7 +216,12 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
 	painter->setFont(QFont("Arial", 10));
 	painter->setPen(QPen(Qt::yellow));
-	painter->drawText(line().p2().x() + 10, line().p2().y() + 5, length());
+
+	QTransform transform;
+	transform.translate(line().p2().x() + 5, line().p2().y() + 5);
+	transform.rotate(90.0);
+	painter->setWorldTransform(transform, true);
+	painter->drawText(0, 0, length());
 }
 
 void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
