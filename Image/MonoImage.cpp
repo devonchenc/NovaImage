@@ -82,6 +82,11 @@ float MonoImage::getValue(const QPoint& position) const
 	return _imageData->getProcessingValue(index);
 }
 
+float MonoImage::getValue(int x, int y) const
+{
+	return getValue(QPoint(x, y));
+}
+
 float MonoImage::getValue(int index) const
 {
 	return _imageData->getProcessingValue(index);

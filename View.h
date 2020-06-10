@@ -80,7 +80,7 @@ private:
 
 	QList<QGraphicsItem*> pasteBoard;
 
-	// Window width
+	// Window width (for image display)
 	float _windowWidth;
 	float _windowLevel;
 };

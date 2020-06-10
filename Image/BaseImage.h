@@ -27,6 +27,7 @@ public:
 	virtual void histogramStatistic() = 0;
 
 	virtual float getValue(const QPoint& position) const = 0;
+	virtual float getValue(int x, int y) const = 0;
 	virtual float getValue(int index) const = 0;
 
 	virtual bool hasPixelSpacing()	{ return false; }
@@ -46,6 +47,7 @@ public:
 	uint* getBluePixelArray()		{ return _bluePixelNumber; }
 
 	QRgb getPixel(const QPoint& position) const;
+	QRgb getPixel(int x, int y) const;
 
 	bool save(const QString& fileName);
 	

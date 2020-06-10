@@ -105,6 +105,11 @@ float GeneralImage::getValue(const QPoint& position) const
     return 0.299f * qRed(pixel) + 0.587f * qGreen(pixel) + 0.114f * qBlue(pixel);
 }
 
+float GeneralImage::getValue(int x, int y) const
+{
+	return getValue(QPoint(x, y));
+}
+
 float GeneralImage::getValue(int index) const
 {
 	QPoint point(index % _width, index / _width);

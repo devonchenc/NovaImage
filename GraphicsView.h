@@ -54,5 +54,6 @@ private:
 private:
 	View* _view;
 	int _zoomFactor;
-	QTransform _transform;
+	QString _strCoord;
+	QString _strValue;
 };

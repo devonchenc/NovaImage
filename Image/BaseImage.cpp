@@ -38,6 +38,11 @@ QRgb BaseImage::getPixel(const QPoint& position) const
 	return _pImage->pixel(position);
 }
 
+QRgb BaseImage::getPixel(int x, int y) const
+{
+	return _pImage->pixel(QPoint(x, y));
+}
+
 bool BaseImage::save(const QString& fileName)
 {
 	if (fileName.endsWith("dcm", Qt::CaseInsensitive))
