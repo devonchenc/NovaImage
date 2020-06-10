@@ -29,7 +29,6 @@ public:
 	virtual void reset();
 
 signals:
-	void setSceneMode(int mode);
 	void setItemType(DiagramItem::DiagramType type);
 
 	void setLineColor(const QColor& color);
@@ -73,7 +72,10 @@ private:
 private:
 	QButtonGroup* _buttonGroup;
 
-	QWidget* _pointWidget;
+	QWidget* _cursorWidget;
+	QWidget* _lengthWidget;
+	QWidget* _angleWidget;
+	QWidget* _arrowWidget;
 	QWidget* _rectangleWidget;
 	QWidget* _roundRectWidget;
 	QWidget* _circleWidget;
@@ -81,7 +83,6 @@ private:
 	QWidget* _rhombusWidget;
 	QWidget* _parallelogramWidget;
 	QWidget* _textWidget;
-	QWidget* _lineWidget;
 
 	QFrame* _lineFrame;
 	QLabel* _labelLine;

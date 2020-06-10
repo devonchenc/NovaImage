@@ -40,19 +40,19 @@ GraphicsScene* View::scene()
 
 void View::createItemMenus()
 {
-	_cutAction = new QAction(QIcon("cut.png"), tr("Cu&t"), this);
+	_cutAction = new QAction(QIcon("Resources/cut.png"), tr("Cu&t"), this);
 	_cutAction->setShortcut(tr("Ctrl+X"));
 	connect(_cutAction, &QAction::triggered, this, &View::cutItem);
 
-	_copyAction = new QAction(QIcon("copy.png"), tr("&Copy"), this);
+	_copyAction = new QAction(QIcon("Resources/copy.png"), tr("&Copy"), this);
 	_copyAction->setShortcut(tr("Ctrl+C"));
 	connect(_copyAction, &QAction::triggered, this, &View::copyItem);
 
-	_pasteAction = new QAction(QIcon("paste.png"), tr("&Paste"), this);
+	_pasteAction = new QAction(QIcon("Resources/paste.png"), tr("&Paste"), this);
 	_pasteAction->setShortcut(tr("Ctrl+V"));
 	connect(_pasteAction, &QAction::triggered, this, &View::pasteItem);
 
-	_deleteAction = new QAction(QIcon("delete.png"), tr("&Delete"), this);
+	_deleteAction = new QAction(QIcon("Resources/delete.png"), tr("&Delete"), this);
 	_deleteAction->setShortcut(tr("Delete"));
 	connect(_deleteAction, &QAction::triggered, this, &View::deleteItem);
 

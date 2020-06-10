@@ -75,13 +75,15 @@ void ToolBar::createAction()
 	_moveAction = new QAction(tr("Move"), this);
 	_moveAction->setIcon(QIcon("Resources/svg/move.svg"));
 	_rulerAction = new QAction(tr("Length"), this);
-	_rulerAction->setIcon(QIcon("Resources/svg/ruler.svg"));
+	_rulerAction->setIcon(QIcon("Resources/svg/length.svg"));
 	_angleAction = new QAction(tr("Angle"), this);
 	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
+	_arrowAction = new QAction(tr("Arrow"), this);
+	_arrowAction->setIcon(QIcon("Resources/svg/arrow.svg"));
 	_rectAction = new QAction(tr("Rectangle"), this);
 	_rectAction->setIcon(QIcon("Resources/svg/rectangle.svg"));
 	_roundrectAction = new QAction(tr("Round Rectangle"), this);
-	_roundrectAction->setIcon(QIcon("Resources/svg/roundrectangle.svg"));
+	_roundrectAction->setIcon(QIcon("Resources/svg/roundrect.svg"));
 	_circleAction = new QAction(tr("Circle"), this);
 	_circleAction->setIcon(QIcon("Resources/svg/circle.svg"));
 	_ellipseAction = new QAction(tr("Ellipse"), this);
@@ -90,8 +92,8 @@ void ToolBar::createAction()
 	_rhombusAction->setIcon(QIcon("Resources/svg/rhombus.svg"));
 	_parallelogramAction = new QAction(tr("Parallelogram"), this);
 	_parallelogramAction->setIcon(QIcon("Resources/svg/parallelogram.svg"));
-	_arrowAction = new QAction(tr("Arrow"), this);
-	_arrowAction->setIcon(QIcon("Resources/svg/arrow.svg"));
+	_textAction = new QAction(tr("Text"), this);
+	_textAction->setIcon(QIcon("Resources/svg/text.svg"));
 
 	MainWindow* mainWindow = getGlobalWindow();
 	connect(_openDicomAction, &QAction::triggered, mainWindow, &MainWindow::openDicomImage);
@@ -125,13 +127,14 @@ void ToolBar::createAction()
 	connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);
 	connect(_rulerAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_angleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_arrowAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_rectAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_roundrectAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_circleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_ellipseAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_rhombusAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_parallelogramAction, &QAction::triggered, this, &ToolBar::measurementChanged);
-	connect(_arrowAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_textAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 }
 
 void ToolBar::createButton()
@@ -260,8 +263,10 @@ void ToolBar::createButton()
 	menu->addAction(_ellipseAction);
 	menu->addAction(_rhombusAction);
 	menu->addAction(_parallelogramAction);
+	menu->addSeparator();
+	menu->addAction(_textAction);
 	_measurementButton->setMenu(menu);
-	_measurementButton->setIconByName("Resources/svg/ruler.svg");
+	_measurementButton->setIconByName("Resources/svg/length.svg");
 	_measurementButton->setToolTip(tr("Measurements and tools"));
 	_measurementButton->installEventFilter(this);
 	_measurementButton->setCurrentAction(_rulerAction);
@@ -341,6 +346,57 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 	}
 }
 
+void ToolBar::setMeasurementType(DiagramItem::DiagramType type)
+{
+	switch (type)
+	{
+	case DiagramItem::None:
+		_cursorAction->trigger();
+		_cursorButton->triggered(_cursorAction);
+		break;
+	case DiagramItem::Line:
+		_rulerAction->trigger();
+		_measurementButton->triggered(_rulerAction);
+		break;
+	case DiagramItem::Angle:
+		_angleAction->trigger();
+		_measurementButton->triggered(_angleAction);
+		break;
+	case DiagramItem::Arrow:
+		_arrowAction->trigger();
+		_measurementButton->triggered(_arrowAction);
+		break;
+	case DiagramItem::Rect:
+		_rectAction->trigger();
+		_measurementButton->triggered(_rectAction);
+		break;
+	case DiagramItem::RoundRect:
+		_roundrectAction->trigger();
+		_measurementButton->triggered(_roundrectAction);
+		break;
+	case DiagramItem::Circle:
+		_circleAction->trigger();
+		_measurementButton->triggered(_circleAction);
+		break;
+	case DiagramItem::Ellipse:
+		_ellipseAction->trigger();
+		_measurementButton->triggered(_ellipseAction);
+		break;
+	case DiagramItem::Rhombus:
+		_rhombusAction->trigger();
+		_measurementButton->triggered(_rhombusAction);
+		break;
+	case DiagramItem::Parallelogram:
+		_parallelogramAction->trigger();
+		_measurementButton->triggered(_parallelogramAction);
+		break;
+	case DiagramItem::Text:
+		_textAction->trigger();
+		_measurementButton->triggered(_textAction);
+		break;
+	}
+}
+
 void ToolBar::imageWindowToolButtonClicked()
 {
 	_imageWindowToolButton->setMouseHandler(new ImageWindowMouseHandler());
@@ -385,17 +441,18 @@ void ToolBar::measurementChanged()
 	QAction* action = qobject_cast<QAction*>(sender());
 	if (action == _rulerAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/ruler.svg");
+		_measurementButton->setIconByName("Resources/svg/length.svg");
 		getGlobalView()->setItemType(DiagramItem::Line);
 	}
 	else if (action == _angleAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/angle.svg");
+		getGlobalView()->setItemType(DiagramItem::Angle);
 	}
 	else if (action == _arrowAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/arrow.svg");
-		getGlobalView()->setItemType(DiagramItem::Line);
+		getGlobalView()->setItemType(DiagramItem::Arrow);
 	}
 	else if (action == _rectAction)
 	{
@@ -404,7 +461,7 @@ void ToolBar::measurementChanged()
 	}
 	else if (action == _roundrectAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/roundrectangle.svg");
+		_measurementButton->setIconByName("Resources/svg/roundrect.svg");
 		getGlobalView()->setItemType(DiagramItem::RoundRect);
 	}
 	else if (action == _circleAction)
@@ -426,6 +483,12 @@ void ToolBar::measurementChanged()
 	{
 		_measurementButton->setIconByName("Resources/svg/parallelogram.svg");
 		getGlobalView()->setItemType(DiagramItem::Parallelogram);
+	}
+	else if (action == _textAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/text.svg");
+		getGlobalView()->setItemType(DiagramItem::Text);
+		mainWindow->setToolBoxWidgetVisible(false, true);
 	}
 	getGlobalView()->setSceneMode(INSERT_ITEM);
 	_measurementButton->setMouseHandler(new DrawMouseHandler());

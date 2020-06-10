@@ -135,7 +135,9 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 	{
 		parentWidget()->setWindowTitle(tr("ToolBox"));
 
-		getLabel(_pointWidget)->setText(tr("Point"));
+		getLabel(_cursorWidget)->setText(tr("Point"));
+		getLabel(_lengthWidget)->setText(tr("Line"));
+		getLabel(_angleWidget)->setText(tr("Angle"));
 		getLabel(_rectangleWidget)->setText(tr("Rectangle"));
 		getLabel(_roundRectWidget)->setText(tr("RoundRect"));
 		getLabel(_circleWidget)->setText(tr("Circle"));
@@ -143,7 +145,6 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 		getLabel(_rhombusWidget)->setText(tr("Rhombus"));
 		getLabel(_parallelogramWidget)->setText(tr("Parallelogram"));
 		getLabel(_textWidget)->setText(tr("Text"));
-		getLabel(_lineWidget)->setText(tr("Line"));
 
 		_labelLine->setText(tr("Line:"));
 		_fillCheckBox->setText(tr("Fill:"));
@@ -169,64 +170,38 @@ QLabel* ToolBoxWidget::getLabel(QWidget* widget)
 
 QGridLayout* ToolBoxWidget::createToolButton()
 {
-	QGridLayout* gridLayout = new QGridLayout;
-
-	QToolButton* pointButton = new QToolButton;
-	pointButton->setCheckable(true);
-	pointButton->setIconSize(iconSize);
-	pointButton->setIcon(QIcon(QPixmap("Resources/pointer.png")));
-	_buttonGroup->addButton(pointButton, DiagramItem::None);
-	QGridLayout* pointLayout = new QGridLayout;
-	pointLayout->addWidget(pointButton, 0, 0, Qt::AlignHCenter);
-	pointLayout->addWidget(new QLabel(tr("Point")), 1, 0, Qt::AlignCenter);
-	_pointWidget = new QWidget;
-	_pointWidget->setLayout(pointLayout);
-	gridLayout->addWidget(_pointWidget, 0, 0);
-
+	_cursorWidget = createCellWidget(tr("Cursor"), DiagramItem::None);
+	_lengthWidget = createCellWidget(tr("Length"), DiagramItem::Line);
+	_angleWidget = createCellWidget(tr("Angle"), DiagramItem::Angle);
+	_arrowWidget = createCellWidget(tr("Arrow"), DiagramItem::Arrow);
 	_rectangleWidget = createCellWidget(tr("Rectangle"), DiagramItem::Rect);
 	_roundRectWidget = createCellWidget(tr("RoundRect"), DiagramItem::RoundRect);
 	_circleWidget = createCellWidget(tr("Circle"), DiagramItem::Circle);
 	_ellipseWidget = createCellWidget(tr("Ellipse"), DiagramItem::Ellipse);
 	_rhombusWidget = createCellWidget(tr("Rhombus"), DiagramItem::Rhombus);
 	_parallelogramWidget = createCellWidget(tr("Parallelogram"), DiagramItem::Parallelogram);
-	gridLayout->addWidget(_rectangleWidget, 0, 1);
-	gridLayout->addWidget(_roundRectWidget, 0, 2);
-	gridLayout->addWidget(_circleWidget, 0, 3);
-	gridLayout->addWidget(_ellipseWidget, 0, 4);
-	gridLayout->addWidget(_rhombusWidget, 1, 0);
-	gridLayout->addWidget(_parallelogramWidget, 1, 1);
+	_textWidget = createCellWidget(tr("Text"), DiagramItem::Text);
 
-	QToolButton* textButton = new QToolButton;
-	textButton->setCheckable(true);
-	textButton->setIconSize(iconSize);
-	textButton->setIcon(QIcon(QPixmap("Resources/textpointer.png")));
-	_buttonGroup->addButton(textButton, DiagramItem::Text);
-	QGridLayout* textLayout = new QGridLayout;
-	textLayout->addWidget(textButton, 0, 0, Qt::AlignHCenter);
-	textLayout->addWidget(new QLabel(tr("Text")), 1, 0, Qt::AlignCenter);
-	_textWidget = new QWidget;
-	_textWidget->setLayout(textLayout);
-	gridLayout->addWidget(_textWidget, 1, 2);
-
-	QToolButton* lineButton = new QToolButton;
-	lineButton->setCheckable(true);
-	lineButton->setIconSize(iconSize);
-	lineButton->setIcon(QIcon(QPixmap("Resources/line.png")));
-	_buttonGroup->addButton(lineButton, DiagramItem::Line);
-	QGridLayout* lineLayout = new QGridLayout;
-	lineLayout->addWidget(lineButton, 0, 0, Qt::AlignHCenter);
-	lineLayout->addWidget(new QLabel(tr("Line")), 1, 0, Qt::AlignCenter);
-	_lineWidget = new QWidget;
-	_lineWidget->setLayout(lineLayout);
-	gridLayout->addWidget(_lineWidget, 1, 3);
+	QGridLayout* gridLayout = new QGridLayout;
+	gridLayout->addWidget(_cursorWidget, 0, 0);
+	gridLayout->addWidget(_lengthWidget, 0, 1);
+	gridLayout->addWidget(_angleWidget, 0, 2);
+	gridLayout->addWidget(_arrowWidget, 0, 3);
+	gridLayout->addWidget(_rectangleWidget, 0, 4);
+	gridLayout->addWidget(_roundRectWidget, 1, 0);
+	gridLayout->addWidget(_circleWidget, 1, 1);
+	gridLayout->addWidget(_ellipseWidget, 1, 2);
+	gridLayout->addWidget(_rhombusWidget, 1, 3);
+	gridLayout->addWidget(_parallelogramWidget, 1, 4);
+	gridLayout->addWidget(_textWidget, 2, 0);
 
 	return gridLayout;
 }
 
 QWidget* ToolBoxWidget::createCellWidget(const QString& text, DiagramItem::DiagramType type)
 {
-	DiagramItem item(type);
-	QIcon icon(item.image());
+	QString str = QString("Resources/svg/%1.svg").arg(text);
+	QIcon icon(str);
 
 	QToolButton* button = new QToolButton;
 	button->setIcon(icon);
@@ -236,7 +211,7 @@ QWidget* ToolBoxWidget::createCellWidget(const QString& text, DiagramItem::Diagr
 
 	QGridLayout* layout = new QGridLayout;
 	layout->addWidget(button, 0, 0, Qt::AlignHCenter);
-	layout->addWidget(new QLabel(text), 1, 0, Qt::AlignCenter);
+//	layout->addWidget(new QLabel(text), 1, 0, Qt::AlignCenter);
 
 	QWidget* widget = new QWidget;
 	widget->setLayout(layout);
@@ -280,14 +255,14 @@ void ToolBoxWidget::buttonGroupClicked(int id)
 	// simply set objButton unchecked if already checked
 	if (!clickedButton->isChecked())
 	{
-		emit setSceneMode(MOVE_ITEM);
+		emit setItemType(DiagramItem::None);
 		return;
 	}
 
 	if (id == DiagramItem::None)
 	{
 		setWidgetVisible(false, false);
-		emit setSceneMode(MOVE_ITEM);
+		emit setItemType(DiagramItem::None);
 	}
 	else
 	{
@@ -295,7 +270,6 @@ void ToolBoxWidget::buttonGroupClicked(int id)
 			setWidgetVisible(false, true);
 		else
 			setWidgetVisible(true, false);
-		emit setSceneMode(INSERT_ITEM);
 		emit setItemType(DiagramItem::DiagramType(id));
 	}
 }
@@ -338,7 +312,6 @@ void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 	{
 		_buttonGroup->button(int(DiagramItem::Line))->setChecked(false);
 	}
-//	emit setSceneMode(MOVE_ITEM);
 }
 
 void ToolBoxWidget::itemSelected(QGraphicsItem* item)

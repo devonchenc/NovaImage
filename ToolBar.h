@@ -10,6 +10,8 @@ QT_END_NAMESPACE
 class ToolButton;
 class MouseHandler;
 
+#include "Widget/DiagramItem.h"
+
 class ToolBar : public QToolBar
 {
 	Q_OBJECT
@@ -28,6 +30,9 @@ protected:
 	void changeEvent(QEvent* event) override;
 
 	bool eventFilter(QObject* obj, QEvent* event) override;
+
+public slots:
+	void setMeasurementType(DiagramItem::DiagramType type);
 
 private slots:
 	void imageWindowToolButtonClicked();
@@ -81,6 +86,7 @@ private:
 	QAction* _ellipseAction;
 	QAction* _rhombusAction;
 	QAction* _parallelogramAction;
+	QAction* _textAction;
 
 	QToolButton* _openToolButton;
 	QToolButton* _saveToolButton;

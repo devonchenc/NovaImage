@@ -157,7 +157,7 @@ void GraphicsView::paintEvent(QPaintEvent* event)
 	QGraphicsView::paintEvent(event);
 
 	QPainter painter(viewport());
-	int fontHeight = 20;
+	int fontHeight = rect().height() < 800 ? 12 : 16;
 	QFont font("Arial", fontHeight);
 	painter.setFont(font);
 	painter.setPen(QPen(qRgb(255, 255, 150)));
