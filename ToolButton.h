@@ -25,9 +25,13 @@ public:
 
 	static void setLeftMouseButton(ToolButton* toolButton);
 
+	static void unsetLeftMouseButton();
+
 	static ToolButton* leftMouseButton();
 
 	static void setRightMouseButton(ToolButton* toolButton);
+
+	static void unsetRightMouseButton();
 
 	static ToolButton* rightMouseButton();
 

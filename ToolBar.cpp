@@ -5,7 +5,6 @@
 #include <QEvent>
 #include <QMouseEvent>
 #include <QDebug>
-#include <QTextCodec>
 
 #include "GlobalFunc.h"
 #include "mainwindow.h"
@@ -56,11 +55,9 @@ void ToolBar::createAction()
 	_flipHorizontalAction = new QAction(tr("Flip horizontal"), this);
 	_flipVerticalAction = new QAction(tr("Flip vertical"), this);
 
-	QTextCodec* cod = QTextCodec::codecForLocale();
-	QString degree = cod->toUnicode("бу");
-	_rotate90CW = new QAction(tr("Rotate 90 ") + degree + tr(" CW"), this);
-	_rotate90CCW = new QAction(tr("Rotate 90 ") + degree + tr(" CCW"), this);
-	_rotate180 = new QAction(tr("Rotate 180 ") + degree, this);
+	_rotate90CW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this);	//0x00B0:degree sign
+	_rotate90CCW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
+	_rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
 
 	_restoreImageWindow = new QAction(tr("Default window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
@@ -307,6 +304,11 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 			// Make sure the clicked location is on the button not the menu area
 			if (mouseEvent->pos().x() < toolButton->size().width() - 12)
 			{
+				if (mouseEvent->button() == Qt::LeftButton)
+					ToolButton::unsetLeftMouseButton();
+				else if (mouseEvent->button() == Qt::RightButton)
+					ToolButton::unsetRightMouseButton();
+
 				if (toolButton->currentAction())
 				{
 					toolButton->currentAction()->trigger();

@@ -236,6 +236,7 @@ void GraphicsScene::mouseMove(const QPointF& point)
 		if (_currentDrawingItem)
 		{
 			_currentDrawingItem->setRectF(QRectF(_startPoint, point));
+			_currentDrawingItem->statisticsInfo();
 		}
 	}
 

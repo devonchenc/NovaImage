@@ -57,11 +57,16 @@ void ToolButton::setMouseHandler(MouseHandler* handler)
 
 void ToolButton::setLeftMouseButton(ToolButton* toolButton)
 {
+	_leftMouseButton = toolButton;
+	updateAllButtonsIcon();
+}
+
+void ToolButton::unsetLeftMouseButton()
+{
 	if (_leftMouseButton)
 	{
 		_leftMouseButton->emit unbounded();
 	}
-	_leftMouseButton = toolButton;
 	updateAllButtonsIcon();
 }
 
@@ -72,11 +77,16 @@ ToolButton* ToolButton::leftMouseButton()
 
 void ToolButton::setRightMouseButton(ToolButton* toolButton)
 {
+	_rightMouseButton = toolButton;
+	updateAllButtonsIcon();
+}
+
+void ToolButton::unsetRightMouseButton()
+{
 	if (_rightMouseButton)
 	{
 		_rightMouseButton->emit unbounded();
 	}
-	_rightMouseButton = toolButton;
 	updateAllButtonsIcon();
 }
 

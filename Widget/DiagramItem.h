@@ -32,6 +32,8 @@ public:
 
 	void setDrawingFinished(bool finished);
 
+	void statisticsInfo();
+
 signals:
 	void itemSelectedChange(QGraphicsItem* item);
 
@@ -55,10 +57,6 @@ private:
 
 	bool isCloseEnough(QPointF const& p1, QPointF const& p2);
 
-	QString statisticsInfo() const;
-
-	bool isInsidePoly(const QPointF& iPoint, const QPolygonF& iMyPoly) const;
-
 private:
     DiagramType _diagramType;
     QPolygonF _polygon;
@@ -70,5 +68,7 @@ private:
     Direction _scaleDirection;
 	bool _drawingFinished = false;
 	int _previousMode;
+
+	QString _info;
 };
 
