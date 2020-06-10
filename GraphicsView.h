@@ -17,23 +17,16 @@ public:
 
 	QPointF mapImagePointToScene(qreal x, qreal y) const;
 
+	void setZoomValue(int value);
+
+	void setZoomValueOffset(int offset);
+
 protected:
 #if QT_CONFIG(wheelevent)
 	void wheelEvent(QWheelEvent*) override;
 #endif
 
-signals:
-	void zoomValueChanged(int value);
-
-	void showCoordinate(const QString& str);
-
-	void showPixelValue(const QString& str);
-
 public slots:
-	void setZoomValue(int value);
-
-	void setZoomValueOffset(int offset);
-
 	void zoomNormal();
 	void zoom2x();
 	void zoom4x();

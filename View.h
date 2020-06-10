@@ -30,9 +30,6 @@ public:
 
 	float windowLevel() { return _windowLevel; }
 
-signals:
-	void showInfo(const QString& str);
-
 public slots:
 	void setSceneMode(int mode);
 

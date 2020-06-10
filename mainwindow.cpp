@@ -67,8 +67,6 @@ void MainWindow::initUI()
 	// setup toolbar
 	createToolbar();
 
-	createStatusBar();
-
 	createToolWidget();
 
 	setContextMenuPolicy(Qt::NoContextMenu);
@@ -141,61 +139,6 @@ void MainWindow::createToolbar()
 
 	_toolBar = new ToolBar(tr("Toolbar"), this);
 	addToolBar(_toolBar);
-}
-
-void MainWindow::createStatusBar()
-{
-	// setup status bar
-	QStatusBar* mainStatusBar = statusBar();
-
-	QLabel* infoLabel = new QLabel(mainStatusBar);
-	infoLabel->setMinimumWidth(160);
-	infoLabel->setAlignment(Qt::AlignHCenter);
-	connect(_view, &View::showInfo, infoLabel, &QLabel::setText);
-
-	QLabel* coordinateLabel = new QLabel(mainStatusBar);
-	coordinateLabel->setMinimumWidth(100);
-	coordinateLabel->setAlignment(Qt::AlignHCenter);
-	connect(_view->view(), &GraphicsView::showCoordinate, coordinateLabel, &QLabel::setText);
-
-	QLabel* pixelValueLabel = new QLabel(mainStatusBar);
-	pixelValueLabel->setMinimumWidth(120);
-	pixelValueLabel->setAlignment(Qt::AlignHCenter);
-	connect(_view->view(), &GraphicsView::showPixelValue, pixelValueLabel, &QLabel::setText);
-
-	QToolButton* fitWindowButton = new QToolButton(mainStatusBar);
-	fitWindowButton->setText("FitWindow");
-	connect(fitWindowButton, &QToolButton::clicked, _view, &View::fitWindow);
-	QToolButton* normalButton = new QToolButton(mainStatusBar);
-	normalButton->setText("Normal");
-	connect(normalButton, &QToolButton::clicked, _view, &View::zoomNormal);
-
-	QToolButton* zoomOutButton = new QToolButton(mainStatusBar);
-	zoomOutButton->setText("-");
-	connect(zoomOutButton, &QToolButton::clicked, _view->view(), &GraphicsView::zoomOut);
-	QToolButton* zoomInButton = new QToolButton(mainStatusBar);
-	zoomInButton->setText("+");
-	connect(zoomInButton, &QToolButton::clicked, _view->view(), &GraphicsView::zoomIn);
-
-	_slider = new QSlider(mainStatusBar);
-	_slider->setOrientation(Qt::Horizontal);
-	_slider->setMinimum(0);
-	_slider->setMaximum(MAX_ZOOM);
-	_slider->setSingleStep(ZOOM_STEP / 5);
-	_slider->setValue(MAX_ZOOM / 2);
-	_slider->setMaximumWidth(200);
-	_slider->setTickPosition(QSlider::TicksBelow);
-	connect(_view->view(), &GraphicsView::zoomValueChanged, _slider, &QSlider::setValue);
-	connect(_slider, &QSlider::valueChanged, _view->view(), &GraphicsView::setZoomValue);
-
-	mainStatusBar->addPermanentWidget(infoLabel);
-	mainStatusBar->addPermanentWidget(coordinateLabel);
-	mainStatusBar->addPermanentWidget(pixelValueLabel);
-	mainStatusBar->addPermanentWidget(fitWindowButton);
-	mainStatusBar->addPermanentWidget(normalButton);
-	mainStatusBar->addPermanentWidget(zoomOutButton);
-	mainStatusBar->addPermanentWidget(_slider);
-	mainStatusBar->addPermanentWidget(zoomInButton);
 }
 
 void MainWindow::createToolWidget()

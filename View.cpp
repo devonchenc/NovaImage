@@ -103,9 +103,6 @@ void View::showImage(const QImage* image, bool resetMatrix)
 		_view->resetMatrix();
 		_view->setSceneRect(pixmap.rect());
 	}
-
-	QString strInfo = QString(tr("Image Size:%1 x %2")).arg(image->width(), 4).arg(image->height(), 4);
-	emit showInfo(strInfo);
 }
 
 void View::resetImage()
@@ -190,7 +187,6 @@ void View::fitWindow()
 
 	int value = log2(ratio) * ZOOM_STEP + MAX_ZOOM / 2;
 	_view->setZoomValue(value);
-	emit _view->zoomValueChanged(value);
 }
 
 void View::zoomNormal()

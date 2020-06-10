@@ -55,45 +55,45 @@ void GraphicsView::setZoomValue(int value)
 void GraphicsView::setZoomValueOffset(int offset)
 {
 	_zoomFactor += offset;
-	emit zoomValueChanged(_zoomFactor);
+	setZoomValue(_zoomFactor);
 }
 
 void GraphicsView::zoomNormal()
 {
 	_zoomFactor = MAX_ZOOM / 2;
-	emit zoomValueChanged(_zoomFactor);
+	setZoomValue(_zoomFactor);
 }
 
 void GraphicsView::zoom2x()
 {
 	_zoomFactor = MAX_ZOOM / 2 + ZOOM_STEP;
-	emit zoomValueChanged(_zoomFactor);
+	setZoomValue(_zoomFactor);
 }
 
 void GraphicsView::zoom4x()
 {
 	_zoomFactor = MAX_ZOOM / 2 + ZOOM_STEP * 2;
-	emit zoomValueChanged(_zoomFactor);
+	setZoomValue(_zoomFactor);
 }
 
 void GraphicsView::zoom8x()
 {
 	_zoomFactor = MAX_ZOOM / 2 + ZOOM_STEP * 3;
-	emit zoomValueChanged(_zoomFactor);
+	setZoomValue(_zoomFactor);
 }
 
 void GraphicsView::zoomIn()
 {
 	_zoomFactor += ZOOM_STEP / 10;
 	_zoomFactor = qMin(_zoomFactor, MAX_ZOOM);
-	emit zoomValueChanged(_zoomFactor);
+	setZoomValue(_zoomFactor);
 }
 
 void GraphicsView::zoomOut()
 {
 	_zoomFactor -= ZOOM_STEP / 10;
 	_zoomFactor = qMax(0, _zoomFactor);
-	emit zoomValueChanged(_zoomFactor);
+	setZoomValue(_zoomFactor);
 }
 
 void GraphicsView::applyZoomValue()
@@ -137,8 +137,6 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 			_strCoord.clear();
 			_strValue.clear();
 		}
-		emit showCoordinate(_strCoord);
-		emit showPixelValue(_strValue);
 		update();
 	}
 
