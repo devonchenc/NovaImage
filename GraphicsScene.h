@@ -78,7 +78,6 @@ private:
 
 	DiagramItem* _currentDrawingItem;
 
-	bool _showCrossLine;
 	QGraphicsLineItem* _refHorzLine;
 	QGraphicsLineItem* _refVertLine;
 };

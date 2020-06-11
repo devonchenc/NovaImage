@@ -24,7 +24,6 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	, _textColor(Qt::green)
 	, _currentDrawingLine(nullptr)
 	, _currentDrawingItem(nullptr)
-	, _showCrossLine(false)
 	, _refHorzLine(nullptr)
 	, _refVertLine(nullptr)
 {
