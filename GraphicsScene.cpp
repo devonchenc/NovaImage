@@ -5,8 +5,11 @@
 #include <QTextCursor>
 #include <QKeyEvent>
 #include <QBrush>
+
 #include "Widget/DiagramTextItem.h"
 #include "Widget/DiagramLineItem.h"
+#include "GlobalFunc.h"
+#include "View.h"
 
 #define MIN_SIZE		10
 
@@ -144,23 +147,34 @@ void GraphicsScene::setItemType(DiagramItem::DiagramType type)
 	_itemType = type;
 }
 
-void GraphicsScene::showCrossLine()
+void GraphicsScene::showCrossLine(bool show)
 {
-	if (_showCrossLine)
+	if (show)
 	{
-		_showCrossLine = false;
+		QRectF rect = sceneRect();
+		_refHorzLine = addLine(rect.left(), rect.center().y(), rect.right(), rect.center().y(), QPen(Qt::red));
+		_refVertLine = addLine(rect.center().x(), rect.top(), rect.center().x(), rect.bottom(), QPen(Qt::red));
+	}
+	else
+	{
 		removeItem(_refHorzLine);
 		removeItem(_refVertLine);
 		delete _refHorzLine;
 		delete _refVertLine;
 	}
-	else
+}
+
+void GraphicsScene::showMeasurement(bool show)
+{
+	QList<QGraphicsItem*> itemList = items();
+	for (int i = 0; i < itemList.size(); i++)
 	{
-		_showCrossLine = true;
-		QRectF rect = sceneRect();
-		_refHorzLine = addLine(rect.left(), rect.center().y(), rect.right(), rect.center().y(), QPen(Qt::red));
-		_refVertLine = addLine(rect.center().x(), rect.top(), rect.center().x(), rect.bottom(), QPen(Qt::red));
+		if (itemList.at(i) != getGlobalView()->getPixmapItem())
+		{
+			itemList.at(i)->setVisible(show);
+		}
 	}
+	update();
 }
 
 void GraphicsScene::editorLostFocus(DiagramTextItem* item)

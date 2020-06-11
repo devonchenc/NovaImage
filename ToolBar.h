@@ -35,6 +35,8 @@ public slots:
 	void setMeasurementType(DiagramItem::DiagramType type);
 
 private slots:
+	void layoutToolButtonClicked();
+	void showInfoToolButtonClicked();
 	void imageWindowToolButtonClicked();
 	void zoomButtonClicked();
 	void selectItem();
@@ -52,9 +54,10 @@ private:
 	QAction* _showDockWidgetAction;
 	QAction* _fullScreenAction;
 
-	QAction* _annotationAction;
-	QAction* _crossAction;
-	QAction* _scaleAction;
+	QAction* _showAnnotationAction;
+	QAction* _showCrossAction;
+	QAction* _showScaleAction;
+	QAction* _showMeasurementAction;
 
 	QAction* _flipHorizontalAction;
 	QAction* _flipVerticalAction;
@@ -91,7 +94,7 @@ private:
 	QToolButton* _openToolButton;
 	QToolButton* _saveToolButton;
 	QToolButton* _layoutToolButton;
-	QToolButton* _annotationToolButton;
+	QToolButton* _showInfoToolButton;
 	QToolButton* _flipToolButton;
 	QToolButton* _rotateToolButton;
 

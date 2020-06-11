@@ -236,17 +236,17 @@ void MainWindow::setToolBoxWidgetVisible(bool line, bool text)
 	emit setToolBoxVisible(line, text);
 }
 
-void MainWindow::showMenuBar()
+void MainWindow::showMenuBar(bool show)
 {
-	menuBar()->setVisible(menuBar()->isVisible() == false);
+	menuBar()->setVisible(show);
 }
 
-void MainWindow::showDockWidget()
+void MainWindow::showDockWidget(bool show)
 {
 	for (int i = 0; i < _vecDockWidget.size(); i++)
 	{
 		QDockWidget* dockWidget = _vecDockWidget[i];
-		dockWidget->setVisible(dockWidget->isVisible() == false);
+		dockWidget->setVisible(show);
 	}
 }
 
@@ -262,19 +262,24 @@ void MainWindow::fullScreen()
 	}
 }
 
-void MainWindow::showAnnotation()
+void MainWindow::showAnnotation(bool show)
+{
+	_view->view()->showAnnotation(show);
+}
+
+void MainWindow::showCrossLine(bool show)
+{
+	_view->scene()->showCrossLine(show);
+}
+
+void MainWindow::showScale(bool show)
 {
 
 }
 
-void MainWindow::showCrossLine()
+void MainWindow::showMeasurement(bool show)
 {
-	_view->scene()->showCrossLine();
-}
-
-void MainWindow::showScale()
-{
-
+	_view->scene()->showMeasurement(show);
 }
 
 void MainWindow::zoomIn()

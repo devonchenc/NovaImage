@@ -61,12 +61,13 @@ public slots:
 	void openDicomImage();
 	void openRawImage();
 	void saveAs();
-	void showMenuBar();
-	void showDockWidget();
+	void showMenuBar(bool show);
+	void showDockWidget(bool show);
 	void fullScreen();
-	void showAnnotation();
-	void showCrossLine();
-	void showScale();
+	void showAnnotation(bool show);
+	void showCrossLine(bool show);
+	void showScale(bool show);
+	void showMeasurement(bool show);
     void zoomIn();
     void zoomOut();
 	void close();

@@ -35,7 +35,9 @@ public:
 
 	void setItemType(DiagramItem::DiagramType type);
 
-	void showCrossLine();
+	void showCrossLine(bool show);
+
+	void showMeasurement(bool show);
 
 	void mousePress(const QPointF& point);
 

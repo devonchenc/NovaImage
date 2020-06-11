@@ -21,6 +21,8 @@ public:
 
 	void setZoomValueOffset(int offset);
 
+	void showAnnotation(bool show);
+
 protected:
 #if QT_CONFIG(wheelevent)
 	void wheelEvent(QWheelEvent*) override;
@@ -49,4 +51,5 @@ private:
 	int _zoomFactor;
 	QString _strCoord;
 	QString _strValue;
+	bool _showAnnotation;
 };

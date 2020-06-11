@@ -12,6 +12,7 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView(scene, parent)
 	, _view(view)
 	, _zoomFactor(MAX_ZOOM / 2)
+	, _showAnnotation(true)
 {
 	setDragMode(QGraphicsView::NoDrag);
 
@@ -56,6 +57,12 @@ void GraphicsView::setZoomValueOffset(int offset)
 {
 	_zoomFactor += offset;
 	setZoomValue(_zoomFactor);
+}
+
+void GraphicsView::showAnnotation(bool show)
+{ 
+	_showAnnotation = show;
+	update();
 }
 
 void GraphicsView::zoomNormal()
@@ -156,27 +163,30 @@ void GraphicsView::paintEvent(QPaintEvent* event)
 {
 	QGraphicsView::paintEvent(event);
 
-	QPainter painter(viewport());
-	int fontHeight = rect().height() < 800 ? 12 : 16;
-	QFont font("Arial", fontHeight);
-	painter.setFont(font);
-	painter.setPen(QPen(qRgb(255, 255, 150)));
-	
-	// Get the height of the font
-	QFontMetrics fm(font);
-	int pixelsHigh = fm.height() * 1.1;
-
-	BaseImage* image = getGlobalImage();
-	if (image)
+	if (_showAnnotation)
 	{
-		QString str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
-		painter.drawText(QRect(0, 0, 200, pixelsHigh), Qt::AlignLeft, str);
+		QPainter painter(viewport());
+		int fontHeight = rect().height() < 800 ? 12 : 16;
+		QFont font("Arial", fontHeight);
+		painter.setFont(font);
+		painter.setPen(QPen(qRgb(255, 255, 150)));
+	
+		// Get the height of the font
+		QFontMetrics fm(font);
+		int pixelsHigh = fm.height() * 1.1;
+
+		BaseImage* image = getGlobalImage();
+		if (image)
+		{
+			QString str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
+			painter.drawText(QRect(0, 0, 200, pixelsHigh), Qt::AlignLeft, str);
+		}
+
+		QString str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
+		painter.drawText(QRect(0, rect().bottom() - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
+
+		painter.setPen(QPen(qRgb(255, 100, 100)));
+		painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
+		painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
 	}
-
-	QString str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
-	painter.drawText(QRect(0, rect().bottom() - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
-
-	painter.setPen(QPen(qRgb(255, 100, 100)));
-	painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
-	painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
 }

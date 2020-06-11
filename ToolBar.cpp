@@ -43,14 +43,17 @@ void ToolBar::createAction()
 	_showDockWidgetAction->setCheckable(true);
 	_showDockWidgetAction->setChecked(true);
 	_fullScreenAction = new QAction(tr("Full screen mode"), this);
-	_annotationAction = new QAction(tr("Annotations"), this);
-	_annotationAction->setCheckable(true);
-	_annotationAction->setChecked(true);
-	_crossAction = new QAction(tr("Cross reference line"), this);
-	_crossAction->setCheckable(true);
-	_scaleAction = new QAction(tr("Image scale"), this);
-	_scaleAction->setCheckable(true);
-	_scaleAction->setChecked(true);
+	_showAnnotationAction = new QAction(tr("Annotations"), this);
+	_showAnnotationAction->setCheckable(true);
+	_showAnnotationAction->setChecked(true);
+	_showCrossAction = new QAction(tr("Cross reference line"), this);
+	_showCrossAction->setCheckable(true);
+	_showScaleAction = new QAction(tr("Image scale"), this);
+	_showScaleAction->setCheckable(true);
+	_showScaleAction->setChecked(true);
+	_showMeasurementAction = new QAction(tr("Measurements"), this);
+	_showMeasurementAction->setCheckable(true);
+	_showMeasurementAction->setChecked(true);
 
 	_flipHorizontalAction = new QAction(tr("Flip horizontal"), this);
 	_flipVerticalAction = new QAction(tr("Flip vertical"), this);
@@ -98,12 +101,15 @@ void ToolBar::createAction()
 	MainWindow* mainWindow = getGlobalWindow();
 	connect(_openDicomAction, &QAction::triggered, mainWindow, &MainWindow::openDicomImage);
 	connect(_openRawAction, &QAction::triggered, mainWindow, &MainWindow::openRawImage);
-	connect(_showMenuAction, &QAction::triggered, mainWindow, &MainWindow::showMenuBar);
-	connect(_showDockWidgetAction, &QAction::triggered, mainWindow, &MainWindow::showDockWidget);
+
+	connect(_showMenuAction, &QAction::toggled, mainWindow, &MainWindow::showMenuBar);
+	connect(_showDockWidgetAction, &QAction::toggled, mainWindow, &MainWindow::showDockWidget);
 	connect(_fullScreenAction, &QAction::triggered, mainWindow, &MainWindow::fullScreen);
-	connect(_annotationAction, &QAction::triggered, mainWindow, &MainWindow::showAnnotation);
-	connect(_crossAction, &QAction::triggered, mainWindow, &MainWindow::showCrossLine);
-	connect(_scaleAction, &QAction::triggered, mainWindow, &MainWindow::showScale);
+
+	connect(_showAnnotationAction, &QAction::toggled, mainWindow, &MainWindow::showAnnotation);
+	connect(_showCrossAction, &QAction::toggled, mainWindow, &MainWindow::showCrossLine);
+	connect(_showScaleAction, &QAction::toggled, mainWindow, &MainWindow::showScale);
+	connect(_showMeasurementAction, &QAction::toggled, mainWindow, &MainWindow::showMeasurement);
 
 	connect(_flipHorizontalAction, &QAction::triggered, mainWindow->getView(), &View::flipHorizontal);
 	connect(_flipVerticalAction, &QAction::triggered, mainWindow->getView(), &View::flipVertical);
@@ -170,19 +176,19 @@ void ToolBar::createButton()
 	_layoutToolButton->setMenu(menu);
 	_layoutToolButton->setIcon(QIcon("Resources/svg/layout.svg"));
 	_layoutToolButton->setToolTip(tr("Change layout"));
-	connect(_layoutToolButton, &QToolButton::clicked, mainWindow, &MainWindow::showMenuBar);
-	connect(_layoutToolButton, &QToolButton::clicked, mainWindow, &MainWindow::showDockWidget);
+	connect(_layoutToolButton, &QToolButton::clicked, this, &ToolBar::layoutToolButtonClicked);
 
-	_annotationToolButton = new QToolButton;
-	_annotationToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_showInfoToolButton = new QToolButton;
+	_showInfoToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_annotationAction);
-	menu->addAction(_crossAction);
-	menu->addAction(_scaleAction);
-	_annotationToolButton->setMenu(menu);
-	_annotationToolButton->setIcon(QIcon("Resources/svg/annotation.svg"));
-	_annotationToolButton->setToolTip(tr("Toggle annotations"));
-	connect(_annotationToolButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
+	menu->addAction(_showAnnotationAction);
+	menu->addAction(_showCrossAction);
+	menu->addAction(_showScaleAction);
+	menu->addAction(_showMeasurementAction);
+	_showInfoToolButton->setMenu(menu);
+	_showInfoToolButton->setIcon(QIcon("Resources/svg/annotation.svg"));
+	_showInfoToolButton->setToolTip(tr("Toggle annotations"));
+	connect(_showInfoToolButton, &QToolButton::clicked, this, &ToolBar::showInfoToolButtonClicked);
 
 	_flipToolButton = new QToolButton;
 	_flipToolButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -276,7 +282,7 @@ void ToolBar::createButton()
 	addWidget(_saveToolButton);
 	addSeparator();
 	addWidget(_layoutToolButton);
-	addWidget(_annotationToolButton);
+	addWidget(_showInfoToolButton);
 	addWidget(_flipToolButton);
 	addWidget(_rotateToolButton);
 	addSeparator();
@@ -395,6 +401,30 @@ void ToolBar::setMeasurementType(DiagramItem::DiagramType type)
 		_measurementButton->triggered(_textAction);
 		break;
 	}
+}
+
+void ToolBar::layoutToolButtonClicked()
+{
+	bool checked = !_showMenuAction->isChecked();
+
+	_showMenuAction->setChecked(checked);
+	_showDockWidgetAction->setChecked(checked);
+
+	_showMenuAction->toggled(checked);
+	_showDockWidgetAction->toggled(checked);
+}
+
+void ToolBar::showInfoToolButtonClicked()
+{
+	bool checked = !_showAnnotationAction->isChecked();
+
+	_showAnnotationAction->setChecked(checked);
+	_showScaleAction->setChecked(checked);
+	_showMeasurementAction->setChecked(checked);
+
+	_showAnnotationAction->toggled(checked);
+	_showScaleAction->toggled(checked);
+	_showMeasurementAction->toggled(checked);
 }
 
 void ToolBar::imageWindowToolButtonClicked()
