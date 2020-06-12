@@ -6,7 +6,6 @@
 class ScanImage : public MonoImage
 {
 public:
-	ScanImage();
 	ScanImage(const QString& pathName);
 	virtual ~ScanImage();
 

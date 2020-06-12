@@ -6,8 +6,10 @@
 #include "Image/GeneralImage.h"
 #include "Image/ScanImage.h"
 #include "Image/DicomImage.h"
+#include "Image/RawImage.h"
 #include "Processor/LevelsProcessor.h"
 #include "Processor/InverseProcessor.h"
+#include "Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
 	: pMainWindow(pWindow)
@@ -39,7 +41,22 @@ bool Document::openFile(const QString& fileName)
 	}
 	else if (type == IMAGE_FORMAT_DAT || type == IMAGE_FORMAT_RAW)
 	{
+		RawParameterDialog dlg(fileName);
+		dlg.resize(400, 400);
+		if (dlg.exec() == QDialog::Accepted)
+		{
+			dlg.dataType();
+			// Create raw image
+			_image = std::make_shared<RawImage>(fileName, dlg.dataType(), dlg.width(), dlg.height());
 
+			// 读入数据
+		//	readRawData(dlg.m_nDataType, dlg.m_nImageWidth, dlg.m_nImageHeight, dlg.m_nHeaderSize);
+		}
+		else
+		{
+			_image = nullptr;
+			return false;
+		}
 	}
 	else if (type != IMAGE_FORMAT_UNKNOWN)
 	{

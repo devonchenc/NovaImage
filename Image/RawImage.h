@@ -2,13 +2,11 @@
 
 #include "MonoImage.h"
 
-class DcmDataset;
-
-class DICOMImage : public MonoImage
+class RawImage : public MonoImage
 {
 public:
-	DICOMImage(const QString& pathName);
-	virtual ~DICOMImage();
+	RawImage(const QString& pathName, int type, int width, int height);
+	virtual ~RawImage();
 
 public:
 	bool hasPixelSpacing() override { return true; }
@@ -19,8 +17,6 @@ public:
 private:
 	// Read data
 	bool readData();
-
-	void readMoreInfo(DcmDataset* dataset);
 
 private:
 	float _horzPixelSpacing;

@@ -26,7 +26,6 @@
 #include "Widget/CommonWidget.h"
 #include "Widget/CurvesWidget.h"
 #include "Widget/LevelsWidget.h"
-//#include "Dialog/RawParameter.h"
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)

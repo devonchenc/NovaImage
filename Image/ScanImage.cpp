@@ -3,11 +3,6 @@
 #include <QFile>
 #include "ImageDataTemplate.h"
 
-ScanImage::ScanImage()
-{
-
-}
-
 ScanImage::ScanImage(const QString& pathName)
 	: MonoImage(pathName)
 {

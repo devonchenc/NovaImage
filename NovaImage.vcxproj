@@ -19,6 +19,7 @@
     <ClCompile Include="Image\DicomImage.cpp" />
     <ClCompile Include="Image\GeneralImage.cpp" />
     <ClCompile Include="Image\MonoImage.cpp" />
+    <ClCompile Include="Image\RawImage.cpp" />
     <ClCompile Include="Image\ScanImage.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="mainwindow.cpp" />
@@ -43,6 +44,7 @@
     <ClCompile Include="Widget\HistogramWidget.cpp" />
     <ClCompile Include="Widget\LevelsWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
+    <ClCompile Include="Widget\RawParameterDialog.cpp" />
     <ClCompile Include="Widget\ToolBoxWidget.cpp" />
     <ClCompile Include="Widget\WidgetManager.cpp" />
   </ItemGroup>
@@ -62,6 +64,7 @@
     <ClInclude Include="Image\MonoImage.h" />
     <QtMoc Include="ToolBar.h" />
     <QtMoc Include="ToolButton.h" />
+    <ClInclude Include="Image\RawImage.h" />
     <ClInclude Include="MouseHandler.h" />
     <QtMoc Include="Widget\DiagramItem.h" />
     <QtMoc Include="Widget\DiagramTextItem.h" />
@@ -74,6 +77,7 @@
     <ClInclude Include="Processor\LevelsProcessor.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
+    <QtMoc Include="Widget\RawParameterDialog.h" />
     <ClInclude Include="Widget\WidgetManager.h" />
     <QtMoc Include="Widget\LevelsWidget.h" />
     <QtMoc Include="Widget\HistogramWidget.h" />

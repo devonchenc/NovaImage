@@ -50,7 +50,7 @@ void ToolBoxWidget::initUI()
 	_lineFrame->setFrameShape(QFrame::HLine);
 	_lineFrame->setFrameShadow(QFrame::Sunken);
 
-	_labelLine = new QLabel(tr("Line:"));
+	_lineLabel = new QLabel(tr("Line:"));
 	_lineColorButton = new QColorButton(qRgb(0, 255, 55));
 	connect(_lineColorButton, &QColorButton::clicked, this, &ToolBoxWidget::lineColorButtonTriggered);
 	_fillCheckBox = new QCheckBox(tr("Fill:"));
@@ -58,7 +58,7 @@ void ToolBoxWidget::initUI()
 	_fillColorButton = new QColorButton(Qt::white);
 	connect(_fillColorButton, &QColorButton::clicked, this, &ToolBoxWidget::fillColorButtonTriggered);
 	QHBoxLayout* hLayout = new QHBoxLayout;
-	hLayout->addWidget(_labelLine);
+	hLayout->addWidget(_lineLabel);
 	hLayout->addWidget(_lineColorButton);
 	hLayout->addStretch();
 	hLayout->addWidget(_fillCheckBox);
@@ -147,7 +147,7 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 		getToolButton(_parallelogramWidget)->setToolTip(tr("Parallelogram"));
 		getToolButton(_textWidget)->setToolTip(tr("Text"));
 
-		_labelLine->setText(tr("Line:"));
+		_lineLabel->setText(tr("Line:"));
 		_fillCheckBox->setText(tr("Fill:"));
 	}
 
@@ -225,7 +225,7 @@ void ToolBoxWidget::setWidgetVisible(bool line, bool text)
 {
 	_lineFrame->setVisible(line || text);
 
-	_labelLine->setVisible(line);
+	_lineLabel->setVisible(line);
 	_fillCheckBox->setVisible(line);
 	_lineColorButton->setVisible(line);
 	_fillColorButton->setVisible(line);

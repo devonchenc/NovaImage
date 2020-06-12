@@ -85,7 +85,7 @@ private:
 	QWidget* _textWidget;
 
 	QFrame* _lineFrame;
-	QLabel* _labelLine;
+	QLabel* _lineLabel;
 	QCheckBox* _fillCheckBox;
 	QColorButton* _lineColorButton;
 	QColorButton* _fillColorButton;

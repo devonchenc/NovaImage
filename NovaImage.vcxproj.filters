@@ -141,6 +141,12 @@
     <ClCompile Include="Processor\LevelsProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\RawParameterDialog.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Image\RawImage.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="View.h">
@@ -197,6 +203,9 @@
     <QtMoc Include="Document.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="Widget\RawParameterDialog.h">
+      <Filter>Widget</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image\BaseImage.h">
@@ -252,6 +261,9 @@
     </ClInclude>
     <ClInclude Include="Processor\LevelsProcessor.h">
       <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\RawImage.h">
+      <Filter>Image</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

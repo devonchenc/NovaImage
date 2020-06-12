@@ -20,15 +20,15 @@ LevelsWidget::LevelsWidget(QWidget* parent)
 	connect(_histogram, &HistogramWidget::updateMid, this, &LevelsWidget::updateMid);
 	connect(_histogram, &HistogramWidget::updateTop, this, &LevelsWidget::updateTop);
 
-	_editMin = new QLineEdit();
+	_editMin = new QLineEdit;
 	_editMin->setText("0");
 	_editMin->setMaximumWidth(100);
 	connect(_editMin, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
-	_editMid = new QLineEdit();
+	_editMid = new QLineEdit;
 	_editMid->setText("1");
 	_editMid->setMaximumWidth(100);
 	connect(_editMid, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
-	_editMax = new QLineEdit();
+	_editMax = new QLineEdit;
 	_editMax->setText("255");
 	_editMax->setMaximumWidth(100);
 	connect(_editMax, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);

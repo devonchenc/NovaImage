@@ -7,11 +7,6 @@
 #include <QDebug>
 #include "ImageDataTemplate.h"
 
-DICOMImage::DICOMImage()
-{
-
-}
-
 DICOMImage::DICOMImage(const QString& pathName)
 	: MonoImage(pathName)
 {
