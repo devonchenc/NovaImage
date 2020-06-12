@@ -135,16 +135,17 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 	{
 		parentWidget()->setWindowTitle(tr("ToolBox"));
 
-		getLabel(_cursorWidget)->setText(tr("Point"));
-		getLabel(_lengthWidget)->setText(tr("Line"));
-		getLabel(_angleWidget)->setText(tr("Angle"));
-		getLabel(_rectangleWidget)->setText(tr("Rectangle"));
-		getLabel(_roundRectWidget)->setText(tr("RoundRect"));
-		getLabel(_circleWidget)->setText(tr("Circle"));
-		getLabel(_ellipseWidget)->setText(tr("Ellipse"));
-		getLabel(_rhombusWidget)->setText(tr("Rhombus"));
-		getLabel(_parallelogramWidget)->setText(tr("Parallelogram"));
-		getLabel(_textWidget)->setText(tr("Text"));
+		getToolButton(_cursorWidget)->setToolTip(tr("Point"));
+		getToolButton(_lengthWidget)->setToolTip(tr("Line"));
+		getToolButton(_angleWidget)->setToolTip(tr("Angle"));
+		getToolButton(_arrowWidget)->setToolTip(tr("Arrow"));
+		getToolButton(_rectangleWidget)->setToolTip(tr("Rectangle"));
+		getToolButton(_roundRectWidget)->setToolTip(tr("RoundRect"));
+		getToolButton(_circleWidget)->setToolTip(tr("Circle"));
+		getToolButton(_ellipseWidget)->setToolTip(tr("Ellipse"));
+		getToolButton(_rhombusWidget)->setToolTip(tr("Rhombus"));
+		getToolButton(_parallelogramWidget)->setToolTip(tr("Parallelogram"));
+		getToolButton(_textWidget)->setToolTip(tr("Text"));
 
 		_labelLine->setText(tr("Line:"));
 		_fillCheckBox->setText(tr("Fill:"));
@@ -153,16 +154,16 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 	BaseWidget::changeEvent(event);
 }
 
-QLabel* ToolBoxWidget::getLabel(QWidget* widget)
+QToolButton* ToolBoxWidget::getToolButton(QWidget* widget)
 {
 	QLayout* layout = widget->layout();
 	for (int i = 0; i < layout->count(); i++)
 	{
 		QLayoutItem* item = layout->itemAt(i);
-		QLabel* label = qobject_cast<QLabel*>(item->widget());
-		if (label)
+		QToolButton* toolButton = qobject_cast<QToolButton*>(item->widget());
+		if (toolButton)
 		{
-			return label;
+			return toolButton;
 		}
 	}
 	return nullptr;
@@ -207,6 +208,7 @@ QWidget* ToolBoxWidget::createCellWidget(const QString& text, DiagramItem::Diagr
 	button->setIcon(icon);
 	button->setIconSize(iconSize);
 	button->setCheckable(true);
+	button->setToolTip(text);
 	_buttonGroup->addButton(button, int(type));
 
 	QGridLayout* layout = new QGridLayout;

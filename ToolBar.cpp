@@ -35,6 +35,7 @@ void ToolBar::createAction()
 {
 	_openDicomAction = new QAction(tr("Open &DICOM file..."), this);
 	_openRawAction = new QAction(tr("Open &Raw file..."), this);
+	_saveAsRawAction = new QAction(tr("Save as &Raw file..."), this);
 
 	_showMenuAction = new QAction(tr("Menu"), this);
 	_showMenuAction->setCheckable(true);
@@ -66,10 +67,10 @@ void ToolBar::createAction()
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 
 	_fitWindowAction = new QAction(tr("Fit window"), this);
-	_1xAction = new QAction(tr("100%"), this);
-	_2xAction = new QAction(tr("200%"), this);
-	_4xAction = new QAction(tr("400%"), this);
-	_8xAction = new QAction(tr("800%"), this);
+	_1xAction = new QAction("100%", this);
+	_2xAction = new QAction("200%", this);
+	_4xAction = new QAction("400%", this);
+	_8xAction = new QAction("800%", this);
 	_zoomInAction = new QAction(tr("Zoom in"), this);
 	_zoomOutAction = new QAction(tr("Zoom out"), this);
 
@@ -101,6 +102,7 @@ void ToolBar::createAction()
 	MainWindow* mainWindow = getGlobalWindow();
 	connect(_openDicomAction, &QAction::triggered, mainWindow, &MainWindow::openDicomImage);
 	connect(_openRawAction, &QAction::triggered, mainWindow, &MainWindow::openRawImage);
+	connect(_saveAsRawAction, &QAction::triggered, mainWindow, &MainWindow::saveAsRawImage);
 
 	connect(_showMenuAction, &QAction::toggled, mainWindow, &MainWindow::showMenuBar);
 	connect(_showDockWidgetAction, &QAction::toggled, mainWindow, &MainWindow::showDockWidget);
@@ -160,7 +162,7 @@ void ToolBar::createButton()
 	_saveToolButton = new QToolButton;
 	_saveToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_openDicomAction);
+	menu->addAction(_saveAsRawAction);
 	_saveToolButton->setMenu(menu);
 	_saveToolButton->setIcon(QIcon("Resources/svg/save.svg"));
 	_saveToolButton->setToolTip(tr("Save image file"));
@@ -298,7 +300,56 @@ void ToolBar::changeEvent(QEvent* event)
 	{
 		_openDicomAction->setText(tr("Open &DICOM file..."));
 		_openRawAction->setText(tr("Open &Raw file..."));
+		_saveAsRawAction->setText(tr("Open &Raw file..."));
+
+		_showMenuAction->setText(tr("Menu"));
+		_showDockWidgetAction->setText(tr("Dock widgets"));
+		_fullScreenAction->setText(tr("Full screen mode"));
+		_showAnnotationAction->setText(tr("Annotations"));
+		_showCrossAction->setText(tr("Cross reference line"));
+		_showScaleAction->setText(tr("Image scale"));
+		_showMeasurementAction->setText(tr("Measurements"));
+
+		_flipHorizontalAction->setText(tr("Flip horizontal"));
+		_flipVerticalAction->setText(tr("Flip vertical"));
+
+		_rotate90CW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"));
+		_rotate90CCW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"));
+		_rotate180->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
+
+		_restoreImageWindow->setText(tr("Default window"));
+		_imageNegativeAction->setText(tr("Negative"));
+
+		_fitWindowAction->setText(tr("Fit window"));
+		_zoomInAction->setText(tr("Zoom in"));
+		_zoomOutAction->setText(tr("Zoom out"));
+
+		_cursorAction->setText(tr("Select"));
+		_moveAction->setText(tr("Move"));
+		_rulerAction->setText(tr("Length"));
+		_angleAction->setText(tr("Angle"));
+		_arrowAction->setText(tr("Arrow"));
+		_rectAction->setText(tr("Rectangle"));
+		_roundrectAction->setText(tr("Round Rectangle"));
+		_circleAction->setText(tr("Circle"));
+		_ellipseAction->setText(tr("Ellipse"));
+		_rhombusAction->setText(tr("Rhombus"));
+		_parallelogramAction->setText(tr("Parallelogram"));
+		_textAction->setText(tr("Text"));
+
+		_openToolButton->setToolTip(tr("Open image file"));
+		_saveToolButton->setToolTip(tr("Save image file"));
+		_layoutToolButton->setToolTip(tr("Change layout"));
+		_showInfoToolButton->setToolTip(tr("Toggle annotations"));
+		_flipToolButton->setToolTip(tr("Flip"));
+		_rotateToolButton->setToolTip(tr("Rotate"));
+		_imageWindowToolButton->setToolTip(tr("Adjust image window"));
+		_zoomButton->setToolTip(tr("Zoom image"));
+		_cursorButton->setToolTip(tr("Select item/Move image"));
+		_measurementButton->setToolTip(tr("Measurements and tools"));
 	}
+
+	QToolBar::changeEvent(event);
 }
 
 bool ToolBar::eventFilter(QObject* obj, QEvent* event)

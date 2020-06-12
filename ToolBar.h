@@ -49,6 +49,7 @@ private slots:
 private:
 	QAction* _openDicomAction;
 	QAction* _openRawAction;
+	QAction* _saveAsRawAction;
 
 	QAction* _showMenuAction;
 	QAction* _showDockWidgetAction;

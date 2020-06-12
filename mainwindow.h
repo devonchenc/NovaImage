@@ -61,6 +61,7 @@ public slots:
 	void openDicomImage();
 	void openRawImage();
 	void saveAs();
+	void saveAsRawImage();
 	void showMenuBar(bool show);
 	void showDockWidget(bool show);
 	void fullScreen();

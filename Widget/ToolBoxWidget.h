@@ -67,7 +67,7 @@ private:
 
 	QWidget* createCellWidget(const QString &text, DiagramItem::DiagramType type);
 
-	QLabel* getLabel(QWidget* widget);
+	QToolButton* getToolButton(QWidget* widget);
 
 private:
 	QButtonGroup* _buttonGroup;

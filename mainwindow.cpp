@@ -305,6 +305,11 @@ void MainWindow::saveAs()
 	}
 }
 
+void MainWindow::saveAsRawImage()
+{
+
+}
+
 void MainWindow::close()
 {
 	_doc->closeFile();
