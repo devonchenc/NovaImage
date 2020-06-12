@@ -24,7 +24,7 @@ DICOMImage::DICOMImage(const QString& pathName)
 		return;
 	}
 	// Convert float data to uchar data
-	if (_imageData->convertToByte(_byteImage) == false)
+	if (convertToByte() == false)
 	{
 		_openSucceed = false;
 		return;

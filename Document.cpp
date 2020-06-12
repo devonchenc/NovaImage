@@ -42,12 +42,12 @@ bool Document::openFile(const QString& fileName)
 	else if (type == IMAGE_FORMAT_DAT || type == IMAGE_FORMAT_RAW)
 	{
 		RawParameterDialog dlg(fileName);
-		dlg.resize(400, 400);
+		dlg.resize(400, 350);
 		if (dlg.exec() == QDialog::Accepted)
 		{
 			dlg.dataType();
 			// Create raw image
-			_image = std::make_shared<RawImage>(fileName, dlg.dataType(), dlg.width(), dlg.height());
+			_image = std::make_shared<RawImage>(fileName, dlg.dataType(), dlg.width(), dlg.height(), dlg.headerSize());
 
 			// 读入数据
 		//	readRawData(dlg.m_nDataType, dlg.m_nImageWidth, dlg.m_nImageHeight, dlg.m_nHeaderSize);

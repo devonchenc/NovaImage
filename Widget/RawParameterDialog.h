@@ -4,6 +4,8 @@
 
 QT_BEGIN_NAMESPACE
 class QLabel;
+class QComboBox;
+class QLineEdit;
 QT_END_NAMESPACE
 
 class RawParameterDialog : public QDialog
@@ -21,14 +23,29 @@ public:
 
 	int height() { return _height; }
 
+	int headerSize() { return _headerSize; }
+
 private:
 	void initUI();
 
+private slots:
+	void updateExpectedSize();
+
+	void acceptButtonClicked();
+
 private:
 	QString _fileName;
-	QLabel* _actualSize;
+	QLabel* _expectedSizeLabel;
+	QComboBox* _typeComboBox;
+	QComboBox* _widthComboBox;
+	QComboBox* _heightComboBox;
+	QLineEdit* _headerEdit;
 
+	qint64 _actualSize;
+	qint64 _expectedSize;
 	int _dataType;
 	int _width;
 	int _height;
+	int _slice;
+	int _headerSize;
 };
