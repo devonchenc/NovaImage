@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QGraphicsTextItem>
-#include <QPen>
 
 QT_BEGIN_NAMESPACE
 class QFocusEvent;

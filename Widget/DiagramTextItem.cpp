@@ -1,10 +1,9 @@
 #include "DiagramTextItem.h"
 
-//#include "DiagramScene.h"
 #include <QDebug>
 #include <QTextCursor>
 
-DiagramTextItem::DiagramTextItem(QGraphicsItem *parent)
+DiagramTextItem::DiagramTextItem(QGraphicsItem* parent)
     : QGraphicsTextItem(parent)
 {
     setFlag(QGraphicsItem::ItemIsMovable);

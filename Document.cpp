@@ -48,9 +48,6 @@ bool Document::openFile(const QString& fileName)
 			dlg.dataType();
 			// Create raw image
 			_image = std::make_shared<RawImage>(fileName, dlg.dataType(), dlg.width(), dlg.height(), dlg.headerSize());
-
-			// 读入数据
-		//	readRawData(dlg.m_nDataType, dlg.m_nImageWidth, dlg.m_nImageHeight, dlg.m_nHeaderSize);
 		}
 		else
 		{
