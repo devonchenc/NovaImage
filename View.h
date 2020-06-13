@@ -18,6 +18,8 @@ public:
 
 	GraphicsScene* scene();
 
+	int sceneMode();
+
 	void showImage(const QImage* image, bool resetMatrix = false);
 
 	QGraphicsPixmapItem* getPixmapItem() { return _currentImage; }

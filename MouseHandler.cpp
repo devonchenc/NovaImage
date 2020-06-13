@@ -139,7 +139,7 @@ void ZoomMouseHandler::release(QMouseEvent* event)
 
 void SelectMouseHandler::press(QMouseEvent* event)
 {
-
+	getGlobalView()->setSceneMode(MOVE_ITEM);
 }
 
 void SelectMouseHandler::move(QMouseEvent* event)
@@ -156,7 +156,7 @@ void SelectMouseHandler::release(QMouseEvent* event)
 
 void MoveMouseHandler::press(QMouseEvent* event)
 {
-
+	getGlobalView()->setSceneMode(MOVE_SCENE);
 }
 
 void MoveMouseHandler::move(QMouseEvent* event)
@@ -177,6 +177,10 @@ void MoveMouseHandler::release(QMouseEvent* event)
 
 void DrawMouseHandler::press(QMouseEvent* event)
 {
+	if (getGlobalView()->sceneMode() != MOVE_ITEM)
+	{
+		getGlobalView()->setSceneMode(INSERT_ITEM);
+	}
 	QPointF point = getGlobalView()->view()->mapToScene(event->pos());
 	getGlobalView()->scene()->mousePress(point);
 }

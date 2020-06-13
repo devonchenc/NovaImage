@@ -38,6 +38,11 @@ GraphicsScene* View::scene()
 	return _scene;
 }
 
+int View::sceneMode()
+{
+	return _scene->mode();
+}
+
 void View::createItemMenus()
 {
 	_cutAction = new QAction(QIcon("Resources/cut.png"), tr("Cu&t"), this);
