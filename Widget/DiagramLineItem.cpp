@@ -57,7 +57,7 @@ DiagramLineItem* DiagramLineItem::clone()
 void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
 	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-	if (scene->mode() != MOVE_ITEM)
+	if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
 		return;
 
 	_resizeMode = false;
@@ -82,7 +82,7 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
 	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-	if (scene->mode() != MOVE_ITEM)
+	if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
 		return;
 
 	if (_resizeMode)
@@ -131,7 +131,7 @@ void DiagramLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 		if (closeToHandlerPoint)
 		{
 			// Close to handler points
-			scene->setMode(MOVE_ITEM);
+			scene->setMode(MOVE_ITEM_TEMP);
 		}
 		else
 		{

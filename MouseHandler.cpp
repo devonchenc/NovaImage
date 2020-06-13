@@ -177,7 +177,7 @@ void MoveMouseHandler::release(QMouseEvent* event)
 
 void DrawMouseHandler::press(QMouseEvent* event)
 {
-	if (getGlobalView()->sceneMode() != MOVE_ITEM)
+	if (getGlobalView()->sceneMode() != MOVE_ITEM_TEMP)
 	{
 		getGlobalView()->setSceneMode(INSERT_ITEM);
 	}

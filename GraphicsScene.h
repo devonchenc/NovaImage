@@ -12,8 +12,9 @@ class DiagramLineItem;
 
 #define NO_DRAG			0
 #define MOVE_ITEM		1
-#define MOVE_SCENE		2
-#define INSERT_ITEM		3
+#define MOVE_ITEM_TEMP	2
+#define MOVE_SCENE		3
+#define INSERT_ITEM		4
 
 class GraphicsScene : public QGraphicsScene
 {
