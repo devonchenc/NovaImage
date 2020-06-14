@@ -57,11 +57,14 @@ void ToolBar::createAction()
 	_showMeasurementAction->setChecked(true);
 
 	_flipHorizontalAction = new QAction(tr("Flip horizontal"), this);
+	_flipHorizontalAction->setCheckable(true);
 	_flipVerticalAction = new QAction(tr("Flip vertical"), this);
+	_flipVerticalAction->setCheckable(true);
 
 	_rotate90CW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this);	//0x00B0:degree sign
 	_rotate90CCW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
 	_rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
+	_resetTransformation = new QAction(tr("Reset transformation"), this);
 
 	_restoreImageWindow = new QAction(tr("Default window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
@@ -119,6 +122,7 @@ void ToolBar::createAction()
 	connect(_rotate90CW, &QAction::triggered, mainWindow->getView(), &View::rotate90CW);
 	connect(_rotate90CCW, &QAction::triggered, mainWindow->getView(), &View::rotate90CCW);
 	connect(_rotate180, &QAction::triggered, mainWindow->getView(), &View::rotate180);
+	connect(_resetTransformation, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
 
 	connect(_restoreImageWindow, &QAction::triggered, mainWindow->getDocument(), &Document::restoreImageWindow);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
@@ -196,7 +200,6 @@ void ToolBar::createButton()
 	_flipToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_flipHorizontalAction);
-	menu->addSeparator();
 	menu->addAction(_flipVerticalAction);
 	_flipToolButton->setMenu(menu);
 	_flipToolButton->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
@@ -210,6 +213,8 @@ void ToolBar::createButton()
 	menu->addAction(_rotate90CCW);
 	menu->addSeparator();
 	menu->addAction(_rotate180);
+	menu->addSeparator();
+	menu->addAction(_resetTransformation);
 	_rotateToolButton->setMenu(menu);
 	_rotateToolButton->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
 	_rotateToolButton->setToolTip(tr("Rotate"));

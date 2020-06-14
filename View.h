@@ -42,6 +42,7 @@ public slots:
 	void rotate90CW();
 	void rotate90CCW();
 	void rotate180();
+	void resetTransformation();
 
 	void fitWindow();
 	void zoomNormal();

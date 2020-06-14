@@ -28,6 +28,8 @@ public:
 private:
 	void initUI();
 
+	void loadSettings();
+
 private slots:
 	void updateExpectedSize();
 

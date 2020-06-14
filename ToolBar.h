@@ -66,6 +66,7 @@ private:
 	QAction* _rotate90CW;
 	QAction* _rotate90CCW;
 	QAction* _rotate180;
+	QAction* _resetTransformation;
 
 	QAction* _restoreImageWindow;
 	QAction* _imageNegativeAction;

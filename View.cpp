@@ -182,6 +182,14 @@ void View::rotate180()
 	_view->rotate(180);
 }
 
+void View::resetTransformation()
+{
+	// Reset rotation
+	_view->resetTransform();
+	// Reset translate
+	view()->setSceneRect(QRectF(0, 0, _currentImage->pixmap().width(), _currentImage->pixmap().height()));
+}
+
 void View::fitWindow()
 {
 	QRectF rect = this->rect();

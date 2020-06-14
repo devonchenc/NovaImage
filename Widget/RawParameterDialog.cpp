@@ -8,6 +8,10 @@
 #include <QGroupBox>
 #include <QVBoxLayout>
 #include <QMessageBox>
+#include <QEvent>
+
+#include <QSettings>
+#include <QCoreApplication>
 
 RawParameterDialog::RawParameterDialog(const QString& pathName, QWidget* parent)
 	: QDialog(parent)
@@ -16,7 +20,11 @@ RawParameterDialog::RawParameterDialog(const QString& pathName, QWidget* parent)
 	QFileInfo fileInfo(_fileName);
 	_actualSize = fileInfo.size();
 
+	setWindowTitle(tr("Open Raw file"));
+	
 	initUI();
+
+	loadSettings();
 
 	updateExpectedSize();
 }
@@ -30,8 +38,8 @@ void RawParameterDialog::initUI()
 {
 	QLabel* nameLabel = new QLabel(tr("File Name:"));
 	QLabel* actualSize = new QLabel(tr("Actual Size:"));
-	QLabel* unit1Label = new QLabel(tr("Byte"));
-	QLabel* unit2Label = new QLabel(tr("Byte"));
+	QLabel* unit1Label = new QLabel(tr("bytes"));
+	QLabel* unit2Label = new QLabel(tr("bytes"));
 	QLabel* expectedSize = new QLabel(tr("Expected Size:"));
 	_expectedSizeLabel = new QLabel;
 
@@ -49,11 +57,11 @@ void RawParameterDialog::initUI()
 
 	QLabel* dataLabel = new QLabel(tr("Data type:"));
 	_typeComboBox = new QComboBox;
-	_typeComboBox->addItem(tr("8-bit Unsigned Char"));
-	_typeComboBox->addItem(tr("16-bit Unsigned Short"));
-	_typeComboBox->addItem(tr("32-bit Unsigned Int"));
-	_typeComboBox->addItem(tr("32-bit Float"));
-	_typeComboBox->addItem(tr("64-bit Double Float"));
+	_typeComboBox->addItem("8-bit Unsigned Char");
+	_typeComboBox->addItem("16-bit Unsigned Short");
+	_typeComboBox->addItem("32-bit Unsigned Int");
+	_typeComboBox->addItem("32-bit Float");
+	_typeComboBox->addItem("64-bit Double Float");
 	QLabel* widthLabel = new QLabel(tr("Image width:"));
 	_widthComboBox = new QComboBox;
 	_widthComboBox->addItem("128");
@@ -78,17 +86,17 @@ void RawParameterDialog::initUI()
 	QValidator* validator = new QRegExpValidator(QRegExp("[0-9]+$"));
 	_headerEdit->setValidator(validator);
 	connect(_headerEdit, &QLineEdit::textChanged, this, &RawParameterDialog::updateExpectedSize);
-	QLabel* header2Label = new QLabel(tr("Byte"));
+	QLabel* header2Label = new QLabel(tr("bytes"));
 
 	QGridLayout* grid2 = new QGridLayout();
 	grid2->addWidget(dataLabel, 0, 0);
 	grid2->addWidget(_typeComboBox, 0, 1);
 	grid2->addWidget(widthLabel, 1, 0);
 	grid2->addWidget(_widthComboBox, 1, 1);
-	grid2->addWidget(new QLabel(tr("pixel")), 1, 2);
+	grid2->addWidget(new QLabel(tr("pixels")), 1, 2);
 	grid2->addWidget(heightLabel, 2, 0);
 	grid2->addWidget(_heightComboBox, 2, 1);
-	grid2->addWidget(new QLabel(tr("pixel")), 2, 2);
+	grid2->addWidget(new QLabel(tr("pixels")), 2, 2);
 	grid2->addWidget(headerLabel, 3, 0);
 	grid2->addWidget(_headerEdit, 3, 1);
 	grid2->addWidget(header2Label, 3, 2);
@@ -111,6 +119,20 @@ void RawParameterDialog::initUI()
 	vLayout->addWidget(groupBox2);
 	vLayout->addLayout(hLayout);
 	setLayout(vLayout);
+}
+
+void RawParameterDialog::loadSettings()
+{
+	QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	int type = setting.value("raw/type", 1).toInt();
+	QString width = setting.value("raw/width", 1024).toString();
+	QString height = setting.value("raw/height", 1024).toString();
+	QString headerSize = setting.value("raw/headerSize", 0).toString();
+	
+	_typeComboBox->setCurrentIndex(type);
+	_widthComboBox->setCurrentText(width);
+	_heightComboBox->setCurrentText(height);
+	_headerEdit->setText(headerSize);
 }
 
 void RawParameterDialog::updateExpectedSize()
@@ -155,6 +177,12 @@ void RawParameterDialog::acceptButtonClicked()
 	}
 	else
 	{
+		QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+		setting.setValue("raw/type", _dataType);
+		setting.setValue("raw/width", _width);
+		setting.setValue("raw/height", _height);
+		setting.setValue("raw/headerSize", _headerSize);
+
 		accept();
 	}
 }
