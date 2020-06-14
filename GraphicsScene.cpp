@@ -87,7 +87,7 @@ void GraphicsScene::setFillColor(const QColor& color)
 		else if (p->type() == DiagramLineItem::Type)
 		{
 			DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(p);
-			item->setPointPen(QPen(color));
+			item->setEndpointPen(QPen(color));
 		}
 	}
 }
@@ -226,11 +226,12 @@ void GraphicsScene::mousePress(const QPointF& point)
 			qDebug() << "text inserted at" << textItem->scenePos();
 			emit itemInserted(textItem);
 		}
-		else if (_itemType == DiagramItem::Line)
+		else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow)
 		{
-			_currentDrawingLine = new DiagramLineItem(QLineF(_startPoint, _startPoint), _itemMenu);
+			int type = _itemType - DiagramItem::Line;
+			_currentDrawingLine = new DiagramLineItem(type, QLineF(_startPoint, _startPoint), _itemMenu);
 			_currentDrawingLine->setPen(QPen(_lineColor, 2));
-			_currentDrawingLine->setPointPen(QPen(_fillColor));
+			_currentDrawingLine->setEndpointPen(QPen(_fillColor));
 			connect(_currentDrawingLine, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
 			addItem(_currentDrawingLine);
 			emit itemInserted(_currentDrawingLine);
@@ -240,7 +241,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 
 void GraphicsScene::mouseMove(const QPointF& point)
 {
-	if (_itemType == DiagramItem::Line && _currentDrawingLine != nullptr)
+	if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow) && _currentDrawingLine != nullptr)
 	{
 		_currentDrawingLine->setLine(QLineF(_currentDrawingLine->line().p1(), point));
 	}
@@ -277,7 +278,7 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 			_currentDrawingItem = nullptr;
 		}
 	}
-	else if (_itemType == DiagramItem::Line && _currentDrawingLine != nullptr)
+	else if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow) && _currentDrawingLine != nullptr)
 	{
 		QRectF rect = _currentDrawingLine->boundingRect();
 		if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)

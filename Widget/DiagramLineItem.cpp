@@ -13,8 +13,9 @@
 #include "../GraphicsScene.h"
 #include "../Image/BaseImage.h"
 
-DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
+DiagramLineItem::DiagramLineItem(int type, const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
+	, _type(type)
 	, _contextMenu(contextMenu)
 	, _previousMode(MOVE_ITEM)
 {
@@ -28,14 +29,14 @@ DiagramLineItem::~DiagramLineItem()
 
 }
 
-void DiagramLineItem::setPointPen(const QPen& pen)
+void DiagramLineItem::setEndpointPen(const QPen& pen)
 {
-	_pointPen = pen;
+	_endpointPen = pen;
 }
 
 QPen DiagramLineItem::pointPen() const
 {
-	return _pointPen;
+	return _endpointPen;
 }
 
 void DiagramLineItem::setDrawingFinished(bool finished)
@@ -62,7 +63,7 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 	_resizeMode = false;
 	int index = 0;
-	foreach(QPointF const& p, resizeHandlePoints())
+	foreach (QPointF const& p, resizeHandlePoints())
 	{
 		if (isCloseEnough(event->pos(), p))
 		{
@@ -169,31 +170,23 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 	QGraphicsLineItem::paint(painter, &myOption, widget);
 
 	painter->setRenderHint(QPainter::Antialiasing, false);
-    // add resize handles
-	qreal resizePointWidth = 6;
-	painter->setPen(_pointPen);
-	foreach (QPointF const& point, resizeHandlePoints())
+	if (_type == 0)
 	{
-		painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
-		painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
-	}
+		// Draw resize handles
+		qreal resizePointWidth = 6;
+		painter->setPen(_endpointPen);
+		foreach(QPointF const& point, resizeHandlePoints())
+		{
+			painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
+			painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
+		}
 
-	QTransform transform = getGlobalView()->view()->transform();
-	QTransform transform2;
-	// The output text is always near the point on the right
-	if (line().p1().x() < line().p2().x())
-	{
-		transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
+		DrawLengthText(painter);
 	}
-	else
+	else if (_type == 1)
 	{
-		transform2.translate(line().p1().x() + 10, line().p1().y() + 5);
+		DrawArrow(painter);
 	}
-
-	painter->setWorldTransform(transform.inverted() * transform2, true);
-	painter->setFont(QFont("Arial", 10));
-	painter->setPen(QPen(Qt::yellow));
-	painter->drawText(0, 0, length());
 }
 
 void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
@@ -222,7 +215,14 @@ bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
 	return delta < closeEnoughDistance;
 }
 
-QString DiagramLineItem::length() const
+float DiagramLineItem::length() const
+{
+	float offsetX = line().p1().x() - line().p2().x();
+	float offsetY = line().p1().y() - line().p2().y();
+	return sqrt(offsetX * offsetX + offsetY * offsetY);
+}
+
+QString DiagramLineItem::lengthString() const
 {
 	float offsetX = line().p1().x() - line().p2().x();
 	float offsetY = line().p1().y() - line().p2().y();
@@ -247,4 +247,42 @@ QString DiagramLineItem::length() const
 		str += tr(" px");
 	}
 	return str;
+}
+
+void DiagramLineItem::DrawLengthText(QPainter* painter)
+{
+	QTransform transform = getGlobalView()->view()->transform();
+	QTransform transform2;
+	// The output text is always near the point on the right
+	if (line().p1().x() < line().p2().x())
+	{
+		transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
+	}
+	else
+	{
+		transform2.translate(line().p1().x() + 10, line().p1().y() + 5);
+	}
+
+	painter->setWorldTransform(transform.inverted() * transform2, true);
+	painter->setFont(QFont("Arial", 10));
+	painter->setPen(QPen(Qt::yellow));
+	painter->drawText(0, 0, lengthString());
+}
+
+void DiagramLineItem::DrawArrow(QPainter* painter)
+{
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	painter->setPen(pen());
+
+	float len = length();
+
+	float cosT = (len > FLT_EPSILON) ? (line().p2().x() - line().p1().x()) / len : 1.0f;
+	float sinT = (len > FLT_EPSILON) ? (line().p2().y() - line().p1().y()) / len : 0.0f;
+
+	int x = 18;
+	int y = 7;
+	QPointF point1(line().p2().x() - x * cosT - y * sinT, line().p2().y() - x * sinT + y * cosT);
+	QPointF point2(line().p2().x() - x * cosT + y * sinT, line().p2().y() - x * sinT - y * cosT);
+	painter->drawLine(line().p2(), point1);
+	painter->drawLine(line().p2(), point2);
 }

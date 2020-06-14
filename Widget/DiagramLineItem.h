@@ -14,12 +14,12 @@ public:
 		Point1, Point2
 	};
 
-	DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
+	DiagramLineItem(int type, const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
 	~DiagramLineItem();
 
 	int type() const override { return Type; }
 
-	void setPointPen(const QPen& pen);
+	void setEndpointPen(const QPen& pen);
 	QPen pointPen() const;
 
 	void setDrawingFinished(bool finished);
@@ -43,11 +43,18 @@ private:
 
 	bool isCloseEnough(QPointF const& p1, QPointF const& p2);
 
-	QString length() const;
+	float length() const;
+
+	QString lengthString() const;
+
+	void DrawLengthText(QPainter* painter);
+
+	void DrawArrow(QPainter* painter);
 
 private:
+	int _type;			// 0:Line, 1:Arrow
     QMenu* _contextMenu;
-	QPen _pointPen;
+	QPen _endpointPen;
 	static constexpr qreal closeEnoughDistance = 12;
 	bool _resizeMode = false;
 	Index _dragIndex;

@@ -83,8 +83,8 @@ private:
 	QAction* _moveAction;
 
 	QAction* _rulerAction;
-	QAction* _angleAction;
 	QAction* _arrowAction;
+	QAction* _angleAction;
 	QAction* _rectAction;
 	QAction* _roundrectAction;
 	QAction* _circleAction;

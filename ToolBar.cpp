@@ -83,10 +83,10 @@ void ToolBar::createAction()
 	_moveAction->setIcon(QIcon("Resources/svg/move.svg"));
 	_rulerAction = new QAction(tr("Length"), this);
 	_rulerAction->setIcon(QIcon("Resources/svg/length.svg"));
-	_angleAction = new QAction(tr("Angle"), this);
-	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
 	_arrowAction = new QAction(tr("Arrow"), this);
 	_arrowAction->setIcon(QIcon("Resources/svg/arrow.svg"));
+	_angleAction = new QAction(tr("Angle"), this);
+	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
 	_rectAction = new QAction(tr("Rectangle"), this);
 	_rectAction->setIcon(QIcon("Resources/svg/rectangle.svg"));
 	_roundrectAction = new QAction(tr("Round Rectangle"), this);
@@ -138,8 +138,8 @@ void ToolBar::createAction()
 	connect(_cursorAction, &QAction::triggered, this, &ToolBar::selectItem);
 	connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);
 	connect(_rulerAction, &QAction::triggered, this, &ToolBar::measurementChanged);
-	connect(_angleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_arrowAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+	connect(_angleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_rectAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_roundrectAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_circleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
@@ -267,8 +267,8 @@ void ToolBar::createButton()
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_rulerAction);
-	menu->addAction(_angleAction);
 	menu->addAction(_arrowAction);
+	menu->addAction(_angleAction);
 	menu->addSeparator();
 	menu->addAction(_rectAction);
 	menu->addAction(_roundrectAction);
@@ -332,8 +332,8 @@ void ToolBar::changeEvent(QEvent* event)
 		_cursorAction->setText(tr("Select"));
 		_moveAction->setText(tr("Move"));
 		_rulerAction->setText(tr("Length"));
-		_angleAction->setText(tr("Angle"));
 		_arrowAction->setText(tr("Arrow"));
+		_angleAction->setText(tr("Angle"));
 		_rectAction->setText(tr("Rectangle"));
 		_roundrectAction->setText(tr("Round Rectangle"));
 		_circleAction->setText(tr("Circle"));
@@ -420,13 +420,13 @@ void ToolBar::setMeasurementType(DiagramItem::DiagramType type)
 		_rulerAction->trigger();
 		_measurementButton->triggered(_rulerAction);
 		break;
-	case DiagramItem::Angle:
-		_angleAction->trigger();
-		_measurementButton->triggered(_angleAction);
-		break;
 	case DiagramItem::Arrow:
 		_arrowAction->trigger();
 		_measurementButton->triggered(_arrowAction);
+		break;
+	case DiagramItem::Angle:
+		_angleAction->trigger();
+		_measurementButton->triggered(_angleAction);
 		break;
 	case DiagramItem::Rect:
 		_rectAction->trigger();
@@ -530,15 +530,15 @@ void ToolBar::measurementChanged()
 		_measurementButton->setIconByName("Resources/svg/length.svg");
 		getGlobalView()->setItemType(DiagramItem::Line);
 	}
-	else if (action == _angleAction)
-	{
-		_measurementButton->setIconByName("Resources/svg/angle.svg");
-		getGlobalView()->setItemType(DiagramItem::Angle);
-	}
 	else if (action == _arrowAction)
 	{
 		_measurementButton->setIconByName("Resources/svg/arrow.svg");
 		getGlobalView()->setItemType(DiagramItem::Arrow);
+	}
+	else if (action == _angleAction)
+	{
+		_measurementButton->setIconByName("Resources/svg/angle.svg");
+		getGlobalView()->setItemType(DiagramItem::Angle);
 	}
 	else if (action == _rectAction)
 	{
