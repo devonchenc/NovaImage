@@ -228,7 +228,7 @@ QString DiagramLineItem::lengthString() const
 	float offsetY = line().p1().y() - line().p2().y();
 
 	BaseImage* image = getGlobalImage();
-	if (image->hasPixelSpacing())
+	if (image && image->hasPixelSpacing())
 	{
 		float horzPixelSpacing = image->horzPixelSpacing();
 		float vertPixelSpacing = image->vertPixelSpacing();
@@ -238,7 +238,7 @@ QString DiagramLineItem::lengthString() const
 	float length = sqrt(offsetX * offsetX + offsetY * offsetY);
 
 	QString str = QString::number(length, 'f', 2);
-	if (image->hasPixelSpacing())
+	if (image && image->hasPixelSpacing())
 	{
 		str += " mm";
 	}

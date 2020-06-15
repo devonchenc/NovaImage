@@ -167,15 +167,21 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
 // Repaint view
 void Document::repaintView()
 {
-	getView()->showImage(_image->getImageEntity());
+	if (_image)
+	{
+		getView()->showImage(_image->getImageEntity());
+	}
 }
 
 void Document::restoreImageWindow()
 {
-	float maxValue = _image->getMaxValue();
-	float minValue = _image->getMinValue();
+	if (_image)
+	{
+		float maxValue = _image->getMaxValue();
+		float minValue = _image->getMinValue();
 
-	getView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+		getView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+	}
 }
 
 void Document::applyImageWidthAndLevel()
@@ -192,12 +198,15 @@ void Document::applyImageWidthAndLevel()
 
 void Document::inverseImage()
 {
-	float maxValue = _image->getMaxValue();
-	float minValue = _image->getMinValue();
-	InverseProcessor processor;
-	processor.process(getImage());
+	if (_image)
+	{
+		float maxValue = _image->getMaxValue();
+		float minValue = _image->getMinValue();
+		InverseProcessor processor;
+		processor.process(getImage());
 
-	repaintView();
+		repaintView();
+	}
 }
 
 View* Document::getView() const

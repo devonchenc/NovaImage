@@ -56,6 +56,11 @@ public:
     bool copyFromArray(uchar* byteImage, int width, int height);
 
 protected:
+	virtual bool saveAsDcm(const QString& fileName);
+
+	virtual bool saveAsRaw(const QString& fileName);
+
+protected:
 	QImage* _pImage;
 
 	int _width, _height;

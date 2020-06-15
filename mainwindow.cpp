@@ -306,7 +306,15 @@ void MainWindow::saveAs()
 
 void MainWindow::saveAsRawImage()
 {
+	if (getGlobalImage() == nullptr)
+		return;
 
+	QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
+		"/", tr("RAW file (*.raw)"));
+	if (!fileName.isEmpty())
+	{
+		_doc->saveAs(fileName);
+	}
 }
 
 void MainWindow::close()

@@ -83,10 +83,13 @@ void ImageWindowMouseHandler::release(QMouseEvent* event)
 
 void ImageWindowMouseHandler::CalcImageWindow(QPoint point)
 {
+	BaseImage* image = getGlobalImage();
+	if (image == nullptr)
+		return;
+
 	float windowWidth = getGlobalView()->windowWidth();
 	float windowLevel = getGlobalView()->windowLevel();
 
-	BaseImage* image = getGlobalImage();
 	float minValue = image->getMinValue();
 	float maxValue = image->getMaxValue();
 

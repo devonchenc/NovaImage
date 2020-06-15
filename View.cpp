@@ -16,6 +16,8 @@
 View::View(QWidget* parent)
 	: QFrame(parent)
 	, _currentImage(nullptr)
+	, _windowWidth(0)
+	, _windowLevel(0)
 {
 	createItemMenus();
 
@@ -187,7 +189,10 @@ void View::resetTransformation()
 	// Reset rotation
 	_view->resetTransform();
 	// Reset translate
-	view()->setSceneRect(QRectF(0, 0, _currentImage->pixmap().width(), _currentImage->pixmap().height()));
+	if (_currentImage)
+	{
+		view()->setSceneRect(QRectF(0, 0, _currentImage->pixmap().width(), _currentImage->pixmap().height()));
+	}
 }
 
 void View::fitWindow()
