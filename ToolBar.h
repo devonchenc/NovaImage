@@ -68,7 +68,8 @@ private:
 	QAction* _rotate180;
 	QAction* _resetTransformation;
 
-	QAction* _restoreImageWindow;
+	QAction* _ROIWidowAction;
+	QAction* _restoreWindowAction;
 	QAction* _imageNegativeAction;
 
 	QAction* _fitWindowAction;

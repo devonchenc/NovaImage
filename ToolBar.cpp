@@ -66,7 +66,8 @@ void ToolBar::createAction()
 	_rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
 	_resetTransformation = new QAction(tr("Reset transformation"), this);
 
-	_restoreImageWindow = new QAction(tr("Default window"), this);
+	_ROIWidowAction = new QAction(tr("ROI window"), this);
+	_restoreWindowAction = new QAction(tr("Default window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 
 	_fitWindowAction = new QAction(tr("Fit window"), this);
@@ -124,7 +125,8 @@ void ToolBar::createAction()
 	connect(_rotate180, &QAction::triggered, mainWindow->getView(), &View::rotate180);
 	connect(_resetTransformation, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
 
-	connect(_restoreImageWindow, &QAction::triggered, mainWindow->getDocument(), &Document::restoreImageWindow);
+	connect(_ROIWidowAction, &QAction::triggered, mainWindow->getView(), &View::ROIWindow);
+	connect(_restoreWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::restoreImageWindow);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
 	connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
@@ -223,7 +225,9 @@ void ToolBar::createButton()
 	_imageWindowToolButton = new ToolButton;
 	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_restoreImageWindow);
+	menu->addAction(_ROIWidowAction);
+	menu->addSeparator();
+	menu->addAction(_restoreWindowAction);
 	menu->addSeparator();
 	menu->addAction(_imageNegativeAction);
 	_imageWindowToolButton->setMenu(menu);
@@ -322,7 +326,8 @@ void ToolBar::changeEvent(QEvent* event)
 		_rotate90CCW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"));
 		_rotate180->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
 
-		_restoreImageWindow->setText(tr("Default window"));
+		_ROIWidowAction->setText(tr("ROI window"));
+		_restoreWindowAction->setText(tr("Default window"));
 		_imageNegativeAction->setText(tr("Negative"));
 
 		_fitWindowAction->setText(tr("Fit window"));
