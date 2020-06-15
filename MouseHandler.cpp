@@ -161,11 +161,14 @@ void MoveMouseHandler::press(QMouseEvent* event)
 
 void MoveMouseHandler::move(QMouseEvent* event)
 {
-	QPointF delta = getGlobalView()->view()->mapToScene(_mousePos) - getGlobalView()->view()->mapToScene(event->pos());
-	_mousePos = event->pos();
+	if (getGlobalView()->sceneMode() == MOVE_SCENE)
+	{
+		QPointF delta = getGlobalView()->view()->mapToScene(_mousePos) - getGlobalView()->view()->mapToScene(event->pos());
+		_mousePos = event->pos();
 
-	QRectF rect = getGlobalView()->view()->sceneRect();
-	getGlobalView()->view()->setSceneRect(rect.x() + delta.x(), rect.y() + delta.y(), rect.width(), rect.height());
+		QRectF rect = getGlobalView()->view()->sceneRect();
+		getGlobalView()->view()->setSceneRect(rect.x() + delta.x(), rect.y() + delta.y(), rect.width(), rect.height());
+	}
 }
 
 void MoveMouseHandler::release(QMouseEvent* event)
