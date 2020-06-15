@@ -305,7 +305,7 @@ void ToolBar::changeEvent(QEvent* event)
 	{
 		_openDicomAction->setText(tr("Open &DICOM file..."));
 		_openRawAction->setText(tr("Open &Raw file..."));
-		_saveAsRawAction->setText(tr("Open &Raw file..."));
+		_saveAsRawAction->setText(tr("Save as &Raw file..."));
 
 		_showMenuAction->setText(tr("Menu"));
 		_showDockWidgetAction->setText(tr("Dock widgets"));

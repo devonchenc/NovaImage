@@ -51,6 +51,11 @@ ScanImage::~ScanImage()
 
 }
 
+bool ScanImage::saveAsDcm(const QString& fileName)
+{
+	return true;
+}
+
 // Read data header
 bool ScanImage::readDataHeader()
 {

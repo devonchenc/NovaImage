@@ -13,12 +13,15 @@ public:
 	// Get reference of DataHeader
 	DataHeader& getDataHeader()		{ return _dh; }
 
+protected:
+	bool saveAsDcm(const QString& fileName) override;
+
 private:
 	// Read data header
 	bool readDataHeader();
 
 	// Read data
-	bool readData();	
+	bool readData();
 
 private:
 	DataHeader _dh;

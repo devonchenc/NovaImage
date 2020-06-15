@@ -146,6 +146,10 @@ bool BaseImage::saveAsDcm(const QString& fileName)
 
 bool BaseImage::saveAsRaw(const QString& fileName)
 {
+	QFile file(fileName);
+	if (!file.open(QFile::WriteOnly))
+		return false;
+
 	uchar* buffer = new uchar[_width * _height];
 	for (int j = 0; j < _height; j++)
 	{
@@ -155,10 +159,6 @@ bool BaseImage::saveAsRaw(const QString& fileName)
 			buffer[j * _width + i] = qRed(value);
 		}
 	}
-
-	QFile file(fileName);
-	if (!file.open(QFile::WriteOnly))
-		return false;
 
 	file.write((const char*)buffer, sizeof(uchar) * _width * _height);
 	file.close();

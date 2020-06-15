@@ -122,22 +122,22 @@
 <context>
     <name>DiagramItem</name>
     <message>
-        <location filename="Widget/DiagramItem.cpp" line="130"/>
+        <location filename="Widget/DiagramItem.cpp" line="133"/>
         <source>Area=%1 mm</source>
         <translation type="unfinished">面积=%1 mm</translation>
     </message>
     <message>
-        <location filename="Widget/DiagramItem.cpp" line="134"/>
+        <location filename="Widget/DiagramItem.cpp" line="137"/>
         <source>Area=%1 px</source>
         <translation type="unfinished">面积=%1 像素</translation>
     </message>
     <message>
-        <location filename="Widget/DiagramItem.cpp" line="143"/>
+        <location filename="Widget/DiagramItem.cpp" line="146"/>
         <source>Mean=%1 SD=%2</source>
         <translation type="unfinished">均值=%1 标准差=%2</translation>
     </message>
     <message>
-        <location filename="Widget/DiagramItem.cpp" line="145"/>
+        <location filename="Widget/DiagramItem.cpp" line="148"/>
         <source>Max=%1 Min=%2</source>
         <translation type="unfinished">最大值=%1 最小值=%2</translation>
     </message>
@@ -153,12 +153,12 @@
 <context>
     <name>GraphicsView</name>
     <message>
-        <location filename="GraphicsView.cpp" line="181"/>
+        <location filename="GraphicsView.cpp" line="179"/>
         <source>Size: %1%2%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="GraphicsView.cpp" line="185"/>
+        <location filename="GraphicsView.cpp" line="182"/>
         <source>WL: %1 WW: %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -185,19 +185,19 @@
     <name>MainWindow</name>
     <message>
         <location filename="mainwindow.cpp" line="77"/>
-        <location filename="mainwindow.cpp" line="416"/>
+        <location filename="mainwindow.cpp" line="424"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="78"/>
-        <location filename="mainwindow.cpp" line="417"/>
+        <location filename="mainwindow.cpp" line="425"/>
         <source>&amp;Save as...</source>
         <translation type="unfinished">另存为(&amp;A)...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="79"/>
-        <location filename="mainwindow.cpp" line="418"/>
+        <location filename="mainwindow.cpp" line="426"/>
         <source>&amp;Close</source>
         <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
@@ -208,49 +208,49 @@
     </message>
     <message>
         <location filename="mainwindow.cpp" line="81"/>
-        <location filename="mainwindow.cpp" line="419"/>
+        <location filename="mainwindow.cpp" line="427"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">退出(&amp;X)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="83"/>
-        <location filename="mainwindow.cpp" line="420"/>
+        <location filename="mainwindow.cpp" line="428"/>
         <source>Zoom &amp;in</source>
         <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="84"/>
-        <location filename="mainwindow.cpp" line="421"/>
+        <location filename="mainwindow.cpp" line="429"/>
         <source>Zoom &amp;out</source>
         <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="85"/>
-        <location filename="mainwindow.cpp" line="422"/>
+        <location filename="mainwindow.cpp" line="430"/>
         <source>&amp;Prev image</source>
         <translation type="unfinished">前一张图像(&amp;P)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="86"/>
-        <location filename="mainwindow.cpp" line="423"/>
+        <location filename="mainwindow.cpp" line="431"/>
         <source>&amp;Next image</source>
         <translation type="unfinished">后一张图像(&amp;N)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="91"/>
-        <location filename="mainwindow.cpp" line="424"/>
+        <location filename="mainwindow.cpp" line="432"/>
         <source>&amp;Chinese</source>
         <translation type="unfinished">中文简体(&amp;C)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="100"/>
-        <location filename="mainwindow.cpp" line="413"/>
+        <location filename="mainwindow.cpp" line="421"/>
         <source>&amp;File</source>
         <translation type="unfinished">文件(&amp;F)</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="109"/>
-        <location filename="mainwindow.cpp" line="414"/>
+        <location filename="mainwindow.cpp" line="422"/>
         <source>&amp;View</source>
         <translation type="unfinished">视图(&amp;V)</translation>
     </message>
@@ -275,6 +275,11 @@
         <translation type="unfinished">DICOM 文件 (*.dcm)</translation>
     </message>
     <message>
+        <location filename="mainwindow.cpp" line="313"/>
+        <source>RAW image (*.raw)</source>
+        <translation type="unfinished">RAW 图像 (*.raw)</translation>
+    </message>
+    <message>
         <location filename="mainwindow.cpp" line="191"/>
         <source>Image files (*.png *.bmp *.jpg *.tif)</source>
         <translation type="unfinished">图像文件 (*.png *.bmp *.jpg *.tif)</translation>
@@ -292,33 +297,35 @@
     <message>
         <location filename="mainwindow.cpp" line="214"/>
         <source>Open Raw Image</source>
-        <translation type="unfinished">打开 RAW 文件</translation>
+        <translation type="unfinished">打开 RAW 图像</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="299"/>
+        <location filename="mainwindow.cpp" line="312"/>
         <source>Save Image As ...</source>
         <translation type="unfinished">图像另存为...</translation>
     </message>
     <message>
         <location filename="mainwindow.cpp" line="300"/>
-        <source>JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm)</source>
-        <translation type="unfinished">JPG 图像 (*.jpg);;PNG 图像 (*.png);;BMP 图像 (*.bmp);;TIFF 图像 (*.tif);;DICOM 图像 (*.dcm)</translation>
+        <source>JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm);;RAW image (*.raw)</source>
+        <oldsource>JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm)</oldsource>
+        <translation type="unfinished">JPG 图像 (*.jpg);;PNG 图像 (*.png);;BMP 图像 (*.bmp);;TIFF 图像 (*.tif);;DICOM 图像 (*.dcm);;RAW 图像 (*.raw)</translation>
     </message>
 </context>
 <context>
     <name>QObject</name>
     <message>
         <location filename="Image/RawImage.cpp" line="93"/>
-        <location filename="Image/ScanImage.cpp" line="75"/>
-        <location filename="Image/ScanImage.cpp" line="100"/>
+        <location filename="Image/ScanImage.cpp" line="80"/>
+        <location filename="Image/ScanImage.cpp" line="105"/>
         <location filename="Widget/RawParameterDialog.cpp" line="174"/>
         <source>Open image file error</source>
         <translation type="unfinished">打开图像错误</translation>
     </message>
     <message>
         <location filename="Image/RawImage.cpp" line="94"/>
-        <location filename="Image/ScanImage.cpp" line="76"/>
-        <location filename="Image/ScanImage.cpp" line="101"/>
+        <location filename="Image/ScanImage.cpp" line="81"/>
+        <location filename="Image/ScanImage.cpp" line="106"/>
         <location filename="Widget/RawParameterDialog.cpp" line="175"/>
         <source>The data size does not match the file information description!</source>
         <translation type="unfinished">数据实际尺寸和文件描述信息不符！</translation>
@@ -554,14 +561,14 @@
         <translation type="unfinished">距离</translation>
     </message>
     <message>
-        <location filename="ToolBar.cpp" line="86"/>
-        <location filename="ToolBar.cpp" line="335"/>
+        <location filename="ToolBar.cpp" line="88"/>
+        <location filename="ToolBar.cpp" line="336"/>
         <source>Angle</source>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
-        <location filename="ToolBar.cpp" line="88"/>
-        <location filename="ToolBar.cpp" line="336"/>
+        <location filename="ToolBar.cpp" line="86"/>
+        <location filename="ToolBar.cpp" line="335"/>
         <source>Arrow</source>
         <translation type="unfinished">箭头</translation>
     </message>
@@ -766,26 +773,26 @@
 <context>
     <name>View</name>
     <message>
-        <location filename="View.cpp" line="48"/>
-        <location filename="View.cpp" line="76"/>
+        <location filename="View.cpp" line="50"/>
+        <location filename="View.cpp" line="78"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished">剪切(&amp;T)</translation>
     </message>
     <message>
-        <location filename="View.cpp" line="52"/>
-        <location filename="View.cpp" line="77"/>
+        <location filename="View.cpp" line="54"/>
+        <location filename="View.cpp" line="79"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="View.cpp" line="56"/>
-        <location filename="View.cpp" line="78"/>
+        <location filename="View.cpp" line="58"/>
+        <location filename="View.cpp" line="80"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">粘贴(&amp;P)</translation>
     </message>
     <message>
-        <location filename="View.cpp" line="60"/>
-        <location filename="View.cpp" line="79"/>
+        <location filename="View.cpp" line="62"/>
+        <location filename="View.cpp" line="81"/>
         <source>&amp;Delete</source>
         <translation type="unfinished">删除(&amp;D)</translation>
     </message>

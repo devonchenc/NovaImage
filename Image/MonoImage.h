@@ -39,6 +39,9 @@ public:
 	bool convertToByte();
 
 protected:
+	bool saveAsRaw(const QString& fileName) override;
+
+protected:
 	bool allocateMemory();
 
 protected:

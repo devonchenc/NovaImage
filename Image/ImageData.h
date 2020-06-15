@@ -1,5 +1,9 @@
 ﻿#pragma once
 
+QT_BEGIN_NAMESPACE
+class QFile;
+QT_END_NAMESPACE
+
 typedef unsigned char uchar;
 
 class ImageData
@@ -31,6 +35,9 @@ public:
 
 	// Allocate data to byte
 	virtual bool convertToByte(uchar* byteImage) = 0;
+
+	// Save array to QFile
+	virtual void saveArray(QFile& file) = 0;
 
 public:
 	float getMinimumValue() const { return _minValue; }

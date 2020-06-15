@@ -297,7 +297,7 @@ void MainWindow::saveAs()
 		return;
 
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
-		"/", tr("JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm)"));
+		"/", tr("JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm);;RAW image (*.raw)"));
 	if (!fileName.isEmpty())
 	{
 		_doc->saveAs(fileName);
@@ -310,7 +310,7 @@ void MainWindow::saveAsRawImage()
 		return;
 
 	QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
-		"/", tr("RAW file (*.raw)"));
+		"/", tr("RAW image (*.raw)"));
 	if (!fileName.isEmpty())
 	{
 		_doc->saveAs(fileName);

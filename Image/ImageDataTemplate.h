@@ -2,9 +2,10 @@
 
 #include "ImageData.h"
 
-#include <QMessageBox>
 #include <cmath>
 #include <iostream>
+#include <QFile>
+#include <QMessageBox>
 
 template <class Type>
 class ImageDataTemplate : public ImageData
@@ -41,6 +42,9 @@ public:
 
 	// Convert float data to uchar data
 	bool convertToByte(uchar* byteImage) override;
+
+	// Save array to QFile
+	void saveArray(QFile& file) override;
 
 protected:
 	Type* _originalData;
@@ -142,4 +146,11 @@ bool ImageDataTemplate<Type>::convertToByte(uchar* byteImage)
 	}
 
 	return true;
+}
+
+// Save array to QFile
+template <class Type>
+void ImageDataTemplate<Type>::saveArray(QFile& file)
+{
+	file.write((const char*)_processingData, sizeof(Type) * _pixelCount);
 }

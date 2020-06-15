@@ -1,5 +1,7 @@
 ﻿#include "MonoImage.h"
 
+#include <QFile>
+
 #include "../GlobalFunc.h"
 #include "ImageData.h"
 
@@ -105,6 +107,19 @@ float MonoImage::getMaxValue() const
 bool MonoImage::convertToByte()
 {
 	return _imageData->convertToByte(_byteImage);
+}
+
+bool MonoImage::saveAsRaw(const QString& fileName)
+{
+	QFile file(fileName);
+	if (!file.open(QFile::WriteOnly))
+		return false;
+
+	_imageData->saveArray(file);
+
+	file.close();
+
+	return true;
 }
 
 bool MonoImage::allocateMemory()
