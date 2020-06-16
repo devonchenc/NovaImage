@@ -44,6 +44,8 @@ void ToolBar::createAction()
 	_showDockWidgetAction->setCheckable(true);
 	_showDockWidgetAction->setChecked(true);
 	_fullScreenAction = new QAction(tr("Full screen mode"), this);
+	_fullScreenAction->setIcon(QIcon("Resources/svg/fullscreen.svg"));
+
 	_showAnnotationAction = new QAction(tr("Annotations"), this);
 	_showAnnotationAction->setCheckable(true);
 	_showAnnotationAction->setChecked(true);
@@ -58,17 +60,24 @@ void ToolBar::createAction()
 
 	_flipHorizontalAction = new QAction(tr("Flip horizontal"), this);
 	_flipHorizontalAction->setCheckable(true);
+	_flipHorizontalAction->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
 	_flipVerticalAction = new QAction(tr("Flip vertical"), this);
 	_flipVerticalAction->setCheckable(true);
+	_flipVerticalAction->setIcon(QIcon("Resources/svg/flip_vertical.svg"));
 
 	_rotate90CW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this);	//0x00B0:degree sign
+	_rotate90CW->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
 	_rotate90CCW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
+	_rotate90CCW->setIcon(QIcon("Resources/svg/rotate_ccw.svg"));
 	_rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
 	_resetTransformation = new QAction(tr("Reset transformation"), this);
+	_resetTransformation->setIcon(QIcon("Resources/svg/reset.svg"));
 
 	_ROIWidowAction = new QAction(tr("ROI window"), this);
+	_ROIWidowAction->setIcon(QIcon("Resources/svg/ROI.svg"));
 	_restoreWindowAction = new QAction(tr("Default window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
+	_imageNegativeAction->setIcon(QIcon("Resources/svg/negative.svg"));
 
 	_fitWindowAction = new QAction(tr("Fit window"), this);
 	_1xAction = new QAction("100%", this);
