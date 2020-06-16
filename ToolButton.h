@@ -35,9 +35,6 @@ public:
 
 	static ToolButton* rightMouseButton();
 
-signals:
-	void unbounded();
-
 private:
 	static void updateAllButtonsIcon();
 

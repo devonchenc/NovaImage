@@ -134,17 +134,17 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
 
 void View::setSceneMode(int mode)
 {
-	if (mode == NO_DRAG)
-	{
-		_view->setDragMode(QGraphicsView::NoDrag);
-	}
-	else if (mode == MOVE_SCENE)
+	if (mode == MOVE_SCENE)
 	{
 		_view->setDragMode(QGraphicsView::ScrollHandDrag);
 	}
 	else if (mode == MOVE_ITEM)
 	{
 		_view->setDragMode(QGraphicsView::RubberBandDrag);
+	}
+	else
+	{
+		_view->setDragMode(QGraphicsView::NoDrag);
 	}
 
 	_scene->setMode(mode);

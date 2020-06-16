@@ -120,9 +120,31 @@ void ImageWindowMouseHandler::CalcImageWindow(QPoint point)
 
 //////////////////////////////////////////////////////////////////////////
 
-void ZoomMouseHandler::press(QMouseEvent* event)
+void ROIWindowMouseHandler::unbounded()
+{
+	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
+}
+
+void ROIWindowMouseHandler::press(QMouseEvent* event)
+{
+	getGlobalView()->view()->setDragMode(QGraphicsView::RubberBandDrag);
+}
+
+void ROIWindowMouseHandler::move(QMouseEvent* event)
 {
 
+}
+
+void ROIWindowMouseHandler::release(QMouseEvent* event)
+{
+
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void ZoomMouseHandler::press(QMouseEvent* event)
+{
+	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
 
 void ZoomMouseHandler::move(QMouseEvent* event)
@@ -140,6 +162,11 @@ void ZoomMouseHandler::release(QMouseEvent* event)
 
 //////////////////////////////////////////////////////////////////////////
 
+void SelectMouseHandler::unbounded()
+{
+	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
+}
+
 void SelectMouseHandler::press(QMouseEvent* event)
 {
 	getGlobalView()->setSceneMode(MOVE_ITEM);
@@ -156,6 +183,11 @@ void SelectMouseHandler::release(QMouseEvent* event)
 }
 
 //////////////////////////////////////////////////////////////////////////
+
+void MoveMouseHandler::unbounded()
+{
+	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
+}
 
 void MoveMouseHandler::press(QMouseEvent* event)
 {

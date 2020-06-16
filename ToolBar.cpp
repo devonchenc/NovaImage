@@ -73,6 +73,8 @@ void ToolBar::createAction()
 	_resetTransformation = new QAction(tr("Reset transformation"), this);
 	_resetTransformation->setIcon(QIcon("Resources/svg/reset.svg"));
 
+	_imageWindowAction = new QAction(tr("Adjust window"), this);
+	_imageWindowAction->setIcon(QIcon("Resources/svg/imagewindow.svg"));
 	_ROIWidowAction = new QAction(tr("ROI window"), this);
 	_ROIWidowAction->setIcon(QIcon("Resources/svg/ROI.svg"));
 	_restoreWindowAction = new QAction(tr("Default window"), this);
@@ -134,7 +136,8 @@ void ToolBar::createAction()
 	connect(_rotate180, &QAction::triggered, mainWindow->getView(), &View::rotate180);
 	connect(_resetTransformation, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
 
-	connect(_ROIWidowAction, &QAction::triggered, mainWindow->getView(), &View::ROIWindow);
+	connect(_imageWindowAction, &QAction::triggered, this, &ToolBar::imageWindowActionTriggered);
+	connect(_ROIWidowAction, &QAction::triggered, this, &ToolBar::ROIWindowActionTriggered);
 	connect(_restoreWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::restoreImageWindow);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
@@ -234,6 +237,7 @@ void ToolBar::createButton()
 	_imageWindowToolButton = new ToolButton;
 	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
+	menu->addAction(_imageWindowAction);
 	menu->addAction(_ROIWidowAction);
 	menu->addSeparator();
 	menu->addAction(_restoreWindowAction);
@@ -243,7 +247,8 @@ void ToolBar::createButton()
 	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
 	_imageWindowToolButton->setToolTip(tr("Adjust image window"));
 	_imageWindowToolButton->installEventFilter(this);
-	connect(_imageWindowToolButton, &QToolButton::clicked, this, &ToolBar::imageWindowToolButtonClicked);
+	_imageWindowToolButton->setCurrentAction(_imageWindowAction);
+	connect(_imageWindowToolButton, &QToolButton::triggered, this, &ToolBar::imageWindowToolButtonTriggered);
 
 	_zoomButton = new ToolButton;
 	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -274,7 +279,6 @@ void ToolBar::createButton()
 	_cursorButton->installEventFilter(this);
 	_cursorButton->setCurrentAction(_cursorAction);
 	connect(_cursorButton, &QToolButton::triggered, this, &ToolBar::cursorButtonTriggered);
-	connect(_cursorButton, &ToolButton::unbounded, this, &ToolBar::cursorButtonUnbounded);
 
 	_measurementButton = new ToolButton;
 	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -497,9 +501,23 @@ void ToolBar::showInfoToolButtonClicked()
 	_showMeasurementAction->toggled(checked);
 }
 
-void ToolBar::imageWindowToolButtonClicked()
+void ToolBar::imageWindowActionTriggered()
 {
+	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
 	_imageWindowToolButton->setMouseHandler(new ImageWindowMouseHandler());
+}
+
+void ToolBar::ROIWindowActionTriggered()
+{
+	_imageWindowToolButton->setIconByName("Resources/svg/ROI.svg");
+	_imageWindowToolButton->setMouseHandler(new ROIWindowMouseHandler());
+}
+
+void ToolBar::imageWindowToolButtonTriggered(QAction* action)
+{
+	_imageWindowToolButton->setCurrentAction(action);
+	ToolButton::setLeftMouseButton(_imageWindowToolButton);
+	MouseHandler::setLeftButton(_imageWindowToolButton);
 }
 
 void ToolBar::zoomButtonClicked()
@@ -526,11 +544,6 @@ void ToolBar::cursorButtonTriggered(QAction* action)
 	_cursorButton->setCurrentAction(action);
 	ToolButton::setLeftMouseButton(_cursorButton);
 	MouseHandler::setLeftButton(_cursorButton);
-}
-
-void ToolBar::cursorButtonUnbounded()
-{
-	getGlobalView()->setSceneMode(NO_DRAG);
 }
 
 void ToolBar::measurementChanged()

@@ -37,12 +37,13 @@ public slots:
 private slots:
 	void layoutToolButtonClicked();
 	void showInfoToolButtonClicked();
-	void imageWindowToolButtonClicked();
+	void imageWindowActionTriggered();
+	void ROIWindowActionTriggered();
+	void imageWindowToolButtonTriggered(QAction* action);
 	void zoomButtonClicked();
 	void selectItem();
 	void moveScene();
 	void cursorButtonTriggered(QAction* action);
-	void cursorButtonUnbounded();
 	void measurementChanged();
 	void measurementButtonTriggered(QAction* action);
 
@@ -68,6 +69,7 @@ private:
 	QAction* _rotate180;
 	QAction* _resetTransformation;
 
+	QAction* _imageWindowAction;
 	QAction* _ROIWidowAction;
 	QAction* _restoreWindowAction;
 	QAction* _imageNegativeAction;

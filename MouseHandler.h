@@ -21,6 +21,9 @@ public:
 
 	static void setRightButton(ToolButton* button);
 
+public:
+	virtual void unbounded() {}
+
 protected:
 	virtual void press(QMouseEvent* event) = 0;
 
@@ -38,7 +41,7 @@ private:
 
 class ImageWindowMouseHandler : public MouseHandler
 {
-public:
+protected:
 	void press(QMouseEvent* event) override;
 
 	void move(QMouseEvent* event) override;
@@ -51,9 +54,22 @@ private:
 	int _horzOrVert = 0;
 };
 
-class ZoomMouseHandler : public MouseHandler
+class ROIWindowMouseHandler : public MouseHandler
 {
 public:
+	void unbounded() override;
+
+protected:
+	void press(QMouseEvent* event) override;
+
+	void move(QMouseEvent* event) override;
+
+	void release(QMouseEvent* event) override;
+};
+
+class ZoomMouseHandler : public MouseHandler
+{
+protected:
 	void press(QMouseEvent* event) override;
 
 	void move(QMouseEvent* event) override;
@@ -64,6 +80,9 @@ public:
 class SelectMouseHandler : public MouseHandler
 {
 public:
+	void unbounded() override;
+
+protected:
 	void press(QMouseEvent* event) override;
 
 	void move(QMouseEvent* event) override;
@@ -74,6 +93,9 @@ public:
 class MoveMouseHandler : public MouseHandler
 {
 public:
+	void unbounded() override;
+
+protected:
 	void press(QMouseEvent* event) override;
 
 	void move(QMouseEvent* event) override;
@@ -83,7 +105,7 @@ public:
 
 class DrawMouseHandler : public MouseHandler
 {
-public:
+protected:
 	void press(QMouseEvent* event) override;
 
 	void move(QMouseEvent* event) override;

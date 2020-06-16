@@ -5,6 +5,7 @@
 
 #include "GlobalFunc.h"
 #include "mainwindow.h"
+#include "MouseHandler.h"
 
 ToolButton* ToolButton::_leftMouseButton = nullptr;
 ToolButton* ToolButton::_rightMouseButton = nullptr;
@@ -50,6 +51,7 @@ void ToolButton::setMouseHandler(MouseHandler* handler)
 {
 	if (_handler)
 	{
+		_handler->unbounded();
 		delete _handler;
 	}
 	_handler = handler;
@@ -65,7 +67,10 @@ void ToolButton::unsetLeftMouseButton()
 {
 	if (_leftMouseButton)
 	{
-		_leftMouseButton->emit unbounded();
+		if (_leftMouseButton->_handler)
+		{
+			_leftMouseButton->_handler->unbounded();
+		}
 	}
 	updateAllButtonsIcon();
 }
@@ -85,7 +90,10 @@ void ToolButton::unsetRightMouseButton()
 {
 	if (_rightMouseButton)
 	{
-		_rightMouseButton->emit unbounded();
+		if (_rightMouseButton->_handler)
+		{
+			_rightMouseButton->_handler->unbounded();
+		}
 	}
 	updateAllButtonsIcon();
 }
