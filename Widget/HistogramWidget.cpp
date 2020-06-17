@@ -33,17 +33,17 @@ HistogramWidget::HistogramWidget(QWidget* parent)
 	_buttonReset = new QPushButton(tr("&Reset"));
 	_buttonReset->setMaximumWidth(80);
 	connect(_buttonReset, &QPushButton::clicked, this, &HistogramWidget::clickReset);
-	QHBoxLayout* hbox = new QHBoxLayout();
+	QHBoxLayout* hbox = new QHBoxLayout;
 	hbox->addStretch();
 	hbox->addWidget(_buttonReset);
-	QVBoxLayout* vbox = new QVBoxLayout();
+	QVBoxLayout* vbox = new QVBoxLayout;
 	vbox->addLayout(hbox);
 	vbox->addStretch();
 	setLayout(vbox);
 
 	allocateMemory();
 
-	_processor = new HistogramProcessor();
+	_processor = new HistogramProcessor;
 }
 
 HistogramWidget::~HistogramWidget()

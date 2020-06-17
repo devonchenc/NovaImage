@@ -11,6 +11,7 @@
 #include <QToolBar>
 #include <QStatusBar>
 #include <QTranslator>
+#include <QPluginLoader>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 
@@ -20,6 +21,7 @@
 #include "GlobalFunc.h"
 #include "GraphicsView.h"
 #include "ToolBar.h"
+#include "PluginInterface.h"
 #include "Image/BaseImage.h"
 #include "Widget/ToolBoxWidget.h"
 #include "Widget/WidgetManager.h"
@@ -38,6 +40,8 @@ MainWindow::MainWindow(QWidget* parent)
 	setCentralWidget(_view);
 
 	initUI();
+
+	loadPlugin();
 
 	// For test
 	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
@@ -355,6 +359,19 @@ void MainWindow::setupShortcuts()
 
 	_prevImageAction->setShortcut(QKeySequence(Qt::Key_PageUp));
 	_nextImageAction->setShortcut(QKeySequence(Qt::Key_PageDown));
+}
+
+void MainWindow::loadPlugin()
+{
+	QPluginLoader loader(QCoreApplication::applicationDirPath() + "/plugin/NovaHardware.dll");
+	QObject* instance = loader.instance();
+	if (instance)
+	{
+		PluginInterface* plugin = qobject_cast<PluginInterface*>(instance);
+		QDockWidget* dockWidget = plugin->createDockWidget(this);
+	//	widget->show();
+		addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dockWidget);
+	}
 }
 
 void MainWindow::prevImage()

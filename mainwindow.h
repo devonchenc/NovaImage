@@ -48,10 +48,10 @@ private:
 
 	void createToolbar();
 
-	void createStatusBar();
-
     void createActions();
     void setupShortcuts();
+
+	void loadPlugin();
 
 signals:
 	void setToolBoxVisible(bool line, bool text);

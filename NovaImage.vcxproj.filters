@@ -265,6 +265,9 @@
     <ClInclude Include="Image\RawImage.h">
       <Filter>Image</Filter>
     </ClInclude>
+    <ClInclude Include="PluginInterface.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="novaimage_zh.ts">

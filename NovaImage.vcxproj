@@ -69,6 +69,7 @@
     <QtMoc Include="Widget\DiagramItem.h" />
     <QtMoc Include="Widget\DiagramTextItem.h" />
     <QtMoc Include="Widget\DiagramLineItem.h" />
+    <ClInclude Include="PluginInterface.h" />
     <ClInclude Include="Processor\BaseProcessor.h" />
     <ClInclude Include="Processor\CommonProcessor.h" />
     <ClInclude Include="Processor\CurvesProcessor.h" />
