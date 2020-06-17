@@ -44,8 +44,6 @@ public slots:
 	void rotate180();
 	void resetTransformation();
 
-	void ROIWindow();
-
 	void fitWindow();
 	void zoomNormal();
 	void zoom2x();

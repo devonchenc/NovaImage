@@ -87,7 +87,9 @@ void ToolBar::createAction()
 	_4xAction = new QAction("400%", this);
 	_8xAction = new QAction("800%", this);
 	_zoomInAction = new QAction(tr("Zoom in"), this);
+	_zoomInAction->setIcon(QIcon("Resources/svg/zoomin.svg"));
 	_zoomOutAction = new QAction(tr("Zoom out"), this);
+	_zoomOutAction->setIcon(QIcon("Resources/svg/zoomout.svg"));
 
 	_cursorAction = new QAction(tr("Select"), this);
 	_cursorAction->setIcon(QIcon("Resources/svg/cursor.svg"));

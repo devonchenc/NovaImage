@@ -195,11 +195,6 @@ void View::resetTransformation()
 	}
 }
 
-void View::ROIWindow()
-{
-	_view->setDragMode(QGraphicsView::RubberBandDrag);
-}
-
 void View::fitWindow()
 {
 	QRectF rect = this->rect();

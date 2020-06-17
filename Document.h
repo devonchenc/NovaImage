@@ -47,6 +47,8 @@ public:
 	void repaintView();
 
 public:
+	void ROIWindow(QRectF rect);
+
 	void restoreImageWindow();
 
 	void applyImageWidthAndLevel();

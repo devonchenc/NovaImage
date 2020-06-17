@@ -4,6 +4,7 @@
 
 #include "GlobalFunc.h"
 #include "View.h"
+#include "Document.h"
 #include "GraphicsView.h"
 #include "ToolButton.h"
 #include "Image/BaseImage.h"
@@ -137,7 +138,8 @@ void ROIWindowMouseHandler::move(QMouseEvent* event)
 
 void ROIWindowMouseHandler::release(QMouseEvent* event)
 {
-
+	getGlobalDocument()->ROIWindow(QRectF(getGlobalView()->view()->mapToScene(_mousePos),
+		getGlobalView()->view()->mapToScene(event->pos())));
 }
 
 //////////////////////////////////////////////////////////////////////////
