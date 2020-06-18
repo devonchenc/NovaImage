@@ -147,7 +147,7 @@ void MainWindow::createToolbar()
 void MainWindow::createToolWidget()
 {
 	ToolBoxWidget* toolbox = new ToolBoxWidget();
-	createDockWidget(toolbox);
+	_toolboxDockWidget = createDockWidget(toolbox);
 
 	connect(toolbox, &ToolBoxWidget::setItemType, _toolBar, &ToolBar::setMeasurementType);
 
@@ -363,14 +363,26 @@ void MainWindow::setupShortcuts()
 
 void MainWindow::loadPlugin()
 {
-	QPluginLoader loader(QCoreApplication::applicationDirPath() + "/plugin/NovaHardware.dll");
-	QObject* instance = loader.instance();
-	if (instance)
+	QDir pluginsDir(QCoreApplication::applicationDirPath() + "/plugin");
+	if (!pluginsDir.exists())
+		return;
+
+	QStringList nameFilters;
+	nameFilters << "*.dll";
+	foreach (QString fileName, pluginsDir.entryList(nameFilters, QDir::Files, QDir::Name))
 	{
-		PluginInterface* plugin = qobject_cast<PluginInterface*>(instance);
-		QDockWidget* dockWidget = plugin->createDockWidget(this);
-	//	widget->show();
-		addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dockWidget);
+		QPluginLoader loader(pluginsDir.absoluteFilePath(fileName));
+		QObject* instance = loader.instance();
+		if (instance)
+		{
+			PluginInterface* plugin = qobject_cast<PluginInterface*>(instance);
+			if (plugin)
+			{
+				QDockWidget* dockWidget = plugin->createDockWidget(this);
+				addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dockWidget);
+				tabifyDockWidget(_toolboxDockWidget, dockWidget);
+			}
+		}
 	}
 }
 

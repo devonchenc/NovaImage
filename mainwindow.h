@@ -87,8 +87,6 @@ private:
     View* _view;
 	Document* _doc;
 
-	QSlider* _slider;
-
 	QMenu* _fileMenu;
 	QMenu* _viewMenu;
 
@@ -107,4 +105,5 @@ private:
 	QTranslator* _translator;
 
 	QVector<QDockWidget*> _vecDockWidget;
+	QDockWidget* _toolboxDockWidget;
 };
