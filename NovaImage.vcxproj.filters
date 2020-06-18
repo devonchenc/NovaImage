@@ -39,9 +39,6 @@
     <ClCompile Include="Image\ScanImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\BaseWidget.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Widget\CommonWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>

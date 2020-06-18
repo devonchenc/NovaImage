@@ -7,7 +7,7 @@ class BaseWidget : public QWidget
 	Q_OBJECT
 
 public:
-	BaseWidget(QWidget* parent = nullptr);
+	BaseWidget(QWidget* parent = nullptr) {}
 
 public:
 	virtual void init() {}
