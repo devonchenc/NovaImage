@@ -31,6 +31,7 @@
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
+	, _translator(nullptr)
 {
 	_doc = new Document(this);
 
@@ -43,6 +44,8 @@ MainWindow::MainWindow(QWidget* parent)
 
 	loadPlugin();
 
+	loadTranslator();
+
 	// For test
 	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
 //	_doc->openFile("D:/test.png");
@@ -53,14 +56,26 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-	if (_doc)
-	{
-		delete _doc;
-	}
 	if (_view)
 	{
 		delete _view;
+		_view = nullptr;
 	}
+	if (_doc)
+	{
+		delete _doc;
+		_doc = nullptr;
+	}
+	if (_translator)
+	{
+		delete _translator;
+		_translator = nullptr;
+	}
+	for (int i = 0; i < _vecPluginTranslator.size(); i++)
+	{
+		delete _vecPluginTranslator[i];
+	}
+	_vecPluginTranslator.clear();
 }
 
 void MainWindow::initUI()
@@ -381,7 +396,26 @@ void MainWindow::loadPlugin()
 				QDockWidget* dockWidget = plugin->createDockWidget(this);
 				addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dockWidget);
 				tabifyDockWidget(_toolboxDockWidget, dockWidget);
+
+				_vecPlugin.append(plugin);
 			}
+		}
+	}
+}
+
+void MainWindow::loadTranslator()
+{
+	_translator = new QTranslator;
+	_translator->load("novaimage_zh.qm");
+
+	for (int i = 0; i < _vecPlugin.size(); i++)
+	{
+		QString name = _vecPlugin[i]->name();
+		QString qmName = QCoreApplication::applicationDirPath() + "/plugin/" + name + "_zh.qm";
+		QTranslator* tran = new QTranslator;
+		if (tran->load(qmName))
+		{
+			_vecPluginTranslator.append(tran);
 		}
 	}
 }
@@ -431,15 +465,21 @@ void MainWindow::slectLanguage(QAction* action)
 {
 	if (action == _chsAction)
 	{
-		_translator = new QTranslator;
-		if (_translator->load("novaimage_zh.qm"))
+		qApp->installTranslator(_translator);
+
+		for (int i = 0 ; i < _vecPluginTranslator.size(); i++)
 		{
-			qApp->installTranslator(_translator);
+			qApp->installTranslator(_vecPluginTranslator[i]);
 		}
 	}
 	else
 	{
 		qApp->removeTranslator(_translator);
+
+		for (int i = 0; i < _vecPluginTranslator.size(); i++)
+		{
+			qApp->removeTranslator(_vecPluginTranslator[i]);
+		}
 	}
 }
 

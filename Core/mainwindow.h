@@ -19,6 +19,7 @@ class View;
 class Document;
 class BaseWidget;
 class ToolBar;
+class PluginInterface;
 
 class MainWindow : public QMainWindow
 {
@@ -52,6 +53,8 @@ private:
     void setupShortcuts();
 
 	void loadPlugin();
+
+	void loadTranslator();
 
 signals:
 	void setToolBoxVisible(bool line, bool text);
@@ -103,6 +106,9 @@ private:
 	QAction* _chsAction;
 
 	QTranslator* _translator;
+	QVector<QTranslator*> _vecPluginTranslator;
+
+	QVector<PluginInterface*> _vecPlugin;
 
 	QVector<QDockWidget*> _vecDockWidget;
 	QDockWidget* _toolboxDockWidget;
