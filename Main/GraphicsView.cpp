@@ -6,7 +6,7 @@
 #include "View.h"
 #include "MouseHandler.h"
 #include "GlobalFunc.h"
-#include "Image/BaseImage.h"
+#include "../Image/BaseImage.h"
 
 GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView(scene, parent)

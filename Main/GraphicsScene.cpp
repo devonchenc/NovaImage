@@ -6,8 +6,8 @@
 #include <QKeyEvent>
 #include <QBrush>
 
-#include "Widget/DiagramTextItem.h"
-#include "Widget/DiagramLineItem.h"
+#include "../Widget/DiagramTextItem.h"
+#include "../Widget/DiagramLineItem.h"
 #include "GlobalFunc.h"
 #include "View.h"
 

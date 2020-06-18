@@ -2,14 +2,14 @@
 
 #include "mainwindow.h"
 #include "View.h"
-#include "Image/BaseImage.h"
-#include "Image/GeneralImage.h"
-#include "Image/ScanImage.h"
-#include "Image/DicomImage.h"
-#include "Image/RawImage.h"
-#include "Processor/LevelsProcessor.h"
-#include "Processor/InverseProcessor.h"
-#include "Widget/RawParameterDialog.h"
+#include "../Image/BaseImage.h"
+#include "../Image/GeneralImage.h"
+#include "../Image/ScanImage.h"
+#include "../Image/DicomImage.h"
+#include "../Image/RawImage.h"
+#include "../Processor/LevelsProcessor.h"
+#include "../Processor/InverseProcessor.h"
+#include "../Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
 	: pMainWindow(pWindow)

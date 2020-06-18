@@ -9,7 +9,7 @@
 
 #include "GraphicsView.h"
 #include "GraphicsScene.h"
-#include "Processor/LevelsProcessor.h"
+#include "../Processor/LevelsProcessor.h"
 #include "GlobalFunc.h"
 #include "Document.h"
 

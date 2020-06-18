@@ -13,7 +13,7 @@
 #include <QEvent>
 
 #include "ColorButton.h"
-#include "../GraphicsScene.h"
+#include "../Main/GraphicsScene.h"
 #include "DiagramLineItem.h"
 
 const QSize iconSize = QSize(32, 32);

@@ -4,7 +4,7 @@
 #include <QEvent>
 
 #include "../Processor/CommonProcessor.h"
-#include "../GlobalFunc.h"
+#include "../Main/GlobalFunc.h"
 
 CommonWidget::CommonWidget(QWidget* parent)
 	: BaseWidget(parent)

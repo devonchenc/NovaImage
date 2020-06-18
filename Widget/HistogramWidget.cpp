@@ -6,7 +6,7 @@
 #include <QMouseEvent>
 #include <QApplication>
 
-#include "../GlobalFunc.h"
+#include "../Main/GlobalFunc.h"
 #include "../Processor/HistogramProcessor.h"
 #include "../Image/BaseImage.h"
 

@@ -1,22 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
       <Extensions>qrc;*</Extensions>
       <ParseFiles>false</ParseFiles>
-    </Filter>
-    <Filter Include="Form Files">
-      <UniqueIdentifier>{99349809-55BA-4b9d-BF79-8FDBB0286EB3}</UniqueIdentifier>
-      <Extensions>ui</Extensions>
     </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{D9D6E242-F8AF-46E4-B9FD-80ECBC20BA3E}</UniqueIdentifier>
@@ -37,20 +25,11 @@
     <Filter Include="Processor">
       <UniqueIdentifier>{4f924b1a-fefc-4fe2-8fd5-83442f5aca8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Main">
+      <UniqueIdentifier>{9208e224-1091-4c46-8925-1d9aa40a9a1c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="mainwindow.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="View.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Document.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Image\BaseImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
@@ -59,12 +38,6 @@
     </ClCompile>
     <ClCompile Include="Image\ScanImage.cpp">
       <Filter>Image</Filter>
-    </ClCompile>
-    <ClCompile Include="GlobalFunc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GraphicsView.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Widget\BaseWidget.cpp">
       <Filter>Widget</Filter>
@@ -96,9 +69,6 @@
     <ClCompile Include="Widget\DiagramItem.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="GraphicsScene.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Widget\ColorButton.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
@@ -113,15 +83,6 @@
     </ClCompile>
     <ClCompile Include="Image\MonoImage.cpp">
       <Filter>Image</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolBar.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ToolButton.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MouseHandler.cpp">
-      <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Processor\BaseProcessor.cpp">
       <Filter>Processor</Filter>
@@ -147,17 +108,38 @@
     <ClCompile Include="Image\RawImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
+    <ClCompile Include="Main\Document.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\GlobalFunc.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\GraphicsScene.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\GraphicsView.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\main.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\mainwindow.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\MouseHandler.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\ToolBar.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\ToolButton.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
+    <ClCompile Include="Main\View.cpp">
+      <Filter>Main</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="View.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="mainwindow.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="GraphicsView.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="Widget\BaseWidget.h">
       <Filter>Widget</Filter>
     </QtMoc>
@@ -179,9 +161,6 @@
     <QtMoc Include="Widget\ToolBoxWidget.h">
       <Filter>Widget</Filter>
     </QtMoc>
-    <QtMoc Include="GraphicsScene.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="Widget\ColorButton.h">
       <Filter>Widget</Filter>
     </QtMoc>
@@ -194,17 +173,29 @@
     <QtMoc Include="Widget\DiagramLineItem.h">
       <Filter>Widget</Filter>
     </QtMoc>
-    <QtMoc Include="ToolBar.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="ToolButton.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
-    <QtMoc Include="Document.h">
-      <Filter>Header Files</Filter>
-    </QtMoc>
     <QtMoc Include="Widget\RawParameterDialog.h">
       <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\Document.h">
+      <Filter>Main</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\GraphicsScene.h">
+      <Filter>Main</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\GraphicsView.h">
+      <Filter>Main</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\mainwindow.h">
+      <Filter>Main</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\ToolBar.h">
+      <Filter>Main</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\ToolButton.h">
+      <Filter>Main</Filter>
+    </QtMoc>
+    <QtMoc Include="Main\View.h">
+      <Filter>Main</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -219,9 +210,6 @@
     </ClInclude>
     <ClInclude Include="Image\ScanImage.h">
       <Filter>Image</Filter>
-    </ClInclude>
-    <ClInclude Include="GlobalFunc.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Widget\Peg.h">
       <Filter>Widget</Filter>
@@ -240,9 +228,6 @@
     </ClInclude>
     <ClInclude Include="Image\MonoImage.h">
       <Filter>Image</Filter>
-    </ClInclude>
-    <ClInclude Include="MouseHandler.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Processor\BaseProcessor.h">
       <Filter>Processor</Filter>
@@ -265,8 +250,14 @@
     <ClInclude Include="Image\RawImage.h">
       <Filter>Image</Filter>
     </ClInclude>
-    <ClInclude Include="PluginInterface.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Main\GlobalFunc.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\MouseHandler.h">
+      <Filter>Main</Filter>
+    </ClInclude>
+    <ClInclude Include="Main\PluginInterface.h">
+      <Filter>Main</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

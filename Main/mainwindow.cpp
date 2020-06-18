@@ -22,12 +22,12 @@
 #include "GraphicsView.h"
 #include "ToolBar.h"
 #include "PluginInterface.h"
-#include "Image/BaseImage.h"
-#include "Widget/ToolBoxWidget.h"
-#include "Widget/WidgetManager.h"
-#include "Widget/CommonWidget.h"
-#include "Widget/CurvesWidget.h"
-#include "Widget/LevelsWidget.h"
+#include "../Image/BaseImage.h"
+#include "../Widget/ToolBoxWidget.h"
+#include "../Widget/WidgetManager.h"
+#include "../Widget/CommonWidget.h"
+#include "../Widget/CurvesWidget.h"
+#include "../Widget/LevelsWidget.h"
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)

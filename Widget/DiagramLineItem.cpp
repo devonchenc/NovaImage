@@ -7,10 +7,10 @@
 #include <QStyleOptionGraphicsItem>
 #include <QDebug>
 
-#include "../GlobalFunc.h"
-#include "../View.h"
-#include "../GraphicsView.h"
-#include "../GraphicsScene.h"
+#include "../Main/GlobalFunc.h"
+#include "../Main/View.h"
+#include "../Main/GraphicsView.h"
+#include "../Main/GraphicsScene.h"
 #include "../Image/BaseImage.h"
 
 DiagramLineItem::DiagramLineItem(int type, const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)

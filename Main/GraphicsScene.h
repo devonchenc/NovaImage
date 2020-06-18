@@ -1,8 +1,9 @@
 #pragma once
 
 #include <QGraphicsScene>
-#include "Widget/DiagramItem.h"
-#include "Widget/DiagramTextItem.h"
+
+#include "../Widget/DiagramItem.h"
+#include "../Widget/DiagramTextItem.h"
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;

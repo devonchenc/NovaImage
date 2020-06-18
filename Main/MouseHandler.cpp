@@ -7,7 +7,7 @@
 #include "Document.h"
 #include "GraphicsView.h"
 #include "ToolButton.h"
-#include "Image/BaseImage.h"
+#include "../Image/BaseImage.h"
 
 QPoint MouseHandler::_mousePos;
 ToolButton* MouseHandler::_leftButton = nullptr;

@@ -11,28 +11,28 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Document.cpp" />
-    <ClCompile Include="GlobalFunc.cpp" />
-    <ClCompile Include="GraphicsScene.cpp" />
-    <ClCompile Include="GraphicsView.cpp" />
     <ClCompile Include="Image\BaseImage.cpp" />
     <ClCompile Include="Image\DicomImage.cpp" />
     <ClCompile Include="Image\GeneralImage.cpp" />
     <ClCompile Include="Image\MonoImage.cpp" />
     <ClCompile Include="Image\RawImage.cpp" />
     <ClCompile Include="Image\ScanImage.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="mainwindow.cpp" />
-    <ClCompile Include="MouseHandler.cpp" />
+    <ClCompile Include="Main\Document.cpp" />
+    <ClCompile Include="Main\GlobalFunc.cpp" />
+    <ClCompile Include="Main\GraphicsScene.cpp" />
+    <ClCompile Include="Main\GraphicsView.cpp" />
+    <ClCompile Include="Main\main.cpp" />
+    <ClCompile Include="Main\mainwindow.cpp" />
+    <ClCompile Include="Main\MouseHandler.cpp" />
+    <ClCompile Include="Main\ToolBar.cpp" />
+    <ClCompile Include="Main\ToolButton.cpp" />
+    <ClCompile Include="Main\View.cpp" />
     <ClCompile Include="Processor\BaseProcessor.cpp" />
     <ClCompile Include="Processor\CommonProcessor.cpp" />
     <ClCompile Include="Processor\CurvesProcessor.cpp" />
     <ClCompile Include="Processor\HistogramProcessor.cpp" />
     <ClCompile Include="Processor\InverseProcessor.cpp" />
     <ClCompile Include="Processor\LevelsProcessor.cpp" />
-    <ClCompile Include="ToolBar.cpp" />
-    <ClCompile Include="ToolButton.cpp" />
-    <ClCompile Include="View.cpp" />
     <ClCompile Include="Widget\BaseWidget.cpp" />
     <ClCompile Include="Widget\ColorButton.cpp" />
     <ClCompile Include="Widget\CommonWidget.cpp" />
@@ -49,27 +49,24 @@
     <ClCompile Include="Widget\WidgetManager.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <QtMoc Include="mainwindow.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="View.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <QtMoc Include="Document.h" />
-    <ClInclude Include="GlobalFunc.h" />
-    <QtMoc Include="GraphicsScene.h" />
     <QtMoc Include="Widget\ColorButton.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
     <ClInclude Include="Image\MonoImage.h" />
-    <QtMoc Include="ToolBar.h" />
-    <QtMoc Include="ToolButton.h" />
     <ClInclude Include="Image\RawImage.h" />
-    <ClInclude Include="MouseHandler.h" />
     <QtMoc Include="Widget\DiagramItem.h" />
     <QtMoc Include="Widget\DiagramTextItem.h" />
     <QtMoc Include="Widget\DiagramLineItem.h" />
-    <ClInclude Include="PluginInterface.h" />
+    <QtMoc Include="Main\Document.h" />
+    <ClInclude Include="Main\GlobalFunc.h" />
+    <QtMoc Include="Main\GraphicsScene.h" />
+    <QtMoc Include="Main\GraphicsView.h" />
+    <QtMoc Include="Main\mainwindow.h" />
+    <ClInclude Include="Main\MouseHandler.h" />
+    <ClInclude Include="Main\PluginInterface.h" />
+    <QtMoc Include="Main\ToolBar.h" />
+    <QtMoc Include="Main\ToolButton.h" />
+    <QtMoc Include="Main\View.h" />
     <ClInclude Include="Processor\BaseProcessor.h" />
     <ClInclude Include="Processor\CommonProcessor.h" />
     <ClInclude Include="Processor\CurvesProcessor.h" />
@@ -86,7 +83,6 @@
     <QtMoc Include="Widget\CurveSquare.h" />
     <QtMoc Include="Widget\CommonWidget.h" />
     <QtMoc Include="Widget\BaseWidget.h" />
-    <QtMoc Include="GraphicsView.h" />
     <ClInclude Include="Image\BaseImage.h" />
     <ClInclude Include="Image\Dataheader.h" />
     <ClInclude Include="Image\GeneralImage.h" />
@@ -127,12 +123,12 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files %28x86%29\DCMTK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\DCMTK\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\DCMTK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\DCMTK\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Program Files %28x86%29\DCMTK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\DCMTK\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>C:\Program Files\DCMTK\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\DCMTK\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
