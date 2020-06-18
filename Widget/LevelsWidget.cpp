@@ -6,7 +6,7 @@
 
 #include "../Processor/LevelsProcessor.h"
 #include "HistogramWidget.h"
-#include "../Main/GlobalFunc.h"
+#include "../Core/GlobalFunc.h"
 #include "../Image/BaseImage.h"
 
 LevelsWidget::LevelsWidget(QWidget* parent)

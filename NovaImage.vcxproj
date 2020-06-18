@@ -11,22 +11,22 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Core\Document.cpp" />
+    <ClCompile Include="Core\GlobalFunc.cpp" />
+    <ClCompile Include="Core\GraphicsScene.cpp" />
+    <ClCompile Include="Core\GraphicsView.cpp" />
+    <ClCompile Include="Core\main.cpp" />
+    <ClCompile Include="Core\mainwindow.cpp" />
+    <ClCompile Include="Core\MouseHandler.cpp" />
+    <ClCompile Include="Core\ToolBar.cpp" />
+    <ClCompile Include="Core\ToolButton.cpp" />
+    <ClCompile Include="Core\View.cpp" />
     <ClCompile Include="Image\BaseImage.cpp" />
     <ClCompile Include="Image\DicomImage.cpp" />
     <ClCompile Include="Image\GeneralImage.cpp" />
     <ClCompile Include="Image\MonoImage.cpp" />
     <ClCompile Include="Image\RawImage.cpp" />
     <ClCompile Include="Image\ScanImage.cpp" />
-    <ClCompile Include="Main\Document.cpp" />
-    <ClCompile Include="Main\GlobalFunc.cpp" />
-    <ClCompile Include="Main\GraphicsScene.cpp" />
-    <ClCompile Include="Main\GraphicsView.cpp" />
-    <ClCompile Include="Main\main.cpp" />
-    <ClCompile Include="Main\mainwindow.cpp" />
-    <ClCompile Include="Main\MouseHandler.cpp" />
-    <ClCompile Include="Main\ToolBar.cpp" />
-    <ClCompile Include="Main\ToolButton.cpp" />
-    <ClCompile Include="Main\View.cpp" />
     <ClCompile Include="Processor\BaseProcessor.cpp" />
     <ClCompile Include="Processor\CommonProcessor.cpp" />
     <ClCompile Include="Processor\CurvesProcessor.cpp" />
@@ -50,6 +50,16 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\ColorButton.h" />
+    <QtMoc Include="Core\Document.h" />
+    <ClInclude Include="Core\GlobalFunc.h" />
+    <QtMoc Include="Core\GraphicsScene.h" />
+    <QtMoc Include="Core\GraphicsView.h" />
+    <QtMoc Include="Core\mainwindow.h" />
+    <ClInclude Include="Core\MouseHandler.h" />
+    <ClInclude Include="Core\PluginInterface.h" />
+    <QtMoc Include="Core\ToolBar.h" />
+    <QtMoc Include="Core\ToolButton.h" />
+    <QtMoc Include="Core\View.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
     <ClInclude Include="Image\MonoImage.h" />
@@ -57,16 +67,6 @@
     <QtMoc Include="Widget\DiagramItem.h" />
     <QtMoc Include="Widget\DiagramTextItem.h" />
     <QtMoc Include="Widget\DiagramLineItem.h" />
-    <QtMoc Include="Main\Document.h" />
-    <ClInclude Include="Main\GlobalFunc.h" />
-    <QtMoc Include="Main\GraphicsScene.h" />
-    <QtMoc Include="Main\GraphicsView.h" />
-    <QtMoc Include="Main\mainwindow.h" />
-    <ClInclude Include="Main\MouseHandler.h" />
-    <ClInclude Include="Main\PluginInterface.h" />
-    <QtMoc Include="Main\ToolBar.h" />
-    <QtMoc Include="Main\ToolButton.h" />
-    <QtMoc Include="Main\View.h" />
     <ClInclude Include="Processor\BaseProcessor.h" />
     <ClInclude Include="Processor\CommonProcessor.h" />
     <ClInclude Include="Processor\CurvesProcessor.h" />

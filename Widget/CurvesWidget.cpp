@@ -9,7 +9,7 @@
 #include <QEvent>
 
 #include "../Processor/CurvesProcessor.h"
-#include "../Main/GlobalFunc.h"
+#include "../Core/GlobalFunc.h"
 #include "../Image/BaseImage.h"
 
 CurvesWidget::CurvesWidget(QWidget* parent)

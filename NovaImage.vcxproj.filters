@@ -25,7 +25,7 @@
     <Filter Include="Processor">
       <UniqueIdentifier>{4f924b1a-fefc-4fe2-8fd5-83442f5aca8f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Main">
+    <Filter Include="Core">
       <UniqueIdentifier>{9208e224-1091-4c46-8925-1d9aa40a9a1c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -108,35 +108,35 @@
     <ClCompile Include="Image\RawImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="Main\Document.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\Document.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\GlobalFunc.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\GlobalFunc.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\GraphicsScene.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\GraphicsScene.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\GraphicsView.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\GraphicsView.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\main.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\main.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\mainwindow.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\mainwindow.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\MouseHandler.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\MouseHandler.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\ToolBar.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\ToolBar.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\ToolButton.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\ToolButton.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Main\View.cpp">
-      <Filter>Main</Filter>
+    <ClCompile Include="Core\View.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -176,26 +176,26 @@
     <QtMoc Include="Widget\RawParameterDialog.h">
       <Filter>Widget</Filter>
     </QtMoc>
-    <QtMoc Include="Main\Document.h">
-      <Filter>Main</Filter>
+    <QtMoc Include="Core\Document.h">
+      <Filter>Core</Filter>
     </QtMoc>
-    <QtMoc Include="Main\GraphicsScene.h">
-      <Filter>Main</Filter>
+    <QtMoc Include="Core\GraphicsScene.h">
+      <Filter>Core</Filter>
     </QtMoc>
-    <QtMoc Include="Main\GraphicsView.h">
-      <Filter>Main</Filter>
+    <QtMoc Include="Core\GraphicsView.h">
+      <Filter>Core</Filter>
     </QtMoc>
-    <QtMoc Include="Main\mainwindow.h">
-      <Filter>Main</Filter>
+    <QtMoc Include="Core\mainwindow.h">
+      <Filter>Core</Filter>
     </QtMoc>
-    <QtMoc Include="Main\ToolBar.h">
-      <Filter>Main</Filter>
+    <QtMoc Include="Core\ToolBar.h">
+      <Filter>Core</Filter>
     </QtMoc>
-    <QtMoc Include="Main\ToolButton.h">
-      <Filter>Main</Filter>
+    <QtMoc Include="Core\ToolButton.h">
+      <Filter>Core</Filter>
     </QtMoc>
-    <QtMoc Include="Main\View.h">
-      <Filter>Main</Filter>
+    <QtMoc Include="Core\View.h">
+      <Filter>Core</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -250,14 +250,14 @@
     <ClInclude Include="Image\RawImage.h">
       <Filter>Image</Filter>
     </ClInclude>
-    <ClInclude Include="Main\GlobalFunc.h">
-      <Filter>Main</Filter>
+    <ClInclude Include="Core\GlobalFunc.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Main\MouseHandler.h">
-      <Filter>Main</Filter>
+    <ClInclude Include="Core\MouseHandler.h">
+      <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="Main\PluginInterface.h">
-      <Filter>Main</Filter>
+    <ClInclude Include="Core\PluginInterface.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

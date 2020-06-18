@@ -2,7 +2,7 @@
 
 #include <QFile>
 
-#include "../Main/GlobalFunc.h"
+#include "../Core/GlobalFunc.h"
 #include "ImageData.h"
 
 MonoImage::MonoImage()
