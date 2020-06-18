@@ -68,13 +68,16 @@ void ImageWindowMouseHandler::press(QMouseEvent* event)
 
 void ImageWindowMouseHandler::move(QMouseEvent* event)
 {
-	QPoint delta = _mousePos - event->pos();
-	_mousePos = event->pos();
+	if (getGlobalView()->sceneMode() != MOVE_ITEM_TEMP)
+	{
+		QPoint delta = _mousePos - event->pos();
+		_mousePos = event->pos();
 
-	// Calculate image window
-	CalcImageWindow(delta);
+		// Calculate image window
+		CalcImageWindow(delta);
 
-	repaintView();
+		repaintView();
+	}
 }
 
 void ImageWindowMouseHandler::release(QMouseEvent* event)
