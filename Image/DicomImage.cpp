@@ -114,8 +114,15 @@ bool DICOMImage::readData()
 
 void DICOMImage::readMoreInfo(DcmDataset* dataset)
 {
+//	OFString strTagValue;
+//	dataset->findAndGetOFString(DCM_PixelSpacing, strTagValue);
+
 	const char* tagValue = new char[30];
 	dataset->findAndGetString(DCM_PixelSpacing, tagValue);
+	if (tagValue)
+	{
+		_horzPixelSpacing = _vertPixelSpacing = atof(tagValue);
+	}
 
-	_horzPixelSpacing = _vertPixelSpacing = atof(tagValue);
+//	delete[] tagValue;
 }

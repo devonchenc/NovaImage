@@ -82,8 +82,8 @@ private:
 	QAction* _zoomInAction;
 	QAction* _zoomOutAction;
 
-	QAction* _cursorAction;
 	QAction* _moveAction;
+	QAction* _cursorAction;
 
 	QAction* _rulerAction;
 	QAction* _arrowAction;

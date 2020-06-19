@@ -76,7 +76,7 @@ bool Document::openFile(const QString& fileName)
 
 	getView()->showImage(_image->getImageEntity(), true);
 	getView()->setWindowWidthAndLevel(_image->getMaxValue() - _image->getMinValue(), (_image->getMaxValue() + _image->getMinValue()) / 2);
-//	getView()->fitWindow();
+	getView()->fitWindow();
 
 	pMainWindow->imageOpened();
 
@@ -160,7 +160,7 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
 
 	_image->histogramStatistic();
 
-//	getView()->zoomFitWindow();
+//	getView()->fitWindow();
 	getView()->repaint();
 }
 

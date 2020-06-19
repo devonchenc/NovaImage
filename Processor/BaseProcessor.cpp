@@ -4,7 +4,7 @@
 #include <typeinfo.h>
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
-//#include "RegionImage.h"
+//#include "../Image/RegionImage.h"
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
 

@@ -91,10 +91,11 @@ void ToolBar::createAction()
 	_zoomOutAction = new QAction(tr("Zoom out"), this);
 	_zoomOutAction->setIcon(QIcon("Resources/svg/zoomout.svg"));
 
-	_cursorAction = new QAction(tr("Select"), this);
-	_cursorAction->setIcon(QIcon("Resources/svg/cursor.svg"));
 	_moveAction = new QAction(tr("Move"), this);
 	_moveAction->setIcon(QIcon("Resources/svg/move.svg"));
+	_cursorAction = new QAction(tr("Select"), this);
+	_cursorAction->setIcon(QIcon("Resources/svg/cursor.svg"));
+
 	_rulerAction = new QAction(tr("Length"), this);
 	_rulerAction->setIcon(QIcon("Resources/svg/length.svg"));
 	_arrowAction = new QAction(tr("Arrow"), this);
@@ -151,8 +152,9 @@ void ToolBar::createAction()
 	connect(_zoomInAction, &QAction::triggered, mainWindow->getView(), &View::zoomIn);
 	connect(_zoomOutAction, &QAction::triggered, mainWindow->getView(), &View::zoomOut);
 
-	connect(_cursorAction, &QAction::triggered, this, &ToolBar::selectItem);
 	connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);
+	connect(_cursorAction, &QAction::triggered, this, &ToolBar::selectItem);
+
 	connect(_rulerAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_arrowAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_angleAction, &QAction::triggered, this, &ToolBar::measurementChanged);
@@ -273,13 +275,13 @@ void ToolBar::createButton()
 	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
-	menu->addAction(_cursorAction);
 	menu->addAction(_moveAction);
+	menu->addAction(_cursorAction);
 	_cursorButton->setMenu(menu);
-	_cursorButton->setIconByName("Resources/svg/cursor.svg");
+	_cursorButton->setIconByName("Resources/svg/move.svg");
 	_cursorButton->setToolTip(tr("Select item/Move image"));
 	_cursorButton->installEventFilter(this);
-	_cursorButton->setCurrentAction(_cursorAction);
+	_cursorButton->setCurrentAction(_moveAction);
 	connect(_cursorButton, &QToolButton::triggered, this, &ToolBar::cursorButtonTriggered);
 
 	_measurementButton = new ToolButton;
@@ -349,8 +351,9 @@ void ToolBar::changeEvent(QEvent* event)
 		_zoomInAction->setText(tr("Zoom in"));
 		_zoomOutAction->setText(tr("Zoom out"));
 
-		_cursorAction->setText(tr("Select"));
 		_moveAction->setText(tr("Move"));
+		_cursorAction->setText(tr("Select"));
+
 		_rulerAction->setText(tr("Length"));
 		_arrowAction->setText(tr("Arrow"));
 		_angleAction->setText(tr("Angle"));

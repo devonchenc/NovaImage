@@ -135,7 +135,6 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 			float value = getGlobalImage()->getValue(QPoint(pointPixmap.x(), pointPixmap.y()));
 			_strCoord = QString("X: %1, Y: %2, Val: %3").arg(QString::number(pointPixmap.x(), 'f', 0)).arg(QString::number(pointPixmap.y(), 'f', 0)).arg(QString::number(value, 'f', 1));
 
-
 			QRgb rgbValue = image.pixel(QPoint(pointPixmap.x(), pointPixmap.y()));
 			_strValue = QString("R:%1, G:%2, B:%3").arg(qRed(rgbValue), 3).arg(qGreen(rgbValue), 3).arg(qBlue(rgbValue), 3);
 		}
@@ -178,6 +177,10 @@ void GraphicsView::paintEvent(QPaintEvent* event)
 
 		QString str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
 		painter.drawText(QRect(0, 0, 200, pixelsHigh), Qt::AlignLeft, str);
+
+		qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
+		str = QString(tr("Zoom: %1%")).arg(QString::number(scale * 100.0, 'f', 2));
+		painter.drawText(QRect(0, pixelsHigh, 200, pixelsHigh), Qt::AlignLeft, str);
 
 		str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
 		painter.drawText(QRect(0, rect().bottom() - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);

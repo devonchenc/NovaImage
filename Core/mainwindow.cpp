@@ -47,7 +47,7 @@ MainWindow::MainWindow(QWidget* parent)
 	loadTranslator();
 
 	// For test
-	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
+//	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
 //	_doc->openFile("D:/test.png");
 
 //	showMaximized();
@@ -207,9 +207,10 @@ void MainWindow::openImage()
 	dialog.setWindowTitle(tr("Open Image"));
 	dialog.setFileMode(QFileDialog::ExistingFile);
 	QStringList filters;
-	filters << tr("Image files (*.png *.bmp *.jpg *.tif)")
-		<< tr("DICOM files (*.dcm)")
-		<< tr("Any files (*)");
+	filters << tr("DICOM file (*.dcm)")
+			<< tr("Raw file (*.raw *.dat)")
+			<< tr("Image file (*.png *.bmp *.jpg *.tif)")
+			<< tr("Any file (*)");
 	dialog.setNameFilters(filters);
 	if (dialog.exec())
 	{
@@ -221,7 +222,7 @@ void MainWindow::openImage()
 void MainWindow::openDicomImage()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open DICOM Image"),
-		"/", QStringLiteral("DICOM files (*.dcm)"));
+		"/", tr("DICOM file (*.dcm)"));
 	if (!fileName.isEmpty())
 	{
 		_doc->openFile(fileName);
@@ -231,7 +232,7 @@ void MainWindow::openDicomImage()
 void MainWindow::openRawImage()
 {
 	QString fileName = QFileDialog::getOpenFileName(this, tr("Open Raw Image"),
-		"/", QStringLiteral("Raw files (*.raw *.dat)"));
+		"/", tr("Raw file (*.raw *.dat)"));
 	if (!fileName.isEmpty())
 	{
 		_doc->openFile(fileName);
