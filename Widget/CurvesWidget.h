@@ -1,14 +1,13 @@
 #pragma once
 
-#include <QLabel>
-#include <QRadioButton>
-
 #include "BaseWidget.h"
 #include "CurveSquare.h"
 
 class CurvesProcessor;
 
 QT_BEGIN_NAMESPACE
+class QLabel;
+class QRadioButton;
 class QTextStream;
 class QComboBox;
 class QPushButton;

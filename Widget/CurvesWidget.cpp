@@ -1,5 +1,7 @@
 #include "CurvesWidget.h"
 
+#include <QLabel>
+#include <QRadioButton>
 #include <QComboBox>
 #include <QPushButton>
 #include <QGroupBox>
