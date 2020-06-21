@@ -207,7 +207,8 @@ void MainWindow::openImage()
 	dialog.setWindowTitle(tr("Open Image"));
 	dialog.setFileMode(QFileDialog::ExistingFile);
 	QStringList filters;
-	filters << tr("DICOM file (*.dcm)")
+	filters << tr("Scan file (*.dr *.ndr)")
+			<< tr("DICOM file (*.dcm)")
 			<< tr("Raw file (*.raw *.dat)")
 			<< tr("Image file (*.png *.bmp *.jpg *.tif)")
 			<< tr("Any file (*)");

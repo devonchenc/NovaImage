@@ -106,11 +106,11 @@ int Document::findType(const QString &fileName)
 	{
 		return IMAGE_FORMAT_GIF;
 	}
-	else if (str.endsWith(".dr"))
+	else if (str.endsWith(".dr") || str.endsWith(".ndr"))
 	{
 		return IMAGE_FORMAT_NDR;
 	}
-	else if (str.endsWith(".ct"))
+	else if (str.endsWith(".ct") || str.endsWith(".nct"))
 	{
 		return IMAGE_FORMAT_NCT;
 	}
