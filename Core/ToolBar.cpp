@@ -171,61 +171,61 @@ void ToolBar::createButton()
 {
 	MainWindow* mainWindow = getGlobalWindow();
 
-	_openToolButton = new QToolButton;
-	_openToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_openButton = new QToolButton;
+	_openButton->setPopupMode(QToolButton::MenuButtonPopup);
 	QMenu* menu = new QMenu(this);
 	menu->addAction(_openDicomAction);
 	menu->addAction(_openRawAction);
-	_openToolButton->setMenu(menu);
-	_openToolButton->setIcon(QIcon("Resources/svg/open.svg"));
-	_openToolButton->setToolTip(tr("Open image file"));
-	connect(_openToolButton, &QToolButton::clicked, mainWindow, &MainWindow::openImage);
+	_openButton->setMenu(menu);
+	_openButton->setIcon(QIcon("Resources/svg/open.svg"));
+	_openButton->setToolTip(tr("Open image file"));
+	connect(_openButton, &QToolButton::clicked, mainWindow, &MainWindow::openImage);
 
-	_saveToolButton = new QToolButton;
-	_saveToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_saveButton = new QToolButton;
+	_saveButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_saveAsRawAction);
-	_saveToolButton->setMenu(menu);
-	_saveToolButton->setIcon(QIcon("Resources/svg/save.svg"));
-	_saveToolButton->setToolTip(tr("Save image file"));
-	connect(_saveToolButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
+	_saveButton->setMenu(menu);
+	_saveButton->setIcon(QIcon("Resources/svg/save.svg"));
+	_saveButton->setToolTip(tr("Save image file"));
+	connect(_saveButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
-	_layoutToolButton = new QToolButton;
-	_layoutToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_layoutButton = new QToolButton;
+	_layoutButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_showMenuAction);
 	menu->addAction(_showDockWidgetAction);
 	menu->addSeparator();
 	menu->addAction(_fullScreenAction);
-	_layoutToolButton->setMenu(menu);
-	_layoutToolButton->setIcon(QIcon("Resources/svg/layout.svg"));
-	_layoutToolButton->setToolTip(tr("Change layout"));
-	connect(_layoutToolButton, &QToolButton::clicked, this, &ToolBar::layoutToolButtonClicked);
+	_layoutButton->setMenu(menu);
+	_layoutButton->setIcon(QIcon("Resources/svg/layout.svg"));
+	_layoutButton->setToolTip(tr("Change layout"));
+	connect(_layoutButton, &QToolButton::clicked, this, &ToolBar::layoutButtonClicked);
 
-	_showInfoToolButton = new QToolButton;
-	_showInfoToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_showInfoButton = new QToolButton;
+	_showInfoButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_showAnnotationAction);
 	menu->addAction(_showCrossAction);
 	menu->addAction(_showScaleAction);
 	menu->addAction(_showMeasurementAction);
-	_showInfoToolButton->setMenu(menu);
-	_showInfoToolButton->setIcon(QIcon("Resources/svg/annotation.svg"));
-	_showInfoToolButton->setToolTip(tr("Toggle annotations"));
-	connect(_showInfoToolButton, &QToolButton::clicked, this, &ToolBar::showInfoToolButtonClicked);
+	_showInfoButton->setMenu(menu);
+	_showInfoButton->setIcon(QIcon("Resources/svg/annotation.svg"));
+	_showInfoButton->setToolTip(tr("Toggle annotations"));
+	connect(_showInfoButton, &QToolButton::clicked, this, &ToolBar::showInfoButtonClicked);
 
-	_flipToolButton = new QToolButton;
-	_flipToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_flipButton = new QToolButton;
+	_flipButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_flipHorizontalAction);
 	menu->addAction(_flipVerticalAction);
-	_flipToolButton->setMenu(menu);
-	_flipToolButton->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
-	_flipToolButton->setToolTip(tr("Flip"));
-	connect(_flipToolButton, &QToolButton::clicked, _flipHorizontalAction, &QAction::triggered);
+	_flipButton->setMenu(menu);
+	_flipButton->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
+	_flipButton->setToolTip(tr("Flip"));
+	connect(_flipButton, &QToolButton::clicked, _flipHorizontalAction, &QAction::triggered);
 
-	_rotateToolButton = new QToolButton;
-	_rotateToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_rotateButton = new QToolButton;
+	_rotateButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_rotate90CW);
 	menu->addAction(_rotate90CCW);
@@ -233,13 +233,19 @@ void ToolBar::createButton()
 	menu->addAction(_rotate180);
 	menu->addSeparator();
 	menu->addAction(_resetTransformation);
-	_rotateToolButton->setMenu(menu);
-	_rotateToolButton->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
-	_rotateToolButton->setToolTip(tr("Rotate"));
-	connect(_rotateToolButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
+	_rotateButton->setMenu(menu);
+	_rotateButton->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
+	_rotateButton->setToolTip(tr("Rotate"));
+	connect(_rotateButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
 
-	_imageWindowToolButton = new ToolButton;
-	_imageWindowToolButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_undoButton = new QToolButton;
+	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
+	_undoButton->setIcon(QIcon("Resources/svg/undo.svg"));
+	_undoButton->setToolTip(tr("Undo"));
+	connect(_undoButton, &QToolButton::clicked, this, &ToolBar::undoButtonClicked);
+
+	_imageWindowButton = new ToolButton;
+	_imageWindowButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_imageWindowAction);
 	menu->addAction(_ROIWidowAction);
@@ -247,12 +253,12 @@ void ToolBar::createButton()
 	menu->addAction(_restoreWindowAction);
 	menu->addSeparator();
 	menu->addAction(_imageNegativeAction);
-	_imageWindowToolButton->setMenu(menu);
-	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
-	_imageWindowToolButton->setToolTip(tr("Adjust image window"));
-	_imageWindowToolButton->installEventFilter(this);
-	_imageWindowToolButton->setCurrentAction(_imageWindowAction);
-	connect(_imageWindowToolButton, &QToolButton::triggered, this, &ToolBar::imageWindowToolButtonTriggered);
+	_imageWindowButton->setMenu(menu);
+	_imageWindowButton->setIconByName("Resources/svg/imagewindow.svg");
+	_imageWindowButton->setToolTip(tr("Adjust image window"));
+	_imageWindowButton->installEventFilter(this);
+	_imageWindowButton->setCurrentAction(_imageWindowAction);
+	connect(_imageWindowButton, &QToolButton::triggered, this, &ToolBar::imageWindowButtonTriggered);
 
 	_zoomButton = new ToolButton;
 	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -306,15 +312,16 @@ void ToolBar::createButton()
 	_measurementButton->setCurrentAction(_rulerAction);
 	connect(_measurementButton, &QToolButton::triggered, this, &ToolBar::measurementButtonTriggered);
 
-	addWidget(_openToolButton);
-	addWidget(_saveToolButton);
+	addWidget(_openButton);
+	addWidget(_saveButton);
 	addSeparator();
-	addWidget(_layoutToolButton);
-	addWidget(_showInfoToolButton);
-	addWidget(_flipToolButton);
-	addWidget(_rotateToolButton);
+	addWidget(_layoutButton);
+	addWidget(_showInfoButton);
+	addWidget(_flipButton);
+	addWidget(_rotateButton);
 	addSeparator();
-	addWidget(_imageWindowToolButton);
+	addWidget(_undoButton);
+	addWidget(_imageWindowButton);
 	addWidget(_zoomButton);
 	addWidget(_cursorButton);
 	addWidget(_measurementButton);
@@ -365,13 +372,13 @@ void ToolBar::changeEvent(QEvent* event)
 		_parallelogramAction->setText(tr("Parallelogram"));
 		_textAction->setText(tr("Text"));
 
-		_openToolButton->setToolTip(tr("Open image file"));
-		_saveToolButton->setToolTip(tr("Save image file"));
-		_layoutToolButton->setToolTip(tr("Change layout"));
-		_showInfoToolButton->setToolTip(tr("Toggle annotations"));
-		_flipToolButton->setToolTip(tr("Flip"));
-		_rotateToolButton->setToolTip(tr("Rotate"));
-		_imageWindowToolButton->setToolTip(tr("Adjust image window"));
+		_openButton->setToolTip(tr("Open image file"));
+		_saveButton->setToolTip(tr("Save image file"));
+		_layoutButton->setToolTip(tr("Change layout"));
+		_showInfoButton->setToolTip(tr("Toggle annotations"));
+		_flipButton->setToolTip(tr("Flip"));
+		_rotateButton->setToolTip(tr("Rotate"));
+		_imageWindowButton->setToolTip(tr("Adjust image window"));
 		_zoomButton->setToolTip(tr("Zoom image"));
 		_cursorButton->setToolTip(tr("Select item/Move image"));
 		_measurementButton->setToolTip(tr("Measurements and tools"));
@@ -382,7 +389,7 @@ void ToolBar::changeEvent(QEvent* event)
 
 bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 {
-	if (obj == _imageWindowToolButton || obj == _zoomButton || obj == _cursorButton || obj == _measurementButton)
+	if (obj == _imageWindowButton || obj == _zoomButton || obj == _cursorButton || obj == _measurementButton)
 	{
 		if (event->type() == QEvent::MouseButtonPress)
 		{
@@ -482,7 +489,7 @@ void ToolBar::setMeasurementType(DiagramItem::DiagramType type)
 	}
 }
 
-void ToolBar::layoutToolButtonClicked()
+void ToolBar::layoutButtonClicked()
 {
 	bool checked = !_showMenuAction->isChecked();
 
@@ -493,7 +500,7 @@ void ToolBar::layoutToolButtonClicked()
 	_showDockWidgetAction->toggled(checked);
 }
 
-void ToolBar::showInfoToolButtonClicked()
+void ToolBar::showInfoButtonClicked()
 {
 	bool checked = !_showAnnotationAction->isChecked();
 
@@ -508,21 +515,26 @@ void ToolBar::showInfoToolButtonClicked()
 
 void ToolBar::imageWindowActionTriggered()
 {
-	_imageWindowToolButton->setIconByName("Resources/svg/imagewindow.svg");
-	_imageWindowToolButton->setMouseHandler(new ImageWindowMouseHandler());
+	_imageWindowButton->setIconByName("Resources/svg/imagewindow.svg");
+	_imageWindowButton->setMouseHandler(new ImageWindowMouseHandler());
 }
 
 void ToolBar::ROIWindowActionTriggered()
 {
-	_imageWindowToolButton->setIconByName("Resources/svg/ROI.svg");
-	_imageWindowToolButton->setMouseHandler(new ROIWindowMouseHandler());
+	_imageWindowButton->setIconByName("Resources/svg/ROI.svg");
+	_imageWindowButton->setMouseHandler(new ROIWindowMouseHandler());
 }
 
-void ToolBar::imageWindowToolButtonTriggered(QAction* action)
+void ToolBar::undoButtonClicked()
 {
-	_imageWindowToolButton->setCurrentAction(action);
-	ToolButton::setLeftMouseButton(_imageWindowToolButton);
-	MouseHandler::setLeftButton(_imageWindowToolButton);
+
+}
+
+void ToolBar::imageWindowButtonTriggered(QAction* action)
+{
+	_imageWindowButton->setCurrentAction(action);
+	ToolButton::setLeftMouseButton(_imageWindowButton);
+	MouseHandler::setLeftButton(_imageWindowButton);
 }
 
 void ToolBar::zoomButtonClicked()

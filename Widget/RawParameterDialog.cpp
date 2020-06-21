@@ -9,7 +9,6 @@
 #include <QVBoxLayout>
 #include <QMessageBox>
 #include <QEvent>
-
 #include <QSettings>
 #include <QCoreApplication>
 

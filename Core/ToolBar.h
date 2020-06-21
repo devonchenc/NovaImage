@@ -35,11 +35,12 @@ public slots:
 	void setMeasurementType(DiagramItem::DiagramType type);
 
 private slots:
-	void layoutToolButtonClicked();
-	void showInfoToolButtonClicked();
+	void layoutButtonClicked();
+	void showInfoButtonClicked();
 	void imageWindowActionTriggered();
 	void ROIWindowActionTriggered();
-	void imageWindowToolButtonTriggered(QAction* action);
+	void undoButtonClicked();
+	void imageWindowButtonTriggered(QAction* action);
 	void zoomButtonClicked();
 	void selectItem();
 	void moveScene();
@@ -96,14 +97,15 @@ private:
 	QAction* _parallelogramAction;
 	QAction* _textAction;
 
-	QToolButton* _openToolButton;
-	QToolButton* _saveToolButton;
-	QToolButton* _layoutToolButton;
-	QToolButton* _showInfoToolButton;
-	QToolButton* _flipToolButton;
-	QToolButton* _rotateToolButton;
+	QToolButton* _openButton;
+	QToolButton* _saveButton;
+	QToolButton* _layoutButton;
+	QToolButton* _showInfoButton;
+	QToolButton* _flipButton;
+	QToolButton* _rotateButton;
+	QToolButton* _undoButton;
 
-	ToolButton* _imageWindowToolButton;
+	ToolButton* _imageWindowButton;
 	ToolButton* _zoomButton;
 	ToolButton* _cursorButton;
 	ToolButton* _measurementButton;
