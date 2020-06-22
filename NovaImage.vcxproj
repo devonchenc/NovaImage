@@ -55,7 +55,7 @@
     <QtMoc Include="Core\GraphicsView.h" />
     <QtMoc Include="Core\mainwindow.h" />
     <ClInclude Include="Core\MouseHandler.h" />
-    <ClInclude Include="Core\PluginInterface.h" />
+    <QtMoc Include="Core\PluginInterface.h" />
     <QtMoc Include="Core\ToolBar.h" />
     <QtMoc Include="Core\ToolButton.h" />
     <QtMoc Include="Core\View.h" />

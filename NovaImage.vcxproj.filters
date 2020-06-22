@@ -194,6 +194,9 @@
     <QtMoc Include="Core\View.h">
       <Filter>Core</Filter>
     </QtMoc>
+    <QtMoc Include="Core\PluginInterface.h">
+      <Filter>Core</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image\BaseImage.h">
@@ -251,9 +254,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\MouseHandler.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Core\PluginInterface.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

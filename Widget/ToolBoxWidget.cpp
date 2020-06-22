@@ -91,15 +91,15 @@ void ToolBoxWidget::initUI()
 	_boldButton = new QToolButton;
 	_boldButton->setCheckable(true);
 	_boldButton->setIcon(QIcon(QPixmap("Resources/bold.png")));
-	connect(_boldButton, SIGNAL(clicked()), this, SLOT(handleFontChange()));
+	connect(_boldButton, &QToolButton::clicked, this, &ToolBoxWidget::handleFontChange);
 	_italicButton = new QToolButton;
 	_italicButton->setCheckable(true);
 	_italicButton->setIcon(QIcon(QPixmap("Resources/italic.png")));
-	connect(_italicButton, SIGNAL(clicked()), this, SLOT(handleFontChange()));
+	connect(_italicButton, &QToolButton::clicked, this, &ToolBoxWidget::handleFontChange);
 	_underlineButton = new QToolButton;
 	_underlineButton->setCheckable(true);
 	_underlineButton->setIcon(QIcon(QPixmap("Resources/underline.png")));
-	connect(_underlineButton, SIGNAL(clicked()), this, SLOT(handleFontChange()));
+	connect(_underlineButton, &QToolButton::clicked, this, &ToolBoxWidget::handleFontChange);
 	h3Layout->addWidget(_styleLabel);
 	h3Layout->addWidget(_boldButton);
 	h3Layout->addWidget(_italicButton);

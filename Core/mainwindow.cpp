@@ -399,6 +399,8 @@ void MainWindow::loadPlugin()
 				addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dockWidget);
 				tabifyDockWidget(_toolboxDockWidget, dockWidget);
 
+				connect(plugin, SIGNAL(openFile(const QString&)), this, SLOT(openFile(const QString&)));
+
 				_vecPlugin.append(plugin);
 			}
 		}
@@ -483,6 +485,11 @@ void MainWindow::slectLanguage(QAction* action)
 			qApp->removeTranslator(_vecPluginTranslator[i]);
 		}
 	}
+}
+
+void MainWindow::openFile(const QString& fileName)
+{
+	_doc->openFile(fileName);
 }
 
 void MainWindow::changeEvent(QEvent* event)

@@ -27,7 +27,7 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	, _refHorzLine(nullptr)
 	, _refVertLine(nullptr)
 {
-	_font.setPointSize(16);
+	_font.setPointSize(24);
 }
 
 void GraphicsScene::setLineColor(const QColor& color)

@@ -7,7 +7,7 @@ QColorButton::QColorButton(const QColor& color, QWidget* parent)
 	, _enableColorText(true)
 	, _enableToolTip(true)
 {
-	connect(this, SIGNAL(clicked()), SLOT(slotChangeColor()));
+	connect(this, &QColorButton::clicked, this, &QColorButton::slotChangeColor);
 	setColor(color);
 }
 

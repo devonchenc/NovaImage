@@ -80,9 +80,9 @@ public slots:
 	void prevImage();
 	void nextImage();
 
-//	void openButtonTriggered();
-
 	void slectLanguage(QAction* action);
+
+	void openFile(const QString& fileName);
 
 private:
     ToolBar* _toolBar;
