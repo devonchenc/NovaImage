@@ -28,6 +28,9 @@
     <Filter Include="Core">
       <UniqueIdentifier>{9208e224-1091-4c46-8925-1d9aa40a9a1c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Notification">
+      <UniqueIdentifier>{d1bfad05-03c6-4364-aa79-e7dbee2beb29}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image\BaseImage.cpp">
@@ -135,6 +138,12 @@
     <ClCompile Include="Core\View.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Notification\NotificationLayout.cpp">
+      <Filter>Notification</Filter>
+    </ClCompile>
+    <ClCompile Include="Notification\NotificationWidget.cpp">
+      <Filter>Notification</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -196,6 +205,12 @@
     </QtMoc>
     <QtMoc Include="Core\PluginInterface.h">
       <Filter>Core</Filter>
+    </QtMoc>
+    <QtMoc Include="Notification\NotificationLayout.h">
+      <Filter>Notification</Filter>
+    </QtMoc>
+    <QtMoc Include="Notification\NotificationWidget.h">
+      <Filter>Notification</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

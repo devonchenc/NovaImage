@@ -28,6 +28,7 @@
 #include "../Widget/CommonWidget.h"
 #include "../Widget/CurvesWidget.h"
 #include "../Widget/LevelsWidget.h"
+#include "../Notification/NotificationLayout.h"
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
@@ -46,12 +47,14 @@ MainWindow::MainWindow(QWidget* parent)
 
 	loadTranslator();
 
+//	showMaximized();
+//	setWindowState(Qt::WindowMaximized);
+
+	_notification = new NotificationLayout;
+
 	// For test
 //	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
 //	_doc->openFile("D:/test.png");
-
-//	showMaximized();
-//	setWindowState(Qt::WindowMaximized);
 }
 
 MainWindow::~MainWindow()
@@ -76,6 +79,11 @@ MainWindow::~MainWindow()
 		delete _vecPluginTranslator[i];
 	}
 	_vecPluginTranslator.clear();
+	if (_notification)
+	{
+		delete _notification;
+		_notification = nullptr;
+	}
 }
 
 void MainWindow::initUI()
@@ -248,6 +256,8 @@ void MainWindow::imageOpened()
 
 		QString title = QString("%1 - NovaImage").arg(getGlobalImage()->getPathName());
 		setWindowTitle(title);
+
+		_notification->addNotification("Open file", title, NotificationParams::Information);
 	}
 }
 

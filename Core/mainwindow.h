@@ -20,6 +20,7 @@ class Document;
 class BaseWidget;
 class ToolBar;
 class PluginInterface;
+class NotificationLayout;
 
 class MainWindow : public QMainWindow
 {
@@ -112,4 +113,6 @@ private:
 
 	QVector<QDockWidget*> _vecDockWidget;
 	QDockWidget* _toolboxDockWidget;
+
+	NotificationLayout* _notification;
 };
