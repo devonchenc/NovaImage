@@ -40,7 +40,7 @@ private:
 
 	Qt::Alignment layoutType = Qt::AlignBottom | Qt::AlignRight;
 
-	int _displayTimeMs = 5000;
+	int _displayTimeMs = 6000;
 	const int _maximumDisplayCount = 5;
 	QElapsedTimer _elapsedTimer;
 	QBasicTimer _basicTimer;

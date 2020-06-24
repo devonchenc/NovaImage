@@ -10,6 +10,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QPainter>
+#include <QGraphicsOpacityEffect>
 
 namespace NotificationWidgetDetails
 {
@@ -50,6 +51,10 @@ NotificationWidget::NotificationWidget(const NotificationParams& params, QWidget
 	setAttribute(Qt::WA_TranslucentBackground); // Indicates that the background will be transparent
 	setAttribute(Qt::WA_ShowWithoutActivating); // At the show, the widget does not get the focus automatically
 
+	_effect = new QGraphicsOpacityEffect;
+	_effect->setOpacity(0.85);
+	setGraphicsEffect(_effect);
+
 	initUI(params);
 
 	QRect geometry = QApplication::desktop()->availableGeometry();
@@ -69,16 +74,8 @@ void NotificationWidget::onDetailsButtonClicked()
 
 void NotificationWidget::initUI(const NotificationParams& params)
 {
-	QHBoxLayout* mainLayout = new QHBoxLayout();
-	mainLayout->setContentsMargins(10, 10, 10, 10);
-
-	QVBoxLayout* messageLayout = new QVBoxLayout();
-	messageLayout->setSpacing(5);
-	mainLayout->addItem(messageLayout);
-
-	QHBoxLayout* titleLayout = new QHBoxLayout();
+	QHBoxLayout* titleLayout = new QHBoxLayout;
 	titleLayout->setSpacing(12);
-	messageLayout->addItem(titleLayout);
 
 	QFontMetrics fm(font());
 	int fontHeight = fm.height() * 2;
@@ -98,11 +95,23 @@ void NotificationWidget::initUI(const NotificationParams& params)
 		titleLayout->addWidget(labelTitle);
 	}
 
-	QLabel* labelMessage = new QLabel(params.message);
-	labelMessage->setMinimumHeight(30);
-	labelMessage->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
-	labelMessage->setWordWrap(true);
-	messageLayout->addWidget(labelMessage);
+	QLabel* messageLabel = new QLabel(params.message);
+	messageLabel->setMinimumHeight(20);
+	messageLabel->setMaximumHeight(20);
+	messageLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+	messageLabel->setWordWrap(true);
+	QHBoxLayout* mesLayout = new QHBoxLayout;
+	mesLayout->addSpacing(20);
+	mesLayout->addWidget(messageLabel);
+
+	QVBoxLayout* messageLayout = new QVBoxLayout();
+	messageLayout->setSpacing(5);
+	messageLayout->addItem(titleLayout);
+	messageLayout->addLayout(mesLayout);
+
+	QHBoxLayout* mainLayout = new QHBoxLayout;
+	mainLayout->setContentsMargins(10, 10, 10, 10);
+	mainLayout->addItem(messageLayout);
 
 	QPalette palette;
 	QColor baseColor = palette.color(QPalette::Midlight);
@@ -127,7 +136,6 @@ void NotificationWidget::initUI(const NotificationParams& params)
 	buttonsLayout->setSpacing(5);
 	{
 		_closeButton = new QPushButton(tr("Close"));
-		_closeButton->setObjectName("CloseButton");
 		_closeButton->setStyleSheet(styleSheet);
 		_closeButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
 		buttonsLayout->addWidget(_closeButton);
@@ -136,7 +144,6 @@ void NotificationWidget::initUI(const NotificationParams& params)
 	if (params.callback)
 	{
 		_detailsButton = new QPushButton(params.detailsButtonText);
-		_detailsButton->setObjectName("DetailsButton");
 		_detailsButton->setStyleSheet(styleSheet);
 		_detailsButton->setSizePolicy(QSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred));
 		buttonsLayout->addWidget(_detailsButton);
@@ -163,14 +170,11 @@ void NotificationWidget::paintEvent(QPaintEvent*)
 	painter.setBrush(QBrush(rectColor));
 	QPen roundedRectPen(Qt::black);
 	painter.setPen(roundedRectPen);
-
 	painter.drawRoundedRect(roundedRect, radius, radius);
 
-	QRect closeButtonGeometry = _closeButton->geometry();
-	QColor lineColor = palette.color(QPalette::Text);
-	QPen pen(lineColor);
-	pen.setWidth(1);
+	QPen pen(Qt::gray, 1);
 	painter.setPen(pen);
+	QRect closeButtonGeometry = _closeButton->geometry();
 	//horizontal line
 	if (_detailsButton != nullptr)
 	{

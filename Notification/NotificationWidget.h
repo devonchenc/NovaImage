@@ -1,10 +1,12 @@
 #pragma once
 
 #include <QWidget>
-#include <functional>
 
+QT_BEGIN_NAMESPACE
 class QPaintEvent;
 class QPushButton;
+class QGraphicsOpacityEffect;
+QT_END_NAMESPACE
 
 struct NotificationParams
 {
@@ -45,4 +47,6 @@ private:
 
 	QPushButton* _closeButton = nullptr;
 	QPushButton* _detailsButton = nullptr;
+
+	QGraphicsOpacityEffect* _effect;
 };

@@ -256,8 +256,6 @@ void MainWindow::imageOpened()
 
 		QString title = QString("%1 - NovaImage").arg(getGlobalImage()->getPathName());
 		setWindowTitle(title);
-
-		_notification->addNotification("Open file", title, NotificationParams::Information);
 	}
 }
 
@@ -410,6 +408,7 @@ void MainWindow::loadPlugin()
 				tabifyDockWidget(_toolboxDockWidget, dockWidget);
 
 				connect(plugin, SIGNAL(openFile(const QString&)), this, SLOT(openFile(const QString&)));
+				connect(plugin, SIGNAL(notify(const QString&, const QString&, int)), this, SLOT(notify(const QString&, const QString&, int)));
 
 				_vecPlugin.append(plugin);
 			}
@@ -500,6 +499,11 @@ void MainWindow::slectLanguage(QAction* action)
 void MainWindow::openFile(const QString& fileName)
 {
 	_doc->openFile(fileName);
+}
+
+void MainWindow::notify(const QString& title, const QString& message, int type)
+{
+	_notification->addNotification(title, message, static_cast<NotificationParams::Type>(type));
 }
 
 void MainWindow::changeEvent(QEvent* event)

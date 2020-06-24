@@ -15,6 +15,8 @@ public:
 
 signals:
 	void openFile(const QString& fileName);
+
+	void notify(const QString& title, const QString& message, int type);
 };
 
 Q_DECLARE_INTERFACE(PluginInterface, "Nova.Plugin.Interface");

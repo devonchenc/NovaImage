@@ -85,6 +85,8 @@ public slots:
 
 	void openFile(const QString& fileName);
 
+	void notify(const QString& title, const QString& message, int type);
+
 private:
     ToolBar* _toolBar;
 
