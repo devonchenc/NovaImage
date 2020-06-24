@@ -28,6 +28,7 @@
 #include "../Widget/CommonWidget.h"
 #include "../Widget/CurvesWidget.h"
 #include "../Widget/LevelsWidget.h"
+#include "../Widget/SettingsDialog.h"
 #include "../Notification/NotificationLayout.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -123,6 +124,8 @@ void MainWindow::createActions()
 	languageGroup->setExclusive(true);
 	connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
 
+	_settingsAction = new QAction(tr("P&references..."), this);
+
 	// setup menubar
 	_fileMenu = menuBar()->addMenu(tr("&File"));
 	_fileMenu->addAction(_openAction);
@@ -143,6 +146,8 @@ void MainWindow::createActions()
 	QMenu* languageMenu = _viewMenu->addMenu(tr("&Language"));
 	languageMenu->addAction(_engAction);
 	languageMenu->addAction(_chsAction);
+	_viewMenu->addSeparator();
+	_viewMenu->addAction(_settingsAction);
 
 	// connect the signals and slots
 	connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
@@ -155,6 +160,7 @@ void MainWindow::createActions()
 	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
 	connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
 	connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
+	connect(_settingsAction, &QAction::triggered, this, &MainWindow::setting);
 
 	setupShortcuts();
 }
@@ -496,6 +502,12 @@ void MainWindow::slectLanguage(QAction* action)
 	}
 }
 
+void MainWindow::setting()
+{
+	SettingsDialog dlg;
+	dlg.exec();
+}
+
 void MainWindow::openFile(const QString& fileName)
 {
 	_doc->openFile(fileName);
@@ -522,6 +534,7 @@ void MainWindow::changeEvent(QEvent* event)
 		_prevImageAction->setText(tr("&Prev image"));
 		_nextImageAction->setText(tr("&Next image"));
 		_chsAction->setText(tr("&Chinese"));
+		_settingsAction->setText(tr("P&references..."));
 	}
 
 	QMainWindow::changeEvent(event);

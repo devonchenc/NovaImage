@@ -83,6 +83,8 @@ public slots:
 
 	void slectLanguage(QAction* action);
 
+	void setting();
+
 	void openFile(const QString& fileName);
 
 	void notify(const QString& title, const QString& message, int type);
@@ -107,6 +109,7 @@ private:
 	QAction* _nextImageAction;
 	QAction* _engAction;
 	QAction* _chsAction;
+	QAction* _settingsAction;
 
 	QTranslator* _translator;
 	QVector<QTranslator*> _vecPluginTranslator;

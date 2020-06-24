@@ -96,8 +96,8 @@ void NotificationWidget::initUI(const NotificationParams& params)
 	}
 
 	QLabel* messageLabel = new QLabel(params.message);
-	messageLabel->setMinimumHeight(20);
-	messageLabel->setMaximumHeight(20);
+	messageLabel->setMinimumHeight(30);
+	messageLabel->setMaximumHeight(30);
 	messageLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	messageLabel->setWordWrap(true);
 	QHBoxLayout* mesLayout = new QHBoxLayout;

@@ -144,6 +144,9 @@
     <ClCompile Include="Notification\NotificationWidget.cpp">
       <Filter>Notification</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\SettingsDialog.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -211,6 +214,9 @@
     </QtMoc>
     <QtMoc Include="Notification\NotificationWidget.h">
       <Filter>Notification</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\SettingsDialog.h">
+      <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

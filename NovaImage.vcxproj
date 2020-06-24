@@ -46,6 +46,7 @@
     <ClCompile Include="Widget\LevelsWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
     <ClCompile Include="Widget\RawParameterDialog.cpp" />
+    <ClCompile Include="Widget\SettingsDialog.cpp" />
     <ClCompile Include="Widget\ToolBoxWidget.cpp" />
     <ClCompile Include="Widget\WidgetManager.cpp" />
   </ItemGroup>
@@ -79,6 +80,7 @@
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />
+    <QtMoc Include="Widget\SettingsDialog.h" />
     <ClInclude Include="Widget\WidgetManager.h" />
     <QtMoc Include="Widget\LevelsWidget.h" />
     <QtMoc Include="Widget\HistogramWidget.h" />

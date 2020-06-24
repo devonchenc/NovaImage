@@ -1,5 +1,8 @@
 ﻿#include "Document.h"
 
+#include <QSettings>
+#include <QCoreApplication>
+
 #include "mainwindow.h"
 #include "View.h"
 #include "../Image/BaseImage.h"
@@ -76,7 +79,17 @@ bool Document::openFile(const QString& fileName)
 
 	getView()->showImage(_image->getImageEntity(), true);
 	getView()->setWindowWidthAndLevel(_image->getMaxValue() - _image->getMinValue(), (_image->getMaxValue() + _image->getMinValue()) / 2);
-	getView()->fitWindow();
+	
+	QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	bool fitWindow = setting.value("Image/autoFitWindow", 1).toBool();
+	if (fitWindow)
+	{
+		getView()->fitWindow();
+	}
+	else
+	{
+		getView()->zoomNormal();
+	}
 
 	pMainWindow->imageOpened();
 

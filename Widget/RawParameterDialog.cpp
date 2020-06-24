@@ -20,6 +20,8 @@ RawParameterDialog::RawParameterDialog(const QString& pathName, QWidget* parent)
 	_actualSize = fileInfo.size();
 
 	setWindowTitle(tr("Open Raw file"));
+
+	setWindowFlag(Qt::Popup);
 	
 	initUI();
 
@@ -123,10 +125,10 @@ void RawParameterDialog::initUI()
 void RawParameterDialog::loadSettings()
 {
 	QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-	int type = setting.value("raw/type", 1).toInt();
-	QString width = setting.value("raw/width", 1024).toString();
-	QString height = setting.value("raw/height", 1024).toString();
-	QString headerSize = setting.value("raw/headerSize", 0).toString();
+	int type = setting.value("Raw/type", 1).toInt();
+	QString width = setting.value("Raw/width", 1024).toString();
+	QString height = setting.value("Raw/height", 1024).toString();
+	QString headerSize = setting.value("Raw/headerSize", 0).toString();
 	
 	_typeComboBox->setCurrentIndex(type);
 	_widthComboBox->setCurrentText(width);
@@ -177,10 +179,10 @@ void RawParameterDialog::acceptButtonClicked()
 	else
 	{
 		QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-		setting.setValue("raw/type", _dataType);
-		setting.setValue("raw/width", _width);
-		setting.setValue("raw/height", _height);
-		setting.setValue("raw/headerSize", _headerSize);
+		setting.setValue("Raw/type", _dataType);
+		setting.setValue("Raw/width", _width);
+		setting.setValue("Raw/height", _height);
+		setting.setValue("Raw/headerSize", _headerSize);
 
 		accept();
 	}
