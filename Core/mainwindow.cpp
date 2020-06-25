@@ -123,8 +123,10 @@ void MainWindow::createActions()
 	languageGroup->addAction(_chsAction);
 	languageGroup->setExclusive(true);
 	connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
-
 	_settingsAction = new QAction(tr("P&references..."), this);
+
+	_userGuideAction = new QAction(tr("&User's guide"));
+	_aboutAction = new QAction(tr("&About"));
 
 	// setup menubar
 	_fileMenu = menuBar()->addMenu(tr("&File"));
@@ -149,6 +151,11 @@ void MainWindow::createActions()
 	_viewMenu->addSeparator();
 	_viewMenu->addAction(_settingsAction);
 
+	_helpMenu = menuBar()->addMenu(tr("&Help"));
+	_helpMenu->addAction(_userGuideAction);
+	_helpMenu->addSeparator();
+	_helpMenu->addAction(_aboutAction);
+
 	// connect the signals and slots
 	connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
 	connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
@@ -161,6 +168,9 @@ void MainWindow::createActions()
 	connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
 	connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
 	connect(_settingsAction, &QAction::triggered, this, &MainWindow::setting);
+
+	connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
+	connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
 
 	setupShortcuts();
 }
@@ -508,6 +518,16 @@ void MainWindow::setting()
 	dlg.exec();
 }
 
+void MainWindow::userGuide()
+{
+
+}
+
+void MainWindow::about()
+{
+
+}
+
 void MainWindow::openFile(const QString& fileName)
 {
 	_doc->openFile(fileName);
@@ -524,6 +544,7 @@ void MainWindow::changeEvent(QEvent* event)
 	{
 		_fileMenu->setTitle(tr("&File"));
 		_viewMenu->setTitle(tr("&View"));
+		_helpMenu->setTitle(tr("&Help"));
 
 		_openAction->setText(tr("&Open..."));
 		_saveAsAction->setText(tr("&Save as..."));
@@ -535,6 +556,8 @@ void MainWindow::changeEvent(QEvent* event)
 		_nextImageAction->setText(tr("&Next image"));
 		_chsAction->setText(tr("&Chinese"));
 		_settingsAction->setText(tr("P&references..."));
+		_userGuideAction->setText(tr("&User's guide"));
+		_aboutAction->setText(tr("&About"));
 	}
 
 	QMainWindow::changeEvent(event);

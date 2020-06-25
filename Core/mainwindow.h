@@ -84,6 +84,8 @@ public slots:
 	void slectLanguage(QAction* action);
 
 	void setting();
+	void userGuide();
+	void about();
 
 	void openFile(const QString& fileName);
 
@@ -97,6 +99,7 @@ private:
 
 	QMenu* _fileMenu;
 	QMenu* _viewMenu;
+	QMenu* _helpMenu;
 
 	QAction* _openAction;
 	QAction* _saveAsAction;
@@ -110,6 +113,8 @@ private:
 	QAction* _engAction;
 	QAction* _chsAction;
 	QAction* _settingsAction;
+	QAction* _userGuideAction;
+	QAction* _aboutAction;
 
 	QTranslator* _translator;
 	QVector<QTranslator*> _vecPluginTranslator;

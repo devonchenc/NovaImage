@@ -349,6 +349,7 @@ void ToolBar::changeEvent(QEvent* event)
 		_rotate90CW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"));
 		_rotate90CCW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"));
 		_rotate180->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
+		_resetTransformation->setText(tr("Reset transformation"));
 
 		_ROIWidowAction->setText(tr("ROI window"));
 		_restoreWindowAction->setText(tr("Default window"));
