@@ -172,15 +172,14 @@ void GraphicsView::paintEvent(QPaintEvent* event)
 		painter.setPen(QPen(qRgb(255, 255, 150)));
 
 		// Get the height of the font
-		QFontMetrics fm(font);
-		int pixelsHigh = fm.height() * 1.1;
+		int pixelsHigh = painter.fontMetrics().height() * 1.1;
 
 		QString str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
-		painter.drawText(QRect(0, 0, 200, pixelsHigh), Qt::AlignLeft, str);
+		painter.drawText(QRect(0, 0, 240, pixelsHigh), Qt::AlignLeft, str);
 
 		qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
 		str = QString(tr("Zoom: %1%")).arg(QString::number(scale * 100.0, 'f', 2));
-		painter.drawText(QRect(0, pixelsHigh, 200, pixelsHigh), Qt::AlignLeft, str);
+		painter.drawText(QRect(0, pixelsHigh, 240, pixelsHigh), Qt::AlignLeft, str);
 
 		str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
 		painter.drawText(QRect(0, rect().bottom() - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
