@@ -22,7 +22,9 @@ CommonWidget::CommonWidget(QWidget* parent)
 	_sliderContrast->setMaximum(100);
 	connect(_sliderContrast, &QSlider::valueChanged, this, &CommonWidget::contrastValueChanged);
 	_labelBrightNum = new QLabel("0");
+	_labelBrightNum->setFixedWidth(20);
 	_labelContrastNum = new QLabel("0");
+	_labelContrastNum->setFixedWidth(20);
 
 	QGridLayout* layout = new QGridLayout();
 	layout->addWidget(_labelBright, 0, 0);
