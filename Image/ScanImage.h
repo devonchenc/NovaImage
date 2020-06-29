@@ -11,10 +11,12 @@ public:
 
 public:
 	// Get reference of DataHeader
-	DataHeader& getDataHeader()		{ return _dh; }
+	DataHeader& getDataHeader()		{ return _dataHeader; }
 
 protected:
 	bool saveAsDcm(const QString& fileName) override;
+
+	void initWindowWidthAndLevel() override;
 
 private:
 	// Read data header
@@ -24,5 +26,5 @@ private:
 	bool readData();
 
 private:
-	DataHeader _dh;
+	DataHeader _dataHeader;
 };

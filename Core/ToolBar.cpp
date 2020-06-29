@@ -533,9 +533,12 @@ void ToolBar::undoButtonClicked()
 
 void ToolBar::imageWindowButtonTriggered(QAction* action)
 {
-	_imageWindowButton->setCurrentAction(action);
-	ToolButton::setLeftMouseButton(_imageWindowButton);
-	MouseHandler::setLeftButton(_imageWindowButton);
+	if (action == _imageWindowAction || action == _ROIWidowAction)
+	{
+		_imageWindowButton->setCurrentAction(action);
+		ToolButton::setLeftMouseButton(_imageWindowButton);
+		MouseHandler::setLeftButton(_imageWindowButton);
+	}
 }
 
 void ToolBar::zoomButtonClicked()

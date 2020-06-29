@@ -69,7 +69,7 @@ void CurvesProcessor::processMonoImage(MonoImage* image)
 	assert(image);
 
 	int width = image->width();
-	int height = image->height();;
+	int height = image->height();
 	uchar* byteImage = image->getBYTEImage();
 	float maxValue = image->getMaxValue();
 	float minValue = image->getMinValue();

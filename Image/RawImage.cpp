@@ -29,6 +29,9 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
 		_openSucceed = false;
 		return;
 	}
+
+	initWindowWidthAndLevel();
+
 	// Convert float data to uchar data
 	if (convertToByte() == false)
 	{
@@ -48,6 +51,12 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
 RawImage::~RawImage()
 {
 
+}
+
+void RawImage::initWindowWidthAndLevel()
+{
+	_windowWidth = _imageData->getMinimumValue();
+	_windowLevel = _imageData->getMaximumValue();
 }
 
 // Read data

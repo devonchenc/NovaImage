@@ -32,6 +32,8 @@ public:
 	float horzPixelSpacing() override { return 0; }
 	float vertPixelSpacing() override { return 0; }
 
+	virtual void initWindowWidthAndLevel() = 0;
+
 public:
 	// get uchar data
 	uchar* getBYTEImage() { return _byteImage; }

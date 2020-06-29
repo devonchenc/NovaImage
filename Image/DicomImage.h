@@ -16,6 +16,8 @@ public:
 	float horzPixelSpacing() override { return _horzPixelSpacing; }
 	float vertPixelSpacing() override { return _vertPixelSpacing; }
 
+	void initWindowWidthAndLevel() override;
+
 private:
 	// Read data
 	bool readData();

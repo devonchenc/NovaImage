@@ -11,14 +11,6 @@ public:
 	virtual ~BaseImage();
 
 public:
-	QImage* getImageEntity() const	{ return _pImage; }
-
-	int width() const				{ return _width; }
-
-	int height() const				{ return _height; }
-
-	virtual int slice() const		{ return 1; }
-
 	// Get min and max value of image
 	virtual float getMinValue() const = 0;
 	virtual float getMaxValue() const = 0;
@@ -36,6 +28,18 @@ public:
 	virtual float vertPixelSpacing() { return 0; }
 
 public:
+	QImage* getImageEntity() const { return _pImage; }
+
+	int width() const { return _width; }
+
+	int height() const { return _height; }
+
+	virtual int slice() const { return 1; }
+
+	float windowWidth() { return _windowWidth; }
+
+	float windowLevel() { return _windowLevel; }
+
 	bool isOpenSucceed()			{ return _openSucceed; }
 
 	QString getPathName() const		{ return _pathName; }
@@ -64,6 +68,9 @@ protected:
 	QImage* _pImage;
 
 	int _width, _height;
+
+	float _windowWidth;
+	float _windowLevel;
 
 	QString _pathName;
 

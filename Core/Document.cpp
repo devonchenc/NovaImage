@@ -78,7 +78,7 @@ bool Document::openFile(const QString& fileName)
 	_image->histogramStatistic();
 
 	getView()->showImage(_image->getImageEntity(), true);
-	getView()->setWindowWidthAndLevel(_image->getMaxValue() - _image->getMinValue(), (_image->getMaxValue() + _image->getMinValue()) / 2);
+	getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
 	
 	QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
 	bool fitWindow = setting.value("Image/autoFitWindow", 1).toBool();

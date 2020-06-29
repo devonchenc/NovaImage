@@ -5,19 +5,19 @@
     <name>CommonWidget</name>
     <message>
         <location filename="Widget/CommonWidget.cpp" line="12"/>
-        <location filename="Widget/CommonWidget.cpp" line="79"/>
+        <location filename="Widget/CommonWidget.cpp" line="81"/>
         <source>Common</source>
         <translation type="unfinished">通用</translation>
     </message>
     <message>
         <location filename="Widget/CommonWidget.cpp" line="14"/>
-        <location filename="Widget/CommonWidget.cpp" line="81"/>
+        <location filename="Widget/CommonWidget.cpp" line="83"/>
         <source>Bright</source>
         <translation type="unfinished">亮度</translation>
     </message>
     <message>
         <location filename="Widget/CommonWidget.cpp" line="15"/>
-        <location filename="Widget/CommonWidget.cpp" line="82"/>
+        <location filename="Widget/CommonWidget.cpp" line="84"/>
         <source>Contrast</source>
         <translation type="unfinished">对比度</translation>
     </message>
@@ -153,17 +153,17 @@
 <context>
     <name>GraphicsView</name>
     <message>
-        <location filename="Core/GraphicsView.cpp" line="178"/>
+        <location filename="Core/GraphicsView.cpp" line="177"/>
         <source>Size: %1%2%3</source>
         <translation type="unfinished">尺寸: %1%2%3</translation>
     </message>
     <message>
-        <location filename="Core/GraphicsView.cpp" line="182"/>
+        <location filename="Core/GraphicsView.cpp" line="181"/>
         <source>Zoom: %1%</source>
         <translation type="unfinished">缩放: %1%</translation>
     </message>
     <message>
-        <location filename="Core/GraphicsView.cpp" line="185"/>
+        <location filename="Core/GraphicsView.cpp" line="184"/>
         <source>WL: %1 WW: %2</source>
         <translation type="unfinished">窗位: %1 窗宽: %2</translation>
     </message>
@@ -190,19 +190,19 @@
     <name>MainWindow</name>
     <message>
         <location filename="Core/mainwindow.cpp" line="105"/>
-        <location filename="Core/mainwindow.cpp" line="548"/>
+        <location filename="Core/mainwindow.cpp" line="549"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="106"/>
-        <location filename="Core/mainwindow.cpp" line="549"/>
+        <location filename="Core/mainwindow.cpp" line="550"/>
         <source>&amp;Save as...</source>
         <translation type="unfinished">另存为(&amp;A)...</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="107"/>
-        <location filename="Core/mainwindow.cpp" line="550"/>
+        <location filename="Core/mainwindow.cpp" line="551"/>
         <source>&amp;Close</source>
         <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
@@ -213,53 +213,55 @@
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="109"/>
-        <location filename="Core/mainwindow.cpp" line="551"/>
+        <location filename="Core/mainwindow.cpp" line="552"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">退出(&amp;X)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="111"/>
-        <location filename="Core/mainwindow.cpp" line="552"/>
+        <location filename="Core/mainwindow.cpp" line="553"/>
         <source>Zoom &amp;in</source>
         <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="112"/>
-        <location filename="Core/mainwindow.cpp" line="553"/>
+        <location filename="Core/mainwindow.cpp" line="554"/>
         <source>Zoom &amp;out</source>
         <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="113"/>
-        <location filename="Core/mainwindow.cpp" line="554"/>
+        <location filename="Core/mainwindow.cpp" line="555"/>
         <source>&amp;Prev image</source>
         <translation type="unfinished">前一张图像(&amp;P)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="114"/>
-        <location filename="Core/mainwindow.cpp" line="555"/>
+        <location filename="Core/mainwindow.cpp" line="556"/>
         <source>&amp;Next image</source>
         <translation type="unfinished">后一张图像(&amp;N)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="119"/>
-        <location filename="Core/mainwindow.cpp" line="556"/>
+        <location filename="Core/mainwindow.cpp" line="557"/>
         <source>&amp;Chinese</source>
         <translation type="unfinished">中文简体(&amp;C)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="126"/>
-        <location filename="Core/mainwindow.cpp" line="557"/>
+        <location filename="Core/mainwindow.cpp" line="558"/>
         <source>P&amp;references...</source>
         <translation type="unfinished">选项(&amp;R)...</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="128"/>
+        <location filename="Core/mainwindow.cpp" line="559"/>
         <source>&amp;User&apos;s guide</source>
         <translation type="unfinished">用户手册(&amp;U)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="129"/>
+        <location filename="Core/mainwindow.cpp" line="560"/>
         <source>&amp;About</source>
         <translation type="unfinished">关于(&amp;A)</translation>
     </message>
@@ -282,6 +284,7 @@
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="154"/>
+        <location filename="Core/mainwindow.cpp" line="547"/>
         <source>&amp;Help</source>
         <translation type="unfinished">帮助(&amp;H)</translation>
     </message>

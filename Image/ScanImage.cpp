@@ -30,6 +30,9 @@ ScanImage::ScanImage(const QString& pathName)
 		_openSucceed = false;
 		return;
 	}
+
+	initWindowWidthAndLevel();
+
 	// Convert float data to uchar data
 	if (convertToByte() == false)
 	{
@@ -56,6 +59,20 @@ bool ScanImage::saveAsDcm(const QString& fileName)
 	return true;
 }
 
+void ScanImage::initWindowWidthAndLevel()
+{
+	if (_dataHeader.WindowWidth == 0 && _dataHeader.WindowLevel == 0)
+	{
+		_windowWidth = _imageData->getMinimumValue();
+		_windowLevel = _imageData->getMaximumValue();
+	}
+	else
+	{
+		_windowWidth = _dataHeader.WindowWidth;
+		_windowLevel = _dataHeader.WindowLevel;
+	}
+}
+
 // Read data header
 bool ScanImage::readDataHeader()
 {
@@ -65,12 +82,12 @@ bool ScanImage::readDataHeader()
 
 	qint64 size = file.size();
 
-	file.read((char*)(&_dh), sizeof(DataHeader));
+	file.read((char*)(&_dataHeader), sizeof(DataHeader));
 	file.close();
 
-	_width = _dh.Width;
-	_height = _dh.Height;
-	_slice = _dh.Slice == 0 ? 1 : _dh.Slice;
+	_width = _dataHeader.Width;
+	_height = _dataHeader.Height;
+	_slice = _dataHeader.Slice == 0 ? 1 : _dataHeader.Slice;
 	if (_width * _height == 0)
 		return false;
 

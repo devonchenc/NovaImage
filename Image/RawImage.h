@@ -9,8 +9,7 @@ public:
 	virtual ~RawImage();
 
 public:
-
-
+	void initWindowWidthAndLevel() override;
 
 private:
 	// Read data

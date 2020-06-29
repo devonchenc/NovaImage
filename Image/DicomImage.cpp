@@ -23,6 +23,9 @@ DICOMImage::DICOMImage(const QString& pathName)
 		_openSucceed = false;
 		return;
 	}
+	
+	initWindowWidthAndLevel();
+
 	// Convert float data to uchar data
 	if (convertToByte() == false)
 	{
@@ -42,6 +45,15 @@ DICOMImage::DICOMImage(const QString& pathName)
 DICOMImage::~DICOMImage()
 {
 
+}
+
+void DICOMImage::initWindowWidthAndLevel()
+{
+	if (_windowWidth == 0 && _windowLevel == 0)
+	{
+		_windowWidth = _imageData->getMinimumValue();
+		_windowLevel = _imageData->getMaximumValue();
+	}
 }
 
 // Read data
@@ -140,5 +152,19 @@ void DICOMImage::readMoreInfo(DcmDataset* dataset)
 	if (tagValue)
 	{
 		//	m_DataHeader.MEUnitWidth = float(atof(tagValue));
+	}
+
+	tagValue = nullptr;
+	dataset->findAndGetString(DCM_WindowCenter, tagValue);
+	if (tagValue)
+	{
+		_windowLevel = float(atof(tagValue));
+	}
+
+	tagValue = nullptr;
+	dataset->findAndGetString(DCM_WindowWidth, tagValue);
+	if (tagValue)
+	{
+		_windowWidth = float(atof(tagValue));
 	}
 }

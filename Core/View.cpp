@@ -197,14 +197,17 @@ void View::resetTransformation()
 
 void View::fitWindow()
 {
-	QRectF rect = this->rect();
-	qreal imageWidth = _currentImage->pixmap().width();
-	qreal imageHeight = _currentImage->pixmap().height();
-	
-	qreal ratio = qMin(rect.width() / imageWidth, rect.height() / imageHeight);
+	if (_currentImage)
+	{
+		QRectF rect = this->rect();
+		qreal imageWidth = _currentImage->pixmap().width();
+		qreal imageHeight = _currentImage->pixmap().height();
 
-	int value = log2(ratio) * ZOOM_STEP + MAX_ZOOM / 2;
-	_view->setZoomValue(value);
+		qreal ratio = qMin(rect.width() / imageWidth, rect.height() / imageHeight);
+
+		int value = log2(ratio) * ZOOM_STEP + MAX_ZOOM / 2;
+		_view->setZoomValue(value);
+	}
 }
 
 void View::zoomNormal()

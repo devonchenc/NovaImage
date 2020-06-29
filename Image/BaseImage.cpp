@@ -6,21 +6,25 @@
 #include <QDebug>
 #include <QFile>
 
-BaseImage::BaseImage() :
-	_pImage(nullptr),
-	_width(0),
-	_height(0),
-	_openSucceed(false)
+BaseImage::BaseImage()
+	: _pImage(nullptr)
+	, _width(0)
+	, _height(0)
+	, _windowWidth(0)
+	, _windowLevel(0)
+	, _openSucceed(false)
 {
 	memset(_grayPixelNumber, 0, sizeof(uint) * 256);
 }
 
-BaseImage::BaseImage(const QString& pathName) :
-	_pImage(nullptr),
-	_width(0),
-	_height(0),
-	_pathName(pathName),
-	_openSucceed(false)
+BaseImage::BaseImage(const QString& pathName)
+	: _pImage(nullptr)
+	, _width(0)
+	, _height(0)
+	, _windowWidth(0)
+	, _windowLevel(0)
+	, _pathName(pathName)
+	, _openSucceed(false)
 {
 
 }

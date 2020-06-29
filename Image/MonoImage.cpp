@@ -96,12 +96,12 @@ float MonoImage::getValue(int index) const
 
 float MonoImage::getMinValue() const
 {
-	return static_cast<float>(_imageData->getMinimumValue());
+	return _imageData->getMinimumValue();
 }
 
 float MonoImage::getMaxValue() const
 {
-	return static_cast<float>(_imageData->getMaximumValue());
+	return _imageData->getMaximumValue();
 }
 
 bool MonoImage::convertToByte()

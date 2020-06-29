@@ -30,8 +30,8 @@ public:
 	ushort ImageBitDepth;
 	ushort Pixelbinning;
 
-	int Reserved0;
-	int	Reserved1;
+	float WindowWidth;
+	float WindowLevel;
 
 	float SOD;
 	float SDD;
