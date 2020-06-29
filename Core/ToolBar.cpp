@@ -77,7 +77,8 @@ void ToolBar::createAction()
 	_imageWindowAction->setIcon(QIcon("Resources/svg/imagewindow.svg"));
 	_ROIWidowAction = new QAction(tr("ROI window"), this);
 	_ROIWidowAction->setIcon(QIcon("Resources/svg/ROI.svg"));
-	_restoreWindowAction = new QAction(tr("Default window"), this);
+	_defaultWindowAction = new QAction(tr("Default window"), this);
+	_fullWindowAction = new QAction(tr("Full window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 	_imageNegativeAction->setIcon(QIcon("Resources/svg/negative.svg"));
 
@@ -141,7 +142,8 @@ void ToolBar::createAction()
 
 	connect(_imageWindowAction, &QAction::triggered, this, &ToolBar::imageWindowActionTriggered);
 	connect(_ROIWidowAction, &QAction::triggered, this, &ToolBar::ROIWindowActionTriggered);
-	connect(_restoreWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::restoreImageWindow);
+	connect(_defaultWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::defaultImageWindow);
+	connect(_fullWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::fullImageWindow);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
 	connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
@@ -250,7 +252,8 @@ void ToolBar::createButton()
 	menu->addAction(_imageWindowAction);
 	menu->addAction(_ROIWidowAction);
 	menu->addSeparator();
-	menu->addAction(_restoreWindowAction);
+	menu->addAction(_defaultWindowAction);
+	menu->addAction(_fullWindowAction);
 	menu->addSeparator();
 	menu->addAction(_imageNegativeAction);
 	_imageWindowButton->setMenu(menu);
@@ -351,8 +354,10 @@ void ToolBar::changeEvent(QEvent* event)
 		_rotate180->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
 		_resetTransformation->setText(tr("Reset transformation"));
 
+		_imageWindowAction->setText(tr("Adjust window"));
 		_ROIWidowAction->setText(tr("ROI window"));
-		_restoreWindowAction->setText(tr("Default window"));
+		_defaultWindowAction->setText(tr("Default window"));
+		_fullWindowAction->setText(tr("Full window"));
 		_imageNegativeAction->setText(tr("Negative"));
 
 		_fitWindowAction->setText(tr("Fit window"));

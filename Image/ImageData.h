@@ -39,6 +39,9 @@ public:
 	// Save array to QFile
 	virtual void saveArray(QFile& file) = 0;
 
+	// Rescale array
+	virtual void rescaleArray(float rescaleSlope, float rescaleIntercept) = 0;
+
 public:
 	float getMinimumValue() const { return _minValue; }
 

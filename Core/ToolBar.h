@@ -72,7 +72,8 @@ private:
 
 	QAction* _imageWindowAction;
 	QAction* _ROIWidowAction;
-	QAction* _restoreWindowAction;
+	QAction* _defaultWindowAction;
+	QAction* _fullWindowAction;
 	QAction* _imageNegativeAction;
 
 	QAction* _fitWindowAction;

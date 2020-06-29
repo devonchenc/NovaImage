@@ -30,7 +30,7 @@ public:
 	// Get pixel value of processing data
 	float getProcessingValue(int index) override
 	{
-		return static_cast<float>(_processingData[index]);
+		return _processingData[index];
 	}
 
 	// Find top and bottom value in data
@@ -46,10 +46,13 @@ public:
 	// Save array to QFile
 	void saveArray(QFile& file) override;
 
+	// Rescale array
+	void rescaleArray(float rescaleSlope, float rescaleIntercept) override;
+
 protected:
 	Type* _originalData;
 
-	Type* _processingData;
+	float* _processingData;
 
 	int _slice;
 
@@ -111,8 +114,11 @@ bool ImageDataTemplate<Type>::allocateMemory()
 {
 	try
 	{
-		_processingData = new Type[_pixelCount];
-		memcpy(_processingData, _originalData, sizeof(Type) * _pixelCount);
+		_processingData = new float[_pixelCount];
+		for (int i = 0; i < _pixelCount; i++)
+		{
+			_processingData[i] = _originalData[i];
+		}
 	}
 	catch (const std::bad_alloc& e)
 	{
@@ -152,5 +158,21 @@ bool ImageDataTemplate<Type>::convertToByte(uchar* byteImage)
 template <class Type>
 void ImageDataTemplate<Type>::saveArray(QFile& file)
 {
-	file.write((const char*)_processingData, sizeof(Type) * _pixelCount);
+	file.write((const char*)_originalData, sizeof(Type) * _pixelCount);
+}
+
+// Rescale array
+template <class Type>
+void ImageDataTemplate<Type>::rescaleArray(float rescaleSlope, float rescaleIntercept)
+{
+	if (_processingData)
+	{
+		for (int i = 0; i < _pixelCount; i++)
+		{
+			_processingData[i] = _originalData[i] * rescaleSlope + rescaleIntercept;
+		}
+
+		_minValue = _minValue * rescaleSlope + rescaleIntercept;
+		_maxValue = _maxValue * rescaleSlope + rescaleIntercept;
+	}
 }

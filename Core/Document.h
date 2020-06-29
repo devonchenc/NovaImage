@@ -49,7 +49,9 @@ public:
 public:
 	void ROIWindow(QRectF rect);
 
-	void restoreImageWindow();
+	void defaultImageWindow();
+
+	void fullImageWindow();
 
 	void applyImageWidthAndLevel();
 

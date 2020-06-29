@@ -9,9 +9,18 @@
 
 DICOMImage::DICOMImage(const QString& pathName)
 	: MonoImage(pathName)
+	, _rescaleSlope(0)
+	, _rescaleIntercept(0)
 {
 	// Read data
 	if (readData() == false)
+	{
+		_openSucceed = false;
+		return;
+	}
+
+	// Allocate memory
+	if (allocateMemory() == false)
 	{
 		_openSucceed = false;
 		return;
@@ -23,6 +32,8 @@ DICOMImage::DICOMImage(const QString& pathName)
 		_openSucceed = false;
 		return;
 	}
+
+	rescaleArray();
 	
 	initWindowWidthAndLevel();
 
@@ -110,13 +121,6 @@ bool DICOMImage::readData()
 		memcpy(originalData, pixelData, sizeof(uint) * _width * _height);
 	}
 
-	// Allocate memory
-	if (allocateMemory() == false)
-	{
-		_openSucceed = false;
-		return false;
-	}
-
 	readMoreInfo(dataset);
 
 	DJDecoderRegistration::cleanup();
@@ -166,5 +170,27 @@ void DICOMImage::readMoreInfo(DcmDataset* dataset)
 	if (tagValue)
 	{
 		_windowWidth = float(atof(tagValue));
+	}
+
+	tagValue = nullptr;
+	dataset->findAndGetString(DCM_RescaleSlope, tagValue);
+	if (tagValue)
+	{
+		_rescaleSlope = float(atof(tagValue));
+	}
+
+	tagValue = nullptr;
+	dataset->findAndGetString(DCM_RescaleIntercept, tagValue);
+	if (tagValue)
+	{
+		_rescaleIntercept = float(atof(tagValue));
+	}
+}
+
+void DICOMImage::rescaleArray()
+{
+	if (_rescaleSlope != 0)
+	{
+		_imageData->rescaleArray(_rescaleSlope * 0.5f, _rescaleIntercept);
 	}
 }

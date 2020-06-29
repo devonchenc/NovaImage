@@ -216,7 +216,15 @@ void Document::ROIWindow(QRectF rect)
 	getView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
 }
 
-void Document::restoreImageWindow()
+void Document::defaultImageWindow()
+{
+	if (_image)
+	{
+		getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+	}
+}
+
+void Document::fullImageWindow()
 {
 	if (_image)
 	{
