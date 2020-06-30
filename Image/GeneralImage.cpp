@@ -3,8 +3,8 @@
 GeneralImage::GeneralImage()
 	: _backupImage(nullptr)
 {
-	_windowWidth = 0;
-	_windowLevel = 255;
+	_windowWidth = 255;
+	_windowLevel = 127.5f;
 }
 
 GeneralImage::GeneralImage(const QString& pathName)
@@ -15,8 +15,8 @@ GeneralImage::GeneralImage(const QString& pathName)
 	_openSucceed = !_pImage->isNull();
 	_width = _pImage->width();
 	_height = _pImage->height();
-	_windowWidth = 0;
-	_windowLevel = 255;
+	_windowWidth = 255;
+	_windowLevel = 127.5f;
 
 	// Backup origin QImage
 	if (_openSucceed)

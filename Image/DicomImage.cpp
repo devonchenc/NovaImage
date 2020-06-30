@@ -62,8 +62,8 @@ void DICOMImage::initWindowWidthAndLevel()
 {
 	if (_windowWidth == 0 && _windowLevel == 0)
 	{
-		_windowWidth = _imageData->getMinimumValue();
-		_windowLevel = _imageData->getMaximumValue();
+		_windowWidth = _imageData->getMaximumValue() - _imageData->getMinimumValue();
+		_windowLevel = (_imageData->getMaximumValue() + _imageData->getMinimumValue()) / 2.0f;
 	}
 }
 

@@ -55,8 +55,8 @@ RawImage::~RawImage()
 
 void RawImage::initWindowWidthAndLevel()
 {
-	_windowWidth = _imageData->getMinimumValue();
-	_windowLevel = _imageData->getMaximumValue();
+	_windowWidth = _imageData->getMaximumValue() - _imageData->getMinimumValue();
+	_windowLevel = (_imageData->getMaximumValue() + _imageData->getMinimumValue()) / 2.0f;
 }
 
 // Read data
