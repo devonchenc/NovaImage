@@ -4,6 +4,7 @@
 #include <QPair>
 #include <QVector>
 #include <QObject>
+#include "UndoSystem.h"
 
 class MainWindow;
 class View;
@@ -57,6 +58,13 @@ public:
 
 	void inverseImage();
 
+	void backup();
+
+public slots:
+	void undo();
+
+	void redo();
+
 private:
 	View* getView() const;
 
@@ -64,5 +72,8 @@ private:
 
 private:
 	MainWindow* pMainWindow;
+
 	std::shared_ptr<BaseImage> _image;
+
+	UndoSystem _undoStack;
 };

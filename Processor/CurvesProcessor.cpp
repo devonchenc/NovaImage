@@ -19,12 +19,12 @@ void CurvesProcessor::processGeneralImage(GeneralImage* image)
 
 	int width = image->width();
 	int height = image->height();
-	QImage* entityImage = image->getImageEntity();
+	QImage* imageEntity = image->getImageEntity();
 	QImage* backupImageEntity = image->getBackupImage();
-	uchar* pImageData = (uchar*)entityImage->bits();
+	uchar* pImageData = (uchar*)imageEntity->bits();
 	uchar* pBackupImageData = (uchar*)backupImageEntity->bits();
-	int pitch = entityImage->bytesPerLine();
-	int depth = entityImage->depth() / 8;
+	int pitch = imageEntity->bytesPerLine();
+	int depth = imageEntity->depth() / 8;
 
 //	PIProgressInit(VS_PROGRESS_STATUS_BAR, _T("Curves"));
 

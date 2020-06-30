@@ -159,6 +159,8 @@ void Document::closeFile()
 {
 	_image.reset();
 
+	_undoStack.reset();
+
 	getView()->resetImage();
 }
 
@@ -173,7 +175,6 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
 
 	_image->histogramStatistic();
 
-//	getView()->fitWindow();
 	getView()->repaint();
 }
 
@@ -258,6 +259,31 @@ void Document::inverseImage()
 
 		repaintView();
 	}
+}
+
+void Document::backup()
+{
+	_undoStack.backup(_image.get());
+}
+
+void Document::undo()
+{
+	if (_undoStack.isEmpty())
+		return;
+
+	BaseImage* undoImage = _undoStack.undo()->copyImage();
+	_image.reset(undoImage);;
+	repaintView();
+}
+
+void Document::redo()
+{
+	if (_undoStack.isTop())
+		return;
+
+	BaseImage* undoImage = _undoStack.redo()->copyImage();
+	_image.reset(undoImage);
+	repaintView();
 }
 
 View* Document::getView() const

@@ -7,11 +7,12 @@ class GeneralImage : public BaseImage
 public:
 	GeneralImage();
 	GeneralImage(const QString& pathName);
+	GeneralImage(const GeneralImage& src);
 	virtual ~GeneralImage();
 
 public:
 	// Get backup QImage pointer
-	QImage* getBackupImage() const { return _backupImage; }
+	QImage* getBackupImage() const { return _backupImage.get(); }
 
 	// Restore image by using backup image
 	void restoreImage();
@@ -31,14 +32,13 @@ public:
 
 	float getMaxValue() const override { return 255.0f; }
 
-private:
-	// 得到图像中最大最小的像素值
-	void getImageBottomAndTop();
+	BaseImage* copyImage() const override;
 
+private:
 	// Backup origin QImage
 	void backupImage();
 
 private:
 	// Backup origin QImage
-	QImage* _backupImage;
+	std::shared_ptr<QImage> _backupImage;
 };

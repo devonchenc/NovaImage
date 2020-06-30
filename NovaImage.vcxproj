@@ -20,6 +20,7 @@
     <ClCompile Include="Core\MouseHandler.cpp" />
     <ClCompile Include="Core\ToolBar.cpp" />
     <ClCompile Include="Core\ToolButton.cpp" />
+    <ClCompile Include="Core\UndoSystem.cpp" />
     <ClCompile Include="Core\View.cpp" />
     <ClCompile Include="Image\BaseImage.cpp" />
     <ClCompile Include="Image\DicomImage.cpp" />
@@ -62,6 +63,7 @@
     <QtMoc Include="Core\ToolBar.h" />
     <QtMoc Include="Core\ToolButton.h" />
     <QtMoc Include="Core\View.h" />
+    <ClInclude Include="Core\UndoSystem.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
     <ClInclude Include="Image\MonoImage.h" />

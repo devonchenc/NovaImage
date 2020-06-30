@@ -15,6 +15,14 @@ public:
 
 	}
 
+	ImageData(const ImageData& src)
+		: _pixelCount(src._pixelCount)
+		, _minValue(src._minValue)
+		, _maxValue(src._maxValue)
+	{
+
+	}
+
 	virtual ~ImageData() {}
 
 public:
@@ -41,6 +49,9 @@ public:
 
 	// Rescale array
 	virtual void rescaleArray(float rescaleSlope, float rescaleIntercept) = 0;
+
+	// Create a deep copy of image data
+	virtual ImageData* copyImageData() const = 0;
 
 public:
 	float getMinimumValue() const { return _minValue; }

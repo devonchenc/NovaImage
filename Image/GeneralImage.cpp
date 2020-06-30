@@ -25,13 +25,15 @@ GeneralImage::GeneralImage(const QString& pathName)
 	}
 }
 
+GeneralImage::GeneralImage(const GeneralImage& src)
+	: BaseImage(src)
+{
+	_backupImage = src._backupImage;
+}
+
 GeneralImage::~GeneralImage()
 {
-	if (_backupImage)
-	{
-		delete _backupImage;
-		_backupImage = nullptr;
-	}
+
 }
 
 void GeneralImage::restoreImage()
@@ -120,11 +122,13 @@ float GeneralImage::getValue(int index) const
 	return 0.299f * qRed(pixel) + 0.587f * qGreen(pixel) + 0.114f * qBlue(pixel);
 }
 
+BaseImage* GeneralImage::copyImage() const
+{
+	return new GeneralImage(*this);
+}
+
 // Backup origin QImage
 void GeneralImage::backupImage()
 {
-	if (_backupImage)
-		delete _backupImage;
-
-	_backupImage = new QImage(*_pImage);
+	_backupImage = std::make_shared<QImage>(*_pImage);
 }

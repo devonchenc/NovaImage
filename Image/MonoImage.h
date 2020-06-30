@@ -9,6 +9,7 @@ class MonoImage : public BaseImage
 public:
 	MonoImage();
 	MonoImage(const QString& pathName);
+	MonoImage(const MonoImage& src);
 	virtual ~MonoImage();
 
 	bool copyToImage();

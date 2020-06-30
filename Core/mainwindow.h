@@ -51,6 +51,7 @@ private:
 	void createToolbar();
 
     void createActions();
+
     void setupShortcuts();
 
 	void loadPlugin();
@@ -98,6 +99,7 @@ private:
 	Document* _doc;
 
 	QMenu* _fileMenu;
+	QMenu* _editMenu;
 	QMenu* _viewMenu;
 	QMenu* _helpMenu;
 
@@ -106,6 +108,8 @@ private:
 	QAction* _closeAction;
 	QAction* _printAction;
 	QAction* _exitAction;
+	QAction* _undoAction;
+	QAction* _redoAction;
 	QAction* _zoomInAction;
 	QAction* _zoomOutAction;
 	QAction* _prevImageAction;

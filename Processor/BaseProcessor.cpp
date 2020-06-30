@@ -2,9 +2,12 @@
 #include "BaseProcessor.h"
 
 #include <typeinfo.h>
+
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 //#include "../Image/RegionImage.h"
+#include "../Core/GlobalFunc.h"
+#include "../Core/Document.h"
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
 
@@ -43,6 +46,8 @@ void BaseProcessor::process(BaseImage* image)
 		assert(pRegionImage);
 		ProcessRegionImage(pRegionImage);
 	}*/
+
+	getGlobalDocument()->backup();
 }
 /* TODO
 void BaseProcessor::ProcessRegionImage(RegionImage* pImage)

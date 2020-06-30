@@ -11,6 +11,8 @@ public:
 public:
 	void initWindowWidthAndLevel() override;
 
+	BaseImage* copyImage() const override;
+
 private:
 	// Read data
 	bool readData();

@@ -8,6 +8,7 @@ class BaseImage
 public:
 	BaseImage();
 	BaseImage(const QString& pathName);
+	BaseImage(const BaseImage& src);
 	virtual ~BaseImage();
 
 public:
@@ -26,6 +27,9 @@ public:
 
 	virtual float horzPixelSpacing() { return 0; }
 	virtual float vertPixelSpacing() { return 0; }
+
+	// Create a deep copy of image
+	virtual BaseImage* copyImage() const = 0;
 
 public:
 	QImage* getImageEntity() const { return _pImage; }

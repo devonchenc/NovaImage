@@ -29,6 +29,22 @@ BaseImage::BaseImage(const QString& pathName)
 
 }
 
+BaseImage::BaseImage(const BaseImage& src)
+	: _width(src._width)
+	, _height(src._height)
+	, _windowWidth(src._windowWidth)
+	, _windowLevel(src._windowLevel)
+	, _pathName(src._pathName)
+	, _openSucceed(src._openSucceed)
+{
+	_pImage = new QImage(*src._pImage);
+
+	memcpy(_grayPixelNumber, src._grayPixelNumber, sizeof(uint) * 256);
+	memcpy(_redPixelNumber, src._redPixelNumber, sizeof(uint) * 256);
+	memcpy(_greenPixelNumber, src._greenPixelNumber, sizeof(uint) * 256);
+	memcpy(_bluePixelNumber, src._bluePixelNumber, sizeof(uint) * 256);
+}
+
 BaseImage::~BaseImage()
 {
 	if (_pImage)

@@ -12,6 +12,7 @@ class ImageDataTemplate : public ImageData
 {
 public:
 	ImageDataTemplate(unsigned long pixelCount);
+	ImageDataTemplate(const ImageDataTemplate& src);
 	virtual ~ImageDataTemplate();
 
 public:
@@ -49,6 +50,9 @@ public:
 	// Rescale array
 	void rescaleArray(float rescaleSlope, float rescaleIntercept) override;
 
+	// Create a deep copy of image data
+	ImageData* copyImageData() const override;
+
 protected:
 	Type* _originalData;
 
@@ -65,6 +69,24 @@ ImageDataTemplate<Type>::ImageDataTemplate(unsigned long pixelCount)
 	, _processingData(nullptr)
 {
 	_originalData = new Type[_pixelCount];
+}
+
+template <class Type>
+ImageDataTemplate<Type>::ImageDataTemplate(const ImageDataTemplate& src)
+	: ImageData(src)
+	, _slice(src._slice)
+	, _currentSlice(src._currentSlice)
+{
+	if (src._originalData)
+	{
+		_originalData = new Type[_pixelCount];
+		memcpy(_originalData, src._originalData, sizeof(Type) * _pixelCount);
+	}
+	if (src._processingData)
+	{
+		_processingData = new float[_pixelCount];
+		memcpy(_processingData, src._processingData, sizeof(float) * _pixelCount);
+	}
 }
 
 template <class Type>
@@ -175,4 +197,11 @@ void ImageDataTemplate<Type>::rescaleArray(float rescaleSlope, float rescaleInte
 		_minValue = _minValue * rescaleSlope + rescaleIntercept;
 		_maxValue = _maxValue * rescaleSlope + rescaleIntercept;
 	}
+}
+
+// Create a deep copy of image data
+template <class Type>
+ImageData* ImageDataTemplate<Type>::copyImageData() const
+{
+	return new ImageDataTemplate<Type>(*this);
 }

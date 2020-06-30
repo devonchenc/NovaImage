@@ -25,6 +25,17 @@ MonoImage::MonoImage(const QString& pathName)
 
 }
 
+MonoImage::MonoImage(const MonoImage& src)
+	: BaseImage(src)
+	, _slice(src._slice)
+	, _currentSlice(src._currentSlice)
+{
+	_imageData = src._imageData->copyImageData();
+
+	_byteImage = new uchar[_width * _height * 3];
+	memcpy(_byteImage, src._byteImage, sizeof(uchar) * _width * _height * 3);
+}
+
 MonoImage::~MonoImage()
 {
 	if (_imageData)

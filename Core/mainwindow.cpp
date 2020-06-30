@@ -103,13 +103,22 @@ void MainWindow::createActions()
 {
 	// create actions, add them to menus
 	_openAction = new QAction(tr("&Open..."), this);
+	_openAction->setIcon(QIcon("Resources/svg/open.svg"));
 	_saveAsAction = new QAction(tr("&Save as..."), this);
+	_saveAsAction->setIcon(QIcon("Resources/svg/save.svg"));
 	_closeAction = new QAction(tr("&Close"), this);
 	_printAction = new QAction(tr("&Print"), this);
 	_exitAction = new QAction(tr("E&xit"), this);
 
+	_undoAction = new QAction(tr("&Undo"), this);
+	_undoAction->setIcon(QIcon("Resources/svg/undo.svg"));
+	_redoAction = new QAction(tr("&Redo"), this);
+	_settingsAction = new QAction(tr("&Preferences..."), this);
+
 	_zoomInAction = new QAction(tr("Zoom &in"), this);
+	_zoomInAction->setIcon(QIcon("Resources/svg/zoomin.svg"));
 	_zoomOutAction = new QAction(tr("Zoom &out"), this);
+	_zoomOutAction->setIcon(QIcon("Resources/svg/zoomout.svg"));
 	_prevImageAction = new QAction(tr("&Prev image"), this);
 	_nextImageAction = new QAction(tr("&Next image"), this);
 
@@ -123,7 +132,6 @@ void MainWindow::createActions()
 	languageGroup->addAction(_chsAction);
 	languageGroup->setExclusive(true);
 	connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
-	_settingsAction = new QAction(tr("P&references..."), this);
 
 	_userGuideAction = new QAction(tr("&User's guide"));
 	_aboutAction = new QAction(tr("&About"));
@@ -138,6 +146,12 @@ void MainWindow::createActions()
 	_fileMenu->addSeparator();
 	_fileMenu->addAction(_exitAction);
 
+	_editMenu = menuBar()->addMenu(tr("&Edit"));
+	_editMenu->addAction(_undoAction);
+	_editMenu->addAction(_redoAction);
+	_editMenu->addSeparator();
+	_editMenu->addAction(_settingsAction);
+
 	_viewMenu = menuBar()->addMenu(tr("&View"));
 	_viewMenu->addAction(_zoomOutAction);
 	_viewMenu->addAction(_zoomInAction);
@@ -148,8 +162,6 @@ void MainWindow::createActions()
 	QMenu* languageMenu = _viewMenu->addMenu(tr("&Language"));
 	languageMenu->addAction(_engAction);
 	languageMenu->addAction(_chsAction);
-	_viewMenu->addSeparator();
-	_viewMenu->addAction(_settingsAction);
 
 	_helpMenu = menuBar()->addMenu(tr("&Help"));
 	_helpMenu->addAction(_userGuideAction);
@@ -163,11 +175,14 @@ void MainWindow::createActions()
 	connect(_printAction, &QAction::triggered, this, &MainWindow::print);
 	connect(_exitAction, &QAction::triggered, QApplication::instance(), &QCoreApplication::quit);
 
+	connect(_undoAction, &QAction::triggered, _doc, &Document::undo);
+	connect(_redoAction, &QAction::triggered, _doc, &Document::redo);
+	connect(_settingsAction, &QAction::triggered, this, &MainWindow::setting);
+
 	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
 	connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
 	connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
 	connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
-	connect(_settingsAction, &QAction::triggered, this, &MainWindow::setting);
 
 	connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
 	connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
@@ -231,7 +246,8 @@ void MainWindow::openImage()
 	dialog.setWindowTitle(tr("Open Image"));
 	dialog.setFileMode(QFileDialog::ExistingFile);
 	QStringList filters;
-	filters << tr("Scan file (*.dr *.ndr)")
+	filters << tr("All support file (*.dr *.ndr *.dcm *.raw *.dat *.png *.bmp *.jpg *.tif)")
+			<< tr("Scan file (*.dr *.ndr)")
 			<< tr("DICOM file (*.dcm)")
 			<< tr("Raw file (*.raw *.dat)")
 			<< tr("Image file (*.png *.bmp *.jpg *.tif)")
@@ -389,6 +405,8 @@ void MainWindow::print()
 void MainWindow::setupShortcuts()
 {
 	_openAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+	_undoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+	_redoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 
 	QList<QKeySequence> shortcuts;
 	shortcuts << Qt::Key_Plus << Qt::Key_Equal;
@@ -543,6 +561,7 @@ void MainWindow::changeEvent(QEvent* event)
 	if (event->type() == QEvent::LanguageChange)
 	{
 		_fileMenu->setTitle(tr("&File"));
+		_editMenu->setTitle(tr("&Edit"));
 		_viewMenu->setTitle(tr("&View"));
 		_helpMenu->setTitle(tr("&Help"));
 
@@ -550,12 +569,16 @@ void MainWindow::changeEvent(QEvent* event)
 		_saveAsAction->setText(tr("&Save as..."));
 		_closeAction->setText(tr("&Close"));
 		_exitAction->setText(tr("E&xit"));
+
+		_undoAction->setText(tr("&Undo"));
+		_redoAction->setText(tr("&Redo"));
+		_settingsAction->setText(tr("&Preferences..."));
+
 		_zoomInAction->setText(tr("Zoom &in"));
 		_zoomOutAction->setText(tr("Zoom &out"));
 		_prevImageAction->setText(tr("&Prev image"));
 		_nextImageAction->setText(tr("&Next image"));
 		_chsAction->setText(tr("&Chinese"));
-		_settingsAction->setText(tr("P&references..."));
 		_userGuideAction->setText(tr("&User's guide"));
 		_aboutAction->setText(tr("&About"));
 	}

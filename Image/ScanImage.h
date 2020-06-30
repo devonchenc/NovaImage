@@ -7,6 +7,7 @@ class ScanImage : public MonoImage
 {
 public:
 	ScanImage(const QString& pathName);
+	ScanImage(const ScanImage& src);
 	virtual ~ScanImage();
 
 public:
@@ -17,6 +18,8 @@ protected:
 	bool saveAsDcm(const QString& fileName) override;
 
 	void initWindowWidthAndLevel() override;
+
+	BaseImage* copyImage() const override;
 
 private:
 	// Read data header

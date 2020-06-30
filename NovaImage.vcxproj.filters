@@ -147,6 +147,9 @@
     <ClCompile Include="Widget\SettingsDialog.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="Core\UndoSystem.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -275,6 +278,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Core\MouseHandler.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core\UndoSystem.h">
       <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>

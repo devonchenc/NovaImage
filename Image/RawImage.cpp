@@ -59,6 +59,11 @@ void RawImage::initWindowWidthAndLevel()
 	_windowLevel = (_imageData->getMaximumValue() + _imageData->getMinimumValue()) / 2.0f;
 }
 
+BaseImage* RawImage::copyImage() const
+{
+	return new RawImage(*this);
+}
+
 // Read data
 bool RawImage::readData()
 {

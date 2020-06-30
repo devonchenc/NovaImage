@@ -67,6 +67,11 @@ void DICOMImage::initWindowWidthAndLevel()
 	}
 }
 
+BaseImage* DICOMImage::copyImage() const
+{
+	return new DICOMImage(*this);
+}
+
 // Read data
 bool DICOMImage::readData()
 {

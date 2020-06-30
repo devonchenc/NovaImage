@@ -49,6 +49,13 @@ ScanImage::ScanImage(const QString& pathName)
 	_openSucceed = true;
 }
 
+ScanImage::ScanImage(const ScanImage& src)
+	: MonoImage(src)
+	, _dataHeader(src._dataHeader)
+{
+
+}
+
 ScanImage::~ScanImage()
 {
 
@@ -71,6 +78,11 @@ void ScanImage::initWindowWidthAndLevel()
 		_windowWidth = _dataHeader.WindowWidth;
 		_windowLevel = _dataHeader.WindowLevel;
 	}
+}
+
+BaseImage* ScanImage::copyImage() const
+{
+	return new ScanImage(*this);
 }
 
 // Read data header

@@ -190,164 +190,188 @@
     <name>MainWindow</name>
     <message>
         <location filename="Core/mainwindow.cpp" line="105"/>
-        <location filename="Core/mainwindow.cpp" line="549"/>
+        <location filename="Core/mainwindow.cpp" line="568"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="106"/>
-        <location filename="Core/mainwindow.cpp" line="550"/>
+        <location filename="Core/mainwindow.cpp" line="107"/>
+        <location filename="Core/mainwindow.cpp" line="569"/>
         <source>&amp;Save as...</source>
         <translation type="unfinished">另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="107"/>
-        <location filename="Core/mainwindow.cpp" line="551"/>
+        <location filename="Core/mainwindow.cpp" line="109"/>
+        <location filename="Core/mainwindow.cpp" line="570"/>
         <source>&amp;Close</source>
         <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="108"/>
+        <location filename="Core/mainwindow.cpp" line="110"/>
         <source>&amp;Print</source>
         <translation type="unfinished">打印(&amp;P)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="109"/>
-        <location filename="Core/mainwindow.cpp" line="552"/>
+        <location filename="Core/mainwindow.cpp" line="111"/>
+        <location filename="Core/mainwindow.cpp" line="571"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">退出(&amp;X)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="111"/>
-        <location filename="Core/mainwindow.cpp" line="553"/>
+        <location filename="Core/mainwindow.cpp" line="113"/>
+        <location filename="Core/mainwindow.cpp" line="573"/>
+        <source>&amp;Undo</source>
+        <translation type="unfinished">撤销(&amp;U)</translation>
+    </message>
+    <message>
+        <location filename="Core/mainwindow.cpp" line="115"/>
+        <location filename="Core/mainwindow.cpp" line="574"/>
+        <source>&amp;Redo</source>
+        <translation type="unfinished">重做(&amp;R)</translation>
+    </message>
+    <message>
+        <location filename="Core/mainwindow.cpp" line="116"/>
+        <location filename="Core/mainwindow.cpp" line="575"/>
+        <source>&amp;Preferences...</source>
+        <translation type="unfinished">选项(&amp;R)...</translation>
+    </message>
+    <message>
+        <location filename="Core/mainwindow.cpp" line="118"/>
+        <location filename="Core/mainwindow.cpp" line="577"/>
         <source>Zoom &amp;in</source>
         <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="112"/>
-        <location filename="Core/mainwindow.cpp" line="554"/>
+        <location filename="Core/mainwindow.cpp" line="120"/>
+        <location filename="Core/mainwindow.cpp" line="578"/>
         <source>Zoom &amp;out</source>
         <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="113"/>
-        <location filename="Core/mainwindow.cpp" line="555"/>
+        <location filename="Core/mainwindow.cpp" line="122"/>
+        <location filename="Core/mainwindow.cpp" line="579"/>
         <source>&amp;Prev image</source>
         <translation type="unfinished">前一张图像(&amp;P)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="114"/>
-        <location filename="Core/mainwindow.cpp" line="556"/>
+        <location filename="Core/mainwindow.cpp" line="123"/>
+        <location filename="Core/mainwindow.cpp" line="580"/>
         <source>&amp;Next image</source>
         <translation type="unfinished">后一张图像(&amp;N)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="119"/>
-        <location filename="Core/mainwindow.cpp" line="557"/>
+        <location filename="Core/mainwindow.cpp" line="128"/>
+        <location filename="Core/mainwindow.cpp" line="581"/>
         <source>&amp;Chinese</source>
         <translation type="unfinished">中文简体(&amp;C)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="126"/>
-        <location filename="Core/mainwindow.cpp" line="558"/>
-        <source>P&amp;references...</source>
-        <translation type="unfinished">选项(&amp;R)...</translation>
-    </message>
-    <message>
-        <location filename="Core/mainwindow.cpp" line="128"/>
-        <location filename="Core/mainwindow.cpp" line="559"/>
+        <location filename="Core/mainwindow.cpp" line="136"/>
+        <location filename="Core/mainwindow.cpp" line="582"/>
         <source>&amp;User&apos;s guide</source>
         <translation type="unfinished">用户手册(&amp;U)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="129"/>
-        <location filename="Core/mainwindow.cpp" line="560"/>
+        <location filename="Core/mainwindow.cpp" line="137"/>
+        <location filename="Core/mainwindow.cpp" line="583"/>
         <source>&amp;About</source>
         <translation type="unfinished">关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="132"/>
-        <location filename="Core/mainwindow.cpp" line="545"/>
+        <location filename="Core/mainwindow.cpp" line="140"/>
+        <location filename="Core/mainwindow.cpp" line="563"/>
         <source>&amp;File</source>
         <translation type="unfinished">文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="141"/>
-        <location filename="Core/mainwindow.cpp" line="546"/>
+        <location filename="Core/mainwindow.cpp" line="149"/>
+        <location filename="Core/mainwindow.cpp" line="564"/>
+        <source>&amp;Edit</source>
+        <translation type="unfinished">编辑(&amp;E)</translation>
+    </message>
+    <message>
+        <location filename="Core/mainwindow.cpp" line="155"/>
+        <location filename="Core/mainwindow.cpp" line="565"/>
         <source>&amp;View</source>
         <translation type="unfinished">视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="148"/>
+        <location filename="Core/mainwindow.cpp" line="162"/>
         <source>&amp;Language</source>
         <translation type="unfinished">语言Language(&amp;L)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="154"/>
-        <location filename="Core/mainwindow.cpp" line="547"/>
+        <location filename="Core/mainwindow.cpp" line="166"/>
+        <location filename="Core/mainwindow.cpp" line="566"/>
         <source>&amp;Help</source>
         <translation type="unfinished">帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="182"/>
+        <location filename="Core/mainwindow.cpp" line="197"/>
         <source>Toolbar</source>
         <translation type="unfinished">工具栏</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="231"/>
+        <location filename="Core/mainwindow.cpp" line="246"/>
         <source>Open Image</source>
         <translation type="unfinished">打开图像</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="234"/>
+        <location filename="Core/mainwindow.cpp" line="249"/>
+        <source>All support file (*.dr *.ndr *.dcm *.raw *.dat *.png *.bmp *.jpg *.tif)</source>
+        <oldsource>All support file  (*.dr *.ndr *.dcm *.raw *.dat *.png *.bmp *.jpg *.tif)</oldsource>
+        <translation type="unfinished">所有支持的文件 (*.dr *.ndr *.dcm *.raw *.dat *.png *.bmp *.jpg *.tif)</translation>
+    </message>
+    <message>
+        <location filename="Core/mainwindow.cpp" line="250"/>
         <source>Scan file (*.dr *.ndr)</source>
         <translation type="unfinished">扫描文件 (*.dr *.ndr)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="237"/>
+        <location filename="Core/mainwindow.cpp" line="253"/>
         <source>Image file (*.png *.bmp *.jpg *.tif)</source>
         <translation type="unfinished">图像文件 (*.png *.bmp *.jpg *.tif)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="235"/>
-        <location filename="Core/mainwindow.cpp" line="250"/>
+        <location filename="Core/mainwindow.cpp" line="251"/>
+        <location filename="Core/mainwindow.cpp" line="266"/>
         <source>DICOM file (*.dcm)</source>
         <translation type="unfinished">DICOM 文件 (*.dcm)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="236"/>
-        <location filename="Core/mainwindow.cpp" line="260"/>
+        <location filename="Core/mainwindow.cpp" line="252"/>
+        <location filename="Core/mainwindow.cpp" line="276"/>
         <source>Raw file (*.raw *.dat)</source>
         <translation type="unfinished">Raw 文件 (*.raw *.dat)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="238"/>
+        <location filename="Core/mainwindow.cpp" line="254"/>
         <source>Any file (*)</source>
         <translation type="unfinished">所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="358"/>
+        <location filename="Core/mainwindow.cpp" line="374"/>
         <source>RAW image (*.raw)</source>
         <translation type="unfinished">RAW 图像 (*.raw)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="249"/>
+        <location filename="Core/mainwindow.cpp" line="265"/>
         <source>Open DICOM Image</source>
         <translation type="unfinished">打开 DICOM 文件</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="259"/>
+        <location filename="Core/mainwindow.cpp" line="275"/>
         <source>Open Raw Image</source>
         <translation type="unfinished">打开 RAW 图像</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="344"/>
-        <location filename="Core/mainwindow.cpp" line="357"/>
+        <location filename="Core/mainwindow.cpp" line="360"/>
+        <location filename="Core/mainwindow.cpp" line="373"/>
         <source>Save Image As ...</source>
         <translation type="unfinished">图像另存为...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="345"/>
+        <location filename="Core/mainwindow.cpp" line="361"/>
         <source>JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm);;RAW image (*.raw)</source>
         <translation type="unfinished">JPG 图像 (*.jpg);;PNG 图像 (*.png);;BMP 图像 (*.bmp);;TIFF 图像 (*.tif);;DICOM 图像 (*.dcm);;RAW 图像 (*.raw)</translation>
     </message>
@@ -363,17 +387,17 @@
 <context>
     <name>QObject</name>
     <message>
-        <location filename="Image/RawImage.cpp" line="102"/>
-        <location filename="Image/ScanImage.cpp" line="97"/>
-        <location filename="Image/ScanImage.cpp" line="122"/>
+        <location filename="Image/RawImage.cpp" line="107"/>
+        <location filename="Image/ScanImage.cpp" line="109"/>
+        <location filename="Image/ScanImage.cpp" line="134"/>
         <location filename="Widget/RawParameterDialog.cpp" line="175"/>
         <source>Open image file error</source>
         <translation type="unfinished">打开图像错误</translation>
     </message>
     <message>
-        <location filename="Image/RawImage.cpp" line="103"/>
-        <location filename="Image/ScanImage.cpp" line="98"/>
-        <location filename="Image/ScanImage.cpp" line="123"/>
+        <location filename="Image/RawImage.cpp" line="108"/>
+        <location filename="Image/ScanImage.cpp" line="110"/>
+        <location filename="Image/ScanImage.cpp" line="135"/>
         <location filename="Widget/RawParameterDialog.cpp" line="176"/>
         <source>The data size does not match the file information description!</source>
         <translation type="unfinished">数据实际尺寸和文件描述信息不符！</translation>
@@ -591,156 +615,157 @@
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="76"/>
+        <location filename="Core/ToolBar.cpp" line="357"/>
         <source>Adjust window</source>
         <translation type="unfinished">调节图像窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="78"/>
-        <location filename="Core/ToolBar.cpp" line="357"/>
+        <location filename="Core/ToolBar.cpp" line="358"/>
         <source>ROI window</source>
         <translation type="unfinished">ROI 窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="80"/>
-        <location filename="Core/ToolBar.cpp" line="358"/>
+        <location filename="Core/ToolBar.cpp" line="359"/>
         <source>Default window</source>
         <translation type="unfinished">默认窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="81"/>
-        <location filename="Core/ToolBar.cpp" line="359"/>
+        <location filename="Core/ToolBar.cpp" line="360"/>
         <source>Full window</source>
         <translation type="unfinished">全窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="82"/>
-        <location filename="Core/ToolBar.cpp" line="360"/>
+        <location filename="Core/ToolBar.cpp" line="361"/>
         <source>Negative</source>
         <translation type="unfinished">负片</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="85"/>
-        <location filename="Core/ToolBar.cpp" line="362"/>
+        <location filename="Core/ToolBar.cpp" line="363"/>
         <source>Fit window</source>
         <translation type="unfinished">适应窗口</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="90"/>
-        <location filename="Core/ToolBar.cpp" line="363"/>
+        <location filename="Core/ToolBar.cpp" line="364"/>
         <source>Zoom in</source>
         <translation type="unfinished">放大</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="92"/>
-        <location filename="Core/ToolBar.cpp" line="364"/>
+        <location filename="Core/ToolBar.cpp" line="365"/>
         <source>Zoom out</source>
         <translation type="unfinished">缩小</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="97"/>
-        <location filename="Core/ToolBar.cpp" line="367"/>
+        <location filename="Core/ToolBar.cpp" line="368"/>
         <source>Select</source>
         <translation type="unfinished">选择</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="95"/>
-        <location filename="Core/ToolBar.cpp" line="366"/>
+        <location filename="Core/ToolBar.cpp" line="367"/>
         <source>Move</source>
         <translation type="unfinished">移动</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="100"/>
-        <location filename="Core/ToolBar.cpp" line="369"/>
+        <location filename="Core/ToolBar.cpp" line="370"/>
         <source>Length</source>
         <translation type="unfinished">距离</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="104"/>
-        <location filename="Core/ToolBar.cpp" line="371"/>
+        <location filename="Core/ToolBar.cpp" line="372"/>
         <source>Angle</source>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="102"/>
-        <location filename="Core/ToolBar.cpp" line="370"/>
+        <location filename="Core/ToolBar.cpp" line="371"/>
         <source>Arrow</source>
         <translation type="unfinished">箭头</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="106"/>
-        <location filename="Core/ToolBar.cpp" line="372"/>
+        <location filename="Core/ToolBar.cpp" line="373"/>
         <source>Rectangle</source>
         <translation type="unfinished">矩形</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="108"/>
-        <location filename="Core/ToolBar.cpp" line="373"/>
+        <location filename="Core/ToolBar.cpp" line="374"/>
         <source>Round Rectangle</source>
         <translation type="unfinished">圆角矩形</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="110"/>
-        <location filename="Core/ToolBar.cpp" line="374"/>
+        <location filename="Core/ToolBar.cpp" line="375"/>
         <source>Circle</source>
         <translation type="unfinished">圆形</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="112"/>
-        <location filename="Core/ToolBar.cpp" line="375"/>
+        <location filename="Core/ToolBar.cpp" line="376"/>
         <source>Ellipse</source>
         <translation type="unfinished">椭圆</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="114"/>
-        <location filename="Core/ToolBar.cpp" line="376"/>
+        <location filename="Core/ToolBar.cpp" line="377"/>
         <source>Rhombus</source>
         <translation type="unfinished">菱形</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="116"/>
-        <location filename="Core/ToolBar.cpp" line="377"/>
+        <location filename="Core/ToolBar.cpp" line="378"/>
         <source>Parallelogram</source>
         <translation type="unfinished">平行四边形</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="118"/>
-        <location filename="Core/ToolBar.cpp" line="378"/>
+        <location filename="Core/ToolBar.cpp" line="379"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="183"/>
-        <location filename="Core/ToolBar.cpp" line="380"/>
+        <location filename="Core/ToolBar.cpp" line="381"/>
         <source>Open image file</source>
         <translation type="unfinished">打开图像</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="192"/>
-        <location filename="Core/ToolBar.cpp" line="381"/>
+        <location filename="Core/ToolBar.cpp" line="382"/>
         <source>Save image file</source>
         <translation type="unfinished">保存图像</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="204"/>
-        <location filename="Core/ToolBar.cpp" line="382"/>
+        <location filename="Core/ToolBar.cpp" line="383"/>
         <source>Change layout</source>
         <translation type="unfinished">布局设置</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="216"/>
-        <location filename="Core/ToolBar.cpp" line="383"/>
+        <location filename="Core/ToolBar.cpp" line="384"/>
         <source>Toggle annotations</source>
         <translation type="unfinished">显示信息</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="226"/>
-        <location filename="Core/ToolBar.cpp" line="384"/>
+        <location filename="Core/ToolBar.cpp" line="385"/>
         <source>Flip</source>
         <translation type="unfinished">翻转</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="240"/>
-        <location filename="Core/ToolBar.cpp" line="385"/>
+        <location filename="Core/ToolBar.cpp" line="386"/>
         <source>Rotate</source>
         <translation type="unfinished">旋转</translation>
     </message>
@@ -751,25 +776,25 @@
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="261"/>
-        <location filename="Core/ToolBar.cpp" line="386"/>
+        <location filename="Core/ToolBar.cpp" line="387"/>
         <source>Adjust image window</source>
         <translation type="unfinished">调节图像窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="280"/>
-        <location filename="Core/ToolBar.cpp" line="387"/>
+        <location filename="Core/ToolBar.cpp" line="388"/>
         <source>Zoom image</source>
         <translation type="unfinished">缩放图像</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="291"/>
-        <location filename="Core/ToolBar.cpp" line="388"/>
+        <location filename="Core/ToolBar.cpp" line="389"/>
         <source>Select item/Move image</source>
         <translation type="unfinished">选择图元/移动图像</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="313"/>
-        <location filename="Core/ToolBar.cpp" line="389"/>
+        <location filename="Core/ToolBar.cpp" line="390"/>
         <source>Measurements and tools</source>
         <translation type="unfinished">测量工具</translation>
     </message>
