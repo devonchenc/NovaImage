@@ -105,6 +105,7 @@ private:
 	QToolButton* _flipButton;
 	QToolButton* _rotateButton;
 	QToolButton* _undoButton;
+	QToolButton* _restoreButton;
 
 	ToolButton* _imageWindowButton;
 	ToolButton* _zoomButton;

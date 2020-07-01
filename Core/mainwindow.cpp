@@ -114,6 +114,8 @@ void MainWindow::createActions()
 	_undoAction->setIcon(QIcon("Resources/svg/undo.svg"));
 	_redoAction = new QAction(tr("&Redo"), this);
 	_redoAction->setIcon(QIcon("Resources/svg/redo.svg"));
+	_restoreAction = new QAction(tr("R&estore"), this);
+	_restoreAction->setIcon(QIcon("Resources/svg/restore.svg"));
 	_settingsAction = new QAction(tr("&Preferences..."), this);
 
 	_zoomInAction = new QAction(tr("Zoom &in"), this);
@@ -151,6 +153,8 @@ void MainWindow::createActions()
 	_editMenu->addAction(_undoAction);
 	_editMenu->addAction(_redoAction);
 	_editMenu->addSeparator();
+	_editMenu->addAction(_restoreAction);
+	_editMenu->addSeparator();
 	_editMenu->addAction(_settingsAction);
 
 	_viewMenu = menuBar()->addMenu(tr("&View"));
@@ -178,6 +182,7 @@ void MainWindow::createActions()
 
 	connect(_undoAction, &QAction::triggered, _doc, &Document::undo);
 	connect(_redoAction, &QAction::triggered, _doc, &Document::redo);
+	connect(_restoreAction, &QAction::triggered, _doc, &Document::restore);
 	connect(_settingsAction, &QAction::triggered, this, &MainWindow::setting);
 
 	connect(_zoomInAction, &QAction::triggered, this, &MainWindow::zoomIn);
@@ -573,6 +578,7 @@ void MainWindow::changeEvent(QEvent* event)
 
 		_undoAction->setText(tr("&Undo"));
 		_redoAction->setText(tr("&Redo"));
+		_restoreAction->setText(tr("R&estore"));
 		_settingsAction->setText(tr("&Preferences..."));
 
 		_zoomInAction->setText(tr("Zoom &in"));

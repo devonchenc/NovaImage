@@ -35,6 +35,8 @@ public:
 
 	virtual void initWindowWidthAndLevel() = 0;
 
+	void restore() override;
+
 public:
 	// get uchar data
 	uchar* getBYTEImage() { return _byteImage; }

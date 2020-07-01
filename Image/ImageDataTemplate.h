@@ -53,6 +53,8 @@ public:
 	// Create a deep copy of image data
 	ImageData* copyImageData() const override;
 
+	void restoreData() override;
+
 protected:
 	Type* _originalData;
 
@@ -204,4 +206,13 @@ template <class Type>
 ImageData* ImageDataTemplate<Type>::copyImageData() const
 {
 	return new ImageDataTemplate<Type>(*this);
+}
+
+template <class Type>
+void ImageDataTemplate<Type>::restoreData()
+{
+	for (int i = 0; i < _pixelCount; i++)
+	{
+		_processingData[i] = _originalData[i];
+	}
 }

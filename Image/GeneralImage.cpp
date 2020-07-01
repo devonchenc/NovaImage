@@ -127,6 +127,11 @@ BaseImage* GeneralImage::copyImage() const
 	return new GeneralImage(*this);
 }
 
+void GeneralImage::restore()
+{
+	*_pImage = *_backupImage;
+}
+
 // Backup origin QImage
 void GeneralImage::backupImage()
 {

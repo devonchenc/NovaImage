@@ -83,6 +83,19 @@ BaseImage* DICOMImage::copyImage() const
 	return new DICOMImage(*this);
 }
 
+void DICOMImage::restore()
+{
+	_imageData->restoreData();
+
+	_imageData->findTopAndBottom();
+
+	rescaleArray();
+
+	convertToByte();
+
+	copyToImage();
+}
+
 // Read data
 bool DICOMImage::readData()
 {

@@ -34,6 +34,8 @@ public:
 
 	BaseImage* copyImage() const override;
 
+	void restore() override;
+
 private:
 	// Backup origin QImage
 	void backupImage();

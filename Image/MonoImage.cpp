@@ -115,6 +115,15 @@ float MonoImage::getMaxValue() const
 	return _imageData->getMaximumValue();
 }
 
+void MonoImage::restore()
+{
+	_imageData->restoreData();
+
+	convertToByte();
+
+	copyToImage();
+}
+
 bool MonoImage::convertToByte()
 {
 	return _imageData->convertToByte(_byteImage);

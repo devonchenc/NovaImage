@@ -53,6 +53,8 @@ public:
 	// Create a deep copy of image data
 	virtual ImageData* copyImageData() const = 0;
 
+	virtual void restoreData() = 0;
+
 public:
 	float getMinimumValue() const { return _minValue; }
 

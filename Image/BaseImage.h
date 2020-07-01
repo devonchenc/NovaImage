@@ -31,6 +31,8 @@ public:
 	// Create a deep copy of image
 	virtual BaseImage* copyImage() const = 0;
 
+	virtual void restore() = 0;
+
 public:
 	QImage* getImageEntity() const { return _pImage; }
 

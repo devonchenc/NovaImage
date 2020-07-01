@@ -65,6 +65,8 @@ public slots:
 
 	void redo();
 
+	void restore();
+
 private:
 	View* getView() const;
 

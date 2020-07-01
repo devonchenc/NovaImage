@@ -110,6 +110,7 @@ private:
 	QAction* _exitAction;
 	QAction* _undoAction;
 	QAction* _redoAction;
+	QAction* _restoreAction;
 	QAction* _zoomInAction;
 	QAction* _zoomOutAction;
 	QAction* _prevImageAction;

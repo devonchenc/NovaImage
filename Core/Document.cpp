@@ -286,6 +286,15 @@ void Document::redo()
 	repaintView();
 }
 
+void Document::restore()
+{
+	if (_image)
+	{
+		_image->restore();
+		repaintView();
+	}
+}
+
 View* Document::getView() const
 {
 	return pMainWindow->getView();

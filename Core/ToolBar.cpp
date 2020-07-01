@@ -241,10 +241,15 @@ void ToolBar::createButton()
 	connect(_rotateButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
 
 	_undoButton = new QToolButton;
-	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
+//	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
 	_undoButton->setIcon(QIcon("Resources/svg/undo.svg"));
 	_undoButton->setToolTip(tr("Undo"));
-	connect(_undoButton, &QToolButton::clicked, this, &ToolBar::undoButtonClicked);
+	connect(_undoButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::undo);
+
+	_restoreButton = new QToolButton;
+	_restoreButton->setIcon(QIcon("Resources/svg/restore.svg"));
+	_restoreButton->setToolTip(tr("Restore"));
+	connect(_restoreButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::restore);
 
 	_imageWindowButton = new ToolButton;
 	_imageWindowButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -324,6 +329,7 @@ void ToolBar::createButton()
 	addWidget(_rotateButton);
 	addSeparator();
 	addWidget(_undoButton);
+	addWidget(_restoreButton);
 	addWidget(_imageWindowButton);
 	addWidget(_zoomButton);
 	addWidget(_cursorButton);
@@ -384,6 +390,8 @@ void ToolBar::changeEvent(QEvent* event)
 		_showInfoButton->setToolTip(tr("Toggle annotations"));
 		_flipButton->setToolTip(tr("Flip"));
 		_rotateButton->setToolTip(tr("Rotate"));
+		_undoButton->setToolTip(tr("Undo"));
+		_restoreButton->setToolTip(tr("Restore"));
 		_imageWindowButton->setToolTip(tr("Adjust image window"));
 		_zoomButton->setToolTip(tr("Zoom image"));
 		_cursorButton->setToolTip(tr("Select item/Move image"));
