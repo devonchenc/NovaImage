@@ -113,6 +113,7 @@ void MainWindow::createActions()
 	_undoAction = new QAction(tr("&Undo"), this);
 	_undoAction->setIcon(QIcon("Resources/svg/undo.svg"));
 	_redoAction = new QAction(tr("&Redo"), this);
+	_redoAction->setIcon(QIcon("Resources/svg/redo.svg"));
 	_settingsAction = new QAction(tr("&Preferences..."), this);
 
 	_zoomInAction = new QAction(tr("Zoom &in"), this);

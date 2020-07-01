@@ -53,6 +53,17 @@ DICOMImage::DICOMImage(const QString& pathName)
 	_openSucceed = true;
 }
 
+DICOMImage::DICOMImage(const DICOMImage& src)
+	: MonoImage(src)
+	, _horzPixelSpacing(src._horzPixelSpacing)
+	, _vertPixelSpacing(src._vertPixelSpacing)
+	, _imagerPixelSpacing(src._imagerPixelSpacing)
+	, _rescaleSlope(src._rescaleSlope)
+	, _rescaleIntercept(src._rescaleIntercept)
+{
+
+}
+
 DICOMImage::~DICOMImage()
 {
 

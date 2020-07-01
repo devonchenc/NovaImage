@@ -8,6 +8,7 @@ class DICOMImage : public MonoImage
 {
 public:
 	DICOMImage(const QString& pathName);
+	DICOMImage(const DICOMImage& src);
 	virtual ~DICOMImage();
 
 public:

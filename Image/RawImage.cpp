@@ -48,6 +48,14 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
 	_openSucceed = true;
 }
 
+RawImage::RawImage(const RawImage& src)
+	: MonoImage(src)
+	, _dataType(src._dataType)
+	, _headerSize(src._headerSize)
+{
+
+}
+
 RawImage::~RawImage()
 {
 
