@@ -22,6 +22,7 @@
 #include "GraphicsView.h"
 #include "ToolBar.h"
 #include "PluginInterface.h"
+#include "RecentFiles.h"
 #include "../Image/BaseImage.h"
 #include "../Widget/ToolBoxWidget.h"
 #include "../Widget/WidgetManager.h"
@@ -52,6 +53,9 @@ MainWindow::MainWindow(QWidget* parent)
 //	setWindowState(Qt::WindowMaximized);
 
 	_notification = new NotificationLayout;
+	_recentFiles = new RecentFiles(this);
+	_recentFiles->attachToMenuAfterItem(_fileMenu, _printAction, SLOT(openFile(const QString&)));
+//	_recentFiles->setNumOfRecentFiles(6);
 
 	// For test
 //	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
@@ -85,6 +89,11 @@ MainWindow::~MainWindow()
 		delete _notification;
 		_notification = nullptr;
 	}
+	if (_recentFiles)
+	{
+		delete _recentFiles;
+		_recentFiles = nullptr;
+	}
 }
 
 void MainWindow::initUI()
@@ -104,7 +113,7 @@ void MainWindow::createActions()
 	// create actions, add them to menus
 	_openAction = new QAction(tr("&Open..."), this);
 	_openAction->setIcon(QIcon("Resources/svg/open.svg"));
-	_saveAsAction = new QAction(tr("&Save as..."), this);
+	_saveAsAction = new QAction(tr("&Save As..."), this);
 	_saveAsAction->setIcon(QIcon("Resources/svg/save.svg"));
 	_closeAction = new QAction(tr("&Close"), this);
 	_printAction = new QAction(tr("&Print"), this);
@@ -118,12 +127,12 @@ void MainWindow::createActions()
 	_restoreAction->setIcon(QIcon("Resources/svg/restore.svg"));
 	_settingsAction = new QAction(tr("&Preferences..."), this);
 
-	_zoomInAction = new QAction(tr("Zoom &in"), this);
+	_zoomInAction = new QAction(tr("Zoom &In"), this);
 	_zoomInAction->setIcon(QIcon("Resources/svg/zoomin.svg"));
-	_zoomOutAction = new QAction(tr("Zoom &out"), this);
+	_zoomOutAction = new QAction(tr("Zoom &Out"), this);
 	_zoomOutAction->setIcon(QIcon("Resources/svg/zoomout.svg"));
-	_prevImageAction = new QAction(tr("&Prev image"), this);
-	_nextImageAction = new QAction(tr("&Next image"), this);
+	_prevImageAction = new QAction(tr("&Prev Image"), this);
+	_nextImageAction = new QAction(tr("&Next Image"), this);
 
 	_engAction = new QAction("&English", this);
 	_engAction->setCheckable(true);
@@ -136,7 +145,7 @@ void MainWindow::createActions()
 	languageGroup->setExclusive(true);
 	connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
 
-	_userGuideAction = new QAction(tr("&User's guide"));
+	_userGuideAction = new QAction(tr("&User's Guide"));
 	_aboutAction = new QAction(tr("&About"));
 
 	// setup menubar
@@ -294,6 +303,8 @@ void MainWindow::imageOpened()
 
 		QString title = QString("%1 - NovaImage").arg(getGlobalImage()->getPathName());
 		setWindowTitle(title);
+
+		_recentFiles->setMostRecentFile(getGlobalImage()->getPathName());
 	}
 }
 
@@ -572,7 +583,7 @@ void MainWindow::changeEvent(QEvent* event)
 		_helpMenu->setTitle(tr("&Help"));
 
 		_openAction->setText(tr("&Open..."));
-		_saveAsAction->setText(tr("&Save as..."));
+		_saveAsAction->setText(tr("&Save As..."));
 		_closeAction->setText(tr("&Close"));
 		_exitAction->setText(tr("E&xit"));
 
@@ -581,13 +592,15 @@ void MainWindow::changeEvent(QEvent* event)
 		_restoreAction->setText(tr("R&estore"));
 		_settingsAction->setText(tr("&Preferences..."));
 
-		_zoomInAction->setText(tr("Zoom &in"));
-		_zoomOutAction->setText(tr("Zoom &out"));
-		_prevImageAction->setText(tr("&Prev image"));
-		_nextImageAction->setText(tr("&Next image"));
+		_zoomInAction->setText(tr("Zoom &In"));
+		_zoomOutAction->setText(tr("Zoom &Out"));
+		_prevImageAction->setText(tr("&Prev Image"));
+		_nextImageAction->setText(tr("&Next Image"));
 		_chsAction->setText(tr("&Chinese"));
-		_userGuideAction->setText(tr("&User's guide"));
+		_userGuideAction->setText(tr("&User's Guide"));
 		_aboutAction->setText(tr("&About"));
+
+		_recentFiles->resetText();
 	}
 
 	QMainWindow::changeEvent(event);

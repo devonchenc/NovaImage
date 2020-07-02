@@ -33,35 +33,35 @@ ToolBar::~ToolBar()
 
 void ToolBar::createAction()
 {
-	_openDicomAction = new QAction(tr("Open &DICOM file..."), this);
-	_openRawAction = new QAction(tr("Open &Raw file..."), this);
-	_saveAsRawAction = new QAction(tr("Save as &Raw file..."), this);
+	_openDicomAction = new QAction(tr("Open &DICOM File..."), this);
+	_openRawAction = new QAction(tr("Open &Raw File..."), this);
+	_saveAsRawAction = new QAction(tr("Save As &Raw File..."), this);
 
 	_showMenuAction = new QAction(tr("Menu"), this);
 	_showMenuAction->setCheckable(true);
 	_showMenuAction->setChecked(true);
-	_showDockWidgetAction = new QAction(tr("Dock widgets"), this);
+	_showDockWidgetAction = new QAction(tr("Dock Widgets"), this);
 	_showDockWidgetAction->setCheckable(true);
 	_showDockWidgetAction->setChecked(true);
-	_fullScreenAction = new QAction(tr("Full screen mode"), this);
+	_fullScreenAction = new QAction(tr("Full Screen Mode"), this);
 	_fullScreenAction->setIcon(QIcon("Resources/svg/fullscreen.svg"));
 
 	_showAnnotationAction = new QAction(tr("Annotations"), this);
 	_showAnnotationAction->setCheckable(true);
 	_showAnnotationAction->setChecked(true);
-	_showCrossAction = new QAction(tr("Cross reference line"), this);
+	_showCrossAction = new QAction(tr("Cross Reference Line"), this);
 	_showCrossAction->setCheckable(true);
-	_showScaleAction = new QAction(tr("Image scale"), this);
+	_showScaleAction = new QAction(tr("Image Scale"), this);
 	_showScaleAction->setCheckable(true);
 	_showScaleAction->setChecked(true);
 	_showMeasurementAction = new QAction(tr("Measurements"), this);
 	_showMeasurementAction->setCheckable(true);
 	_showMeasurementAction->setChecked(true);
 
-	_flipHorizontalAction = new QAction(tr("Flip horizontal"), this);
+	_flipHorizontalAction = new QAction(tr("Flip Horizontal"), this);
 	_flipHorizontalAction->setCheckable(true);
 	_flipHorizontalAction->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
-	_flipVerticalAction = new QAction(tr("Flip vertical"), this);
+	_flipVerticalAction = new QAction(tr("Flip Vertical"), this);
 	_flipVerticalAction->setCheckable(true);
 	_flipVerticalAction->setIcon(QIcon("Resources/svg/flip_vertical.svg"));
 
@@ -70,26 +70,26 @@ void ToolBar::createAction()
 	_rotate90CCW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
 	_rotate90CCW->setIcon(QIcon("Resources/svg/rotate_ccw.svg"));
 	_rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
-	_resetTransformation = new QAction(tr("Reset transformation"), this);
+	_resetTransformation = new QAction(tr("Reset Transformation"), this);
 	_resetTransformation->setIcon(QIcon("Resources/svg/reset.svg"));
 
-	_imageWindowAction = new QAction(tr("Adjust window"), this);
+	_imageWindowAction = new QAction(tr("Adjust Window"), this);
 	_imageWindowAction->setIcon(QIcon("Resources/svg/imagewindow.svg"));
-	_ROIWidowAction = new QAction(tr("ROI window"), this);
+	_ROIWidowAction = new QAction(tr("ROI Window"), this);
 	_ROIWidowAction->setIcon(QIcon("Resources/svg/ROI.svg"));
-	_defaultWindowAction = new QAction(tr("Default window"), this);
-	_fullWindowAction = new QAction(tr("Full window"), this);
+	_defaultWindowAction = new QAction(tr("Default Window"), this);
+	_fullWindowAction = new QAction(tr("Full Window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 	_imageNegativeAction->setIcon(QIcon("Resources/svg/negative.svg"));
 
-	_fitWindowAction = new QAction(tr("Fit window"), this);
+	_fitWindowAction = new QAction(tr("Fit Window"), this);
 	_1xAction = new QAction("100%", this);
 	_2xAction = new QAction("200%", this);
 	_4xAction = new QAction("400%", this);
 	_8xAction = new QAction("800%", this);
-	_zoomInAction = new QAction(tr("Zoom in"), this);
+	_zoomInAction = new QAction(tr("Zoom In"), this);
 	_zoomInAction->setIcon(QIcon("Resources/svg/zoomin.svg"));
-	_zoomOutAction = new QAction(tr("Zoom out"), this);
+	_zoomOutAction = new QAction(tr("Zoom Out"), this);
 	_zoomOutAction->setIcon(QIcon("Resources/svg/zoomout.svg"));
 
 	_cursorAction = new QAction(tr("Select"), this);
@@ -180,7 +180,7 @@ void ToolBar::createButton()
 	menu->addAction(_openRawAction);
 	_openButton->setMenu(menu);
 	_openButton->setIcon(QIcon("Resources/svg/open.svg"));
-	_openButton->setToolTip(tr("Open image file"));
+	_openButton->setToolTip(tr("Open Image File"));
 	connect(_openButton, &QToolButton::clicked, mainWindow, &MainWindow::openImage);
 
 	_saveButton = new QToolButton;
@@ -189,7 +189,7 @@ void ToolBar::createButton()
 	menu->addAction(_saveAsRawAction);
 	_saveButton->setMenu(menu);
 	_saveButton->setIcon(QIcon("Resources/svg/save.svg"));
-	_saveButton->setToolTip(tr("Save image file"));
+	_saveButton->setToolTip(tr("Save Image File"));
 	connect(_saveButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
 	_layoutButton = new QToolButton;
@@ -201,7 +201,7 @@ void ToolBar::createButton()
 	menu->addAction(_fullScreenAction);
 	_layoutButton->setMenu(menu);
 	_layoutButton->setIcon(QIcon("Resources/svg/layout.svg"));
-	_layoutButton->setToolTip(tr("Change layout"));
+	_layoutButton->setToolTip(tr("Change Layout"));
 	connect(_layoutButton, &QToolButton::clicked, this, &ToolBar::layoutButtonClicked);
 
 	_showInfoButton = new QToolButton;
@@ -213,7 +213,7 @@ void ToolBar::createButton()
 	menu->addAction(_showMeasurementAction);
 	_showInfoButton->setMenu(menu);
 	_showInfoButton->setIcon(QIcon("Resources/svg/annotation.svg"));
-	_showInfoButton->setToolTip(tr("Toggle annotations"));
+	_showInfoButton->setToolTip(tr("Toggle Annotations"));
 	connect(_showInfoButton, &QToolButton::clicked, this, &ToolBar::showInfoButtonClicked);
 
 	_flipButton = new QToolButton;
@@ -263,7 +263,7 @@ void ToolBar::createButton()
 	menu->addAction(_imageNegativeAction);
 	_imageWindowButton->setMenu(menu);
 	_imageWindowButton->setIconByName("Resources/svg/imagewindow.svg");
-	_imageWindowButton->setToolTip(tr("Adjust image window"));
+	_imageWindowButton->setToolTip(tr("Adjust Image Window"));
 	_imageWindowButton->installEventFilter(this);
 	_imageWindowButton->setCurrentAction(_imageWindowAction);
 	connect(_imageWindowButton, &QToolButton::triggered, this, &ToolBar::imageWindowButtonTriggered);
@@ -282,7 +282,7 @@ void ToolBar::createButton()
 	menu->addAction(_zoomOutAction);
 	_zoomButton->setMenu(menu);
 	_zoomButton->setIconByName("Resources/svg/zoom.svg");
-	_zoomButton->setToolTip(tr("Zoom image"));
+	_zoomButton->setToolTip(tr("Zoom Image"));
 	_zoomButton->installEventFilter(this);
 	connect(_zoomButton, &QToolButton::clicked, this, &ToolBar::zoomButtonClicked);
 
@@ -293,7 +293,7 @@ void ToolBar::createButton()
 	menu->addAction(_moveAction);
 	_cursorButton->setMenu(menu);
 	_cursorButton->setIconByName("Resources/svg/cursor.svg");
-	_cursorButton->setToolTip(tr("Select item/Move image"));
+	_cursorButton->setToolTip(tr("Select Item/Move Image"));
 	_cursorButton->installEventFilter(this);
 	_cursorButton->setCurrentAction(_cursorAction);
 	connect(_cursorButton, &QToolButton::triggered, this, &ToolBar::cursorButtonTriggered);
@@ -315,7 +315,7 @@ void ToolBar::createButton()
 	menu->addAction(_textAction);
 	_measurementButton->setMenu(menu);
 	_measurementButton->setIconByName("Resources/svg/length.svg");
-	_measurementButton->setToolTip(tr("Measurements and tools"));
+	_measurementButton->setToolTip(tr("Measurements and Tools"));
 	_measurementButton->installEventFilter(this);
 	_measurementButton->setCurrentAction(_rulerAction);
 	connect(_measurementButton, &QToolButton::triggered, this, &ToolBar::measurementButtonTriggered);
@@ -340,35 +340,35 @@ void ToolBar::changeEvent(QEvent* event)
 {
 	if (event->type() == QEvent::LanguageChange)
 	{
-		_openDicomAction->setText(tr("Open &DICOM file..."));
-		_openRawAction->setText(tr("Open &Raw file..."));
-		_saveAsRawAction->setText(tr("Save as &Raw file..."));
+		_openDicomAction->setText(tr("Open &DICOM File..."));
+		_openRawAction->setText(tr("Open &Raw File..."));
+		_saveAsRawAction->setText(tr("Save As &Raw File..."));
 
 		_showMenuAction->setText(tr("Menu"));
-		_showDockWidgetAction->setText(tr("Dock widgets"));
-		_fullScreenAction->setText(tr("Full screen mode"));
+		_showDockWidgetAction->setText(tr("Dock Widgets"));
+		_fullScreenAction->setText(tr("Full Screen Mode"));
 		_showAnnotationAction->setText(tr("Annotations"));
-		_showCrossAction->setText(tr("Cross reference line"));
-		_showScaleAction->setText(tr("Image scale"));
+		_showCrossAction->setText(tr("Cross Reference Line"));
+		_showScaleAction->setText(tr("Image Scale"));
 		_showMeasurementAction->setText(tr("Measurements"));
 
-		_flipHorizontalAction->setText(tr("Flip horizontal"));
-		_flipVerticalAction->setText(tr("Flip vertical"));
+		_flipHorizontalAction->setText(tr("Flip Horizontal"));
+		_flipVerticalAction->setText(tr("Flip Vertical"));
 
 		_rotate90CW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"));
 		_rotate90CCW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"));
 		_rotate180->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
-		_resetTransformation->setText(tr("Reset transformation"));
+		_resetTransformation->setText(tr("Reset Transformation"));
 
-		_imageWindowAction->setText(tr("Adjust window"));
-		_ROIWidowAction->setText(tr("ROI window"));
-		_defaultWindowAction->setText(tr("Default window"));
-		_fullWindowAction->setText(tr("Full window"));
+		_imageWindowAction->setText(tr("Adjust Window"));
+		_ROIWidowAction->setText(tr("ROI Window"));
+		_defaultWindowAction->setText(tr("Default Window"));
+		_fullWindowAction->setText(tr("Full Window"));
 		_imageNegativeAction->setText(tr("Negative"));
 
-		_fitWindowAction->setText(tr("Fit window"));
-		_zoomInAction->setText(tr("Zoom in"));
-		_zoomOutAction->setText(tr("Zoom out"));
+		_fitWindowAction->setText(tr("Fit Window"));
+		_zoomInAction->setText(tr("Zoom In"));
+		_zoomOutAction->setText(tr("Zoom Out"));
 
 		_cursorAction->setText(tr("Select"));
 		_moveAction->setText(tr("Move"));
@@ -384,18 +384,18 @@ void ToolBar::changeEvent(QEvent* event)
 		_parallelogramAction->setText(tr("Parallelogram"));
 		_textAction->setText(tr("Text"));
 
-		_openButton->setToolTip(tr("Open image file"));
-		_saveButton->setToolTip(tr("Save image file"));
-		_layoutButton->setToolTip(tr("Change layout"));
-		_showInfoButton->setToolTip(tr("Toggle annotations"));
+		_openButton->setToolTip(tr("Open Image File"));
+		_saveButton->setToolTip(tr("Save Image File"));
+		_layoutButton->setToolTip(tr("Change Layout"));
+		_showInfoButton->setToolTip(tr("Toggle Annotations"));
 		_flipButton->setToolTip(tr("Flip"));
 		_rotateButton->setToolTip(tr("Rotate"));
 		_undoButton->setToolTip(tr("Undo"));
 		_restoreButton->setToolTip(tr("Restore"));
-		_imageWindowButton->setToolTip(tr("Adjust image window"));
-		_zoomButton->setToolTip(tr("Zoom image"));
-		_cursorButton->setToolTip(tr("Select item/Move image"));
-		_measurementButton->setToolTip(tr("Measurements and tools"));
+		_imageWindowButton->setToolTip(tr("Adjust Image Window"));
+		_zoomButton->setToolTip(tr("Zoom Image"));
+		_cursorButton->setToolTip(tr("Select Item/Move Image"));
+		_measurementButton->setToolTip(tr("Measurements and Tools"));
 	}
 
 	QToolBar::changeEvent(event);

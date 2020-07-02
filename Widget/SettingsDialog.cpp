@@ -59,16 +59,16 @@ void SettingsDialog::initUI()
 
 void SettingsDialog::loadSettings()
 {
-	QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-	bool fitWindow = setting.value("Image/autoFitWindow", 1).toBool();
+	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	bool fitWindow = settings.value("Image/autoFitWindow", 1).toBool();
 
 	_autoFitWindowCheckBox->setChecked(fitWindow);
 }
 
 void SettingsDialog::acceptButtonClicked()
 {
-	QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-	setting.setValue("Image/autoFitWindow", _autoFitWindowCheckBox->isChecked());
+	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	settings.setValue("Image/autoFitWindow", _autoFitWindowCheckBox->isChecked());
 
 	accept();
 }

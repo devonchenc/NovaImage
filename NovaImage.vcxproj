@@ -18,6 +18,12 @@
     <ClCompile Include="Core\main.cpp" />
     <ClCompile Include="Core\mainwindow.cpp" />
     <ClCompile Include="Core\MouseHandler.cpp" />
+    <ClCompile Include="Core\RecentFiles.cpp">
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Filename).moc</QtMocFileName>
+      <DynamicSource Condition="'$(Configuration)|$(Platform)'=='Release|x64'">input</DynamicSource>
+      <QtMocFileName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(Filename).moc</QtMocFileName>
+    </ClCompile>
     <ClCompile Include="Core\ToolBar.cpp" />
     <ClCompile Include="Core\ToolButton.cpp" />
     <ClCompile Include="Core\UndoSystem.cpp" />
@@ -63,6 +69,7 @@
     <QtMoc Include="Core\ToolBar.h" />
     <QtMoc Include="Core\ToolButton.h" />
     <QtMoc Include="Core\View.h" />
+    <QtMoc Include="Core\RecentFiles.h" />
     <ClInclude Include="Core\UndoSystem.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />

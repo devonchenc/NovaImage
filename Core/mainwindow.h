@@ -21,6 +21,7 @@ class BaseWidget;
 class ToolBar;
 class PluginInterface;
 class NotificationLayout;
+class RecentFiles;
 
 class MainWindow : public QMainWindow
 {
@@ -130,4 +131,6 @@ private:
 	QDockWidget* _toolboxDockWidget;
 
 	NotificationLayout* _notification;
+
+	RecentFiles* _recentFiles;
 };

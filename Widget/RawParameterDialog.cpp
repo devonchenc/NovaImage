@@ -124,11 +124,11 @@ void RawParameterDialog::initUI()
 
 void RawParameterDialog::loadSettings()
 {
-	QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-	int type = setting.value("Raw/type", 1).toInt();
-	QString width = setting.value("Raw/width", 1024).toString();
-	QString height = setting.value("Raw/height", 1024).toString();
-	QString headerSize = setting.value("Raw/headerSize", 0).toString();
+	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	int type = settings.value("Raw/type", 1).toInt();
+	QString width = settings.value("Raw/width", 1024).toString();
+	QString height = settings.value("Raw/height", 1024).toString();
+	QString headerSize = settings.value("Raw/headerSize", 0).toString();
 	
 	_typeComboBox->setCurrentIndex(type);
 	_widthComboBox->setCurrentText(width);
@@ -178,11 +178,11 @@ void RawParameterDialog::acceptButtonClicked()
 	}
 	else
 	{
-		QSettings setting(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-		setting.setValue("Raw/type", _dataType);
-		setting.setValue("Raw/width", _width);
-		setting.setValue("Raw/height", _height);
-		setting.setValue("Raw/headerSize", _headerSize);
+		QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+		settings.setValue("Raw/type", _dataType);
+		settings.setValue("Raw/width", _width);
+		settings.setValue("Raw/height", _height);
+		settings.setValue("Raw/headerSize", _headerSize);
 
 		accept();
 	}

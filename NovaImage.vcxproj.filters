@@ -150,6 +150,9 @@
     <ClCompile Include="Core\UndoSystem.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Core\RecentFiles.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -220,6 +223,9 @@
     </QtMoc>
     <QtMoc Include="Widget\SettingsDialog.h">
       <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Core\RecentFiles.h">
+      <Filter>Core</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
