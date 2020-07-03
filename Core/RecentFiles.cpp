@@ -128,7 +128,7 @@ void RecentFiles::setMenuEnabled(bool enable)
 int RecentFiles::numberOfRecentFilesToSave()
 {
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-	return settings.value(recentFileCount).toInt();
+	return settings.value(recentFileCount, 6).toInt();
 }
 
 void RecentFiles::resetText()
@@ -144,9 +144,19 @@ void RecentFiles::setMostRecentFile(const QString& fileName)
 
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
 	QStringList recentFileList = settings.value(recentFileListId).toStringList();
+	int numOfRecentFiles = settings.value(recentFileCount, 6).toInt();
 
 	recentFileList.removeAll(fileName);
 	recentFileList.prepend(fileName);
+
+	if (recentFileList.size() > numOfRecentFiles)
+	{
+		for (int i = recentFileList.size() - 1; i >= numOfRecentFiles; i--)
+		{
+			recentFileList.removeAt(i);
+		}
+	}
+	
 	settings.setValue(recentFileListId, QVariant(recentFileList));
 
 	updateRecentFiles(settings);
