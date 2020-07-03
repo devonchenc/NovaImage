@@ -14,6 +14,7 @@
 #include <QPluginLoader>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
+#include <QMimeData>
 
 #include "mainwindow.h"
 #include "View.h"
@@ -52,10 +53,11 @@ MainWindow::MainWindow(QWidget* parent)
 //	showMaximized();
 //	setWindowState(Qt::WindowMaximized);
 
+	setAcceptDrops(true);
+
 	_notification = new NotificationLayout;
 	_recentFiles = new RecentFiles(this);
 	_recentFiles->attachToMenuAfterItem(_fileMenu, _printAction, SLOT(openFile(const QString&)));
-//	_recentFiles->setNumOfRecentFiles(6);
 
 	// For test
 //	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
@@ -604,4 +606,27 @@ void MainWindow::changeEvent(QEvent* event)
 	}
 
 	QMainWindow::changeEvent(event);
+}
+
+void MainWindow::dragEnterEvent(QDragEnterEvent* event)
+{
+	if (event->mimeData()->hasUrls())
+	{
+		QList<QUrl> urls = event->mimeData()->urls();
+		QString fileName = urls[0].toLocalFile();
+		if (Document::findType(fileName) != IMAGE_FORMAT_UNKNOWN)
+		{
+			event->acceptProposedAction();
+		}
+	}
+}
+
+void MainWindow::dropEvent(QDropEvent* event)
+{
+	QList<QUrl> urls = event->mimeData()->urls();
+	if (urls.isEmpty())
+		return;
+
+	QString fileName = urls[0].toLocalFile();
+	openFile(fileName);
 }

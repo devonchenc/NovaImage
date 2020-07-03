@@ -27,7 +27,7 @@ void QColorButton::setColor(const QColor& currentColor)
 	setIcon(pix);
 }
 
-void QColorButton::setText(const QString &text)
+void QColorButton::setText(const QString& text)
 {
 	if (_realText == text)
 		return;

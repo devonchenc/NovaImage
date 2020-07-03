@@ -47,6 +47,8 @@ public:
 	// Repaint view
 	void repaintView();
 
+	static int findType(const QString& fileName);
+
 public:
 	void ROIWindow(QRectF rect);
 
@@ -69,8 +71,6 @@ public slots:
 
 private:
 	View* getView() const;
-
-	int findType(const QString& fileName);
 
 private:
 	MainWindow* pMainWindow;

@@ -96,7 +96,7 @@ bool Document::openFile(const QString& fileName)
 	return true;
 }
 
-int Document::findType(const QString &fileName)
+int Document::findType(const QString& fileName)
 {
 	QString str = fileName.toLower();
 	if (str.endsWith(".jpg") || str.endsWith(".jpeg"))

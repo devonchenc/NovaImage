@@ -65,7 +65,7 @@ private:
 
 	QGridLayout* createToolButton();
 
-	QWidget* createCellWidget(const QString &text, DiagramItem::DiagramType type);
+	QWidget* createCellWidget(const QString& text, DiagramItem::DiagramType type);
 
 	QToolButton* getToolButton(QWidget* widget);
 
