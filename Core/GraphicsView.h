@@ -24,9 +24,9 @@ public:
 	void showAnnotation(bool show);
 
 protected:
-#if QT_CONFIG(wheelevent)
 	void wheelEvent(QWheelEvent*) override;
-#endif
+
+	void dragEnterEvent(QDragEnterEvent* event) override;
 
 public slots:
 	void zoomNormal();

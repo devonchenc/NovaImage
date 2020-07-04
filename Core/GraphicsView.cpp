@@ -2,6 +2,7 @@
 
 #include <QtMath>
 #include <QDebug>
+#include <QMimeData>
 
 #include "View.h"
 #include "MouseHandler.h"
@@ -28,7 +29,6 @@ QPointF GraphicsView::mapImagePointToScene(qreal x, qreal y) const
 	return pixmapItem->mapToScene(x, y);
 }
 
-#if QT_CONFIG(wheelevent)
 void GraphicsView::wheelEvent(QWheelEvent* e)
 {
 	if (e->modifiers() & Qt::ControlModifier)
@@ -45,7 +45,12 @@ void GraphicsView::wheelEvent(QWheelEvent* e)
 		QGraphicsView::wheelEvent(e);
 	}
 }
-#endif
+
+void GraphicsView::dragEnterEvent(QDragEnterEvent* event)
+{
+	// Ignore drag event to make mainwindow handle it
+	event->ignore();
+}
 
 void GraphicsView::setZoomValue(int value)
 {
