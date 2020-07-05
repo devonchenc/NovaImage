@@ -552,6 +552,7 @@ void MainWindow::slectLanguage(int language)
 		{
 			qApp->removeTranslator(_vecPluginTranslator[i]);
 		}
+		_engAction->setChecked(true);
 	}
 	else if (language == 1)
 	{
@@ -561,6 +562,7 @@ void MainWindow::slectLanguage(int language)
 		{
 			qApp->installTranslator(_vecPluginTranslator[i]);
 		}
+		_chsAction->setChecked(true);
 	}
 }
 
@@ -614,7 +616,6 @@ void MainWindow::changeEvent(QEvent* event)
 		_zoomOutAction->setText(tr("Zoom &Out"));
 		_prevImageAction->setText(tr("&Prev Image"));
 		_nextImageAction->setText(tr("&Next Image"));
-		_chsAction->setText(tr("&Chinese"));
 		_userGuideAction->setText(tr("&User's Guide"));
 		_aboutAction->setText(tr("&About"));
 
