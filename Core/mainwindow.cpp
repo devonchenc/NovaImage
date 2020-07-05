@@ -139,7 +139,7 @@ void MainWindow::createActions()
 	_engAction = new QAction("&English", this);
 	_engAction->setCheckable(true);
 	_engAction->setChecked(true);
-	_chsAction = new QAction(tr("&Chinese"), this);
+	_chsAction = new QAction(QStringLiteral("ÖÐÎÄ£¨¼òÌå£©"), this);
 	_chsAction->setCheckable(true);
 	QActionGroup* languageGroup = new QActionGroup(this);
 	languageGroup->addAction(_engAction);
@@ -484,6 +484,9 @@ void MainWindow::loadTranslator()
 			_vecPluginTranslator.append(tran);
 		}
 	}
+
+	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	slectLanguage(settings.value("General/language", 0).toInt());
 }
 
 void MainWindow::prevImage()
@@ -529,16 +532,19 @@ void MainWindow::nextImage()
 
 void MainWindow::slectLanguage(QAction* action)
 {
-	if (action == _chsAction)
+	if (action == _engAction)
 	{
-		qApp->installTranslator(_translator);
-
-		for (int i = 0 ; i < _vecPluginTranslator.size(); i++)
-		{
-			qApp->installTranslator(_vecPluginTranslator[i]);
-		}
+		slectLanguage(0);
 	}
-	else
+	else if(action == _chsAction)
+	{
+		slectLanguage(1);		
+	}
+}
+
+void MainWindow::slectLanguage(int language)
+{
+	if (language == 0)
 	{
 		qApp->removeTranslator(_translator);
 
@@ -547,11 +553,21 @@ void MainWindow::slectLanguage(QAction* action)
 			qApp->removeTranslator(_vecPluginTranslator[i]);
 		}
 	}
+	else if (language == 1)
+	{
+		qApp->installTranslator(_translator);
+
+		for (int i = 0; i < _vecPluginTranslator.size(); i++)
+		{
+			qApp->installTranslator(_vecPluginTranslator[i]);
+		}
+	}
 }
 
 void MainWindow::setting()
 {
 	SettingsDialog dlg;
+	connect(&dlg, SIGNAL(changeLanguage(int)), this, SLOT(slectLanguage(int)));
 	dlg.exec();
 }
 

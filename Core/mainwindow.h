@@ -88,6 +88,7 @@ public slots:
 	void nextImage();
 
 	void slectLanguage(QAction* action);
+	void slectLanguage(int language);
 
 	void setting();
 	void userGuide();

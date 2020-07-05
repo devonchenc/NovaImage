@@ -3,10 +3,15 @@
 #include <QTabWidget>
 #include <QLabel>
 #include <QCheckBox>
+#include <QComboBox>
 #include <QPushButton>
 #include <QHBoxLayout>
 #include <QSettings>
 #include <QCoreApplication>
+
+#if _MSC_VER >= 1600 
+#pragma execution_character_set("UTF-8")
+#endif
 
 SettingsDialog::SettingsDialog(QWidget* parent)
 	: QDialog(parent)
@@ -27,17 +32,28 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::initUI()
 {
-	_autoFitWindowCheckBox = new QCheckBox(tr("Image display size automatically adapts to window width"));
-	QVBoxLayout* vLayout = new QVBoxLayout;
-	vLayout->addWidget(_autoFitWindowCheckBox);
+	_languageComboBox = new QComboBox;
+	_languageComboBox->addItem("English");
+	_languageComboBox->addItem("ÖÐÎÄ£¨¼òÌå£©");
+	QHBoxLayout* hLayout1 = new QHBoxLayout;
+	hLayout1->addWidget(new QLabel(tr("Language:")));
+	hLayout1->addWidget(_languageComboBox);
 
-	QWidget* widget = new QWidget;
-	widget->setLayout(vLayout);
+	QWidget* generalWidget = new QWidget;
+	generalWidget->setLayout(hLayout1);
+
+	_autoFitWindowCheckBox = new QCheckBox(tr("Image display size automatically adapts to window width"));
+	QVBoxLayout* vLayout2 = new QVBoxLayout;
+	vLayout2->addWidget(_autoFitWindowCheckBox);
+
+	QWidget* imageWidget = new QWidget;
+	imageWidget->setLayout(vLayout2);
 
 	QLabel* label = new QLabel("Hello Qt");
 
 	QTabWidget* tabWidget = new QTabWidget(this);
-	tabWidget->addTab(widget, tr("Image"));
+	tabWidget->addTab(generalWidget, tr("General"));
+	tabWidget->addTab(imageWidget, tr("Image"));
 	tabWidget->addTab(label, "Reserved");
 
 	QPushButton* acceptButton = new QPushButton(tr("Accept"));
@@ -60,15 +76,26 @@ void SettingsDialog::initUI()
 void SettingsDialog::loadSettings()
 {
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	int language = settings.value("General/language", 0).toInt();
 	bool fitWindow = settings.value("Image/autoFitWindow", 1).toBool();
 
+	_languageComboBox->setCurrentIndex(language);
 	_autoFitWindowCheckBox->setChecked(fitWindow);
 }
 
 void SettingsDialog::acceptButtonClicked()
 {
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	int language = settings.value("General/language", 0).toInt();
+
+	settings.setValue("General/language", _languageComboBox->currentIndex());
 	settings.setValue("Image/autoFitWindow", _autoFitWindowCheckBox->isChecked());
+
+	if (language != _languageComboBox->currentIndex())
+	{
+		// Change language
+		emit changeLanguage(_languageComboBox->currentIndex());
+	}
 
 	accept();
 }

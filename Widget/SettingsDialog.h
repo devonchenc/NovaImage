@@ -3,6 +3,7 @@
 #include <QDialog>
 
 QT_BEGIN_NAMESPACE
+class QComboBox;
 class QCheckBox;
 QT_END_NAMESPACE
 
@@ -14,6 +15,9 @@ public:
 	SettingsDialog(QWidget* parent = nullptr);
 	~SettingsDialog();
 
+signals:
+	void changeLanguage(int language);
+
 private:
 	void initUI();
 
@@ -23,5 +27,6 @@ private slots:
 	void acceptButtonClicked();
 
 private:
+	QComboBox* _languageComboBox;
 	QCheckBox* _autoFitWindowCheckBox;
 };
