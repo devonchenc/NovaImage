@@ -10,6 +10,7 @@ class QMouseEvent;
 QT_END_NAMESPACE
 
 class DiagramLineItem;
+class DiagramAngleItem;
 
 #define NO_DRAG			0
 #define MOVE_ITEM		1
@@ -77,6 +78,8 @@ private:
 	QFont _font;
 
 	DiagramLineItem* _currentDrawingLine;
+
+	DiagramAngleItem* _currentDrawingAngle;
 
 	DiagramItem* _currentDrawingItem;
 

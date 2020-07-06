@@ -153,6 +153,9 @@
     <ClCompile Include="Core\RecentFiles.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\DiagramAngleItem.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -226,6 +229,9 @@
     </QtMoc>
     <QtMoc Include="Core\RecentFiles.h">
       <Filter>Core</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\DiagramAngleItem.h">
+      <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

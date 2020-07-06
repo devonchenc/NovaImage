@@ -32,7 +32,6 @@ QVariant DiagramTextItem::itemChange(GraphicsItemChange change, const QVariant& 
 
 void DiagramTextItem::focusInEvent(QFocusEvent* event)
 {
-    qDebug() << "start editing";
     if (positionLastTime == QPointF(0, 0))
         // initialize positionLastTime to insertion position
         positionLastTime = scenePos();
@@ -42,7 +41,6 @@ void DiagramTextItem::focusInEvent(QFocusEvent* event)
 void DiagramTextItem::focusOutEvent(QFocusEvent* event)
 {
     setTextInteractionFlags(Qt::NoTextInteraction);
-    qDebug() << "after editing" << this;
     if (contentLastTime == toPlainText())
 	{
         contentHasChanged = false;
@@ -67,7 +65,6 @@ void DiagramTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramTextItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    qDebug() << "text begin move";
     QGraphicsTextItem::mousePressEvent(event);
 }
 
@@ -78,6 +75,5 @@ void DiagramTextItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
         qDebug() << scenePos() << "::" << positionLastTime;
     }
     positionLastTime = scenePos();
-    qDebug() << "text end moving";
     QGraphicsTextItem::mouseReleaseEvent(event);
 }

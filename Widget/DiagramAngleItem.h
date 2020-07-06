@@ -3,26 +3,40 @@
 #include <QGraphicsLineItem>
 #include <QPen>
 
-class DiagramLineItem : public QObject, public QGraphicsLineItem
+class DiagramAngleItem : public QObject, public QGraphicsLineItem
 {
 	Q_OBJECT
 
 public:
-    enum { Type = UserType + 12 };
+    enum { Type = UserType + 10 };
 	enum Index
 	{
-		Point1, Point2
+		Point1, Point2, Point3
 	};
 
-	DiagramLineItem(int type, const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-	~DiagramLineItem();
+	DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
+	~DiagramAngleItem();
 
 	int type() const override { return Type; }
+
+	QRectF boundingRect() const override;
+
+	QPainterPath shape() const override;
 
 	void setEndpointPen(const QPen& pen);
 	QPen pointPen() const;
 
+	void setCurrentDrawingIndex(Index index) { _drawingIndex = index; }
+
+	void setCurrentDrawingPoint(const QPointF& point);
+
+	Index currentDrawingPoint() { return _drawingIndex; }
+
 	void setDrawingFinished(bool finished);
+
+	inline QPointF p1() const;
+	inline QPointF p2() const;
+	inline QPointF p3() const;
 
 signals:
 	void itemSelectedChange(QGraphicsItem* item);
@@ -43,20 +57,21 @@ private:
 
 	bool isCloseEnough(const QPointF& p1, const QPointF& p2);
 
-	float length() const;
+	void calcAngle();
 
-	QString lengthString() const;
+	void drawAngleText(QPainter* painter);
 
-	void drawLengthText(QPainter* painter);
-
-	void drawArrow(QPainter* painter);
+	QPainterPath qt_graphicsItem_shapeFromPath(const QPainterPath &path, const QPen &pen) const;
 
 private:
-	int _type;			// 0:Line, 1:Arrow
+	QPointF _p3;
+	float _angle;
+
     QMenu* _contextMenu;
 	QPen _endpointPen;
 	static constexpr qreal closeEnoughDistance = 12;
 	bool _resizeMode = false;
+	Index _drawingIndex;
 	Index _dragIndex;
 	bool _drawingFinished = false;
 	int _previousMode;

@@ -138,7 +138,7 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 		if (pointPixmap.x() >= 0 && pointPixmap.x() < image.width() && pointPixmap.y() >= 0 && pointPixmap.y() < image.height())
 		{
 			float value = getGlobalImage()->getValue(QPoint(pointPixmap.x(), pointPixmap.y()));
-			_strCoord = QString("X: %1, Y: %2, Val: %3").arg(QString::number(pointPixmap.x(), 'f', 0)).arg(QString::number(pointPixmap.y(), 'f', 0)).arg(QString::number(value, 'f', 1));
+			_strCoord = QString(tr("X: %1, Y: %2, Val: %3")).arg(QString::number(pointPixmap.x(), 'f', 0)).arg(QString::number(pointPixmap.y(), 'f', 0)).arg(QString::number(value, 'f', 1));
 
 			QRgb rgbValue = image.pixel(QPoint(pointPixmap.x(), pointPixmap.y()));
 			_strValue = QString("R:%1, G:%2, B:%3").arg(qRed(rgbValue), 3).arg(qGreen(rgbValue), 3).arg(qBlue(rgbValue), 3);

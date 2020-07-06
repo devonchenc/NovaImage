@@ -36,6 +36,13 @@ void MouseHandler::handleMove(QMouseEvent* event)
 	{
 		_rightButton->mouseHandler()->move(event);
 	}
+
+	// No mouse button is pressed down
+	if (!(event->buttons() & Qt::LeftButton) && !(event->buttons() & Qt::RightButton))
+	{
+		QPointF point = getGlobalView()->view()->mapToScene(event->pos());
+		getGlobalView()->scene()->mouseMove(point);
+	}
 }
 
 void MouseHandler::handleRelease(QMouseEvent* event)

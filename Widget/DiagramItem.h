@@ -49,13 +49,13 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
 private:
-    QPolygonF scaledPolygon(QPolygonF const& old, Direction direction, QPointF const& newPos);
+    QPolygonF scaledPolygon(const QPolygonF& old, Direction direction, const QPointF& newPos);
 
 	int changeIndex(int index);
 
 	QList<QPointF> resizeHandlePoints();
 
-	bool isCloseEnough(QPointF const& p1, QPointF const& p2);
+	bool isCloseEnough(const QPointF& p1, const QPointF& p2);
 
 private:
     DiagramType _diagramType;

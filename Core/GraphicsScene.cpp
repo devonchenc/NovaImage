@@ -8,6 +8,7 @@
 
 #include "../Widget/DiagramTextItem.h"
 #include "../Widget/DiagramLineItem.h"
+#include "../Widget/DiagramAngleItem.h"
 #include "GlobalFunc.h"
 #include "View.h"
 
@@ -24,6 +25,7 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	, _textColor(Qt::green)
 	, _currentDrawingLine(nullptr)
 	, _currentDrawingItem(nullptr)
+	, _currentDrawingAngle(nullptr)
 	, _refHorzLine(nullptr)
 	, _refVertLine(nullptr)
 {
@@ -121,8 +123,6 @@ void GraphicsScene::setTextFont(const QFont& font)
 
 void GraphicsScene::deleteItems(QList<QGraphicsItem*> const& items)
 {
-	qDebug() << "delete items" << items;
-
 	QList<QGraphicsItem*> diagramItems;
 	foreach (QGraphicsItem* item, items)
 	{
@@ -223,7 +223,6 @@ void GraphicsScene::mousePress(const QPointF& point)
 			addItem(textItem);
 			textItem->setDefaultTextColor(_textColor);
 			textItem->setPos(_startPoint);
-			qDebug() << "text inserted at" << textItem->scenePos();
 			emit itemInserted(textItem);
 		}
 		else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow)
@@ -236,6 +235,23 @@ void GraphicsScene::mousePress(const QPointF& point)
 			addItem(_currentDrawingLine);
 			emit itemInserted(_currentDrawingLine);
 		}
+		else if (_itemType == DiagramItem::Angle)
+		{
+			if (_currentDrawingAngle == nullptr)
+			{
+				_currentDrawingAngle = new DiagramAngleItem(_startPoint, _itemMenu);
+				_currentDrawingAngle->setPen(QPen(_lineColor, 2));
+				_currentDrawingAngle->setEndpointPen(QPen(_fillColor));
+				_currentDrawingAngle->setCurrentDrawingIndex(DiagramAngleItem::Point2);
+				addItem(_currentDrawingAngle);
+				emit itemInserted(_currentDrawingAngle);
+			}
+			else
+			{
+				_currentDrawingAngle->setCurrentDrawingIndex(DiagramAngleItem::Point3);
+				_currentDrawingAngle->setCurrentDrawingPoint(_startPoint);
+			}
+		}
 	}
 }
 
@@ -244,6 +260,10 @@ void GraphicsScene::mouseMove(const QPointF& point)
 	if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow) && _currentDrawingLine != nullptr)
 	{
 		_currentDrawingLine->setLine(QLineF(_currentDrawingLine->line().p1(), point));
+	}
+	else if (_itemType == DiagramItem::Angle && _currentDrawingAngle != nullptr)
+	{
+		_currentDrawingAngle->setCurrentDrawingPoint(point);
 	}
 	else if (_itemType <= DiagramItem::Parallelogram)
 	{
@@ -292,6 +312,29 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 			_currentDrawingLine->setSelected(true);
 		}
 		_currentDrawingLine = nullptr;
+	}
+	else if (_itemType == DiagramItem::Angle && _currentDrawingAngle != nullptr)
+	{
+		QRectF rect = _currentDrawingAngle->boundingRect();
+		if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
+		{
+			removeItem(_currentDrawingAngle);
+			delete _currentDrawingAngle;
+			_currentDrawingAngle = nullptr;
+		}
+		else
+		{
+			if (_currentDrawingAngle->currentDrawingPoint() == DiagramAngleItem::Point2)
+			{
+				_currentDrawingAngle->setCurrentDrawingIndex(DiagramAngleItem::Point3);
+			}
+			else if (_currentDrawingAngle->currentDrawingPoint() == DiagramAngleItem::Point3)
+			{
+				_currentDrawingAngle->setDrawingFinished(true);
+				_currentDrawingAngle->setSelected(true);
+				_currentDrawingAngle = nullptr;
+			}
+		}
 	}
 
 	update();

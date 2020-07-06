@@ -153,6 +153,11 @@
 <context>
     <name>GraphicsView</name>
     <message>
+        <location filename="Core/GraphicsView.cpp" line="141"/>
+        <source>X: %1, Y: %2, Val: %3</source>
+        <translation type="unfinished">X: %1, Y: %2, 数值: %3</translation>
+    </message>
+    <message>
         <location filename="Core/GraphicsView.cpp" line="182"/>
         <source>Size: %1%2%3</source>
         <translation type="unfinished">尺寸: %1%2%3</translation>

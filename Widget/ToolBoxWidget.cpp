@@ -15,6 +15,7 @@
 #include "ColorButton.h"
 #include "../Core/GraphicsScene.h"
 #include "DiagramLineItem.h"
+#include "DiagramAngleItem.h"
 
 const QSize iconSize = QSize(32, 32);
 
@@ -313,6 +314,10 @@ void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 	else if (item->type() == DiagramLineItem::Type)
 	{
 		_buttonGroup->button(int(DiagramItem::Line))->setChecked(false);
+	}
+	else if (item->type() == DiagramAngleItem::Type)
+	{
+		_buttonGroup->button(int(DiagramItem::Angle))->setChecked(false);
 	}
 }
 

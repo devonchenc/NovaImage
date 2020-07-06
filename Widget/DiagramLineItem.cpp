@@ -5,7 +5,6 @@
 #include <QMenu>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
-#include <QDebug>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -63,7 +62,7 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 	_resizeMode = false;
 	int index = 0;
-	foreach (QPointF const& p, resizeHandlePoints())
+	foreach (const QPointF& p, resizeHandlePoints())
 	{
 		if (isCloseEnough(event->pos(), p))
 		{
@@ -117,7 +116,7 @@ void DiagramLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 	setCursor(Qt::ArrowCursor);
 	bool closeToHandlerPoint = false;
 	QList<QPointF> pointList = resizeHandlePoints();
-	foreach (QPointF const& p, pointList)
+	foreach (const QPointF& p, pointList)
 	{
 		if (isCloseEnough(p, event->pos()))
 		{
@@ -175,17 +174,17 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 		// Draw resize handles
 		qreal resizePointWidth = 6;
 		painter->setPen(_endpointPen);
-		foreach(QPointF const& point, resizeHandlePoints())
+		foreach (const QPointF& point, resizeHandlePoints())
 		{
 			painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
 			painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
 		}
 
-		DrawLengthText(painter);
+		drawLengthText(painter);
 	}
 	else if (_type == 1)
 	{
-		DrawArrow(painter);
+		drawArrow(painter);
 	}
 }
 
@@ -209,7 +208,7 @@ QList<QPointF> DiagramLineItem::resizeHandlePoints()
 	return QList<QPointF>{line().p1(), line().p2()};
 }
 
-bool DiagramLineItem::isCloseEnough(QPointF const& p1, QPointF const& p2)
+bool DiagramLineItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
 {
 	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
@@ -249,7 +248,7 @@ QString DiagramLineItem::lengthString() const
 	return str;
 }
 
-void DiagramLineItem::DrawLengthText(QPainter* painter)
+void DiagramLineItem::drawLengthText(QPainter* painter)
 {
 	QTransform transform = getGlobalView()->view()->transform();
 	QTransform transform2;
@@ -269,7 +268,7 @@ void DiagramLineItem::DrawLengthText(QPainter* painter)
 	painter->drawText(0, 0, lengthString());
 }
 
-void DiagramLineItem::DrawArrow(QPainter* painter)
+void DiagramLineItem::drawArrow(QPainter* painter)
 {
 	painter->setRenderHint(QPainter::Antialiasing, true);
 	painter->setPen(pen());

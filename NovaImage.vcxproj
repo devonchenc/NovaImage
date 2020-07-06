@@ -46,6 +46,7 @@
     <ClCompile Include="Widget\CommonWidget.cpp" />
     <ClCompile Include="Widget\CurveSquare.cpp" />
     <ClCompile Include="Widget\CurvesWidget.cpp" />
+    <ClCompile Include="Widget\DiagramAngleItem.cpp" />
     <ClCompile Include="Widget\DiagramItem.cpp" />
     <ClCompile Include="Widget\DiagramLineItem.cpp" />
     <ClCompile Include="Widget\DiagramTextItem.cpp" />
@@ -86,6 +87,7 @@
     <ClInclude Include="Processor\HistogramProcessor.h" />
     <ClInclude Include="Processor\InverseProcessor.h" />
     <ClInclude Include="Processor\LevelsProcessor.h" />
+    <QtMoc Include="Widget\DiagramAngleItem.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />
