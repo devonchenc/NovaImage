@@ -44,7 +44,7 @@ void ToolBar::createAction()
 	_showDockWidgetAction->setCheckable(true);
 	_showDockWidgetAction->setChecked(true);
 	_fullScreenAction = new QAction(tr("Full Screen Mode"), this);
-	_fullScreenAction->setIcon(QIcon("Resources/svg/fullscreen.svg"));
+	_fullScreenAction->setIcon(QIcon(":/icon/svg/fullscreen.svg"));
 
 	_showAnnotationAction = new QAction(tr("Annotations"), this);
 	_showAnnotationAction->setCheckable(true);
@@ -60,27 +60,27 @@ void ToolBar::createAction()
 
 	_flipHorizontalAction = new QAction(tr("Flip Horizontal"), this);
 	_flipHorizontalAction->setCheckable(true);
-	_flipHorizontalAction->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
+	_flipHorizontalAction->setIcon(QIcon(":/icon/svg/flip_horizontal.svg"));
 	_flipVerticalAction = new QAction(tr("Flip Vertical"), this);
 	_flipVerticalAction->setCheckable(true);
-	_flipVerticalAction->setIcon(QIcon("Resources/svg/flip_vertical.svg"));
+	_flipVerticalAction->setIcon(QIcon(":/icon/svg/flip_vertical.svg"));
 
 	_rotate90CW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this);	//0x00B0:degree sign
-	_rotate90CW->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
+	_rotate90CW->setIcon(QIcon(":/icon/svg/rotate_cw.svg"));
 	_rotate90CCW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
-	_rotate90CCW->setIcon(QIcon("Resources/svg/rotate_ccw.svg"));
+	_rotate90CCW->setIcon(QIcon(":/icon/svg/rotate_ccw.svg"));
 	_rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
 	_resetTransformation = new QAction(tr("Reset Transformation"), this);
-	_resetTransformation->setIcon(QIcon("Resources/svg/reset.svg"));
+	_resetTransformation->setIcon(QIcon(":/icon/svg/reset.svg"));
 
 	_imageWindowAction = new QAction(tr("Adjust Window"), this);
-	_imageWindowAction->setIcon(QIcon("Resources/svg/imagewindow.svg"));
+	_imageWindowAction->setIcon(QIcon(":/icon/svg/imagewindow.svg"));
 	_ROIWidowAction = new QAction(tr("ROI Window"), this);
-	_ROIWidowAction->setIcon(QIcon("Resources/svg/ROI.svg"));
+	_ROIWidowAction->setIcon(QIcon(":/icon/svg/ROI.svg"));
 	_defaultWindowAction = new QAction(tr("Default Window"), this);
 	_fullWindowAction = new QAction(tr("Full Window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
-	_imageNegativeAction->setIcon(QIcon("Resources/svg/negative.svg"));
+	_imageNegativeAction->setIcon(QIcon(":/icon/svg/negative.svg"));
 
 	_fitWindowAction = new QAction(tr("Fit Window"), this);
 	_1xAction = new QAction("100%", this);
@@ -88,35 +88,35 @@ void ToolBar::createAction()
 	_4xAction = new QAction("400%", this);
 	_8xAction = new QAction("800%", this);
 	_zoomInAction = new QAction(tr("Zoom In"), this);
-	_zoomInAction->setIcon(QIcon("Resources/svg/zoomin.svg"));
+	_zoomInAction->setIcon(QIcon(":/icon/svg/zoomin.svg"));
 	_zoomOutAction = new QAction(tr("Zoom Out"), this);
-	_zoomOutAction->setIcon(QIcon("Resources/svg/zoomout.svg"));
+	_zoomOutAction->setIcon(QIcon(":/icon/svg/zoomout.svg"));
 
 	_cursorAction = new QAction(tr("Select"), this);
-	_cursorAction->setIcon(QIcon("Resources/svg/cursor.svg"));
+	_cursorAction->setIcon(QIcon(":/icon/svg/cursor.svg"));
 	_moveAction = new QAction(tr("Move"), this);
-	_moveAction->setIcon(QIcon("Resources/svg/move.svg"));
+	_moveAction->setIcon(QIcon(":/icon/svg/move.svg"));
 
 	_rulerAction = new QAction(tr("Length"), this);
-	_rulerAction->setIcon(QIcon("Resources/svg/length.svg"));
+	_rulerAction->setIcon(QIcon(":/icon/svg/length.svg"));
 	_arrowAction = new QAction(tr("Arrow"), this);
-	_arrowAction->setIcon(QIcon("Resources/svg/arrow.svg"));
+	_arrowAction->setIcon(QIcon(":/icon/svg/arrow.svg"));
 	_angleAction = new QAction(tr("Angle"), this);
-	_angleAction->setIcon(QIcon("Resources/svg/angle.svg"));
+	_angleAction->setIcon(QIcon(":/icon/svg/angle.svg"));
 	_rectAction = new QAction(tr("Rectangle"), this);
-	_rectAction->setIcon(QIcon("Resources/svg/rectangle.svg"));
+	_rectAction->setIcon(QIcon(":/icon/svg/rectangle.svg"));
 	_roundrectAction = new QAction(tr("Round Rectangle"), this);
-	_roundrectAction->setIcon(QIcon("Resources/svg/roundrect.svg"));
+	_roundrectAction->setIcon(QIcon(":/icon/svg/roundrect.svg"));
 	_circleAction = new QAction(tr("Circle"), this);
-	_circleAction->setIcon(QIcon("Resources/svg/circle.svg"));
+	_circleAction->setIcon(QIcon(":/icon/svg/circle.svg"));
 	_ellipseAction = new QAction(tr("Ellipse"), this);
-	_ellipseAction->setIcon(QIcon("Resources/svg/ellipse.svg"));
+	_ellipseAction->setIcon(QIcon(":/icon/svg/ellipse.svg"));
 	_rhombusAction = new QAction(tr("Rhombus"), this);
-	_rhombusAction->setIcon(QIcon("Resources/svg/rhombus.svg"));
+	_rhombusAction->setIcon(QIcon(":/icon/svg/rhombus.svg"));
 	_parallelogramAction = new QAction(tr("Parallelogram"), this);
-	_parallelogramAction->setIcon(QIcon("Resources/svg/parallelogram.svg"));
+	_parallelogramAction->setIcon(QIcon(":/icon/svg/parallelogram.svg"));
 	_textAction = new QAction(tr("Text"), this);
-	_textAction->setIcon(QIcon("Resources/svg/text.svg"));
+	_textAction->setIcon(QIcon(":/icon/svg/text.svg"));
 
 	MainWindow* mainWindow = getGlobalWindow();
 	connect(_openDicomAction, &QAction::triggered, mainWindow, &MainWindow::openDicomImage);
@@ -179,7 +179,7 @@ void ToolBar::createButton()
 	menu->addAction(_openDicomAction);
 	menu->addAction(_openRawAction);
 	_openButton->setMenu(menu);
-	_openButton->setIcon(QIcon("Resources/svg/open.svg"));
+	_openButton->setIcon(QIcon(":/icon/svg/open.svg"));
 	_openButton->setToolTip(tr("Open Image File"));
 	connect(_openButton, &QToolButton::clicked, mainWindow, &MainWindow::openImage);
 
@@ -188,7 +188,7 @@ void ToolBar::createButton()
 	menu = new QMenu(this);
 	menu->addAction(_saveAsRawAction);
 	_saveButton->setMenu(menu);
-	_saveButton->setIcon(QIcon("Resources/svg/save.svg"));
+	_saveButton->setIcon(QIcon(":/icon/svg/save.svg"));
 	_saveButton->setToolTip(tr("Save Image File"));
 	connect(_saveButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
@@ -200,7 +200,7 @@ void ToolBar::createButton()
 	menu->addSeparator();
 	menu->addAction(_fullScreenAction);
 	_layoutButton->setMenu(menu);
-	_layoutButton->setIcon(QIcon("Resources/svg/layout.svg"));
+	_layoutButton->setIcon(QIcon(":/icon/svg/layout.svg"));
 	_layoutButton->setToolTip(tr("Change Layout"));
 	connect(_layoutButton, &QToolButton::clicked, this, &ToolBar::layoutButtonClicked);
 
@@ -212,7 +212,7 @@ void ToolBar::createButton()
 	menu->addAction(_showScaleAction);
 	menu->addAction(_showMeasurementAction);
 	_showInfoButton->setMenu(menu);
-	_showInfoButton->setIcon(QIcon("Resources/svg/annotation.svg"));
+	_showInfoButton->setIcon(QIcon(":/icon/svg/annotation.svg"));
 	_showInfoButton->setToolTip(tr("Toggle Annotations"));
 	connect(_showInfoButton, &QToolButton::clicked, this, &ToolBar::showInfoButtonClicked);
 
@@ -222,7 +222,7 @@ void ToolBar::createButton()
 	menu->addAction(_flipHorizontalAction);
 	menu->addAction(_flipVerticalAction);
 	_flipButton->setMenu(menu);
-	_flipButton->setIcon(QIcon("Resources/svg/flip_horizontal.svg"));
+	_flipButton->setIcon(QIcon(":/icon/svg/flip_horizontal.svg"));
 	_flipButton->setToolTip(tr("Flip"));
 	connect(_flipButton, &QToolButton::clicked, _flipHorizontalAction, &QAction::triggered);
 
@@ -236,18 +236,18 @@ void ToolBar::createButton()
 	menu->addSeparator();
 	menu->addAction(_resetTransformation);
 	_rotateButton->setMenu(menu);
-	_rotateButton->setIcon(QIcon("Resources/svg/rotate_cw.svg"));
+	_rotateButton->setIcon(QIcon(":/icon/svg/rotate_cw.svg"));
 	_rotateButton->setToolTip(tr("Rotate"));
 	connect(_rotateButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
 
 	_undoButton = new QToolButton;
 //	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
-	_undoButton->setIcon(QIcon("Resources/svg/undo.svg"));
+	_undoButton->setIcon(QIcon(":/icon/svg/undo.svg"));
 	_undoButton->setToolTip(tr("Undo"));
 	connect(_undoButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::undo);
 
 	_restoreButton = new QToolButton;
-	_restoreButton->setIcon(QIcon("Resources/svg/restore.svg"));
+	_restoreButton->setIcon(QIcon(":/icon/svg/restore.svg"));
 	_restoreButton->setToolTip(tr("Restore"));
 	connect(_restoreButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::restore);
 
@@ -262,7 +262,7 @@ void ToolBar::createButton()
 	menu->addSeparator();
 	menu->addAction(_imageNegativeAction);
 	_imageWindowButton->setMenu(menu);
-	_imageWindowButton->setIconByName("Resources/svg/imagewindow.svg");
+	_imageWindowButton->setIconByName(":/icon/svg/imagewindow.svg");
 	_imageWindowButton->setToolTip(tr("Adjust Image Window"));
 	_imageWindowButton->installEventFilter(this);
 	_imageWindowButton->setCurrentAction(_imageWindowAction);
@@ -281,7 +281,7 @@ void ToolBar::createButton()
 	menu->addAction(_zoomInAction);
 	menu->addAction(_zoomOutAction);
 	_zoomButton->setMenu(menu);
-	_zoomButton->setIconByName("Resources/svg/zoom.svg");
+	_zoomButton->setIconByName(":/icon/svg/zoom.svg");
 	_zoomButton->setToolTip(tr("Zoom Image"));
 	_zoomButton->installEventFilter(this);
 	connect(_zoomButton, &QToolButton::clicked, this, &ToolBar::zoomButtonClicked);
@@ -292,7 +292,7 @@ void ToolBar::createButton()
 	menu->addAction(_cursorAction);
 	menu->addAction(_moveAction);
 	_cursorButton->setMenu(menu);
-	_cursorButton->setIconByName("Resources/svg/cursor.svg");
+	_cursorButton->setIconByName(":/icon/svg/cursor.svg");
 	_cursorButton->setToolTip(tr("Select Item/Move Image"));
 	_cursorButton->installEventFilter(this);
 	_cursorButton->setCurrentAction(_cursorAction);
@@ -314,7 +314,7 @@ void ToolBar::createButton()
 	menu->addSeparator();
 	menu->addAction(_textAction);
 	_measurementButton->setMenu(menu);
-	_measurementButton->setIconByName("Resources/svg/length.svg");
+	_measurementButton->setIconByName(":/icon/svg/length.svg");
 	_measurementButton->setToolTip(tr("Measurements and Tools"));
 	_measurementButton->installEventFilter(this);
 	_measurementButton->setCurrentAction(_rulerAction);
@@ -529,13 +529,13 @@ void ToolBar::showInfoButtonClicked()
 
 void ToolBar::imageWindowActionTriggered()
 {
-	_imageWindowButton->setIconByName("Resources/svg/imagewindow.svg");
+	_imageWindowButton->setIconByName(":/icon/svg/imagewindow.svg");
 	_imageWindowButton->setMouseHandler(new ImageWindowMouseHandler());
 }
 
 void ToolBar::ROIWindowActionTriggered()
 {
-	_imageWindowButton->setIconByName("Resources/svg/ROI.svg");
+	_imageWindowButton->setIconByName(":/icon/svg/ROI.svg");
 	_imageWindowButton->setMouseHandler(new ROIWindowMouseHandler());
 }
 
@@ -562,14 +562,14 @@ void ToolBar::zoomButtonClicked()
 void ToolBar::selectItem()
 {
 	getGlobalView()->setSceneMode(MOVE_ITEM);
-	_cursorButton->setIconByName("Resources/svg/cursor.svg");
+	_cursorButton->setIconByName(":/icon/svg/cursor.svg");
 	_cursorButton->setMouseHandler(new SelectMouseHandler());
 }
 
 void ToolBar::moveScene()
 {
 	getGlobalView()->setSceneMode(MOVE_SCENE);
-	_cursorButton->setIconByName("Resources/svg/move.svg");
+	_cursorButton->setIconByName(":/icon/svg/move.svg");
 	_cursorButton->setMouseHandler(new MoveMouseHandler());
 }
 
@@ -588,52 +588,52 @@ void ToolBar::measurementChanged()
 	QAction* action = qobject_cast<QAction*>(sender());
 	if (action == _rulerAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/length.svg");
+		_measurementButton->setIconByName(":/icon/svg/length.svg");
 		getGlobalView()->setItemType(DiagramItem::Line);
 	}
 	else if (action == _arrowAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/arrow.svg");
+		_measurementButton->setIconByName(":/icon/svg/arrow.svg");
 		getGlobalView()->setItemType(DiagramItem::Arrow);
 	}
 	else if (action == _angleAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/angle.svg");
+		_measurementButton->setIconByName(":/icon/svg/angle.svg");
 		getGlobalView()->setItemType(DiagramItem::Angle);
 	}
 	else if (action == _rectAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/rectangle.svg");
+		_measurementButton->setIconByName(":/icon/svg/rectangle.svg");
 		getGlobalView()->setItemType(DiagramItem::Rect);
 	}
 	else if (action == _roundrectAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/roundrect.svg");
+		_measurementButton->setIconByName(":/icon/svg/roundrect.svg");
 		getGlobalView()->setItemType(DiagramItem::RoundRect);
 	}
 	else if (action == _circleAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/circle.svg");
+		_measurementButton->setIconByName(":/icon/svg/circle.svg");
 		getGlobalView()->setItemType(DiagramItem::Circle);
 	}
 	else if (action == _ellipseAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/ellipse.svg");
+		_measurementButton->setIconByName(":/icon/svg/ellipse.svg");
 		getGlobalView()->setItemType(DiagramItem::Ellipse);
 	}
 	else if (action == _rhombusAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/rhombus.svg");
+		_measurementButton->setIconByName(":/icon/svg/rhombus.svg");
 		getGlobalView()->setItemType(DiagramItem::Rhombus);
 	}
 	else if (action == _parallelogramAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/parallelogram.svg");
+		_measurementButton->setIconByName(":/icon/svg/parallelogram.svg");
 		getGlobalView()->setItemType(DiagramItem::Parallelogram);
 	}
 	else if (action == _textAction)
 	{
-		_measurementButton->setIconByName("Resources/svg/text.svg");
+		_measurementButton->setIconByName(":/icon/svg/text.svg");
 		getGlobalView()->setItemType(DiagramItem::Text);
 		mainWindow->setToolBoxWidgetVisible(false, true);
 	}

@@ -108,6 +108,9 @@
   <ItemGroup>
     <None Include="novaimage_zh.ts" />
   </ItemGroup>
+  <ItemGroup>
+    <QtRcc Include="Resources\Resource.qrc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{E3637189-40AF-4D2B-8191-6484026FF1A7}</ProjectGuid>
     <Keyword>QtVS_v302</Keyword>

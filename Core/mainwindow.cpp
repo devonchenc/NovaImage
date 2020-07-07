@@ -114,25 +114,25 @@ void MainWindow::createActions()
 {
 	// create actions, add them to menus
 	_openAction = new QAction(tr("&Open..."), this);
-	_openAction->setIcon(QIcon("Resources/svg/open.svg"));
+	_openAction->setIcon(QIcon(":/icon/svg/open.svg"));
 	_saveAsAction = new QAction(tr("&Save As..."), this);
-	_saveAsAction->setIcon(QIcon("Resources/svg/save.svg"));
+	_saveAsAction->setIcon(QIcon(":/icon/svg/save.svg"));
 	_closeAction = new QAction(tr("&Close"), this);
 	_printAction = new QAction(tr("&Print"), this);
 	_exitAction = new QAction(tr("E&xit"), this);
 
 	_undoAction = new QAction(tr("&Undo"), this);
-	_undoAction->setIcon(QIcon("Resources/svg/undo.svg"));
+	_undoAction->setIcon(QIcon(":/icon/svg/undo.svg"));
 	_redoAction = new QAction(tr("&Redo"), this);
-	_redoAction->setIcon(QIcon("Resources/svg/redo.svg"));
+	_redoAction->setIcon(QIcon(":/icon/svg/redo.svg"));
 	_restoreAction = new QAction(tr("R&estore"), this);
-	_restoreAction->setIcon(QIcon("Resources/svg/restore.svg"));
+	_restoreAction->setIcon(QIcon(":/icon/svg/restore.svg"));
 	_settingsAction = new QAction(tr("&Preferences..."), this);
 
 	_zoomInAction = new QAction(tr("Zoom &In"), this);
-	_zoomInAction->setIcon(QIcon("Resources/svg/zoomin.svg"));
+	_zoomInAction->setIcon(QIcon(":/icon/svg/zoomin.svg"));
 	_zoomOutAction = new QAction(tr("Zoom &Out"), this);
-	_zoomOutAction->setIcon(QIcon("Resources/svg/zoomout.svg"));
+	_zoomOutAction->setIcon(QIcon(":/icon/svg/zoomout.svg"));
 	_prevImageAction = new QAction(tr("&Prev Image"), this);
 	_nextImageAction = new QAction(tr("&Next Image"), this);
 

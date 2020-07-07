@@ -202,8 +202,8 @@ QGridLayout* ToolBoxWidget::createToolButton()
 
 QWidget* ToolBoxWidget::createCellWidget(const QString& text, DiagramItem::DiagramType type)
 {
-	QString str = QString("Resources/svg/%1.svg").arg(text);
-	QIcon icon(str);
+	QString str = QString(":/icon/svg/%1.svg").arg(text);
+	QIcon icon(str.toLower());
 
 	QToolButton* button = new QToolButton;
 	button->setIcon(icon);
