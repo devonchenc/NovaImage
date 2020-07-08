@@ -174,6 +174,26 @@ void ZoomMouseHandler::release(QMouseEvent* event)
 
 //////////////////////////////////////////////////////////////////////////
 
+void MagnifierMouseHandler::press(QMouseEvent* event)
+{
+//	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
+}
+
+void MagnifierMouseHandler::move(QMouseEvent* event)
+{
+//	QPoint delta = _mousePos - event->pos();
+//	_mousePos = event->pos();
+
+//	getGlobalView()->view()->setZoomValueOffset(delta.y());
+}
+
+void MagnifierMouseHandler::release(QMouseEvent* event)
+{
+
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 void SelectMouseHandler::unbounded()
 {
 	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);

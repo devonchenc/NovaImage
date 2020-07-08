@@ -82,6 +82,10 @@ void ToolBar::createAction()
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 	_imageNegativeAction->setIcon(QIcon(":/icon/svg/negative.svg"));
 
+	_zoomAction = new QAction(tr("Zoom Image"), this);
+	_zoomAction->setIcon(QIcon(":/icon/svg/zoom.svg"));
+	_magnifierAction = new QAction(tr("Magnifier"), this);
+	_magnifierAction->setIcon(QIcon(":/icon/svg/magnifier.svg"));
 	_fitWindowAction = new QAction(tr("Fit Window"), this);
 	_1xAction = new QAction("100%", this);
 	_2xAction = new QAction("200%", this);
@@ -146,6 +150,8 @@ void ToolBar::createAction()
 	connect(_fullWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::fullImageWindow);
 	connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
 
+	connect(_zoomAction, &QAction::triggered, this, &ToolBar::zoomActionTriggered);
+	connect(_magnifierAction, &QAction::triggered, this, &ToolBar::magnifierActionTriggered);
 	connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
 	connect(_1xAction, &QAction::triggered, mainWindow->getView(), &View::zoomNormal);
 	connect(_2xAction, &QAction::triggered, mainWindow->getView(), &View::zoom2x);
@@ -271,6 +277,9 @@ void ToolBar::createButton()
 	_zoomButton = new ToolButton;
 	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
+	menu->addAction(_zoomAction);
+	menu->addAction(_magnifierAction);
+	menu->addSeparator();
 	menu->addAction(_fitWindowAction);
 	menu->addSeparator();
 	menu->addAction(_1xAction);
@@ -284,7 +293,8 @@ void ToolBar::createButton()
 	_zoomButton->setIconByName(":/icon/svg/zoom.svg");
 	_zoomButton->setToolTip(tr("Zoom Image"));
 	_zoomButton->installEventFilter(this);
-	connect(_zoomButton, &QToolButton::clicked, this, &ToolBar::zoomButtonClicked);
+	_zoomButton->setCurrentAction(_zoomAction);
+	connect(_zoomButton, &QToolButton::triggered, this, &ToolBar::zoomButtonTriggered);
 
 	_cursorButton = new ToolButton;
 	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -366,6 +376,8 @@ void ToolBar::changeEvent(QEvent* event)
 		_fullWindowAction->setText(tr("Full Window"));
 		_imageNegativeAction->setText(tr("Negative"));
 
+		_zoomAction->setText(tr("Zoom Image"));
+		_magnifierAction->setText(tr("Magnifier"));
 		_fitWindowAction->setText(tr("Fit Window"));
 		_zoomInAction->setText(tr("Zoom In"));
 		_zoomOutAction->setText(tr("Zoom Out"));
@@ -554,9 +566,26 @@ void ToolBar::imageWindowButtonTriggered(QAction* action)
 	}
 }
 
-void ToolBar::zoomButtonClicked()
+void ToolBar::zoomActionTriggered()
 {
+	_zoomButton->setIconByName(":/icon/svg/zoom.svg");
 	_zoomButton->setMouseHandler(new ZoomMouseHandler());
+}
+
+void ToolBar::magnifierActionTriggered()
+{
+	_zoomButton->setIconByName(":/icon/svg/magnifier.svg");
+	_zoomButton->setMouseHandler(new MagnifierMouseHandler());
+}
+
+void ToolBar::zoomButtonTriggered(QAction* action)
+{
+	if (action == _zoomAction || action == _magnifierAction)
+	{
+		_zoomButton->setCurrentAction(action);
+		ToolButton::setLeftMouseButton(_zoomButton);
+		MouseHandler::setLeftButton(_zoomButton);
+	}
 }
 
 void ToolBar::selectItem()

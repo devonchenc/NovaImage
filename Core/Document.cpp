@@ -81,7 +81,7 @@ bool Document::openFile(const QString& fileName)
 	getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
 	
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-	bool fitWindow = settings.value("Image/autoFitWindow", 1).toBool();
+	bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
 	if (fitWindow)
 	{
 		getView()->fitWindow();

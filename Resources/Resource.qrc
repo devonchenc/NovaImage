@@ -39,5 +39,7 @@
         <file>svg/zoom.svg</file>
         <file>svg/zoomin.svg</file>
         <file>svg/zoomout.svg</file>
+        <file>svg/magnifier.svg</file>
+        <file>svg/view.svg</file>
     </qresource>
 </RCC>

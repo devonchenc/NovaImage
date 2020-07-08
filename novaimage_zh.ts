@@ -145,7 +145,7 @@
 <context>
     <name>DiagramLineItem</name>
     <message>
-        <location filename="Widget/DiagramLineItem.cpp" line="247"/>
+        <location filename="Widget/DiagramLineItem.cpp" line="246"/>
         <source> px</source>
         <translation type="unfinished"> 像素</translation>
     </message>
@@ -540,297 +540,304 @@
     <name>ToolBar</name>
     <message>
         <location filename="Core/ToolBar.cpp" line="36"/>
-        <location filename="Core/ToolBar.cpp" line="343"/>
+        <location filename="Core/ToolBar.cpp" line="352"/>
         <source>Open &amp;DICOM File...</source>
         <translation type="unfinished">打开 DICOM 文件(&amp;D)...</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="37"/>
-        <location filename="Core/ToolBar.cpp" line="344"/>
+        <location filename="Core/ToolBar.cpp" line="353"/>
         <source>Open &amp;Raw File...</source>
         <translation type="unfinished">打开 RAW 文件(&amp;R)...</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="38"/>
-        <location filename="Core/ToolBar.cpp" line="345"/>
+        <location filename="Core/ToolBar.cpp" line="354"/>
         <source>Save As &amp;Raw File...</source>
         <translation type="unfinished">另存为 RAW 文件(&amp;R)...</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="40"/>
-        <location filename="Core/ToolBar.cpp" line="347"/>
+        <location filename="Core/ToolBar.cpp" line="356"/>
         <source>Menu</source>
         <translation type="unfinished">菜单栏</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="43"/>
-        <location filename="Core/ToolBar.cpp" line="348"/>
+        <location filename="Core/ToolBar.cpp" line="357"/>
         <source>Dock Widgets</source>
         <translation type="unfinished">工作区</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="46"/>
-        <location filename="Core/ToolBar.cpp" line="349"/>
+        <location filename="Core/ToolBar.cpp" line="358"/>
         <source>Full Screen Mode</source>
         <translation type="unfinished">全屏模式</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="49"/>
-        <location filename="Core/ToolBar.cpp" line="350"/>
+        <location filename="Core/ToolBar.cpp" line="359"/>
         <source>Annotations</source>
         <translation type="unfinished">显示图像信息</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="52"/>
-        <location filename="Core/ToolBar.cpp" line="351"/>
+        <location filename="Core/ToolBar.cpp" line="360"/>
         <source>Cross Reference Line</source>
         <translation type="unfinished">显示参考线</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="54"/>
-        <location filename="Core/ToolBar.cpp" line="352"/>
+        <location filename="Core/ToolBar.cpp" line="361"/>
         <source>Image Scale</source>
         <translation type="unfinished">显示比例尺</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="57"/>
-        <location filename="Core/ToolBar.cpp" line="353"/>
+        <location filename="Core/ToolBar.cpp" line="362"/>
         <source>Measurements</source>
         <translation type="unfinished">显示测量图元</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="61"/>
-        <location filename="Core/ToolBar.cpp" line="355"/>
+        <location filename="Core/ToolBar.cpp" line="364"/>
         <source>Flip Horizontal</source>
         <translation type="unfinished">水平翻转</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="64"/>
-        <location filename="Core/ToolBar.cpp" line="356"/>
+        <location filename="Core/ToolBar.cpp" line="365"/>
         <source>Flip Vertical</source>
         <translation type="unfinished">垂直翻转</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="68"/>
         <location filename="Core/ToolBar.cpp" line="70"/>
-        <location filename="Core/ToolBar.cpp" line="358"/>
-        <location filename="Core/ToolBar.cpp" line="359"/>
+        <location filename="Core/ToolBar.cpp" line="367"/>
+        <location filename="Core/ToolBar.cpp" line="368"/>
         <source>Rotate 90 </source>
         <translation type="unfinished">旋转 90 </translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="68"/>
-        <location filename="Core/ToolBar.cpp" line="358"/>
+        <location filename="Core/ToolBar.cpp" line="367"/>
         <source> CW</source>
         <translation type="unfinished"> 顺时针</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="70"/>
-        <location filename="Core/ToolBar.cpp" line="359"/>
+        <location filename="Core/ToolBar.cpp" line="368"/>
         <source> CCW</source>
         <translation type="unfinished"> 逆时针</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="72"/>
-        <location filename="Core/ToolBar.cpp" line="360"/>
+        <location filename="Core/ToolBar.cpp" line="369"/>
         <source>Rotate 180 </source>
         <translation type="unfinished">旋转 180 </translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="73"/>
-        <location filename="Core/ToolBar.cpp" line="361"/>
+        <location filename="Core/ToolBar.cpp" line="370"/>
         <source>Reset Transformation</source>
         <translation type="unfinished">重置转换</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="76"/>
-        <location filename="Core/ToolBar.cpp" line="363"/>
+        <location filename="Core/ToolBar.cpp" line="372"/>
         <source>Adjust Window</source>
         <translation type="unfinished">调节图像窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="78"/>
-        <location filename="Core/ToolBar.cpp" line="364"/>
+        <location filename="Core/ToolBar.cpp" line="373"/>
         <source>ROI Window</source>
         <translation type="unfinished">ROI 窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="80"/>
-        <location filename="Core/ToolBar.cpp" line="365"/>
+        <location filename="Core/ToolBar.cpp" line="374"/>
         <source>Default Window</source>
         <translation type="unfinished">默认窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="81"/>
-        <location filename="Core/ToolBar.cpp" line="366"/>
+        <location filename="Core/ToolBar.cpp" line="375"/>
         <source>Full Window</source>
         <translation type="unfinished">全窗宽</translation>
     </message>
     <message>
         <location filename="Core/ToolBar.cpp" line="82"/>
-        <location filename="Core/ToolBar.cpp" line="367"/>
+        <location filename="Core/ToolBar.cpp" line="376"/>
         <source>Negative</source>
         <translation type="unfinished">负片</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="85"/>
-        <location filename="Core/ToolBar.cpp" line="369"/>
+        <location filename="Core/ToolBar.cpp" line="87"/>
+        <location filename="Core/ToolBar.cpp" line="378"/>
         <source>Fit Window</source>
         <translation type="unfinished">适应窗口</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="90"/>
-        <location filename="Core/ToolBar.cpp" line="370"/>
+        <location filename="Core/ToolBar.cpp" line="92"/>
+        <location filename="Core/ToolBar.cpp" line="379"/>
         <source>Zoom In</source>
         <translation type="unfinished">放大</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="92"/>
-        <location filename="Core/ToolBar.cpp" line="371"/>
+        <location filename="Core/ToolBar.cpp" line="94"/>
+        <location filename="Core/ToolBar.cpp" line="380"/>
         <source>Zoom Out</source>
         <translation type="unfinished">缩小</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="95"/>
-        <location filename="Core/ToolBar.cpp" line="373"/>
+        <location filename="Core/ToolBar.cpp" line="96"/>
+        <location filename="Core/ToolBar.cpp" line="381"/>
+        <source>Magnifier</source>
+        <translation type="unfinished">放大镜</translation>
+    </message>
+    <message>
+        <location filename="Core/ToolBar.cpp" line="99"/>
+        <location filename="Core/ToolBar.cpp" line="383"/>
         <source>Select</source>
         <translation type="unfinished">选择</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="97"/>
-        <location filename="Core/ToolBar.cpp" line="374"/>
+        <location filename="Core/ToolBar.cpp" line="101"/>
+        <location filename="Core/ToolBar.cpp" line="384"/>
         <source>Move</source>
         <translation type="unfinished">移动</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="100"/>
-        <location filename="Core/ToolBar.cpp" line="376"/>
+        <location filename="Core/ToolBar.cpp" line="104"/>
+        <location filename="Core/ToolBar.cpp" line="386"/>
         <source>Length</source>
         <translation type="unfinished">距离</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="104"/>
-        <location filename="Core/ToolBar.cpp" line="378"/>
+        <location filename="Core/ToolBar.cpp" line="108"/>
+        <location filename="Core/ToolBar.cpp" line="388"/>
         <source>Angle</source>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="204"/>
-        <location filename="Core/ToolBar.cpp" line="389"/>
+        <location filename="Core/ToolBar.cpp" line="209"/>
+        <location filename="Core/ToolBar.cpp" line="399"/>
         <source>Change Layout</source>
         <translation type="unfinished">布局设置</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="216"/>
-        <location filename="Core/ToolBar.cpp" line="390"/>
+        <location filename="Core/ToolBar.cpp" line="221"/>
+        <location filename="Core/ToolBar.cpp" line="400"/>
         <source>Toggle Annotations</source>
         <translation type="unfinished">显示信息</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="285"/>
-        <location filename="Core/ToolBar.cpp" line="396"/>
+        <location filename="Core/ToolBar.cpp" line="85"/>
+        <location filename="Core/ToolBar.cpp" line="293"/>
+        <location filename="Core/ToolBar.cpp" line="406"/>
         <source>Zoom Image</source>
         <translation type="unfinished">缩放图像</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="296"/>
-        <location filename="Core/ToolBar.cpp" line="397"/>
+        <location filename="Core/ToolBar.cpp" line="305"/>
+        <location filename="Core/ToolBar.cpp" line="407"/>
         <source>Select Item/Move Image</source>
         <translation type="unfinished">选择图元/移动图像</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="318"/>
-        <location filename="Core/ToolBar.cpp" line="398"/>
+        <location filename="Core/ToolBar.cpp" line="327"/>
+        <location filename="Core/ToolBar.cpp" line="408"/>
         <source>Measurements and Tools</source>
         <translation type="unfinished">测量工具</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="266"/>
-        <location filename="Core/ToolBar.cpp" line="395"/>
+        <location filename="Core/ToolBar.cpp" line="271"/>
+        <location filename="Core/ToolBar.cpp" line="405"/>
         <source>Adjust Image Window</source>
         <translation type="unfinished">调节图像窗宽</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="102"/>
-        <location filename="Core/ToolBar.cpp" line="377"/>
+        <location filename="Core/ToolBar.cpp" line="106"/>
+        <location filename="Core/ToolBar.cpp" line="387"/>
         <source>Arrow</source>
         <translation type="unfinished">箭头</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="106"/>
-        <location filename="Core/ToolBar.cpp" line="379"/>
+        <location filename="Core/ToolBar.cpp" line="110"/>
+        <location filename="Core/ToolBar.cpp" line="389"/>
         <source>Rectangle</source>
         <translation type="unfinished">矩形</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="108"/>
-        <location filename="Core/ToolBar.cpp" line="380"/>
+        <location filename="Core/ToolBar.cpp" line="112"/>
+        <location filename="Core/ToolBar.cpp" line="390"/>
         <source>Round Rectangle</source>
         <translation type="unfinished">圆角矩形</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="110"/>
-        <location filename="Core/ToolBar.cpp" line="381"/>
+        <location filename="Core/ToolBar.cpp" line="114"/>
+        <location filename="Core/ToolBar.cpp" line="391"/>
         <source>Circle</source>
         <translation type="unfinished">圆形</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="112"/>
-        <location filename="Core/ToolBar.cpp" line="382"/>
+        <location filename="Core/ToolBar.cpp" line="116"/>
+        <location filename="Core/ToolBar.cpp" line="392"/>
         <source>Ellipse</source>
         <translation type="unfinished">椭圆</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="114"/>
-        <location filename="Core/ToolBar.cpp" line="383"/>
+        <location filename="Core/ToolBar.cpp" line="118"/>
+        <location filename="Core/ToolBar.cpp" line="393"/>
         <source>Rhombus</source>
         <translation type="unfinished">菱形</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="116"/>
-        <location filename="Core/ToolBar.cpp" line="384"/>
+        <location filename="Core/ToolBar.cpp" line="120"/>
+        <location filename="Core/ToolBar.cpp" line="394"/>
         <source>Parallelogram</source>
         <translation type="unfinished">平行四边形</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="118"/>
-        <location filename="Core/ToolBar.cpp" line="385"/>
+        <location filename="Core/ToolBar.cpp" line="122"/>
+        <location filename="Core/ToolBar.cpp" line="395"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="183"/>
-        <location filename="Core/ToolBar.cpp" line="387"/>
+        <location filename="Core/ToolBar.cpp" line="188"/>
+        <location filename="Core/ToolBar.cpp" line="397"/>
         <source>Open Image File</source>
         <translation type="unfinished">打开图像</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="192"/>
-        <location filename="Core/ToolBar.cpp" line="388"/>
+        <location filename="Core/ToolBar.cpp" line="197"/>
+        <location filename="Core/ToolBar.cpp" line="398"/>
         <source>Save Image File</source>
         <translation type="unfinished">保存图像</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="226"/>
-        <location filename="Core/ToolBar.cpp" line="391"/>
+        <location filename="Core/ToolBar.cpp" line="231"/>
+        <location filename="Core/ToolBar.cpp" line="401"/>
         <source>Flip</source>
         <translation type="unfinished">翻转</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="240"/>
-        <location filename="Core/ToolBar.cpp" line="392"/>
+        <location filename="Core/ToolBar.cpp" line="245"/>
+        <location filename="Core/ToolBar.cpp" line="402"/>
         <source>Rotate</source>
         <translation type="unfinished">旋转</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="246"/>
-        <location filename="Core/ToolBar.cpp" line="393"/>
+        <location filename="Core/ToolBar.cpp" line="251"/>
+        <location filename="Core/ToolBar.cpp" line="403"/>
         <source>Undo</source>
         <translation type="unfinished">撤销</translation>
     </message>
     <message>
-        <location filename="Core/ToolBar.cpp" line="251"/>
-        <location filename="Core/ToolBar.cpp" line="394"/>
+        <location filename="Core/ToolBar.cpp" line="256"/>
+        <location filename="Core/ToolBar.cpp" line="404"/>
         <source>Restore</source>
         <translation type="unfinished">恢复</translation>
     </message>
@@ -838,94 +845,94 @@
 <context>
     <name>ToolBoxWidget</name>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="24"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="136"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="25"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="137"/>
         <source>ToolBox</source>
         <translation type="unfinished">工具箱</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="53"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="150"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="54"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="151"/>
         <source>Line:</source>
         <translation type="unfinished">线条：</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="56"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="151"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="57"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="152"/>
         <source>Fill:</source>
         <translation type="unfinished">填充：</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="138"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="139"/>
         <source>Point</source>
         <translation type="unfinished">指针</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="140"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="176"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="141"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="177"/>
         <source>Angle</source>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="142"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="178"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="143"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="179"/>
         <source>Rectangle</source>
         <translation type="unfinished">矩形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="143"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="179"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="144"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="180"/>
         <source>RoundRect</source>
         <translation type="unfinished">圆角矩形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="144"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="180"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="145"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="181"/>
         <source>Circle</source>
         <translation type="unfinished">圆形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="145"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="181"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="146"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="182"/>
         <source>Ellipse</source>
         <translation type="unfinished">椭圆</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="146"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="182"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="147"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="183"/>
         <source>Rhombus</source>
         <translation type="unfinished">菱形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="147"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="183"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="148"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="184"/>
         <source>Parallelogram</source>
         <translation type="unfinished">平行四边形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="148"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="184"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="149"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="185"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="174"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="175"/>
         <source>Cursor</source>
         <translation type="unfinished">移动</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="175"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="176"/>
         <source>Length</source>
         <translation type="unfinished">距离</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="141"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="177"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="142"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="178"/>
         <source>Arrow</source>
         <translation type="unfinished">箭头</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="139"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="140"/>
         <source>Line</source>
         <translation type="unfinished">直线</translation>
     </message>

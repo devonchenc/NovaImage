@@ -77,7 +77,7 @@ void SettingsDialog::loadSettings()
 {
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
 	int language = settings.value("General/language", 0).toInt();
-	bool fitWindow = settings.value("Image/autoFitWindow", 1).toBool();
+	bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
 
 	_languageComboBox->setCurrentIndex(language);
 	_autoFitWindowCheckBox->setChecked(fitWindow);

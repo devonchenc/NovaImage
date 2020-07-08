@@ -41,7 +41,9 @@ private slots:
 	void ROIWindowActionTriggered();
 	void undoButtonClicked();
 	void imageWindowButtonTriggered(QAction* action);
-	void zoomButtonClicked();
+	void zoomActionTriggered();
+	void magnifierActionTriggered();
+	void zoomButtonTriggered(QAction* action);
 	void selectItem();
 	void moveScene();
 	void cursorButtonTriggered(QAction* action);
@@ -76,6 +78,8 @@ private:
 	QAction* _fullWindowAction;
 	QAction* _imageNegativeAction;
 
+	QAction* _zoomAction;
+	QAction* _magnifierAction;
 	QAction* _fitWindowAction;
 	QAction* _1xAction;
 	QAction* _2xAction;

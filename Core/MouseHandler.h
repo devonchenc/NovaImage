@@ -77,6 +77,16 @@ protected:
 	void release(QMouseEvent* event) override;
 };
 
+class MagnifierMouseHandler : public MouseHandler
+{
+protected:
+	void press(QMouseEvent* event) override;
+
+	void move(QMouseEvent* event) override;
+
+	void release(QMouseEvent* event) override;
+};
+
 class SelectMouseHandler : public MouseHandler
 {
 public:
