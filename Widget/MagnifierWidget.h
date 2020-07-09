@@ -17,8 +17,7 @@ public slots:
 	void updatePosition();
 
 private:
-	QColor _color;
-
+	QSize _size;
 	QTimer* _timer;
 };
 
