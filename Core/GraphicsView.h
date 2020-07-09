@@ -7,6 +7,7 @@
 #define ZOOM_STEP		200
 
 class View;
+class Magnifier;
 
 class GraphicsView : public QGraphicsView
 {
@@ -22,6 +23,8 @@ public:
 	void setZoomValueOffset(int offset);
 
 	void showAnnotation(bool show);
+
+	void showMagnifier();
 
 protected:
 	void wheelEvent(QWheelEvent*) override;
@@ -52,4 +55,5 @@ private:
 	QString _strCoord;
 	QString _strValue;
 	bool _showAnnotation;
+	Magnifier* _magnifier;
 };

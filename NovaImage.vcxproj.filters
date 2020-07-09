@@ -156,6 +156,12 @@
     <ClCompile Include="Widget\DiagramAngleItem.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\Magnifier.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget\MagnifierWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -231,6 +237,12 @@
       <Filter>Core</Filter>
     </QtMoc>
     <QtMoc Include="Widget\DiagramAngleItem.h">
+      <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\Magnifier.h">
+      <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\MagnifierWidget.h">
       <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>
