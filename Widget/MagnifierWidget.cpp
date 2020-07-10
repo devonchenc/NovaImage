@@ -50,6 +50,18 @@ void MagnifierWidget::paintEvent(QPaintEvent*)
 		painter.setPen(QColor(255, 255, 255));
 	painter.drawRect(0, 0, rect().width() - 1, rect().height() - 1);
 
+	static int change = 0;
+	change++;
+	if (change > 3)
+	{
+		painter.setPen(QColor(0, 0, 0));
+		if (change >= 6)
+			change = 0;
+	}
+	else
+	{
+		painter.setPen(QColor(255, 255, 255));
+	}
 	QPoint leftop(_size.width() / 2 - _magnificationTimes / 2, _size.height() / 2 - _magnificationTimes / 2);
 	painter.drawRect(leftop.x(), leftop.y(), _magnificationTimes, _magnificationTimes);
 }
@@ -61,10 +73,6 @@ void MagnifierWidget::mousePressEvent(QMouseEvent*)
 		parentWidget()->setCursor(Qt::ArrowCursor);
 	}
 	close();
-}
-
-void MagnifierWidget::mouseMoveEvent(QMouseEvent* event)
-{
 }
 
 void MagnifierWidget::mouseReleaseEvent(QMouseEvent*)

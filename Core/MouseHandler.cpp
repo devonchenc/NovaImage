@@ -176,6 +176,7 @@ void ZoomMouseHandler::release(QMouseEvent* event)
 
 void MagnifierMouseHandler::press(QMouseEvent* event)
 {
+	QGraphicsView::DragMode a = getGlobalView()->view()->dragMode();
 	getGlobalView()->view()->setCursor(Qt::CrossCursor);
 	getGlobalView()->view()->showMagnifier();
 }
