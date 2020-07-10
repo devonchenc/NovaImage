@@ -187,6 +187,7 @@ void MagnifierMouseHandler::move(QMouseEvent* event)
 
 void MagnifierMouseHandler::release(QMouseEvent* event)
 {
+
 }
 
 //////////////////////////////////////////////////////////////////////////

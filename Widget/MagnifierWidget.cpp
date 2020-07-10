@@ -8,17 +8,18 @@
 #include <QScreen>
 #include <QTimer>
 #include <QDebug>
+#include <QMouseEvent>
 
 const int grabInterval = 50;
-const int magnificationTimes = 10;
 const int sizeOfMouseIcon = 20;
 
 MagnifierWidget::MagnifierWidget(QWidget* parent)
 	: QWidget(parent)
 	, _size(190, 190)
+	, _magnificationTimes(10)
 	, _timer(new QTimer)
 {
-	setWindowFlags(Qt::Popup);
+	setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 	setFixedSize(_size);
 	setMouseTracking(true);
 	_timer->setInterval(grabInterval);
@@ -35,13 +36,13 @@ void MagnifierWidget::paintEvent(QPaintEvent*)
 {
 	QWindow* window = QApplication::desktop()->windowHandle();
 	QPixmap grab = window->screen()->grabWindow(QApplication::desktop()->winId());
-	grab = grab.copy(QCursor::pos().x() - _size.width() / magnificationTimes / 2, QCursor::pos().y() - _size.height() / magnificationTimes / 2,
-		_size.width() / magnificationTimes, _size.height() / magnificationTimes);
+	grab = grab.copy(QCursor::pos().x() - _size.width() / _magnificationTimes / 2, QCursor::pos().y() - _size.height() / _magnificationTimes / 2,
+		_size.width() / _magnificationTimes, _size.height() / _magnificationTimes);
 
 	QPainter painter(this);
 	painter.drawPixmap(0, 0, _size.width(), _size.height(), grab);
 
-	QPixmap pixmap = grab.copy(_size.width() / magnificationTimes / 2, _size.height() / magnificationTimes / 2, 1, 1);
+	QPixmap pixmap = grab.copy(_size.width() / _magnificationTimes / 2, _size.height() / _magnificationTimes / 2, 1, 1);
 	QColor color = pixmap.toImage().pixel(0, 0);
 	if (color.red() > 100 && color.blue() > 100 && color.green() > 100)
 		painter.setPen(QColor(0, 0, 0));
@@ -49,15 +50,14 @@ void MagnifierWidget::paintEvent(QPaintEvent*)
 		painter.setPen(QColor(255, 255, 255));
 	painter.drawRect(0, 0, rect().width() - 1, rect().height() - 1);
 
-	QPoint leftop(_size.width() / 2 - magnificationTimes / 2, _size.height() / 2 - magnificationTimes / 2);
-	painter.drawRect(leftop.x(), leftop.y(), magnificationTimes, magnificationTimes);
+	QPoint leftop(_size.width() / 2 - _magnificationTimes / 2, _size.height() / 2 - _magnificationTimes / 2);
+	painter.drawRect(leftop.x(), leftop.y(), _magnificationTimes, _magnificationTimes);
 }
 
 void MagnifierWidget::mousePressEvent(QMouseEvent*)
 {
 	if (parentWidget())
 	{
-		qDebug() << " MagnifierWidget::mousePressEvent";
 		parentWidget()->setCursor(Qt::ArrowCursor);
 	}
 	close();
@@ -65,15 +65,12 @@ void MagnifierWidget::mousePressEvent(QMouseEvent*)
 
 void MagnifierWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	qDebug() << " MagnifierWidget::mouseMoveEvent";
-//	this->parentWidget()->mouseMoveEvent(event);
 }
 
 void MagnifierWidget::mouseReleaseEvent(QMouseEvent*)
 {
 	if (parentWidget())
 	{
-		qDebug() << " MagnifierWidget::mouseReleaseEvent";
 		parentWidget()->setCursor(Qt::ArrowCursor);
 	}
 	close();

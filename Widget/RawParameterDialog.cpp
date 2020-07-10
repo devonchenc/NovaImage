@@ -28,6 +28,8 @@ RawParameterDialog::RawParameterDialog(const QString& pathName, QWidget* parent)
 	loadSettings();
 
 	updateExpectedSize();
+
+	resize(400, 350);
 }
 
 RawParameterDialog::~RawParameterDialog()

@@ -19,6 +19,8 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 {
 	setDragMode(QGraphicsView::NoDrag);
 
+	_magnifier->installEventFilter(this);
+
 	setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 	setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
 
@@ -135,10 +137,12 @@ void GraphicsView::mousePressEvent(QMouseEvent* event)
 
 void GraphicsView::mouseMoveEvent(QMouseEvent* event)
 {
+	// Not directly use event->pos
+	QPoint mousePoint = mapFromGlobal(event->globalPos()) - QPoint(1, 1);
 	QGraphicsPixmapItem* pixmapItem = _view->getPixmapItem();
 	if (pixmapItem)
 	{
-		QPointF pointScene = mapToScene(event->pos());
+		QPointF pointScene = mapToScene(mousePoint);
 		QPointF pointPixmap = pixmapItem->mapFromScene(pointScene);
 
 		QImage image = pixmapItem->pixmap().toImage();
@@ -199,5 +203,20 @@ void GraphicsView::paintEvent(QPaintEvent* event)
 		painter.setPen(QPen(qRgb(255, 100, 100)));
 		painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
 		painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
+	}
+}
+
+bool GraphicsView::eventFilter(QObject* obj, QEvent* event)
+{
+	if (obj == _magnifier && event->type() == QEvent::MouseMove)
+	{
+		// In order to track the image pixel when magnifying
+		QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
+		mouseMoveEvent(mouseEvent);
+		return false;
+	}
+	else
+	{
+		return QGraphicsView::eventFilter(obj, event);
 	}
 }

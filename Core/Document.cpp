@@ -45,7 +45,6 @@ bool Document::openFile(const QString& fileName)
 	else if (type == IMAGE_FORMAT_DAT || type == IMAGE_FORMAT_RAW)
 	{
 		RawParameterDialog dlg(fileName);
-		dlg.resize(400, 350);
 		if (dlg.exec() == QDialog::Accepted)
 		{
 			dlg.dataType();

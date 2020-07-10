@@ -22,5 +22,6 @@ public slots:
 
 private:
 	QSize _size;
+	int _magnificationTimes;
 	QTimer* _timer;
 };

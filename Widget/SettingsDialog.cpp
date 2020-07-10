@@ -26,6 +26,8 @@ SettingsDialog::SettingsDialog(QWidget* parent)
 	initUI();
 
 	loadSettings();
+
+	resize(400, 200);
 }
 
 SettingsDialog::~SettingsDialog()
