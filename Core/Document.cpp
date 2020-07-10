@@ -78,9 +78,20 @@ bool Document::openFile(const QString& fileName)
 	_image->histogramStatistic();
 
 	getView()->showImage(_image->getImageEntity(), true);
-	getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
-	
+
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	int displayWindow = settings.value("Image/displayWindow", 0).toInt();
+	if (displayWindow == 0)
+	{
+		getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+	}
+	else
+	{
+		float windowWidth = _image->getMaxValue() - _image->getMinValue();
+		float windowLevel = (_image->getMaxValue() + _image->getMinValue()) / 2;
+		getView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+	}
+	
 	bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
 	if (fitWindow)
 	{

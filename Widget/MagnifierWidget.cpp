@@ -7,6 +7,7 @@
 #include <QWindow>
 #include <QScreen>
 #include <QTimer>
+#include <QDebug>
 
 const int grabInterval = 50;
 const int magnificationTimes = 10;
@@ -16,7 +17,8 @@ MagnifierWidget::MagnifierWidget(QWidget* parent)
 	: QWidget(parent)
 	, _size(190, 190)
 	, _timer(new QTimer)
-{	
+{
+	setWindowFlags(Qt::Popup);
 	setFixedSize(_size);
 	setMouseTracking(true);
 	_timer->setInterval(grabInterval);
@@ -31,11 +33,12 @@ MagnifierWidget::~MagnifierWidget()
 
 void MagnifierWidget::paintEvent(QPaintEvent*)
 {
-	QPainter painter(this);
-
-	QWindow* window = parentWidget()->windowHandle();
+	QWindow* window = QApplication::desktop()->windowHandle();
 	QPixmap grab = window->screen()->grabWindow(QApplication::desktop()->winId());
-	grab = grab.copy(QCursor::pos().x() - _size.width() / magnificationTimes / 2, QCursor::pos().y() - _size.height() / magnificationTimes / 2, _size.width() / magnificationTimes, _size.height() / magnificationTimes);
+	grab = grab.copy(QCursor::pos().x() - _size.width() / magnificationTimes / 2, QCursor::pos().y() - _size.height() / magnificationTimes / 2,
+		_size.width() / magnificationTimes, _size.height() / magnificationTimes);
+
+	QPainter painter(this);
 	painter.drawPixmap(0, 0, _size.width(), _size.height(), grab);
 
 	QPixmap pixmap = grab.copy(_size.width() / magnificationTimes / 2, _size.height() / magnificationTimes / 2, 1, 1);
@@ -50,13 +53,39 @@ void MagnifierWidget::paintEvent(QPaintEvent*)
 	painter.drawRect(leftop.x(), leftop.y(), magnificationTimes, magnificationTimes);
 }
 
+void MagnifierWidget::mousePressEvent(QMouseEvent*)
+{
+	if (parentWidget())
+	{
+		qDebug() << " MagnifierWidget::mousePressEvent";
+		parentWidget()->setCursor(Qt::ArrowCursor);
+	}
+	close();
+}
+
+void MagnifierWidget::mouseMoveEvent(QMouseEvent* event)
+{
+	qDebug() << " MagnifierWidget::mouseMoveEvent";
+//	this->parentWidget()->mouseMoveEvent(event);
+}
+
+void MagnifierWidget::mouseReleaseEvent(QMouseEvent*)
+{
+	if (parentWidget())
+	{
+		qDebug() << " MagnifierWidget::mouseReleaseEvent";
+		parentWidget()->setCursor(Qt::ArrowCursor);
+	}
+	close();
+}
+
 void MagnifierWidget::updatePosition()
 {
-	QPoint show = QCursor::pos() + QPoint(sizeOfMouseIcon, -(_size.height() + sizeOfMouseIcon));
-	if (show.y() < 0)
-		show.setY(show.y() + _size.height() + sizeOfMouseIcon);
-	if (show.x() + _size.width() > parentWidget()->width())
-		show.setX(show.x() - (_size.height() + sizeOfMouseIcon));
-	move(show);
+	QPoint position = QCursor::pos() + QPoint(sizeOfMouseIcon, sizeOfMouseIcon);
+	if (position.x() + _size.width() > QApplication::desktop()->width())
+		position.setX(position.x() - _size.width() - 2 * sizeOfMouseIcon);
+	if (position.y() + _size.height() > QApplication::desktop()->height())
+		position.setY(position.y() - _size.height() - 2 * sizeOfMouseIcon);
+	move(position);
 	update();
 }

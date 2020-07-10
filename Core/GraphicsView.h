@@ -7,7 +7,7 @@
 #define ZOOM_STEP		200
 
 class View;
-class Magnifier;
+class MagnifierWidget;
 
 class GraphicsView : public QGraphicsView
 {
@@ -55,5 +55,5 @@ private:
 	QString _strCoord;
 	QString _strValue;
 	bool _showAnnotation;
-	Magnifier* _magnifier;
+	MagnifierWidget* _magnifier;
 };

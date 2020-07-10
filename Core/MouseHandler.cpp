@@ -187,7 +187,6 @@ void MagnifierMouseHandler::move(QMouseEvent* event)
 
 void MagnifierMouseHandler::release(QMouseEvent* event)
 {
-	getGlobalView()->view()->setCursor(Qt::ArrowCursor);
 }
 
 //////////////////////////////////////////////////////////////////////////

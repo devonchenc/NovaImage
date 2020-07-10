@@ -52,7 +52,6 @@
     <ClCompile Include="Widget\DiagramTextItem.cpp" />
     <ClCompile Include="Widget\HistogramWidget.cpp" />
     <ClCompile Include="Widget\LevelsWidget.cpp" />
-    <ClCompile Include="Widget\Magnifier.cpp" />
     <ClCompile Include="Widget\MagnifierWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
     <ClCompile Include="Widget\RawParameterDialog.cpp" />
@@ -90,7 +89,6 @@
     <ClInclude Include="Processor\InverseProcessor.h" />
     <ClInclude Include="Processor\LevelsProcessor.h" />
     <QtMoc Include="Widget\DiagramAngleItem.h" />
-    <QtMoc Include="Widget\Magnifier.h" />
     <QtMoc Include="Widget\MagnifierWidget.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />

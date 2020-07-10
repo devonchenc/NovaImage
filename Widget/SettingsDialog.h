@@ -5,6 +5,7 @@
 QT_BEGIN_NAMESPACE
 class QComboBox;
 class QCheckBox;
+class QButtonGroup;
 QT_END_NAMESPACE
 
 class SettingsDialog : public QDialog
@@ -29,4 +30,5 @@ private slots:
 private:
 	QComboBox* _languageComboBox;
 	QCheckBox* _autoFitWindowCheckBox;
+	QButtonGroup* _windowGroup;
 };

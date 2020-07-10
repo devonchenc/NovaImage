@@ -8,14 +8,14 @@
 #include "MouseHandler.h"
 #include "GlobalFunc.h"
 #include "../Image/BaseImage.h"
-#include "../Widget/Magnifier.h"
+#include "../Widget/MagnifierWidget.h"
 
 GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	: QGraphicsView(scene, parent)
 	, _view(view)
 	, _zoomFactor(MAX_ZOOM / 2)
 	, _showAnnotation(true)
-	, _magnifier(new Magnifier(this))
+	, _magnifier(new MagnifierWidget(this))
 {
 	setDragMode(QGraphicsView::NoDrag);
 

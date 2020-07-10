@@ -11,7 +11,11 @@ public:
 	~MagnifierWidget();
 
 protected:
-	void paintEvent(QPaintEvent*);
+	void paintEvent(QPaintEvent*) override;
+
+	void mousePressEvent(QMouseEvent*) override;
+	void mouseMoveEvent(QMouseEvent*) override;
+	void mouseReleaseEvent(QMouseEvent*) override;
 
 public slots:
 	void updatePosition();
@@ -20,4 +24,3 @@ private:
 	QSize _size;
 	QTimer* _timer;
 };
-

@@ -544,6 +544,8 @@ void MainWindow::slectLanguage(QAction* action)
 
 void MainWindow::slectLanguage(int language)
 {
+	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	settings.setValue("General/language", language);
 	if (language == 0)
 	{
 		qApp->removeTranslator(_translator);
