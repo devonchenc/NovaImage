@@ -31,6 +31,9 @@
     <Filter Include="Notification">
       <UniqueIdentifier>{d1bfad05-03c6-4364-aa79-e7dbee2beb29}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Diagram">
+      <UniqueIdentifier>{ddbda8cd-14eb-42f8-816c-701d3977a230}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image\BaseImage.cpp">
@@ -66,16 +69,7 @@
     <ClCompile Include="Widget\ToolBoxWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\DiagramItem.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Widget\ColorButton.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
-    <ClCompile Include="Widget\DiagramTextItem.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
-    <ClCompile Include="Widget\DiagramLineItem.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
     <ClCompile Include="Image\DicomImage.cpp">
@@ -153,11 +147,20 @@
     <ClCompile Include="Core\RecentFiles.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\DiagramAngleItem.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Widget\MagnifierWidget.cpp">
       <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Diagram\DiagramAngleItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
+    <ClCompile Include="Diagram\DiagramItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
+    <ClCompile Include="Diagram\DiagramLineItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
+    <ClCompile Include="Diagram\DiagramTextItem.cpp">
+      <Filter>Diagram</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -183,15 +186,6 @@
       <Filter>Widget</Filter>
     </QtMoc>
     <QtMoc Include="Widget\ColorButton.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
-    <QtMoc Include="Widget\DiagramTextItem.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
-    <QtMoc Include="Widget\DiagramItem.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
-    <QtMoc Include="Widget\DiagramLineItem.h">
       <Filter>Widget</Filter>
     </QtMoc>
     <QtMoc Include="Widget\RawParameterDialog.h">
@@ -233,11 +227,20 @@
     <QtMoc Include="Core\RecentFiles.h">
       <Filter>Core</Filter>
     </QtMoc>
-    <QtMoc Include="Widget\DiagramAngleItem.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
     <QtMoc Include="Widget\MagnifierWidget.h">
       <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramAngleItem.h">
+      <Filter>Diagram</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramItem.h">
+      <Filter>Diagram</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramLineItem.h">
+      <Filter>Diagram</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramTextItem.h">
+      <Filter>Diagram</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -14,8 +14,8 @@
 
 #include "ColorButton.h"
 #include "../Core/GraphicsScene.h"
-#include "DiagramLineItem.h"
-#include "DiagramAngleItem.h"
+#include "../Diagram/DiagramLineItem.h"
+#include "../Diagram/DiagramAngleItem.h"
 
 const QSize iconSize = QSize(32, 32);
 

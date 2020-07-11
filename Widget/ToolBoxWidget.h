@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BaseWidget.h"
-#include "DiagramItem.h"
+#include "../Diagram/DiagramItem.h"
 
 QT_BEGIN_NAMESPACE
 class QButtonGroup;

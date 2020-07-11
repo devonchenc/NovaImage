@@ -10,7 +10,7 @@ QT_END_NAMESPACE
 class ToolButton;
 class MouseHandler;
 
-#include "../Widget/DiagramItem.h"
+#include "../Diagram/DiagramItem.h"
 
 class ToolBar : public QToolBar
 {

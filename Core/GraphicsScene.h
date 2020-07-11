@@ -2,8 +2,8 @@
 
 #include <QGraphicsScene>
 
-#include "../Widget/DiagramItem.h"
-#include "../Widget/DiagramTextItem.h"
+#include "../Diagram/DiagramItem.h"
+#include "../Diagram/DiagramTextItem.h"
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;

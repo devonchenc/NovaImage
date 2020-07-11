@@ -6,9 +6,9 @@
 #include <QKeyEvent>
 #include <QBrush>
 
-#include "../Widget/DiagramTextItem.h"
-#include "../Widget/DiagramLineItem.h"
-#include "../Widget/DiagramAngleItem.h"
+#include "../Diagram/DiagramTextItem.h"
+#include "../Diagram/DiagramLineItem.h"
+#include "../Diagram/DiagramAngleItem.h"
 #include "GlobalFunc.h"
 #include "View.h"
 
