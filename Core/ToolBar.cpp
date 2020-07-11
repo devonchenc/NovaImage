@@ -16,19 +16,74 @@
 ToolBar::ToolBar(QWidget* parent)
 	: QToolBar(parent)
 {
-	createAction();
 	createButton();
+	createAction();
+	initButton();
 }
 
 ToolBar::ToolBar(const QString& title, QWidget* parent)
 	: QToolBar(title, parent)
 {
-	createAction();
 	createButton();
+	createAction();
+	initButton();
 }
 
 ToolBar::~ToolBar()
 {
+}
+
+void ToolBar::createButton()
+{
+	_openButton = new QToolButton;
+	_openButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_saveButton = new QToolButton;
+	_saveButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_layoutButton = new QToolButton;
+	_layoutButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_showInfoButton = new QToolButton;
+	_showInfoButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_flipButton = new QToolButton;
+	_flipButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_rotateButton = new QToolButton;
+	_rotateButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_undoButton = new QToolButton;
+//	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_restoreButton = new QToolButton;
+
+	_imageWindowButton = new ToolButton;
+	_imageWindowButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_zoomButton = new ToolButton;
+	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_cursorButton = new ToolButton;
+	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	_measurementButton = new ToolButton;
+	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+	addWidget(_openButton);
+	addWidget(_saveButton);
+	addSeparator();
+	addWidget(_layoutButton);
+	addWidget(_showInfoButton);
+	addWidget(_flipButton);
+	addWidget(_rotateButton);
+	addSeparator();
+	addWidget(_undoButton);
+	addWidget(_restoreButton);
+	addWidget(_imageWindowButton);
+	addWidget(_zoomButton);
+	addWidget(_cursorButton);
+	addWidget(_measurementButton);
 }
 
 void ToolBar::createAction()
@@ -73,18 +128,22 @@ void ToolBar::createAction()
 	_resetTransformation = new QAction(tr("Reset Transformation"), this);
 	_resetTransformation->setIcon(QIcon(":/icon/svg/reset.svg"));
 
-	_imageWindowAction = new QAction(tr("Adjust Window"), this);
+	_imageWindowAction = new QAction(tr("Adjust Window"), _imageWindowButton);
+	_imageWindowAction->setObjectName("imageWindowAction");
 	_imageWindowAction->setIcon(QIcon(":/icon/svg/imagewindow.svg"));
-	_ROIWidowAction = new QAction(tr("ROI Window"), this);
+	_ROIWidowAction = new QAction(tr("ROI Window"), _imageWindowButton);
+	_ROIWidowAction->setObjectName("ROIWidowAction");
 	_ROIWidowAction->setIcon(QIcon(":/icon/svg/ROI.svg"));
 	_defaultWindowAction = new QAction(tr("Default Window"), this);
 	_fullWindowAction = new QAction(tr("Full Window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 	_imageNegativeAction->setIcon(QIcon(":/icon/svg/negative.svg"));
 
-	_zoomAction = new QAction(tr("Zoom Image"), this);
+	_zoomAction = new QAction(tr("Zoom Image"), _zoomButton);
+	_zoomAction->setObjectName("zoomAction");
 	_zoomAction->setIcon(QIcon(":/icon/svg/zoom.svg"));
-	_magnifierAction = new QAction(tr("Magnifier"), this);
+	_magnifierAction = new QAction(tr("Magnifier"), _zoomButton);
+	_magnifierAction->setObjectName("magnifierAction");
 	_magnifierAction->setIcon(QIcon(":/icon/svg/magnifier.svg"));
 	_fitWindowAction = new QAction(tr("Fit Window"), this);
 	_1xAction = new QAction("100%", this);
@@ -96,30 +155,42 @@ void ToolBar::createAction()
 	_zoomOutAction = new QAction(tr("Zoom Out"), this);
 	_zoomOutAction->setIcon(QIcon(":/icon/svg/zoomout.svg"));
 
-	_cursorAction = new QAction(tr("Select"), this);
+	_cursorAction = new QAction(tr("Select"), _cursorButton);
+	_cursorAction->setObjectName("cursorAction");
 	_cursorAction->setIcon(QIcon(":/icon/svg/cursor.svg"));
-	_moveAction = new QAction(tr("Move"), this);
+	_moveAction = new QAction(tr("Move"), _cursorButton);
+	_moveAction->setObjectName("moveAction");
 	_moveAction->setIcon(QIcon(":/icon/svg/move.svg"));
 
-	_rulerAction = new QAction(tr("Length"), this);
+	_rulerAction = new QAction(tr("Length"), _measurementButton);
+	_rulerAction->setObjectName("rulerAction");
 	_rulerAction->setIcon(QIcon(":/icon/svg/length.svg"));
-	_arrowAction = new QAction(tr("Arrow"), this);
+	_arrowAction = new QAction(tr("Arrow"), _measurementButton);
+	_arrowAction->setObjectName("arrowAction");
 	_arrowAction->setIcon(QIcon(":/icon/svg/arrow.svg"));
-	_angleAction = new QAction(tr("Angle"), this);
+	_angleAction = new QAction(tr("Angle"), _measurementButton);
+	_angleAction->setObjectName("angleAction");
 	_angleAction->setIcon(QIcon(":/icon/svg/angle.svg"));
-	_rectAction = new QAction(tr("Rectangle"), this);
+	_rectAction = new QAction(tr("Rectangle"), _measurementButton);
+	_rectAction->setObjectName("rectAction");
 	_rectAction->setIcon(QIcon(":/icon/svg/rectangle.svg"));
-	_roundrectAction = new QAction(tr("Round Rectangle"), this);
+	_roundrectAction = new QAction(tr("Round Rectangle"), _measurementButton);
+	_roundrectAction->setObjectName("roundrectAction");
 	_roundrectAction->setIcon(QIcon(":/icon/svg/roundrect.svg"));
-	_circleAction = new QAction(tr("Circle"), this);
+	_circleAction = new QAction(tr("Circle"), _measurementButton);
+	_circleAction->setObjectName("circleAction");
 	_circleAction->setIcon(QIcon(":/icon/svg/circle.svg"));
-	_ellipseAction = new QAction(tr("Ellipse"), this);
+	_ellipseAction = new QAction(tr("Ellipse"), _measurementButton);
+	_ellipseAction->setObjectName("ellipseAction");
 	_ellipseAction->setIcon(QIcon(":/icon/svg/ellipse.svg"));
-	_rhombusAction = new QAction(tr("Rhombus"), this);
+	_rhombusAction = new QAction(tr("Rhombus"), _measurementButton);
+	_rhombusAction->setObjectName("rhombusAction");
 	_rhombusAction->setIcon(QIcon(":/icon/svg/rhombus.svg"));
-	_parallelogramAction = new QAction(tr("Parallelogram"), this);
+	_parallelogramAction = new QAction(tr("Parallelogram"), _measurementButton);
+	_parallelogramAction->setObjectName("parallelogramAction");
 	_parallelogramAction->setIcon(QIcon(":/icon/svg/parallelogram.svg"));
-	_textAction = new QAction(tr("Text"), this);
+	_textAction = new QAction(tr("Text"), _measurementButton);
+	_textAction->setObjectName("textAction");
 	_textAction->setIcon(QIcon(":/icon/svg/text.svg"));
 
 	MainWindow* mainWindow = getGlobalWindow();
@@ -173,14 +244,28 @@ void ToolBar::createAction()
 	connect(_rhombusAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_parallelogramAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 	connect(_textAction, &QAction::triggered, this, &ToolBar::measurementChanged);
+
+	_actionVector.push_back(_imageWindowAction);
+	_actionVector.push_back(_ROIWidowAction);
+	_actionVector.push_back(_zoomAction);
+	_actionVector.push_back(_magnifierAction);
+	_actionVector.push_back(_moveAction);
+	_actionVector.push_back(_cursorAction);
+	_actionVector.push_back(_rulerAction);
+	_actionVector.push_back(_arrowAction);
+	_actionVector.push_back(_angleAction);
+	_actionVector.push_back(_rectAction);
+	_actionVector.push_back(_roundrectAction);
+	_actionVector.push_back(_circleAction);
+	_actionVector.push_back(_ellipseAction);
+	_actionVector.push_back(_rhombusAction);
+	_actionVector.push_back(_parallelogramAction);
+	_actionVector.push_back(_textAction);
 }
 
-void ToolBar::createButton()
+void ToolBar::initButton()
 {
 	MainWindow* mainWindow = getGlobalWindow();
-
-	_openButton = new QToolButton;
-	_openButton->setPopupMode(QToolButton::MenuButtonPopup);
 	QMenu* menu = new QMenu(this);
 	menu->addAction(_openDicomAction);
 	menu->addAction(_openRawAction);
@@ -189,8 +274,6 @@ void ToolBar::createButton()
 	_openButton->setToolTip(tr("Open Image File"));
 	connect(_openButton, &QToolButton::clicked, mainWindow, &MainWindow::openImage);
 
-	_saveButton = new QToolButton;
-	_saveButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_saveAsRawAction);
 	_saveButton->setMenu(menu);
@@ -198,8 +281,6 @@ void ToolBar::createButton()
 	_saveButton->setToolTip(tr("Save Image File"));
 	connect(_saveButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
-	_layoutButton = new QToolButton;
-	_layoutButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_showMenuAction);
 	menu->addAction(_showDockWidgetAction);
@@ -210,8 +291,6 @@ void ToolBar::createButton()
 	_layoutButton->setToolTip(tr("Change Layout"));
 	connect(_layoutButton, &QToolButton::clicked, this, &ToolBar::layoutButtonClicked);
 
-	_showInfoButton = new QToolButton;
-	_showInfoButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_showAnnotationAction);
 	menu->addAction(_showCrossAction);
@@ -222,8 +301,6 @@ void ToolBar::createButton()
 	_showInfoButton->setToolTip(tr("Toggle Annotations"));
 	connect(_showInfoButton, &QToolButton::clicked, this, &ToolBar::showInfoButtonClicked);
 
-	_flipButton = new QToolButton;
-	_flipButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_flipHorizontalAction);
 	menu->addAction(_flipVerticalAction);
@@ -232,8 +309,6 @@ void ToolBar::createButton()
 	_flipButton->setToolTip(tr("Flip"));
 	connect(_flipButton, &QToolButton::clicked, _flipHorizontalAction, &QAction::triggered);
 
-	_rotateButton = new QToolButton;
-	_rotateButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_rotate90CW);
 	menu->addAction(_rotate90CCW);
@@ -246,19 +321,14 @@ void ToolBar::createButton()
 	_rotateButton->setToolTip(tr("Rotate"));
 	connect(_rotateButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
 
-	_undoButton = new QToolButton;
-//	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
 	_undoButton->setIcon(QIcon(":/icon/svg/undo.svg"));
 	_undoButton->setToolTip(tr("Undo"));
 	connect(_undoButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::undo);
 
-	_restoreButton = new QToolButton;
 	_restoreButton->setIcon(QIcon(":/icon/svg/restore.svg"));
 	_restoreButton->setToolTip(tr("Restore"));
 	connect(_restoreButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::restore);
 
-	_imageWindowButton = new ToolButton;
-	_imageWindowButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_imageWindowAction);
 	menu->addAction(_ROIWidowAction);
@@ -274,8 +344,6 @@ void ToolBar::createButton()
 	_imageWindowButton->setCurrentAction(_imageWindowAction);
 	connect(_imageWindowButton, &QToolButton::triggered, this, &ToolBar::imageWindowButtonTriggered);
 
-	_zoomButton = new ToolButton;
-	_zoomButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_zoomAction);
 	menu->addAction(_magnifierAction);
@@ -296,8 +364,6 @@ void ToolBar::createButton()
 	_zoomButton->setCurrentAction(_zoomAction);
 	connect(_zoomButton, &QToolButton::triggered, this, &ToolBar::zoomButtonTriggered);
 
-	_cursorButton = new ToolButton;
-	_cursorButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_cursorAction);
 	menu->addAction(_moveAction);
@@ -308,8 +374,6 @@ void ToolBar::createButton()
 	_cursorButton->setCurrentAction(_cursorAction);
 	connect(_cursorButton, &QToolButton::triggered, this, &ToolBar::cursorButtonTriggered);
 
-	_measurementButton = new ToolButton;
-	_measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 	menu = new QMenu(this);
 	menu->addAction(_rulerAction);
 	menu->addAction(_arrowAction);
@@ -329,21 +393,6 @@ void ToolBar::createButton()
 	_measurementButton->installEventFilter(this);
 	_measurementButton->setCurrentAction(_rulerAction);
 	connect(_measurementButton, &QToolButton::triggered, this, &ToolBar::measurementButtonTriggered);
-
-	addWidget(_openButton);
-	addWidget(_saveButton);
-	addSeparator();
-	addWidget(_layoutButton);
-	addWidget(_showInfoButton);
-	addWidget(_flipButton);
-	addWidget(_rotateButton);
-	addSeparator();
-	addWidget(_undoButton);
-	addWidget(_restoreButton);
-	addWidget(_imageWindowButton);
-	addWidget(_zoomButton);
-	addWidget(_cursorButton);
-	addWidget(_measurementButton);
 }
 
 void ToolBar::changeEvent(QEvent* event)
@@ -539,6 +588,11 @@ void ToolBar::showInfoButtonClicked()
 	_showMeasurementAction->toggled(checked);
 }
 
+void ToolBar::undoButtonClicked()
+{
+
+}
+
 void ToolBar::imageWindowActionTriggered()
 {
 	_imageWindowButton->setIconByName(":/icon/svg/imagewindow.svg");
@@ -551,18 +605,11 @@ void ToolBar::ROIWindowActionTriggered()
 	_imageWindowButton->setMouseHandler(new ROIWindowMouseHandler());
 }
 
-void ToolBar::undoButtonClicked()
-{
-
-}
-
 void ToolBar::imageWindowButtonTriggered(QAction* action)
 {
 	if (action == _imageWindowAction || action == _ROIWidowAction)
 	{
-		_imageWindowButton->setCurrentAction(action);
-		ToolButton::setLeftMouseButton(_imageWindowButton);
-		MouseHandler::setLeftButton(_imageWindowButton);
+		_imageWindowButton->activeAction(action);
 	}
 }
 
@@ -582,9 +629,7 @@ void ToolBar::zoomButtonTriggered(QAction* action)
 {
 	if (action == _zoomAction || action == _magnifierAction)
 	{
-		_zoomButton->setCurrentAction(action);
-		ToolButton::setLeftMouseButton(_zoomButton);
-		MouseHandler::setLeftButton(_zoomButton);
+		_zoomButton->activeAction(action);
 	}
 }
 
@@ -604,9 +649,7 @@ void ToolBar::moveScene()
 
 void ToolBar::cursorButtonTriggered(QAction* action)
 {
-	_cursorButton->setCurrentAction(action);
-	ToolButton::setLeftMouseButton(_cursorButton);
-	MouseHandler::setLeftButton(_cursorButton);
+	_cursorButton->activeAction(action);
 }
 
 void ToolBar::measurementChanged()
@@ -672,7 +715,5 @@ void ToolBar::measurementChanged()
 
 void ToolBar::measurementButtonTriggered(QAction* action)
 {
-	_measurementButton->setCurrentAction(action);
-	ToolButton::setLeftMouseButton(_measurementButton);
-	MouseHandler::setLeftButton(_measurementButton);
+	_measurementButton->activeAction(action);
 }

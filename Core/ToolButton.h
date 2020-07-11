@@ -19,6 +19,8 @@ public:
 
 	QAction* currentAction()		{ return _currentAction; }
 
+	void activeAction(QAction* action, bool leftMouseButton = true);
+
 	void setMouseHandler(MouseHandler* handler);
 
 	MouseHandler* mouseHandler()	{ return _handler; }

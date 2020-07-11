@@ -22,6 +22,10 @@ signals:
 private:
 	void initUI();
 
+	QWidget* createGeneralWidget();
+
+	QWidget* createImageWidget();
+
 	void loadSettings();
 
 private slots:
@@ -29,6 +33,8 @@ private slots:
 
 private:
 	QComboBox* _languageComboBox;
+	QComboBox* _leftMouseComboBox;
+	QComboBox* _rightMouseComboBox;
 	QCheckBox* _autoFitWindowCheckBox;
 	QButtonGroup* _windowGroup;
 };

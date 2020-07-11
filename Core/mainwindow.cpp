@@ -24,6 +24,7 @@
 #include "ToolBar.h"
 #include "PluginInterface.h"
 #include "RecentFiles.h"
+#include "ToolButton.h"
 #include "../Image/BaseImage.h"
 #include "../Widget/ToolBoxWidget.h"
 #include "../Widget/WidgetManager.h"
@@ -213,6 +214,40 @@ void MainWindow::createToolbar()
 
 	_toolBar = new ToolBar(tr("Toolbar"), this);
 	addToolBar(_toolBar);
+
+	// Load mouse settings
+	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+	QString leftMouseString = settings.value("General/leftMouse", tr("None")).toString();
+	QString rightMouseString = settings.value("General/rightMouse", tr("None")).toString();
+	QVector<QAction*> vec = mouseActionVector();
+	if (leftMouseString != "None")
+	{
+		for (int i = 0; i < vec.size(); i++)
+		{
+			if (leftMouseString == vec[i]->objectName())
+			{
+				QAction* action = vec[i];
+				action->trigger();
+				ToolButton* toolButton = qobject_cast<ToolButton*>(action->parentWidget());
+				toolButton->activeAction(action, true);
+				break;
+			}
+		}
+	}
+	if (rightMouseString != "None")
+	{
+		for (int i = 0; i < vec.size(); i++)
+		{
+			if (rightMouseString == vec[i]->objectName())
+			{
+				QAction* action = vec[i];
+				action->trigger();
+				ToolButton* toolButton = qobject_cast<ToolButton*>(action->parentWidget());
+				toolButton->activeAction(action, false);
+				break;
+			}
+		}
+	}
 }
 
 void MainWindow::createToolWidget()
@@ -313,6 +348,11 @@ void MainWindow::imageOpened()
 void MainWindow::setToolBoxWidgetVisible(bool line, bool text)
 {
 	emit setToolBoxVisible(line, text);
+}
+
+QVector<QAction*> MainWindow::mouseActionVector()
+{
+	return _toolBar->actionVector();
 }
 
 void MainWindow::showMenuBar(bool show)

@@ -39,6 +39,8 @@ public:
 
 	void setToolBoxWidgetVisible(bool line, bool text);
 
+	QVector<QAction*> mouseActionVector();
+
 protected:
 	void changeEvent(QEvent* event) override;
 

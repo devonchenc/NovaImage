@@ -47,6 +47,21 @@ void ToolButton::setCurrentAction(QAction* action)
 	_currentAction = action;
 }
 
+void ToolButton::activeAction(QAction* action, bool leftMouseButton)
+{
+	setCurrentAction(action);
+	if (leftMouseButton)
+	{
+		ToolButton::setLeftMouseButton(this);
+		MouseHandler::setLeftButton(this);
+	}
+	else
+	{
+		ToolButton::setRightMouseButton(this);
+		MouseHandler::setRightButton(this);
+	}
+}
+
 void ToolButton::setMouseHandler(MouseHandler* handler)
 {
 	if (_handler)

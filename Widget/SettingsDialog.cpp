@@ -9,8 +9,13 @@
 #include <QButtonGroup>
 #include <QGroupBox>
 #include <QHBoxLayout>
+#include <QAction>
 #include <QSettings>
 #include <QCoreApplication>
+
+#include "../Core/GlobalFunc.h"
+#include "../Core/mainwindow.h"
+#include "../Core/ToolButton.h"
 
 #if _MSC_VER >= 1600 
 #pragma execution_character_set("UTF-8")
@@ -37,40 +42,9 @@ SettingsDialog::~SettingsDialog()
 
 void SettingsDialog::initUI()
 {
-	_languageComboBox = new QComboBox;
-	_languageComboBox->addItem("English");
-	_languageComboBox->addItem("中文（简体）");
-	QHBoxLayout* hLayout1 = new QHBoxLayout;
-	hLayout1->addWidget(new QLabel(tr("Language:")));
-	hLayout1->addWidget(_languageComboBox);
-
-	QWidget* generalWidget = new QWidget;
-	generalWidget->setLayout(hLayout1);
-
-	_autoFitWindowCheckBox = new QCheckBox(tr("Image display size automatically adapts to window width"));
-	QRadioButton* defaultWindowButton = new QRadioButton(tr("Default Window"));
-	QRadioButton* fullWindowButton = new QRadioButton(tr("Full Window"));
-	_windowGroup = new QButtonGroup;
-	_windowGroup->addButton(defaultWindowButton, 0);
-	_windowGroup->addButton(fullWindowButton, 1);
-	QHBoxLayout* hLayout2 = new QHBoxLayout;
-	hLayout2->addWidget(defaultWindowButton);
-	hLayout2->addWidget(fullWindowButton);
-	QGroupBox* groupBox1 = new QGroupBox(tr("Image display window"));
-	groupBox1->setLayout(hLayout2);
-	QVBoxLayout* vLayout2 = new QVBoxLayout;
-	vLayout2->addWidget(_autoFitWindowCheckBox);
-	vLayout2->addWidget(groupBox1);
-
-	QWidget* imageWidget = new QWidget;
-	imageWidget->setLayout(vLayout2);
-
-	QLabel* label = new QLabel("Hello Qt");
-
 	QTabWidget* tabWidget = new QTabWidget(this);
-	tabWidget->addTab(generalWidget, tr("General"));
-	tabWidget->addTab(imageWidget, tr("Image"));
-	tabWidget->addTab(label, "Reserved");
+	tabWidget->addTab(createGeneralWidget(), tr("General"));
+	tabWidget->addTab(createImageWidget(), tr("Image"));
 
 	QPushButton* acceptButton = new QPushButton(tr("Accept"));
 	connect(acceptButton, &QPushButton::clicked, this, &SettingsDialog::acceptButtonClicked);
@@ -89,14 +63,114 @@ void SettingsDialog::initUI()
 	setLayout(globalLayout);
 }
 
+QWidget* SettingsDialog::createGeneralWidget()
+{
+	_languageComboBox = new QComboBox;
+	_languageComboBox->addItem("English");
+	_languageComboBox->addItem("中文（简体）");
+	QHBoxLayout* hLayout1 = new QHBoxLayout;
+	hLayout1->addWidget(new QLabel(tr("Language:")));
+	hLayout1->addWidget(_languageComboBox);
+
+	MainWindow* mainWindow = getGlobalWindow();
+	QVector<QAction*> vec = mainWindow->mouseActionVector();
+
+	_leftMouseComboBox = new QComboBox;
+	_leftMouseComboBox->addItem(tr("None"));
+	_rightMouseComboBox = new QComboBox;
+	_rightMouseComboBox->addItem(tr("None"));
+	for (int i = 0; i < vec.size(); i++)
+	{
+		_leftMouseComboBox->addItem(vec[i]->text());
+		_rightMouseComboBox->addItem(vec[i]->text());
+	}
+
+	QGridLayout* hLayout2 = new QGridLayout;
+	hLayout2->addWidget(new QLabel(tr("Left Mouse:")), 0, 0);
+	hLayout2->addWidget(_leftMouseComboBox, 0, 1);
+	hLayout2->addWidget(new QLabel(tr("Right Mouse:")), 1, 0);
+	hLayout2->addWidget(_rightMouseComboBox, 1, 1);
+	QGroupBox* groupBox1 = new QGroupBox(tr("Default mouse operation"));
+	groupBox1->setLayout(hLayout2);
+
+	QVBoxLayout* vLayout = new QVBoxLayout;
+	vLayout->addLayout(hLayout1);
+	vLayout->addWidget(groupBox1);
+
+	QWidget* generalWidget = new QWidget;
+	generalWidget->setLayout(vLayout);
+
+	return generalWidget;
+}
+
+QWidget* SettingsDialog::createImageWidget()
+{
+	_autoFitWindowCheckBox = new QCheckBox(tr("Image display size automatically adapts to window width"));
+	QRadioButton* defaultWindowButton = new QRadioButton(tr("Default Window"));
+	QRadioButton* fullWindowButton = new QRadioButton(tr("Full Window"));
+	_windowGroup = new QButtonGroup;
+	_windowGroup->addButton(defaultWindowButton, 0);
+	_windowGroup->addButton(fullWindowButton, 1);
+	QHBoxLayout* hLayout = new QHBoxLayout;
+	hLayout->addWidget(defaultWindowButton);
+	hLayout->addWidget(fullWindowButton);
+	QGroupBox* groupBox1 = new QGroupBox(tr("Image display window"));
+	groupBox1->setLayout(hLayout);
+	QVBoxLayout* vLayout = new QVBoxLayout;
+	vLayout->addWidget(_autoFitWindowCheckBox);
+	vLayout->addWidget(groupBox1);
+
+	QWidget* imageWidget = new QWidget;
+	imageWidget->setLayout(vLayout);
+
+	return imageWidget;
+}
+
 void SettingsDialog::loadSettings()
 {
 	QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
 	int language = settings.value("General/language", 0).toInt();
+	QString leftMouseString = settings.value("General/leftMouse", tr("None")).toString();
+	QString rightMouseString = settings.value("General/rightMouse", tr("None")).toString();
 	bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
 	int displayWindow = settings.value("Image/displayWindow", 0).toInt();
 
 	_languageComboBox->setCurrentIndex(language);
+
+	MainWindow* mainWindow = getGlobalWindow();
+	QVector<QAction*> vec = mainWindow->mouseActionVector();
+	if (leftMouseString == "None")
+	{
+		_leftMouseComboBox->setCurrentIndex(0);
+	}
+	else
+	{
+		for (int i = 0; i < vec.size(); i++)
+		{
+			if (leftMouseString == vec[i]->objectName())
+			{
+				_leftMouseComboBox->setCurrentIndex(i + 1);
+				break;
+			}
+		}
+	}
+	
+	if (rightMouseString == "None")
+	{
+		_rightMouseComboBox->setCurrentIndex(0);
+	}
+	else
+	{
+		for (int i = 0; i < vec.size(); i++)
+		{
+			if (rightMouseString == vec[i]->objectName())
+			{
+				_rightMouseComboBox->setCurrentIndex(i + 1);
+				break;
+			}
+		}
+	}
+
 	_autoFitWindowCheckBox->setChecked(fitWindow);
 	_windowGroup->button(displayWindow)->setChecked(true);
 }
@@ -107,6 +181,34 @@ void SettingsDialog::acceptButtonClicked()
 	int language = settings.value("General/language", 0).toInt();
 
 	settings.setValue("General/language", _languageComboBox->currentIndex());
+	MainWindow* mainWindow = getGlobalWindow();
+	QVector<QAction*> vec = mainWindow->mouseActionVector();
+	if (_leftMouseComboBox->currentIndex() == 0)
+	{
+		settings.setValue("General/leftMouse", "None");
+	}
+	else
+	{
+		QAction* action = vec[_leftMouseComboBox->currentIndex() - 1];
+		settings.setValue("General/leftMouse", action->objectName());
+		action->trigger();
+		ToolButton* toolButton = qobject_cast<ToolButton*>(action->parentWidget());
+		toolButton->activeAction(action, true);
+	}
+
+	if (_rightMouseComboBox->currentIndex() == 0)
+	{
+		settings.setValue("General/rightMouse", "None");
+	}
+	else
+	{
+		QAction* action = vec[_rightMouseComboBox->currentIndex() - 1];
+		settings.setValue("General/rightMouse", action->objectName());
+		action->trigger();
+		ToolButton* toolButton = qobject_cast<ToolButton*>(action->parentWidget());
+		toolButton->activeAction(action, false);
+	}
+
 	settings.setValue("Image/autoFitWindow", _autoFitWindowCheckBox->isChecked());
 	settings.setValue("Image/displayWindow", _windowGroup->checkedId());
 

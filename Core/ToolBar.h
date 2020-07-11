@@ -21,10 +21,14 @@ public:
 	ToolBar(const QString& title, QWidget* parent = nullptr);
 	virtual ~ToolBar();
 
+	QVector<QAction*> actionVector() { return _actionVector; }
+
 private:
+	void createButton();
+
 	void createAction();
 
-	void createButton();
+	void initButton();
 
 protected:
 	void changeEvent(QEvent* event) override;
@@ -88,8 +92,8 @@ private:
 	QAction* _zoomInAction;
 	QAction* _zoomOutAction;
 
-	QAction* _moveAction;
 	QAction* _cursorAction;
+	QAction* _moveAction;
 
 	QAction* _rulerAction;
 	QAction* _arrowAction;
@@ -115,4 +119,6 @@ private:
 	ToolButton* _zoomButton;
 	ToolButton* _cursorButton;
 	ToolButton* _measurementButton;
+
+	QVector<QAction*> _actionVector;
 };
