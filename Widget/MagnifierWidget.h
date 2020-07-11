@@ -10,6 +10,11 @@ public:
 	explicit MagnifierWidget(QWidget* parent = nullptr);
 	~MagnifierWidget();
 
+public:
+	void setMagnifyArea(QSize size);
+
+	void setMagnifyTimes(int times);
+
 protected:
 	void paintEvent(QPaintEvent*) override;
 
@@ -21,7 +26,11 @@ public slots:
 	void updatePosition();
 
 private:
-	QSize _size;
-	int _magnificationTimes;
+	enum Direction { TopLeft, TopRight, BottomLeft, BottomRight};
+	Direction _displayDirection;
+	QSize _magnifyAeraSize;
+	int _magnifyTimes;
+	QSize _magnifierSize;
+	QSize _totalSize;
 	QTimer* _timer;
 };
