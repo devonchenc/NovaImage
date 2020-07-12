@@ -26,7 +26,6 @@
         <file>svg/reset.svg</file>
         <file>svg/restore.svg</file>
         <file>svg/rhombus.svg</file>
-        <file>svg/ROI.svg</file>
         <file>svg/rotate_ccw.svg</file>
         <file>svg/rotate_cw.svg</file>
         <file>svg/roundrect.svg</file>
@@ -41,5 +40,6 @@
         <file>svg/zoomout.svg</file>
         <file>svg/magnifier.svg</file>
         <file>svg/view.svg</file>
+        <file>svg/ROIwindow.svg</file>
     </qresource>
 </RCC>

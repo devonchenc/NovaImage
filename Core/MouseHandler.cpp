@@ -62,10 +62,35 @@ void MouseHandler::setLeftButton(ToolButton* button)
 	_leftButton = button;
 }
 
+void MouseHandler::unsetLeftButton()
+{
+	if (_leftButton)
+	{
+		if (_leftButton->mouseHandler())
+		{
+			_leftButton->mouseHandler()->unbounded();
+		}
+		_leftButton = nullptr;
+	}
+}
+
 void MouseHandler::setRightButton(ToolButton* button)
 {
 	_rightButton = button;
 }
+
+void MouseHandler::unsetRightButton()
+{
+	if (_rightButton)
+	{
+		if (_rightButton->mouseHandler())
+		{
+			_rightButton->mouseHandler()->unbounded();
+		}
+		_rightButton = nullptr;
+	}
+}
+
 //////////////////////////////////////////////////////////////////////////
 
 void ImageWindowMouseHandler::press(QMouseEvent* event)

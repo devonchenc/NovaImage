@@ -129,21 +129,21 @@ void ToolBar::createAction()
 	_resetTransformation->setIcon(QIcon(":/icon/svg/reset.svg"));
 
 	_imageWindowAction = new QAction(tr("Adjust Window"), _imageWindowButton);
-	_imageWindowAction->setObjectName("imageWindowAction");
+	_imageWindowAction->setObjectName("imagewindow");
 	_imageWindowAction->setIcon(QIcon(":/icon/svg/imagewindow.svg"));
 	_ROIWidowAction = new QAction(tr("ROI Window"), _imageWindowButton);
-	_ROIWidowAction->setObjectName("ROIWidowAction");
-	_ROIWidowAction->setIcon(QIcon(":/icon/svg/ROI.svg"));
+	_ROIWidowAction->setObjectName("ROIwindow");
+	_ROIWidowAction->setIcon(QIcon(":/icon/svg/ROIwindow.svg"));
 	_defaultWindowAction = new QAction(tr("Default Window"), this);
 	_fullWindowAction = new QAction(tr("Full Window"), this);
 	_imageNegativeAction = new QAction(tr("Negative"), this);
 	_imageNegativeAction->setIcon(QIcon(":/icon/svg/negative.svg"));
 
 	_zoomAction = new QAction(tr("Zoom Image"), _zoomButton);
-	_zoomAction->setObjectName("zoomAction");
+	_zoomAction->setObjectName("zoom");
 	_zoomAction->setIcon(QIcon(":/icon/svg/zoom.svg"));
 	_magnifierAction = new QAction(tr("Magnifier"), _zoomButton);
-	_magnifierAction->setObjectName("magnifierAction");
+	_magnifierAction->setObjectName("magnifier");
 	_magnifierAction->setIcon(QIcon(":/icon/svg/magnifier.svg"));
 	_fitWindowAction = new QAction(tr("Fit Window"), this);
 	_1xAction = new QAction("100%", this);
@@ -156,41 +156,41 @@ void ToolBar::createAction()
 	_zoomOutAction->setIcon(QIcon(":/icon/svg/zoomout.svg"));
 
 	_cursorAction = new QAction(tr("Select"), _cursorButton);
-	_cursorAction->setObjectName("cursorAction");
+	_cursorAction->setObjectName("cursor");
 	_cursorAction->setIcon(QIcon(":/icon/svg/cursor.svg"));
 	_moveAction = new QAction(tr("Move"), _cursorButton);
-	_moveAction->setObjectName("moveAction");
+	_moveAction->setObjectName("move");
 	_moveAction->setIcon(QIcon(":/icon/svg/move.svg"));
 
 	_rulerAction = new QAction(tr("Length"), _measurementButton);
-	_rulerAction->setObjectName("rulerAction");
+	_rulerAction->setObjectName("length");
 	_rulerAction->setIcon(QIcon(":/icon/svg/length.svg"));
 	_arrowAction = new QAction(tr("Arrow"), _measurementButton);
-	_arrowAction->setObjectName("arrowAction");
+	_arrowAction->setObjectName("arrow");
 	_arrowAction->setIcon(QIcon(":/icon/svg/arrow.svg"));
 	_angleAction = new QAction(tr("Angle"), _measurementButton);
-	_angleAction->setObjectName("angleAction");
+	_angleAction->setObjectName("angle");
 	_angleAction->setIcon(QIcon(":/icon/svg/angle.svg"));
 	_rectAction = new QAction(tr("Rectangle"), _measurementButton);
-	_rectAction->setObjectName("rectAction");
+	_rectAction->setObjectName("rectangle");
 	_rectAction->setIcon(QIcon(":/icon/svg/rectangle.svg"));
 	_roundrectAction = new QAction(tr("Round Rectangle"), _measurementButton);
-	_roundrectAction->setObjectName("roundrectAction");
+	_roundrectAction->setObjectName("roundrect");
 	_roundrectAction->setIcon(QIcon(":/icon/svg/roundrect.svg"));
 	_circleAction = new QAction(tr("Circle"), _measurementButton);
-	_circleAction->setObjectName("circleAction");
+	_circleAction->setObjectName("circle");
 	_circleAction->setIcon(QIcon(":/icon/svg/circle.svg"));
 	_ellipseAction = new QAction(tr("Ellipse"), _measurementButton);
-	_ellipseAction->setObjectName("ellipseAction");
+	_ellipseAction->setObjectName("ellipse");
 	_ellipseAction->setIcon(QIcon(":/icon/svg/ellipse.svg"));
 	_rhombusAction = new QAction(tr("Rhombus"), _measurementButton);
-	_rhombusAction->setObjectName("rhombusAction");
+	_rhombusAction->setObjectName("rhombus");
 	_rhombusAction->setIcon(QIcon(":/icon/svg/rhombus.svg"));
 	_parallelogramAction = new QAction(tr("Parallelogram"), _measurementButton);
-	_parallelogramAction->setObjectName("parallelogramAction");
+	_parallelogramAction->setObjectName("parallelogram");
 	_parallelogramAction->setIcon(QIcon(":/icon/svg/parallelogram.svg"));
 	_textAction = new QAction(tr("Text"), _measurementButton);
-	_textAction->setObjectName("textAction");
+	_textAction->setObjectName("text");
 	_textAction->setIcon(QIcon(":/icon/svg/text.svg"));
 
 	MainWindow* mainWindow = getGlobalWindow();
@@ -601,7 +601,7 @@ void ToolBar::imageWindowActionTriggered()
 
 void ToolBar::ROIWindowActionTriggered()
 {
-	_imageWindowButton->setIconByName(":/icon/svg/ROI.svg");
+	_imageWindowButton->setIconByName(":/icon/svg/ROIwindow.svg");
 	_imageWindowButton->setMouseHandler(new ROIWindowMouseHandler());
 }
 

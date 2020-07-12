@@ -89,6 +89,7 @@ void ToolButton::unsetLeftMouseButton()
 		}
 		_leftMouseButton = nullptr;
 	}
+	MouseHandler::unsetLeftButton();
 	updateAllButtonsIcon();
 }
 
@@ -114,6 +115,7 @@ void ToolButton::unsetRightMouseButton()
 		}
 		_rightMouseButton = nullptr;
 	}
+	MouseHandler::unsetRightButton();
 	updateAllButtonsIcon();
 }
 

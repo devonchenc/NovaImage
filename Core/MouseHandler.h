@@ -19,7 +19,11 @@ public:
 
 	static void setLeftButton(ToolButton* button);
 
+	static void unsetLeftButton();
+
 	static void setRightButton(ToolButton* button);
+
+	static void unsetRightButton();
 
 public:
 	virtual void unbounded() {}

@@ -76,13 +76,16 @@ QWidget* SettingsDialog::createGeneralWidget()
 	QVector<QAction*> vec = mainWindow->mouseActionVector();
 
 	_leftMouseComboBox = new QComboBox;
+	_leftMouseComboBox->setIconSize(QSize(24, 24));
 	_leftMouseComboBox->addItem(tr("None"));
 	_rightMouseComboBox = new QComboBox;
+	_rightMouseComboBox->setIconSize(QSize(24, 24));
 	_rightMouseComboBox->addItem(tr("None"));
 	for (int i = 0; i < vec.size(); i++)
 	{
-		_leftMouseComboBox->addItem(vec[i]->text());
-		_rightMouseComboBox->addItem(vec[i]->text());
+		QString icon = QString(":/icon/svg/%1.svg").arg(vec[i]->objectName());
+		_leftMouseComboBox->addItem(QIcon(icon), vec[i]->text());
+		_rightMouseComboBox->addItem(QIcon(icon), vec[i]->text());
 	}
 
 	QGridLayout* hLayout2 = new QGridLayout;
@@ -186,6 +189,8 @@ void SettingsDialog::acceptButtonClicked()
 	if (_leftMouseComboBox->currentIndex() == 0)
 	{
 		settings.setValue("General/leftMouse", "None");
+
+		ToolButton::unsetLeftMouseButton();
 	}
 	else
 	{
@@ -199,6 +204,8 @@ void SettingsDialog::acceptButtonClicked()
 	if (_rightMouseComboBox->currentIndex() == 0)
 	{
 		settings.setValue("General/rightMouse", "None");
+
+		ToolButton::unsetRightMouseButton();
 	}
 	else
 	{
