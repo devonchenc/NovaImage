@@ -30,7 +30,7 @@ public:
 	QColor lineColor() const { return _lineColor; }
 
 	// utilities
-	void deleteItems(QList<QGraphicsItem*> const& items);
+	void deleteItems(const QList<QGraphicsItem*>& items);
 
 	void setMode(int mode);
 

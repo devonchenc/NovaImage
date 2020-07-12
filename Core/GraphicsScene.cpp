@@ -121,7 +121,7 @@ void GraphicsScene::setTextFont(const QFont& font)
 	}
 }
 
-void GraphicsScene::deleteItems(QList<QGraphicsItem*> const& items)
+void GraphicsScene::deleteItems(const QList<QGraphicsItem*>& items)
 {
 	QList<QGraphicsItem*> diagramItems;
 	foreach (QGraphicsItem* item, items)
@@ -131,6 +131,16 @@ void GraphicsScene::deleteItems(QList<QGraphicsItem*> const& items)
 
 	foreach (QGraphicsItem* item, diagramItems)
 	{
+		// Delete unfinished line or angle item
+		if (item == _currentDrawingLine)
+		{
+			_currentDrawingLine = nullptr;
+		}
+		else if (item == _currentDrawingAngle)
+		{
+			_currentDrawingAngle = nullptr;
+		}
+
 		removeItem(item);
 		delete item;
 	}
@@ -239,6 +249,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 		{
 			if (_currentDrawingAngle == nullptr)
 			{
+				qDebug() << "Drawing Point2";
 				_currentDrawingAngle = new DiagramAngleItem(_startPoint, _itemMenu);
 				_currentDrawingAngle->setPen(QPen(_lineColor, 2));
 				_currentDrawingAngle->setEndpointPen(QPen(_fillColor));
@@ -248,6 +259,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 			}
 			else
 			{
+				qDebug() << "Drawing Point3";
 				_currentDrawingAngle->setCurrentDrawingIndex(DiagramAngleItem::Point3);
 				_currentDrawingAngle->setCurrentDrawingPoint(_startPoint);
 			}

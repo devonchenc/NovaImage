@@ -64,7 +64,7 @@ protected:
 private:
 	void createItemMenus();
 
-	QList<QGraphicsItem*> cloneItems(QList<QGraphicsItem*> const& items);
+	QList<QGraphicsItem*> cloneItems(const QList<QGraphicsItem*>& items);
 
 private:
 	GraphicsScene* _scene;
