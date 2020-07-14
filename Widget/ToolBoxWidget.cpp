@@ -138,8 +138,9 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 
 		getToolButton(_cursorWidget)->setToolTip(tr("Point"));
 		getToolButton(_lengthWidget)->setToolTip(tr("Line"));
-		getToolButton(_angleWidget)->setToolTip(tr("Angle"));
 		getToolButton(_arrowWidget)->setToolTip(tr("Arrow"));
+		getToolButton(_angleWidget)->setToolTip(tr("Angle"));
+		getToolButton(_plotWidget)->setToolTip(tr("Plot"));
 		getToolButton(_rectangleWidget)->setToolTip(tr("Rectangle"));
 		getToolButton(_roundRectWidget)->setToolTip(tr("RoundRect"));
 		getToolButton(_circleWidget)->setToolTip(tr("Circle"));
@@ -174,8 +175,9 @@ QGridLayout* ToolBoxWidget::createToolButton()
 {
 	_cursorWidget = createCellWidget(tr("Cursor"), DiagramItem::None);
 	_lengthWidget = createCellWidget(tr("Length"), DiagramItem::Line);
-	_angleWidget = createCellWidget(tr("Angle"), DiagramItem::Angle);
 	_arrowWidget = createCellWidget(tr("Arrow"), DiagramItem::Arrow);
+	_angleWidget = createCellWidget(tr("Angle"), DiagramItem::Angle);
+	_plotWidget = createCellWidget(tr("Plot"), DiagramItem::Plot);
 	_rectangleWidget = createCellWidget(tr("Rectangle"), DiagramItem::Rect);
 	_roundRectWidget = createCellWidget(tr("RoundRect"), DiagramItem::RoundRect);
 	_circleWidget = createCellWidget(tr("Circle"), DiagramItem::Circle);
@@ -187,15 +189,16 @@ QGridLayout* ToolBoxWidget::createToolButton()
 	QGridLayout* gridLayout = new QGridLayout;
 	gridLayout->addWidget(_cursorWidget, 0, 0);
 	gridLayout->addWidget(_lengthWidget, 0, 1);
-	gridLayout->addWidget(_angleWidget, 0, 2);
-	gridLayout->addWidget(_arrowWidget, 0, 3);
-	gridLayout->addWidget(_rectangleWidget, 0, 4);
-	gridLayout->addWidget(_roundRectWidget, 1, 0);
-	gridLayout->addWidget(_circleWidget, 1, 1);
-	gridLayout->addWidget(_ellipseWidget, 1, 2);
-	gridLayout->addWidget(_rhombusWidget, 1, 3);
-	gridLayout->addWidget(_parallelogramWidget, 1, 4);
-	gridLayout->addWidget(_textWidget, 2, 0);
+	gridLayout->addWidget(_arrowWidget, 0, 2);
+	gridLayout->addWidget(_angleWidget, 0, 3);
+	gridLayout->addWidget(_plotWidget, 0, 4);
+	gridLayout->addWidget(_rectangleWidget, 1, 0);
+	gridLayout->addWidget(_roundRectWidget, 1, 1);
+	gridLayout->addWidget(_circleWidget, 1, 2);
+	gridLayout->addWidget(_ellipseWidget, 1, 3);
+	gridLayout->addWidget(_rhombusWidget, 1, 4);
+	gridLayout->addWidget(_parallelogramWidget, 2, 0);
+	gridLayout->addWidget(_textWidget, 2, 1);
 
 	return gridLayout;
 }

@@ -74,8 +74,9 @@ private:
 
 	QWidget* _cursorWidget;
 	QWidget* _lengthWidget;
-	QWidget* _angleWidget;
 	QWidget* _arrowWidget;
+	QWidget* _angleWidget;
+	QWidget* _plotWidget;
 	QWidget* _rectangleWidget;
 	QWidget* _roundRectWidget;
 	QWidget* _circleWidget;

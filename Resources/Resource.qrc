@@ -41,5 +41,6 @@
         <file>svg/magnifier.svg</file>
         <file>svg/view.svg</file>
         <file>svg/ROIwindow.svg</file>
+        <file>svg/plot.svg</file>
     </qresource>
 </RCC>
