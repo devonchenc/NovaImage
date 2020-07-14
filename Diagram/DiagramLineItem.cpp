@@ -169,7 +169,7 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 	QGraphicsLineItem::paint(painter, &myOption, widget);
 
 	painter->setRenderHint(QPainter::Antialiasing, false);
-	if (_type == 0)
+	if (_type == 0 || _type == 2)
 	{
 		// Draw resize handles
 		qreal resizePointWidth = 6;
@@ -180,7 +180,10 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 			painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
 		}
 
-		drawLengthText(painter);
+		if (_type == 0)
+		{
+			drawLengthText(painter);
+		}
 	}
 	else if (_type == 1)
 	{

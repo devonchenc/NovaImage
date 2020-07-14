@@ -54,6 +54,7 @@
     <ClCompile Include="Widget\LevelsWidget.cpp" />
     <ClCompile Include="Widget\MagnifierWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
+    <ClCompile Include="Widget\PlotDialog.cpp" />
     <ClCompile Include="Widget\RawParameterDialog.cpp" />
     <ClCompile Include="Widget\SettingsDialog.cpp" />
     <ClCompile Include="Widget\ToolBoxWidget.cpp" />
@@ -94,6 +95,7 @@
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />
     <QtMoc Include="Widget\SettingsDialog.h" />
+    <QtMoc Include="Widget\PlotDialog.h" />
     <ClInclude Include="Widget\WidgetManager.h" />
     <QtMoc Include="Widget\LevelsWidget.h" />
     <QtMoc Include="Widget\HistogramWidget.h" />
@@ -156,7 +158,7 @@
   </ImportGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <QtInstall>msvc2017_64</QtInstall>
-    <QtModules>core;gui;printsupport;widgets</QtModules>
+    <QtModules>core;gui;printsupport;widgets;charts</QtModules>
   </PropertyGroup>
   <PropertyGroup Label="QtSettings" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <QtInstall>msvc2017_64</QtInstall>

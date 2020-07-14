@@ -9,6 +9,7 @@
 #include "../Diagram/DiagramTextItem.h"
 #include "../Diagram/DiagramLineItem.h"
 #include "../Diagram/DiagramAngleItem.h"
+#include "../Widget/PlotDialog.h"
 #include "GlobalFunc.h"
 #include "View.h"
 
@@ -242,7 +243,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 			textItem->setPos(_startPoint);
 			emit itemInserted(textItem);
 		}
-		else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow)
+		else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot)
 		{
 			int type = _itemType - DiagramItem::Line;
 			_currentDrawingLine = new DiagramLineItem(type, QLineF(_startPoint, _startPoint), _itemMenu);
@@ -276,7 +277,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 
 void GraphicsScene::mouseMove(const QPointF& point)
 {
-	if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow) && _currentDrawingLine != nullptr)
+	if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot) && _currentDrawingLine != nullptr)
 	{
 		_currentDrawingLine->setLine(QLineF(_currentDrawingLine->line().p1(), point));
 	}
@@ -317,7 +318,7 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 			_currentDrawingItem = nullptr;
 		}
 	}
-	else if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow) && _currentDrawingLine != nullptr)
+	else if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot) && _currentDrawingLine != nullptr)
 	{
 		QRectF rect = _currentDrawingLine->boundingRect();
 		if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
@@ -329,6 +330,12 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 		{
 			_currentDrawingLine->setDrawingFinished(true);
 			_currentDrawingLine->setSelected(true);
+
+			if (_itemType == DiagramItem::Plot)
+			{
+				PlotDialog dlg;
+				dlg.exec();
+			}
 		}
 		_currentDrawingLine = nullptr;
 	}

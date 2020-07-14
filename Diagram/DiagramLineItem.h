@@ -52,7 +52,7 @@ private:
 	void drawArrow(QPainter* painter);
 
 private:
-	int _type;			// 0:Line, 1:Arrow
+	int _type;			// 0:Line, 1:Arrow, 2:Plot
     QMenu* _contextMenu;
 	QPen _endpointPen;
 	static constexpr qreal closeEnoughDistance = 12;

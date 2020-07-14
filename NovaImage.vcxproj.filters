@@ -162,6 +162,9 @@
     <ClCompile Include="Diagram\DiagramTextItem.cpp">
       <Filter>Diagram</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\PlotDialog.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -241,6 +244,9 @@
     </QtMoc>
     <QtMoc Include="Diagram\DiagramTextItem.h">
       <Filter>Diagram</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\PlotDialog.h">
+      <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
