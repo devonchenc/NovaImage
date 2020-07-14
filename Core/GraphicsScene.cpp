@@ -51,6 +51,13 @@ void GraphicsScene::setLineColor(const QColor& color)
 			pen.setColor(color);
 			item->setPen(pen);
 		}
+		else if (p->type() == DiagramAngleItem::Type)
+		{
+			DiagramAngleItem* item = qgraphicsitem_cast<DiagramAngleItem*>(p);
+			QPen pen = item->pen();
+			pen.setColor(color);
+			item->setPen(pen);
+		}
 	}
 }
 
