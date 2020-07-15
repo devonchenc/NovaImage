@@ -54,6 +54,27 @@ BaseImage::~BaseImage()
 	}
 }
 
+float BaseImage::getValue(float x, float y) const
+{
+	int x0 = (int)floor(x);
+	int x1 = (int)ceil(x);
+	int y0 = (int)floor(y);
+	int y1 = (int)ceil(y);
+
+	float lambda_x = x - x0;
+	float lambda_y = y - y0;
+
+	float v00 = getValue(x0, y0);
+	float v10 = getValue(x1, y0);
+	float v01 = getValue(x0, y1);
+	float v11 = getValue(x1, y1);
+	// Bilinear interpolation
+	// f(x,y)=f(0,0)(1-x)(1-y)+f(0,1)(1-x)y+f(1,1)xy+f(1,0)x(1-y)
+	float value = (1 - lambda_x) * (1 - lambda_y) * v00 + lambda_x * (1 - lambda_y) * v10
+		+ (1 - lambda_x) * lambda_y * v01 + lambda_x * lambda_y * v11;
+	return value;
+}
+
 QRgb BaseImage::getPixel(const QPoint& position) const
 {
 	return _pImage->pixel(position);

@@ -22,6 +22,7 @@ public:
 	virtual float getValue(const QPoint& position) const = 0;
 	virtual float getValue(int x, int y) const = 0;
 	virtual float getValue(int index) const = 0;
+	virtual float getValue(float x, float y) const;
 
 	virtual bool hasPixelSpacing()	{ return false; }
 

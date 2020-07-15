@@ -1,13 +1,10 @@
 #include "PlotDialog.h"
 
 #include <QVBoxLayout>
-#include <QChartView>
-#include <QLineSeries>
-
-QT_CHARTS_USE_NAMESPACE
 
 PlotDialog::PlotDialog(QWidget* parent)
 	: QDialog(parent)
+	, _chart(new QChart)
 {
 	setWindowTitle(tr("Plot"));
 
@@ -16,6 +13,8 @@ PlotDialog::PlotDialog(QWidget* parent)
 	initUI();
 
 	resize(400, 200);
+
+	setStyleSheet("background-color:none");
 }
 
 PlotDialog::~PlotDialog()
@@ -23,23 +22,27 @@ PlotDialog::~PlotDialog()
 
 }
 
+void PlotDialog::setData(const QVector<qreal>& points)
+{
+	_points = points;
+
+	_chart->removeAllSeries();
+
+	QLineSeries* series = new QLineSeries;
+	for (int i = 0; i < _points.size(); i++)
+	{
+		series->append(i, _points[i]);
+	}
+
+	_chart->addSeries(series);
+	_chart->createDefaultAxes();
+}
+
 void PlotDialog::initUI()
 {
-	QLineSeries* series = new QLineSeries();
-	series->append(0, 6);
-	series->append(2, 4);
-	series->append(3, 8);
-	series->append(7, 4);
-	series->append(10, 5);
-	*series << QPointF(11, 1) << QPointF(13, 3) << QPointF(17, 6) << QPointF(18, 3) << QPointF(20, 2);
+	_chart->legend()->hide();
 
-	QChart* chart = new QChart();
-	chart->legend()->hide();
-	chart->addSeries(series);
-	chart->createDefaultAxes();
-	chart->setTitle("Simple line chart example");
-
-	QChartView* chartView = new QChartView(chart);
+	QChartView* chartView = new QChartView(_chart);
 	chartView->setRenderHint(QPainter::Antialiasing);
 
 	QVBoxLayout* globalLayout = new QVBoxLayout;

@@ -5,6 +5,8 @@
 
 class DiagramItem;
 class GraphicsView;
+class PlotDialog;
+
 #include "GraphicsScene.h"
 
 class View : public QFrame
@@ -13,6 +15,7 @@ class View : public QFrame
 
 public:
 	explicit View(QWidget* parent = nullptr);
+	~View();
 
 	GraphicsView* view() const;
 
@@ -31,6 +34,8 @@ public:
 	float windowWidth() { return _windowWidth; }
 
 	float windowLevel() { return _windowLevel; }
+
+	void showPlotDialog(const QLineF& line);
 
 public slots:
 	void setSceneMode(int mode);
@@ -83,4 +88,6 @@ private:
 	// Window width (for image display)
 	float _windowWidth;
 	float _windowLevel;
+
+	PlotDialog* _plotDlg;
 };

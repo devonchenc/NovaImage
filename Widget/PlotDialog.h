@@ -2,9 +2,10 @@
 
 #include <QDialog>
 
-QT_BEGIN_NAMESPACE
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
 
-QT_END_NAMESPACE
+QT_CHARTS_USE_NAMESPACE
 
 class PlotDialog : public QDialog
 {
@@ -14,6 +15,7 @@ public:
 	PlotDialog(QWidget* parent = nullptr);
 	~PlotDialog();
 
+	void setData(const QVector<qreal>& points);
 
 private:
 	void initUI();
@@ -22,9 +24,7 @@ private slots:
 //	void acceptButtonClicked();
 
 private:
-/*	QComboBox* _languageComboBox;
-	QComboBox* _leftMouseComboBox;
-	QComboBox* _rightMouseComboBox;
-	QCheckBox* _autoFitWindowCheckBox;
-	QButtonGroup* _windowGroup;*/
+	QChart* _chart;
+
+	QVector<qreal> _points;
 };

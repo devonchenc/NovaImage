@@ -212,7 +212,7 @@ void Document::ROIWindow(QRectF rect)
 	{
 		for (int i = 0; i < intersectedRect.width(); i++)
 		{
-			float value = _image->getValue(i + intersectedRect.x(), j + intersectedRect.y());
+			float value = _image->getValue(i + int(intersectedRect.x()), j + int(intersectedRect.y()));
 			if (minValue > value)
 			{
 				minValue = value;

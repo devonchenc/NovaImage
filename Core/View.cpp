@@ -10,14 +10,17 @@
 #include "GraphicsView.h"
 #include "GraphicsScene.h"
 #include "../Processor/LevelsProcessor.h"
+#include "../Widget/PlotDialog.h"
 #include "GlobalFunc.h"
 #include "Document.h"
+#include "../Image/BaseImage.h"
 
 View::View(QWidget* parent)
 	: QFrame(parent)
 	, _currentImage(nullptr)
 	, _windowWidth(0)
 	, _windowLevel(0)
+	, _plotDlg(nullptr)
 {
 	createItemMenus();
 
@@ -28,6 +31,17 @@ View::View(QWidget* parent)
 	layout->addWidget(_view);
 
 	setLayout(layout);
+
+	setStyleSheet("background-color:black");
+}
+
+View::~View()
+{
+	if (_plotDlg)
+	{
+		delete _plotDlg;
+		_plotDlg = nullptr;
+	}
 }
 
 GraphicsView* View::view() const
@@ -130,6 +144,58 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
 	_windowLevel = windowLevel;
 
 	getGlobalDocument()->applyImageWidthAndLevel();
+}
+
+void View::showPlotDialog(const QLineF& line)
+{
+	if (_plotDlg == nullptr)
+	{
+		_plotDlg = new PlotDialog(this);
+	}
+
+	QPointF p1 = line.p1();
+	QPointF p2 = line.p2();
+	qreal distance = sqrt((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
+	QPointF slope = line.p2() - line.p1();
+	QPointF orthoSlope(-slope.y(), slope.x());
+	if (orthoSlope.x() != 0.0f || orthoSlope.y() != 0.0f)
+	{
+		orthoSlope /= sqrt(orthoSlope.x() * orthoSlope.x() + orthoSlope.y() * orthoSlope.y());
+	}
+
+	int lineWidth = 1;
+
+	QVector<qreal> dataVec;
+	for (qreal i = 0; i <= distance; i++)
+	{
+		qreal average = 0.0f;
+		int count = 0;
+		for (int n = 0; n < lineWidth; n++)
+		{
+			// 计算线宽度带来的垂直方向偏移
+			float offset = (-lineWidth + 1) / 2.0f + n;
+			QPointF temp = p1 + orthoSlope * offset + slope / distance * i;
+			float fValue = getGlobalImage()->getValue(float(temp.x()), float(temp.y()));
+			if (fValue != -1.0f)
+			{
+				average += fValue;
+				count++;
+			}
+		}
+
+		if (count > 0)
+		{
+			average /= count;
+		}
+		else
+		{
+			average = -1.0;
+		}
+		dataVec.push_back(average);
+	}
+
+	_plotDlg->setData(dataVec);
+	_plotDlg->show();
 }
 
 void View::setSceneMode(int mode)

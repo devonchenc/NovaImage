@@ -42,7 +42,6 @@ MainWindow::MainWindow(QWidget* parent)
 
 	// main area for image display
 	_view = new View(this);
-	_view->setStyleSheet("background-color:black");
 	setCentralWidget(_view);
 
 	initUI();

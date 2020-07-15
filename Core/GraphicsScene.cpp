@@ -6,12 +6,11 @@
 #include <QKeyEvent>
 #include <QBrush>
 
+#include "GlobalFunc.h"
+#include "View.h"
 #include "../Diagram/DiagramTextItem.h"
 #include "../Diagram/DiagramLineItem.h"
 #include "../Diagram/DiagramAngleItem.h"
-#include "../Widget/PlotDialog.h"
-#include "GlobalFunc.h"
-#include "View.h"
 
 #define MIN_SIZE		10
 
@@ -333,8 +332,7 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 
 			if (_itemType == DiagramItem::Plot)
 			{
-				PlotDialog dlg;
-				dlg.exec();
+				getGlobalView()->showPlotDialog(_currentDrawingLine->line());
 			}
 		}
 		_currentDrawingLine = nullptr;
