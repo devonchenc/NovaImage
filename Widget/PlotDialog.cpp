@@ -2,12 +2,15 @@
 
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QtCharts/QChartView>
+#include <QtCharts/QLineSeries>
 
-#include "../Diagram/DiagramLineItem.h"
+QT_CHARTS_USE_NAMESPACE
+
+#include "../Diagram/DiagramPlotItem.h"
 
 PlotDialog::PlotDialog(QWidget* parent)
 	: QDialog(parent)
-	, _chart(new QChart)
 	, _tabWidget(new QTabWidget(this))
 {
 
@@ -29,26 +32,25 @@ PlotDialog::~PlotDialog()
 
 void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points)
 {
-	DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(lineItem);
-	connect(item, &DiagramLineItem::itemDeleted, this, &PlotDialog::deleteLine);
-	_points = points;
-
-	_chart->removeAllSeries();
+	DiagramPlotItem* item = qgraphicsitem_cast<DiagramPlotItem*>(lineItem);
+	connect(item, &DiagramPlotItem::itemDeleted, this, &PlotDialog::deleteLine);
 
 	QLineSeries* series = new QLineSeries;
-	for (int i = 0; i < _points.size(); i++)
+	for (int i = 0; i < points.size(); i++)
 	{
-		series->append(i, _points[i]);
+		series->append(i, points[i]);
 	}
 
-	_chart->addSeries(series);
-	_chart->createDefaultAxes();
-	_chart->legend()->hide();
+	QChart* chart = new QChart;
+	chart->addSeries(series);
+	chart->createDefaultAxes();
+	chart->legend()->hide();
 
-	QChartView* chartView = new QChartView(_chart);
+	QChartView* chartView = new QChartView(chart);
 	chartView->setRenderHint(QPainter::Antialiasing);
 
-	_tabWidget->addTab(chartView, "Plot 1");
+	QString str = QString(tr("Plot")) + QString::number(item->plotIndex());
+	_tabWidget->addTab(chartView, str);
 }
 
 void PlotDialog::initUI()

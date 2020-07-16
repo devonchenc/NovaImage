@@ -14,7 +14,7 @@ public:
 		Point1, Point2
 	};
 
-	DiagramLineItem(int type, const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
+	DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
 	~DiagramLineItem();
 
 	int type() const override { return Type; }
@@ -27,8 +27,6 @@ public:
 signals:
 	void itemSelectedChange(QGraphicsItem* item);
 
-	void itemDeleted();
-
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
@@ -40,25 +38,17 @@ protected:
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
+protected:
+	void drawResizeHandle(QPainter* painter);
+
+	float length() const;
+
 private:
 	QList<QPointF> resizeHandlePoints();
 
 	bool isCloseEnough(const QPointF& p1, const QPointF& p2);
 
-	float length() const;
-
-	QString lengthString() const;
-
-	void drawResizeHandle(QPainter* painter);
-
-	void drawLengthText(QPainter* painter);
-
-	void drawArrow(QPainter* painter);
-
-	void drawPlotIndex(QPainter* painter);
-
-private:
-	int _type;			// 0:Line, 1:Arrow, 2:Plot
+protected:
     QMenu* _contextMenu;
 	QPen _endpointPen;
 	static constexpr qreal closeEnoughDistance = 12;
@@ -66,7 +56,4 @@ private:
 	Index _dragIndex;
 	bool _drawingFinished = false;
 	int _previousMode;
-
-	int _plotIndex;
-	static int _plotCount;
 };

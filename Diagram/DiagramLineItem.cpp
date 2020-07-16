@@ -10,30 +10,20 @@
 #include "../Core/View.h"
 #include "../Core/GraphicsView.h"
 #include "../Core/GraphicsScene.h"
-#include "../Image/BaseImage.h"
 
-int DiagramLineItem::_plotCount = 0;
-
-DiagramLineItem::DiagramLineItem(int type, const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
+DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
-	, _type(type)
 	, _contextMenu(contextMenu)
 	, _previousMode(MOVE_ITEM)
 {
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
 	setAcceptHoverEvents(true);
-
-	if (_type == 2)
-	{
-		_plotCount++;
-		_plotIndex = _plotCount;
-	}
 }
 
 DiagramLineItem::~DiagramLineItem()
 {
-	emit itemDeleted();
+
 }
 
 void DiagramLineItem::setEndpointPen(const QPen& pen)
@@ -174,20 +164,6 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 	QGraphicsLineItem::paint(painter, option, widget);
 
 	painter->setRenderHint(QPainter::Antialiasing, false);
-	if (_type == 0)
-	{
-		drawResizeHandle(painter);
-		drawLengthText(painter);
-	}
-	else if (_type == 1)
-	{
-		drawArrow(painter);
-	}
-	else if (_type == 2)
-	{
-		drawResizeHandle(painter);
-		drawPlotIndex(painter);
-	}
 }
 
 void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
@@ -216,40 +192,6 @@ bool DiagramLineItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
 	return delta < closeEnoughDistance;
 }
 
-float DiagramLineItem::length() const
-{
-	float offsetX = line().p1().x() - line().p2().x();
-	float offsetY = line().p1().y() - line().p2().y();
-	return sqrt(offsetX * offsetX + offsetY * offsetY);
-}
-
-QString DiagramLineItem::lengthString() const
-{
-	float offsetX = line().p1().x() - line().p2().x();
-	float offsetY = line().p1().y() - line().p2().y();
-
-	BaseImage* image = getGlobalImage();
-	if (image && image->hasPixelSpacing())
-	{
-		float horzPixelSpacing = image->horzPixelSpacing();
-		float vertPixelSpacing = image->vertPixelSpacing();
-		offsetX *= horzPixelSpacing;
-		offsetY *= vertPixelSpacing;
-	}
-	float length = sqrt(offsetX * offsetX + offsetY * offsetY);
-
-	QString str = QString::number(length, 'f', 2);
-	if (image && image->hasPixelSpacing())
-	{
-		str += " mm";
-	}
-	else
-	{
-		str += tr(" px");
-	}
-	return str;
-}
-
 // Draw resize handles
 void DiagramLineItem::drawResizeHandle(QPainter* painter)
 {
@@ -262,52 +204,9 @@ void DiagramLineItem::drawResizeHandle(QPainter* painter)
 	}
 }
 
-void DiagramLineItem::drawLengthText(QPainter* painter)
+float DiagramLineItem::length() const
 {
-	QTransform transform = getGlobalView()->view()->transform();
-	QTransform transform2;
-	// The output text is always near the point on the right
-	if (line().p1().x() < line().p2().x())
-	{
-		transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
-	}
-	else
-	{
-		transform2.translate(line().p1().x() + 10, line().p1().y() + 5);
-	}
-
-	painter->setWorldTransform(transform.inverted() * transform2, true);
-	painter->setFont(QFont("Arial", 10));
-	painter->setPen(QPen(Qt::yellow));
-	painter->drawText(0, 0, lengthString());
-}
-
-void DiagramLineItem::drawArrow(QPainter* painter)
-{
-	painter->setRenderHint(QPainter::Antialiasing, true);
-	painter->setPen(pen());
-
-	float len = length();
-
-	float cosT = (len > FLT_EPSILON) ? (line().p2().x() - line().p1().x()) / len : 1.0f;
-	float sinT = (len > FLT_EPSILON) ? (line().p2().y() - line().p1().y()) / len : 0.0f;
-
-	int x = 18;
-	int y = 7;
-	QPointF point1(line().p2().x() - x * cosT - y * sinT, line().p2().y() - x * sinT + y * cosT);
-	QPointF point2(line().p2().x() - x * cosT + y * sinT, line().p2().y() - x * sinT - y * cosT);
-	painter->drawLine(line().p2(), point1);
-	painter->drawLine(line().p2(), point2);
-}
-
-void DiagramLineItem::drawPlotIndex(QPainter* painter)
-{
-	QTransform transform = getGlobalView()->view()->transform();
-	QTransform transform2;
-	transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
-
-	painter->setWorldTransform(transform.inverted() * transform2, true);
-	painter->setFont(QFont("Arial", 10));
-	painter->setPen(QPen(Qt::yellow));
-	painter->drawText(0, 0, QString::number(_plotIndex));
+	float offsetX = line().p1().x() - line().p2().x();
+	float offsetY = line().p1().y() - line().p2().y();
+	return sqrt(offsetX * offsetX + offsetY * offsetY);
 }

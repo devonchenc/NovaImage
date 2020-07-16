@@ -29,8 +29,11 @@
     <ClCompile Include="Core\UndoSystem.cpp" />
     <ClCompile Include="Core\View.cpp" />
     <ClCompile Include="Diagram\DiagramAngleItem.cpp" />
+    <ClCompile Include="Diagram\DiagramArrowItem.cpp" />
     <ClCompile Include="Diagram\DiagramItem.cpp" />
+    <ClCompile Include="Diagram\DiagramLengthItem.cpp" />
     <ClCompile Include="Diagram\DiagramLineItem.cpp" />
+    <ClCompile Include="Diagram\DiagramPlotItem.cpp" />
     <ClCompile Include="Diagram\DiagramTextItem.cpp" />
     <ClCompile Include="Image\BaseImage.cpp" />
     <ClCompile Include="Image\DicomImage.cpp" />
@@ -78,6 +81,9 @@
     <QtMoc Include="Diagram\DiagramItem.h" />
     <QtMoc Include="Diagram\DiagramLineItem.h" />
     <QtMoc Include="Diagram\DiagramTextItem.h" />
+    <QtMoc Include="Diagram\DiagramPlotItem.h" />
+    <QtMoc Include="Diagram\DiagramArrowItem.h" />
+    <QtMoc Include="Diagram\DiagramLengthItem.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
     <ClInclude Include="Image\MonoImage.h" />

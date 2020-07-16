@@ -2,13 +2,9 @@
 
 #include <QDialog>
 
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-
-QT_CHARTS_USE_NAMESPACE
-
 QT_BEGIN_NAMESPACE
 class QTabWidget;
+class QGraphicsLineItem;
 QT_END_NAMESPACE
 
 class PlotDialog : public QDialog
@@ -29,9 +25,5 @@ private slots:
 	void deleteLine();
 
 private:
-	QChart* _chart;
-
-	QVector<qreal> _points;
-
 	QTabWidget* _tabWidget;
 };

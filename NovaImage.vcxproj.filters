@@ -165,6 +165,15 @@
     <ClCompile Include="Widget\PlotDialog.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="Diagram\DiagramPlotItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
+    <ClCompile Include="Diagram\DiagramArrowItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
+    <ClCompile Include="Diagram\DiagramLengthItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -247,6 +256,15 @@
     </QtMoc>
     <QtMoc Include="Widget\PlotDialog.h">
       <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramPlotItem.h">
+      <Filter>Diagram</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramArrowItem.h">
+      <Filter>Diagram</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramLengthItem.h">
+      <Filter>Diagram</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

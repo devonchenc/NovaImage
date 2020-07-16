@@ -171,7 +171,7 @@ void ToolBar::createAction()
 	_angleAction = new QAction(tr("Angle"), _measurementButton);
 	_angleAction->setObjectName("angle");
 	_angleAction->setIcon(QIcon(":/icon/svg/angle.svg"));
-	_plotAction = new QAction(tr("Angle"), _measurementButton);
+	_plotAction = new QAction(tr("Plot"), _measurementButton);
 	_plotAction->setObjectName("plot");
 	_plotAction->setIcon(QIcon(":/icon/svg/plot.svg"));
 	_rectAction = new QAction(tr("Rectangle"), _measurementButton);

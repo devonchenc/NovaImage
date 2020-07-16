@@ -10,6 +10,9 @@
 #include "View.h"
 #include "../Diagram/DiagramTextItem.h"
 #include "../Diagram/DiagramLineItem.h"
+#include "../Diagram/DiagramLengthItem.h"
+#include "../Diagram/DiagramArrowItem.h"
+#include "../Diagram/DiagramPlotItem.h"
 #include "../Diagram/DiagramAngleItem.h"
 
 #define MIN_SIZE		10
@@ -245,7 +248,18 @@ void GraphicsScene::mousePress(const QPointF& point)
 		else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot)
 		{
 			int type = _itemType - DiagramItem::Line;
-			_currentDrawingLine = new DiagramLineItem(type, QLineF(_startPoint, _startPoint), _itemMenu);
+			if (_itemType == DiagramItem::Line)
+			{
+				_currentDrawingLine = new DiagramLengthItem(QLineF(_startPoint, _startPoint), _itemMenu);
+			}
+			else if (_itemType == DiagramItem::Arrow)
+			{
+				_currentDrawingLine = new DiagramArrowItem(QLineF(_startPoint, _startPoint), _itemMenu);
+			}
+			else if (_itemType == DiagramItem::Plot)
+			{
+				_currentDrawingLine = new DiagramPlotItem(QLineF(_startPoint, _startPoint), _itemMenu);
+			}
 			_currentDrawingLine->setPen(QPen(_lineColor, 2));
 			_currentDrawingLine->setEndpointPen(QPen(_fillColor));
 			connect(_currentDrawingLine, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
@@ -332,7 +346,6 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 
 			if (_itemType == DiagramItem::Plot)
 			{
-			//	getGlobalView()->showPlotDialog(_currentDrawingLine->line());
 				getGlobalView()->showPlotDialog(_currentDrawingLine);
 			}
 		}
