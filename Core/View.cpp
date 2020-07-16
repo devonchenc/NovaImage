@@ -175,7 +175,7 @@ void View::showPlotDialog(QGraphicsLineItem* lineItem)
 		int count = 0;
 		for (int n = 0; n < lineWidth; n++)
 		{
-			// 计算线宽度带来的垂直方向偏移
+			// Calculate vertical offset
 			float offset = (-lineWidth + 1) / 2.0f + n;
 			QPointF temp = p1 + orthoSlope * offset + slope / distance * i;
 			float fValue = getGlobalImage()->getValue(float(temp.x()), float(temp.y()));

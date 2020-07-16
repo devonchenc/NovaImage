@@ -2,10 +2,7 @@
 
 #include <QTabWidget>
 #include <QVBoxLayout>
-#include <QtCharts/QChartView>
-#include <QtCharts/QLineSeries>
-
-QT_CHARTS_USE_NAMESPACE
+#include <QDebug>
 
 #include "../Diagram/DiagramPlotItem.h"
 
@@ -13,7 +10,6 @@ PlotDialog::PlotDialog(QWidget* parent)
 	: QDialog(parent)
 	, _tabWidget(new QTabWidget(this))
 {
-
 	setWindowTitle(tr("Plot"));
 
 	setWindowFlag(Qt::Popup);
@@ -27,7 +23,11 @@ PlotDialog::PlotDialog(QWidget* parent)
 
 PlotDialog::~PlotDialog()
 {
-
+	if (_tabWidget)
+	{
+		delete _tabWidget;
+		_tabWidget = nullptr;
+	}
 }
 
 void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points)
@@ -51,6 +51,9 @@ void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& poin
 
 	QString str = QString(tr("Plot")) + QString::number(item->plotIndex());
 	_tabWidget->addTab(chartView, str);
+	_tabWidget->setCurrentWidget(chartView);
+
+	_map.insert(item, chartView);
 }
 
 void PlotDialog::initUI()
@@ -62,5 +65,20 @@ void PlotDialog::initUI()
 
 void PlotDialog::deleteLine()
 {
-	int a = 5;
+	DiagramPlotItem* item = qobject_cast<DiagramPlotItem*>(sender());
+
+	QMapIterator<DiagramPlotItem*, QChartView*> i(_map);
+	while (i.hasNext())
+	{
+		if (i.next().key() == item)
+		{
+			int index = _tabWidget->indexOf(i.value());
+			_tabWidget->removeTab(index);
+			break;
+		}
+	}
+	if (_tabWidget->count() == 0)
+	{
+		close();
+	}
 }
