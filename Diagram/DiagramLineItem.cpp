@@ -12,6 +12,8 @@
 #include "../Core/GraphicsScene.h"
 #include "../Image/BaseImage.h"
 
+int DiagramLineItem::_plotCount = 0;
+
 DiagramLineItem::DiagramLineItem(int type, const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(line, parent)
 	, _type(type)
@@ -21,11 +23,17 @@ DiagramLineItem::DiagramLineItem(int type, const QLineF& line, QMenu* contextMen
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
 	setAcceptHoverEvents(true);
+
+	if (_type == 2)
+	{
+		_plotCount++;
+		_plotIndex = _plotCount;
+	}
 }
 
 DiagramLineItem::~DiagramLineItem()
 {
-
+	emit itemDeleted();
 }
 
 void DiagramLineItem::setEndpointPen(const QPen& pen)
@@ -163,31 +171,22 @@ void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 {
 	painter->setRenderHint(QPainter::Antialiasing, true);
 
-    // remove build-in selected state
-    QStyleOptionGraphicsItem myOption(*option);
-	myOption.state &= ~QStyle::State_Selected;
-	QGraphicsLineItem::paint(painter, &myOption, widget);
+	QGraphicsLineItem::paint(painter, option, widget);
 
 	painter->setRenderHint(QPainter::Antialiasing, false);
-	if (_type == 0 || _type == 2)
+	if (_type == 0)
 	{
-		// Draw resize handles
-		qreal resizePointWidth = 6;
-		painter->setPen(_endpointPen);
-		foreach (const QPointF& point, resizeHandlePoints())
-		{
-			painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
-			painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
-		}
-
-		if (_type == 0)
-		{
-			drawLengthText(painter);
-		}
+		drawResizeHandle(painter);
+		drawLengthText(painter);
 	}
 	else if (_type == 1)
 	{
 		drawArrow(painter);
+	}
+	else if (_type == 2)
+	{
+		drawResizeHandle(painter);
+		drawPlotIndex(painter);
 	}
 }
 
@@ -251,6 +250,18 @@ QString DiagramLineItem::lengthString() const
 	return str;
 }
 
+// Draw resize handles
+void DiagramLineItem::drawResizeHandle(QPainter* painter)
+{
+	qreal resizePointWidth = 6;
+	painter->setPen(_endpointPen);
+	foreach(const QPointF& point, resizeHandlePoints())
+	{
+		painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
+		painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
+	}
+}
+
 void DiagramLineItem::drawLengthText(QPainter* painter)
 {
 	QTransform transform = getGlobalView()->view()->transform();
@@ -287,4 +298,16 @@ void DiagramLineItem::drawArrow(QPainter* painter)
 	QPointF point2(line().p2().x() - x * cosT + y * sinT, line().p2().y() - x * sinT - y * cosT);
 	painter->drawLine(line().p2(), point1);
 	painter->drawLine(line().p2(), point2);
+}
+
+void DiagramLineItem::drawPlotIndex(QPainter* painter)
+{
+	QTransform transform = getGlobalView()->view()->transform();
+	QTransform transform2;
+	transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
+
+	painter->setWorldTransform(transform.inverted() * transform2, true);
+	painter->setFont(QFont("Arial", 10));
+	painter->setPen(QPen(Qt::yellow));
+	painter->drawText(0, 0, QString::number(_plotIndex));
 }

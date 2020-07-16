@@ -332,7 +332,8 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 
 			if (_itemType == DiagramItem::Plot)
 			{
-				getGlobalView()->showPlotDialog(_currentDrawingLine->line());
+			//	getGlobalView()->showPlotDialog(_currentDrawingLine->line());
+				getGlobalView()->showPlotDialog(_currentDrawingLine);
 			}
 		}
 		_currentDrawingLine = nullptr;

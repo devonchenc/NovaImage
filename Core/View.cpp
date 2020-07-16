@@ -146,17 +146,20 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
 	getGlobalDocument()->applyImageWidthAndLevel();
 }
 
-void View::showPlotDialog(const QLineF& line)
+void View::showPlotDialog(QGraphicsLineItem* lineItem)
 {
+	if (getGlobalImage() == nullptr)
+		return;
+	
 	if (_plotDlg == nullptr)
 	{
 		_plotDlg = new PlotDialog(this);
 	}
 
-	QPointF p1 = line.p1();
-	QPointF p2 = line.p2();
+	QPointF p1 = lineItem->line().p1();
+	QPointF p2 = lineItem->line().p2();
 	qreal distance = sqrt((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
-	QPointF slope = line.p2() - line.p1();
+	QPointF slope = lineItem->line().p2() - lineItem->line().p1();
 	QPointF orthoSlope(-slope.y(), slope.x());
 	if (orthoSlope.x() != 0.0f || orthoSlope.y() != 0.0f)
 	{
@@ -194,7 +197,7 @@ void View::showPlotDialog(const QLineF& line)
 		dataVec.push_back(average);
 	}
 
-	_plotDlg->setData(dataVec);
+	_plotDlg->setData(lineItem, dataVec);
 	_plotDlg->show();
 }
 

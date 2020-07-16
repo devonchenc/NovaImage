@@ -35,7 +35,7 @@ public:
 
 	float windowLevel() { return _windowLevel; }
 
-	void showPlotDialog(const QLineF& line);
+	void showPlotDialog(QGraphicsLineItem* lineItem);
 
 public slots:
 	void setSceneMode(int mode);

@@ -27,6 +27,8 @@ public:
 signals:
 	void itemSelectedChange(QGraphicsItem* item);
 
+	void itemDeleted();
+
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
@@ -47,9 +49,13 @@ private:
 
 	QString lengthString() const;
 
+	void drawResizeHandle(QPainter* painter);
+
 	void drawLengthText(QPainter* painter);
 
 	void drawArrow(QPainter* painter);
+
+	void drawPlotIndex(QPainter* painter);
 
 private:
 	int _type;			// 0:Line, 1:Arrow, 2:Plot
@@ -60,4 +66,7 @@ private:
 	Index _dragIndex;
 	bool _drawingFinished = false;
 	int _previousMode;
+
+	int _plotIndex;
+	static int _plotCount;
 };
