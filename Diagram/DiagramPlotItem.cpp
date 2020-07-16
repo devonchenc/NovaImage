@@ -28,6 +28,13 @@ void DiagramPlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 	drawPlotIndex(painter);
 }
 
+void DiagramPlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+{
+	getGlobalView()->showPlotDialog(this);
+
+	DiagramLineItem::mouseReleaseEvent(event);
+}
+
 void DiagramPlotItem::drawPlotIndex(QPainter* painter)
 {
 	QTransform transform = getGlobalView()->view()->transform();

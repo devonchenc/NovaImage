@@ -343,11 +343,6 @@ void GraphicsScene::mouseRelease(const QPointF& point)
 		{
 			_currentDrawingLine->setDrawingFinished(true);
 			_currentDrawingLine->setSelected(true);
-
-			if (_itemType == DiagramItem::Plot)
-			{
-				getGlobalView()->showPlotDialog(_currentDrawingLine);
-			}
 		}
 		_currentDrawingLine = nullptr;
 	}

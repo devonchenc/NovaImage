@@ -35,25 +35,47 @@ void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& poin
 	DiagramPlotItem* item = qgraphicsitem_cast<DiagramPlotItem*>(lineItem);
 	connect(item, &DiagramPlotItem::itemDeleted, this, &PlotDialog::deleteLine);
 
-	QLineSeries* series = new QLineSeries;
-	for (int i = 0; i < points.size(); i++)
+	QMap<DiagramPlotItem*, QChartView*>::const_iterator iter = _map.find(item);
+	if (iter == _map.end())
 	{
-		series->append(i, points[i]);
+		// Add new plot
+		QLineSeries* series = new QLineSeries;
+		for (int i = 0; i < points.size(); i++)
+		{
+			series->append(i, points[i]);
+		}
+
+		QChart* chart = new QChart;
+		chart->addSeries(series);
+		chart->createDefaultAxes();
+		chart->legend()->hide();
+
+		QChartView* chartView = new QChartView(chart);
+		chartView->setRenderHint(QPainter::Antialiasing);
+
+		QString str = QString(tr("Plot")) + QString::number(item->plotIndex());
+		_tabWidget->addTab(chartView, str);
+		_tabWidget->setCurrentWidget(chartView);
+
+		_map.insert(item, chartView);
 	}
+	else
+	{
+		// Update existing plot
+		QLineSeries* series = new QLineSeries;
+		for (int i = 0; i < points.size(); i++)
+		{
+			series->append(i, points[i]);
+		}
 
-	QChart* chart = new QChart;
-	chart->addSeries(series);
-	chart->createDefaultAxes();
-	chart->legend()->hide();
+		QChartView* chartView = iter.value();
+		chartView->chart()->removeAllSeries();
+		chartView->chart()->addSeries(series);
+		chartView->chart()->createDefaultAxes();
 
-	QChartView* chartView = new QChartView(chart);
-	chartView->setRenderHint(QPainter::Antialiasing);
-
-	QString str = QString(tr("Plot")) + QString::number(item->plotIndex());
-	_tabWidget->addTab(chartView, str);
-	_tabWidget->setCurrentWidget(chartView);
-
-	_map.insert(item, chartView);
+		int index = _tabWidget->indexOf(chartView);
+		_tabWidget->setCurrentIndex(index);
+	}
 }
 
 void PlotDialog::initUI()
