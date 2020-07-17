@@ -202,11 +202,9 @@ void DiagramAngleItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
 {
 	painter->setRenderHint(QPainter::Antialiasing, true);
 
-    // remove build-in selected state
-    QStyleOptionGraphicsItem myOption(*option);
-	myOption.state &= ~QStyle::State_Selected;
-	QGraphicsLineItem::paint(painter, &myOption, widget);
+	QGraphicsLineItem::paint(painter, option, widget);
 
+	painter->setPen(this->pen());
 	painter->drawLine(p2(), p3());
 
 	painter->setRenderHint(QPainter::Antialiasing, false);

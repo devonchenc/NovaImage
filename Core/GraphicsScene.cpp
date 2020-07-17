@@ -270,7 +270,6 @@ void GraphicsScene::mousePress(const QPointF& point)
 		{
 			if (_currentDrawingAngle == nullptr)
 			{
-				qDebug() << "Drawing Point2";
 				_currentDrawingAngle = new DiagramAngleItem(_startPoint, _itemMenu);
 				_currentDrawingAngle->setPen(QPen(_lineColor, 2));
 				_currentDrawingAngle->setEndpointPen(QPen(_fillColor));
@@ -280,7 +279,6 @@ void GraphicsScene::mousePress(const QPointF& point)
 			}
 			else
 			{
-				qDebug() << "Drawing Point3";
 				_currentDrawingAngle->setCurrentDrawingIndex(DiagramAngleItem::Point3);
 				_currentDrawingAngle->setCurrentDrawingPoint(_startPoint);
 			}
