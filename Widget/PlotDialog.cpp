@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QDebug>
 
+#include "ChartView.h"
 #include "../Diagram/DiagramPlotItem.h"
 
 PlotDialog::PlotDialog(QWidget* parent)
@@ -35,23 +36,14 @@ void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& poin
 	DiagramPlotItem* item = qgraphicsitem_cast<DiagramPlotItem*>(lineItem);
 	connect(item, &DiagramPlotItem::itemDeleted, this, &PlotDialog::deleteLine);
 
-	QMap<DiagramPlotItem*, QChartView*>::const_iterator iter = _map.find(item);
+//	connect(series, &QLineSeries::hovered, this, &PlotDialog::tooltip);
+
+	QMap<DiagramPlotItem*, ChartView*>::const_iterator iter = _map.find(item);
 	if (iter == _map.end())
 	{
-		// Add new plot
-		QLineSeries* series = new QLineSeries;
-		for (int i = 0; i < points.size(); i++)
-		{
-			series->append(i, points[i]);
-		}
-
-		QChart* chart = new QChart;
-		chart->addSeries(series);
-		chart->createDefaultAxes();
-		chart->legend()->hide();
-
-		QChartView* chartView = new QChartView(chart);
-		chartView->setRenderHint(QPainter::Antialiasing);
+		// Add new ChartView
+		ChartView* chartView = new ChartView;
+		chartView->setData(points);
 
 		QString str = QString(tr("Plot")) + QString::number(item->plotIndex());
 		_tabWidget->addTab(chartView, str);
@@ -62,16 +54,8 @@ void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& poin
 	else
 	{
 		// Update existing plot
-		QLineSeries* series = new QLineSeries;
-		for (int i = 0; i < points.size(); i++)
-		{
-			series->append(i, points[i]);
-		}
-
-		QChartView* chartView = iter.value();
-		chartView->chart()->removeAllSeries();
-		chartView->chart()->addSeries(series);
-		chartView->chart()->createDefaultAxes();
+		ChartView* chartView = iter.value();
+		chartView->updateData(points);
 
 		int index = _tabWidget->indexOf(chartView);
 		_tabWidget->setCurrentIndex(index);
@@ -89,7 +73,7 @@ void PlotDialog::deleteLine()
 {
 	DiagramPlotItem* item = qobject_cast<DiagramPlotItem*>(sender());
 
-	QMapIterator<DiagramPlotItem*, QChartView*> i(_map);
+	QMapIterator<DiagramPlotItem*, ChartView*> i(_map);
 	while (i.hasNext())
 	{
 		if (i.next().key() == item)
@@ -103,4 +87,9 @@ void PlotDialog::deleteLine()
 	{
 		close();
 	}
+}
+
+void PlotDialog::tooltip(const QPointF& point, bool state)
+{
+//	setToolTip(QString("X: %1 \nY: %2 ").arg(point.x()).arg(point.y()));
 }

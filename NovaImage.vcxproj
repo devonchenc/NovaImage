@@ -49,6 +49,7 @@
     <ClCompile Include="Processor\HistogramProcessor.cpp" />
     <ClCompile Include="Processor\InverseProcessor.cpp" />
     <ClCompile Include="Processor\LevelsProcessor.cpp" />
+    <ClCompile Include="Widget\ChartView.cpp" />
     <ClCompile Include="Widget\ColorButton.cpp" />
     <ClCompile Include="Widget\CommonWidget.cpp" />
     <ClCompile Include="Widget\CurveSquare.cpp" />
@@ -97,6 +98,7 @@
     <ClInclude Include="Processor\InverseProcessor.h" />
     <ClInclude Include="Processor\LevelsProcessor.h" />
     <QtMoc Include="Widget\MagnifierWidget.h" />
+    <ClInclude Include="Widget\ChartView.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />

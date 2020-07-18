@@ -12,6 +12,7 @@ class QGraphicsLineItem;
 QT_END_NAMESPACE
 
 class DiagramPlotItem;
+class ChartView;
 
 class PlotDialog : public QDialog
 {
@@ -29,8 +30,10 @@ private:
 private slots:
 	void deleteLine();
 
+	void tooltip(const QPointF& point, bool state);
+
 private:
 	QTabWidget* _tabWidget;
 
-	QMap<DiagramPlotItem*, QChartView*> _map;
+	QMap<DiagramPlotItem*, ChartView*> _map;
 };
