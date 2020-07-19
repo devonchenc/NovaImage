@@ -14,7 +14,7 @@ RecentFiles::RecentFiles(QMainWindow* parent)
 	, _recentMenuTriggeredAction(nullptr)
 {
 	// create the sub-menu
-	_recentMenu->setTitle(tr("Open Recent"));
+	_recentMenu->setTitle(tr("Open &Recent"));
 
 	// create an action for all possible entries in the sub-menu
 	for (int i = 0; i < _maxRecentFiles; i++)
@@ -133,7 +133,7 @@ int RecentFiles::numberOfRecentFilesToSave()
 
 void RecentFiles::resetText()
 {
-	_recentMenu->setTitle(tr("Open Recent"));
+	_recentMenu->setTitle(tr("Open &Recent"));
 	_clearAction->setText(tr("Clear Recently Opened"));
 }
 

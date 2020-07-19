@@ -57,6 +57,8 @@ public slots:
 	void zoomIn();
 	void zoomOut();
 
+	void plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);
+
 private slots:
 	void cutItem();
 	void copyItem();
@@ -70,6 +72,8 @@ private:
 	void createItemMenus();
 
 	QList<QGraphicsItem*> cloneItems(const QList<QGraphicsItem*>& items);
+
+	void calcPlotData(QGraphicsLineItem* lineItem, int lineWidth);
 
 private:
 	GraphicsScene* _scene;

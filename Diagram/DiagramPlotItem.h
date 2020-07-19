@@ -10,6 +10,10 @@ public:
 	DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
 	~DiagramPlotItem();
 
+	int width() { return _lineWidth; }
+
+	void setWidth(int lineWidth) { _lineWidth = lineWidth; }
+
 	int plotIndex() { return _plotIndex; }
 
 signals:
@@ -20,9 +24,13 @@ protected:
 	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
+	void drawRect(QPainter* painter);
+
 	void drawPlotIndex(QPainter* painter);
 
 private:
+	int _lineWidth;
+
 	int _plotIndex;
 	static int _plotCount;
 };

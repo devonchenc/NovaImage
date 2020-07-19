@@ -24,13 +24,16 @@ public:
 
 	void setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points);
 
+signals:
+	void lineWidthChanged(QGraphicsLineItem* plotItem, int lineWidth);
+
 private:
 	void initUI();
 
 private slots:
 	void deleteLine();
 
-	void tooltip(const QPointF& point, bool state);
+	void setLineWidth();
 
 private:
 	QTabWidget* _tabWidget;

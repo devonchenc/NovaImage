@@ -153,51 +153,10 @@ void View::showPlotDialog(QGraphicsLineItem* lineItem)
 	if (_plotDlg == nullptr)
 	{
 		_plotDlg = new PlotDialog(this);
+		connect(_plotDlg, &PlotDialog::lineWidthChanged, this, &View::plotLineWidthChanged);
 	}
 
-	QPointF p1 = lineItem->line().p1();
-	QPointF p2 = lineItem->line().p2();
-	qreal distance = sqrt((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
-	QPointF slope = lineItem->line().p2() - lineItem->line().p1();
-	QPointF orthoSlope(-slope.y(), slope.x());
-	if (orthoSlope.x() != 0.0f || orthoSlope.y() != 0.0f)
-	{
-		orthoSlope /= sqrt(orthoSlope.x() * orthoSlope.x() + orthoSlope.y() * orthoSlope.y());
-	}
-
-	int lineWidth = 1;
-
-	QVector<qreal> dataVec;
-	for (qreal i = 0; i <= distance; i++)
-	{
-		qreal average = 0.0f;
-		int count = 0;
-		for (int n = 0; n < lineWidth; n++)
-		{
-			// Calculate vertical offset
-			float offset = (-lineWidth + 1) / 2.0f + n;
-			QPointF temp = p1 + orthoSlope * offset + slope / distance * i;
-			float fValue = getGlobalImage()->getValue(float(temp.x()), float(temp.y()));
-			if (fValue != -1.0f)
-			{
-				average += fValue;
-				count++;
-			}
-		}
-
-		if (count > 0)
-		{
-			average /= count;
-		}
-		else
-		{
-			average = -1.0;
-		}
-		dataVec.push_back(average);
-	}
-
-	_plotDlg->setData(lineItem, dataVec);
-	_plotDlg->show();
+	calcPlotData(lineItem, 1);	
 }
 
 void View::setSceneMode(int mode)
@@ -308,6 +267,11 @@ void View::zoomOut()
 	view()->zoomOut();
 }
 
+void View::plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth)
+{
+	calcPlotData(lineItem, lineWidth);
+}
+
 void View::cutItem()
 {
 	copyItem();
@@ -360,4 +324,49 @@ QList<QGraphicsItem*> View::cloneItems(const QList<QGraphicsItem*>& items)
 	}
 
 	return copyMap.values();
+}
+
+void View::calcPlotData(QGraphicsLineItem* lineItem, int lineWidth)
+{
+	QPointF p1 = lineItem->line().p1();
+	QPointF p2 = lineItem->line().p2();
+	qreal distance = sqrt((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
+	QPointF slope = lineItem->line().p2() - lineItem->line().p1();
+	QPointF orthoSlope(-slope.y(), slope.x());
+	if (orthoSlope.x() != 0.0f || orthoSlope.y() != 0.0f)
+	{
+		orthoSlope /= sqrt(orthoSlope.x() * orthoSlope.x() + orthoSlope.y() * orthoSlope.y());
+	}
+
+	QVector<qreal> dataVec;
+	for (qreal i = 0; i <= distance; i++)
+	{
+		qreal average = 0.0f;
+		int count = 0;
+		for (int n = 0; n < lineWidth; n++)
+		{
+			// Calculate vertical offset
+			float offset = (-lineWidth + 1) / 2.0f + n;
+			QPointF temp = p1 + orthoSlope * offset + slope / distance * i;
+			float fValue = getGlobalImage()->getValue(float(temp.x()), float(temp.y()));
+			if (fValue != -1.0f)
+			{
+				average += fValue;
+				count++;
+			}
+		}
+
+		if (count > 0)
+		{
+			average /= count;
+		}
+		else
+		{
+			average = -1.0;
+		}
+		dataVec.push_back(average);
+	}
+
+	_plotDlg->setData(lineItem, dataVec);
+	_plotDlg->show();
 }

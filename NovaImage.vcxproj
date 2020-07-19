@@ -98,7 +98,7 @@
     <ClInclude Include="Processor\InverseProcessor.h" />
     <ClInclude Include="Processor\LevelsProcessor.h" />
     <QtMoc Include="Widget\MagnifierWidget.h" />
-    <ClInclude Include="Widget\ChartView.h" />
+    <QtMoc Include="Widget\ChartView.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />

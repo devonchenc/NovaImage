@@ -269,6 +269,9 @@
     <QtMoc Include="Diagram\DiagramLengthItem.h">
       <Filter>Diagram</Filter>
     </QtMoc>
+    <QtMoc Include="Widget\ChartView.h">
+      <Filter>Widget</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image\BaseImage.h">
@@ -330,9 +333,6 @@
     </ClInclude>
     <ClInclude Include="Core\UndoSystem.h">
       <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Widget\ChartView.h">
-      <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -10,6 +10,7 @@ int DiagramPlotItem::_plotCount = 0;
 
 DiagramPlotItem::DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: DiagramLineItem(line, contextMenu, parent)
+	, _lineWidth(1)
 {
 	_plotCount++;
 	_plotIndex = _plotCount;
@@ -24,6 +25,7 @@ void DiagramPlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 {
 	DiagramLineItem::paint(painter, option, widget);
 
+	drawRect(painter);
 	drawResizeHandle(painter);
 	drawPlotIndex(painter);
 }
@@ -33,6 +35,36 @@ void DiagramPlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 	getGlobalView()->showPlotDialog(this);
 
 	DiagramLineItem::mouseReleaseEvent(event);
+}
+
+void DiagramPlotItem::drawRect(QPainter* painter)
+{
+	if (_lineWidth <= 1)
+		return;
+
+	QPointF p1 = line().p1();
+	QPointF p2 = line().p2();
+	qreal distance = sqrt((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
+	QPointF slope = line().p2() - line().p1();
+	QPointF orthoSlope(-slope.y(), slope.x());
+	if (orthoSlope.x() != 0.0f || orthoSlope.y() != 0.0f)
+	{
+		orthoSlope /= sqrt(orthoSlope.x() * orthoSlope.x() + orthoSlope.y() * orthoSlope.y());
+	}
+
+	QVector<QPointF> vec;
+	vec.push_back(p1 - orthoSlope * _lineWidth / 2.0);
+	vec.push_back(p1 + orthoSlope * _lineWidth / 2.0);
+	vec.push_back(p2 + orthoSlope * _lineWidth / 2.0);
+	vec.push_back(p2 - orthoSlope * _lineWidth / 2.0);
+
+	QPolygonF polygon(vec);
+	painter->setPen(Qt::NoPen);
+	painter->setRenderHint(QPainter::Antialiasing, true);
+	painter->setBrush(QBrush(QColor(128, 128, 255, 128)));
+	painter->drawConvexPolygon(polygon);
+
+	painter->setRenderHint(QPainter::Antialiasing, false);
 }
 
 void DiagramPlotItem::drawPlotIndex(QPainter* painter)

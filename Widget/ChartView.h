@@ -30,6 +30,8 @@ private:
 
 class ChartView : public QChartView
 {
+	Q_OBJECT
+
 public:
 	ChartView(QWidget* parent = nullptr);
 	~ChartView();

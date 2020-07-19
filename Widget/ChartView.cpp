@@ -151,6 +151,16 @@ void ChartView::setData(const QVector<qreal>& points)
 	chart->addSeries(_hSeries);
 	chart->addSeries(_vSeries);
 	chart->createDefaultAxes();
+	QList<QAbstractAxis*> axesList = chart->axes(Qt::Horizontal);
+	for (int i = 0; i < axesList.size(); i++)
+	{
+		axesList[i]->setRange(0, points.size() - 1);
+	}
+	axesList = chart->axes(Qt::Vertical);
+	for (int i = 0; i < axesList.size(); i++)
+	{
+		axesList[i]->setRange(minValue, maxValue);
+	}
 	chart->legend()->hide();
 	chart->setAnimationOptions(QChart::SeriesAnimations);
 

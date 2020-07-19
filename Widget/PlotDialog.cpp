@@ -2,9 +2,13 @@
 
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QMenuBar>
+#include <QInputDialog>
 
 #include "ChartView.h"
 #include "../Diagram/DiagramPlotItem.h"
+#include "../Core/GlobalFunc.h"
+#include "../Core/View.h"
 
 PlotDialog::PlotDialog(QWidget* parent)
 	: QDialog(parent)
@@ -61,7 +65,13 @@ void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& poin
 
 void PlotDialog::initUI()
 {
+	QMenuBar* menuBar = new QMenuBar(this);
+	QMenu* menu = menuBar->addMenu(tr("&Settings"));
+	QAction* widthAction = menu->addAction(tr("&Line Width"));
+	connect(widthAction, &QAction::triggered, this, &PlotDialog::setLineWidth);
+
 	QVBoxLayout* globalLayout = new QVBoxLayout;
+	globalLayout->setMenuBar(menuBar);
 	globalLayout->addWidget(_tabWidget);
 	setLayout(globalLayout);
 }
@@ -86,7 +96,27 @@ void PlotDialog::deleteLine()
 	}
 }
 
-void PlotDialog::tooltip(const QPointF& point, bool state)
+void PlotDialog::setLineWidth()
 {
-//	setToolTip(QString("X: %1 \nY: %2 ").arg(point.x()).arg(point.y()));
+	ChartView* chartView = qobject_cast<ChartView*>(_tabWidget->currentWidget());
+
+	QMapIterator<DiagramPlotItem*, ChartView*> i(_map);
+	while (i.hasNext())
+	{
+		if (i.next().value() == chartView)
+		{
+			DiagramPlotItem* plotItem = i.key();
+			bool ok;
+			int lineWidth = QInputDialog::getInt(this, tr("Line Width"), tr("Width:"),
+				plotItem->width(), 1, 300, 1, &ok);
+			if (ok)
+			{
+				plotItem->setWidth(lineWidth);
+				getGlobalView()->repaint();
+				emit lineWidthChanged(plotItem, lineWidth);
+			}
+			break;;
+		}
+	}
 }
+
