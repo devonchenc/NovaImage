@@ -1,7 +1,6 @@
 #include "GraphicsScene.h"
 
 #include <QGraphicsSceneMouseEvent>
-#include <QDebug>
 #include <QTextCursor>
 #include <QKeyEvent>
 #include <QBrush>

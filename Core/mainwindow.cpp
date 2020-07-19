@@ -3,7 +3,6 @@
 #include <QMessageBox>
 #include <QPixmap>
 #include <QKeyEvent>
-#include <QDebug>
 #include <QDockWidget>
 #include <QHBoxLayout>
 #include <QToolButton>

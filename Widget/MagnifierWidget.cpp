@@ -7,7 +7,6 @@
 #include <QWindow>
 #include <QScreen>
 #include <QTimer>
-#include <QDebug>
 #include <QMouseEvent>
 
 const int grabInterval = 50;

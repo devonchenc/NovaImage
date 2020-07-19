@@ -2,7 +2,6 @@
 
 #include <QTabWidget>
 #include <QVBoxLayout>
-#include <QDebug>
 
 #include "ChartView.h"
 #include "../Diagram/DiagramPlotItem.h"
@@ -35,8 +34,6 @@ void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& poin
 {
 	DiagramPlotItem* item = qgraphicsitem_cast<DiagramPlotItem*>(lineItem);
 	connect(item, &DiagramPlotItem::itemDeleted, this, &PlotDialog::deleteLine);
-
-//	connect(series, &QLineSeries::hovered, this, &PlotDialog::tooltip);
 
 	QMap<DiagramPlotItem*, ChartView*>::const_iterator iter = _map.find(item);
 	if (iter == _map.end())

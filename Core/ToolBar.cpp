@@ -4,7 +4,6 @@
 #include <QMenu>
 #include <QEvent>
 #include <QMouseEvent>
-#include <QDebug>
 
 #include "GlobalFunc.h"
 #include "mainwindow.h"

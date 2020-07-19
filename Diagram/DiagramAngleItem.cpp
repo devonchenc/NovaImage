@@ -5,7 +5,6 @@
 #include <QMenu>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
-#include <QDebug>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"

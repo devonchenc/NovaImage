@@ -5,7 +5,6 @@
 #include <QIcon>
 #include <QMenu>
 #include <QAction>
-#include <QDebug>
 
 #include "GraphicsView.h"
 #include "GraphicsScene.h"

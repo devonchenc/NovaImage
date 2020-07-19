@@ -1,7 +1,6 @@
 #include "GraphicsView.h"
 
 #include <QtMath>
-#include <QDebug>
 #include <QMimeData>
 
 #include "View.h"
