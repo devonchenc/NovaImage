@@ -444,19 +444,24 @@ void MainWindow::close()
 
 void MainWindow::print()
 {
-	QPrinter printer(QPrinter::HighResolution);
+	QPrinter printer(QPrinter::ScreenResolution);
 	printer.setPageSize(QPrinter::A4);
+	printer.setOrientation(QPrinter::Portrait);
 
-	QPainter painter(&printer);
-	QRectF target(0, 0, printer.width(), printer.height());
+	QPrintPreviewDialog preview(&printer, this);
+	connect(&preview, &QPrintPreviewDialog::paintRequested, this, &MainWindow::printPreview);
+	preview.resize(size().height() * 0.8, size().height());
+	preview.exec();
+}
+
+void MainWindow::printPreview(QPrinter* printer)
+{
+	QPainter painter(printer);
+	QRectF target(0, 0, printer->width(), printer->height());
 	GraphicsView* graphicsView = _view->view();
 	QRectF sceneRect(graphicsView->sceneRect());
 	QRect source(graphicsView->mapFromScene(sceneRect.topLeft()), graphicsView->mapFromScene(sceneRect.bottomRight()));
 	graphicsView->render(&painter, target, source);
-
-	// TODO
-//	QPrintPreviewDialog preview(&printer, this);
-//	preview.exec();
 }
 
 void MainWindow::setupShortcuts()

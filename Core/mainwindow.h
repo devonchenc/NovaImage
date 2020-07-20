@@ -13,6 +13,7 @@ class QGraphicsScene;
 class QGraphicsView;
 class QGraphicsPixmapItem;
 class QTranslator;
+class QPrinter;
 QT_END_NAMESPACE
 
 class View;
@@ -99,6 +100,8 @@ public slots:
 	void openFile(const QString& fileName);
 
 	void notify(const QString& title, const QString& message, int type);
+
+	void printPreview(QPrinter* printer);
 
 private:
     ToolBar* _toolBar;
