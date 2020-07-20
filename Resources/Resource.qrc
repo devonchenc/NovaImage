@@ -43,5 +43,7 @@
         <file>svg/ROIwindow.svg</file>
         <file>svg/plot.svg</file>
         <file>svg/print.svg</file>
+        <file>svg/guide.svg</file>
+        <file>svg/about.svg</file>
     </qresource>
 </RCC>

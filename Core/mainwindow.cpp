@@ -148,7 +148,9 @@ void MainWindow::createActions()
 	connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
 
 	_userGuideAction = new QAction(tr("&User's Guide"));
+	_userGuideAction->setIcon(QIcon(":/icon/svg/guide.svg"));
 	_aboutAction = new QAction(tr("&About"));
+	_aboutAction->setIcon(QIcon(":/icon/svg/about.svg"));
 
 	// setup menubar
 	_fileMenu = menuBar()->addMenu(tr("&File"));
@@ -473,6 +475,7 @@ void MainWindow::setupShortcuts()
 	_undoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
 	_redoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
 	_exitAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_F4));
+	_userGuideAction->setShortcut(QKeySequence(Qt::Key_F1));
 
 	QList<QKeySequence> shortcuts;
 	shortcuts << Qt::Key_Plus << Qt::Key_Equal;
