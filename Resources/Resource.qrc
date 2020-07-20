@@ -42,5 +42,6 @@
         <file>svg/view.svg</file>
         <file>svg/ROIwindow.svg</file>
         <file>svg/plot.svg</file>
+        <file>svg/print.svg</file>
     </qresource>
 </RCC>

@@ -40,6 +40,8 @@ void ToolBar::createButton()
 	_saveButton = new QToolButton;
 	_saveButton->setPopupMode(QToolButton::MenuButtonPopup);
 
+	_printButton = new QToolButton;
+
 	_layoutButton = new QToolButton;
 	_layoutButton->setPopupMode(QToolButton::MenuButtonPopup);
 
@@ -71,6 +73,7 @@ void ToolBar::createButton()
 
 	addWidget(_openButton);
 	addWidget(_saveButton);
+	addWidget(_printButton);
 	addSeparator();
 	addWidget(_layoutButton);
 	addWidget(_showInfoButton);
@@ -285,6 +288,10 @@ void ToolBar::initButton()
 	_saveButton->setToolTip(tr("Save Image File"));
 	connect(_saveButton, &QToolButton::clicked, mainWindow, &MainWindow::saveAs);
 
+	_printButton->setIcon(QIcon(":/icon/svg/print.svg"));
+	_printButton->setToolTip(tr("Print"));
+	connect(_printButton, &QToolButton::clicked, mainWindow, &MainWindow::print);
+
 	menu = new QMenu(this);
 	menu->addAction(_showMenuAction);
 	menu->addAction(_showDockWidgetAction);
@@ -453,6 +460,7 @@ void ToolBar::changeEvent(QEvent* event)
 
 		_openButton->setToolTip(tr("Open Image File"));
 		_saveButton->setToolTip(tr("Save Image File"));
+		_printButton->setToolTip(tr("Print"));
 		_layoutButton->setToolTip(tr("Change Layout"));
 		_showInfoButton->setToolTip(tr("Toggle Annotations"));
 		_flipButton->setToolTip(tr("Flip"));

@@ -117,7 +117,8 @@ void MainWindow::createActions()
 	_saveAsAction = new QAction(tr("&Save As..."), this);
 	_saveAsAction->setIcon(QIcon(":/icon/svg/save.svg"));
 	_closeAction = new QAction(tr("&Close"), this);
-	_printAction = new QAction(tr("&Print"), this);
+	_printAction = new QAction(tr("&Print..."), this);
+	_printAction->setIcon(QIcon(":/icon/svg/print.svg"));
 	_exitAction = new QAction(tr("E&xit"), this);
 
 	_undoAction = new QAction(tr("&Undo"), this);
@@ -467,8 +468,11 @@ void MainWindow::printPreview(QPrinter* printer)
 void MainWindow::setupShortcuts()
 {
 	_openAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+	_closeAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
+	_printAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_P));
 	_undoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
 	_redoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_R));
+	_exitAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_F4));
 
 	QList<QKeySequence> shortcuts;
 	shortcuts << Qt::Key_Plus << Qt::Key_Equal;
@@ -650,6 +654,7 @@ void MainWindow::changeEvent(QEvent* event)
 		_openAction->setText(tr("&Open..."));
 		_saveAsAction->setText(tr("&Save As..."));
 		_closeAction->setText(tr("&Close"));
+		_printAction->setText(tr("&Print..."));
 		_exitAction->setText(tr("E&xit"));
 
 		_undoAction->setText(tr("&Undo"));

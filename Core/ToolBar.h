@@ -109,6 +109,7 @@ private:
 
 	QToolButton* _openButton;
 	QToolButton* _saveButton;
+	QToolButton* _printButton;
 	QToolButton* _layoutButton;
 	QToolButton* _showInfoButton;
 	QToolButton* _flipButton;
