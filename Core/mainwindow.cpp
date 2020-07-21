@@ -365,8 +365,7 @@ void MainWindow::showDockWidget(bool show)
 {
 	for (int i = 0; i < _vecDockWidget.size(); i++)
 	{
-		QDockWidget* dockWidget = _vecDockWidget[i];
-		dockWidget->setVisible(show);
+		_vecDockWidget[i]->setVisible(show);
 	}
 }
 
@@ -389,12 +388,12 @@ void MainWindow::showAnnotation(bool show)
 
 void MainWindow::showCrossLine(bool show)
 {
-	_view->scene()->showCrossLine(show);
+	_view->view()->showCrossLine(show);
 }
 
 void MainWindow::showScale(bool show)
 {
-
+	_view->view()->showLineScale(show);
 }
 
 void MainWindow::showMeasurement(bool show)
@@ -509,6 +508,8 @@ void MainWindow::loadPlugin()
 				QDockWidget* dockWidget = plugin->createDockWidget(this);
 				addDockWidget(Qt::DockWidgetArea::LeftDockWidgetArea, dockWidget);
 				tabifyDockWidget(_toolboxDockWidget, dockWidget);
+
+				_vecDockWidget.append(dockWidget);
 
 				connect(plugin, SIGNAL(openFile(const QString&)), this, SLOT(openFile(const QString&)));
 				connect(plugin, SIGNAL(notify(const QString&, const QString&, int)), this, SLOT(notify(const QString&, const QString&, int)));

@@ -24,6 +24,10 @@ public:
 
 	void showAnnotation(bool show);
 
+	void showCrossLine(bool show);
+
+	void showLineScale(bool show);
+
 	void showMagnifier();
 
 protected:
@@ -44,7 +48,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
-	void paintEvent(QPaintEvent* event) override;
+	void drawForeground(QPainter* painter, const QRectF& rect);
 
 	bool eventFilter(QObject* obj, QEvent* event) override;
 
@@ -57,5 +61,7 @@ private:
 	QString _strCoord;
 	QString _strValue;
 	bool _showAnnotation;
+	bool _showCrossLine;
+	bool _showLineScale;
 	MagnifierWidget* _magnifier;
 };

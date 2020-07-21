@@ -22,7 +22,7 @@ void DiagramArrowItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* 
 
 void DiagramArrowItem::drawArrow(QPainter* painter)
 {
-	painter->setRenderHint(QPainter::Antialiasing, false);
+	painter->setRenderHint(QPainter::Antialiasing, true);
 	painter->setPen(pen());
 
 	float len = length();

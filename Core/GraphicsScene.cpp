@@ -28,8 +28,6 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	, _currentDrawingLine(nullptr)
 	, _currentDrawingItem(nullptr)
 	, _currentDrawingAngle(nullptr)
-	, _refHorzLine(nullptr)
-	, _refVertLine(nullptr)
 {
 	_font.setPointSize(24);
 }
@@ -163,23 +161,6 @@ void GraphicsScene::setMode(int mode)
 void GraphicsScene::setItemType(DiagramItem::DiagramType type)
 {
 	_itemType = type;
-}
-
-void GraphicsScene::showCrossLine(bool show)
-{
-	if (show)
-	{
-		QRectF rect = sceneRect();
-		_refHorzLine = addLine(rect.left(), rect.center().y(), rect.right(), rect.center().y(), QPen(Qt::red));
-		_refVertLine = addLine(rect.center().x(), rect.top(), rect.center().x(), rect.bottom(), QPen(Qt::red));
-	}
-	else
-	{
-		removeItem(_refHorzLine);
-		removeItem(_refVertLine);
-		delete _refHorzLine;
-		delete _refVertLine;
-	}
 }
 
 void GraphicsScene::showMeasurement(bool show)

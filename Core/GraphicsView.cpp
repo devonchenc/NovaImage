@@ -14,6 +14,8 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
 	, _view(view)
 	, _zoomFactor(MAX_ZOOM / 2)
 	, _showAnnotation(true)
+	, _showCrossLine(false)
+	, _showLineScale(true)
 	, _magnifier(new MagnifierWidget(this))
 {
 	setDragMode(QGraphicsView::NoDrag);
@@ -68,8 +70,20 @@ void GraphicsView::setZoomValueOffset(int offset)
 }
 
 void GraphicsView::showAnnotation(bool show)
-{ 
+{
 	_showAnnotation = show;
+	update();
+}
+
+void GraphicsView::showCrossLine(bool show)
+{
+	_showCrossLine = show;
+	update();
+}
+
+void GraphicsView::showLineScale(bool show)
+{
+	_showLineScale = show;
 	update();
 }
 
@@ -173,15 +187,16 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent* event)
 	QGraphicsView::mouseReleaseEvent(event);
 }
 
-void GraphicsView::paintEvent(QPaintEvent* event)
+void GraphicsView::drawForeground(QPainter*, const QRectF& rect)
 {
-	QGraphicsView::paintEvent(event);
-
 	BaseImage* image = getGlobalImage();
-	if (image && _showAnnotation)
+	if (image == nullptr)
+		return;
+
+	QPainter painter(viewport());
+	if (_showAnnotation)
 	{
-		QPainter painter(viewport());
-		int fontHeight = rect().height() < 800 ? 12 : 16;
+		int fontHeight = this->rect().height() < 800 ? 12 : 16;
 		QFont font("Arial", fontHeight);
 		painter.setFont(font);
 		painter.setPen(QPen(qRgb(255, 255, 150)));
@@ -197,11 +212,25 @@ void GraphicsView::paintEvent(QPaintEvent* event)
 		painter.drawText(QRect(0, pixelsHigh, 240, pixelsHigh), Qt::AlignLeft, str);
 
 		str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
-		painter.drawText(QRect(0, rect().bottom() - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
+		painter.drawText(QRect(0, this->rect().bottom() - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
 
 		painter.setPen(QPen(qRgb(255, 100, 100)));
-		painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
-		painter.drawText(QRect(0, rect().bottom() - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
+		painter.drawText(QRect(0, this->rect().bottom() - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
+		painter.drawText(QRect(0, this->rect().bottom() - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
+	}
+	if (_showCrossLine)
+	{
+		QRectF rect = _view->getPixmapItem()->sceneBoundingRect();
+		QPoint topLeft = mapFromScene(rect.topLeft());
+		QPoint center = mapFromScene(rect.center());
+		QPoint bottomRight = mapFromScene(rect.bottomRight());
+		painter.setPen(QPen(Qt::red));
+		painter.drawLine(topLeft.x(), center.y(), bottomRight.x(), center.y());
+		painter.drawLine(center.x(), topLeft.y(), center.x(), bottomRight.y());
+	}
+	if (_showLineScale)
+	{
+
 	}
 }
 

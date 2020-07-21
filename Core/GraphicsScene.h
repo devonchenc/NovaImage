@@ -38,8 +38,6 @@ public:
 
 	void setItemType(DiagramItem::DiagramType type);
 
-	void showCrossLine(bool show);
-
 	void showMeasurement(bool show);
 
 	void mousePress(const QPointF& point);
@@ -82,7 +80,4 @@ private:
 	DiagramAngleItem* _currentDrawingAngle;
 
 	DiagramItem* _currentDrawingItem;
-
-	QGraphicsLineItem* _refHorzLine;
-	QGraphicsLineItem* _refVertLine;
 };
