@@ -197,7 +197,7 @@ void Document::repaintView()
 	}
 }
 
-void Document::ROIWindow(QRectF rect)
+void Document::ROIWindow(const QRectF& rect)
 {
 	if (_image == nullptr)
 		return;

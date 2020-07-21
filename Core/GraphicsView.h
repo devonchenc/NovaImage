@@ -55,6 +55,14 @@ protected:
 private:
 	void applyZoomValue();
 
+	void drawAnnotation();
+
+	void drawCrossLine();
+
+	void drawLineScale();
+
+	float calcScale(float pixelSpacing);
+
 private:
 	View* _view;
 	int _zoomFactor;

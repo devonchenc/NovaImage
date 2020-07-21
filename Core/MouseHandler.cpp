@@ -41,7 +41,6 @@ void MouseHandler::handleMove(QMouseEvent* event)
 		QPointF point = getGlobalView()->view()->mapToScene(event->pos());
 		getGlobalView()->scene()->mouseMove(point);
 	}
-	_mousePos = event->pos();
 }
 
 void MouseHandler::handleRelease(QMouseEvent* event)
@@ -103,6 +102,8 @@ void ImageWindowMouseHandler::move(QMouseEvent* event)
 	{
 		// Calculate image window
 		CalcImageWindow(_mousePos - event->pos());
+
+		_mousePos = event->pos();
 
 		repaintView();
 	}
@@ -184,6 +185,7 @@ void ZoomMouseHandler::move(QMouseEvent* event)
 {
 	QPoint delta = _mousePos - event->pos();
 	getGlobalView()->view()->setZoomValueOffset(delta.y());
+	_mousePos = event->pos();
 }
 
 void ZoomMouseHandler::release(QMouseEvent* event)
@@ -249,6 +251,7 @@ void MoveMouseHandler::move(QMouseEvent* event)
 	if (getGlobalView()->sceneMode() == MOVE_SCENE)
 	{
 		QPointF delta = getGlobalView()->view()->mapToScene(_mousePos) - getGlobalView()->view()->mapToScene(event->pos());
+		_mousePos = event->pos();
 
 		QRectF rect = getGlobalView()->view()->sceneRect();
 		getGlobalView()->view()->setSceneRect(rect.x() + delta.x(), rect.y() + delta.y(), rect.width(), rect.height());

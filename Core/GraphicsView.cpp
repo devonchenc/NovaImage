@@ -187,50 +187,23 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent* event)
 	QGraphicsView::mouseReleaseEvent(event);
 }
 
-void GraphicsView::drawForeground(QPainter*, const QRectF& rect)
+void GraphicsView::drawForeground(QPainter*, const QRectF&)
 {
 	BaseImage* image = getGlobalImage();
 	if (image == nullptr)
 		return;
 
-	QPainter painter(viewport());
 	if (_showAnnotation)
 	{
-		int fontHeight = this->rect().height() < 800 ? 12 : 16;
-		QFont font("Arial", fontHeight);
-		painter.setFont(font);
-		painter.setPen(QPen(qRgb(255, 255, 150)));
-
-		// Get the height of the font
-		int pixelsHigh = painter.fontMetrics().height() * 1.1;
-
-		QString str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
-		painter.drawText(QRect(0, 0, 240, pixelsHigh), Qt::AlignLeft, str);
-
-		qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
-		str = QString(tr("Zoom: %1%")).arg(QString::number(scale * 100.0, 'f', 2));
-		painter.drawText(QRect(0, pixelsHigh, 240, pixelsHigh), Qt::AlignLeft, str);
-
-		str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
-		painter.drawText(QRect(0, this->rect().bottom() - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
-
-		painter.setPen(QPen(qRgb(255, 100, 100)));
-		painter.drawText(QRect(0, this->rect().bottom() - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
-		painter.drawText(QRect(0, this->rect().bottom() - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
+		drawAnnotation();
 	}
 	if (_showCrossLine)
 	{
-		QRectF rect = _view->getPixmapItem()->sceneBoundingRect();
-		QPoint topLeft = mapFromScene(rect.topLeft());
-		QPoint center = mapFromScene(rect.center());
-		QPoint bottomRight = mapFromScene(rect.bottomRight());
-		painter.setPen(QPen(Qt::red));
-		painter.drawLine(topLeft.x(), center.y(), bottomRight.x(), center.y());
-		painter.drawLine(center.x(), topLeft.y(), center.x(), bottomRight.y());
+		drawCrossLine();
 	}
 	if (_showLineScale)
 	{
-
+		drawLineScale();
 	}
 }
 
@@ -247,4 +220,115 @@ bool GraphicsView::eventFilter(QObject* obj, QEvent* event)
 	{
 		return QGraphicsView::eventFilter(obj, event);
 	}
+}
+
+void GraphicsView::drawAnnotation()
+{
+	int fontHeight = rect().height() < 800 ? 12 : 16;
+	QFont font("Arial", fontHeight);
+	QPainter painter(viewport());
+	painter.setFont(font);
+	painter.setPen(QPen(qRgb(255, 255, 150)));
+
+	// Get the height of the font
+	int pixelsHigh = painter.fontMetrics().height() * 1.1;
+	int y = rect().bottom() - 10;
+
+	BaseImage* image = getGlobalImage();
+	QString str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
+	painter.drawText(QRect(0, 0, 240, pixelsHigh), Qt::AlignLeft, str);
+
+	qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
+	str = QString(tr("Zoom: %1%")).arg(QString::number(scale * 100.0, 'f', 2));
+	painter.drawText(QRect(0, pixelsHigh, 240, pixelsHigh), Qt::AlignLeft, str);
+
+	str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
+	painter.drawText(QRect(0, y - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
+
+	painter.setPen(QPen(qRgb(255, 100, 100)));
+	painter.drawText(QRect(0, y - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
+	painter.drawText(QRect(0, y - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
+}
+
+void GraphicsView::drawCrossLine()
+{
+	QRectF rect = _view->getPixmapItem()->sceneBoundingRect();
+	QPoint topLeft = mapFromScene(rect.topLeft());
+	QPoint center = mapFromScene(rect.center());
+	QPoint bottomRight = mapFromScene(rect.bottomRight());
+	QPainter painter(viewport());
+	painter.setPen(QPen(qRgb(255, 50, 50)));
+	painter.drawLine(topLeft.x(), center.y(), bottomRight.x(), center.y());
+	painter.drawLine(center.x(), topLeft.y(), center.x(), bottomRight.y());
+}
+
+void GraphicsView::drawLineScale()
+{
+	BaseImage* image = getGlobalImage();
+	if (!image->hasPixelSpacing())
+		return;
+
+	float horzPixelSpacing = image->horzPixelSpacing();
+	float vertPixelSpacing = image->vertPixelSpacing();
+
+	float horzDistance = calcScale(horzPixelSpacing);
+	float vertDistance = calcScale(vertPixelSpacing);
+
+	qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
+	float horzInterval = horzDistance * scale / horzPixelSpacing;
+	float vertInterval = vertDistance * scale / vertPixelSpacing;
+	int margin = 5;
+	int x = rect().right() - margin;
+	int y = rect().bottom() - margin;
+
+	QPainter painter(viewport());
+	painter.setPen(QPen(qRgb(255, 255, 100)));
+	painter.drawLine(rect().center().x() - 5 * horzInterval, y, rect().center().x() + 5 * horzInterval, y);
+	painter.drawLine(x, rect().center().y() - 5 * vertInterval, x, rect().center().y() + 5 * vertInterval);
+
+	painter.setPen(QPen(qRgb(255, 255, 0)));
+	for (int i = 0; i <= 10; i++)
+	{
+		painter.drawLine(rect().center().x() + (i - 5) * horzInterval, y, rect().center().x() + (i - 5) * horzInterval, y - 5);
+		if (i % 5 == 0)
+		{
+			painter.drawLine(rect().center().x() + (i - 5) * horzInterval, y, rect().center().x() + (i - 5) * horzInterval, y - 10);
+		}
+		painter.drawLine(x, rect().center().y() + (i - 5) * vertInterval, x - 5, rect().center().y() + (i - 5) * vertInterval);
+		if (i % 5 == 0)
+		{
+			painter.drawLine(x, rect().center().y() + (i - 5) * vertInterval, x - 10, rect().center().y() + (i - 5) * vertInterval);
+		}
+	}
+
+	QString str = QString::number(horzDistance, 'f', 2) + " mm";
+	painter.drawText(QRect(rect().center().x(), y - 23, 9 * horzInterval, 20), Qt::AlignCenter, str);
+
+	painter.rotate(-90);
+	str = QString::number(vertDistance, 'f', 2) + " mm";
+	painter.drawText(QRect(-rect().center().y(), rect().width() - 23 - margin, 9 * horzInterval, 20), Qt::AlignCenter, str);
+}
+
+float GraphicsView::calcScale(float pixelSpacing)
+{
+	float distance = 20.0f;
+	int flag = 0;
+	while (distance / pixelSpacing > 60)
+	{
+		if (flag == 0)
+		{
+			distance /= 2;
+		}
+		else if (flag == 1)
+		{
+			distance /= 2;
+		}
+		else if (flag == 2)
+		{
+			distance /= 2.5;
+		}
+		flag = (flag + 1) % 3;
+	}
+
+	return distance;
 }

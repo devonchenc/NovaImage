@@ -50,7 +50,7 @@ public:
 	static int findType(const QString& fileName);
 
 public:
-	void ROIWindow(QRectF rect);
+	void ROIWindow(const QRectF& rect);
 
 	void defaultImageWindow();
 
