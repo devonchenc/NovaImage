@@ -4,6 +4,7 @@
 #include <QTextCursor>
 #include <QKeyEvent>
 #include <QBrush>
+#include <QApplication>
 
 #include "GlobalFunc.h"
 #include "View.h"
@@ -270,7 +271,23 @@ void GraphicsScene::mouseMove(const QPointF& point)
 {
 	if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot) && _currentDrawingLine != nullptr)
 	{
-		_currentDrawingLine->setLine(QLineF(_currentDrawingLine->line().p1(), point));
+		QPointF p1 = _currentDrawingLine->line().p1();
+		if (QApplication::keyboardModifiers() == Qt::ShiftModifier)
+		{
+			QPointF offset = point - p1;
+			if (abs(offset.x()) > abs(offset.y()))
+			{
+				_currentDrawingLine->setLine(QLineF(p1, QPointF(point.x(), p1.y())));
+			}
+			else
+			{
+				_currentDrawingLine->setLine(QLineF(p1, QPointF(p1.x(), point.y())));
+			}
+		}
+		else
+		{
+			_currentDrawingLine->setLine(QLineF(p1, point));
+		}
 	}
 	else if (_itemType == DiagramItem::Angle && _currentDrawingAngle != nullptr)
 	{
