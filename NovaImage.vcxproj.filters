@@ -334,6 +334,9 @@
     <ClInclude Include="Core\UndoSystem.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="Image\OldDataheader.h">
+      <Filter>Image</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="novaimage_zh.ts">

@@ -2,6 +2,7 @@
 
 #include "MonoImage.h"
 #include "Dataheader.h"
+#include "OldDataheader.h"
 
 class ScanImage : public MonoImage
 {
@@ -11,15 +12,21 @@ public:
 	virtual ~ScanImage();
 
 public:
+	bool hasPixelSpacing() override { return true; }
+
+	float horzPixelSpacing() override { return _dataHeader.HorzPixelSpacing; }
+	float vertPixelSpacing() override { return _dataHeader.VertPixelSpacing; }
+
+	void initWindowWidthAndLevel() override;
+
+	BaseImage* copyImage() const override;
+
+public:
 	// Get reference of DataHeader
 	DataHeader& getDataHeader()		{ return _dataHeader; }
 
 protected:
 	bool saveAsDcm(const QString& fileName) override;
-
-	void initWindowWidthAndLevel() override;
-
-	BaseImage* copyImage() const override;
 
 private:
 	// Read data header

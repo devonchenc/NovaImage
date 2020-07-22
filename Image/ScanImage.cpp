@@ -92,23 +92,36 @@ bool ScanImage::readDataHeader()
 	if (!file.open(QFile::ReadOnly))
 		return false;
 
-	qint64 size = file.size();
-
-	file.read((char*)(&_dataHeader), sizeof(DataHeader));
-	file.close();
-
-	_width = _dataHeader.Width;
-	_height = _dataHeader.Height;
-	_slice = _dataHeader.Slice == 0 ? 1 : _dataHeader.Slice;
-	if (_width * _height == 0)
-		return false;
-
-	qint64 expectSize = _width * _height * _slice * sizeof(float) + DATA_HEADER_SIZE;
-	if (expectSize > size)
+	int tag;
+	file.read((char*)(&tag), sizeof(int));
+	if (tag == 0xCDCD0000)
 	{
-		QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
-			QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
-		return false;
+		// New version
+
+	}
+	else
+	{
+		// Old version
+		file.seek(0);
+		OldDataHeader dh;
+		file.read((char*)(&dh), sizeof(OldDataHeader));
+		file.close();
+
+		// Convert old header to new header
+
+		_width = _dataHeader.Width;
+		_height = _dataHeader.Height;
+		_slice = _dataHeader.Slice == 0 ? 1 : _dataHeader.Slice;
+		if (_width * _height == 0)
+			return false;
+
+		qint64 expectSize = _width * _height * _slice * sizeof(float) + OLD_DATA_HEADER_SIZE;
+		if (expectSize > file.size())
+		{
+			QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
+				QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
+			return false;
+		}
 	}
 
 	return true;
@@ -125,7 +138,17 @@ bool ScanImage::readData()
 	if (!file.open(QFile::ReadOnly))
 		return false;
 
-	file.seek(DATA_HEADER_SIZE);
+	int tag;
+	file.read((char*)(&tag), sizeof(int));
+	if (tag == 0xCDCD0000)
+	{
+		file.seek(DATA_HEADER_SIZE);
+	}
+	else
+	{
+		file.seek(OLD_DATA_HEADER_SIZE);
+	}
+
 	qint64 readSize = file.read((char*)originalData, sizeof(float) * _width * _height);
 	file.close();
 

@@ -1,7 +1,7 @@
 ﻿#pragma once
 
-#ifndef DATA_HEADER_SIZE
-#define DATA_HEADER_SIZE		4096
+#ifndef OLD_DATA_HEADER_SIZE
+#define OLD_DATA_HEADER_SIZE	1024
 #endif
 
 #define PANEL_NORMAL_IMAGE		11
@@ -13,16 +13,15 @@
 
 #include <memory>
 
-class DataHeader
+class OldDataHeader
 {
 public:
-	DataHeader()
+	OldDataHeader()
 	{
-		memset(this, 0, sizeof(DataHeader));
+		memset(this, 0, sizeof(OldDataHeader));
 	}
 
 public:
-	int Tag;
 	uint Attribute;
 	ushort Width;
 	ushort Height;
@@ -60,7 +59,22 @@ public:
 	float	Reserved4;
 	float	SourceOffset;
 
+	ushort	VolumeXDis;
+	ushort	VolumeYDis;
+	ushort	VolumeZDis;
+	ushort	DataType;				// DataType 0:float, 1:unsigned short, 2:unsigned char
 
-	float HorzPixelSpacing;
-	float VertPixelSpacing;
+	int     SpecialScanMode;
+	float	Pitch;
+	int		RotaionNum;
+	int		LimitedScanAng;
+	float	ShortScanDistance;
+
+	float	Reserved8;
+	float	Reserved9;
+	float	Reserved10;
+	float	Reserved11;
+
+	float	RowPixelWidth;
+	float	ColumnPixelWidth;
 };
