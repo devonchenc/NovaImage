@@ -196,7 +196,7 @@ void ScanImage::convertHeader(const OldDataHeader& dh)
 
 	_dataHeader.DetectorType = dh.DetectorType;
 	_dataHeader.ElementSize = dh.UnitWidth;
-	_dataHeader.ImageFrameCount = dh.ImageFrameCount;
+	_dataHeader.FrameBinning = dh.ImageFrameCount;
 	_dataHeader.DetectorBitDepth = dh.ImageBitDepth;
 	_dataHeader.Pixelbinning = dh.Pixelbinning;
 	_dataHeader.IntegrationTime = dh.IntegrationTime;

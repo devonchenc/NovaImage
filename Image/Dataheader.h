@@ -45,12 +45,13 @@ public:
 	float	Frequency;
 	float	FocusSize;
 	float	TargetPower;
+	float	TubePower;
 
 	// Detector
 	int		DetectorType;
 	float	ElementSize;
-	int		ImageFrameCount;
 	int		DetectorBitDepth;
+	int		FrameBinning;
 	int		Pixelbinning;
 	float	IntegrationTime;
 	float	Reserved2;
@@ -79,7 +80,6 @@ public:
 	int		RotaionNum;				// Number of turns of Spiral scan
 	int		LimitedScanAng;			// Angle of limited angle scan
 	float	ShortScanDistance;		// Detector offset of LFOV scan
-
 
 	float	Reserved4;
 	float	Reserved5;
