@@ -92,36 +92,44 @@ bool ScanImage::readDataHeader()
 	if (!file.open(QFile::ReadOnly))
 		return false;
 
-	int tag;
-	file.read((char*)(&tag), sizeof(int));
-	if (tag == 0xCDCD0000)
+	bool isNew = isNewHeader(file);
+	if (isNew)
 	{
 		// New version
-
+		file.read((char*)(&_dataHeader), sizeof(DataHeader));
+		file.close();
 	}
 	else
 	{
 		// Old version
-		file.seek(0);
 		OldDataHeader dh;
 		file.read((char*)(&dh), sizeof(OldDataHeader));
 		file.close();
 
 		// Convert old header to new header
+		convertHeader(dh);
+	}
 
-		_width = _dataHeader.Width;
-		_height = _dataHeader.Height;
-		_slice = _dataHeader.Slice == 0 ? 1 : _dataHeader.Slice;
-		if (_width * _height == 0)
-			return false;
+	_width = _dataHeader.Width;
+	_height = _dataHeader.Height;
+	_slice = _dataHeader.Slice == 0 ? 1 : _dataHeader.Slice;
+	if (_width * _height <= 0)
+		return false;
 
-		qint64 expectSize = _width * _height * _slice * sizeof(float) + OLD_DATA_HEADER_SIZE;
-		if (expectSize > file.size())
-		{
-			QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
-				QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
-			return false;
-		}
+	qint64 expectSize = _width * _height * _slice * sizeof(float);
+	if (isNew)
+	{
+		expectSize += DATA_HEADER_SIZE;
+	}
+	else
+	{
+		expectSize += OLD_DATA_HEADER_SIZE;
+	}
+	if (expectSize > file.size())
+	{
+		QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
+			QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
+		return false;
 	}
 
 	return true;
@@ -138,9 +146,8 @@ bool ScanImage::readData()
 	if (!file.open(QFile::ReadOnly))
 		return false;
 
-	int tag;
-	file.read((char*)(&tag), sizeof(int));
-	if (tag == 0xCDCD0000)
+	bool isNew = isNewHeader(file);
+	if (isNew)
 	{
 		file.seek(DATA_HEADER_SIZE);
 	}
@@ -160,4 +167,44 @@ bool ScanImage::readData()
 	}
 
 	return true;
+}
+
+bool ScanImage::isNewHeader(QFile& file)
+{
+	int tag;
+	file.seek(0);
+	file.read((char*)(&tag), sizeof(int));
+	file.seek(0);
+	return tag == 0xCDCD0000;
+}
+
+void ScanImage::convertHeader(const OldDataHeader& dh)
+{
+	_dataHeader.Attribute = dh.Attribute;
+	_dataHeader.Width = dh.Width;
+	_dataHeader.Height = dh.Height;
+	_dataHeader.Slice = dh.Slice;
+
+	_dataHeader.DataType = dh.DataType;
+	_dataHeader.HorzPixelSpacing = dh.RowPixelWidth;
+	_dataHeader.VertPixelSpacing = dh.ColumnPixelWidth;
+
+	_dataHeader.Voltage = dh.Voltage;
+	_dataHeader.Current = dh.Current;
+	_dataHeader.Frequency = dh.Frequency;
+	_dataHeader.FocusSize = dh.FocusSize;
+
+	_dataHeader.DetectorType = dh.DetectorType;
+	_dataHeader.ElementSize = dh.UnitWidth;
+	_dataHeader.ImageFrameCount = dh.ImageFrameCount;
+	_dataHeader.DetectorBitDepth = dh.ImageBitDepth;
+	_dataHeader.Pixelbinning = dh.Pixelbinning;
+	_dataHeader.IntegrationTime = dh.IntegrationTime;
+
+	_dataHeader.SOD = dh.SOD;
+	_dataHeader.SDD = dh.SDD;
+	_dataHeader.IntegrationTime = dh.IntegrationTime;
+	_dataHeader.IntegrationTime = dh.IntegrationTime;
+	_dataHeader.IntegrationTime = dh.IntegrationTime;
+	_dataHeader.IntegrationTime = dh.IntegrationTime;
 }

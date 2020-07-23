@@ -4,6 +4,8 @@
 #include "Dataheader.h"
 #include "OldDataheader.h"
 
+class QFile;
+
 class ScanImage : public MonoImage
 {
 public:
@@ -34,6 +36,10 @@ private:
 
 	// Read data
 	bool readData();
+
+	bool isNewHeader(QFile& file);
+
+	void convertHeader(const OldDataHeader& dh);
 
 private:
 	DataHeader _dataHeader;

@@ -221,6 +221,14 @@ void ChartView::mouseMoveEvent(QMouseEvent* event)
 
 		*_vSeries << QPointF(position.x(), valueAxis->min()) << QPointF(position.x(), valueAxis->max());
 
+		// Set pen style
+		QPen pen = _hSeries->pen();
+		pen.setStyle(Qt::DashLine);
+		_hSeries->setPen(pen);
+		pen = _vSeries->pen();
+		pen.setStyle(Qt::DashLine);
+		_vSeries->setPen(pen);
+
 		if (_callout == nullptr)
 			_callout = new Callout(chart());
 
