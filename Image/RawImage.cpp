@@ -82,7 +82,6 @@ bool RawImage::readData()
 	if (!file.open(QFile::ReadOnly))
 		return false;
 
-	qint64 size = file.size();
 	file.seek(_headerSize);
 
 	int pixelCount = _width * _height;

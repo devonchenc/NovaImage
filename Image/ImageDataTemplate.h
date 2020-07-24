@@ -111,7 +111,7 @@ template <class Type>
 bool ImageDataTemplate<Type>::findTopAndBottom()
 {
 	_minValue = _maxValue = _originalData[0];
-	for (int i = 1; i < _pixelCount; i++)
+    for (unsigned long i = 1; i < _pixelCount; i++)
 	{
 		if ((std::is_same<Type, float>::value || std::is_same<Type, double>::value) && (std::isnan(_originalData[i]) || std::isinf(_originalData[i])))
 		{
@@ -139,7 +139,7 @@ bool ImageDataTemplate<Type>::allocateMemory()
 	try
 	{
 		_processingData = new float[_pixelCount];
-		for (int i = 0; i < _pixelCount; i++)
+        for (unsigned long i = 0; i < _pixelCount; i++)
 		{
 			_processingData[i] = _originalData[i];
 		}
