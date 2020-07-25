@@ -262,8 +262,6 @@ void Document::inverseImage()
 {
 	if (_image)
 	{
-		float maxValue = _image->getMaxValue();
-		float minValue = _image->getMinValue();
 		InverseProcessor processor;
 		processor.process(getImage());
 

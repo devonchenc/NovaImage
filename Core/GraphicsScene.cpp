@@ -123,7 +123,6 @@ void GraphicsScene::setTextFont(const QFont& font)
 		if (p->type() == DiagramTextItem::Type)
 		{
 			DiagramTextItem* item = qgraphicsitem_cast<DiagramTextItem*>(p);
-			int size = _font.pointSize();
 			item->setFont(_font);
 		}
 	}
@@ -215,7 +214,6 @@ void GraphicsScene::mousePress(const QPointF& point)
 		else if (_itemType == DiagramItem::Text)
 		{
 			DiagramTextItem* textItem = new DiagramTextItem;
-			int size = _font.pointSize();
 			textItem->setFont(_font);
 			textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
 			textItem->setZValue(1000.0);
@@ -227,8 +225,7 @@ void GraphicsScene::mousePress(const QPointF& point)
 			emit itemInserted(textItem);
 		}
 		else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot)
-		{
-			int type = _itemType - DiagramItem::Line;
+        {
 			if (_itemType == DiagramItem::Line)
 			{
 				_currentDrawingLine = new DiagramLengthItem(QLineF(_startPoint, _startPoint), _itemMenu);

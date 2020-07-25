@@ -104,6 +104,10 @@ void CommonProcessor::processMonoImage(MonoImage* image)
 // Process float array
 void CommonProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
+    Q_UNUSED(width);
+    Q_UNUSED(height);
+    Q_UNUSED(minValue);
+    Q_UNUSED(maxValue);
 	assert(array && pByte);
 
 /*	float fAverage = float(minValue + maxValue) / 2.0f;

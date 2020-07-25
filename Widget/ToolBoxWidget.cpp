@@ -369,11 +369,13 @@ void ToolBoxWidget::textSelected(QGraphicsItem* item)
 
 void ToolBoxWidget::currentFontChanged(const QFont& font)
 {
+    Q_UNUSED(font);
 	handleFontChange();
 }
 
 void ToolBoxWidget::fontSizeChanged(const QString& size)
 {
+    Q_UNUSED(size);
 	handleFontChange();
 }
 

@@ -509,6 +509,7 @@ void CurveSquare::mouseMoveEvent(QMouseEvent* event)
 
 void CurveSquare::mouseReleaseEvent(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	setCursor(Qt::ArrowCursor);
 	// Update image
 //	AfxBeginThread(UpdateImageThread, this);

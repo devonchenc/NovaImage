@@ -9,6 +9,8 @@ class GeneralImage;
 class MonoImage;
 class RegionImage;
 
+#include <QtGlobal>
+
 // Base class of image processing algorithm
 class BaseProcessor
 {
@@ -25,12 +27,13 @@ public:
 	void process(BaseImage* image);
 
 	// Process float array
-	virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)	{}
+    virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
+    {Q_UNUSED(array);Q_UNUSED(width);Q_UNUSED(height);Q_UNUSED(minValue);Q_UNUSED(maxValue);Q_UNUSED(pByte);}
 
 protected:
-	virtual void processGeneralImage(GeneralImage* image) {}
+    virtual void processGeneralImage(GeneralImage* image) { Q_UNUSED(image); }
 
-	virtual void processMonoImage(MonoImage* image) {}
+    virtual void processMonoImage(MonoImage* image) { Q_UNUSED(image); }
 
 //	virtual void ProcessRegionImage(RegionImage* pImage);
 

@@ -54,8 +54,6 @@ void InverseProcessor::processMonoImage(MonoImage* image)
 	int width = image->width();
 	int height = image->height();
 	uchar* byteImage = image->getBYTEImage();
-	float maxValue = image->getMaxValue();
-	float minValue = image->getMinValue();
 
 	for (int i = 0; i < width * height * 3; i++)
 	{
@@ -68,6 +66,8 @@ void InverseProcessor::processMonoImage(MonoImage* image)
 // Process float array
 void InverseProcessor::processArray(float* array, int width, int height, uchar* pByte)
 {
+    Q_UNUSED(width);
+    Q_UNUSED(height);
 	assert(array && pByte);
 	
 }

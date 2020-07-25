@@ -3,19 +3,26 @@
 # ------------------------------------------------------
 QT       += core gui widgets printsupport charts
 
-TEMPLATE = app
+CONFIG += qt thread debug c++11
+
 TARGET = NovaImage
-DESTDIR = ./x64/Debug
-CONFIG += debug
+TEMPLATE = app
+
+# The following define makes your compiler emit warnings if you use
+# any feature of Qt which has been marked as deprecated (the exact warnings
+# depend on your compiler). Please consult the documentation of the
+# deprecated API in order to know how to port your code away from it.
+DEFINES += QT_DEPRECATED_WARNINGS
+
+OBJECTS_DIR += debug
+DESTDIR = ./bin
 INCLUDEPATH += "C:\Program Files\DCMTK\include"
 LIBS += -L"C:\Program Files\DCMTK\lib" -ldcmtk
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
-OBJECTS_DIR += debug
 UI_DIR += ./GeneratedFiles
 RCC_DIR += ./GeneratedFiles
 include(NovaImage.pri)
-TRANSLATIONS += novaimage_zh.ts
 
 DEFINES  -= UNICODE
 DEFINES  += UMBCS

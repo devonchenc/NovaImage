@@ -169,7 +169,7 @@ bool ImageDataTemplate<Type>::convertToByte(uchar* byteImage)
 		variable = 0.0f;
 	}
 
-	for (int i = 0; i < _pixelCount; i++)
+    for (unsigned long i = 0; i < _pixelCount; i++)
 	{
 		byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =
 				uchar((_processingData[i] - _minValue) * variable);
@@ -191,7 +191,7 @@ void ImageDataTemplate<Type>::rescaleArray(float rescaleSlope, float rescaleInte
 {
 	if (_processingData)
 	{
-		for (int i = 0; i < _pixelCount; i++)
+        for (unsigned long i = 0; i < _pixelCount; i++)
 		{
 			_processingData[i] = _originalData[i] * rescaleSlope + rescaleIntercept;
 		}
@@ -211,7 +211,7 @@ ImageData* ImageDataTemplate<Type>::copyImageData() const
 template <class Type>
 void ImageDataTemplate<Type>::restoreData()
 {
-	for (int i = 0; i < _pixelCount; i++)
+    for (unsigned long i = 0; i < _pixelCount; i++)
 	{
 		_processingData[i] = _originalData[i];
 	}

@@ -93,7 +93,7 @@ void MouseHandler::unsetRightButton()
 
 void ImageWindowMouseHandler::press(QMouseEvent* event)
 {
-
+    Q_UNUSED(event);
 }
 
 void ImageWindowMouseHandler::move(QMouseEvent* event)
@@ -111,6 +111,7 @@ void ImageWindowMouseHandler::move(QMouseEvent* event)
 
 void ImageWindowMouseHandler::release(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	_horzOrVert = 0;
 }
 
@@ -160,12 +161,13 @@ void ROIWindowMouseHandler::unbounded()
 
 void ROIWindowMouseHandler::press(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	getGlobalView()->view()->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
 void ROIWindowMouseHandler::move(QMouseEvent* event)
 {
-
+    Q_UNUSED(event);
 }
 
 void ROIWindowMouseHandler::release(QMouseEvent* event)
@@ -178,6 +180,7 @@ void ROIWindowMouseHandler::release(QMouseEvent* event)
 
 void ZoomMouseHandler::press(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
 
@@ -190,13 +193,14 @@ void ZoomMouseHandler::move(QMouseEvent* event)
 
 void ZoomMouseHandler::release(QMouseEvent* event)
 {
-
+    Q_UNUSED(event);
 }
 
 //////////////////////////////////////////////////////////////////////////
 
 void MagnifierMouseHandler::press(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 	getGlobalView()->view()->setCursor(Qt::CrossCursor);
 	getGlobalView()->view()->showMagnifier();
@@ -204,12 +208,12 @@ void MagnifierMouseHandler::press(QMouseEvent* event)
 
 void MagnifierMouseHandler::move(QMouseEvent* event)
 {
-
+    Q_UNUSED(event);
 }
 
 void MagnifierMouseHandler::release(QMouseEvent* event)
 {
-
+    Q_UNUSED(event);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -221,17 +225,19 @@ void SelectMouseHandler::unbounded()
 
 void SelectMouseHandler::press(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	getGlobalView()->setSceneMode(MOVE_ITEM);
 }
 
 void SelectMouseHandler::move(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	getGlobalView()->scene()->update();
 }
 
 void SelectMouseHandler::release(QMouseEvent* event)
 {
-
+    Q_UNUSED(event);
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -243,6 +249,7 @@ void MoveMouseHandler::unbounded()
 
 void MoveMouseHandler::press(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	getGlobalView()->setSceneMode(MOVE_SCENE);
 }
 
@@ -260,7 +267,7 @@ void MoveMouseHandler::move(QMouseEvent* event)
 
 void MoveMouseHandler::release(QMouseEvent* event)
 {
-
+    Q_UNUSED(event);
 }
 
 //////////////////////////////////////////////////////////////////////////

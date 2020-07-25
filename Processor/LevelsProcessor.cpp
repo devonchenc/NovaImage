@@ -68,8 +68,6 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 	int width = image->width();
 	int height = image->height();
 	uchar* byteImage = image->getBYTEImage();
-	float maxValue = image->getMaxValue();
-	float minValue = image->getMinValue();
 
 	int channel = 0;
 
@@ -187,11 +185,15 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
 // Process float array
 void LevelsProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
+    Q_UNUSED(width);
+    Q_UNUSED(height);
+    Q_UNUSED(minValue);
+    Q_UNUSED(maxValue);
 	assert(array && pByte);
 
-	int channel = 0;
+/*	int channel = 0;
 
-/*	float variable1 = 255.0f / (float)(_top - _bottom);
+    float variable1 = 255.0f / (float)(_top - _bottom);
 	int midColor = round(255 * _mid / (1 + _mid));
 	float fVariable2 = (float)(midColor) / (float)((_bottom + _top) / 2.0f - _bottom);
 	float fVariable3 = (float)(255.0f - midColor) / (float)(_top - (_bottom + fTop) / 2.0f);

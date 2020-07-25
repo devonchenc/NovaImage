@@ -358,6 +358,7 @@ void HistogramWidget::mouseMoveEvent(QMouseEvent* event)
 
 void HistogramWidget::mouseReleaseEvent(QMouseEvent* event)
 {
+    Q_UNUSED(event);
 	if (_drag == DRAG_HISTOGRAM)
 	{
 		// Calculate selected area

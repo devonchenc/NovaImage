@@ -63,6 +63,7 @@ ScanImage::~ScanImage()
 
 bool ScanImage::saveAsDcm(const QString& fileName)
 {
+    Q_UNUSED(fileName);
 	return true;
 }
 
