@@ -16,8 +16,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 OBJECTS_DIR += debug
 DESTDIR = ./bin
-INCLUDEPATH += "C:\Program Files\DCMTK\include"
-LIBS += -L"C:\Program Files\DCMTK\lib" -ldcmtk
+INCLUDEPATH += "C:/Program Files/DCMTK/include"
+LIBS += -L"C:/Program Files/DCMTK/lib" -ldcmtk
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
 UI_DIR += ./GeneratedFiles
