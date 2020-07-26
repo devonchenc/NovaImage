@@ -16,10 +16,17 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 OBJECTS_DIR += debug
 DESTDIR = ./bin
-#INCLUDEPATH += "C:/Program Files/DCMTK/include"
-#LIBS += -L"C:/Program Files/DCMTK/lib" -ldcmtk
-INCLUDEPATH += "/home/dchen/Downloads/dcmtk-3.6.5/install/include"
-LIBS += -L"/home/dchen/Downloads/dcmtk-3.6.5/install/lib" -ldcmtk
+
+win32{
+INCLUDEPATH += "C:/Program Files/DCMTK/include"
+LIBS += -L"C:/Program Files/DCMTK/lib" -ldcmtk
+}
+
+unix{
+INCLUDEPATH += "/home/dchen/dcmtk-3.6.5/install/include"
+LIBS += -L"/home/dchen/dcmtk-3.6.5/install/lib" -ldcmtk
+}
+
 DEPENDPATH += .
 MOC_DIR += ./GeneratedFiles/$(ConfigurationName)
 UI_DIR += ./GeneratedFiles
