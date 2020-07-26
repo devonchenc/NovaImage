@@ -1,7 +1,7 @@
 
 #include "BaseProcessor.h"
 
-#include <typeinfo.h>
+#include <typeinfo>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"

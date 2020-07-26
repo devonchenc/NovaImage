@@ -1,6 +1,7 @@
 #include "DiagramArrowItem.h"
 
 #include <QPainter>
+#include <float.h>
 
 DiagramArrowItem::DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
 	: DiagramLineItem(line, contextMenu, parent)

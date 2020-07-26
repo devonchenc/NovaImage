@@ -236,7 +236,7 @@ void GraphicsView::drawAnnotation()
 
 	BaseImage* image = getGlobalImage();
 	QString str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
-	painter.drawText(QRect(0, 0, 240, pixelsHigh), Qt::AlignLeft, str);
+    painter.drawText(QRect(0, 0, 350, pixelsHigh), Qt::AlignLeft, str);
 
 	qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
 	str = QString(tr("Zoom: %1%")).arg(QString::number(scale * 100.0, 'f', 2));
@@ -246,8 +246,8 @@ void GraphicsView::drawAnnotation()
 	painter.drawText(QRect(0, y - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
 
 	painter.setPen(QPen(qRgb(255, 100, 100)));
-	painter.drawText(QRect(0, y - pixelsHigh * 2, 400, pixelsHigh), Qt::AlignLeft, _strValue);
-	painter.drawText(QRect(0, y - pixelsHigh * 3, 400, pixelsHigh), Qt::AlignLeft, _strCoord);
+    painter.drawText(QRect(0, y - pixelsHigh * 2, 600, pixelsHigh), Qt::AlignLeft, _strValue);
+    painter.drawText(QRect(0, y - pixelsHigh * 3, 600, pixelsHigh), Qt::AlignLeft, _strCoord);
 }
 
 void GraphicsView::drawCrossLine()

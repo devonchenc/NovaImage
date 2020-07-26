@@ -5,6 +5,7 @@
 #include <QKeyEvent>
 #include <QBrush>
 #include <QApplication>
+#include <cmath>
 
 #include "GlobalFunc.h"
 #include "View.h"
@@ -19,16 +20,16 @@
 
 GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
 	: QGraphicsScene(parent)
+    , _itemType(DiagramItem::Rect)
 	, _itemMenu(itemMenu)
-	, _mode(MOVE_ITEM)
-	, _itemType(DiagramItem::Rect)
+    , _mode(MOVE_ITEM)
 	, _enableFill(false)
 	, _lineColor(qRgb(0, 255, 55))
 	, _fillColor(Qt::white)
 	, _textColor(Qt::green)
-	, _currentDrawingLine(nullptr)
-	, _currentDrawingItem(nullptr)
+    , _currentDrawingLine(nullptr)
 	, _currentDrawingAngle(nullptr)
+    , _currentDrawingItem(nullptr)
 {
 	_font.setPointSize(24);
 }

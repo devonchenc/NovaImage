@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <cmath>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -18,11 +19,11 @@
 
 DiagramAngleItem::DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu, QGraphicsItem* parent)
 	: QGraphicsLineItem(QLineF(startPoint, startPoint), parent)
-	, _contextMenu(contextMenu)
-	, _previousMode(MOVE_ITEM)
-	, _drawingIndex(Point1)
-	, _p3(startPoint)
-	, _angle(0)
+    , _p3(startPoint)
+    , _angle(0)
+    , _contextMenu(contextMenu)
+    , _drawingIndex(Point1)
+    , _previousMode(MOVE_ITEM)
 {
 	setFlag(QGraphicsItem::ItemIsMovable, true);
 	setFlag(QGraphicsItem::ItemIsSelectable, true);
@@ -270,7 +271,7 @@ QList<QPointF> DiagramAngleItem::resizeHandlePoints()
 
 bool DiagramAngleItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
 {
-	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
+    qreal delta = sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
 }
 

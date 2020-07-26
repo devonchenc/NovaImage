@@ -3,6 +3,7 @@
 #include <QtGui/QMouseEvent>
 #include <QValueAxis>
 #include <QGraphicsSceneMouseEvent>
+#include <cmath>
 
 Callout::Callout(QChart* chart)
 	: QGraphicsItem(chart)

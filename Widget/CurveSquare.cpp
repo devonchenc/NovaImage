@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QMouseEvent>
+#include <cmath>
 
 #include "../Core/GlobalFunc.h"
 
@@ -475,15 +476,13 @@ void CurveSquare::mouseMoveEvent(QMouseEvent* event)
 			if ((pegs[_activePegIndex].x() - pegs[_activePegIndex - 1].x() < 12) &&
 				(abs(pegs[_activePegIndex].y() - pegs[_activePegIndex - 1].y()) < 12))
 			{
-				QPoint tempPoint = pegs[_activePegIndex].point();
 				removePeg(_activePegIndex);
 				flag = 1;
 			}
 			// Merge with next peg
 			else if ((pegs[_activePegIndex + 1].x() - pegs[_activePegIndex].x() < 12) &&
 				(abs(pegs[_activePegIndex + 1].y() - pegs[_activePegIndex].y()) < 12))
-			{
-				QPoint tempPoint = pegs[_activePegIndex].point();
+            {
 				removePeg(_activePegIndex);
 				flag = 2;
 			}

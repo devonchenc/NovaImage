@@ -1,6 +1,7 @@
 #include "DiagramPlotItem.h"
 
 #include <QPainter>
+#include <cmath>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"

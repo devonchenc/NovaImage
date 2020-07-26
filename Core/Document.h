@@ -4,6 +4,8 @@
 #include <QPair>
 #include <QVector>
 #include <QObject>
+#include <memory>
+
 #include "UndoSystem.h"
 
 class MainWindow;

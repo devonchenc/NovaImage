@@ -5,6 +5,7 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QApplication>
+#include <cmath>
 
 #include "../Core/GlobalFunc.h"
 #include "../Processor/HistogramProcessor.h"

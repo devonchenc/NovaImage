@@ -1,5 +1,7 @@
 ﻿#include "GeneralImage.h"
 
+#include <cmath>
+
 GeneralImage::GeneralImage()
 	: _backupImage(nullptr)
 {

@@ -71,4 +71,3 @@ private:
 
 	QString _info;
 };
-

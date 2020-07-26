@@ -1,5 +1,7 @@
 #include "HistogramProcessor.h"
 
+#include <cmath>
+
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 

@@ -1,4 +1,4 @@
-#include <QApplication>
+ï»¿#include <QApplication>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QPixmap>
@@ -139,7 +139,7 @@ void MainWindow::createActions()
 	_engAction = new QAction("&English", this);
 	_engAction->setCheckable(true);
 	_engAction->setChecked(true);
-	_chsAction = new QAction(QStringLiteral("ÖÐÎÄ£¨¼òÌå£©"), this);
+	_chsAction = new QAction(QStringLiteral("ä¸­æ–‡ï¼ˆç®€ä½“ï¼‰"), this);
 	_chsAction->setCheckable(true);
 	QActionGroup* languageGroup = new QActionGroup(this);
 	languageGroup->addAction(_engAction);

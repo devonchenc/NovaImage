@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <memory>
+
 #include "BaseImage.h"
 
 class GeneralImage : public BaseImage

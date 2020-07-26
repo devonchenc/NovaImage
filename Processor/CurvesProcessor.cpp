@@ -1,5 +1,6 @@
 #include "CurvesProcessor.h"
 
+#include <cmath>
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 

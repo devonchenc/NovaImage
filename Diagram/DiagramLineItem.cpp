@@ -5,6 +5,7 @@
 #include <QMenu>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <cmath>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -188,7 +189,7 @@ QList<QPointF> DiagramLineItem::resizeHandlePoints()
 
 bool DiagramLineItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
 {
-	qreal delta = std::sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
+    qreal delta = sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
 	return delta < closeEnoughDistance;
 }
 
