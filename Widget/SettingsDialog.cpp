@@ -1,4 +1,4 @@
-#include "SettingsDialog.h"
+ï»¿#include "SettingsDialog.h"
 
 #include <QTabWidget>
 #include <QLabel>
@@ -16,10 +16,6 @@
 #include "../Core/GlobalFunc.h"
 #include "../Core/mainwindow.h"
 #include "../Core/ToolButton.h"
-
-#if _MSC_VER >= 1600 
-#pragma execution_character_set("UTF-8")
-#endif
 
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)
@@ -67,7 +63,7 @@ QWidget* SettingsDialog::createGeneralWidget()
 {
     _languageComboBox = new QComboBox;
     _languageComboBox->addItem("English");
-    _languageComboBox->addItem("ÖÐÎÄ£¨¼òÌå£©");
+    _languageComboBox->addItem(QStringLiteral("ä¸­æ–‡ï¼ˆç®€ä½“ï¼‰"));
     QHBoxLayout* hLayout1 = new QHBoxLayout;
     hLayout1->addWidget(new QLabel(tr("Language:")));
     hLayout1->addWidget(_languageComboBox);
