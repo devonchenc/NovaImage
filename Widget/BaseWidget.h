@@ -4,23 +4,24 @@
 
 class BaseWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     BaseWidget(QWidget* parent = nullptr) { Q_UNUSED(parent); }
+    virtual ~BaseWidget() {}
 
 public:
-	virtual void init() {}
+    virtual void init() {}
 
-	virtual void reset() {}
+    virtual void reset() {}
 
-	// Set name
-	void setName(QString name)	{ _name = name; }
+    // Set name
+    void setName(QString name)	{ _name = name; }
 
-	// Get name
-	QString getName()			{ return _name; }
+    // Get name
+    QString getName()			{ return _name; }
 
 protected:
-	// Widget name
-	QString _name;
+    // Widget name
+    QString _name;
 };

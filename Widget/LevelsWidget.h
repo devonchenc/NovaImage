@@ -10,39 +10,39 @@ QT_END_NAMESPACE
 
 class LevelsWidget : public BaseWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	LevelsWidget(QWidget* parent = nullptr);
-	virtual ~LevelsWidget();
+    LevelsWidget(QWidget* parent = nullptr);
+    virtual ~LevelsWidget();
 
 public:
-	virtual void init();
+    virtual void init() override;
 
-	virtual void reset();
+    virtual void reset() override;
 
 public slots:
-	void updateHistogram();
+    void updateHistogram();
 
-	void updateBottom(float bottom);
+    void updateBottom(float bottom);
 
-	void updateMid(float mid);
+    void updateMid(float mid);
 
-	void updateTop(float top);
+    void updateTop(float top);
 
 protected:
-	void changeEvent(QEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
 private:
-	// Levels adjust
-	void levelsAdjust();
+    // Levels adjust
+    void levelsAdjust();
 
 private:
-	HistogramWidget* _histogram;
-	QLineEdit* _editMin;
-	QLineEdit* _editMid;
-	QLineEdit* _editMax;
+    HistogramWidget* _histogram;
+    QLineEdit* _editMin;
+    QLineEdit* _editMid;
+    QLineEdit* _editMax;
 
-	// Image processor
-	LevelsProcessor* _processor;
+    // Image processor
+    LevelsProcessor* _processor;
 };

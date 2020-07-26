@@ -33,114 +33,114 @@ public:
     ~MainWindow();
 
 public:
-	Document* getDocument() { return _doc; }
-	View* getView() { return _view; }
+    Document* getDocument() { return _doc; }
+    View* getView() { return _view; }
 
-	void imageOpened();
+    void imageOpened();
 
-	void setToolBoxWidgetVisible(bool line, bool text);
+    void setToolBoxWidgetVisible(bool line, bool text);
 
-	QVector<QAction*> mouseActionVector();
+    QVector<QAction*> mouseActionVector();
 
 protected:
-	void changeEvent(QEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
-	void dragEnterEvent(QDragEnterEvent* event) override;
+    void dragEnterEvent(QDragEnterEvent* event) override;
 
-	void dropEvent(QDropEvent* event) override;
+    void dropEvent(QDropEvent* event) override;
 
 private:
     void initUI();
 
-	void createToolWidget();
+    void createToolWidget();
 
-	QDockWidget* createDockWidget(BaseWidget* widget);
+    QDockWidget* createDockWidget(BaseWidget* widget);
 
-	void createToolbar();
+    void createToolbar();
 
     void createActions();
 
     void setupShortcuts();
 
-	void loadPlugin();
+    void loadPlugin();
 
-	void loadTranslator();
+    void loadTranslator();
 
 signals:
-	void setToolBoxVisible(bool line, bool text);
+    void setToolBoxVisible(bool line, bool text);
 
 public slots:
     void openImage();
-	void openDicomImage();
-	void openRawImage();
-	void saveAs();
-	void saveAsRawImage();
-	void showMenuBar(bool show);
-	void showDockWidget(bool show);
-	void fullScreen();
-	void showAnnotation(bool show);
-	void showCrossLine(bool show);
-	void showScale(bool show);
-	void showMeasurement(bool show);
+    void openDicomImage();
+    void openRawImage();
+    void saveAs();
+    void saveAsRawImage();
+    void showMenuBar(bool show);
+    void showDockWidget(bool show);
+    void fullScreen();
+    void showAnnotation(bool show);
+    void showCrossLine(bool show);
+    void showScale(bool show);
+    void showMeasurement(bool show);
     void zoomIn();
     void zoomOut();
-	void close();
-	void print();
+    void close();
+    void print();
 
-	void prevImage();
-	void nextImage();
+    void prevImage();
+    void nextImage();
 
-	void slectLanguage(QAction* action);
-	void slectLanguage(int language);
+    void slectLanguage(QAction* action);
+    void slectLanguage(int language);
 
-	void setting();
-	void userGuide();
-	void about();
+    void setting();
+    void userGuide();
+    void about();
 
-	void openFile(const QString& fileName);
+    void openFile(const QString& fileName);
 
-	void notify(const QString& title, const QString& message, int type);
+    void notify(const QString& title, const QString& message, int type);
 
-	void printPreview(QPrinter* printer);
+    void printPreview(QPrinter* printer);
 
 private:
     ToolBar* _toolBar;
 
     View* _view;
-	Document* _doc;
+    Document* _doc;
 
-	QMenu* _fileMenu;
-	QMenu* _editMenu;
-	QMenu* _viewMenu;
-	QMenu* _helpMenu;
+    QMenu* _fileMenu;
+    QMenu* _editMenu;
+    QMenu* _viewMenu;
+    QMenu* _helpMenu;
 
-	QAction* _openAction;
-	QAction* _saveAsAction;
-	QAction* _closeAction;
-	QAction* _printAction;
-	QAction* _exitAction;
-	QAction* _undoAction;
-	QAction* _redoAction;
-	QAction* _restoreAction;
-	QAction* _zoomInAction;
-	QAction* _zoomOutAction;
-	QAction* _prevImageAction;
-	QAction* _nextImageAction;
-	QAction* _engAction;
-	QAction* _chsAction;
-	QAction* _settingsAction;
-	QAction* _userGuideAction;
-	QAction* _aboutAction;
+    QAction* _openAction;
+    QAction* _saveAsAction;
+    QAction* _closeAction;
+    QAction* _printAction;
+    QAction* _exitAction;
+    QAction* _undoAction;
+    QAction* _redoAction;
+    QAction* _restoreAction;
+    QAction* _zoomInAction;
+    QAction* _zoomOutAction;
+    QAction* _prevImageAction;
+    QAction* _nextImageAction;
+    QAction* _engAction;
+    QAction* _chsAction;
+    QAction* _settingsAction;
+    QAction* _userGuideAction;
+    QAction* _aboutAction;
 
-	QTranslator* _translator;
-	QVector<QTranslator*> _vecPluginTranslator;
+    QTranslator* _translator;
+    QVector<QTranslator*> _vecPluginTranslator;
 
-	QVector<PluginInterface*> _vecPlugin;
+    QVector<PluginInterface*> _vecPlugin;
 
-	QVector<QDockWidget*> _vecDockWidget;
-	QDockWidget* _toolboxDockWidget;
+    QVector<QDockWidget*> _vecDockWidget;
+    QDockWidget* _toolboxDockWidget;
 
-	NotificationLayout* _notification;
+    NotificationLayout* _notification;
 
-	RecentFiles* _recentFiles;
+    RecentFiles* _recentFiles;
 };

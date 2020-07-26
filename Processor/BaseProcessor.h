@@ -15,18 +15,18 @@ class RegionImage;
 class BaseProcessor
 {
 public:
-	BaseProcessor();
-	~BaseProcessor();
+    BaseProcessor();
+    virtual ~BaseProcessor();
 
 public:
-	static BaseProcessor* getProcessor();
+    static BaseProcessor* getProcessor();
 
-	BaseProcessor* setCurrentProcessor();
+    BaseProcessor* setCurrentProcessor();
 
-	// Process image
-	void process(BaseImage* image);
+    // Process image
+    void process(BaseImage* image);
 
-	// Process float array
+    // Process float array
     virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
     {Q_UNUSED(array);Q_UNUSED(width);Q_UNUSED(height);Q_UNUSED(minValue);Q_UNUSED(maxValue);Q_UNUSED(pByte);}
 
@@ -35,11 +35,11 @@ protected:
 
     virtual void processMonoImage(MonoImage* image) { Q_UNUSED(image); }
 
-//	virtual void ProcessRegionImage(RegionImage* pImage);
+    //	virtual void ProcessRegionImage(RegionImage* pImage);
 
-	// Convert float data to uchar data
-	void convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte);
+    // Convert float data to uchar data
+    void convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte);
 
 private:
-	static BaseProcessor* _currentProcessor;
+    static BaseProcessor* _currentProcessor;
 };

@@ -20,64 +20,64 @@ class DiagramAngleItem;
 
 class GraphicsScene : public QGraphicsScene
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit GraphicsScene(QMenu* itemMenu, QObject* parent = nullptr);
-	QFont font() const { return _font; }
-	QColor textColor() const { return _textColor; }
-	QColor itemColor() const { return _fillColor; }
-	QColor lineColor() const { return _lineColor; }
+    explicit GraphicsScene(QMenu* itemMenu, QObject* parent = nullptr);
+    QFont font() const { return _font; }
+    QColor textColor() const { return _textColor; }
+    QColor itemColor() const { return _fillColor; }
+    QColor lineColor() const { return _lineColor; }
 
-	// utilities
-	void deleteItems(const QList<QGraphicsItem*>& items);
+    // utilities
+    void deleteItems(const QList<QGraphicsItem*>& items);
 
-	void setMode(int mode);
+    void setMode(int mode);
 
-	int mode() { return _mode; }
+    int mode() { return _mode; }
 
-	void setItemType(DiagramItem::DiagramType type);
+    void setItemType(DiagramItem::DiagramType type);
 
-	void showMeasurement(bool show);
+    void showMeasurement(bool show);
 
-	void mousePress(const QPointF& point);
+    void mousePress(const QPointF& point);
 
-	void mouseMove(const QPointF& point);
+    void mouseMove(const QPointF& point);
 
-	void mouseRelease(const QPointF& point);
+    void mouseRelease(const QPointF& point);
 
 public slots:
-	void editorLostFocus(DiagramTextItem* item);
-	void setLineColor(const QColor& color);
-	void enableFillColor(bool enable);
-	void setFillColor(const QColor& color);
-	void setTextColor(const QColor& color);
-	void setTextFont(const QFont& font);
+    void editorLostFocus(DiagramTextItem* item);
+    void setLineColor(const QColor& color);
+    void enableFillColor(bool enable);
+    void setFillColor(const QColor& color);
+    void setTextColor(const QColor& color);
+    void setTextFont(const QFont& font);
 
-	void itemSelectedChange(QGraphicsItem* item);
+    void itemSelectedChange(QGraphicsItem* item);
 
 signals:
-	void itemInserted(QGraphicsItem* item);
-	void itemSelected(QGraphicsItem* item);
-	void textSelected(QGraphicsItem* item);
+    void itemInserted(QGraphicsItem* item);
+    void itemSelected(QGraphicsItem* item);
+    void textSelected(QGraphicsItem* item);
 
 protected:
-	void keyPressEvent(QKeyEvent* keyEvent) override;
+    void keyPressEvent(QKeyEvent* keyEvent) override;
 
 private:
-	DiagramItem::DiagramType _itemType;
-	QMenu* _itemMenu;
-	int _mode;
-	QPointF _startPoint;
-	bool _enableFill;
-	QColor _lineColor;
-	QColor _fillColor;
-	QColor _textColor;
-	QFont _font;
+    DiagramItem::DiagramType _itemType;
+    QMenu* _itemMenu;
+    int _mode;
+    QPointF _startPoint;
+    bool _enableFill;
+    QColor _lineColor;
+    QColor _fillColor;
+    QColor _textColor;
+    QFont _font;
 
-	DiagramLineItem* _currentDrawingLine;
+    DiagramLineItem* _currentDrawingLine;
 
-	DiagramAngleItem* _currentDrawingAngle;
+    DiagramAngleItem* _currentDrawingAngle;
 
-	DiagramItem* _currentDrawingItem;
+    DiagramItem* _currentDrawingItem;
 };

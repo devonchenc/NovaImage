@@ -6,144 +6,144 @@
 
 MainWindow* getGlobalWindow()
 {
-	foreach(QWidget* w, qApp->topLevelWidgets())
-		if (MainWindow* mainWin = qobject_cast<MainWindow*>(w))
-			return mainWin;
-	return nullptr;
+    foreach(QWidget* w, qApp->topLevelWidgets())
+        if (MainWindow* mainWin = qobject_cast<MainWindow*>(w))
+            return mainWin;
+    return nullptr;
 }
 
 Document* getGlobalDocument()
 {
-	MainWindow* mainWindow = getGlobalWindow();
-	return mainWindow->getDocument();
+    MainWindow* mainWindow = getGlobalWindow();
+    return mainWindow->getDocument();
 }
 
 View* getGlobalView()
 {
-	MainWindow* mainWindow = getGlobalWindow();
-	return mainWindow->getView();
+    MainWindow* mainWindow = getGlobalWindow();
+    return mainWindow->getView();
 }
 
 BaseImage* getGlobalImage()
 {
-	Document* document = getGlobalDocument();
-	if (document)
-	{
-		return document->getImage();
-	}
-	else
-	{
-		return nullptr;
-	}
+    Document* document = getGlobalDocument();
+    if (document)
+    {
+        return document->getImage();
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 void repaintView()
 {
-	Document* document = getGlobalDocument();
-	if (document)
-	{
-		document->repaintView();
-	}
+    Document* document = getGlobalDocument();
+    if (document)
+    {
+        document->repaintView();
+    }
 }
 
 bool copyByteToImage(uchar* byteImage, int width, int height, QImage* pImage)
 {
-	if (byteImage == nullptr || pImage == nullptr)
-		return false;
+    if (byteImage == nullptr || pImage == nullptr)
+        return false;
 
-	if (width != pImage->width() || height != pImage->height())
-		return false;
+    if (width != pImage->width() || height != pImage->height())
+        return false;
 
-	uchar* pData = pImage->bits();
-	int pitch = pImage->bytesPerLine();
-	int depth = pImage->depth() / 8;
-	for (int j = 0; j < height; j++)
-	{
-		for (int i = 0; i < width * depth; i++)
-		{
-			uchar* pixel = pData + j * pitch + i;
-			*pixel = byteImage[(j * width) * depth + i];
-		}
-	}
+    uchar* pData = pImage->bits();
+    int pitch = pImage->bytesPerLine();
+    int depth = pImage->depth() / 8;
+    for (int j = 0; j < height; j++)
+    {
+        for (int i = 0; i < width * depth; i++)
+        {
+            uchar* pixel = pData + j * pitch + i;
+            *pixel = byteImage[(j * width) * depth + i];
+        }
+    }
 
-	return true;
+    return true;
 }
 
 // Spline function
 float spline(float* x, float* y, int n, float* t, int m, float* z)
 {
-	float* dy = new float[n];
-	memset(dy, 0, sizeof(float) * n);
-	dy[0] = -0.5f;
+    float* dy = new float[n];
+    memset(dy, 0, sizeof(float) * n);
+    dy[0] = -0.5f;
 
-	float* ddy = new float[n];
-	memset(ddy, 0, sizeof(float) * n);
+    float* ddy = new float[n];
+    memset(ddy, 0, sizeof(float) * n);
 
-	float h1;
-	float* s = new float[n];
-	float h0 = x[1] - x[0];
-	s[0] = 3.0f * (y[1] - y[0]) / (2.0f * h0) - ddy[0] * h0 / 4.0f;
-	for (int j = 1; j <= n - 2; j++)
-	{
-		h1 = x[j + 1] - x[j];
-		float alpha = h0 / (h0 + h1);
-		float beta = (1.0f - alpha) * (y[j] - y[j - 1]) / h0;
-		beta = 3.0f * (beta + alpha * (y[j + 1] - y[j]) / h1);
-		dy[j] = -alpha / (2.0f + (1.0f - alpha) * dy[j - 1]);
-		s[j] = (beta - (1.0f - alpha) * s[j - 1]);
-		s[j] = s[j] / (2.0f + (1.0f - alpha) * dy[j - 1]);
-		h0 = h1;
-	}
-	dy[n - 1] = (3.0f * (y[n - 1] - y[n - 2]) / h1 + ddy[n - 1] * h1 / 2.0f - s[n - 2]) / (2.0f + dy[n - 2]);
-	for (int j = n - 2; j >= 0; j--)
-	{
-		dy[j] = dy[j] * dy[j + 1] + s[j];
-	}
-	for (int j = 0; j <= n - 2; j++)
-	{
-		s[j] = x[j + 1] - x[j];
-	}
-	for (int j = 0; j <= n - 2; j++)
-	{
-		h1 = s[j] * s[j];
-		ddy[j] = 6.0f * (y[j + 1] - y[j]) / h1 - 2.0f * (2.0f * dy[j] + dy[j + 1]) / s[j];
-	}
-	h1 = s[n - 2] * s[n - 2];
-	ddy[n - 1] = 6.0f * (y[n - 2] - y[n - 1]) / h1 + 2.0f * (2.0f * dy[n - 1] + dy[n - 2]) / s[n - 2];
-	float g = 0.0f;
-	for (int i = 0; i <= n - 2; i++)
-	{
-		h1 = 0.5f * s[i] * (y[i] + y[i + 1]);
-		h1 = h1 - s[i] * s[i] * s[i] * (ddy[i] + ddy[i + 1]) / 24.0f;
-		g = g + h1;
-	}
-	for (int j = 0; j <= m - 1; j++)
-	{
-		int i;
-		if (t[j] >= x[n - 1])
-		{
-			i = n - 2;
-		}
-		else
-		{
-			i = 0;
-			while (t[j] > x[i + 1])
-			{
-				i = i + 1;
-			}
-		}
-		h1 = (x[i + 1] - t[j]) / s[i];
-		h0 = h1 * h1;
-		z[j] = (3.0f * h0 - 2.0f * h0 * h1) * y[i];
-		z[j] = z[j] + s[i] * (h0 - h0 * h1) * dy[i];
-		h1 = (t[j] - x[i]) / s[i];
-		h0 = h1 * h1;
-		z[j] = z[j] + (3.0f * h0 - 2.0f * h0 * h1) * y[i + 1];
-		z[j] = z[j] - s[i] * (h0 - h0 * h1) * dy[i + 1];
-	}
-	delete[] s;
-	delete[] dy;
-	delete[] ddy;
+    float h1;
+    float* s = new float[n];
+    float h0 = x[1] - x[0];
+    s[0] = 3.0f * (y[1] - y[0]) / (2.0f * h0) - ddy[0] * h0 / 4.0f;
+    for (int j = 1; j <= n - 2; j++)
+    {
+        h1 = x[j + 1] - x[j];
+        float alpha = h0 / (h0 + h1);
+        float beta = (1.0f - alpha) * (y[j] - y[j - 1]) / h0;
+        beta = 3.0f * (beta + alpha * (y[j + 1] - y[j]) / h1);
+        dy[j] = -alpha / (2.0f + (1.0f - alpha) * dy[j - 1]);
+        s[j] = (beta - (1.0f - alpha) * s[j - 1]);
+        s[j] = s[j] / (2.0f + (1.0f - alpha) * dy[j - 1]);
+        h0 = h1;
+    }
+    dy[n - 1] = (3.0f * (y[n - 1] - y[n - 2]) / h1 + ddy[n - 1] * h1 / 2.0f - s[n - 2]) / (2.0f + dy[n - 2]);
+    for (int j = n - 2; j >= 0; j--)
+    {
+        dy[j] = dy[j] * dy[j + 1] + s[j];
+    }
+    for (int j = 0; j <= n - 2; j++)
+    {
+        s[j] = x[j + 1] - x[j];
+    }
+    for (int j = 0; j <= n - 2; j++)
+    {
+        h1 = s[j] * s[j];
+        ddy[j] = 6.0f * (y[j + 1] - y[j]) / h1 - 2.0f * (2.0f * dy[j] + dy[j + 1]) / s[j];
+    }
+    h1 = s[n - 2] * s[n - 2];
+    ddy[n - 1] = 6.0f * (y[n - 2] - y[n - 1]) / h1 + 2.0f * (2.0f * dy[n - 1] + dy[n - 2]) / s[n - 2];
+    float g = 0.0f;
+    for (int i = 0; i <= n - 2; i++)
+    {
+        h1 = 0.5f * s[i] * (y[i] + y[i + 1]);
+        h1 = h1 - s[i] * s[i] * s[i] * (ddy[i] + ddy[i + 1]) / 24.0f;
+        g = g + h1;
+    }
+    for (int j = 0; j <= m - 1; j++)
+    {
+        int i;
+        if (t[j] >= x[n - 1])
+        {
+            i = n - 2;
+        }
+        else
+        {
+            i = 0;
+            while (t[j] > x[i + 1])
+            {
+                i = i + 1;
+            }
+        }
+        h1 = (x[i + 1] - t[j]) / s[i];
+        h0 = h1 * h1;
+        z[j] = (3.0f * h0 - 2.0f * h0 * h1) * y[i];
+        z[j] = z[j] + s[i] * (h0 - h0 * h1) * dy[i];
+        h1 = (t[j] - x[i]) / s[i];
+        h0 = h1 * h1;
+        z[j] = z[j] + (3.0f * h0 - 2.0f * h0 * h1) * y[i + 1];
+        z[j] = z[j] - s[i] * (h0 - h0 * h1) * dy[i + 1];
+    }
+    delete[] s;
+    delete[] dy;
+    delete[] ddy;
 
-	return g;
+    return g;
 }

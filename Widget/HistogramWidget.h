@@ -13,110 +13,110 @@ class HistogramProcessor;
 
 class HistogramWidget : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	HistogramWidget(QWidget* parent = nullptr);
-	virtual ~HistogramWidget();
+    HistogramWidget(QWidget* parent = nullptr);
+    virtual ~HistogramWidget();
 
 public:
-	virtual QSize sizeHint() const;
+    virtual QSize sizeHint() const override;
 
-	virtual QSize minimumSizeHint() const;
+    virtual QSize minimumSizeHint() const override;
 
-	void init();
+    void init();
 
-	void reset();
+    void reset();
 
-	void setParameters(float bottom, float mid, float top);
+    void setParameters(float bottom, float mid, float top);
 
 public slots:
-	void clickReset();
+    void clickReset();
 
 signals:
-	void resetControl();
+    void resetControl();
 
-	void updateBottom(float bottom);
+    void updateBottom(float bottom);
 
-	void updateMid(float mid);
+    void updateMid(float mid);
 
-	void updateTop(float top);
+    void updateTop(float top);
 
 protected:
-	void resizeEvent(QResizeEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
 
-	void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
-	void mousePressEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
-	void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
 
-	void mouseReleaseEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
-	void changeEvent(QEvent* event) override;
-
-private:
-	void paintCursor();
-
-	void paintHistogram();
-
-	// Set image window
-	void setBottomAndTop(bool* pArray, int arrayNum);
-
-	// Allocate memory
-	void allocateMemory(int oldWidth = 0);
-
-	void copySelectArray(bool* array, int arrayNum);
-
-	void generateHistogram();
-
-	// Calculate selected area
-	void calcSelectArea();
-
-	// Calculate temporary selected area
-	void calcSelectTempArea();
-
-	// Get rect of cursor
-	QRect getCursorRect(int index);
-
-	// Change index to height
-	int indexToHeight(int i);
+    void changeEvent(QEvent* event) override;
 
 private:
-	// Height array of each line
-	uint* _heightArray;
+    void paintCursor();
 
-	// Min and max value in _heightArray
-	uint _minHeight, _maxHeight;
+    void paintHistogram();
 
-	// Selected start point and finish point
-	int _start, _finish;
+    // Set image window
+    void setBottomAndTop(bool* pArray, int arrayNum);
 
-	// Selected array
-	bool* _select;
+    // Allocate memory
+    void allocateMemory(int oldWidth = 0);
 
-	// Temporary selected array
-	bool* _selectTemp;
+    void copySelectArray(bool* array, int arrayNum);
 
-	// Width and height of histogram
-	QRect _rectHistogram;
+    void generateHistogram();
 
-	// Cursor position
-	int _cursorPos[3];
+    // Calculate selected area
+    void calcSelectArea();
 
-	// Drag flag
-	int _drag;
+    // Calculate temporary selected area
+    void calcSelectTempArea();
 
-	// Min and max value of image
-	float _minValue, _maxValue;
+    // Get rect of cursor
+    QRect getCursorRect(int index);
 
-	// 色阶调整对应的控件
-	float _bottom;
-	float _mid;
-	float _top;
+    // Change index to height
+    int indexToHeight(int i);
 
-	QPushButton* _buttonReset;
+private:
+    // Height array of each line
+    uint* _heightArray;
 
-	// Image processor
-	HistogramProcessor* _processor;
+    // Min and max value in _heightArray
+    uint _minHeight, _maxHeight;
+
+    // Selected start point and finish point
+    int _start, _finish;
+
+    // Selected array
+    bool* _select;
+
+    // Temporary selected array
+    bool* _selectTemp;
+
+    // Width and height of histogram
+    QRect _rectHistogram;
+
+    // Cursor position
+    int _cursorPos[3];
+
+    // Drag flag
+    int _drag;
+
+    // Min and max value of image
+    float _minValue, _maxValue;
+
+    // 色阶调整对应的控件
+    float _bottom;
+    float _mid;
+    float _top;
+
+    QPushButton* _buttonReset;
+
+    // Image processor
+    HistogramProcessor* _processor;
 };

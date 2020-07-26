@@ -9,38 +9,38 @@ class QFile;
 class ScanImage : public MonoImage
 {
 public:
-	ScanImage(const QString& pathName);
-	ScanImage(const ScanImage& src);
-	virtual ~ScanImage();
+    ScanImage(const QString& pathName);
+    ScanImage(const ScanImage& src);
+    virtual ~ScanImage();
 
 public:
-	bool hasPixelSpacing() override { return true; }
+    bool hasPixelSpacing() override { return true; }
 
-	float horzPixelSpacing() override { return _dataHeader.HorzPixelSpacing; }
-	float vertPixelSpacing() override { return _dataHeader.VertPixelSpacing; }
+    float horzPixelSpacing() override { return _dataHeader.HorzPixelSpacing; }
+    float vertPixelSpacing() override { return _dataHeader.VertPixelSpacing; }
 
-	void initWindowWidthAndLevel() override;
+    void initWindowWidthAndLevel() override;
 
-	BaseImage* copyImage() const override;
+    BaseImage* copyImage() const override;
 
 public:
-	// Get reference of DataHeader
-	DataHeader& getDataHeader()		{ return _dataHeader; }
+    // Get reference of DataHeader
+    DataHeader& getDataHeader()		{ return _dataHeader; }
 
 protected:
-	bool saveAsDcm(const QString& fileName) override;
+    bool saveAsDcm(const QString& fileName) override;
 
 private:
-	// Read data header
-	bool readDataHeader();
+    // Read data header
+    bool readDataHeader();
 
-	// Read data
-	bool readData();
+    // Read data
+    bool readData();
 
-	bool isNewHeader(QFile& file);
+    bool isNewHeader(QFile& file);
 
-	void convertHeader(const OldDataHeader& dh);
+    void convertHeader(const OldDataHeader& dh);
 
 private:
-	DataHeader _dataHeader;
+    DataHeader _dataHeader;
 };

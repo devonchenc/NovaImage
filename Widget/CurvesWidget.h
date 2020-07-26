@@ -15,68 +15,68 @@ QT_END_NAMESPACE
 
 class CurvesWidget : public BaseWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	CurvesWidget(QWidget* parent = nullptr);
-	virtual ~CurvesWidget();
+    CurvesWidget(QWidget* parent = nullptr);
+    virtual ~CurvesWidget();
 
 public:
-	virtual void init();
+    virtual void init() override;
 
-	virtual void reset();
+    virtual void reset() override;
 
 public slots:
-	void channelChanged(int value);
+    void channelChanged(int value);
 
-	void clickReset();
+    void clickReset();
 
-	void clickReverse();
+    void clickReverse();
 
-	void toggleCurveRadio();
-	void toggleLinearRadio();
+    void toggleCurveRadio();
+    void toggleLinearRadio();
 
-	void clickSave();
+    void clickSave();
 
-	void clickLoad();
+    void clickLoad();
 
 protected slots:
-	void resizeSquare();
+    void resizeSquare();
 
-	void updateImage();
+    void updateImage();
 
-	void updateLabelText(QString input, QString output);
+    void updateLabelText(QString input, QString output);
 
 protected:
-	void changeEvent(QEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
 private:
-	void generateHistogram();
+    void generateHistogram();
 
-	void connectSqureWithProcessor();
+    void connectSqureWithProcessor();
 
-	void savePegArray(QTextStream& stream, const PegArray& pegs);
+    void savePegArray(QTextStream& stream, const PegArray& pegs);
 
-	void loadPegArray(QTextStream& stream, PegArray& pegs);
+    void loadPegArray(QTextStream& stream, PegArray& pegs);
 
 private:
-	QLabel* _labelChannel;
-	QLabel* _labelInput;
-	QLabel* _labelInputValue;
-	QLabel* _labelOutput;
-	QLabel* _labelOutputValue;
+    QLabel* _labelChannel;
+    QLabel* _labelInput;
+    QLabel* _labelInputValue;
+    QLabel* _labelOutput;
+    QLabel* _labelOutputValue;
 
-	QComboBox* _comboboxChannel;
-	QRadioButton* _radioCurve;
-	QRadioButton* _radioLinear;
+    QComboBox* _comboboxChannel;
+    QRadioButton* _radioCurve;
+    QRadioButton* _radioLinear;
 
-	QPushButton* _buttonReset;
-	QPushButton* _buttonReverse;
-	QPushButton* _buttonSave;
-	QPushButton* _buttonLoad;
+    QPushButton* _buttonReset;
+    QPushButton* _buttonReverse;
+    QPushButton* _buttonSave;
+    QPushButton* _buttonLoad;
 
-	CurveSquare* _square;
+    CurveSquare* _square;
 
-	// Image processor
-	CurvesProcessor* _processor;
+    // Image processor
+    CurvesProcessor* _processor;
 };

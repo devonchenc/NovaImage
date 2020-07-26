@@ -18,169 +18,169 @@ typedef QVector<Peg> PegArray;
 
 class CurveSquare : public QWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	CurveSquare(QWidget* parent = nullptr);
-	virtual ~CurveSquare();
+    CurveSquare(QWidget* parent = nullptr);
+    virtual ~CurveSquare();
 
 public:
-	virtual QSize sizeHint() const;
+    virtual QSize sizeHint() const override;
 
-	virtual QSize minimumSizeHint() const;
+    virtual QSize minimumSizeHint() const override;
 
-	void init();
+    void init();
 
-	void reset();
+    void reset();
 
-	void reverse();
+    void reverse();
 
-	// Generate histogram
-	bool generateHistogram(uint* pArray);
+    // Generate histogram
+    bool generateHistogram(uint* pArray);
 
-	int getSize()		{ return _size; }
+    int getSize()		{ return _size; }
 
-	int getArraySize()	{ return _arraySize; }
+    int getArraySize()	{ return _arraySize; }
 
-	int getChannel()	{ return _channel; }
+    int getChannel()	{ return _channel; }
 
-	void setChannel(int channel);
+    void setChannel(int channel);
 
-	void setCurveOrLinear(bool curveOrLinear);
+    void setCurveOrLinear(bool curveOrLinear);
 
-	bool getCurveOrLinear() { return _curveOrLinear; }
+    bool getCurveOrLinear() { return _curveOrLinear; }
 
-	PegArray& getIntensityPegsArray() { return _pegsIntensity; }
+    PegArray& getIntensityPegsArray() { return _pegsIntensity; }
 
-	PegArray& getRedPegsArray() { return _pegsRed; }
+    PegArray& getRedPegsArray() { return _pegsRed; }
 
-	PegArray& getGreenPegsArray() { return _pegsGreen; }
+    PegArray& getGreenPegsArray() { return _pegsGreen; }
 
-	PegArray& getBluePegsArray() { return _pegsBlue; }
+    PegArray& getBluePegsArray() { return _pegsBlue; }
 
-	uint* getIntensity() { return _arrayIntensity; }
-	uint* getRed() { return _arrayRed; }
-	uint* getGreen() { return _arrayGreen; }
-	uint* getBlue() { return _arrayBlue; }
+    uint* getIntensity() { return _arrayIntensity; }
+    uint* getRed() { return _arrayRed; }
+    uint* getGreen() { return _arrayGreen; }
+    uint* getBlue() { return _arrayBlue; }
 
-	// Calculate array value
-	void calcArrayValue();
-	void calcArrayValue(int index, bool flag);
+    // Calculate array value
+    void calcArrayValue();
+    void calcArrayValue(int index, bool flag);
 
 signals:
-	void resize();
+    void resize();
 
-	void updateImage();
+    void updateImage();
 
-	void updateLabelText(QString input, QString output);
+    void updateLabelText(QString input, QString output);
 
 protected:
-	void resizeEvent(QResizeEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
 
-	void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
-	void mousePressEvent(QMouseEvent* event) override;
+    void mousePressEvent(QMouseEvent* event) override;
 
-	void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
 
-	void mouseReleaseEvent(QMouseEvent* event) override;
-
-private:
-	void paintHistogram();
-
-	// Paint grid
-	void paintBackground();
-
-	// Paint pegs
-	void paintPegs(QColor color);
-
-	// Paint single peg
-	void paintSinglePeg(const Peg& peg, QColor color);
-
-	// Paint connection
-	void paintConnection(QColor color);
-
-	void initPegsArray();
-
-	// Calculate window coordinate according to x and y
-	QPoint getCoordinate(int x, int y);
-
-	// Determine if the mouse is in any peg
-	int ptInAnyPeg(QPoint point) const;
-
-	// Preprocess before adding new peg
-	// 判断是否允许在当前点插入peg; 参数为新插入点的x坐标
-	bool prepareAddPeg(int xCoordinate);
-
-	// Add peg
-	int	addPeg(const QPoint& point);
-
-	// Repaint
-	void repaintPeg();
-
-	// Sort pegs according to x coordinate
-	int sortPegs(const Peg& peg);
-
-	// Use piecewise linear function to set array value, if flag equal true means adding or moving peg, false means deleting peg
-	void setLinearArrayValue(int index, bool flag = true);
-
-	// 改变一个线段的值，参数startIndex表示线段起始peg的index
-	// This function is only called by setLinearArrayValue()
-	void setLinearValue(int startIndex);
-
-	// Use spline function to set array value
-	void setCurveArrayValue();
-
-	// Get input&output value of current peg
-	QSize getCurrentValue(int index);
-
-	// Get input&output value of current position
-	QSize getCurrentMouseValue(const QPoint& point);
-
-	// Remove one peg
-	void removePeg(int index);
-
-	// Remove all pegs
-	void removeAllPegs();
+    void mouseReleaseEvent(QMouseEvent* event) override;
 
 private:
-	int _size;
+    void paintHistogram();
 
-	int _arraySize;
+    // Paint grid
+    void paintBackground();
 
-	// Square rect
-	QRect _rectSquare;
+    // Paint pegs
+    void paintPegs(QColor color);
 
-	// 其中存放的是量化后的每条线对应相对的高度
-	uint* _heightArray;
+    // Paint single peg
+    void paintSinglePeg(const Peg& peg, QColor color);
 
-	// min& max in _heightArray
-	uint _minHeight, _maxHeight;
+    // Paint connection
+    void paintConnection(QColor color);
 
-	// Curve or line
-	bool _curveOrLinear;
+    void initPegsArray();
 
-	// Channel
-	int _channel;
+    // Calculate window coordinate according to x and y
+    QPoint getCoordinate(int x, int y);
 
-	// Index of active peg
-	int	_activePegIndex;
+    // Determine if the mouse is in any peg
+    int ptInAnyPeg(QPoint point) const;
 
-	// Active peg array
-	PegArray* _activePegs;
+    // Preprocess before adding new peg
+    // 判断是否允许在当前点插入peg; 参数为新插入点的x坐标
+    bool prepareAddPeg(int xCoordinate);
 
-	// Record peg array of each channel
-	PegArray _pegsIntensity;
-	PegArray _pegsRed;
-	PegArray _pegsGreen;
-	PegArray _pegsBlue;
+    // Add peg
+    int	addPeg(const QPoint& point);
 
-	// Point to active array
-	uint* _activeArray;
+    // Repaint
+    void repaintPeg();
 
-	// Record array value of each channel
-	uint* _arrayIntensity;
-	uint* _arrayRed;
-	uint* _arrayGreen;
-	uint* _arrayBlue;
+    // Sort pegs according to x coordinate
+    int sortPegs(const Peg& peg);
+
+    // Use piecewise linear function to set array value, if flag equal true means adding or moving peg, false means deleting peg
+    void setLinearArrayValue(int index, bool flag = true);
+
+    // 改变一个线段的值，参数startIndex表示线段起始peg的index
+    // This function is only called by setLinearArrayValue()
+    void setLinearValue(int startIndex);
+
+    // Use spline function to set array value
+    void setCurveArrayValue();
+
+    // Get input&output value of current peg
+    QSize getCurrentValue(int index);
+
+    // Get input&output value of current position
+    QSize getCurrentMouseValue(const QPoint& point);
+
+    // Remove one peg
+    void removePeg(int index);
+
+    // Remove all pegs
+    void removeAllPegs();
+
+private:
+    int _size;
+
+    int _arraySize;
+
+    // Square rect
+    QRect _rectSquare;
+
+    // 其中存放的是量化后的每条线对应相对的高度
+    uint* _heightArray;
+
+    // min& max in _heightArray
+    uint _minHeight, _maxHeight;
+
+    // Curve or line
+    bool _curveOrLinear;
+
+    // Channel
+    int _channel;
+
+    // Index of active peg
+    int	_activePegIndex;
+
+    // Active peg array
+    PegArray* _activePegs;
+
+    // Record peg array of each channel
+    PegArray _pegsIntensity;
+    PegArray _pegsRed;
+    PegArray _pegsGreen;
+    PegArray _pegsBlue;
+
+    // Point to active array
+    uint* _activeArray;
+
+    // Record array value of each channel
+    uint* _arrayIntensity;
+    uint* _arrayRed;
+    uint* _arrayGreen;
+    uint* _arrayBlue;
 };

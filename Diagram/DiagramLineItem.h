@@ -5,55 +5,55 @@
 
 class DiagramLineItem : public QObject, public QGraphicsLineItem
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     enum { Type = UserType + 12 };
-	enum Index
-	{
-		Point1, Point2
-	};
+    enum Index
+    {
+        Point1, Point2
+    };
 
-	DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-	~DiagramLineItem();
+    DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
+    ~DiagramLineItem();
 
-	int type() const override { return Type; }
+    int type() const override { return Type; }
 
-	void setEndpointPen(const QPen& pen);
-	QPen pointPen() const;
+    void setEndpointPen(const QPen& pen);
+    QPen pointPen() const;
 
-	void setDrawingFinished(bool finished);
+    void setDrawingFinished(bool finished);
 
 signals:
-	void itemSelectedChange(QGraphicsItem* item);
+    void itemSelectedChange(QGraphicsItem* item);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
     void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
-	void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
-	void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
 protected:
-	void drawResizeHandle(QPainter* painter);
+    void drawResizeHandle(QPainter* painter);
 
-	float length() const;
+    float length() const;
 
 private:
-	QList<QPointF> resizeHandlePoints();
+    QList<QPointF> resizeHandlePoints();
 
-	bool isCloseEnough(const QPointF& p1, const QPointF& p2);
+    bool isCloseEnough(const QPointF& p1, const QPointF& p2);
 
 protected:
     QMenu* _contextMenu;
-	QPen _endpointPen;
-	static constexpr qreal closeEnoughDistance = 12;
-	bool _resizeMode = false;
-	Index _dragIndex;
-	bool _drawingFinished = false;
-	int _previousMode;
+    QPen _endpointPen;
+    static constexpr qreal closeEnoughDistance = 12;
+    bool _resizeMode = false;
+    Index _dragIndex;
+    bool _drawingFinished = false;
+    int _previousMode;
 };

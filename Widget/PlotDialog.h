@@ -16,27 +16,27 @@ class ChartView;
 
 class PlotDialog : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	PlotDialog(QWidget* parent = nullptr);
-	~PlotDialog();
+    PlotDialog(QWidget* parent = nullptr);
+    ~PlotDialog();
 
-	void setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points);
+    void setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points);
 
 signals:
-	void lineWidthChanged(QGraphicsLineItem* plotItem, int lineWidth);
+    void lineWidthChanged(QGraphicsLineItem* plotItem, int lineWidth);
 
 private:
-	void initUI();
+    void initUI();
 
 private slots:
-	void deleteLine();
+    void deleteLine();
 
-	void setLineWidth();
+    void setLineWidth();
 
 private:
-	QTabWidget* _tabWidget;
+    QTabWidget* _tabWidget;
 
-	QMap<DiagramPlotItem*, ChartView*> _map;
+    QMap<DiagramPlotItem*, ChartView*> _map;
 };

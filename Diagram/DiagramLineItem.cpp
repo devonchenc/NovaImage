@@ -13,13 +13,13 @@
 #include "../Core/GraphicsScene.h"
 
 DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
-	: QGraphicsLineItem(line, parent)
-	, _contextMenu(contextMenu)
-	, _previousMode(MOVE_ITEM)
+    : QGraphicsLineItem(line, parent)
+    , _contextMenu(contextMenu)
+    , _previousMode(MOVE_ITEM)
 {
-	setFlag(QGraphicsItem::ItemIsMovable, true);
-	setFlag(QGraphicsItem::ItemIsSelectable, true);
-	setAcceptHoverEvents(true);
+    setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setAcceptHoverEvents(true);
 }
 
 DiagramLineItem::~DiagramLineItem()
@@ -29,17 +29,17 @@ DiagramLineItem::~DiagramLineItem()
 
 void DiagramLineItem::setEndpointPen(const QPen& pen)
 {
-	_endpointPen = pen;
+    _endpointPen = pen;
 }
 
 QPen DiagramLineItem::pointPen() const
 {
-	return _endpointPen;
+    return _endpointPen;
 }
 
 void DiagramLineItem::setDrawingFinished(bool finished)
 {
-	_drawingFinished = finished;
+    _drawingFinished = finished;
 }
 
 /*
@@ -55,116 +55,116 @@ DiagramLineItem* DiagramLineItem::clone()
 
 void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-	if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
-		return;
+    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
+        return;
 
-	_resizeMode = false;
-	int index = 0;
-	foreach (const QPointF& p, resizeHandlePoints())
-	{
-		if (isCloseEnough(event->pos(), p))
-		{
-			_resizeMode = true;
-			break;
-		}
-		index++;
-	}
+    _resizeMode = false;
+    int index = 0;
+    foreach (const QPointF& p, resizeHandlePoints())
+    {
+        if (isCloseEnough(event->pos(), p))
+        {
+            _resizeMode = true;
+            break;
+        }
+        index++;
+    }
 
-	setFlag(GraphicsItemFlag::ItemIsMovable, !_resizeMode);
+    setFlag(GraphicsItemFlag::ItemIsMovable, !_resizeMode);
 
-	_dragIndex = static_cast<Index>(index);
+    _dragIndex = static_cast<Index>(index);
 
-	QGraphicsLineItem::mousePressEvent(event);
+    QGraphicsLineItem::mousePressEvent(event);
 }
 
 void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-	if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
-		return;
+    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
+        return;
 
-	if (_resizeMode)
-	{
-		prepareGeometryChange();
+    if (_resizeMode)
+    {
+        prepareGeometryChange();
 
-		if (_dragIndex == Point1)
-		{
-			setLine(QLineF(event->pos(), line().p2()));
-		}
-		else
-		{
-			setLine(QLineF(line().p1(), event->pos()));
-		}
-	}
+        if (_dragIndex == Point1)
+        {
+            setLine(QLineF(event->pos(), line().p2()));
+        }
+        else
+        {
+            setLine(QLineF(line().p1(), event->pos()));
+        }
+    }
 
-	scene->update();
+    scene->update();
 
-	QGraphicsLineItem::mouseMoveEvent(event);
+    QGraphicsLineItem::mouseMoveEvent(event);
 }
 
 void DiagramLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-	_resizeMode = false;
+    _resizeMode = false;
 
-	QGraphicsLineItem::mouseReleaseEvent(event);
+    QGraphicsLineItem::mouseReleaseEvent(event);
 }
 
 void DiagramLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 {
-	setCursor(Qt::ArrowCursor);
-	bool closeToHandlerPoint = false;
-	QList<QPointF> pointList = resizeHandlePoints();
-	foreach (const QPointF& p, pointList)
-	{
-		if (isCloseEnough(p, event->pos()))
-		{
-			setCursor(Qt::SizeAllCursor);
-			closeToHandlerPoint = true;
-		}
-	}
+    setCursor(Qt::ArrowCursor);
+    bool closeToHandlerPoint = false;
+    QList<QPointF> pointList = resizeHandlePoints();
+    foreach (const QPointF& p, pointList)
+    {
+        if (isCloseEnough(p, event->pos()))
+        {
+            setCursor(Qt::SizeAllCursor);
+            closeToHandlerPoint = true;
+        }
+    }
 
-	if (_drawingFinished)
-	{
-		GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-		if (closeToHandlerPoint)
-		{
-			// Close to handler points
-			scene->setMode(MOVE_ITEM_TEMP);
-		}
-		else
-		{
-			scene->setMode(_previousMode);
-		}
-	}
+    if (_drawingFinished)
+    {
+        GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+        if (closeToHandlerPoint)
+        {
+            // Close to handler points
+            scene->setMode(MOVE_ITEM_TEMP);
+        }
+        else
+        {
+            scene->setMode(_previousMode);
+        }
+    }
 
-	QGraphicsLineItem::hoverMoveEvent(event);
+    QGraphicsLineItem::hoverMoveEvent(event);
 }
 
 void DiagramLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-	_previousMode = scene->mode();
+    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    _previousMode = scene->mode();
 
-	QGraphicsLineItem::hoverEnterEvent(event);
+    QGraphicsLineItem::hoverEnterEvent(event);
 }
 
 void DiagramLineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
-	// Restore mode
-	GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
-	scene->setMode(_previousMode);
+    // Restore mode
+    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    scene->setMode(_previousMode);
 
-	QGraphicsLineItem::hoverLeaveEvent(event);
+    QGraphicsLineItem::hoverLeaveEvent(event);
 }
 
 void DiagramLineItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-	painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setRenderHint(QPainter::Antialiasing, true);
 
-	QGraphicsLineItem::paint(painter, option, widget);
+    QGraphicsLineItem::paint(painter, option, widget);
 
-	painter->setRenderHint(QPainter::Antialiasing, false);
+    painter->setRenderHint(QPainter::Antialiasing, false);
 }
 
 void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
@@ -176,38 +176,38 @@ void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 
 QVariant DiagramLineItem::itemChange(GraphicsItemChange change, const QVariant& value)
 {
-	if (change == QGraphicsItem::ItemSelectedHasChanged)
-		emit itemSelectedChange(this);
+    if (change == QGraphicsItem::ItemSelectedHasChanged)
+        emit itemSelectedChange(this);
 
     return value;
 }
 
 QList<QPointF> DiagramLineItem::resizeHandlePoints()
 {
-	return QList<QPointF>{line().p1(), line().p2()};
+    return QList<QPointF>{line().p1(), line().p2()};
 }
 
 bool DiagramLineItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
 {
     qreal delta = sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
-	return delta < closeEnoughDistance;
+    return delta < closeEnoughDistance;
 }
 
 // Draw resize handles
 void DiagramLineItem::drawResizeHandle(QPainter* painter)
 {
-	qreal resizePointWidth = 6;
-	painter->setPen(_endpointPen);
-	foreach(const QPointF& point, resizeHandlePoints())
-	{
-		painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
-		painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
-	}
+    qreal resizePointWidth = 6;
+    painter->setPen(_endpointPen);
+    foreach(const QPointF& point, resizeHandlePoints())
+    {
+        painter->drawLine(point.x(), point.y() - resizePointWidth, point.x(), point.y() + resizePointWidth);
+        painter->drawLine(point.x() - resizePointWidth, point.y(), point.x() + resizePointWidth, point.y());
+    }
 }
 
 float DiagramLineItem::length() const
 {
-	float offsetX = line().p1().x() - line().p2().x();
-	float offsetY = line().p1().y() - line().p2().y();
-	return sqrt(offsetX * offsetX + offsetY * offsetY);
+    float offsetX = line().p1().x() - line().p2().x();
+    float offsetY = line().p1().y() - line().p2().y();
+    return sqrt(offsetX * offsetX + offsetY * offsetY);
 }

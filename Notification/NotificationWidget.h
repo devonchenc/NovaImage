@@ -10,43 +10,43 @@ QT_END_NAMESPACE
 
 struct NotificationParams
 {
-	enum Type
-	{
-		Information,
-		Warning,
-		Critical
-	};
-	QString title;
-	QString message;
-	Type type = Information;
-	QString detailsButtonText = "Details";
-	std::function<void()> callback;
+    enum Type
+    {
+        Information,
+        Warning,
+        Critical
+    };
+    QString title;
+    QString message;
+    Type type = Information;
+    QString detailsButtonText = "Details";
+    std::function<void()> callback;
 };
 
 class NotificationWidget : public QWidget
 {
-	Q_OBJECT
-	Q_PROPERTY(QPoint position READ pos WRITE move)
-	Q_PROPERTY(float opacity READ windowOpacity WRITE setWindowOpacity)
+    Q_OBJECT
+    Q_PROPERTY(QPoint position READ pos WRITE move)
+    Q_PROPERTY(float opacity READ windowOpacity WRITE setWindowOpacity)
 
 public:
-	explicit NotificationWidget(const NotificationParams& params, QWidget* parent = nullptr);
+    explicit NotificationWidget(const NotificationParams& params, QWidget* parent = nullptr);
 
 signals:
-	void closeButtonClicked(NotificationWidget* current);
-	void detailsButtonClicked(NotificationWidget* current);
+    void closeButtonClicked(NotificationWidget* current);
+    void detailsButtonClicked(NotificationWidget* current);
 
 private slots:
-	void onCloseButtonClicked();
-	void onDetailsButtonClicked();
+    void onCloseButtonClicked();
+    void onDetailsButtonClicked();
 
 private:
-	void initUI(const NotificationParams& params);
+    void initUI(const NotificationParams& params);
 
-	void paintEvent(QPaintEvent* event) override;
+    void paintEvent(QPaintEvent* event) override;
 
-	QPushButton* _closeButton = nullptr;
-	QPushButton* _detailsButton = nullptr;
+    QPushButton* _closeButton = nullptr;
+    QPushButton* _detailsButton = nullptr;
 
-	QGraphicsOpacityEffect* _effect;
+    QGraphicsOpacityEffect* _effect;
 };

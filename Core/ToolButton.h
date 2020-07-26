@@ -6,52 +6,52 @@ class MouseHandler;
 
 class ToolButton : public QToolButton
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ToolButton(QWidget* parent = nullptr);
-	virtual	~ToolButton();
+    ToolButton(QWidget* parent = nullptr);
+    virtual	~ToolButton();
 
 public:
-	void setIconByName(const QString& fileName);
+    void setIconByName(const QString& fileName);
 
-	void setCurrentAction(QAction* action);
+    void setCurrentAction(QAction* action);
 
-	QAction* currentAction()		{ return _currentAction; }
+    QAction* currentAction()		{ return _currentAction; }
 
-	void activeAction(QAction* action, bool leftMouseButton = true);
+    void activeAction(QAction* action, bool leftMouseButton = true);
 
-	void setMouseHandler(MouseHandler* handler);
+    void setMouseHandler(MouseHandler* handler);
 
-	MouseHandler* mouseHandler()	{ return _handler; }
+    MouseHandler* mouseHandler()	{ return _handler; }
 
-	static void setLeftMouseButton(ToolButton* toolButton);
+    static void setLeftMouseButton(ToolButton* toolButton);
 
-	static void unsetLeftMouseButton();
+    static void unsetLeftMouseButton();
 
-	static ToolButton* leftMouseButton();
+    static ToolButton* leftMouseButton();
 
-	static void setRightMouseButton(ToolButton* toolButton);
+    static void setRightMouseButton(ToolButton* toolButton);
 
-	static void unsetRightMouseButton();
+    static void unsetRightMouseButton();
 
-	static ToolButton* rightMouseButton();
-
-private:
-	static void updateAllButtonsIcon();
-
-	void updateIcon();
+    static ToolButton* rightMouseButton();
 
 private:
-	QString _fileName;
+    static void updateAllButtonsIcon();
 
-	QAction* _currentAction;
+    void updateIcon();
 
-	MouseHandler* _handler;
+private:
+    QString _fileName;
 
-	static ToolButton* _leftMouseButton;
-	static ToolButton* _rightMouseButton;
+    QAction* _currentAction;
 
-	static QVector<ToolButton*> _vec;
+    MouseHandler* _handler;
+
+    static ToolButton* _leftMouseButton;
+    static ToolButton* _rightMouseButton;
+
+    static QVector<ToolButton*> _vec;
 };
 

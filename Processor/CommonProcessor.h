@@ -5,21 +5,21 @@
 class CommonProcessor : public BaseProcessor
 {
 public:
-	CommonProcessor();
-	~CommonProcessor();
+    CommonProcessor();
+    virtual ~CommonProcessor();
 
 protected:
-	void processGeneralImage(GeneralImage* image) override;
+    void processGeneralImage(GeneralImage* image) override;
 
-	void processMonoImage(MonoImage* image) override;
+    void processMonoImage(MonoImage* image) override;
 
-	// Process float array
-	void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
+    // Process float array
+    void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
 
 public:
-	void setBrightnessAndContrast(int brightness, int contrast);
+    void setBrightnessAndContrast(int brightness, int contrast);
 
 private:
-	int _brightness;
-	int _contrast;
+    int _brightness;
+    int _contrast;
 };

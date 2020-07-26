@@ -7,21 +7,21 @@ class BaseWidget;
 class WidgetManager
 {
 private:
-	WidgetManager() {}
-	~WidgetManager() {}
+    WidgetManager() {}
+    ~WidgetManager() {}
 
 public:
-	static WidgetManager* getInstance();
-	static void cleanUp();
+    static WidgetManager* getInstance();
+    static void cleanUp();
 
-	void addWidget(BaseWidget* widget);
+    void addWidget(BaseWidget* widget);
 
-	void init();
+    void init();
 
-	void reset();
+    void reset();
 
 private:
-	static WidgetManager* _instance;
+    static WidgetManager* _instance;
 
-	QVector<BaseWidget*> _vecWidget;
+    QVector<BaseWidget*> _vecWidget;
 };

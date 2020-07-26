@@ -13,49 +13,49 @@ class QAction;
 
 class RecentFiles : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	explicit RecentFiles(QMainWindow* parent = nullptr);
-	~RecentFiles();
+    explicit RecentFiles(QMainWindow* parent = nullptr);
+    ~RecentFiles();
 
-	// Inserts the sub-menu into another Menu
-	void attachToMenuAfterItem(QMenu* menu, QAction* action, const char* slotName);
+    // Inserts the sub-menu into another Menu
+    void attachToMenuAfterItem(QMenu* menu, QAction* action, const char* slotName);
 
-	QStringList getRecentFiles() const;
+    QStringList getRecentFiles() const;
 
-	void setMostRecentFile(const QString& fileName);
+    void setMostRecentFile(const QString& fileName);
 
-	QString strippedName(const QString& fullFileName);
+    QString strippedName(const QString& fullFileName);
 
-	void setMenuEnabled(bool enable);
+    void setMenuEnabled(bool enable);
 
-	// returns how many recent files are being remembered
-	int numberOfRecentFilesToSave();
+    // returns how many recent files are being remembered
+    int numberOfRecentFilesToSave();
 
-	void resetText();
+    void resetText();
 
-	static const int _maxRecentFiles = 6;
+    static const int _maxRecentFiles = 6;
 
 public slots:
-	// The application can set the number of recent files retained/reported here
-	void setNumOfRecentFiles(int num);
+    // The application can set the number of recent files retained/reported here
+    void setNumOfRecentFiles(int num);
 
 signals:
-	// emitted when user selects item from "Open Recent" sub-menu
-	void openFile(QString fileName);
+    // emitted when user selects item from "Open Recent" sub-menu
+    void openFile(QString fileName);
 
 private slots:
-	void openRecentFile();
+    void openRecentFile();
 
-	void clearRecentFiles();
+    void clearRecentFiles();
 
 private:
-	void purgeMissingFilesFromList(QStringList& recentFileList);
-	void updateRecentFiles(QSettings& settings);
+    void purgeMissingFilesFromList(QStringList& recentFileList);
+    void updateRecentFiles(QSettings& settings);
 
-	QMenu* _recentMenu;
-	QAction* _recentMenuTriggeredAction;
-	QAction* _recentFileActions[_maxRecentFiles];
-	QAction* _clearAction;
+    QMenu* _recentMenu;
+    QAction* _recentMenuTriggeredAction;
+    QAction* _recentFileActions[_maxRecentFiles];
+    QAction* _clearAction;
 };

@@ -7,54 +7,54 @@ class ImageData;
 class MonoImage : public BaseImage
 {
 public:
-	MonoImage();
-	MonoImage(const QString& pathName);
-	MonoImage(const MonoImage& src);
-	virtual ~MonoImage();
+    MonoImage();
+    MonoImage(const QString& pathName);
+    MonoImage(const MonoImage& src);
+    virtual ~MonoImage();
 
-	bool copyToImage();
-
-public:
-	int slice() const override { return _slice; }
-
-	float getMinValue() const override;
-
-	float getMaxValue() const override;
-
-	// Histogram statistic
-	void histogramStatistic() override;
-
-	float getValue(const QPoint& position) const override;
-	float getValue(int x, int y) const override;
-	float getValue(int index) const override;
-
-	bool hasPixelSpacing() override { return false; }
-
-	float horzPixelSpacing() override { return 0; }
-	float vertPixelSpacing() override { return 0; }
-
-	virtual void initWindowWidthAndLevel() = 0;
-
-	void restore() override;
+    bool copyToImage();
 
 public:
-	// get uchar data
-	uchar* getBYTEImage() { return _byteImage; }
+    int slice() const override { return _slice; }
 
-	bool convertToByte();
+    float getMinValue() const override;
+
+    float getMaxValue() const override;
+
+    // Histogram statistic
+    void histogramStatistic() override;
+
+    float getValue(const QPoint& position) const override;
+    float getValue(int x, int y) const override;
+    float getValue(int index) const override;
+
+    bool hasPixelSpacing() override { return false; }
+
+    float horzPixelSpacing() override { return 0; }
+    float vertPixelSpacing() override { return 0; }
+
+    virtual void initWindowWidthAndLevel() = 0;
+
+    void restore() override;
+
+public:
+    // get uchar data
+    uchar* getBYTEImage() { return _byteImage; }
+
+    bool convertToByte();
 
 protected:
-	bool saveAsRaw(const QString& fileName) override;
+    bool saveAsRaw(const QString& fileName) override;
 
 protected:
-	bool allocateMemory();
+    bool allocateMemory();
 
 protected:
-	ImageData* _imageData;
+    ImageData* _imageData;
 
-	uchar* _byteImage;
+    uchar* _byteImage;
 
-	int _slice;
+    int _slice;
 
-	int _currentSlice;
+    int _currentSlice;
 };

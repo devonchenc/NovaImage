@@ -5,21 +5,21 @@
 class HistogramProcessor : public BaseProcessor
 {
 public:
-	HistogramProcessor();
-	~HistogramProcessor();
+    HistogramProcessor();
+    virtual ~HistogramProcessor();
 
 protected:
-	void processGeneralImage(GeneralImage* image) override;
+    void processGeneralImage(GeneralImage* image) override;
 
-	void processMonoImage(MonoImage* image) override;
+    void processMonoImage(MonoImage* image) override;
 
-	// Process float array
-	void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
+    // Process float array
+    void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
 
 public:
-	void setWindowArray(bool* array, int arrayNum);
+    void setWindowArray(bool* array, int arrayNum);
 
 private:
-	bool* _array;
-	int _arrayNum;
+    bool* _array;
+    int _arrayNum;
 };

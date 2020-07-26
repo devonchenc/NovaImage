@@ -4,17 +4,17 @@
 
 class DiagramLengthItem : public DiagramLineItem
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	DiagramLengthItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-	~DiagramLengthItem();
+    DiagramLengthItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
+    ~DiagramLengthItem();
 
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
 
 private:
-	QString lengthString() const;
+    QString lengthString() const;
 
-	void drawLengthText(QPainter* painter);
+    void drawLengthText(QPainter* painter);
 };

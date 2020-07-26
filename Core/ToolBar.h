@@ -14,113 +14,113 @@ class MouseHandler;
 
 class ToolBar : public QToolBar
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	ToolBar(QWidget* parent = nullptr);
-	ToolBar(const QString& title, QWidget* parent = nullptr);
-	virtual ~ToolBar();
+    ToolBar(QWidget* parent = nullptr);
+    ToolBar(const QString& title, QWidget* parent = nullptr);
+    virtual ~ToolBar();
 
-	QVector<QAction*> actionVector() { return _actionVector; }
+    QVector<QAction*> actionVector() { return _actionVector; }
 
 private:
-	void createButton();
+    void createButton();
 
-	void createAction();
+    void createAction();
 
-	void initButton();
+    void initButton();
 
 protected:
-	void changeEvent(QEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
-	bool eventFilter(QObject* obj, QEvent* event) override;
+    bool eventFilter(QObject* obj, QEvent* event) override;
 
 public slots:
-	void setMeasurementType(DiagramItem::DiagramType type);
+    void setMeasurementType(DiagramItem::DiagramType type);
 
 private slots:
-	void layoutButtonClicked();
-	void showInfoButtonClicked();
-	void imageWindowActionTriggered();
-	void ROIWindowActionTriggered();
-	void undoButtonClicked();
-	void imageWindowButtonTriggered(QAction* action);
-	void zoomActionTriggered();
-	void magnifierActionTriggered();
-	void zoomButtonTriggered(QAction* action);
-	void selectItem();
-	void moveScene();
-	void cursorButtonTriggered(QAction* action);
-	void measurementChanged();
-	void measurementButtonTriggered(QAction* action);
+    void layoutButtonClicked();
+    void showInfoButtonClicked();
+    void imageWindowActionTriggered();
+    void ROIWindowActionTriggered();
+    void undoButtonClicked();
+    void imageWindowButtonTriggered(QAction* action);
+    void zoomActionTriggered();
+    void magnifierActionTriggered();
+    void zoomButtonTriggered(QAction* action);
+    void selectItem();
+    void moveScene();
+    void cursorButtonTriggered(QAction* action);
+    void measurementChanged();
+    void measurementButtonTriggered(QAction* action);
 
 private:
-	QAction* _openDicomAction;
-	QAction* _openRawAction;
-	QAction* _saveAsRawAction;
+    QAction* _openDicomAction;
+    QAction* _openRawAction;
+    QAction* _saveAsRawAction;
 
-	QAction* _showMenuAction;
-	QAction* _showDockWidgetAction;
-	QAction* _fullScreenAction;
+    QAction* _showMenuAction;
+    QAction* _showDockWidgetAction;
+    QAction* _fullScreenAction;
 
-	QAction* _showAnnotationAction;
-	QAction* _showCrossAction;
-	QAction* _showScaleAction;
-	QAction* _showMeasurementAction;
+    QAction* _showAnnotationAction;
+    QAction* _showCrossAction;
+    QAction* _showScaleAction;
+    QAction* _showMeasurementAction;
 
-	QAction* _flipHorizontalAction;
-	QAction* _flipVerticalAction;
+    QAction* _flipHorizontalAction;
+    QAction* _flipVerticalAction;
 
-	QAction* _rotate90CW;
-	QAction* _rotate90CCW;
-	QAction* _rotate180;
-	QAction* _resetTransformation;
+    QAction* _rotate90CW;
+    QAction* _rotate90CCW;
+    QAction* _rotate180;
+    QAction* _resetTransformation;
 
-	QAction* _imageWindowAction;
-	QAction* _ROIWidowAction;
-	QAction* _defaultWindowAction;
-	QAction* _fullWindowAction;
-	QAction* _imageNegativeAction;
+    QAction* _imageWindowAction;
+    QAction* _ROIWidowAction;
+    QAction* _defaultWindowAction;
+    QAction* _fullWindowAction;
+    QAction* _imageNegativeAction;
 
-	QAction* _zoomAction;
-	QAction* _magnifierAction;
-	QAction* _fitWindowAction;
-	QAction* _1xAction;
-	QAction* _2xAction;
-	QAction* _4xAction;
-	QAction* _8xAction;
-	QAction* _zoomInAction;
-	QAction* _zoomOutAction;
+    QAction* _zoomAction;
+    QAction* _magnifierAction;
+    QAction* _fitWindowAction;
+    QAction* _1xAction;
+    QAction* _2xAction;
+    QAction* _4xAction;
+    QAction* _8xAction;
+    QAction* _zoomInAction;
+    QAction* _zoomOutAction;
 
-	QAction* _cursorAction;
-	QAction* _moveAction;
+    QAction* _cursorAction;
+    QAction* _moveAction;
 
-	QAction* _rulerAction;
-	QAction* _arrowAction;
-	QAction* _angleAction;
-	QAction* _plotAction;
-	QAction* _rectAction;
-	QAction* _roundrectAction;
-	QAction* _circleAction;
-	QAction* _ellipseAction;
-	QAction* _rhombusAction;
-	QAction* _parallelogramAction;
-	QAction* _textAction;
+    QAction* _rulerAction;
+    QAction* _arrowAction;
+    QAction* _angleAction;
+    QAction* _plotAction;
+    QAction* _rectAction;
+    QAction* _roundrectAction;
+    QAction* _circleAction;
+    QAction* _ellipseAction;
+    QAction* _rhombusAction;
+    QAction* _parallelogramAction;
+    QAction* _textAction;
 
-	QToolButton* _openButton;
-	QToolButton* _saveButton;
-	QToolButton* _printButton;
-	QToolButton* _layoutButton;
-	QToolButton* _showInfoButton;
-	QToolButton* _flipButton;
-	QToolButton* _rotateButton;
-	QToolButton* _undoButton;
-	QToolButton* _restoreButton;
+    QToolButton* _openButton;
+    QToolButton* _saveButton;
+    QToolButton* _printButton;
+    QToolButton* _layoutButton;
+    QToolButton* _showInfoButton;
+    QToolButton* _flipButton;
+    QToolButton* _rotateButton;
+    QToolButton* _undoButton;
+    QToolButton* _restoreButton;
 
-	ToolButton* _imageWindowButton;
-	ToolButton* _zoomButton;
-	ToolButton* _cursorButton;
-	ToolButton* _measurementButton;
+    ToolButton* _imageWindowButton;
+    ToolButton* _zoomButton;
+    ToolButton* _cursorButton;
+    ToolButton* _measurementButton;
 
-	QVector<QAction*> _actionVector;
+    QVector<QAction*> _actionVector;
 };

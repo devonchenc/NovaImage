@@ -14,70 +14,70 @@ class BaseImage;
 
 enum ENUM_IMAGE_FORMAT
 {
-	IMAGE_FORMAT_UNKNOWN = 0,
-	IMAGE_FORMAT_JPG = 1,
-	IMAGE_FORMAT_PNG = 2,
-	IMAGE_FORMAT_TIF = 3,
-	IMAGE_FORMAT_BMP = 4,
-	IMAGE_FORMAT_GIF = 5,
-	IMAGE_FORMAT_NDR = 6,
-	IMAGE_FORMAT_NCT = 7,
-	IMAGE_FORMAT_RAW = 8,
-	IMAGE_FORMAT_DAT = 9,
-	IMAGE_FORMAT_DICOM = 10,
+    IMAGE_FORMAT_UNKNOWN = 0,
+    IMAGE_FORMAT_JPG = 1,
+    IMAGE_FORMAT_PNG = 2,
+    IMAGE_FORMAT_TIF = 3,
+    IMAGE_FORMAT_BMP = 4,
+    IMAGE_FORMAT_GIF = 5,
+    IMAGE_FORMAT_NDR = 6,
+    IMAGE_FORMAT_NCT = 7,
+    IMAGE_FORMAT_RAW = 8,
+    IMAGE_FORMAT_DAT = 9,
+    IMAGE_FORMAT_DICOM = 10,
 };
 
 class Document : public QObject
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	Document(MainWindow* pWindow);
-	~Document();
+    Document(MainWindow* pWindow);
+    ~Document();
 
 public:
-	bool openFile(const QString& fileName);
+    bool openFile(const QString& fileName);
 
-	bool saveAs(const QString& fileName);
+    bool saveAs(const QString& fileName);
 
-	void closeFile();
+    void closeFile();
 
-	BaseImage* getImage() const { return _image.get(); }
+    BaseImage* getImage() const { return _image.get(); }
 
-	void copyImage(const std::shared_ptr<BaseImage>& image);
+    void copyImage(const std::shared_ptr<BaseImage>& image);
 
-	// Repaint view
-	void repaintView();
+    // Repaint view
+    void repaintView();
 
-	static int findType(const QString& fileName);
+    static int findType(const QString& fileName);
 
 public:
-	void ROIWindow(const QRectF& rect);
+    void ROIWindow(const QRectF& rect);
 
-	void defaultImageWindow();
+    void defaultImageWindow();
 
-	void fullImageWindow();
+    void fullImageWindow();
 
-	void applyImageWidthAndLevel();
+    void applyImageWidthAndLevel();
 
-	void inverseImage();
+    void inverseImage();
 
-	void backup();
+    void backup();
 
 public slots:
-	void undo();
+    void undo();
 
-	void redo();
+    void redo();
 
-	void restore();
-
-private:
-	View* getView() const;
+    void restore();
 
 private:
-	MainWindow* pMainWindow;
+    View* getView() const;
 
-	std::shared_ptr<BaseImage> _image;
+private:
+    MainWindow* pMainWindow;
 
-	UndoSystem _undoStack;
+    std::shared_ptr<BaseImage> _image;
+
+    UndoSystem _undoStack;
 };

@@ -7,22 +7,22 @@ class BaseImage;
 class UndoSystem
 {
 public:
-	~UndoSystem();
+    ~UndoSystem();
 
-	void backup(BaseImage* image);
+    void backup(BaseImage* image);
 
-	BaseImage* undo();
+    BaseImage* undo();
 
-	BaseImage* redo();
+    BaseImage* redo();
 
-	bool isEmpty() { return _currentIndex < 1; }
+    bool isEmpty() { return _currentIndex < 1; }
 
-	bool isTop() { return _currentIndex + 1 == _imageStack.length(); }
+    bool isTop() { return _currentIndex + 1 == _imageStack.length(); }
 
-	void reset();
+    void reset();
 
 private:
-	QVector<BaseImage*> _imageStack;
+    QVector<BaseImage*> _imageStack;
 
-	int _currentIndex = -1;
+    int _currentIndex = -1;
 };

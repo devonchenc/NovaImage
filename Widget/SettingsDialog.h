@@ -10,31 +10,31 @@ QT_END_NAMESPACE
 
 class SettingsDialog : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	SettingsDialog(QWidget* parent = nullptr);
-	~SettingsDialog();
+    SettingsDialog(QWidget* parent = nullptr);
+    ~SettingsDialog();
 
 signals:
-	void changeLanguage(int language);
+    void changeLanguage(int language);
 
 private:
-	void initUI();
+    void initUI();
 
-	QWidget* createGeneralWidget();
+    QWidget* createGeneralWidget();
 
-	QWidget* createImageWidget();
+    QWidget* createImageWidget();
 
-	void loadSettings();
+    void loadSettings();
 
 private slots:
-	void acceptButtonClicked();
+    void acceptButtonClicked();
 
 private:
-	QComboBox* _languageComboBox;
-	QComboBox* _leftMouseComboBox;
-	QComboBox* _rightMouseComboBox;
-	QCheckBox* _autoFitWindowCheckBox;
-	QButtonGroup* _windowGroup;
+    QComboBox* _languageComboBox;
+    QComboBox* _leftMouseComboBox;
+    QComboBox* _rightMouseComboBox;
+    QCheckBox* _autoFitWindowCheckBox;
+    QButtonGroup* _windowGroup;
 };

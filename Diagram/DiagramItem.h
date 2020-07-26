@@ -8,18 +8,18 @@ QT_END_NAMESPACE
 
 class DiagramItem : public QObject, public QGraphicsPolygonItem
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
     enum { Type = UserType + 15 };
-	enum DiagramType
-	{
-		None, Rect, RoundRect, Circle, Ellipse, Rhombus, Parallelogram, Text, Line, Arrow, Plot, Angle
-	};
-	enum Direction { TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
+    enum DiagramType
+    {
+        None, Rect, RoundRect, Circle, Ellipse, Rhombus, Parallelogram, Text, Line, Arrow, Plot, Angle
+    };
+    enum Direction { TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
 
     DiagramItem(DiagramType diagramType, QMenu* contextMenu = nullptr, QGraphicsItem* parent = nullptr);
-	~DiagramItem();
+    ~DiagramItem();
 
     DiagramType diagramType() const { return _diagramType; }
     QPolygonF polygon() const { return _polygon; }
@@ -28,22 +28,22 @@ public:
     int type() const override { return Type;}
     DiagramItem* clone();
 
-	void setRectF(const QRectF& rect);
+    void setRectF(const QRectF& rect);
 
-	void setDrawingFinished(bool finished);
+    void setDrawingFinished(bool finished);
 
-	void statisticsInfo();
+    void statisticsInfo();
 
 signals:
-	void itemSelectedChange(QGraphicsItem* item);
+    void itemSelectedChange(QGraphicsItem* item);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseMoveEvent(QGraphicsSceneMouseEvent* event) override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
-	void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
-	void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
-	void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
+    void hoverMoveEvent(QGraphicsSceneHoverEvent* event) override;
+    void hoverEnterEvent(QGraphicsSceneHoverEvent* event) override;
+    void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
@@ -51,23 +51,23 @@ protected:
 private:
     QPolygonF scaledPolygon(const QPolygonF& old, Direction direction, const QPointF& newPos);
 
-	int changeIndex(int index);
+    int changeIndex(int index);
 
-	QList<QPointF> resizeHandlePoints();
+    QList<QPointF> resizeHandlePoints();
 
-	bool isCloseEnough(const QPointF& p1, const QPointF& p2);
+    bool isCloseEnough(const QPointF& p1, const QPointF& p2);
 
 private:
     DiagramType _diagramType;
     QPolygonF _polygon;
-	QGraphicsOpacityEffect* _effect;
+    QGraphicsOpacityEffect* _effect;
     QMenu* _contextMenu;
     static constexpr qreal resizePointWidth = 5;
     static constexpr qreal closeEnoughDistance = 12;
     bool _resizeMode = false;
     Direction _scaleDirection;
-	bool _drawingFinished = false;
-	int _previousMode;
+    bool _drawingFinished = false;
+    int _previousMode;
 
-	QString _info;
+    QString _info;
 };

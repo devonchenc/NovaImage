@@ -16,65 +16,65 @@
 class OldDataHeader
 {
 public:
-	OldDataHeader()
-	{
-		memset(this, 0, sizeof(OldDataHeader));
-	}
+    OldDataHeader()
+    {
+        memset(this, 0, sizeof(OldDataHeader));
+    }
 
 public:
-	uint Attribute;
-	ushort Width;
-	ushort Height;
-	ushort Slice;
-	ushort ImageFrameCount;
-	ushort ImageBitDepth;
-	ushort Pixelbinning;
+    uint Attribute;
+    ushort Width;
+    ushort Height;
+    ushort Slice;
+    ushort ImageFrameCount;
+    ushort ImageBitDepth;
+    ushort Pixelbinning;
 
-	float WindowWidth;
-	float WindowLevel;
+    float WindowWidth;
+    float WindowLevel;
 
-	float SOD;
-	float SDD;
-	float Reserved2;
-	float Reserved3;
+    float SOD;
+    float SDD;
+    float Reserved2;
+    float Reserved3;
 
-	float	Voltage;
-	float	Frequency;
-	float	Current;
-	float	IntegrationTime;
-	float	FocusSize;
-	int		DetectorType;
+    float	Voltage;
+    float	Frequency;
+    float	Current;
+    float	IntegrationTime;
+    float	FocusSize;
+    int		DetectorType;
 
-	ushort	RotateCount;
-	ushort	CurrentIndex;
-	int	RotateDirection;
-	float	TROffset;
-	float	RotateAngel;
+    ushort	RotateCount;
+    ushort	CurrentIndex;
+    int	RotateDirection;
+    float	TROffset;
+    float	RotateAngel;
 
-	float	StartHeight;
-	float	EndHeight;
-	float	UnitWidth;
-	float	LevelHeight;
-	float	LineDetectorOffset;
-	float	Reserved4;
-	float	SourceOffset;
+    float	StartHeight;
+    float	EndHeight;
+    float	UnitWidth;
+    float	LevelHeight;
+    float	LineDetectorOffset;
+    float	Reserved4;
+    float	SourceOffset;
 
-	ushort	VolumeXDis;
-	ushort	VolumeYDis;
-	ushort	VolumeZDis;
-	ushort	DataType;				// DataType 0:float, 1:unsigned short, 2:unsigned char
+    ushort	VolumeXDis;
+    ushort	VolumeYDis;
+    ushort	VolumeZDis;
+    ushort	DataType;				// DataType 0:float, 1:unsigned short, 2:unsigned char
 
-	int     SpecialScanMode;
-	float	Pitch;
-	int		RotaionNum;
-	int		LimitedScanAng;
-	float	ShortScanDistance;
+    int     SpecialScanMode;
+    float	Pitch;
+    int		RotaionNum;
+    int		LimitedScanAng;
+    float	ShortScanDistance;
 
-	float	Reserved8;
-	float	Reserved9;
-	float	Reserved10;
-	float	Reserved11;
+    float	Reserved8;
+    float	Reserved9;
+    float	Reserved10;
+    float	Reserved11;
 
-	float	RowPixelWidth;
-	float	ColumnPixelWidth;
+    float	RowPixelWidth;
+    float	ColumnPixelWidth;
 };

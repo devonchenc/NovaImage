@@ -10,44 +10,44 @@ QT_END_NAMESPACE
 
 class RawParameterDialog : public QDialog
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	RawParameterDialog(const QString& pathName, QWidget* parent = nullptr);
-	~RawParameterDialog();
+    RawParameterDialog(const QString& pathName, QWidget* parent = nullptr);
+    ~RawParameterDialog();
 
 public:
-	int dataType() { return _dataType; }
+    int dataType() { return _dataType; }
 
-	int width() { return _width; }
+    int width() { return _width; }
 
-	int height() { return _height; }
+    int height() { return _height; }
 
-	int headerSize() { return _headerSize; }
+    int headerSize() { return _headerSize; }
 
 private:
-	void initUI();
+    void initUI();
 
-	void loadSettings();
+    void loadSettings();
 
 private slots:
-	void updateExpectedSize();
+    void updateExpectedSize();
 
-	void acceptButtonClicked();
+    void acceptButtonClicked();
 
 private:
-	QString _fileName;
-	QLabel* _expectedSizeLabel;
-	QComboBox* _typeComboBox;
-	QComboBox* _widthComboBox;
-	QComboBox* _heightComboBox;
-	QLineEdit* _headerEdit;
+    QString _fileName;
+    QLabel* _expectedSizeLabel;
+    QComboBox* _typeComboBox;
+    QComboBox* _widthComboBox;
+    QComboBox* _heightComboBox;
+    QLineEdit* _headerEdit;
 
-	qint64 _actualSize;
-	qint64 _expectedSize;
-	int _dataType;
-	int _width;
-	int _height;
-	int _slice;
-	int _headerSize;
+    qint64 _actualSize;
+    qint64 _expectedSize;
+    int _dataType;
+    int _width;
+    int _height;
+    int _slice;
+    int _headerSize;
 };

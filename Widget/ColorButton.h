@@ -4,37 +4,37 @@
 
 class QColorButton : public QPushButton
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	QColorButton(const QColor& color = Qt::blue, QWidget* parent = nullptr);
+    QColorButton(const QColor& color = Qt::blue, QWidget* parent = nullptr);
 
-	void setColor(const QColor& color);
+    void setColor(const QColor& color);
 
-	inline QColor getColor() const { return _currentColor; }
+    inline QColor getColor() const { return _currentColor; }
 
-	void setText(const QString& text);
+    void setText(const QString& text);
 
-	void enableColorText(bool enableColorText);
+    void enableColorText(bool enableColorText);
 
-	inline bool isColorTextEnabled() const { return _enableColorText; }
+    inline bool isColorTextEnabled() const { return _enableColorText; }
 
-	void enableToolTip(bool enableToolTip);
+    void enableToolTip(bool enableToolTip);
 
-	inline bool isToolTipEnabled() const { return _enableToolTip; }
-
-private:
-	void setColorText(const QString& colorText);
-
+    inline bool isToolTipEnabled() const { return _enableToolTip; }
 
 private:
-	bool _enableColorText;
-	bool _enableToolTip;
+    void setColorText(const QString& colorText);
 
-	QColor _currentColor;
 
-	QString _realText;
+private:
+    bool _enableColorText;
+    bool _enableToolTip;
+
+    QColor _currentColor;
+
+    QString _realText;
 
 private slots:
-	void slotChangeColor();
+    void slotChangeColor();
 };

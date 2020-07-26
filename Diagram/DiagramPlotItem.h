@@ -4,33 +4,33 @@
 
 class DiagramPlotItem : public DiagramLineItem
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-	~DiagramPlotItem();
+    DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
+    ~DiagramPlotItem();
 
-	int width() { return _lineWidth; }
+    int width() { return _lineWidth; }
 
-	void setWidth(int lineWidth) { _lineWidth = lineWidth; }
+    void setWidth(int lineWidth) { _lineWidth = lineWidth; }
 
-	int plotIndex() { return _plotIndex; }
+    int plotIndex() { return _plotIndex; }
 
 signals:
-	void itemDeleted();
+    void itemDeleted();
 
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
-	void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
+    void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
-	void drawRect(QPainter* painter);
+    void drawRect(QPainter* painter);
 
-	void drawPlotIndex(QPainter* painter);
+    void drawPlotIndex(QPainter* painter);
 
 private:
-	int _lineWidth;
+    int _lineWidth;
 
-	int _plotIndex;
-	static int _plotCount;
+    int _plotIndex;
+    static int _plotCount;
 };

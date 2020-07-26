@@ -4,15 +4,15 @@
 
 class DiagramArrowItem : public DiagramLineItem
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-	~DiagramArrowItem();
+    DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
+    ~DiagramArrowItem();
 
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
 
 private:
-	void drawArrow(QPainter* painter);
+    void drawArrow(QPainter* painter);
 };

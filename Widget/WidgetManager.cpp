@@ -6,40 +6,40 @@ WidgetManager* WidgetManager::_instance = nullptr;
 
 WidgetManager* WidgetManager::getInstance()
 {
-	if (_instance == nullptr)
-	{
-		_instance = new WidgetManager;
-	}
+    if (_instance == nullptr)
+    {
+        _instance = new WidgetManager;
+    }
 
-	return _instance;
+    return _instance;
 }
 
 void WidgetManager::cleanUp()
 {
-	if (_instance)
-	{
-		delete _instance;
-		_instance = nullptr;
-	}
+    if (_instance)
+    {
+        delete _instance;
+        _instance = nullptr;
+    }
 }
 
 void WidgetManager::addWidget(BaseWidget* widget)
 {
-	_vecWidget.append(widget);
+    _vecWidget.append(widget);
 }
 
 void WidgetManager::init()
 {
-	for (auto widget : _vecWidget)
-	{
-		widget->init();
-	}
+    for (auto widget : _vecWidget)
+    {
+        widget->init();
+    }
 }
 
 void WidgetManager::reset()
 {
-	for (auto widget : _vecWidget)
-	{
-		widget->reset();
-	}
+    for (auto widget : _vecWidget)
+    {
+        widget->reset();
+    }
 }

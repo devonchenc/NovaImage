@@ -9,37 +9,37 @@ class CommonProcessor;
 
 class CommonWidget : public BaseWidget
 {
-	Q_OBJECT
+    Q_OBJECT
 
 public:
-	CommonWidget(QWidget* parent = nullptr);
-	virtual ~CommonWidget();
+    CommonWidget(QWidget* parent = nullptr);
+    virtual ~CommonWidget();
 
 public:
-	virtual void init();
+    virtual void init() override;
 
-	virtual void reset();
+    virtual void reset() override;
 
 public slots:
-	void brightValueChanged(int value);
+    void brightValueChanged(int value);
 
-	void contrastValueChanged(int value);
+    void contrastValueChanged(int value);
 
 protected:
-	void changeEvent(QEvent* event) override;
+    void changeEvent(QEvent* event) override;
 
 private:
-	void SetBrightnessAndContrast();
+    void SetBrightnessAndContrast();
 
 private:
-	QSlider* _sliderBright;
-	QSlider* _sliderContrast;
-	QLabel* _labelBrightNum;
-	QLabel* _labelContrastNum;
+    QSlider* _sliderBright;
+    QSlider* _sliderContrast;
+    QLabel* _labelBrightNum;
+    QLabel* _labelContrastNum;
 
-	QLabel* _labelBright;
-	QLabel* _labelContrast;
+    QLabel* _labelBright;
+    QLabel* _labelContrast;
 
-	// Image processor
-	CommonProcessor* _processor;
+    // Image processor
+    CommonProcessor* _processor;
 };

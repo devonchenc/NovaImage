@@ -13,35 +13,35 @@
 class CurvesProcessor : public BaseProcessor
 {
 public:
-	CurvesProcessor();
-	~CurvesProcessor();
+    CurvesProcessor();
+    virtual ~CurvesProcessor();
 
 protected:
-	void processGeneralImage(GeneralImage* image) override;
+    void processGeneralImage(GeneralImage* image) override;
 
-	void processMonoImage(MonoImage* image) override;
+    void processMonoImage(MonoImage* image) override;
 
-	// Process float array
-	void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
+    // Process float array
+    void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
 
 public:
-	void setChannel(int channel) { _channel = channel; }
+    void setChannel(int channel) { _channel = channel; }
 
-	void setArray(int arrayNum, uint* arrayIntensity, uint* arrayRed, uint* arrayGreen, uint* arrayBlue);
-
-private:
-	// Interpolation
-	uchar interpolation(uchar target, uint* array, int arrayNum, float variable);
-
-	template <typename Type>
-	uchar interpolation(Type target, uint* array, int arrayNum, float variable1, float variable2);
+    void setArray(int arrayNum, uint* arrayIntensity, uint* arrayRed, uint* arrayGreen, uint* arrayBlue);
 
 private:
-	int _channel;
+    // Interpolation
+    uchar interpolation(uchar target, uint* array, int arrayNum, float variable);
 
-	int _arrayNum;
-	uint* _arrayIntensity;
-	uint* _arrayRed;
-	uint* _arrayGreen;
-	uint* _arrayBlue;
+    template <typename Type>
+    uchar interpolation(Type target, uint* array, int arrayNum, float variable1, float variable2);
+
+private:
+    int _channel;
+
+    int _arrayNum;
+    uint* _arrayIntensity;
+    uint* _arrayRed;
+    uint* _arrayGreen;
+    uint* _arrayBlue;
 };

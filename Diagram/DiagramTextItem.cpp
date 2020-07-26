@@ -42,11 +42,11 @@ void DiagramTextItem::focusOutEvent(QFocusEvent* event)
 {
     setTextInteractionFlags(Qt::NoTextInteraction);
     if (contentLastTime == toPlainText())
-	{
+    {
         contentHasChanged = false;
     }
-	else
-	{
+    else
+    {
         contentLastTime = toPlainText();
         contentHasChanged = true;
     }
@@ -57,7 +57,7 @@ void DiagramTextItem::focusOutEvent(QFocusEvent* event)
 void DiagramTextItem::mouseDoubleClickEvent(QGraphicsSceneMouseEvent* event)
 {
     if (textInteractionFlags() == Qt::NoTextInteraction)
-	{
+    {
         setTextInteractionFlags(Qt::TextEditorInteraction);
     }
     QGraphicsTextItem::mouseDoubleClickEvent(event);
@@ -71,7 +71,7 @@ void DiagramTextItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 void DiagramTextItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     if (scenePos() != positionLastTime)
-	{
+    {
         qDebug() << scenePos() << "::" << positionLastTime;
     }
     positionLastTime = scenePos();
