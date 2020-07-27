@@ -1,7 +1,14 @@
 #include "DiagramArrowItem.h"
 
 #include <QPainter>
+#include <QDomDocument>
 #include <float.h>
+
+DiagramArrowItem::DiagramArrowItem()
+    : DiagramLineItem(QLineF(), nullptr, nullptr)
+{
+
+}
 
 DiagramArrowItem::DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
     : DiagramLineItem(line, contextMenu, parent)
@@ -12,6 +19,21 @@ DiagramArrowItem::DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGrap
 DiagramArrowItem::~DiagramArrowItem()
 {
 
+}
+
+QDomElement DiagramArrowItem::saveToXML(QDomDocument* doc)
+{
+    QDomElement lineItem = doc->createElement("DiagramItem");
+    lineItem.setAttribute("Type", "DiagramLineItem");
+
+    QDomElement attribute = doc->createElement("Attribute");
+    attribute.setAttribute("Name", "Arrow");
+    attribute.setAttribute("Point1", QString("%1 %2").arg(line().p1().x()).arg(line().p1().y()));
+    attribute.setAttribute("Point2", QString("%1 %2").arg(line().p2().x()).arg(line().p2().y()));
+    attribute.setAttribute("Color", QString("%1 %2 %3").arg(pen().color().red()).arg(pen().color().green()).arg(pen().color().blue()));
+
+    lineItem.appendChild(attribute);
+    return lineItem;
 }
 
 void DiagramArrowItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)

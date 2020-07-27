@@ -22,9 +22,9 @@ public:
     virtual ~CurvesWidget();
 
 public:
-    virtual void init() override;
+    void init() override;
 
-    virtual void reset() override;
+    void reset() override;
 
 public slots:
     void channelChanged(int value);

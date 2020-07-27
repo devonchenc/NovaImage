@@ -35,6 +35,10 @@ public:
 
     float windowLevel() { return _windowLevel; }
 
+    void saveGraphicsItem();
+
+	void loadGraphicsItem();
+
     void showPlotDialog(QGraphicsLineItem* lineItem);
 
 public slots:

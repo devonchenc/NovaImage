@@ -7,6 +7,7 @@ class DiagramPlotItem : public DiagramLineItem
     Q_OBJECT
 
 public:
+    DiagramPlotItem();
     DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramPlotItem();
 
@@ -15,6 +16,10 @@ public:
     void setWidth(int lineWidth) { _lineWidth = lineWidth; }
 
     int plotIndex() { return _plotIndex; }
+
+    QDomElement saveToXML(QDomDocument* doc) override;
+
+//    void loadFromXML(const QDomElement& e) override;
 
 signals:
     void itemDeleted();

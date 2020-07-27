@@ -7,8 +7,13 @@ class DiagramLengthItem : public DiagramLineItem
     Q_OBJECT
 
 public:
+    DiagramLengthItem();
     DiagramLengthItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramLengthItem();
+
+    QDomElement saveToXML(QDomDocument* doc) override;
+
+//    void loadFromXML(const QDomElement& e) override;
 
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;

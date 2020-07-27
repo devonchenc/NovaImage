@@ -46,6 +46,10 @@ public:
 
     void mouseRelease(const QPointF& point);
 
+    bool saveToFile(const QString& fileName);
+
+    bool loadFromFile(const QString& fileName);
+
 public slots:
     void editorLostFocus(DiagramTextItem* item);
     void setLineColor(const QColor& color);

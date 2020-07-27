@@ -20,9 +20,9 @@ public:
     virtual ~HistogramWidget();
 
 public:
-    virtual QSize sizeHint() const override;
+    QSize sizeHint() const override;
 
-    virtual QSize minimumSizeHint() const override;
+    QSize minimumSizeHint() const override;
 
     void init();
 

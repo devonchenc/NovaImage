@@ -146,6 +146,22 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
+void View::saveGraphicsItem()
+{
+    QString str = getGlobalImage()->getPathName();
+    int index = str.lastIndexOf('.');
+    QString fileName = str.left(index) + ".xml";
+    _scene->saveToFile(fileName);
+}
+
+void View::loadGraphicsItem()
+{
+    QString str = getGlobalImage()->getPathName();
+    int index = str.lastIndexOf('.');
+    QString fileName = str.left(index) + ".xml";
+    _scene->loadFromFile(fileName);
+}
+
 void View::showPlotDialog(QGraphicsLineItem* lineItem)
 {
     if (getGlobalImage() == nullptr)

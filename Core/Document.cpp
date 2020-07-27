@@ -101,6 +101,8 @@ bool Document::openFile(const QString& fileName)
         getView()->zoomNormal();
     }
 
+	getView()->loadGraphicsItem();
+
     pMainWindow->imageOpened();
 
     return true;
@@ -167,11 +169,13 @@ bool Document::saveAs(const QString& fileName)
 
 void Document::closeFile()
 {
+    getView()->saveGraphicsItem();
+
+    getView()->resetImage();
+
     _image.reset();
 
     _undoStack.reset();
-
-    getView()->resetImage();
 }
 
 void Document::copyImage(const std::shared_ptr<BaseImage>& image)

@@ -1,11 +1,13 @@
 #include "GraphicsScene.h"
 
+#include <cmath>
 #include <QGraphicsSceneMouseEvent>
 #include <QTextCursor>
 #include <QKeyEvent>
 #include <QBrush>
 #include <QApplication>
-#include <cmath>
+#include <QDomDocument>
+#include <QTextStream>
 
 #include "GlobalFunc.h"
 #include "View.h"
@@ -364,6 +366,92 @@ void GraphicsScene::mouseRelease(const QPointF& point)
     }
 
     update();
+}
+
+bool GraphicsScene::saveToFile(const QString& fileName)
+{
+    QDomDocument doc("GraphicsScene");
+    QDomElement root = doc.createElement("GraphicsItems");
+    doc.appendChild(root);
+
+    QList<QGraphicsItem*> itemList = items();
+    for (int i = 0; i < itemList.size(); i++)
+    {
+        if (itemList.at(i)->type() == DiagramItem::Type)
+        {
+            DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(itemList.at(i));
+        }
+        else if (itemList.at(i)->type() == DiagramLineItem::Type)
+        {
+            DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(itemList.at(i));
+            QDomElement lineItem = item->saveToXML(&doc);
+            root.appendChild(lineItem);
+        }
+    }
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+        return false;
+
+    QTextStream txtOutput(&file);
+    txtOutput.setCodec("UTF-8");
+    txtOutput << doc.toString();
+    file.close();
+    return true;
+}
+
+bool GraphicsScene::loadFromFile(const QString& fileName)
+{
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly))
+        return false;
+
+    QDomDocument doc;
+    if (!doc.setContent(&file))
+    {
+        file.close();
+        return false;
+    }
+    file.close();
+
+    QDomNodeList domList = doc.elementsByTagName("DiagramItem");
+    for (int i = 0; i < domList.size(); i++)
+    {
+        QDomElement diagramElem = domList.at(i).toElement();
+        QString type = diagramElem.attribute("Type");
+        if (type == "DiagramLineItem")
+        {
+            DiagramLineItem* item = nullptr;
+            QDomElement attribute = diagramElem.firstChild().toElement();
+            if (attribute.isNull())
+                break;
+
+            QString name = attribute.attribute("Name");
+            if (name == "Length")
+            {
+                item = new DiagramLengthItem;
+            }
+            else if (name == "Arrow")
+            {
+                item = new DiagramArrowItem;
+            }
+            else if (name == "Plot")
+            {
+                item = new DiagramPlotItem;
+            }
+            
+            item->loadFromXML(attribute);
+            connect(item, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            addItem(item);
+        }
+        else if (type == "DiagramItem")
+        {
+        //    DiagramItem* item = new DiagramItem;
+         //   item->loadFromXML();
+        }
+    }
+
+    return true;
 }
 
 void GraphicsScene::keyPressEvent(QKeyEvent* keyEvent)

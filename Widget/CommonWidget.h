@@ -16,9 +16,9 @@ public:
     virtual ~CommonWidget();
 
 public:
-    virtual void init() override;
+    void init() override;
 
-    virtual void reset() override;
+    void reset() override;
 
 public slots:
     void brightValueChanged(int value);

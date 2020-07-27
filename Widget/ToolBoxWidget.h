@@ -24,9 +24,9 @@ public:
     virtual ~ToolBoxWidget();
 
 public:
-    virtual void init() override;
+    void init() override;
 
-    virtual void reset() override;
+    void reset() override;
 
 signals:
     void setItemType(DiagramItem::DiagramType type);

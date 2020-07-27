@@ -2,6 +2,11 @@
 
 #include <QGraphicsLineItem>
 #include <QPen>
+#include <QDomElement>
+
+QT_BEGIN_NAMESPACE
+class QDomDocument;
+QT_END_NAMESPACE
 
 class DiagramLineItem : public QObject, public QGraphicsLineItem
 {
@@ -23,6 +28,10 @@ public:
     QPen pointPen() const;
 
     void setDrawingFinished(bool finished);
+
+    virtual QDomElement saveToXML(QDomDocument* doc) = 0;
+
+    virtual void loadFromXML(const QDomElement& e);
 
 signals:
     void itemSelectedChange(QGraphicsItem* item);
