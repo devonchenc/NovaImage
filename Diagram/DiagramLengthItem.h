@@ -13,8 +13,6 @@ public:
 
     QDomElement saveToXML(QDomDocument* doc) override;
 
-//    void loadFromXML(const QDomElement& e) override;
-
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
 

@@ -19,7 +19,7 @@ public:
 
     QDomElement saveToXML(QDomDocument* doc) override;
 
-//    void loadFromXML(const QDomElement& e) override;
+    void loadFromXML(const QDomElement& e) override;
 
 signals:
     void itemDeleted();

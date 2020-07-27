@@ -1,5 +1,7 @@
 #include "DiagramItem.h"
 
+#include <cmath>
+#include <float.h>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QMenu>
@@ -7,14 +9,28 @@
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsOpacityEffect>
 #include <QTextCodec>
-#include <cmath>
-#include <float.h>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
 #include "../Core/GraphicsView.h"
 #include "../Core/GraphicsScene.h"
 #include "../Image/BaseImage.h"
+
+DiagramItem::DiagramItem()
+    : QGraphicsPolygonItem(nullptr)
+    , _diagramType(None)
+    , _contextMenu(nullptr)
+    , _previousMode(MOVE_ITEM)
+{
+    setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
+    setAcceptHoverEvents(true);
+
+    _effect = new QGraphicsOpacityEffect;
+    _effect->setOpacity(1.0);
+    setGraphicsEffect(_effect);
+}
 
 DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsItem* parent)
     : QGraphicsPolygonItem(parent)
@@ -91,6 +107,42 @@ void DiagramItem::setRectF(const QRectF& rect)
 void DiagramItem::setDrawingFinished(bool finished)
 {
     _drawingFinished = finished;
+}
+
+QDomElement DiagramItem::saveToXML(QDomDocument* doc)
+{
+    QDomElement lineItem = doc->createElement("GraphicsItem");
+    lineItem.setAttribute("Type", "DiagramItem");
+
+    QDomElement attribute = doc->createElement("Attribute");
+    attribute.setAttribute("DiagramType", QString::number(_diagramType));
+    attribute.setAttribute("Polygon", polygonToString(_polygon));
+    attribute.setAttribute("Info", _info);
+    attribute.setAttribute("PenColor", colorToString(pen().color()));
+    attribute.setAttribute("BrushColor", colorToString(brush().color()));
+    attribute.setAttribute("BrushStyle", QString::number(brush().style()));
+
+    lineItem.appendChild(attribute);
+    return lineItem;
+}
+
+void DiagramItem::loadFromXML(const QDomElement& e)
+{
+    _diagramType = DiagramType(e.attribute("DiagramType").toInt());
+    QString strPolygon = e.attribute("Polygon");
+    _polygon = stringToPolygon(strPolygon);
+    setPolygon(_polygon);
+
+    _info = e.attribute("Info");
+
+    QColor color = stringToColor(e.attribute("PenColor"));
+    setPen(QPen(color, 2));
+
+    color = stringToColor(e.attribute("BrushColor"));
+    Qt::BrushStyle style = Qt::BrushStyle(e.attribute("BrushStyle").toInt());
+    QBrush brush(color);
+    brush.setStyle(style);
+    setBrush(brush);
 }
 
 void DiagramItem::statisticsInfo()

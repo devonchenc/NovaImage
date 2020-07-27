@@ -44,29 +44,15 @@ void DiagramLineItem::setDrawingFinished(bool finished)
 
 void DiagramLineItem::loadFromXML(const QDomElement& e)
 {
-    QString strPoint1 = e.attribute("Point1");
-    QString strPoint2 = e.attribute("Point2");
-    int index = strPoint1.indexOf(' ');
-    QPointF p1;
-    p1.setX(strPoint1.left(index).toFloat());
-    p1.setY(strPoint1.right(strPoint1.length() - index - 1).toFloat());
-
-    QPointF p2;
-    index = strPoint2.indexOf(' ');
-    p2.setX(strPoint2.left(index).toFloat());
-    p2.setY(strPoint2.right(strPoint2.length() - index - 1).toFloat());
-
+    QPointF p1 = stringToPointF(e.attribute("Point1"));
+    QPointF p2 = stringToPointF(e.attribute("Point2"));
     setLine(QLineF(p1, p2));
 
-    QString strColor = e.attribute("Color");
-    QColor color;
-    int index1 = strColor.indexOf(' ');
-    int index2 = strColor.indexOf(' ', index1 + 1);
-    color.setRed(strColor.left(index1).toInt());
-    color.setGreen(strColor.mid(index1 + 1, index2 - index1).toInt());
-    color.setBlue(strColor.right(strColor.length() - index2 - 1).toInt());
-
+    QColor color = stringToColor(e.attribute("Color"));
     setPen(QPen(color, 2));
+
+    color = stringToColor(e.attribute("EndPointColor"));
+    _endpointPen = QPen(color);
 }
 
 /*

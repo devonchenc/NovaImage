@@ -31,24 +31,32 @@ DiagramPlotItem::~DiagramPlotItem()
 
 QDomElement DiagramPlotItem::saveToXML(QDomDocument* doc)
 {
-    QDomElement lineItem = doc->createElement("DiagramItem");
+    QDomElement lineItem = doc->createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");
 
     QDomElement attribute = doc->createElement("Attribute");
     attribute.setAttribute("Name", "Plot");
-    attribute.setAttribute("Point1", QString("%1 %2").arg(line().p1().x()).arg(line().p1().y()));
-    attribute.setAttribute("Point2", QString("%1 %2").arg(line().p2().x()).arg(line().p2().y()));
-    attribute.setAttribute("Color", QString("%1 %2 %3").arg(pen().color().red()).arg(pen().color().green()).arg(pen().color().blue()));
+    attribute.setAttribute("Point1", pointFToString(line().p1()));
+    attribute.setAttribute("Point2", pointFToString(line().p2()));
+    attribute.setAttribute("Color", colorToString(pen().color()));
+    attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
+    attribute.setAttribute("LineWidth", QString::number(_lineWidth));
+    attribute.setAttribute("Index", QString::number(_plotIndex));
 
     lineItem.appendChild(attribute);
     return lineItem;
 }
-/*
+
 void DiagramPlotItem::loadFromXML(const QDomElement& e)
 {
+    DiagramLineItem::loadFromXML(e);
 
+    _lineWidth = e.attribute("LineWidth").toInt();
+    _plotIndex = e.attribute("Index").toInt();
+
+    _plotCount = qMax(_plotCount, _plotIndex);
 }
-*/
+
 void DiagramPlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     DiagramLineItem::paint(painter, option, widget);

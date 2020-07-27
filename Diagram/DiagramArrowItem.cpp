@@ -1,8 +1,10 @@
 #include "DiagramArrowItem.h"
 
+#include <float.h>
 #include <QPainter>
 #include <QDomDocument>
-#include <float.h>
+
+#include "../Core/GlobalFunc.h"
 
 DiagramArrowItem::DiagramArrowItem()
     : DiagramLineItem(QLineF(), nullptr, nullptr)
@@ -23,14 +25,15 @@ DiagramArrowItem::~DiagramArrowItem()
 
 QDomElement DiagramArrowItem::saveToXML(QDomDocument* doc)
 {
-    QDomElement lineItem = doc->createElement("DiagramItem");
+    QDomElement lineItem = doc->createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");
 
     QDomElement attribute = doc->createElement("Attribute");
     attribute.setAttribute("Name", "Arrow");
-    attribute.setAttribute("Point1", QString("%1 %2").arg(line().p1().x()).arg(line().p1().y()));
-    attribute.setAttribute("Point2", QString("%1 %2").arg(line().p2().x()).arg(line().p2().y()));
-    attribute.setAttribute("Color", QString("%1 %2 %3").arg(pen().color().red()).arg(pen().color().green()).arg(pen().color().blue()));
+    attribute.setAttribute("Point1", pointFToString(line().p1()));
+    attribute.setAttribute("Point2", pointFToString(line().p2()));
+    attribute.setAttribute("Color", colorToString(pen().color()));
+    attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
 
     lineItem.appendChild(attribute);
     return lineItem;

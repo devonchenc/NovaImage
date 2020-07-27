@@ -1,9 +1,11 @@
 #pragma once
 
 #include <QGraphicsPolygonItem>
+#include <QDomElement>
 
 QT_BEGIN_NAMESPACE
 class QGraphicsOpacityEffect;
+class QDomDocument;
 QT_END_NAMESPACE
 
 class DiagramItem : public QObject, public QGraphicsPolygonItem
@@ -18,6 +20,7 @@ public:
     };
     enum Direction { TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
 
+    DiagramItem();
     DiagramItem(DiagramType diagramType, QMenu* contextMenu = nullptr, QGraphicsItem* parent = nullptr);
     ~DiagramItem();
 
@@ -31,6 +34,10 @@ public:
     void setRectF(const QRectF& rect);
 
     void setDrawingFinished(bool finished);
+
+    virtual QDomElement saveToXML(QDomDocument* doc);
+
+    virtual void loadFromXML(const QDomElement& e);
 
     void statisticsInfo();
 

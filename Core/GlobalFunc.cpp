@@ -46,6 +46,62 @@ void repaintView()
     }
 }
 
+QPointF stringToPointF(const QString& str)
+{
+    int index = str.indexOf(' ');
+    QPointF point;
+    point.setX(str.left(index).toFloat());
+    point.setY(str.right(str.length() - index - 1).toFloat());
+    return point;
+}
+
+QColor stringToColor(const QString& str)
+{
+    QColor color;
+    int index1 = str.indexOf(' ');
+    int index2 = str.indexOf(' ', index1 + 1);
+    color.setRed(str.left(index1).toInt());
+    color.setGreen(str.mid(index1 + 1, index2 - index1).toInt());
+    color.setBlue(str.right(str.length() - index2 - 1).toInt());
+    return color;
+}
+
+QPolygonF stringToPolygon(const QString& str)
+{
+    QPolygonF polygon;
+
+    QString temp = str;
+    while (!temp.isEmpty())
+    {
+        int index = temp.indexOf(',');
+        QPointF point = stringToPointF(temp.left(index));
+        polygon.push_back(point);
+        temp = temp.right(temp.length() - index - 1);
+    }
+
+    return polygon;
+}
+
+QString pointFToString(const QPointF& point)
+{
+    return QString("%1 %2").arg(point.x()).arg(point.y());
+}
+
+QString colorToString(const QColor& color)
+{
+    return QString("%1 %2 %3").arg(color.red()).arg(color.green()).arg(color.blue());
+}
+
+QString polygonToString(const QPolygonF& polygon)
+{
+    QString str;
+    for (int i = 0; i < polygon.size(); i++)
+    {
+        str += pointFToString(polygon.at(i)) + ',';
+    }
+    return str;
+}
+
 bool copyByteToImage(uchar* byteImage, int width, int height, QImage* pImage)
 {
     if (byteImage == nullptr || pImage == nullptr)

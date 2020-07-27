@@ -380,6 +380,8 @@ bool GraphicsScene::saveToFile(const QString& fileName)
         if (itemList.at(i)->type() == DiagramItem::Type)
         {
             DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(itemList.at(i));
+            QDomElement lineItem = item->saveToXML(&doc);
+            root.appendChild(lineItem);
         }
         else if (itemList.at(i)->type() == DiagramLineItem::Type)
         {
@@ -414,19 +416,19 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
     }
     file.close();
 
-    QDomNodeList domList = doc.elementsByTagName("DiagramItem");
+    QDomNodeList domList = doc.elementsByTagName("GraphicsItem");
     for (int i = 0; i < domList.size(); i++)
     {
         QDomElement diagramElem = domList.at(i).toElement();
+        QDomElement attribute = diagramElem.firstChild().toElement();
+        if (attribute.isNull())
+            break;
+
         QString type = diagramElem.attribute("Type");
         if (type == "DiagramLineItem")
         {
-            DiagramLineItem* item = nullptr;
-            QDomElement attribute = diagramElem.firstChild().toElement();
-            if (attribute.isNull())
-                break;
-
             QString name = attribute.attribute("Name");
+            DiagramLineItem* item = nullptr;
             if (name == "Length")
             {
                 item = new DiagramLengthItem;
@@ -446,8 +448,10 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
         }
         else if (type == "DiagramItem")
         {
-        //    DiagramItem* item = new DiagramItem;
-         //   item->loadFromXML();
+            DiagramItem* item = new DiagramItem;
+            item->loadFromXML(attribute);
+            connect(item, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            addItem(item);
         }
     }
 
