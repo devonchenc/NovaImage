@@ -439,7 +439,23 @@ void MainWindow::saveAsRawImage()
 
 void MainWindow::close()
 {
+    if (_doc->modified())
+    {
+        QMessageBox::StandardButton reply = QMessageBox::warning(nullptr, tr("Save file"),
+            tr("Do you want to save the changes you made to %1?").arg(_doc->getImage()->getPathName()), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        if (reply == QMessageBox::Save)
+        {
+            _doc->saveGraphicsItem();
+        }
+        else if (reply == QMessageBox::Cancel)
+        {
+            return;
+        }
+    }
+
     _doc->closeFile();
+
+    setWindowTitle("NovaImage");
 
     WidgetManager::getInstance()->reset();
 }

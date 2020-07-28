@@ -44,10 +44,15 @@ public:
 
     BaseImage* getImage() const { return _image.get(); }
 
-    void copyImage(const std::shared_ptr<BaseImage>& image);
+  //  void copyImage(const std::shared_ptr<BaseImage>& image);
 
-    // Repaint view
     void repaintView();
+
+    bool modified() { return _modified; }
+
+    void setModified(bool flag) { _modified = flag; }
+
+    void saveGraphicsItem();
 
     static int findType(const QString& fileName);
 
@@ -80,4 +85,6 @@ private:
     std::shared_ptr<BaseImage> _image;
 
     UndoSystem _undoStack;
+
+    bool _modified;
 };

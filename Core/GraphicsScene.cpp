@@ -8,9 +8,11 @@
 #include <QApplication>
 #include <QDomDocument>
 #include <QTextStream>
+#include <QTextDocument>
 
 #include "GlobalFunc.h"
 #include "View.h"
+#include "Document.h"
 #include "../Diagram/DiagramTextItem.h"
 #include "../Diagram/DiagramLineItem.h"
 #include "../Diagram/DiagramLengthItem.h"
@@ -154,6 +156,7 @@ void GraphicsScene::deleteItems(const QList<QGraphicsItem*>& items)
         removeItem(item);
         delete item;
     }
+    itemChanged();
 }
 
 void GraphicsScene::setMode(int mode)
@@ -211,7 +214,9 @@ void GraphicsScene::mousePress(const QPointF& point)
             _currentDrawingItem->setBrush(brush);
             _currentDrawingItem->setPen(QPen(_lineColor, 2));
             connect(_currentDrawingItem, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(_currentDrawingItem, &DiagramItem::itemChanged, this, &GraphicsScene::itemChanged);
             addItem(_currentDrawingItem);
+            itemChanged();
             emit itemInserted(_currentDrawingItem);
         }
         else if (_itemType == DiagramItem::Text)
@@ -220,11 +225,13 @@ void GraphicsScene::mousePress(const QPointF& point)
             textItem->setFont(_font);
             textItem->setTextInteractionFlags(Qt::TextEditorInteraction);
             textItem->setZValue(1000.0);
-            connect(textItem, &DiagramTextItem::lostFocus, this, &GraphicsScene::editorLostFocus);
-            connect(textItem, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
-            addItem(textItem);
             textItem->setDefaultTextColor(_textColor);
             textItem->setPos(_startPoint);
+            connect(textItem, &DiagramTextItem::lostFocus, this, &GraphicsScene::editorLostFocus);
+            connect(textItem, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
+            connect(textItem->document(), &QTextDocument::contentsChanged, this, &GraphicsScene::itemChanged);
+            addItem(textItem);
+            itemChanged();
             emit itemInserted(textItem);
         }
         else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot)
@@ -244,7 +251,9 @@ void GraphicsScene::mousePress(const QPointF& point)
             _currentDrawingLine->setPen(QPen(_lineColor, 2));
             _currentDrawingLine->setEndpointPen(QPen(_fillColor));
             connect(_currentDrawingLine, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(_currentDrawingLine, &DiagramLineItem::itemChanged, this, &GraphicsScene::itemChanged);
             addItem(_currentDrawingLine);
+            itemChanged();
             emit itemInserted(_currentDrawingLine);
         }
         else if (_itemType == DiagramItem::Angle)
@@ -256,7 +265,9 @@ void GraphicsScene::mousePress(const QPointF& point)
                 _currentDrawingAngle->setEndpointPen(QPen(_fillColor));
                 _currentDrawingAngle->setCurrentDrawingIndex(DiagramAngleItem::Point2);
                 connect(_currentDrawingAngle, &DiagramAngleItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+                connect(_currentDrawingAngle, &DiagramAngleItem::itemChanged, this, &GraphicsScene::itemChanged);
                 addItem(_currentDrawingAngle);
+                itemChanged();
                 emit itemInserted(_currentDrawingAngle);
             }
             else
@@ -452,6 +463,7 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
             DiagramItem* item = new DiagramItem;
             item->loadFromXML(attribute);
             connect(item, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(item, &DiagramItem::itemChanged, this, &GraphicsScene::itemChanged);
             addItem(item);
         }
         else if (type == "DiagramLineItem")
@@ -473,6 +485,7 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
             
             item->loadFromXML(attribute);
             connect(item, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(item, &DiagramLineItem::itemChanged, this, &GraphicsScene::itemChanged);
             addItem(item);
         }
         else if (type == "DiagramAngleItem")
@@ -480,6 +493,7 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
             DiagramAngleItem* item = new DiagramAngleItem;
             item->loadFromXML(attribute);
             connect(item, &DiagramAngleItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(item, &DiagramAngleItem::itemChanged, this, &GraphicsScene::itemChanged);
             addItem(item);
         }
         else if (type == "DiagramTextItem")
@@ -488,26 +502,12 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
             item->loadFromXML(attribute);
             connect(item, &DiagramTextItem::lostFocus, this, &GraphicsScene::editorLostFocus);
             connect(item, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
+            connect(item->document(), &QTextDocument::contentsChanged, this, &GraphicsScene::itemChanged);
             addItem(item);
         }
     }
 
     return true;
-}
-
-void GraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
-{
-    if (keyEvent->key() == Qt::Key_Delete)
-    {
-        foreach (QGraphicsItem* item, selectedItems())
-        {
-            removeItem(item);
-            delete item;
-        }
-        update();
-    }
-
-    QGraphicsScene::keyPressEvent(keyEvent);
 }
 
 void GraphicsScene::itemSelectedChange(QGraphicsItem* item)
@@ -532,4 +532,25 @@ void GraphicsScene::itemSelectedChange(QGraphicsItem* item)
     }
 
     emit itemSelected(item);
+}
+
+void GraphicsScene::itemChanged()
+{
+    getGlobalDocument()->setModified(true);
+}
+
+void GraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
+{
+    if (keyEvent->key() == Qt::Key_Delete)
+    {
+        foreach(QGraphicsItem* item, selectedItems())
+        {
+            removeItem(item);
+            delete item;
+        }
+        itemChanged();
+        update();
+    }
+
+    QGraphicsScene::keyPressEvent(keyEvent);
 }

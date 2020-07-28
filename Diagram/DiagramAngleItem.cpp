@@ -79,6 +79,7 @@ QDomElement DiagramAngleItem::saveToXML(QDomDocument* doc)
     lineItem.setAttribute("Type", "DiagramAngleItem");
 
     QDomElement attribute = doc->createElement("Attribute");
+    attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Point1", pointFToString(p1()));
     attribute.setAttribute("Point2", pointFToString(p2()));
     attribute.setAttribute("Point3", pointFToString(p3()));
@@ -91,6 +92,8 @@ QDomElement DiagramAngleItem::saveToXML(QDomDocument* doc)
 
 void DiagramAngleItem::loadFromXML(const QDomElement& e)
 {
+    setPos(stringToPointF(e.attribute("Position")));
+
     QPointF p1 = stringToPointF(e.attribute("Point1"));
     QPointF p2 = stringToPointF(e.attribute("Point2"));
     _p3 = stringToPointF(e.attribute("Point3"));
@@ -188,6 +191,8 @@ void DiagramAngleItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 void DiagramAngleItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     _resizeMode = false;
+
+    emit itemChanged();
 
     QGraphicsLineItem::mouseReleaseEvent(event);
 }

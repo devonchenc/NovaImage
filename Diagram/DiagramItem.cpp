@@ -116,6 +116,7 @@ QDomElement DiagramItem::saveToXML(QDomDocument* doc)
 
     QDomElement attribute = doc->createElement("Attribute");
     attribute.setAttribute("DiagramType", QString::number(_diagramType));
+    attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Polygon", polygonToString(_polygon));
     attribute.setAttribute("Info", _info);
     attribute.setAttribute("PenColor", colorToString(pen().color()));
@@ -128,6 +129,8 @@ QDomElement DiagramItem::saveToXML(QDomDocument* doc)
 
 void DiagramItem::loadFromXML(const QDomElement& e)
 {
+    setPos(stringToPointF(e.attribute("Position")));
+
     _diagramType = DiagramType(e.attribute("DiagramType").toInt());
     QString strPolygon = e.attribute("Polygon");
     _polygon = stringToPolygon(strPolygon);
@@ -311,6 +314,8 @@ void DiagramItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
+    emit itemChanged();
+
     GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;

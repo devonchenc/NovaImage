@@ -50,6 +50,7 @@ public:
 
 signals:
     void itemSelectedChange(QGraphicsItem* item);
+    void itemChanged();
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

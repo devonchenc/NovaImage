@@ -33,6 +33,7 @@ QDomElement DiagramLengthItem::saveToXML(QDomDocument* doc)
 
     QDomElement attribute = doc->createElement("Attribute");
     attribute.setAttribute("Name", "Length");
+    attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Point1", pointFToString(line().p1()));
     attribute.setAttribute("Point2", pointFToString(line().p2()));
     attribute.setAttribute("Color", colorToString(pen().color()));

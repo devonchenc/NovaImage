@@ -17,6 +17,7 @@
 Document::Document(MainWindow* pWindow)
     : pMainWindow(pWindow)
     , _image(nullptr)
+    , _modified(false)
 {
 
 }
@@ -169,15 +170,15 @@ bool Document::saveAs(const QString& fileName)
 
 void Document::closeFile()
 {
-    getView()->saveGraphicsItem();
-
     getView()->resetImage();
 
     _image.reset();
 
     _undoStack.reset();
-}
 
+    _modified = false;
+}
+/*
 void Document::copyImage(const std::shared_ptr<BaseImage>& image)
 {
     if (_image)
@@ -190,7 +191,7 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
     _image->histogramStatistic();
 
     getView()->repaint();
-}
+}*/
 
 // Repaint view
 void Document::repaintView()
@@ -199,6 +200,12 @@ void Document::repaintView()
     {
         getView()->showImage(_image->getImageEntity());
     }
+}
+
+void Document::saveGraphicsItem()
+{
+    getView()->saveGraphicsItem();
+    _modified = false;
 }
 
 void Document::ROIWindow(const QRectF& rect)

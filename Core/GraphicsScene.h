@@ -60,6 +60,8 @@ public slots:
 
     void itemSelectedChange(QGraphicsItem* item);
 
+    void itemChanged();
+
 signals:
     void itemInserted(QGraphicsItem* item);
     void itemSelected(QGraphicsItem* item);

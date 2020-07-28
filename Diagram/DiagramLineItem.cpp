@@ -44,6 +44,8 @@ void DiagramLineItem::setDrawingFinished(bool finished)
 
 void DiagramLineItem::loadFromXML(const QDomElement& e)
 {
+    setPos(stringToPointF(e.attribute("Position")));
+
     QPointF p1 = stringToPointF(e.attribute("Point1"));
     QPointF p2 = stringToPointF(e.attribute("Point2"));
     setLine(QLineF(p1, p2));
@@ -121,6 +123,8 @@ void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 void DiagramLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     _resizeMode = false;
+
+    emit itemChanged();
 
     QGraphicsLineItem::mouseReleaseEvent(event);
 }
