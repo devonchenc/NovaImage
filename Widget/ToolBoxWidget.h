@@ -5,7 +5,7 @@
 
 QT_BEGIN_NAMESPACE
 class QButtonGroup;
-class QColorButton;
+class ColorButton;
 class QGridLayout;
 class QFrame;
 class QLabel;
@@ -88,8 +88,8 @@ private:
     QFrame* _lineFrame;
     QLabel* _lineLabel;
     QCheckBox* _fillCheckBox;
-    QColorButton* _lineColorButton;
-    QColorButton* _fillColorButton;
+    ColorButton* _lineColorButton;
+    ColorButton* _fillColorButton;
     QLabel* _fontLabel;
     QLabel* _sizeLabel;
     QLabel* _styleLabel;
@@ -99,5 +99,5 @@ private:
     QToolButton* _italicButton;
     QToolButton* _underlineButton;
     QLabel* _textLabel;
-    QColorButton* _textColorButton;
+    ColorButton* _textColorButton;
 };

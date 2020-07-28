@@ -255,6 +255,7 @@ void GraphicsScene::mousePress(const QPointF& point)
                 _currentDrawingAngle->setPen(QPen(_lineColor, 2));
                 _currentDrawingAngle->setEndpointPen(QPen(_fillColor));
                 _currentDrawingAngle->setCurrentDrawingIndex(DiagramAngleItem::Point2);
+                connect(_currentDrawingAngle, &DiagramAngleItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
                 addItem(_currentDrawingAngle);
                 emit itemInserted(_currentDrawingAngle);
             }
@@ -377,17 +378,38 @@ bool GraphicsScene::saveToFile(const QString& fileName)
     QList<QGraphicsItem*> itemList = items();
     for (int i = 0; i < itemList.size(); i++)
     {
-        if (itemList.at(i)->type() == DiagramItem::Type)
+        switch (itemList.at(i)->type())
+        {
+        case DiagramItem::Type:
         {
             DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(itemList.at(i));
             QDomElement lineItem = item->saveToXML(&doc);
             root.appendChild(lineItem);
         }
-        else if (itemList.at(i)->type() == DiagramLineItem::Type)
+            break;
+        case DiagramLineItem::Type:
         {
             DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(itemList.at(i));
             QDomElement lineItem = item->saveToXML(&doc);
             root.appendChild(lineItem);
+        }
+            break;
+        case DiagramAngleItem::Type:
+        {
+            DiagramAngleItem* item = qgraphicsitem_cast<DiagramAngleItem*>(itemList.at(i));
+            QDomElement lineItem = item->saveToXML(&doc);
+            root.appendChild(lineItem);
+        }
+            break;
+        case DiagramTextItem::Type:
+        {
+            DiagramTextItem* item = qgraphicsitem_cast<DiagramTextItem*>(itemList.at(i));
+            QDomElement lineItem = item->saveToXML(&doc);
+            root.appendChild(lineItem);
+        }
+            break;
+        default:
+            break;
         }
     }
 
@@ -425,7 +447,14 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
             break;
 
         QString type = diagramElem.attribute("Type");
-        if (type == "DiagramLineItem")
+        if (type == "DiagramItem")
+        {
+            DiagramItem* item = new DiagramItem;
+            item->loadFromXML(attribute);
+            connect(item, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            addItem(item);
+        }
+        else if (type == "DiagramLineItem")
         {
             QString name = attribute.attribute("Name");
             DiagramLineItem* item = nullptr;
@@ -446,11 +475,19 @@ bool GraphicsScene::loadFromFile(const QString& fileName)
             connect(item, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
             addItem(item);
         }
-        else if (type == "DiagramItem")
+        else if (type == "DiagramAngleItem")
         {
-            DiagramItem* item = new DiagramItem;
+            DiagramAngleItem* item = new DiagramAngleItem;
             item->loadFromXML(attribute);
-            connect(item, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(item, &DiagramAngleItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            addItem(item);
+        }
+        else if (type == "DiagramTextItem")
+        {
+            DiagramTextItem* item = new DiagramTextItem;
+            item->loadFromXML(attribute);
+            connect(item, &DiagramTextItem::lostFocus, this, &GraphicsScene::editorLostFocus);
+            connect(item, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
             addItem(item);
         }
     }
@@ -477,15 +514,21 @@ void GraphicsScene::itemSelectedChange(QGraphicsItem* item)
 {
     if (item->type() == DiagramItem::Type)
     {
-        DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);
-        _lineColor = diagramitem->pen().color();
-        _fillColor = diagramitem->brush().color();
+        DiagramItem* diagramItem = qgraphicsitem_cast<DiagramItem*>(item);
+        _lineColor = diagramItem->pen().color();
+        _fillColor = diagramItem->brush().color();
     }
     else if (item->type() == DiagramLineItem::Type)
     {
-        DiagramLineItem* lineitem = qgraphicsitem_cast<DiagramLineItem*>(item);
-        _lineColor = lineitem->pen().color();
-        _fillColor = lineitem->pointPen().color();
+        DiagramLineItem* lineItem = qgraphicsitem_cast<DiagramLineItem*>(item);
+        _lineColor = lineItem->pen().color();
+        _fillColor = lineItem->pointPen().color();
+    }
+    else if (item->type() == DiagramAngleItem::Type)
+    {
+        DiagramAngleItem* angleItem = qgraphicsitem_cast<DiagramAngleItem*>(item);
+        _lineColor = angleItem->pen().color();
+        _fillColor = angleItem->pointPen().color();
     }
 
     emit itemSelected(item);

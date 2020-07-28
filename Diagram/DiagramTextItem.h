@@ -1,12 +1,14 @@
 #pragma once
 
 #include <QGraphicsTextItem>
+#include <QDomElement>
 
 QT_BEGIN_NAMESPACE
 class QFocusEvent;
 class QGraphicsItem;
 class QGraphicsScene;
 class QGraphicsSceneMouseEvent;
+class QDomDocument;
 QT_END_NAMESPACE
 
 class DiagramTextItem : public QGraphicsTextItem
@@ -20,8 +22,12 @@ public:
 
     int type() const override { return Type; }
 
-    bool contentIsUpdated() { return contentHasChanged; }
+    bool contentIsUpdated() { return _contentHasChanged; }
     DiagramTextItem* clone();
+
+    virtual QDomElement saveToXML(QDomDocument* doc);
+
+    virtual void loadFromXML(const QDomElement& e);
 
 signals:
     void lostFocus(DiagramTextItem* item);
@@ -36,7 +42,7 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
-    QString contentLastTime;
-    QPointF positionLastTime;
-    bool contentHasChanged = false;
+    QString _contentLastTime;
+    QPointF _positionLastTime;
+    bool _contentHasChanged = false;
 };

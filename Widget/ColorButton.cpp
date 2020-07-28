@@ -2,16 +2,16 @@
 
 #include <QColorDialog>
 
-QColorButton::QColorButton(const QColor& color, QWidget* parent)
+ColorButton::ColorButton(const QColor& color, QWidget* parent)
     : QPushButton(parent)
     , _enableColorText(true)
     , _enableToolTip(true)
 {
-    connect(this, &QColorButton::clicked, this, &QColorButton::slotChangeColor);
+    connect(this, &ColorButton::clicked, this, &ColorButton::slotChangeColor);
     setColor(color);
 }
 
-void QColorButton::setColor(const QColor& currentColor)
+void ColorButton::setColor(const QColor& currentColor)
 {
     if (_currentColor == currentColor)
         return;
@@ -27,7 +27,7 @@ void QColorButton::setColor(const QColor& currentColor)
     setIcon(pix);
 }
 
-void QColorButton::setText(const QString& text)
+void ColorButton::setText(const QString& text)
 {
     if (_realText == text)
         return;
@@ -36,7 +36,7 @@ void QColorButton::setText(const QString& text)
     QPushButton::setText(_realText);
 }
 
-void QColorButton::enableColorText(bool enableColorText)
+void ColorButton::enableColorText(bool enableColorText)
 {
     if (_enableColorText == enableColorText)
         return;
@@ -48,7 +48,7 @@ void QColorButton::enableColorText(bool enableColorText)
         setText(_realText);
 }
 
-void QColorButton::enableToolTip(bool enableToolTip)
+void ColorButton::enableToolTip(bool enableToolTip)
 {
     if (_enableToolTip == enableToolTip)
         return;
@@ -60,7 +60,7 @@ void QColorButton::enableToolTip(bool enableToolTip)
         setToolTip("");
 }
 
-void QColorButton::setColorText(const QString& colorText)
+void ColorButton::setColorText(const QString& colorText)
 {
     if (text() == colorText)
         return;
@@ -68,7 +68,7 @@ void QColorButton::setColorText(const QString& colorText)
     QPushButton::setText(colorText);
 }
 
-void QColorButton::slotChangeColor()
+void ColorButton::slotChangeColor()
 {
     QColor newColor = QColorDialog::getColor(_currentColor, this);
     if (newColor.isValid())

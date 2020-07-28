@@ -52,12 +52,12 @@ void ToolBoxWidget::initUI()
     _lineFrame->setFrameShadow(QFrame::Sunken);
 
     _lineLabel = new QLabel(tr("Line:"));
-    _lineColorButton = new QColorButton(qRgb(0, 255, 55));
-    connect(_lineColorButton, &QColorButton::clicked, this, &ToolBoxWidget::lineColorButtonTriggered);
+    _lineColorButton = new ColorButton(qRgb(0, 255, 55));
+    connect(_lineColorButton, &ColorButton::clicked, this, &ToolBoxWidget::lineColorButtonTriggered);
     _fillCheckBox = new QCheckBox(tr("Fill:"));
     connect(_fillCheckBox, &QCheckBox::stateChanged, this, &ToolBoxWidget::enableFillColor);
-    _fillColorButton = new QColorButton(Qt::white);
-    connect(_fillColorButton, &QColorButton::clicked, this, &ToolBoxWidget::fillColorButtonTriggered);
+    _fillColorButton = new ColorButton(Qt::white);
+    connect(_fillColorButton, &ColorButton::clicked, this, &ToolBoxWidget::fillColorButtonTriggered);
     QHBoxLayout* hLayout = new QHBoxLayout;
     hLayout->addWidget(_lineLabel);
     hLayout->addWidget(_lineColorButton);
@@ -108,8 +108,8 @@ void ToolBoxWidget::initUI()
     h3Layout->addStretch();
 
     _textLabel = new QLabel("Color:");
-    _textColorButton = new QColorButton(Qt::green);
-    connect(_textColorButton, SIGNAL(clicked()), this, SLOT(textColorButtonTriggered()));
+    _textColorButton = new ColorButton(Qt::green);
+    connect(_textColorButton, &ColorButton::clicked, this, &ToolBoxWidget::textColorButtonTriggered);
     QHBoxLayout* h4Layout = new QHBoxLayout;
     h4Layout->addWidget(_textLabel);
     h4Layout->addWidget(_textColorButton);
@@ -330,20 +330,29 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
     bool hasBrush;
     if (item->type() == DiagramItem::Type)
     {
-        DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);
-        lineColor = diagramitem->pen().color();
-        fillColor = diagramitem->brush().color();
-        hasBrush = diagramitem->brush().style() != Qt::NoBrush ? true : false;
+        DiagramItem* diagramItem = qgraphicsitem_cast<DiagramItem*>(item);
+        lineColor = diagramItem->pen().color();
+        fillColor = diagramItem->brush().color();
+        hasBrush = diagramItem->brush().style() != Qt::NoBrush ? true : false;
         setWidgetVisible(true, false);
     }
     else if (item->type() == DiagramLineItem::Type)
     {
-        DiagramLineItem* lineitem = qgraphicsitem_cast<DiagramLineItem*>(item);
-        lineColor = lineitem->pen().color();
-        fillColor = lineitem->pointPen().color();
+        DiagramLineItem* lineItem = qgraphicsitem_cast<DiagramLineItem*>(item);
+        lineColor = lineItem->pen().color();
+        fillColor = lineItem->pointPen().color();
         hasBrush = false;
         setWidgetVisible(true, false);
     }
+    else if (item->type() == DiagramAngleItem::Type)
+    {
+        DiagramAngleItem* angleItem = qgraphicsitem_cast<DiagramAngleItem*>(item);
+        lineColor = angleItem->pen().color();
+        fillColor = angleItem->pointPen().color();
+        hasBrush = false;
+        setWidgetVisible(true, false);
+    }
+
     _lineColorButton->setColor(lineColor);
     _fillColorButton->setColor(fillColor);
     _fillCheckBox->setChecked(hasBrush);
@@ -357,7 +366,7 @@ void ToolBoxWidget::textSelected(QGraphicsItem* item)
     setWidgetVisible(false, true);
 
     QFont font = textItem->font();
-    //	_fontCombo->setCurrentFont(font);
+//  _fontCombo->setCurrentFont(font);
     _fontSizeCombo->setEditText(QString().setNum(font.pointSize()));
     _boldButton->setChecked(font.weight() == QFont::Bold);
     _italicButton->setChecked(font.italic());

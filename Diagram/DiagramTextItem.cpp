@@ -3,12 +3,14 @@
 #include <QDebug>
 #include <QTextCursor>
 
+#include "../Core/GlobalFunc.h"
+
 DiagramTextItem::DiagramTextItem(QGraphicsItem* parent)
     : QGraphicsTextItem(parent)
 {
     setFlag(QGraphicsItem::ItemIsMovable);
     setFlag(QGraphicsItem::ItemIsSelectable);
-    positionLastTime = QPointF(0, 0);
+    _positionLastTime = QPointF(0, 0);
 }
 
 DiagramTextItem* DiagramTextItem::clone()
@@ -23,6 +25,40 @@ DiagramTextItem* DiagramTextItem::clone()
     return cloned;
 }
 
+QDomElement DiagramTextItem::saveToXML(QDomDocument* doc)
+{
+    QDomElement lineItem = doc->createElement("GraphicsItem");
+    lineItem.setAttribute("Type", "DiagramTextItem");
+
+    QDomElement attribute = doc->createElement("Attribute");
+    attribute.setAttribute("Text", toPlainText());
+    attribute.setAttribute("Position", pointFToString(pos()));
+    attribute.setAttribute("DefaultTextColor", colorToString(defaultTextColor()));
+    attribute.setAttribute("Font", font().family());
+    attribute.setAttribute("PointSize", QString::number(font().pointSize()));
+    attribute.setAttribute("Weight", QString::number(font().weight()));
+    attribute.setAttribute("Italic", QString::number(font().italic()));
+    attribute.setAttribute("Underline", QString::number(font().underline()));
+
+    lineItem.appendChild(attribute);
+    return lineItem;
+}
+
+void DiagramTextItem::loadFromXML(const QDomElement& e)
+{
+    setPlainText(e.attribute("Text"));
+    setPos(stringToPointF(e.attribute("Position")));
+    setDefaultTextColor(stringToColor(e.attribute("DefaultTextColor")));
+
+    QFont font = this->font();
+    font.setFamily(e.attribute("Font"));
+    font.setPointSize(e.attribute("PointSize").toInt());
+    font.setWeight(e.attribute("Weight").toInt());
+    font.setItalic(e.attribute("Italic").toInt());
+    font.setUnderline(e.attribute("Underline").toInt());
+    setFont(font);
+}
+
 QVariant DiagramTextItem::itemChange(GraphicsItemChange change, const QVariant& value)
 {
     if (change == QGraphicsItem::ItemSelectedHasChanged)
@@ -32,23 +68,23 @@ QVariant DiagramTextItem::itemChange(GraphicsItemChange change, const QVariant& 
 
 void DiagramTextItem::focusInEvent(QFocusEvent* event)
 {
-    if (positionLastTime == QPointF(0, 0))
+    if (_positionLastTime == QPointF(0, 0))
         // initialize positionLastTime to insertion position
-        positionLastTime = scenePos();
+        _positionLastTime = scenePos();
     QGraphicsTextItem::focusInEvent(event);
 }
 
 void DiagramTextItem::focusOutEvent(QFocusEvent* event)
 {
     setTextInteractionFlags(Qt::NoTextInteraction);
-    if (contentLastTime == toPlainText())
+    if (_contentLastTime == toPlainText())
     {
-        contentHasChanged = false;
+        _contentHasChanged = false;
     }
     else
     {
-        contentLastTime = toPlainText();
-        contentHasChanged = true;
+        _contentLastTime = toPlainText();
+        _contentHasChanged = true;
     }
     emit lostFocus(this);
     QGraphicsTextItem::focusOutEvent(event);
@@ -70,10 +106,10 @@ void DiagramTextItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramTextItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    if (scenePos() != positionLastTime)
+    if (scenePos() != _positionLastTime)
     {
-        qDebug() << scenePos() << "::" << positionLastTime;
+        qDebug() << scenePos() << "::" << _positionLastTime;
     }
-    positionLastTime = scenePos();
+    _positionLastTime = scenePos();
     QGraphicsTextItem::mouseReleaseEvent(event);
 }

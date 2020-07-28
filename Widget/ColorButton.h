@@ -2,12 +2,12 @@
 
 #include <QPushButton>
 
-class QColorButton : public QPushButton
+class ColorButton : public QPushButton
 {
     Q_OBJECT
 
 public:
-    QColorButton(const QColor& color = Qt::blue, QWidget* parent = nullptr);
+    ColorButton(const QColor& color = Qt::blue, QWidget* parent = nullptr);
 
     void setColor(const QColor& color);
 
@@ -25,7 +25,6 @@ public:
 
 private:
     void setColorText(const QString& colorText);
-
 
 private:
     bool _enableColorText;

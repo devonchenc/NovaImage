@@ -53,6 +53,8 @@ void DiagramLineItem::loadFromXML(const QDomElement& e)
 
     color = stringToColor(e.attribute("EndPointColor"));
     _endpointPen = QPen(color);
+
+    _drawingFinished = true;
 }
 
 /*

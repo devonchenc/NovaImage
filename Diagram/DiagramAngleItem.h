@@ -2,6 +2,11 @@
 
 #include <QGraphicsLineItem>
 #include <QPen>
+#include <QDomElement>
+
+QT_BEGIN_NAMESPACE
+class QDomDocument;
+QT_END_NAMESPACE
 
 class DiagramAngleItem : public QObject, public QGraphicsLineItem
 {
@@ -14,6 +19,7 @@ public:
         Point1, Point2, Point3
     };
 
+    DiagramAngleItem();
     DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramAngleItem();
 
@@ -33,6 +39,10 @@ public:
     Index currentDrawingPoint() { return _drawingIndex; }
 
     void setDrawingFinished(bool finished);
+
+    virtual QDomElement saveToXML(QDomDocument* doc);
+
+    virtual void loadFromXML(const QDomElement& e);
 
     inline QPointF p1() const;
     inline QPointF p2() const;

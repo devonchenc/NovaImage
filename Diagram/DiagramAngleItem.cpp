@@ -17,6 +17,16 @@
 #define M_PI (3.14159265358979323846)
 #endif
 
+DiagramAngleItem::DiagramAngleItem()
+    : QGraphicsLineItem(QLineF(), nullptr)
+    , _contextMenu(nullptr)
+    , _previousMode(MOVE_ITEM)
+{
+    setFlag(QGraphicsItem::ItemIsMovable, true);
+    setFlag(QGraphicsItem::ItemIsSelectable, true);
+    setAcceptHoverEvents(true);
+}
+
 DiagramAngleItem::DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu, QGraphicsItem* parent)
     : QGraphicsLineItem(QLineF(startPoint, startPoint), parent)
     , _p3(startPoint)
@@ -61,6 +71,38 @@ void DiagramAngleItem::setCurrentDrawingPoint(const QPointF& point)
 void DiagramAngleItem::setDrawingFinished(bool finished)
 {
     _drawingFinished = finished;
+}
+
+QDomElement DiagramAngleItem::saveToXML(QDomDocument* doc)
+{
+    QDomElement lineItem = doc->createElement("GraphicsItem");
+    lineItem.setAttribute("Type", "DiagramAngleItem");
+
+    QDomElement attribute = doc->createElement("Attribute");
+    attribute.setAttribute("Point1", pointFToString(p1()));
+    attribute.setAttribute("Point2", pointFToString(p2()));
+    attribute.setAttribute("Point3", pointFToString(p3()));
+    attribute.setAttribute("Color", colorToString(pen().color()));
+    attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
+
+    lineItem.appendChild(attribute);
+    return lineItem;
+}
+
+void DiagramAngleItem::loadFromXML(const QDomElement& e)
+{
+    QPointF p1 = stringToPointF(e.attribute("Point1"));
+    QPointF p2 = stringToPointF(e.attribute("Point2"));
+    _p3 = stringToPointF(e.attribute("Point3"));
+    setLine(QLineF(p1, p2));
+
+    QColor color = stringToColor(e.attribute("Color"));
+    setPen(QPen(color, 2));
+
+    color = stringToColor(e.attribute("EndPointColor"));
+    _endpointPen = QPen(color);
+
+    _drawingFinished = true;
 }
 
 inline QPointF DiagramAngleItem::p1() const
