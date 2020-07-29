@@ -439,19 +439,8 @@ void MainWindow::saveAsRawImage()
 
 void MainWindow::close()
 {
-    if (_doc->modified())
-    {
-        QMessageBox::StandardButton reply = QMessageBox::warning(nullptr, tr("Save file"),
-            tr("Do you want to save the changes you made to %1?").arg(_doc->getImage()->getPathName()), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
-        if (reply == QMessageBox::Save)
-        {
-            _doc->saveGraphicsItem();
-        }
-        else if (reply == QMessageBox::Cancel)
-        {
-            return;
-        }
-    }
+    if (!querySave())
+        return;
 
     _doc->closeFile();
 
@@ -554,6 +543,24 @@ void MainWindow::loadTranslator()
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     slectLanguage(settings.value("General/language", 0).toInt());
+}
+
+bool MainWindow::querySave()
+{
+    if (_doc->modified())
+    {
+        QMessageBox::StandardButton reply = QMessageBox::warning(nullptr, tr("Save file"),
+            tr("Do you want to save the changes you made to %1?").arg(_doc->getImage()->getPathName()), QMessageBox::Save | QMessageBox::Discard | QMessageBox::Cancel);
+        if (reply == QMessageBox::Cancel)
+        {
+            return false;
+        }
+        else if (reply == QMessageBox::Save)
+        {
+            _doc->saveGraphicsItem();
+        }
+    }
+    return true;
 }
 
 void MainWindow::prevImage()
@@ -693,6 +700,18 @@ void MainWindow::changeEvent(QEvent* event)
     }
 
     QMainWindow::changeEvent(event);
+}
+
+void MainWindow::closeEvent(QCloseEvent* event)
+{
+    if (querySave())
+    {
+        event->accept();
+    }
+    else
+    {
+        event->ignore();
+    }
 }
 
 void MainWindow::dragEnterEvent(QDragEnterEvent* event)

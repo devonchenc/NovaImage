@@ -44,9 +44,8 @@ public:
 
 protected:
     void changeEvent(QEvent* event) override;
-
+    void closeEvent(QCloseEvent* event) override;
     void dragEnterEvent(QDragEnterEvent* event) override;
-
     void dropEvent(QDropEvent* event) override;
 
 private:
@@ -65,6 +64,8 @@ private:
     void loadPlugin();
 
     void loadTranslator();
+
+    bool querySave();
 
 signals:
     void setToolBoxVisible(bool line, bool text);
