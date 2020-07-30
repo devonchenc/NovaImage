@@ -3,6 +3,7 @@
 #include <float.h>
 #include <QPainter>
 #include <QDomDocument>
+#include <QGraphicsOpacityEffect>
 
 #include "../Core/GlobalFunc.h"
 
@@ -35,6 +36,7 @@ QDomElement DiagramArrowItem::saveToXML(QDomDocument* doc)
     attribute.setAttribute("Point2", pointFToString(line().p2()));
     attribute.setAttribute("Color", colorToString(pen().color()));
     attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
+    attribute.setAttribute("Opacity", QString::number(_effect->opacity(), 'f', 2));
 
     lineItem.appendChild(attribute);
     return lineItem;

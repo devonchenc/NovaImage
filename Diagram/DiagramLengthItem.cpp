@@ -3,6 +3,7 @@
 #include <cmath>
 #include <QPainter>
 #include <QDomDocument>
+#include <QGraphicsOpacityEffect>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -38,6 +39,7 @@ QDomElement DiagramLengthItem::saveToXML(QDomDocument* doc)
     attribute.setAttribute("Point2", pointFToString(line().p2()));
     attribute.setAttribute("Color", colorToString(pen().color()));
     attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
+    attribute.setAttribute("Opacity", QString::number(_effect->opacity(), 'f', 2));
 
     lineItem.appendChild(attribute);
     return lineItem;

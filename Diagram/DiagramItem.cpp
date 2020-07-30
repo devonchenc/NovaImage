@@ -132,6 +132,7 @@ QDomElement DiagramItem::saveToXML(QDomDocument* doc)
     attribute.setAttribute("PenColor", colorToString(pen().color()));
     attribute.setAttribute("BrushColor", colorToString(brush().color()));
     attribute.setAttribute("BrushStyle", QString::number(brush().style()));
+    attribute.setAttribute("Opacity", QString::number(_effect->opacity(), 'f', 2));
 
     lineItem.appendChild(attribute);
     return lineItem;
@@ -156,6 +157,10 @@ void DiagramItem::loadFromXML(const QDomElement& e)
     QBrush brush(color);
     brush.setStyle(style);
     setBrush(brush);
+
+    _effect->setOpacity(e.attribute("Opacity").toDouble());
+
+    _drawingFinished = true;
 }
 
 void DiagramItem::statisticsInfo()

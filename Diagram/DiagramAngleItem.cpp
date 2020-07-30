@@ -1,11 +1,12 @@
 #include "DiagramAngleItem.h"
 
+#include <cmath>
 #include <QGraphicsScene>
 #include <QGraphicsSceneContextMenuEvent>
 #include <QMenu>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
-#include <cmath>
+#include <QGraphicsOpacityEffect>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -25,6 +26,10 @@ DiagramAngleItem::DiagramAngleItem()
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setAcceptHoverEvents(true);
+
+    _effect = new QGraphicsOpacityEffect;
+    _effect->setOpacity(1.0);
+    setGraphicsEffect(_effect);
 }
 
 DiagramAngleItem::DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu, QGraphicsItem* parent)
@@ -38,11 +43,15 @@ DiagramAngleItem::DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setAcceptHoverEvents(true);
+
+    _effect = new QGraphicsOpacityEffect;
+    _effect->setOpacity(1.0);
+    setGraphicsEffect(_effect);
 }
 
 DiagramAngleItem::~DiagramAngleItem()
 {
-
+    delete _effect;
 }
 
 void DiagramAngleItem::setEndpointPen(const QPen& pen)
@@ -53,6 +62,16 @@ void DiagramAngleItem::setEndpointPen(const QPen& pen)
 QPen DiagramAngleItem::pointPen() const
 {
     return _endpointPen;
+}
+
+void DiagramAngleItem::setTransparency(int value)
+{
+    _effect->setOpacity(1.0 - float(value) / 100);
+}
+
+int DiagramAngleItem::transparency()
+{
+    return 100 - round(_effect->opacity() * 100);
 }
 
 void DiagramAngleItem::setCurrentDrawingPoint(const QPointF& point)
@@ -85,6 +104,7 @@ QDomElement DiagramAngleItem::saveToXML(QDomDocument* doc)
     attribute.setAttribute("Point3", pointFToString(p3()));
     attribute.setAttribute("Color", colorToString(pen().color()));
     attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
+    attribute.setAttribute("Opacity", QString::number(_effect->opacity(), 'f', 2));
 
     lineItem.appendChild(attribute);
     return lineItem;
@@ -104,6 +124,8 @@ void DiagramAngleItem::loadFromXML(const QDomElement& e)
 
     color = stringToColor(e.attribute("EndPointColor"));
     _endpointPen = QPen(color);
+
+    _effect->setOpacity(e.attribute("Opacity").toDouble());
 
     _drawingFinished = true;
 }

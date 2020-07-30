@@ -6,6 +6,7 @@
 #include <QMenu>
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
+#include <QGraphicsOpacityEffect>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -20,11 +21,15 @@ DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphi
     setFlag(QGraphicsItem::ItemIsMovable, true);
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setAcceptHoverEvents(true);
+
+    _effect = new QGraphicsOpacityEffect;
+    _effect->setOpacity(1.0);
+    setGraphicsEffect(_effect);
 }
 
 DiagramLineItem::~DiagramLineItem()
 {
-
+    delete _effect;
 }
 
 void DiagramLineItem::setEndpointPen(const QPen& pen)
@@ -35,6 +40,16 @@ void DiagramLineItem::setEndpointPen(const QPen& pen)
 QPen DiagramLineItem::pointPen() const
 {
     return _endpointPen;
+}
+
+void DiagramLineItem::setTransparency(int value)
+{
+    _effect->setOpacity(1.0 - float(value) / 100);
+}
+
+int DiagramLineItem::transparency()
+{
+    return 100 - round(_effect->opacity() * 100);
 }
 
 void DiagramLineItem::setDrawingFinished(bool finished)
@@ -55,6 +70,8 @@ void DiagramLineItem::loadFromXML(const QDomElement& e)
 
     color = stringToColor(e.attribute("EndPointColor"));
     _endpointPen = QPen(color);
+
+    _effect->setOpacity(e.attribute("Opacity").toDouble());
 
     _drawingFinished = true;
 }

@@ -118,8 +118,13 @@ void GraphicsScene::setTransparency(int value)
         }
         else if (p->type() == DiagramLineItem::Type)
         {
-         //   DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(p);
-          //  item->setEndpointPen(QPen(color));
+            DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(p);
+            item->setTransparency(value);
+        }
+        else if (p->type() == DiagramAngleItem::Type)
+        {
+            DiagramAngleItem* item = qgraphicsitem_cast<DiagramAngleItem*>(p);
+            item->setTransparency(value);
         }
     }
 }

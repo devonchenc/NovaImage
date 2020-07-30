@@ -5,6 +5,7 @@
 #include <QDomElement>
 
 QT_BEGIN_NAMESPACE
+class QGraphicsOpacityEffect;
 class QDomDocument;
 QT_END_NAMESPACE
 
@@ -31,6 +32,9 @@ public:
 
     void setEndpointPen(const QPen& pen);
     QPen pointPen() const;
+
+    void setTransparency(int value);
+    int transparency();
 
     void setCurrentDrawingIndex(Index index) { _drawingIndex = index; }
 
@@ -77,9 +81,10 @@ private:
 private:
     QPointF _p3;
     float _angle;
-
-    QMenu* _contextMenu;
     QPen _endpointPen;
+
+    QGraphicsOpacityEffect* _effect;
+    QMenu* _contextMenu;
     static constexpr qreal closeEnoughDistance = 12;
     bool _resizeMode = false;
     Index _drawingIndex;

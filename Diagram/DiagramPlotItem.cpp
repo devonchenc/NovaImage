@@ -3,6 +3,7 @@
 #include <cmath>
 #include <QPainter>
 #include <QDomDocument>
+#include <QGraphicsOpacityEffect>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -43,6 +44,7 @@ QDomElement DiagramPlotItem::saveToXML(QDomDocument* doc)
     attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
     attribute.setAttribute("LineWidth", QString::number(_lineWidth));
     attribute.setAttribute("Index", QString::number(_plotIndex));
+    attribute.setAttribute("Opacity", QString::number(_effect->opacity(), 'f', 2));
 
     lineItem.appendChild(attribute);
     return lineItem;

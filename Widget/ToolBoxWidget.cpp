@@ -367,6 +367,7 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
         lineColor = lineItem->pen().color();
         fillColor = lineItem->pointPen().color();
         hasBrush = false;
+        transparency = lineItem->transparency();
         setWidgetVisible(true, false);
     }
     else if (item->type() == DiagramAngleItem::Type)
@@ -375,6 +376,7 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
         lineColor = angleItem->pen().color();
         fillColor = angleItem->pointPen().color();
         hasBrush = false;
+        transparency = angleItem->transparency();
         setWidgetVisible(true, false);
     }
 
