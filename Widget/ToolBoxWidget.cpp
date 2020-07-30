@@ -66,16 +66,29 @@ void ToolBoxWidget::initUI()
     hLayout->addWidget(_fillColorButton);
     hLayout->addStretch();
 
-    _fontLabel = new QLabel("Font:");
+    _transparencyLabel = new QLabel(tr("Transparency:"));
+    _transparencySlider = new QSlider(Qt::Orientation::Horizontal);
+    _transparencySlider->setMinimum(0);
+    _transparencySlider->setMaximum(100);
+    connect(_transparencySlider, &QSlider::valueChanged, this, &ToolBoxWidget::transparencyValueChanged);
+    _transparencyValueLabel = new QLabel("0");
+    _transparencyValueLabel->setFixedWidth(20);
+    QHBoxLayout* h2Layout = new QHBoxLayout;
+    h2Layout->addWidget(_transparencyLabel);
+    h2Layout->addWidget(_transparencySlider);
+    h2Layout->addWidget(_transparencyValueLabel);
+    h2Layout->addStretch();
+
+    _fontLabel = new QLabel(tr("Font:"));
     _fontCombo = new QFontComboBox();
     connect(_fontCombo, &QFontComboBox::currentFontChanged, this, &ToolBoxWidget::currentFontChanged);
     _fontCombo->setEditable(false);
-    QHBoxLayout* h2Layout = new QHBoxLayout;
-    h2Layout->addWidget(_fontLabel);
-    h2Layout->addWidget(_fontCombo);
-    h2Layout->addStretch();
+    QHBoxLayout* h3Layout = new QHBoxLayout;
+    h3Layout->addWidget(_fontLabel);
+    h3Layout->addWidget(_fontCombo);
+    h3Layout->addStretch();
 
-    _sizeLabel = new QLabel("Size:");
+    _sizeLabel = new QLabel(tr("Size:"));
     _fontSizeCombo = new QComboBox;
     _fontSizeCombo->setEditable(true);
     for (int i = 8; i <= 80; i = i + 4)
@@ -83,12 +96,12 @@ void ToolBoxWidget::initUI()
     QIntValidator* validator = new QIntValidator(2, 64, this);
     _fontSizeCombo->setValidator(validator);
     connect(_fontSizeCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(fontSizeChanged(QString)));
-    QHBoxLayout* h3Layout = new QHBoxLayout;
-    h3Layout->addWidget(_sizeLabel);
-    h3Layout->addWidget(_fontSizeCombo);
-    h3Layout->addStretch();
+    QHBoxLayout* h4Layout = new QHBoxLayout;
+    h4Layout->addWidget(_sizeLabel);
+    h4Layout->addWidget(_fontSizeCombo);
+    h4Layout->addStretch();
 
-    _styleLabel = new QLabel("Style:");
+    _styleLabel = new QLabel(tr("Style:"));
     _boldButton = new QToolButton;
     _boldButton->setCheckable(true);
     _boldButton->setIcon(QIcon(QPixmap("Resources/bold.png")));
@@ -101,19 +114,19 @@ void ToolBoxWidget::initUI()
     _underlineButton->setCheckable(true);
     _underlineButton->setIcon(QIcon(QPixmap("Resources/underline.png")));
     connect(_underlineButton, &QToolButton::clicked, this, &ToolBoxWidget::handleFontChange);
-    h3Layout->addWidget(_styleLabel);
-    h3Layout->addWidget(_boldButton);
-    h3Layout->addWidget(_italicButton);
-    h3Layout->addWidget(_underlineButton);
-    h3Layout->addStretch();
+    h4Layout->addWidget(_styleLabel);
+    h4Layout->addWidget(_boldButton);
+    h4Layout->addWidget(_italicButton);
+    h4Layout->addWidget(_underlineButton);
+    h4Layout->addStretch();
 
-    _textLabel = new QLabel("Color:");
+    _textLabel = new QLabel(tr("Color:"));
     _textColorButton = new ColorButton(Qt::green);
     connect(_textColorButton, &ColorButton::clicked, this, &ToolBoxWidget::textColorButtonTriggered);
-    QHBoxLayout* h4Layout = new QHBoxLayout;
-    h4Layout->addWidget(_textLabel);
-    h4Layout->addWidget(_textColorButton);
-    h4Layout->addStretch();
+    QHBoxLayout* h5Layout = new QHBoxLayout;
+    h5Layout->addWidget(_textLabel);
+    h5Layout->addWidget(_textColorButton);
+    h5Layout->addStretch();
 
     QGridLayout* gridLayout = createToolButton();
     QVBoxLayout* vLayout = new QVBoxLayout;
@@ -123,6 +136,7 @@ void ToolBoxWidget::initUI()
     vLayout->addLayout(h2Layout);
     vLayout->addLayout(h3Layout);
     vLayout->addLayout(h4Layout);
+    vLayout->addLayout(h5Layout);
     vLayout->addStretch();
 
     setLayout(vLayout);
@@ -151,6 +165,12 @@ void ToolBoxWidget::changeEvent(QEvent* event)
 
         _lineLabel->setText(tr("Line:"));
         _fillCheckBox->setText(tr("Fill:"));
+        _transparencyLabel->setText(tr("Transparency:"));
+
+        _fontLabel->setText(tr("Font:"));
+        _sizeLabel->setText(tr("Size:"));
+        _styleLabel->setText(tr("Style:"));
+        _textLabel->setText(tr("Color:"));
     }
 
     BaseWidget::changeEvent(event);
@@ -233,6 +253,9 @@ void ToolBoxWidget::setWidgetVisible(bool line, bool text)
     _fillCheckBox->setVisible(line);
     _lineColorButton->setVisible(line);
     _fillColorButton->setVisible(line);
+    _transparencyLabel->setVisible(line);
+    _transparencySlider->setVisible(line);
+    _transparencyValueLabel->setVisible(line);
 
     _fontLabel->setVisible(text);
     _fontCombo->setVisible(text);
@@ -328,12 +351,14 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
 {
     QColor lineColor, fillColor;
     bool hasBrush;
+    int transparency;
     if (item->type() == DiagramItem::Type)
     {
         DiagramItem* diagramItem = qgraphicsitem_cast<DiagramItem*>(item);
         lineColor = diagramItem->pen().color();
         fillColor = diagramItem->brush().color();
         hasBrush = diagramItem->brush().style() != Qt::NoBrush ? true : false;
+        transparency = diagramItem->transparency();
         setWidgetVisible(true, false);
     }
     else if (item->type() == DiagramLineItem::Type)
@@ -356,6 +381,7 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
     _lineColorButton->setColor(lineColor);
     _fillColorButton->setColor(fillColor);
     _fillCheckBox->setChecked(hasBrush);
+    _transparencySlider->setValue(transparency);
 }
 
 void ToolBoxWidget::textSelected(QGraphicsItem* item)
@@ -374,6 +400,13 @@ void ToolBoxWidget::textSelected(QGraphicsItem* item)
 
     QColor color = textItem->defaultTextColor();
     _textColorButton->setColor(color);
+}
+
+void ToolBoxWidget::transparencyValueChanged(int value)
+{
+    _transparencyValueLabel->setText(QString::number(value));
+
+    emit setTransparency(value);
 }
 
 void ToolBoxWidget::currentFontChanged(const QFont& font)

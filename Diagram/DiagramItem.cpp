@@ -104,6 +104,16 @@ void DiagramItem::setRectF(const QRectF& rect)
     setPolygon(_polygon);
 }
 
+void DiagramItem::setTransparency(int value)
+{
+    _effect->setOpacity(1.0 - float(value) / 100);
+}
+
+int DiagramItem::transparency()
+{
+    return 100 - round(_effect->opacity() * 100);
+}
+
 void DiagramItem::setDrawingFinished(bool finished)
 {
     _drawingFinished = finished;

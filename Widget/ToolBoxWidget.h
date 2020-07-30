@@ -13,6 +13,7 @@ class QCheckBox;
 class QFontComboBox;
 class QComboBox;
 class QToolButton;
+class QSlider;
 QT_END_NAMESPACE
 
 class ToolBoxWidget : public BaseWidget
@@ -34,6 +35,7 @@ signals:
     void setLineColor(const QColor& color);
     void setEnableFillColor(bool enable);
     void setFillColor(const QColor& color);
+    void setTransparency(int value);
     void setTextColor(const QColor& color);
     void setTextFont(const QFont& font);
 
@@ -49,6 +51,8 @@ public slots:
     void itemInserted(QGraphicsItem* item);
     void itemSelected(QGraphicsItem* item);
     void textSelected(QGraphicsItem* item);
+
+    void transparencyValueChanged(int value);
 
     void currentFontChanged(const QFont& font);
     void fontSizeChanged(const QString& size);
@@ -90,6 +94,10 @@ private:
     QCheckBox* _fillCheckBox;
     ColorButton* _lineColorButton;
     ColorButton* _fillColorButton;
+    QLabel* _transparencyLabel;
+    QSlider* _transparencySlider;
+    QLabel* _transparencyValueLabel;
+
     QLabel* _fontLabel;
     QLabel* _sizeLabel;
     QLabel* _styleLabel;

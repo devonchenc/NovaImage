@@ -33,6 +33,10 @@ public:
 
     void setRectF(const QRectF& rect);
 
+    void setTransparency(int value);
+
+    int transparency();
+
     void setDrawingFinished(bool finished);
 
     virtual QDomElement saveToXML(QDomDocument* doc);

@@ -32,13 +32,13 @@ private:
     void SetBrightnessAndContrast();
 
 private:
-    QSlider* _sliderBright;
-    QSlider* _sliderContrast;
-    QLabel* _labelBrightNum;
-    QLabel* _labelContrastNum;
+    QSlider* _brightSlider;
+    QSlider* _contrastSlider;
+    QLabel* _brightValueLabel;
+    QLabel* _contrastValueLabel;
 
-    QLabel* _labelBright;
-    QLabel* _labelContrast;
+    QLabel* _brightLabel;
+    QLabel* _contrastLabel;
 
     // Image processor
     CommonProcessor* _processor;

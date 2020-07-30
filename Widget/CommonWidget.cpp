@@ -11,28 +11,28 @@ CommonWidget::CommonWidget(QWidget* parent)
 {
     setName(tr("Common"));
 
-    _labelBright = new QLabel(tr("Bright"));
-    _labelContrast = new QLabel(tr("Contrast"));
-    _sliderBright = new QSlider(Qt::Orientation::Horizontal);
-    _sliderBright->setMinimum(-100);
-    _sliderBright->setMaximum(100);
-    connect(_sliderBright, &QSlider::valueChanged, this, &CommonWidget::brightValueChanged);
-    _sliderContrast = new QSlider(Qt::Orientation::Horizontal);
-    _sliderContrast->setMinimum(-100);
-    _sliderContrast->setMaximum(100);
-    connect(_sliderContrast, &QSlider::valueChanged, this, &CommonWidget::contrastValueChanged);
-    _labelBrightNum = new QLabel("0");
-    _labelBrightNum->setFixedWidth(20);
-    _labelContrastNum = new QLabel("0");
-    _labelContrastNum->setFixedWidth(20);
+    _brightLabel = new QLabel(tr("Bright"));
+    _contrastLabel = new QLabel(tr("Contrast"));
+    _brightSlider = new QSlider(Qt::Orientation::Horizontal);
+    _brightSlider->setMinimum(-100);
+    _brightSlider->setMaximum(100);
+    connect(_brightSlider, &QSlider::valueChanged, this, &CommonWidget::brightValueChanged);
+    _contrastSlider = new QSlider(Qt::Orientation::Horizontal);
+    _contrastSlider->setMinimum(-100);
+    _contrastSlider->setMaximum(100);
+    connect(_contrastSlider, &QSlider::valueChanged, this, &CommonWidget::contrastValueChanged);
+    _brightValueLabel = new QLabel("0");
+    _brightValueLabel->setFixedWidth(20);
+    _contrastValueLabel = new QLabel("0");
+    _contrastValueLabel->setFixedWidth(20);
 
     QGridLayout* layout = new QGridLayout();
-    layout->addWidget(_labelBright, 0, 0);
-    layout->addWidget(_sliderBright, 0, 1);
-    layout->addWidget(_labelBrightNum, 0, 2);
-    layout->addWidget(_labelContrast, 1, 0);
-    layout->addWidget(_sliderContrast, 1, 1);
-    layout->addWidget(_labelContrastNum, 1, 2);
+    layout->addWidget(_brightLabel, 0, 0);
+    layout->addWidget(_brightSlider, 0, 1);
+    layout->addWidget(_brightValueLabel, 0, 2);
+    layout->addWidget(_contrastLabel, 1, 0);
+    layout->addWidget(_contrastSlider, 1, 1);
+    layout->addWidget(_contrastValueLabel, 1, 2);
 
     setLayout(layout);
 
@@ -54,22 +54,22 @@ void CommonWidget::init()
 
 void CommonWidget::reset()
 {
-    _sliderBright->setValue(0);
-    _sliderContrast->setValue(0);
-    _labelBrightNum->setText(QString::number(0));
-    _labelContrastNum->setText(QString::number(0));
+    _brightSlider->setValue(0);
+    _contrastSlider->setValue(0);
+    _brightValueLabel->setText(QString::number(0));
+    _contrastValueLabel->setText(QString::number(0));
 }
 
-void CommonWidget::brightValueChanged(int x)
+void CommonWidget::brightValueChanged(int value)
 {
-    _labelBrightNum->setText(QString::number(x));
+    _brightValueLabel->setText(QString::number(value));
 
     SetBrightnessAndContrast();
 }
 
-void CommonWidget::contrastValueChanged(int x)
+void CommonWidget::contrastValueChanged(int value)
 {
-    _labelContrastNum->setText(QString::number(x));
+    _contrastValueLabel->setText(QString::number(value));
 
     SetBrightnessAndContrast();
 }
@@ -80,8 +80,8 @@ void CommonWidget::changeEvent(QEvent* event)
     {
         parentWidget()->setWindowTitle(tr("Common"));
 
-        _labelBright->setText(tr("Bright"));
-        _labelContrast->setText(tr("Contrast"));
+        _brightLabel->setText(tr("Bright"));
+        _contrastLabel->setText(tr("Contrast"));
     }
     BaseWidget::changeEvent(event);
 }
@@ -91,7 +91,7 @@ void CommonWidget::SetBrightnessAndContrast()
     BaseImage* image = getGlobalImage();
     if (image)
     {
-        _processor->setBrightnessAndContrast(_sliderBright->value(), _sliderContrast->value());
+        _processor->setBrightnessAndContrast(_brightSlider->value(), _contrastSlider->value());
         _processor->process(image);
 
         repaintView();

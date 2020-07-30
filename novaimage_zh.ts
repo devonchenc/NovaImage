@@ -943,99 +943,129 @@
     <name>ToolBoxWidget</name>
     <message>
         <location filename="Widget/ToolBoxWidget.cpp" line="25"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="137"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="150"/>
         <source>ToolBox</source>
         <translation type="unfinished">工具箱</translation>
     </message>
     <message>
         <location filename="Widget/ToolBoxWidget.cpp" line="54"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="152"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="165"/>
         <source>Line:</source>
         <translation type="unfinished">线条：</translation>
     </message>
     <message>
         <location filename="Widget/ToolBoxWidget.cpp" line="57"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="153"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="166"/>
         <source>Fill:</source>
         <translation type="unfinished">填充：</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="139"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="69"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="167"/>
+        <source>Transparency:</source>
+        <translation type="unfinished">透明度：</translation>
+    </message>
+    <message>
+        <location filename="Widget/ToolBoxWidget.cpp" line="81"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="169"/>
+        <source>Font:</source>
+        <translation type="unfinished">字体：</translation>
+    </message>
+    <message>
+        <location filename="Widget/ToolBoxWidget.cpp" line="90"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="170"/>
+        <source>Size:</source>
+        <translation type="unfinished">字号：</translation>
+    </message>
+    <message>
+        <location filename="Widget/ToolBoxWidget.cpp" line="103"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="171"/>
+        <source>Style:</source>
+        <translation type="unfinished">样式：</translation>
+    </message>
+    <message>
+        <location filename="Widget/ToolBoxWidget.cpp" line="122"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="172"/>
+        <source>Color:</source>
+        <translation type="unfinished">颜色：</translation>
+    </message>
+    <message>
+        <location filename="Widget/ToolBoxWidget.cpp" line="152"/>
         <source>Point</source>
         <translation type="unfinished">指针</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="142"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="179"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="155"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="198"/>
         <source>Angle</source>
         <translation type="unfinished">角度</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="143"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="180"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="156"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="199"/>
         <source>Plot</source>
         <translation type="unfinished">曲线</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="144"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="181"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="157"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="200"/>
         <source>Rectangle</source>
         <translation type="unfinished">矩形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="145"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="182"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="158"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="201"/>
         <source>RoundRect</source>
         <translation type="unfinished">圆角矩形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="146"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="183"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="159"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="202"/>
         <source>Circle</source>
         <translation type="unfinished">圆形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="147"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="184"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="160"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="203"/>
         <source>Ellipse</source>
         <translation type="unfinished">椭圆</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="148"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="185"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="161"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="204"/>
         <source>Rhombus</source>
         <translation type="unfinished">菱形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="149"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="186"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="162"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="205"/>
         <source>Parallelogram</source>
         <translation type="unfinished">平行四边形</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="150"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="187"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="163"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="206"/>
         <source>Text</source>
         <translation type="unfinished">文字</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="176"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="195"/>
         <source>Cursor</source>
         <translation type="unfinished">移动</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="177"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="196"/>
         <source>Length</source>
         <translation type="unfinished">距离</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="141"/>
-        <location filename="Widget/ToolBoxWidget.cpp" line="178"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="154"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="197"/>
         <source>Arrow</source>
         <translation type="unfinished">箭头</translation>
     </message>
     <message>
-        <location filename="Widget/ToolBoxWidget.cpp" line="140"/>
+        <location filename="Widget/ToolBoxWidget.cpp" line="153"/>
         <source>Line</source>
         <translation type="unfinished">直线</translation>
     </message>

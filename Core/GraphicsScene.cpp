@@ -107,6 +107,23 @@ void GraphicsScene::setFillColor(const QColor& color)
     }
 }
 
+void GraphicsScene::setTransparency(int value)
+{
+    foreach(QGraphicsItem* p, selectedItems())
+    {
+        if (p->type() == DiagramItem::Type)
+        {
+            DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(p);
+            item->setTransparency(value);
+        }
+        else if (p->type() == DiagramLineItem::Type)
+        {
+         //   DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(p);
+          //  item->setEndpointPen(QPen(color));
+        }
+    }
+}
+
 void GraphicsScene::setTextColor(const QColor& color)
 {
     _textColor = color;

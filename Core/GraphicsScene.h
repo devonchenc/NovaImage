@@ -55,6 +55,7 @@ public slots:
     void setLineColor(const QColor& color);
     void enableFillColor(bool enable);
     void setFillColor(const QColor& color);
+    void setTransparency(int value);
     void setTextColor(const QColor& color);
     void setTextFont(const QFont& font);
 
