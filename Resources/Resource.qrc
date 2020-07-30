@@ -9,18 +9,14 @@
         <file>svg/flip_horizontal.svg</file>
         <file>svg/flip_vertical.svg</file>
         <file>svg/fullscreen.svg</file>
-        <file>svg/gear.svg</file>
         <file>svg/imagewindow.svg</file>
         <file>svg/layout.svg</file>
         <file>svg/length.svg</file>
-        <file>svg/link.svg</file>
         <file>svg/move.svg</file>
         <file>svg/negative.svg</file>
-        <file>svg/no_radiation.svg</file>
         <file>svg/open.svg</file>
         <file>svg/options.svg</file>
         <file>svg/parallelogram.svg</file>
-        <file>svg/radiation.svg</file>
         <file>svg/rectangle.svg</file>
         <file>svg/redo.svg</file>
         <file>svg/reset.svg</file>
@@ -30,11 +26,8 @@
         <file>svg/rotate_cw.svg</file>
         <file>svg/roundrect.svg</file>
         <file>svg/save.svg</file>
-        <file>svg/settings.svg</file>
-        <file>svg/stop.svg</file>
         <file>svg/text.svg</file>
         <file>svg/undo.svg</file>
-        <file>svg/unlink.svg</file>
         <file>svg/zoom.svg</file>
         <file>svg/zoomin.svg</file>
         <file>svg/zoomout.svg</file>
