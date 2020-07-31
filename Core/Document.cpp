@@ -50,7 +50,7 @@ bool Document::openFile(const QString& fileName)
         {
             dlg.dataType();
             // Create raw image
-            _image = std::make_shared<RawImage>(fileName, dlg.dataType(), dlg.width(), dlg.height(), dlg.headerSize());
+            _image = std::make_shared<RawImage>(fileName, dlg.dataType(), dlg.width(), dlg.height(), dlg.slice(), dlg.headerSize());
         }
         else
         {

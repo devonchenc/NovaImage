@@ -3,14 +3,27 @@
 #include <QThread>
 #include <QFile>
 
+class AbstractReader : public QThread
+{
+    Q_OBJECT
+
+public:
+    AbstractReader(QObject* parent = nullptr)
+        : QThread(parent)
+        , _widget(nullptr)
+    {}
+
+    void setWidget(QWidget* widget) { _widget = widget; }
+
+protected:
+    QWidget* _widget;
+};
+
 template <class Type>
-class ImageReader : public QThread
+class ImageReader : public AbstractReader
 {
 public:
     ImageReader(const QString& pathName, int headSize, int pixelCount, int slice, Type* buffer);
-
-public:
-    void setWidget(QWidget* widget) { _widget = widget; }
 
 protected:
     void run() override;
@@ -21,19 +34,17 @@ private:
     int _pixelPerSlice;
     int _slice;
     Type* _buffer;
-    QWidget* _widget;
 };
 
 
 template <class Type>
 ImageReader<Type>::ImageReader(const QString& pathName, int headSize, int pixelCount, int slice, Type* buffer)
-    : QThread(nullptr)
+    : AbstractReader(nullptr)
     , _pathName(pathName)
     , _headSize(headSize)
     , _pixelPerSlice(pixelCount)
     , _slice(slice)
     , _buffer(buffer)
-    , _widget(nullptr)
 {
 
 }
@@ -45,22 +56,24 @@ void ImageReader<Type>::run()
     if (!file.open(QFile::ReadOnly))
         return;
 
-    if (_widget)
-    {
-        QMetaObject::invokeMethod(_widget, "setTitle", Qt::QueuedConnection, Q_ARG(const QString&, tr("Loading file...")));
-    }
+    QMetaObject::invokeMethod(_widget, "setTitle", Qt::QueuedConnection, Q_ARG(const QString&, tr("Loading file...")));
 
     file.seek(_headSize);
     for (int i = 0; i < _slice; i++)
     {
-        file.read((char*)(_buffer + i * _pixelPerSlice), sizeof(Type) * _pixelPerSlice);
-        msleep(20);
-
-        if (_widget)
+        qint64 readSize = file.read((char*)(_buffer + i * _pixelPerSlice), sizeof(Type) * _pixelPerSlice);
+        msleep(10);
+        if (readSize != qint64(sizeof(Type)) * qint64(_pixelPerSlice))
         {
-            int progress = (i + 1) * 100 / _slice;
-            QMetaObject::invokeMethod(_widget, "setProgress", Qt::QueuedConnection, Q_ARG(int, progress));
+            file.close();
+            QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
+                QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
+            QMetaObject::invokeMethod(_widget, "reject", Qt::QueuedConnection);
+            return;
         }
+
+        int progress = (i + 1) * 100 / _slice;
+        QMetaObject::invokeMethod(_widget, "setProgress", Qt::QueuedConnection, Q_ARG(int, progress));
     }
 
     file.close();

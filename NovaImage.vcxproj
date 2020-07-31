@@ -88,7 +88,7 @@
     <QtMoc Include="Diagram\DiagramLengthItem.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
-    <ClInclude Include="Image\ImageReader.h" />
+    <QtMoc Include="Image\ImageReader.h" />
     <ClInclude Include="Image\MonoImage.h" />
     <ClInclude Include="Image\OldDataheader.h" />
     <ClInclude Include="Image\RawImage.h" />

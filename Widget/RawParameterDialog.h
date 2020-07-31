@@ -23,6 +23,8 @@ public:
 
     int height() { return _height; }
 
+    int slice() { return _slice; }
+
     int headerSize() { return _headerSize; }
 
 private:
@@ -41,6 +43,7 @@ private:
     QComboBox* _typeComboBox;
     QComboBox* _widthComboBox;
     QComboBox* _heightComboBox;
+    QComboBox* _sliceComboBox;
     QLineEdit* _headerEdit;
 
     qint64 _actualSize;

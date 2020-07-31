@@ -445,16 +445,18 @@
 <context>
     <name>QObject</name>
     <message>
+        <location filename="Image/ImageReader.h" line="68"/>
         <location filename="Image/RawImage.cpp" line="114"/>
         <location filename="Image/ScanImage.cpp" line="134"/>
-        <location filename="Widget/RawParameterDialog.cpp" line="177"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="192"/>
         <source>Open image file error</source>
         <translation type="unfinished">打开图像错误</translation>
     </message>
     <message>
+        <location filename="Image/ImageReader.h" line="69"/>
         <location filename="Image/RawImage.cpp" line="115"/>
         <location filename="Image/ScanImage.cpp" line="135"/>
-        <location filename="Widget/RawParameterDialog.cpp" line="178"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="193"/>
         <source>The data size does not match the file information description!</source>
         <translation type="unfinished">数据实际尺寸和文件描述信息不符！</translation>
     </message>
@@ -479,7 +481,7 @@
     <message>
         <location filename="Widget/RawParameterDialog.cpp" line="44"/>
         <location filename="Widget/RawParameterDialog.cpp" line="45"/>
-        <location filename="Widget/RawParameterDialog.cpp" line="92"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="101"/>
         <source>bytes</source>
         <translation type="unfinished">字节</translation>
     </message>
@@ -509,28 +511,34 @@
         <translation type="unfinished">图像高度：</translation>
     </message>
     <message>
-        <location filename="Widget/RawParameterDialog.cpp" line="87"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="84"/>
+        <source>Image slice:</source>
+        <translation type="unfinished">图像层数：</translation>
+    </message>
+    <message>
+        <location filename="Widget/RawParameterDialog.cpp" line="96"/>
         <source>Header size:</source>
         <translation type="unfinished">文件头尺寸：</translation>
     </message>
     <message>
-        <location filename="Widget/RawParameterDialog.cpp" line="99"/>
-        <location filename="Widget/RawParameterDialog.cpp" line="102"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="108"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="111"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="114"/>
         <source>pixels</source>
         <translation type="unfinished">像素</translation>
     </message>
     <message>
-        <location filename="Widget/RawParameterDialog.cpp" line="106"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="118"/>
         <source>Image Information</source>
         <translation type="unfinished">图像信息</translation>
     </message>
     <message>
-        <location filename="Widget/RawParameterDialog.cpp" line="109"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="121"/>
         <source>Accept</source>
         <translation type="unfinished">接受</translation>
     </message>
     <message>
-        <location filename="Widget/RawParameterDialog.cpp" line="111"/>
+        <location filename="Widget/RawParameterDialog.cpp" line="123"/>
         <source>Cancel</source>
         <translation type="unfinished">取消</translation>
     </message>
@@ -1079,7 +1087,7 @@
 <context>
     <name>Type</name>
     <message>
-        <location filename="Image/ImageReader.h" line="50"/>
+        <location filename="Image/ImageReader.h" line="59"/>
         <source>Loading file...</source>
         <translation type="unfinished">加载文件…</translation>
     </message>

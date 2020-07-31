@@ -278,6 +278,9 @@
     <QtMoc Include="Widget\ProgressDialog.h">
       <Filter>Widget</Filter>
     </QtMoc>
+    <QtMoc Include="Image\ImageReader.h">
+      <Filter>Image</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image\BaseImage.h">
@@ -341,9 +344,6 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Image\OldDataheader.h">
-      <Filter>Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Image\ImageReader.h">
       <Filter>Image</Filter>
     </ClInclude>
   </ItemGroup>

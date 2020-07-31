@@ -1,15 +1,19 @@
 ﻿#include "RawImage.h"
 
 #include <QFile>
-#include "ImageDataTemplate.h"
 
-RawImage::RawImage(const QString& pathName, int type, int width, int height, int headerSize)
+#include "ImageDataTemplate.h"
+#include "ImageReader.h"
+#include "../Widget/ProgressDialog.h"
+
+RawImage::RawImage(const QString& pathName, int type, int width, int height, int slice, int headerSize)
     : MonoImage(pathName)
     , _dataType(type)
     , _headerSize(headerSize)
 {
-    _width= width;
+    _width = width;
     _height = height;
+    _slice = slice;
 
     // Read data
     if (readData() == false)
@@ -75,46 +79,99 @@ BaseImage* RawImage::copyImage() const
 // Read data
 bool RawImage::readData()
 {
-    if (_width <= 0 || _height <= 0)
+    if (_width <= 0 || _height <= 0 || _slice <= 0)
         return false;
 
-    QFile file(_pathName);
-    if (!file.open(QFile::ReadOnly))
-        return false;
-
-    file.seek(_headerSize);
-
-    int pixelCount = _width * _height;
-    qint64 readCount;
+    ProgressDialog dlg;
+    AbstractReader* reader = nullptr;
     switch (_dataType)
     {
     case 0:
-        _imageData = new ImageDataTemplate<uchar>(pixelCount);
-        readCount = file.read((char*)_imageData->getOriginalData(), sizeof(uchar) * pixelCount) / sizeof(uchar);
-        break;
-    case 1:
-        _imageData = new ImageDataTemplate<ushort>(pixelCount);
-        readCount = file.read((char*)_imageData->getOriginalData(), sizeof(ushort) * pixelCount) / sizeof(ushort);
-        break;
-    case 2:
-        _imageData = new ImageDataTemplate<uint>(pixelCount);
-        readCount = file.read((char*)_imageData->getOriginalData(), sizeof(uint) * pixelCount) / sizeof(uint);
-        break;
-    case 3:
-        _imageData = new ImageDataTemplate<float>(pixelCount);
-        readCount = file.read((char*)_imageData->getOriginalData(), sizeof(float) * pixelCount) / sizeof(float);
-        break;
-    case 4:
-        _imageData = new ImageDataTemplate<double>(pixelCount);
-        readCount = file.read((char*)_imageData->getOriginalData(), sizeof(double) * pixelCount) / sizeof(double);
-        break;
-    }
-    if (readCount != pixelCount)
     {
-        QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
-                              QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
+        _imageData = new ImageDataTemplate<uchar>(_width * _height, _slice);
+        uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
+        reader = new ImageReader<uchar>(_pathName, _headerSize, _width * _height, _slice, originalData);
+    }
+    break;
+    case 1:
+    {
+        _imageData = new ImageDataTemplate<ushort>(_width * _height, _slice);
+        ushort* originalData = static_cast<ushort*>(_imageData->getOriginalData());
+        reader = new ImageReader<ushort>(_pathName, _headerSize, _width * _height, _slice, originalData);
+    }
+    break;
+    case 2:
+    {
+        _imageData = new ImageDataTemplate<uint>(_width * _height, _slice);
+        uint* originalData = static_cast<uint*>(_imageData->getOriginalData());
+        reader = new ImageReader<uint>(_pathName, _headerSize, _width * _height, _slice, originalData);
+    }
+    break;
+    case 3:
+    {
+        _imageData = new ImageDataTemplate<float>(_width * _height, _slice);
+        float* originalData = static_cast<float*>(_imageData->getOriginalData());
+        reader = new ImageReader<float>(_pathName, _headerSize, _width * _height, _slice, originalData);
+    }
+    break;
+    case 4:
+    {
+        _imageData = new ImageDataTemplate<double>(_width * _height, _slice);
+        double* originalData = static_cast<double*>(_imageData->getOriginalData());
+        reader = new ImageReader<double>(_pathName, _headerSize, _width * _height, _slice, originalData);
+    }
+    break;
+    }
+    reader->setWidget(&dlg);
+    reader->start();
+    reader->deleteLater();
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        return true;
+    }
+    else
+    {
         return false;
     }
+
+    /*    QFile file(_pathName);
+        if (!file.open(QFile::ReadOnly))
+            return false;
+
+        file.seek(_headerSize);
+
+        int pixelCount = _width * _height ;
+        qint64 readCount;
+        switch (_dataType)
+        {
+        case 0:
+            _imageData = new ImageDataTemplate<uchar>(pixelCount);
+            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(uchar) * pixelCount) / sizeof(uchar);
+            break;
+        case 1:
+            _imageData = new ImageDataTemplate<ushort>(pixelCount);
+            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(ushort) * pixelCount) / sizeof(ushort);
+            break;
+        case 2:
+            _imageData = new ImageDataTemplate<uint>(pixelCount);
+            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(uint) * pixelCount) / sizeof(uint);
+            break;
+        case 3:
+            _imageData = new ImageDataTemplate<float>(pixelCount);
+            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(float) * pixelCount) / sizeof(float);
+            break;
+        case 4:
+            _imageData = new ImageDataTemplate<double>(pixelCount);
+            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(double) * pixelCount) / sizeof(double);
+            break;
+        }
+        if (readCount != pixelCount)
+        {
+            QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
+                                  QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
+            return false;
+        }*/
 
     return true;
 }

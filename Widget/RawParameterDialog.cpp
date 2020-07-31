@@ -81,9 +81,18 @@ void RawParameterDialog::initUI()
     _heightComboBox->addItem("1024");
     _heightComboBox->addItem("2048");
     _heightComboBox->setEditable(true);
+    QLabel* sliceLabel = new QLabel(tr("Image slice:"));
+    _sliceComboBox = new QComboBox;
+    _sliceComboBox->addItem("128");
+    _sliceComboBox->addItem("256");
+    _sliceComboBox->addItem("512");
+    _sliceComboBox->addItem("1024");
+    _sliceComboBox->addItem("2048");
+    _sliceComboBox->setEditable(true);
     connect(_typeComboBox, &QComboBox::currentTextChanged, this, &RawParameterDialog::updateExpectedSize);
     connect(_widthComboBox, &QComboBox::currentTextChanged, this, &RawParameterDialog::updateExpectedSize);
     connect(_heightComboBox, &QComboBox::currentTextChanged, this, &RawParameterDialog::updateExpectedSize);
+    connect(_sliceComboBox, &QComboBox::currentTextChanged, this, &RawParameterDialog::updateExpectedSize);
     QLabel* headerLabel = new QLabel(tr("Header size:"));
     _headerEdit = new QLineEdit("0");
     QValidator* validator = new QRegExpValidator(QRegExp("[0-9]+$"));
@@ -100,9 +109,12 @@ void RawParameterDialog::initUI()
     grid2->addWidget(heightLabel, 2, 0);
     grid2->addWidget(_heightComboBox, 2, 1);
     grid2->addWidget(new QLabel(tr("pixels")), 2, 2);
-    grid2->addWidget(headerLabel, 3, 0);
-    grid2->addWidget(_headerEdit, 3, 1);
-    grid2->addWidget(header2Label, 3, 2);
+    grid2->addWidget(sliceLabel, 3, 0);
+    grid2->addWidget(_sliceComboBox, 3, 1);
+    grid2->addWidget(new QLabel(tr("pixels")), 3, 2);
+    grid2->addWidget(headerLabel, 4, 0);
+    grid2->addWidget(_headerEdit, 4, 1);
+    grid2->addWidget(header2Label, 4, 2);
     QGroupBox* groupBox2 = new QGroupBox(tr("Image Information"));
     groupBox2->setLayout(grid2);
 
@@ -130,11 +142,13 @@ void RawParameterDialog::loadSettings()
     int type = settings.value("Raw/type", 1).toInt();
     QString width = settings.value("Raw/width", 1024).toString();
     QString height = settings.value("Raw/height", 1024).toString();
+    QString slice = settings.value("Raw/slice", 1024).toString();
     QString headerSize = settings.value("Raw/headerSize", 0).toString();
 
     _typeComboBox->setCurrentIndex(type);
     _widthComboBox->setCurrentText(width);
     _heightComboBox->setCurrentText(height);
+    _sliceComboBox->setCurrentText(slice);
     _headerEdit->setText(headerSize);
 }
 
@@ -143,25 +157,26 @@ void RawParameterDialog::updateExpectedSize()
     _dataType = _typeComboBox->currentIndex();
     _width = _widthComboBox->currentText().toInt();
     _height = _heightComboBox->currentText().toInt();
+    _slice = _sliceComboBox->currentText().toInt();
     _headerSize = _headerEdit->text().toInt();
 
     _expectedSize = _headerSize;
     switch (_dataType)
     {
     case 0:
-        _expectedSize += sizeof(uchar) * _width * _height;
+        _expectedSize += sizeof(uchar) * qint64(_width) * qint64(_height) * qint64(_slice);
         break;
     case 1:
-        _expectedSize += sizeof(ushort) * _width * _height;
+        _expectedSize += sizeof(ushort) * qint64(_width) * qint64(_height) * qint64(_slice);
         break;
     case 2:
-        _expectedSize += sizeof(uint) * _width * _height;
+        _expectedSize += sizeof(uint) * qint64(_width) * qint64(_height) * qint64(_slice);
         break;
     case 3:
-        _expectedSize += sizeof(float) * _width * _height;
+        _expectedSize += sizeof(float) * qint64(_width) * qint64(_height) * qint64(_slice);
         break;
     case 4:
-        _expectedSize += sizeof(double) * _width * _height;
+        _expectedSize += sizeof(double) * qint64(_width) * qint64(_height) * qint64(_slice);
         break;
     }
 
@@ -184,6 +199,7 @@ void RawParameterDialog::acceptButtonClicked()
         settings.setValue("Raw/type", _dataType);
         settings.setValue("Raw/width", _width);
         settings.setValue("Raw/height", _height);
+        settings.setValue("Raw/slice", _slice);
         settings.setValue("Raw/headerSize", _headerSize);
 
         accept();

@@ -160,22 +160,28 @@ bool ScanImage::readData()
     }
 
     ProgressDialog dlg;
+    AbstractReader* reader = nullptr;
     if (_dataHeader.DataType == 0)
     {
         _imageData = new ImageDataTemplate<float>(_width * _height, _slice);
         float* originalData = static_cast<float*>(_imageData->getOriginalData());
-        ImageReader<float>* reader = new ImageReader<float>(_pathName, headerSize, _width * _height, _slice, originalData);
-        reader->setWidget(&dlg);
-     //   QObject::connect(&reader, &ImageReader<float>::setTitle, &dlg, &ProgressDialog::setTitle);
-        reader->start();
+        reader = new ImageReader<float>(_pathName, headerSize, _width * _height, _slice, originalData);
     }
     else if (_dataHeader.DataType == 1)
     {
         _imageData = new ImageDataTemplate<ushort>(_width * _height * _slice);
         ushort* originalData = static_cast<ushort*>(_imageData->getOriginalData());
-        ImageReader<ushort> reader(_pathName, headerSize, _width * _height, _slice, originalData);
-        reader.start();
+        reader = new ImageReader<ushort>(_pathName, headerSize, _width * _height, _slice, originalData);
     }
+    else if (_dataHeader.DataType == 2)
+    {
+        _imageData = new ImageDataTemplate<uchar>(_width * _height * _slice);
+        uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
+        reader = new ImageReader<uchar>(_pathName, headerSize, _width * _height, _slice, originalData);
+    }
+    reader->setWidget(&dlg);
+    reader->start();
+    reader->deleteLater();
 
     if (dlg.exec() == QDialog::Accepted)
     {
