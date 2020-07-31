@@ -1,7 +1,10 @@
 ﻿#include "ScanImage.h"
 
 #include <QFile>
+
 #include "ImageDataTemplate.h"
+#include "ImageReader.h"
+#include "../Widget/ProgressDialog.h"
 
 ScanImage::ScanImage(const QString& pathName)
     : MonoImage(pathName)
@@ -139,25 +142,51 @@ bool ScanImage::readDataHeader()
 // Read data
 bool ScanImage::readData()
 {
-    _imageData = new ImageDataTemplate<float>(_width * _height);
-
-    float* originalData = static_cast<float*>(_imageData->getOriginalData());
-
     QFile file(_pathName);
     if (!file.open(QFile::ReadOnly))
         return false;
 
     bool isNew = isNewHeader(file);
+    file.close();
+
+    int headerSize = 0;
     if (isNew)
     {
-        file.seek(DATA_HEADER_SIZE);
+        headerSize = DATA_HEADER_SIZE;
     }
     else
     {
-        file.seek(OLD_DATA_HEADER_SIZE);
+        headerSize = OLD_DATA_HEADER_SIZE;
     }
 
-    qint64 readSize = file.read((char*)originalData, sizeof(float) * _width * _height);
+    ProgressDialog dlg;
+    if (_dataHeader.DataType == 0)
+    {
+        _imageData = new ImageDataTemplate<float>(_width * _height, _slice);
+        float* originalData = static_cast<float*>(_imageData->getOriginalData());
+        ImageReader<float>* reader = new ImageReader<float>(_pathName, headerSize, _width * _height, _slice, originalData);
+        reader->setWidget(&dlg);
+     //   QObject::connect(&reader, &ImageReader<float>::setTitle, &dlg, &ProgressDialog::setTitle);
+        reader->start();
+    }
+    else if (_dataHeader.DataType == 1)
+    {
+        _imageData = new ImageDataTemplate<ushort>(_width * _height * _slice);
+        ushort* originalData = static_cast<ushort*>(_imageData->getOriginalData());
+        ImageReader<ushort> reader(_pathName, headerSize, _width * _height, _slice, originalData);
+        reader.start();
+    }
+
+    if (dlg.exec() == QDialog::Accepted)
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+
+/*    qint64 readSize = file.read((char*)originalData, sizeof(float) * _width * _height);
     file.close();
 
     if (readSize != qint64(sizeof(float)) * qint64(_width) * qint64(_height))
@@ -165,7 +194,7 @@ bool ScanImage::readData()
         QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
                               QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
         return false;
-    }
+    }*/
 
     return true;
 }

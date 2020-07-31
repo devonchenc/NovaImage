@@ -9,14 +9,16 @@ typedef unsigned char uchar;
 class ImageData
 {
 public:
-    ImageData(unsigned long pixelCount)
-        : _pixelCount(pixelCount)
+    ImageData(unsigned long pixelPerSlice, int slice = 1)
+        : _pixelPerSlice(pixelPerSlice)
+        , _slice(slice)
     {
 
     }
 
     ImageData(const ImageData& src)
-        : _pixelCount(src._pixelCount)
+        : _pixelPerSlice(src._pixelPerSlice)
+        , _slice(src._slice)
         , _minValue(src._minValue)
         , _maxValue(src._maxValue)
     {
@@ -65,7 +67,9 @@ public:
     void setMaximumValue(float maxValue) { _maxValue = maxValue; }
 
 protected:
-    unsigned long _pixelCount;
+    unsigned long _pixelPerSlice;
+
+    int _slice;
 
     float _minValue, _maxValue;
 };

@@ -59,6 +59,7 @@
     <ClCompile Include="Widget\MagnifierWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
     <ClCompile Include="Widget\PlotDialog.cpp" />
+    <ClCompile Include="Widget\ProgressDialog.cpp" />
     <ClCompile Include="Widget\RawParameterDialog.cpp" />
     <ClCompile Include="Widget\SettingsDialog.cpp" />
     <ClCompile Include="Widget\ToolBoxWidget.cpp" />
@@ -87,6 +88,7 @@
     <QtMoc Include="Diagram\DiagramLengthItem.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
+    <ClInclude Include="Image\ImageReader.h" />
     <ClInclude Include="Image\MonoImage.h" />
     <ClInclude Include="Image\OldDataheader.h" />
     <ClInclude Include="Image\RawImage.h" />
@@ -105,6 +107,7 @@
     <QtMoc Include="Widget\RawParameterDialog.h" />
     <QtMoc Include="Widget\SettingsDialog.h" />
     <QtMoc Include="Widget\PlotDialog.h" />
+    <QtMoc Include="Widget\ProgressDialog.h" />
     <ClInclude Include="Widget\WidgetManager.h" />
     <QtMoc Include="Widget\LevelsWidget.h" />
     <QtMoc Include="Widget\HistogramWidget.h" />

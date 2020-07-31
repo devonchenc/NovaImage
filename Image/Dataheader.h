@@ -113,7 +113,7 @@ public:
     float	Reserved18;
 
     // Object Information
-    char	Type[40];				// 型号
+    char	ObjectType[40];		    // 型号
     char	PartNum[40];			// 零件图号
     char	SerialNum[40];			// 零件编号
     char	LocationNum[40];		// 部位序号
