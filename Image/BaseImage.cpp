@@ -175,11 +175,12 @@ bool BaseImage::saveAsDcm(const QString& fileName)
     dataset->putAndInsertString(DCM_Modality, "CT");
     dataset->putAndInsertUint16(DCM_Columns, _width);
     dataset->putAndInsertUint16(DCM_Rows, _height);
-    dataset->putAndInsertString(DCM_NumberOfFrames, "1");
+    dataset->putAndInsertUint16(DCM_NumberOfFrames, 1);
     dataset->putAndInsertString(DCM_PhotometricInterpretation, "MONOCHROME2");
-    dataset->putAndInsertString(DCM_BitsAllocated, "8");
-    dataset->putAndInsertString(DCM_BitsStored, "8");
-    dataset->putAndInsertString(DCM_HighBit, "7");
+    dataset->putAndInsertUint16(DCM_SamplesPerPixel, 1);
+    dataset->putAndInsertUint16(DCM_BitsAllocated, 8);
+    dataset->putAndInsertUint16(DCM_BitsStored, 8);
+    dataset->putAndInsertUint16(DCM_HighBit, 7);
     dataset->putAndInsertString(DCM_PixelRepresentation, "0");
     condition = dataset->saveFile(fileName.toStdString().c_str(), EXS_LittleEndianExplicit);
     return condition.good();
