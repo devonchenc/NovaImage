@@ -64,6 +64,15 @@ ScanImage::~ScanImage()
 
 }
 
+void ScanImage::setSlice(int slice)
+{
+    MonoImage::setSlice(slice);
+
+    convertToByte();
+
+    copyToImage();
+}
+
 bool ScanImage::saveAsDcm(const QString& fileName)
 {
     Q_UNUSED(fileName);
@@ -117,6 +126,7 @@ bool ScanImage::readDataHeader()
     _width = _dataHeader.Width;
     _height = _dataHeader.Height;
     _slice = _dataHeader.Slice == 0 ? 1 : _dataHeader.Slice;
+    _currentSlice = round(_slice / 2.0) - 1;
     if (_width * _height <= 0)
         return false;
 

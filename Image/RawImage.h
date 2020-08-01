@@ -10,6 +10,8 @@ public:
     virtual ~RawImage();
 
 public:
+    void setSlice(int slice) override;
+
     void initWindowWidthAndLevel() override;
 
     BaseImage* copyImage() const override;

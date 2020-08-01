@@ -56,6 +56,13 @@ bool MonoImage::copyToImage()
     return copyByteToImage(_byteImage, _width, _height, _pImage);
 }
 
+void MonoImage::setSlice(int slice)
+{
+    _currentSlice = slice;
+
+    _imageData->changeSlice(_currentSlice);
+}
+
 void MonoImage::histogramStatistic()
 {
     memset(_grayPixelNumber, 0, sizeof(uint) * 256);

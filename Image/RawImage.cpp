@@ -14,6 +14,7 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
     _width = width;
     _height = height;
     _slice = slice;
+    _currentSlice = round(_slice / 2.0) - 1;
 
     // Read data
     if (readData() == false)
@@ -63,6 +64,15 @@ RawImage::RawImage(const RawImage& src)
 RawImage::~RawImage()
 {
 
+}
+
+void RawImage::setSlice(int slice)
+{
+    MonoImage::setSlice(slice);
+
+    convertToByte();
+
+    copyToImage();
 }
 
 void RawImage::initWindowWidthAndLevel()
@@ -134,44 +144,4 @@ bool RawImage::readData()
     {
         return false;
     }
-
-    /*    QFile file(_pathName);
-        if (!file.open(QFile::ReadOnly))
-            return false;
-
-        file.seek(_headerSize);
-
-        int pixelCount = _width * _height ;
-        qint64 readCount;
-        switch (_dataType)
-        {
-        case 0:
-            _imageData = new ImageDataTemplate<uchar>(pixelCount);
-            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(uchar) * pixelCount) / sizeof(uchar);
-            break;
-        case 1:
-            _imageData = new ImageDataTemplate<ushort>(pixelCount);
-            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(ushort) * pixelCount) / sizeof(ushort);
-            break;
-        case 2:
-            _imageData = new ImageDataTemplate<uint>(pixelCount);
-            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(uint) * pixelCount) / sizeof(uint);
-            break;
-        case 3:
-            _imageData = new ImageDataTemplate<float>(pixelCount);
-            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(float) * pixelCount) / sizeof(float);
-            break;
-        case 4:
-            _imageData = new ImageDataTemplate<double>(pixelCount);
-            readCount = file.read((char*)_imageData->getOriginalData(), sizeof(double) * pixelCount) / sizeof(double);
-            break;
-        }
-        if (readCount != pixelCount)
-        {
-            QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
-                                  QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
-            return false;
-        }*/
-
-    return true;
 }

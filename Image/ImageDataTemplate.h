@@ -55,6 +55,8 @@ public:
 
     void restoreData() override;
 
+    void changeSlice(int slice) override;
+
 protected:
     Type* _originalData;
 
@@ -209,6 +211,16 @@ ImageData* ImageDataTemplate<Type>::copyImageData() const
 template <class Type>
 void ImageDataTemplate<Type>::restoreData()
 {
+    for (unsigned long i = 0; i < _pixelPerSlice; i++)
+    {
+        _processingData[i] = _originalData[i + _currentSlice * _pixelPerSlice];
+    }
+}
+
+template <class Type>
+void ImageDataTemplate<Type>::changeSlice(int slice)
+{
+    _currentSlice = slice;
     for (unsigned long i = 0; i < _pixelPerSlice; i++)
     {
         _processingData[i] = _originalData[i + _currentSlice * _pixelPerSlice];

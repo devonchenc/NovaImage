@@ -54,10 +54,7 @@ void ToolBar::createButton()
     _rotateButton = new QToolButton;
     _rotateButton->setPopupMode(QToolButton::MenuButtonPopup);
 
-    _undoButton = new QToolButton;
-    //	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
-
-    _restoreButton = new QToolButton;
+    _sliceButton = new ToolButton;
 
     _imageWindowButton = new ToolButton;
     _imageWindowButton->setPopupMode(QToolButton::MenuButtonPopup);
@@ -71,6 +68,11 @@ void ToolBar::createButton()
     _measurementButton = new ToolButton;
     _measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 
+    _undoButton = new QToolButton;
+   //	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
+
+    _restoreButton = new QToolButton;
+
     addWidget(_openButton);
     addWidget(_saveButton);
     addWidget(_printButton);
@@ -80,12 +82,14 @@ void ToolBar::createButton()
     addWidget(_flipButton);
     addWidget(_rotateButton);
     addSeparator();
-    addWidget(_undoButton);
-    addWidget(_restoreButton);
+    addWidget(_sliceButton);
     addWidget(_imageWindowButton);
     addWidget(_zoomButton);
     addWidget(_cursorButton);
     addWidget(_measurementButton);
+    addSeparator();
+    addWidget(_undoButton);
+    addWidget(_restoreButton);
 }
 
 void ToolBar::createAction()
@@ -129,6 +133,10 @@ void ToolBar::createAction()
     _rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
     _resetTransformation = new QAction(tr("Reset Transformation"), this);
     _resetTransformation->setIcon(QIcon(":/icon/svg/reset.svg"));
+
+    _sliceAction = new QAction(tr("Browse slices"), _sliceButton);
+    _sliceAction->setObjectName("slice");
+    _sliceAction->setIcon(QIcon(":/icon/svg/slice.svg"));
 
     _imageWindowAction = new QAction(tr("Adjust Window"), _imageWindowButton);
     _imageWindowAction->setObjectName("imagewindow");
@@ -220,6 +228,8 @@ void ToolBar::createAction()
     connect(_rotate180, &QAction::triggered, mainWindow->getView(), &View::rotate180);
     connect(_resetTransformation, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
 
+    connect(_sliceAction, &QAction::triggered, this, &ToolBar::sliceActionTriggered);
+
     connect(_imageWindowAction, &QAction::triggered, this, &ToolBar::imageWindowActionTriggered);
     connect(_ROIWidowAction, &QAction::triggered, this, &ToolBar::ROIWindowActionTriggered);
     connect(_defaultWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::defaultImageWindow);
@@ -251,6 +261,7 @@ void ToolBar::createAction()
     connect(_parallelogramAction, &QAction::triggered, this, &ToolBar::measurementChanged);
     connect(_textAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 
+    _actionVector.push_back(_sliceAction);
     _actionVector.push_back(_imageWindowAction);
     _actionVector.push_back(_ROIWidowAction);
     _actionVector.push_back(_zoomAction);
@@ -332,13 +343,10 @@ void ToolBar::initButton()
     _rotateButton->setToolTip(tr("Rotate"));
     connect(_rotateButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
 
-    _undoButton->setIcon(QIcon(":/icon/svg/undo.svg"));
-    _undoButton->setToolTip(tr("Undo"));
-    connect(_undoButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::undo);
-
-    _restoreButton->setIcon(QIcon(":/icon/svg/restore.svg"));
-    _restoreButton->setToolTip(tr("Restore"));
-    connect(_restoreButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::restore);
+    _sliceButton->setIconByName(":/icon/svg/slice.svg");
+    _sliceButton->setToolTip(tr("Browse slices"));
+    _sliceButton->installEventFilter(this);
+    _sliceButton->setCurrentAction(_sliceAction);
 
     menu = new QMenu(this);
     menu->addAction(_imageWindowAction);
@@ -354,6 +362,14 @@ void ToolBar::initButton()
     _imageWindowButton->installEventFilter(this);
     _imageWindowButton->setCurrentAction(_imageWindowAction);
     connect(_imageWindowButton, &QToolButton::triggered, this, &ToolBar::imageWindowButtonTriggered);
+
+    _undoButton->setIcon(QIcon(":/icon/svg/undo.svg"));
+    _undoButton->setToolTip(tr("Undo"));
+    connect(_undoButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::undo);
+
+    _restoreButton->setIcon(QIcon(":/icon/svg/restore.svg"));
+    _restoreButton->setToolTip(tr("Restore"));
+    connect(_restoreButton, &QToolButton::clicked, mainWindow->getDocument(), &Document::restore);
 
     menu = new QMenu(this);
     menu->addAction(_zoomAction);
@@ -478,14 +494,11 @@ void ToolBar::changeEvent(QEvent* event)
 
 bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 {
-    if (obj == _imageWindowButton || obj == _zoomButton || obj == _cursorButton || obj == _measurementButton)
+    ToolButton* toolButton = static_cast<ToolButton*>(obj);
+    if (toolButton)
     {
         if (event->type() == QEvent::MouseButtonPress)
         {
-            ToolButton* toolButton = static_cast<ToolButton*>(obj);
-            if (toolButton == nullptr)
-                return false;
-
             QMouseEvent* mouseEvent = static_cast<QMouseEvent*>(event);
             // Make sure the clicked location is on the button not the menu area
             if (mouseEvent->pos().x() < toolButton->size().width() - 12)
@@ -606,9 +619,10 @@ void ToolBar::showInfoButtonClicked()
     _showMeasurementAction->toggled(checked);
 }
 
-void ToolBar::undoButtonClicked()
+void ToolBar::sliceActionTriggered()
 {
-
+    _sliceButton->setIconByName(":/icon/svg/slice.svg");
+    _sliceButton->setMouseHandler(new SliceMouseHandler());
 }
 
 void ToolBar::imageWindowActionTriggered()

@@ -14,6 +14,8 @@ public:
     virtual ~ScanImage();
 
 public:
+    void setSlice(int slice) override;
+
     bool hasPixelSpacing() override { return true; }
 
     float horzPixelSpacing() override { return _dataHeader.HorzPixelSpacing; }

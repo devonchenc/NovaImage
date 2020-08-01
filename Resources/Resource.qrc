@@ -38,5 +38,6 @@
         <file>svg/print.svg</file>
         <file>svg/guide.svg</file>
         <file>svg/about.svg</file>
+        <file>svg/slice.svg</file>
     </qresource>
 </RCC>

@@ -57,6 +57,8 @@ public:
 
     virtual void restoreData() = 0;
 
+    virtual void changeSlice(int slice) = 0;
+
 public:
     float getMinimumValue() const { return _minValue; }
 

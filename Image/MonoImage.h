@@ -17,6 +17,10 @@ public:
 public:
     int slice() const override { return _slice; }
 
+    void setSlice(int slice) override;
+
+    int currentSlice() const override { return _currentSlice; }
+
     float getMinValue() const override;
 
     float getMaxValue() const override;

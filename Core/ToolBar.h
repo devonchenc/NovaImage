@@ -41,9 +41,9 @@ public slots:
 private slots:
     void layoutButtonClicked();
     void showInfoButtonClicked();
+    void sliceActionTriggered();
     void imageWindowActionTriggered();
     void ROIWindowActionTriggered();
-    void undoButtonClicked();
     void imageWindowButtonTriggered(QAction* action);
     void zoomActionTriggered();
     void magnifierActionTriggered();
@@ -75,6 +75,8 @@ private:
     QAction* _rotate90CCW;
     QAction* _rotate180;
     QAction* _resetTransformation;
+
+    QAction* _sliceAction;
 
     QAction* _imageWindowAction;
     QAction* _ROIWidowAction;
@@ -114,13 +116,15 @@ private:
     QToolButton* _showInfoButton;
     QToolButton* _flipButton;
     QToolButton* _rotateButton;
-    QToolButton* _undoButton;
-    QToolButton* _restoreButton;
 
+    ToolButton* _sliceButton;
     ToolButton* _imageWindowButton;
     ToolButton* _zoomButton;
     ToolButton* _cursorButton;
     ToolButton* _measurementButton;
+
+    QToolButton* _undoButton;
+    QToolButton* _restoreButton;
 
     QVector<QAction*> _actionVector;
 };

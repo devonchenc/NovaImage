@@ -43,6 +43,10 @@ public:
 
     virtual int slice() const { return 1; }
 
+    virtual void setSlice(int slice) {}
+
+    virtual int currentSlice() const { return 0; }
+
     float windowWidth() { return _windowWidth; }
 
     float windowLevel() { return _windowLevel; }

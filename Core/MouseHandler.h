@@ -43,6 +43,16 @@ private:
     static ToolButton* _rightButton;
 };
 
+class SliceMouseHandler : public MouseHandler
+{
+protected:
+    void press(QMouseEvent* event) override;
+
+    void move(QMouseEvent* event) override;
+
+    void release(QMouseEvent* event) override;
+};
+
 class ImageWindowMouseHandler : public MouseHandler
 {
 protected:

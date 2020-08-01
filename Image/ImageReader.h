@@ -62,7 +62,6 @@ void ImageReader<Type>::run()
     for (int i = 0; i < _slice; i++)
     {
         qint64 readSize = file.read((char*)(_buffer + i * _pixelPerSlice), sizeof(Type) * _pixelPerSlice);
-        msleep(10);
         if (readSize != qint64(sizeof(Type)) * qint64(_pixelPerSlice))
         {
             file.close();

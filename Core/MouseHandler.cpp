@@ -91,6 +91,42 @@ void MouseHandler::unsetRightButton()
 
 //////////////////////////////////////////////////////////////////////////
 
+void SliceMouseHandler::press(QMouseEvent* event)
+{
+    Q_UNUSED(event);
+}
+
+void SliceMouseHandler::move(QMouseEvent* event)
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr)
+        return;
+
+    if (image->slice() <= 1)
+        return;
+
+    QPoint offset = _mousePos - event->pos();
+    if (offset.y() > 0)
+    {
+        image->setSlice((image->currentSlice() + 1) >= image->slice() ? 0 : (image->currentSlice() + 1));
+    }
+    else if (offset.y() < 0)
+    {
+        image->setSlice((image->currentSlice() - 1) < 0 ? (image->slice() - 1) : (image->currentSlice() - 1));
+    }
+
+    getGlobalDocument()->repaintView();
+
+    _mousePos = event->pos();
+}
+
+void SliceMouseHandler::release(QMouseEvent* event)
+{
+    Q_UNUSED(event);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
 void ImageWindowMouseHandler::press(QMouseEvent* event)
 {
     Q_UNUSED(event);
