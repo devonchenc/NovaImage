@@ -162,7 +162,20 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
         if (pointPixmap.x() >= 0 && pointPixmap.x() < image.width() && pointPixmap.y() >= 0 && pointPixmap.y() < image.height())
         {
             float value = getGlobalImage()->getValue(QPoint(pointPixmap.x(), pointPixmap.y()));
-            _strCoord = QString(tr("X: %1, Y: %2, Val: %3")).arg(QString::number(pointPixmap.x(), 'f', 0)).arg(QString::number(pointPixmap.y(), 'f', 0)).arg(QString::number(value, 'f', 1));
+            int decimal = 4;
+            if (abs(value) > 10.0f)
+            {
+                decimal = 1;
+            }
+            else if (abs(value) > 1.0f)
+            {
+                decimal = 2;
+            }
+            else if (abs(value) > 0.1f)
+            {
+                decimal = 3;
+            }
+            _strCoord = QString(tr("X: %1, Y: %2, Val: %3")).arg(QString::number(pointPixmap.x(), 'f', 0)).arg(QString::number(pointPixmap.y(), 'f', 0)).arg(QString::number(value, 'f', decimal));
 
             QRgb rgbValue = image.pixel(QPoint(pointPixmap.x(), pointPixmap.y()));
             _strValue = QString("R:%1, G:%2, B:%3").arg(qRed(rgbValue), 3).arg(qGreen(rgbValue), 3).arg(qBlue(rgbValue), 3);
@@ -245,7 +258,22 @@ void GraphicsView::drawAnnotation()
     str = QString(tr("Slice: %1/%2")).arg(image->currentSlice() + 1).arg(image->slice());
     painter.drawText(QRect(0, pixelsHigh * 2, 350, pixelsHigh), Qt::AlignLeft, str);
 
-    str = QString(tr("WL: %1 WW: %2")).arg(QString::number(_view->windowLevel(), 'f', 1)).arg(QString::number(_view->windowWidth(), 'f', 1));
+    float windowLevel = _view->windowLevel();
+    float windowWidth = _view->windowWidth();
+    int decimal = 4;
+    if (abs(windowLevel) > 10.0f)
+    {
+        decimal = 1;
+    }
+    else if (abs(windowLevel) > 1.0f)
+    {
+        decimal = 2;
+    }
+    else if (abs(windowLevel) > 0.1f)
+    {
+        decimal = 3;
+    }
+    str = QString(tr("WL: %1 WW: %2")).arg(QString::number(windowLevel, 'f', decimal)).arg(QString::number(windowWidth, 'f', decimal));
     painter.drawText(QRect(0, y - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
 
     painter.setPen(QPen(qRgb(255, 100, 100)));
