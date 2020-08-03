@@ -226,10 +226,25 @@ void DiagramItem::statisticsInfo()
             sumSquares += (vecValue[i] - average) * (vecValue[i] - average);
         }
         float std = sqrt(sumSquares / vecValue.size());
+
+        int decimal = 4;
+        if (abs(average) > 10.0f)
+        {
+            decimal = 1;
+        }
+        else if (abs(average) > 1.0f)
+        {
+            decimal = 2;
+        }
+        else if (abs(average) > 0.1f)
+        {
+            decimal = 3;
+        }
+
         _info += QString("\n");
-        _info += QString(tr("Mean=%1 SD=%2")).arg(QString::number(average, 'f', 2)).arg(QString::number(std, 'f', 2));
+        _info += QString(tr("Mean=%1 SD=%2")).arg(QString::number(average, 'f', decimal + 1)).arg(QString::number(std, 'f', decimal + 1));
         _info += QString("\n");
-        _info += QString(tr("Max=%1 Min=%2")).arg(QString::number(maxValue, 'f', 1)).arg(QString::number(minValue, 'f', 1));
+        _info += QString(tr("Max=%1 Min=%2")).arg(QString::number(maxValue, 'f', decimal)).arg(QString::number(minValue, 'f', decimal));
     }
 }
 

@@ -447,6 +447,8 @@ void ToolBar::changeEvent(QEvent* event)
         _rotate180->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
         _resetTransformation->setText(tr("Reset Transformation"));
 
+        _sliceAction->setText(tr("Browse slices"));
+
         _imageWindowAction->setText(tr("Adjust Window"));
         _ROIWidowAction->setText(tr("ROI Window"));
         _defaultWindowAction->setText(tr("Default Window"));
@@ -481,12 +483,13 @@ void ToolBar::changeEvent(QEvent* event)
         _showInfoButton->setToolTip(tr("Toggle Annotations"));
         _flipButton->setToolTip(tr("Flip"));
         _rotateButton->setToolTip(tr("Rotate"));
-        _undoButton->setToolTip(tr("Undo"));
-        _restoreButton->setToolTip(tr("Restore"));
+        _sliceButton->setToolTip(tr("Browse slices"));
         _imageWindowButton->setToolTip(tr("Adjust Image Window"));
         _zoomButton->setToolTip(tr("Zoom Image"));
         _cursorButton->setToolTip(tr("Select Item/Move Image"));
         _measurementButton->setToolTip(tr("Measurements and Tools"));
+        _undoButton->setToolTip(tr("Undo"));
+        _restoreButton->setToolTip(tr("Restore"));
     }
 
     QToolBar::changeEvent(event);
