@@ -27,12 +27,6 @@ ScanImage::ScanImage(const QString& pathName)
         _openSucceed = false;
         return;
     }
-    // Find top and bottom value in data
-    if (_imageData->findTopAndBottom() == false)
-    {
-        _openSucceed = false;
-        return;
-    }
 
     initWindowWidthAndLevel();
 
@@ -195,22 +189,16 @@ bool ScanImage::readData()
 
     if (dlg.exec() == QDialog::Accepted)
     {
+        // Get min and max value in data
+        _imageData->setMinimumValue(reader->minValue());
+        _imageData->setMaximumValue(reader->maxValue());
+
         return true;
     }
     else
     {
         return false;
     }
-
-/*    qint64 readSize = file.read((char*)originalData, sizeof(float) * _width * _height);
-    file.close();
-
-    if (readSize != qint64(sizeof(float)) * qint64(_width) * qint64(_height))
-    {
-        QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
-                              QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
-        return false;
-    }*/
 
     return true;
 }

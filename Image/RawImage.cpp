@@ -28,12 +28,6 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
         _openSucceed = false;
         return;
     }
-    // Find top and bottom value in data
-    if (_imageData->findTopAndBottom() == false)
-    {
-        _openSucceed = false;
-        return;
-    }
 
     initWindowWidthAndLevel();
 
@@ -138,6 +132,10 @@ bool RawImage::readData()
 
     if (dlg.exec() == QDialog::Accepted)
     {
+        // Get min and max value in data
+        _imageData->setMinimumValue(reader->minValue());
+        _imageData->setMaximumValue(reader->maxValue());
+
         return true;
     }
     else
