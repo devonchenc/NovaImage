@@ -43,7 +43,7 @@ public:
 
     virtual int slice() const { return 1; }
 
-    virtual void setSlice(int slice) {}
+    virtual void setSlice(int) {}
 
     virtual int currentSlice() const { return 0; }
 

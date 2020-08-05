@@ -12,6 +12,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Image/GeneralImage.h \
     ./Image/ScanImage.h \
     ./Image/ImageDataTemplate.h \
+    ./Image/ImageReader.h \
     ./Widget/Peg.h \
     ./Widget/WidgetManager.h \
     ./Widget/ColorButton.h \
@@ -19,6 +20,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Widget/ChartView.h \
     ./Widget/ToolBoxWidget.h \
     ./Widget/RawParameterDialog.h \
+    ./Widget/ProgressDialog.h \
     ./Widget/SettingsDialog.h \
     ./Widget/PlotDialog.h \
     ./Widget/LevelsWidget.h \
@@ -71,6 +73,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/Peg.cpp \
     ./Widget/PlotDialog.cpp \
     ./Widget/RawParameterDialog.cpp \
+    ./Widget/ProgressDialog.cpp \
     ./Widget/SettingsDialog.cpp \
     ./Widget/ToolBoxWidget.cpp \
     ./Widget/WidgetManager.cpp \

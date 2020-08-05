@@ -91,9 +91,9 @@ void MouseHandler::unsetRightButton()
 
 //////////////////////////////////////////////////////////////////////////
 
-void SliceMouseHandler::press(QMouseEvent* event)
+void SliceMouseHandler::press(QMouseEvent*)
 {
-    Q_UNUSED(event);
+    getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
 
 void SliceMouseHandler::move(QMouseEvent* event)
@@ -120,16 +120,16 @@ void SliceMouseHandler::move(QMouseEvent* event)
     _mousePos = event->pos();
 }
 
-void SliceMouseHandler::release(QMouseEvent* event)
+void SliceMouseHandler::release(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void ImageWindowMouseHandler::press(QMouseEvent* event)
+void ImageWindowMouseHandler::press(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
 void ImageWindowMouseHandler::move(QMouseEvent* event)
@@ -145,9 +145,8 @@ void ImageWindowMouseHandler::move(QMouseEvent* event)
     }
 }
 
-void ImageWindowMouseHandler::release(QMouseEvent* event)
+void ImageWindowMouseHandler::release(QMouseEvent*)
 {
-    Q_UNUSED(event);
     _horzOrVert = 0;
 }
 
@@ -195,15 +194,14 @@ void ROIWindowMouseHandler::unbounded()
     getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
 
-void ROIWindowMouseHandler::press(QMouseEvent* event)
+void ROIWindowMouseHandler::press(QMouseEvent*)
 {
-    Q_UNUSED(event);
     getGlobalView()->view()->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
-void ROIWindowMouseHandler::move(QMouseEvent* event)
+void ROIWindowMouseHandler::move(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
 void ROIWindowMouseHandler::release(QMouseEvent* event)
@@ -214,9 +212,8 @@ void ROIWindowMouseHandler::release(QMouseEvent* event)
 
 //////////////////////////////////////////////////////////////////////////
 
-void ZoomMouseHandler::press(QMouseEvent* event)
+void ZoomMouseHandler::press(QMouseEvent*)
 {
-    Q_UNUSED(event);
     getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
 
@@ -227,29 +224,28 @@ void ZoomMouseHandler::move(QMouseEvent* event)
     _mousePos = event->pos();
 }
 
-void ZoomMouseHandler::release(QMouseEvent* event)
+void ZoomMouseHandler::release(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
 
-void MagnifierMouseHandler::press(QMouseEvent* event)
+void MagnifierMouseHandler::press(QMouseEvent*)
 {
-    Q_UNUSED(event);
     getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
     getGlobalView()->view()->setCursor(Qt::CrossCursor);
     getGlobalView()->view()->showMagnifier();
 }
 
-void MagnifierMouseHandler::move(QMouseEvent* event)
+void MagnifierMouseHandler::move(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
-void MagnifierMouseHandler::release(QMouseEvent* event)
+void MagnifierMouseHandler::release(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -259,21 +255,19 @@ void SelectMouseHandler::unbounded()
     getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
 
-void SelectMouseHandler::press(QMouseEvent* event)
+void SelectMouseHandler::press(QMouseEvent*)
 {
-    Q_UNUSED(event);
     getGlobalView()->setSceneMode(MOVE_ITEM);
 }
 
-void SelectMouseHandler::move(QMouseEvent* event)
+void SelectMouseHandler::move(QMouseEvent*)
 {
-    Q_UNUSED(event);
     getGlobalView()->scene()->update();
 }
 
-void SelectMouseHandler::release(QMouseEvent* event)
+void SelectMouseHandler::release(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -283,9 +277,8 @@ void MoveMouseHandler::unbounded()
     getGlobalView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
 
-void MoveMouseHandler::press(QMouseEvent* event)
+void MoveMouseHandler::press(QMouseEvent*)
 {
-    Q_UNUSED(event);
     getGlobalView()->setSceneMode(MOVE_SCENE);
 }
 
@@ -301,9 +294,9 @@ void MoveMouseHandler::move(QMouseEvent* event)
     }
 }
 
-void MoveMouseHandler::release(QMouseEvent* event)
+void MoveMouseHandler::release(QMouseEvent*)
 {
-    Q_UNUSED(event);
+
 }
 
 //////////////////////////////////////////////////////////////////////////

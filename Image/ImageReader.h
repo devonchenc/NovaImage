@@ -1,7 +1,9 @@
 ﻿#pragma once
 
+#include <float.h>
 #include <QThread>
 #include <QFile>
+#include <QMessageBox>
 
 class AbstractReader : public QThread
 {
@@ -10,8 +12,8 @@ class AbstractReader : public QThread
 public:
     AbstractReader(const QString& pathName, QObject* parent = nullptr)
         : QThread(parent)
-        , _pathName(pathName)
         , _widget(nullptr)
+        , _pathName(pathName)
         , _minValue(FLT_MAX)
         , _maxValue(-FLT_MAX)
     {}
@@ -83,7 +85,7 @@ void ImageReader<Type>::run()
         }
 
         Type* temp = _buffer + i * _pixelPerSlice;
-        for (unsigned long i = 1; i < _pixelPerSlice; i++)
+        for (int i = 1; i < _pixelPerSlice; i++)
         {
             if (_minValue > temp[i])
             {
