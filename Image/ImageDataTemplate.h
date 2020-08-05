@@ -19,7 +19,7 @@ public:
     // Get original data pointer
     void* getOriginalData() override
     {
-        return static_cast<void*>(_originalData);
+        return static_cast<void*>(_originalData.get());
     }
 
     // Get processing data pointer
@@ -58,7 +58,7 @@ public:
     void changeSlice(int slice) override;
 
 protected:
-    Type* _originalData;
+    std::shared_ptr<Type> _originalData;
 
     float* _processingData;
 
@@ -68,22 +68,19 @@ protected:
 template <class Type>
 ImageDataTemplate<Type>::ImageDataTemplate(unsigned long pixelPerSlice, int slice)
     : ImageData(pixelPerSlice, slice)
+    , _originalData(std::shared_ptr<Type>(new Type[pixelPerSlice * slice ]))
     , _processingData(nullptr)
     , _currentSlice(round(slice / 2.0) - 1)
 {
-    _originalData = new Type[pixelPerSlice * slice];
+
 }
 
 template <class Type>
 ImageDataTemplate<Type>::ImageDataTemplate(const ImageDataTemplate& src)
     : ImageData(src)
+    , _originalData(src._originalData)
     , _currentSlice(src._currentSlice)
 {
-    if (src._originalData)
-    {
-        _originalData = new Type[_pixelPerSlice * _slice];
-        memcpy(_originalData, src._originalData, sizeof(Type) * _pixelPerSlice * _slice);
-    }
     if (src._processingData)
     {
         _processingData = new float[_pixelPerSlice];
@@ -94,11 +91,6 @@ ImageDataTemplate<Type>::ImageDataTemplate(const ImageDataTemplate& src)
 template <class Type>
 ImageDataTemplate<Type>::~ImageDataTemplate()
 {
-    if (_originalData)
-    {
-        delete [] _originalData;
-        _originalData = nullptr;
-    }
     if (_processingData)
     {
         delete [] _processingData;
@@ -110,22 +102,22 @@ ImageDataTemplate<Type>::~ImageDataTemplate()
 template <class Type>
 bool ImageDataTemplate<Type>::findTopAndBottom()
 {
-    _minValue = _maxValue = _originalData[0];
+    _minValue = _maxValue = _originalData.get()[0];
     for (unsigned long i = 1; i < _pixelPerSlice * _slice; i++)
     {
-        if ((std::is_same<Type, float>::value || std::is_same<Type, double>::value) && (std::isnan(_originalData[i]) || std::isinf(_originalData[i])))
+        if ((std::is_same<Type, float>::value || std::is_same<Type, double>::value) && (std::isnan(_originalData.get()[i]) || std::isinf(_originalData.get()[i])))
         {
             QMessageBox::critical(nullptr, "Error in traversing data", "Invalid value in data!", QMessageBox::Ok);
             return false;
         }
 
-        if (_minValue > _originalData[i])
+        if (_minValue > _originalData.get()[i])
         {
-            _minValue = _originalData[i];
+            _minValue = _originalData.get()[i];
         }
-        if (_maxValue < _originalData[i])
+        if (_maxValue < _originalData.get()[i])
         {
-            _maxValue = _originalData[i];
+            _maxValue = _originalData.get()[i];
         }
     }
 
@@ -141,7 +133,7 @@ bool ImageDataTemplate<Type>::allocateMemory()
         _processingData = new float[_pixelPerSlice];
         for (unsigned long i = 0; i < _pixelPerSlice; i++)
         {
-            _processingData[i] = _originalData[i + _currentSlice * _pixelPerSlice];
+            _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice];
         }
     }
     catch (const std::bad_alloc& e)
@@ -193,7 +185,7 @@ void ImageDataTemplate<Type>::rescaleArray(float rescaleSlope, float rescaleInte
     {
         for (unsigned long i = 0; i < _pixelPerSlice; i++)
         {
-            _processingData[i] = _originalData[i + _currentSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
+            _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
         }
 
         _minValue = _minValue * rescaleSlope + rescaleIntercept;
@@ -213,7 +205,7 @@ void ImageDataTemplate<Type>::restoreData()
 {
     for (unsigned long i = 0; i < _pixelPerSlice; i++)
     {
-        _processingData[i] = _originalData[i + _currentSlice * _pixelPerSlice];
+        _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice];
     }
 }
 
@@ -223,6 +215,6 @@ void ImageDataTemplate<Type>::changeSlice(int slice)
     _currentSlice = slice;
     for (unsigned long i = 0; i < _pixelPerSlice; i++)
     {
-        _processingData[i] = _originalData[i + _currentSlice * _pixelPerSlice];
+        _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice];
     }
 }
