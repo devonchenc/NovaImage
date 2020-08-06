@@ -158,6 +158,8 @@ void ToolBar::createAction()
     _resetTransformation->setIcon(QIcon(":/icon/svg/reset.svg"));
 
     _30FPSAction = new QAction(tr("30 FPS"), this);
+    _30FPSAction->setCheckable(true);
+    _30FPSAction->setChecked(true);
 
     _sliceAction = new QAction(tr("Browse slices"), _sliceButton);
     _sliceAction->setObjectName("slice");

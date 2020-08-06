@@ -35,6 +35,9 @@ public:
 
     float windowLevel() { return _windowLevel; }
 
+    void slicePlusOne();
+    void sliceMinusOne();
+
     void saveGraphicsItem();
 
 	void loadGraphicsItem();

@@ -99,20 +99,17 @@ void SliceMouseHandler::press(QMouseEvent*)
 void SliceMouseHandler::move(QMouseEvent* event)
 {
     BaseImage* image = getGlobalImage();
-    if (image == nullptr)
-        return;
-
-    if (image->slice() <= 1)
+    if (image == nullptr || image->slice() <= 1)
         return;
 
     QPoint offset = _mousePos - event->pos();
     if (offset.y() > 0)
     {
-        image->setSlice((image->currentSlice() + 1) >= image->slice() ? 0 : (image->currentSlice() + 1));
+        getGlobalView()->slicePlusOne();
     }
     else if (offset.y() < 0)
     {
-        image->setSlice((image->currentSlice() - 1) < 0 ? (image->slice() - 1) : (image->currentSlice() - 1));
+        getGlobalView()->sliceMinusOne();
     }
 
     getGlobalDocument()->applyImageWidthAndLevel();

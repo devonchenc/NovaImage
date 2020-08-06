@@ -146,6 +146,28 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
+void View::slicePlusOne()
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr || image->slice() <= 1)
+        return;
+
+    image->setSlice((image->currentSlice() + 1) >= image->slice() ? 0 : (image->currentSlice() + 1));
+
+    getGlobalDocument()->applyImageWidthAndLevel();
+}
+
+void View::sliceMinusOne()
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr || image->slice() <= 1)
+        return;
+
+    image->setSlice((image->currentSlice() - 1) < 0 ? (image->slice() - 1) : (image->currentSlice() - 1));
+
+    getGlobalDocument()->applyImageWidthAndLevel();
+}
+
 void View::saveGraphicsItem()
 {
     QString str = getGlobalImage()->getPathName();

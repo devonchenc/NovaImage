@@ -30,11 +30,6 @@ public:
 
     void showMagnifier();
 
-protected:
-    void wheelEvent(QWheelEvent*) override;
-
-    void dragEnterEvent(QDragEnterEvent* event) override;
-
 public slots:
     void zoomNormal();
     void zoom2x();
@@ -47,6 +42,9 @@ protected:
     void mousePressEvent(QMouseEvent* event) override;
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
+    void wheelEvent(QWheelEvent* event) override;
+
+    void dragEnterEvent(QDragEnterEvent* event) override;
 
     void drawForeground(QPainter* painter, const QRectF& rect);
 

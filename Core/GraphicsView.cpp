@@ -34,29 +34,6 @@ QPointF GraphicsView::mapImagePointToScene(qreal x, qreal y) const
     return pixmapItem->mapToScene(x, y);
 }
 
-void GraphicsView::wheelEvent(QWheelEvent* e)
-{
-    if (e->modifiers() & Qt::ControlModifier)
-    {
-        if (e->angleDelta().y() > 0)
-            zoomIn();
-        else
-            zoomOut();
-
-        e->accept();
-    }
-    else
-    {
-        QGraphicsView::wheelEvent(e);
-    }
-}
-
-void GraphicsView::dragEnterEvent(QDragEnterEvent* event)
-{
-    // Ignore drag event to make mainwindow handle it
-    event->ignore();
-}
-
 void GraphicsView::setZoomValue(int value)
 {
     _zoomFactor = value;
@@ -198,6 +175,38 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent* event)
     MouseHandler::handleRelease(event);
 
     QGraphicsView::mouseReleaseEvent(event);
+}
+
+void GraphicsView::wheelEvent(QWheelEvent* event)
+{
+    if (event->modifiers() & Qt::ControlModifier)
+    {
+        if (event->angleDelta().y() > 0)
+            zoomIn();
+        else
+            zoomOut();
+
+        event->accept();
+    }
+    else
+    {
+        BaseImage* image = getGlobalImage();
+        if (image)
+        {
+            if (event->angleDelta().y() > 0)
+                _view->slicePlusOne();
+            else
+                _view->sliceMinusOne();
+        }
+
+        QGraphicsView::wheelEvent(event);
+    }
+}
+
+void GraphicsView::dragEnterEvent(QDragEnterEvent* event)
+{
+    // Ignore drag event to make mainwindow handle it
+    event->ignore();
 }
 
 void GraphicsView::drawForeground(QPainter*, const QRectF&)
