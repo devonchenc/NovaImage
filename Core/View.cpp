@@ -1,11 +1,12 @@
 #include "View.h"
 
+#include <cmath>
 #include <QVBoxLayout>
 #include <QGraphicsItem>
 #include <QIcon>
 #include <QMenu>
 #include <QAction>
-#include <cmath>
+#include <QTimer>
 
 #include "GraphicsView.h"
 #include "GraphicsScene.h"
@@ -21,11 +22,14 @@ View::View(QWidget* parent)
     , _windowWidth(0)
     , _windowLevel(0)
     , _plotDlg(nullptr)
+    , _timer(new QTimer(this))
 {
     createItemMenus();
 
     _scene = new GraphicsScene(_itemMenu, parent);
     _view = new GraphicsView(this, _scene);
+
+    connect(_timer, &QTimer::timeout, this, &View::slicePlusOne);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(_view);
@@ -304,6 +308,30 @@ void View::zoomIn()
 void View::zoomOut()
 {
     view()->zoomOut();
+}
+
+void View::cine30FPS()
+{
+    if (_timer->isActive() && _timer->interval() == 33)
+    {
+        _timer->stop();
+    }
+    else
+    {
+        _timer->start(33);
+    }
+}
+
+void View::cine60FPS()
+{
+    if (_timer->isActive() && _timer->interval() == 17)
+    {
+        _timer->stop();
+    }
+    else
+    {
+        _timer->start(17);
+    }
 }
 
 void View::plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth)

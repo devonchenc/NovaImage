@@ -43,6 +43,8 @@ public slots:
 private slots:
     void layoutButtonClicked();
     void showInfoButtonClicked();
+    void FPS30ActionTriggered();
+    void FPS60ActionTriggered();
     void sliceActionTriggered();
     void imageWindowActionTriggered();
     void ROIWindowActionTriggered();
@@ -78,7 +80,8 @@ private:
     QAction* _rotate180Action;
     QAction* _resetTransformation;
 
-    QAction* _30FPSAction;
+    QAction* _FPS30Action;
+    QAction* _FPS60Action;
 
     QAction* _sliceAction;
 

@@ -13,6 +13,7 @@ public:
     AbstractReader(const QString& pathName, QObject* parent = nullptr)
         : QThread(parent)
         , _widget(nullptr)
+        , _waitForQuit(false)
         , _pathName(pathName)
         , _minValue(FLT_MAX)
         , _maxValue(-FLT_MAX)
@@ -20,11 +21,15 @@ public:
 
     void setWidget(QWidget* widget) { _widget = widget; }
 
+    void waitForQuit() { _waitForQuit = true; }
+
     float minValue() { return _minValue; }
     float maxValue() { return _maxValue; }
 
 protected:
     QWidget* _widget;
+    bool _waitForQuit;
+
     QString _pathName;
 
     float _minValue;
@@ -83,6 +88,9 @@ void ImageReader<Type>::run()
             QMetaObject::invokeMethod(_widget, "reject", Qt::QueuedConnection);
             return;
         }
+
+        if (_waitForQuit)
+            return;
 
         Type* temp = _buffer + i * _pixelPerSlice;
         for (int i = 1; i < _pixelPerSlice; i++)

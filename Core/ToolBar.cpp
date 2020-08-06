@@ -157,9 +157,12 @@ void ToolBar::createAction()
     _resetTransformation = new QAction(tr("Reset Transformation"), this);
     _resetTransformation->setIcon(QIcon(":/icon/svg/reset.svg"));
 
-    _30FPSAction = new QAction(tr("30 FPS"), this);
-    _30FPSAction->setCheckable(true);
-    _30FPSAction->setChecked(true);
+    _FPS30Action = new QAction("30 FPS", this);
+    _FPS30Action->setCheckable(true);
+    _FPS30Action->setChecked(true);
+    _FPS60Action = new QAction("60 FPS", this);
+    _FPS60Action->setCheckable(true);
+    _FPS60Action->setChecked(false);
 
     _sliceAction = new QAction(tr("Browse slices"), _sliceButton);
     _sliceAction->setObjectName("slice");
@@ -255,7 +258,8 @@ void ToolBar::createAction()
     connect(_rotate180Action, &QAction::triggered, mainWindow->getView(), &View::rotate180);
     connect(_resetTransformation, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
 
-    connect(_30FPSAction, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
+    connect(_FPS30Action, &QAction::triggered, this, &ToolBar::FPS30ActionTriggered);
+    connect(_FPS60Action, &QAction::triggered, this, &ToolBar::FPS60ActionTriggered);
 
     connect(_sliceAction, &QAction::triggered, this, &ToolBar::sliceActionTriggered);
 
@@ -373,11 +377,12 @@ void ToolBar::initButton()
     connect(_rotateButton, &QToolButton::clicked, _rotate90CWAction, &QAction::triggered);
 
     menu = new QMenu(this);
-    menu->addAction(_30FPSAction);
+    menu->addAction(_FPS30Action);
+    menu->addAction(_FPS60Action);
     _cineButton->setMenu(menu);
     _cineButton->setIcon(QIcon(":/icon/svg/cine.svg"));
     _cineButton->setToolTip(tr("Cine"));
-    connect(_cineButton, &QToolButton::clicked, _30FPSAction, &QAction::triggered);
+    connect(_cineButton, &QToolButton::clicked, _FPS30Action, &QAction::triggered);
 
     _sliceButton->setIconByName(":/icon/svg/slice.svg");
     _sliceButton->setToolTip(tr("Browse slices"));
@@ -657,6 +662,20 @@ void ToolBar::showInfoButtonClicked()
     _showAnnotationAction->toggled(checked);
     _showScaleAction->toggled(checked);
     _showMeasurementAction->toggled(checked);
+}
+
+void ToolBar::FPS30ActionTriggered()
+{
+    _FPS30Action->setChecked(true);
+    _FPS60Action->setChecked(false);
+    getGlobalView()->cine30FPS();
+}
+
+void ToolBar::FPS60ActionTriggered()
+{
+    _FPS30Action->setChecked(false);
+    _FPS60Action->setChecked(true);
+    getGlobalView()->cine60FPS();
 }
 
 void ToolBar::sliceActionTriggered()

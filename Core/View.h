@@ -64,6 +64,9 @@ public slots:
     void zoomIn();
     void zoomOut();
 
+    void cine30FPS();
+    void cine60FPS();
+
     void plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);
 
 private slots:
@@ -101,4 +104,6 @@ private:
     float _windowLevel;
 
     PlotDialog* _plotDlg;
+
+    QTimer* _timer;
 };

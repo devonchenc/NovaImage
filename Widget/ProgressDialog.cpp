@@ -2,9 +2,13 @@
 
 #include <QProgressBar>
 #include <QVBoxLayout>
+#include <QThread>
 
-ProgressDialog::ProgressDialog(QWidget* parent)
+#include "../Image/ImageReader.h"
+
+ProgressDialog::ProgressDialog(AbstractReader* thread, QWidget* parent)
     : QDialog(parent)
+    , _thread(thread)
 {
     setWindowTitle(tr("Progress"));
 
@@ -23,6 +27,11 @@ void ProgressDialog::setTitle(const QString& title)
 void ProgressDialog::setProgress(int progress)
 {
     _progressBar->setValue(progress);
+}
+
+void ProgressDialog::closeEvent(QCloseEvent*)
+{
+    _thread->waitForQuit();
 }
 
 void ProgressDialog::initUI()

@@ -86,7 +86,6 @@ bool RawImage::readData()
     if (_width <= 0 || _height <= 0 || _slice <= 0)
         return false;
 
-    ProgressDialog dlg;
     AbstractReader* reader = nullptr;
     switch (_dataType)
     {
@@ -126,6 +125,7 @@ bool RawImage::readData()
     }
     break;
     }
+    ProgressDialog dlg(reader);
     reader->setWidget(&dlg);
     reader->start();
     reader->deleteLater();

@@ -163,7 +163,6 @@ bool ScanImage::readData()
         headerSize = OLD_DATA_HEADER_SIZE;
     }
 
-    ProgressDialog dlg;
     AbstractReader* reader = nullptr;
     if (_dataHeader.DataType == 0)
     {
@@ -183,6 +182,7 @@ bool ScanImage::readData()
         uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
         reader = new ImageReader<uchar>(_pathName, headerSize, _width * _height, _slice, originalData);
     }
+    ProgressDialog dlg(reader);
     reader->setWidget(&dlg);
     reader->start();
     reader->deleteLater();
