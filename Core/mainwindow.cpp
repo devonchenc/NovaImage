@@ -57,10 +57,6 @@ MainWindow::MainWindow(QWidget* parent)
     _notification = new NotificationLayout;
     _recentFiles = new RecentFiles(this);
     _recentFiles->attachToMenuAfterItem(_fileMenu, _printAction, SLOT(openFile(const QString&)));
-
-    // For test
-    //	_doc->openFile("D:/Qt/John Wagner/STUDY/IM-0001-0001.dcm");
-    //	_doc->openFile("D:/test.png");
 }
 
 MainWindow::~MainWindow()
@@ -344,6 +340,8 @@ void MainWindow::imageOpened()
         setWindowTitle(title);
 
         _recentFiles->setMostRecentFile(getGlobalImage()->getPathName());
+
+        _toolBar->enableButton(true);
     }
 }
 
@@ -448,6 +446,8 @@ void MainWindow::close()
     setWindowTitle("NovaImage");
 
     WidgetManager::getInstance()->reset();
+
+    _toolBar->enableButton(false);
 }
 
 void MainWindow::print()

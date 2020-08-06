@@ -14,11 +14,11 @@ ToolButton* MouseHandler::_rightButton = nullptr;
 void MouseHandler::handlePress(QMouseEvent* event)
 {
     _mousePos = event->pos();
-    if (event->button() == Qt::LeftButton && _leftButton)
+    if (event->button() == Qt::LeftButton && _leftButton && _leftButton->isEnabled())
     {
         _leftButton->mouseHandler()->press(event);
     }
-    else if(event->button() == Qt::RightButton && _rightButton)
+    else if(event->button() == Qt::RightButton && _rightButton && _rightButton->isEnabled())
     {
         _rightButton->mouseHandler()->press(event);
     }
@@ -26,11 +26,11 @@ void MouseHandler::handlePress(QMouseEvent* event)
 
 void MouseHandler::handleMove(QMouseEvent* event)
 {
-    if (event->buttons() & Qt::LeftButton && _leftButton)
+    if (event->buttons() & Qt::LeftButton && _leftButton && _leftButton->isEnabled())
     {
         _leftButton->mouseHandler()->move(event);
     }
-    else if (event->buttons() & Qt::RightButton && _rightButton)
+    else if (event->buttons() & Qt::RightButton && _rightButton && _rightButton->isEnabled())
     {
         _rightButton->mouseHandler()->move(event);
     }
@@ -45,11 +45,11 @@ void MouseHandler::handleMove(QMouseEvent* event)
 
 void MouseHandler::handleRelease(QMouseEvent* event)
 {
-    if (event->button() == Qt::LeftButton && _leftButton)
+    if (event->button() == Qt::LeftButton && _leftButton && _leftButton->isEnabled())
     {
         _leftButton->mouseHandler()->release(event);
     }
-    else if (event->button() == Qt::RightButton && _rightButton)
+    else if (event->button() == Qt::RightButton && _rightButton && _rightButton->isEnabled())
     {
         _rightButton->mouseHandler()->release(event);
     }
@@ -115,7 +115,7 @@ void SliceMouseHandler::move(QMouseEvent* event)
         image->setSlice((image->currentSlice() - 1) < 0 ? (image->slice() - 1) : (image->currentSlice() - 1));
     }
 
-    getGlobalDocument()->repaintView();
+    getGlobalDocument()->applyImageWidthAndLevel();
 
     _mousePos = event->pos();
 }

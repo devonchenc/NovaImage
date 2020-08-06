@@ -83,10 +83,12 @@ bool Document::openFile(const QString& fileName)
     int displayWindow = settings.value("Image/displayWindow", 0).toInt();
     if (displayWindow == 0)
     {
+        // Default window
         getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
     }
     else
     {
+        // Full window
         float windowWidth = _image->getMaxValue() - _image->getMinValue();
         float windowLevel = (_image->getMaxValue() + _image->getMinValue()) / 2;
         getView()->setWindowWidthAndLevel(windowWidth, windowLevel);
@@ -199,6 +201,14 @@ void Document::repaintView()
     if (_image)
     {
         getView()->showImage(_image->getImageEntity());
+    }
+}
+
+void Document::setModified(bool flag)
+{
+    if (_image)
+    {
+        _modified = flag;
     }
 }
 

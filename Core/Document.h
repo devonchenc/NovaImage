@@ -50,7 +50,7 @@ public:
 
     bool modified() { return _modified; }
 
-    void setModified(bool flag) { _modified = flag; }
+    void setModified(bool flag);
 
     void saveGraphicsItem();
 

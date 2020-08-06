@@ -23,6 +23,8 @@ public:
 
     QVector<QAction*> actionVector() { return _actionVector; }
 
+    void enableButton(bool flag);
+
 private:
     void createButton();
 
@@ -71,10 +73,12 @@ private:
     QAction* _flipHorizontalAction;
     QAction* _flipVerticalAction;
 
-    QAction* _rotate90CW;
-    QAction* _rotate90CCW;
-    QAction* _rotate180;
+    QAction* _rotate90CWAction;
+    QAction* _rotate90CCWAction;
+    QAction* _rotate180Action;
     QAction* _resetTransformation;
+
+    QAction* _30FPSAction;
 
     QAction* _sliceAction;
 
@@ -116,6 +120,7 @@ private:
     QToolButton* _showInfoButton;
     QToolButton* _flipButton;
     QToolButton* _rotateButton;
+    QToolButton* _cineButton;
 
     ToolButton* _sliceButton;
     ToolButton* _imageWindowButton;

@@ -32,6 +32,23 @@ ToolBar::~ToolBar()
 {
 }
 
+void ToolBar::enableButton(bool flag)
+{
+    _saveButton->setEnabled(flag);
+    _printButton->setEnabled(flag);
+    _flipButton->setEnabled(flag);
+    _rotateButton->setEnabled(flag);
+    _cineButton->setEnabled(flag);
+
+    _sliceButton->setEnabled(flag);
+    _imageWindowButton->setEnabled(flag);
+    _zoomButton->setEnabled(flag);
+    _cursorButton->setEnabled(flag);
+    _measurementButton->setEnabled(flag);
+    _undoButton->setEnabled(flag);
+    _restoreButton->setEnabled(flag);
+}
+
 void ToolBar::createButton()
 {
     _openButton = new QToolButton;
@@ -54,6 +71,9 @@ void ToolBar::createButton()
     _rotateButton = new QToolButton;
     _rotateButton->setPopupMode(QToolButton::MenuButtonPopup);
 
+    _cineButton = new QToolButton;
+    _cineButton->setPopupMode(QToolButton::MenuButtonPopup);
+
     _sliceButton = new ToolButton;
 
     _imageWindowButton = new ToolButton;
@@ -69,7 +89,7 @@ void ToolBar::createButton()
     _measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 
     _undoButton = new QToolButton;
-   //	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
+//	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
 
     _restoreButton = new QToolButton;
 
@@ -81,6 +101,7 @@ void ToolBar::createButton()
     addWidget(_showInfoButton);
     addWidget(_flipButton);
     addWidget(_rotateButton);
+    addWidget(_cineButton);
     addSeparator();
     addWidget(_sliceButton);
     addWidget(_imageWindowButton);
@@ -90,6 +111,8 @@ void ToolBar::createButton()
     addSeparator();
     addWidget(_undoButton);
     addWidget(_restoreButton);
+
+    enableButton(false);
 }
 
 void ToolBar::createAction()
@@ -126,13 +149,15 @@ void ToolBar::createAction()
     _flipVerticalAction->setCheckable(true);
     _flipVerticalAction->setIcon(QIcon(":/icon/svg/flip_vertical.svg"));
 
-    _rotate90CW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this);	//0x00B0:degree sign
-    _rotate90CW->setIcon(QIcon(":/icon/svg/rotate_cw.svg"));
-    _rotate90CCW = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
-    _rotate90CCW->setIcon(QIcon(":/icon/svg/rotate_ccw.svg"));
-    _rotate180 = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
+    _rotate90CWAction = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this);	//0x00B0:degree sign
+    _rotate90CWAction->setIcon(QIcon(":/icon/svg/rotate_cw.svg"));
+    _rotate90CCWAction = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
+    _rotate90CCWAction->setIcon(QIcon(":/icon/svg/rotate_ccw.svg"));
+    _rotate180Action = new QAction(tr("Rotate 180 ") + QString(QChar(0x00B0)), this);
     _resetTransformation = new QAction(tr("Reset Transformation"), this);
     _resetTransformation->setIcon(QIcon(":/icon/svg/reset.svg"));
+
+    _30FPSAction = new QAction(tr("30 FPS"), this);
 
     _sliceAction = new QAction(tr("Browse slices"), _sliceButton);
     _sliceAction->setObjectName("slice");
@@ -223,10 +248,12 @@ void ToolBar::createAction()
     connect(_flipHorizontalAction, &QAction::triggered, mainWindow->getView(), &View::flipHorizontal);
     connect(_flipVerticalAction, &QAction::triggered, mainWindow->getView(), &View::flipVertical);
 
-    connect(_rotate90CW, &QAction::triggered, mainWindow->getView(), &View::rotate90CW);
-    connect(_rotate90CCW, &QAction::triggered, mainWindow->getView(), &View::rotate90CCW);
-    connect(_rotate180, &QAction::triggered, mainWindow->getView(), &View::rotate180);
+    connect(_rotate90CWAction, &QAction::triggered, mainWindow->getView(), &View::rotate90CW);
+    connect(_rotate90CCWAction, &QAction::triggered, mainWindow->getView(), &View::rotate90CCW);
+    connect(_rotate180Action, &QAction::triggered, mainWindow->getView(), &View::rotate180);
     connect(_resetTransformation, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
+
+    connect(_30FPSAction, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
 
     connect(_sliceAction, &QAction::triggered, this, &ToolBar::sliceActionTriggered);
 
@@ -332,16 +359,23 @@ void ToolBar::initButton()
     connect(_flipButton, &QToolButton::clicked, _flipHorizontalAction, &QAction::triggered);
 
     menu = new QMenu(this);
-    menu->addAction(_rotate90CW);
-    menu->addAction(_rotate90CCW);
+    menu->addAction(_rotate90CWAction);
+    menu->addAction(_rotate90CCWAction);
     menu->addSeparator();
-    menu->addAction(_rotate180);
+    menu->addAction(_rotate180Action);
     menu->addSeparator();
     menu->addAction(_resetTransformation);
     _rotateButton->setMenu(menu);
     _rotateButton->setIcon(QIcon(":/icon/svg/rotate_cw.svg"));
     _rotateButton->setToolTip(tr("Rotate"));
-    connect(_rotateButton, &QToolButton::clicked, _rotate90CW, &QAction::triggered);
+    connect(_rotateButton, &QToolButton::clicked, _rotate90CWAction, &QAction::triggered);
+
+    menu = new QMenu(this);
+    menu->addAction(_30FPSAction);
+    _cineButton->setMenu(menu);
+    _cineButton->setIcon(QIcon(":/icon/svg/cine.svg"));
+    _cineButton->setToolTip(tr("Cine"));
+    connect(_cineButton, &QToolButton::clicked, _30FPSAction, &QAction::triggered);
 
     _sliceButton->setIconByName(":/icon/svg/slice.svg");
     _sliceButton->setToolTip(tr("Browse slices"));
@@ -442,9 +476,9 @@ void ToolBar::changeEvent(QEvent* event)
         _flipHorizontalAction->setText(tr("Flip Horizontal"));
         _flipVerticalAction->setText(tr("Flip Vertical"));
 
-        _rotate90CW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"));
-        _rotate90CCW->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"));
-        _rotate180->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
+        _rotate90CWAction->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"));
+        _rotate90CCWAction->setText(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"));
+        _rotate180Action->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
         _resetTransformation->setText(tr("Reset Transformation"));
 
         _sliceAction->setText(tr("Browse slices"));
@@ -483,6 +517,7 @@ void ToolBar::changeEvent(QEvent* event)
         _showInfoButton->setToolTip(tr("Toggle Annotations"));
         _flipButton->setToolTip(tr("Flip"));
         _rotateButton->setToolTip(tr("Rotate"));
+        _cineButton->setToolTip(tr("Cine"));
         _sliceButton->setToolTip(tr("Browse slices"));
         _imageWindowButton->setToolTip(tr("Adjust Image Window"));
         _zoomButton->setToolTip(tr("Zoom Image"));
@@ -498,7 +533,7 @@ void ToolBar::changeEvent(QEvent* event)
 bool ToolBar::eventFilter(QObject* obj, QEvent* event)
 {
     ToolButton* toolButton = static_cast<ToolButton*>(obj);
-    if (toolButton)
+    if (toolButton && toolButton->isEnabled())
     {
         if (event->type() == QEvent::MouseButtonPress)
         {

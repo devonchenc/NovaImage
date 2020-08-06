@@ -39,5 +39,6 @@
         <file>svg/guide.svg</file>
         <file>svg/about.svg</file>
         <file>svg/slice.svg</file>
+        <file>svg/cine.svg</file>
     </qresource>
 </RCC>
