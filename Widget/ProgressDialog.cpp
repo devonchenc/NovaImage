@@ -16,7 +16,7 @@ ProgressDialog::ProgressDialog(AbstractReader* thread, QWidget* parent)
 
     initUI();
 
-    resize(400, 80);
+    setFixedSize(400, 80);
 }
 
 void ProgressDialog::setTitle(const QString& title)

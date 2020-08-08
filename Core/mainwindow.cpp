@@ -524,6 +524,8 @@ void MainWindow::loadPlugin()
             }
         }
     }
+
+    _toolboxDockWidget->raise();
 }
 
 void MainWindow::loadTranslator()
