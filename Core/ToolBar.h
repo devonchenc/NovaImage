@@ -43,6 +43,8 @@ public slots:
 private slots:
     void layoutButtonClicked();
     void showInfoButtonClicked();
+    void oneViewActionTriggered();
+    void threeViewActionTriggered();
     void FPS30ActionTriggered();
     void FPS60ActionTriggered();
     void sliceActionTriggered();
@@ -65,6 +67,8 @@ private:
 
     QAction* _showMenuAction;
     QAction* _showDockWidgetAction;
+    QAction* _oneViewAction;
+    QAction* _threeViewAction;
     QAction* _fullScreenAction;
 
     QAction* _showAnnotationAction;

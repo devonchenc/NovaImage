@@ -180,6 +180,9 @@
     <ClCompile Include="Widget\ProgressDialog.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="Core\LayoutManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -280,6 +283,9 @@
     </QtMoc>
     <QtMoc Include="Image\ImageReader.h">
       <Filter>Image</Filter>
+    </QtMoc>
+    <QtMoc Include="Core\LayoutManager.h">
+      <Filter>Core</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

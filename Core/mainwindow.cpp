@@ -18,6 +18,7 @@
 #include "mainwindow.h"
 #include "View.h"
 #include "Document.h"
+#include "LayoutManager.h"
 #include "GlobalFunc.h"
 #include "GraphicsView.h"
 #include "ToolBar.h"
@@ -35,22 +36,26 @@
 
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
+    , _doc(new Document(this))
+    , _topView(new View(this))
+    , _frontalView(new View(this))
+    , _profileView(new View(this))
+    , _volumeView(new View(this))
     , _translator(nullptr)
 {
-    _doc = new Document(this);
-
     // main area for image display
-    _view = new View(this);
-    setCentralWidget(_view);
+    QWidget* centerWidget = new QWidget;
+    setCentralWidget(centerWidget);
+
+    _layoutManager = new LayoutManager(centerWidget);
+    _layoutManager->setWidget(_topView, _frontalView, _profileView, _volumeView);
+    _layoutManager->oneView();
 
     initUI();
 
     loadPlugin();
 
     loadTranslator();
-
-    //	showMaximized();
-    //	setWindowState(Qt::WindowMaximized);
 
     setAcceptDrops(true);
 
@@ -61,10 +66,25 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-    if (_view)
+    if (_topView)
     {
-        delete _view;
-        _view = nullptr;
+        delete _topView;
+        _topView = nullptr;
+    }
+    if (_frontalView)
+    {
+        delete _frontalView;
+        _frontalView = nullptr;
+    }
+    if (_profileView)
+    {
+        delete _profileView;
+        _profileView = nullptr;
+    }
+    if (_volumeView)
+    {
+        delete _volumeView;
+        _volumeView = nullptr;
     }
     if (_doc)
     {
@@ -254,16 +274,16 @@ void MainWindow::createToolWidget()
 
     connect(toolbox, &ToolBoxWidget::setItemType, _toolBar, &ToolBar::setMeasurementType);
 
-    connect(toolbox, &ToolBoxWidget::setLineColor, _view->scene(), &GraphicsScene::setLineColor);
-    connect(toolbox, &ToolBoxWidget::setEnableFillColor, _view->scene(), &GraphicsScene::enableFillColor);
-    connect(toolbox, &ToolBoxWidget::setFillColor, _view->scene(), &GraphicsScene::setFillColor);
-    connect(toolbox, &ToolBoxWidget::setTransparency, _view->scene(), &GraphicsScene::setTransparency);
-    connect(toolbox, &ToolBoxWidget::setTextColor, _view->scene(), &GraphicsScene::setTextColor);
-    connect(toolbox, &ToolBoxWidget::setTextFont, _view->scene(), &GraphicsScene::setTextFont);
+    connect(toolbox, &ToolBoxWidget::setLineColor, _topView->scene(), &GraphicsScene::setLineColor);
+    connect(toolbox, &ToolBoxWidget::setEnableFillColor, _topView->scene(), &GraphicsScene::enableFillColor);
+    connect(toolbox, &ToolBoxWidget::setFillColor, _topView->scene(), &GraphicsScene::setFillColor);
+    connect(toolbox, &ToolBoxWidget::setTransparency, _topView->scene(), &GraphicsScene::setTransparency);
+    connect(toolbox, &ToolBoxWidget::setTextColor, _topView->scene(), &GraphicsScene::setTextColor);
+    connect(toolbox, &ToolBoxWidget::setTextFont, _topView->scene(), &GraphicsScene::setTextFont);
 
-    connect(_view->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
-    connect(_view->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
-    connect(_view->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
+    connect(_topView->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
+    connect(_topView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
+    connect(_topView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
     connect(this, &MainWindow::setToolBoxVisible, toolbox, &ToolBoxWidget::setWidgetVisible);
 
     CommonWidget* common = new CommonWidget();
@@ -368,6 +388,16 @@ void MainWindow::showDockWidget(bool show)
     }
 }
 
+void MainWindow::oneView()
+{
+    _layoutManager->oneView();
+}
+
+void MainWindow::threeView()
+{
+    _layoutManager->threeView();
+}
+
 void MainWindow::fullScreen()
 {
     if (isFullScreen())
@@ -382,32 +412,32 @@ void MainWindow::fullScreen()
 
 void MainWindow::showAnnotation(bool show)
 {
-    _view->view()->showAnnotation(show);
+    _topView->view()->showAnnotation(show);
 }
 
 void MainWindow::showCrossLine(bool show)
 {
-    _view->view()->showCrossLine(show);
+    _topView->view()->showCrossLine(show);
 }
 
 void MainWindow::showScale(bool show)
 {
-    _view->view()->showLineScale(show);
+    _topView->view()->showLineScale(show);
 }
 
 void MainWindow::showMeasurement(bool show)
 {
-    _view->scene()->showMeasurement(show);
+    _topView->scene()->showMeasurement(show);
 }
 
 void MainWindow::zoomIn()
 {
-    _view->view()->zoomIn();
+    _topView->view()->zoomIn();
 }
 
 void MainWindow::zoomOut()
 {
-    _view->view()->zoomOut();
+    _topView->view()->zoomOut();
 }
 
 void MainWindow::saveAs()
@@ -466,7 +496,7 @@ void MainWindow::printPreview(QPrinter* printer)
 {
     QPainter painter(printer);
     QRectF target(0, 0, printer->width(), printer->height());
-    GraphicsView* graphicsView = _view->view();
+    GraphicsView* graphicsView = _topView->view();
     QRectF sceneRect(graphicsView->sceneRect());
     QRect source(graphicsView->mapFromScene(sceneRect.topLeft()), graphicsView->mapFromScene(sceneRect.bottomRight()));
     graphicsView->render(&painter, target, source);

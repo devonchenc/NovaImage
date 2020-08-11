@@ -47,6 +47,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Core/ToolButton.h \
     ./Core/View.h \
     ./Core/RecentFiles.h \
+	./Core/LayoutManager.h \
     ./Notification/NotificationLayout.h \
     ./Notification/NotificationWidget.h \
     ./Diagram/DiagramAngleItem.h \
@@ -95,6 +96,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Core/ToolButton.cpp \
     ./Core/UndoSystem.cpp \
     ./Core/View.cpp \
+    ./Core/LayoutManager.cpp \
     ./Notification/NotificationLayout.cpp \
     ./Notification/NotificationWidget.cpp \
     ./Diagram/DiagramAngleItem.cpp \

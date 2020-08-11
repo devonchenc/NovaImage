@@ -18,6 +18,7 @@ QT_END_NAMESPACE
 
 class View;
 class Document;
+class LayoutManager;
 class BaseWidget;
 class ToolBar;
 class PluginInterface;
@@ -34,7 +35,7 @@ public:
 
 public:
     Document* getDocument() { return _doc; }
-    View* getView() { return _view; }
+    View* getView() { return _topView; }
 
     void imageOpened();
 
@@ -78,6 +79,8 @@ public slots:
     void saveAsRawImage();
     void showMenuBar(bool show);
     void showDockWidget(bool show);
+    void oneView();
+    void threeView();
     void fullScreen();
     void showAnnotation(bool show);
     void showCrossLine(bool show);
@@ -107,8 +110,12 @@ public slots:
 private:
     ToolBar* _toolBar;
 
-    View* _view;
     Document* _doc;
+    View* _topView;
+    View* _frontalView;
+    View* _profileView;
+    View* _volumeView;
+    LayoutManager* _layoutManager;
 
     QMenu* _fileMenu;
     QMenu* _editMenu;

@@ -15,6 +15,7 @@
     <ClCompile Include="Core\GlobalFunc.cpp" />
     <ClCompile Include="Core\GraphicsScene.cpp" />
     <ClCompile Include="Core\GraphicsView.cpp" />
+    <ClCompile Include="Core\LayoutManager.cpp" />
     <ClCompile Include="Core\main.cpp" />
     <ClCompile Include="Core\mainwindow.cpp" />
     <ClCompile Include="Core\MouseHandler.cpp" />
@@ -72,6 +73,7 @@
     <QtMoc Include="Core\GraphicsScene.h" />
     <QtMoc Include="Core\GraphicsView.h" />
     <QtMoc Include="Core\mainwindow.h" />
+    <QtMoc Include="Core\LayoutManager.h" />
     <ClInclude Include="Core\MouseHandler.h" />
     <QtMoc Include="Core\PluginInterface.h" />
     <QtMoc Include="Core\ToolBar.h" />

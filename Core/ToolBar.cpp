@@ -127,6 +127,12 @@ void ToolBar::createAction()
     _showDockWidgetAction = new QAction(tr("Dock Widgets"), this);
     _showDockWidgetAction->setCheckable(true);
     _showDockWidgetAction->setChecked(true);
+    _oneViewAction = new QAction(tr("One View"), this);
+    _oneViewAction->setCheckable(true);
+    _oneViewAction->setChecked(true);
+    _threeViewAction = new QAction(tr("Three View"), this);
+    _threeViewAction->setCheckable(true);
+    _threeViewAction->setChecked(false);
     _fullScreenAction = new QAction(tr("Full Screen Mode"), this);
     _fullScreenAction->setIcon(QIcon(":/icon/svg/fullscreen.svg"));
 
@@ -243,6 +249,8 @@ void ToolBar::createAction()
 
     connect(_showMenuAction, &QAction::toggled, mainWindow, &MainWindow::showMenuBar);
     connect(_showDockWidgetAction, &QAction::toggled, mainWindow, &MainWindow::showDockWidget);
+    connect(_oneViewAction, &QAction::triggered, this, &ToolBar::oneViewActionTriggered);
+    connect(_threeViewAction, &QAction::triggered, this, &ToolBar::threeViewActionTriggered);
     connect(_fullScreenAction, &QAction::triggered, mainWindow, &MainWindow::fullScreen);
 
     connect(_showAnnotationAction, &QAction::toggled, mainWindow, &MainWindow::showAnnotation);
@@ -339,6 +347,9 @@ void ToolBar::initButton()
     menu = new QMenu(this);
     menu->addAction(_showMenuAction);
     menu->addAction(_showDockWidgetAction);
+    menu->addSeparator();
+    menu->addAction(_oneViewAction);
+    menu->addAction(_threeViewAction);
     menu->addSeparator();
     menu->addAction(_fullScreenAction);
     _layoutButton->setMenu(menu);
@@ -474,6 +485,8 @@ void ToolBar::changeEvent(QEvent* event)
 
         _showMenuAction->setText(tr("Menu"));
         _showDockWidgetAction->setText(tr("Dock Widgets"));
+        _oneViewAction->setText(tr("One View"));
+        _threeViewAction->setText(tr("Three View"));
         _fullScreenAction->setText(tr("Full Screen Mode"));
         _showAnnotationAction->setText(tr("Annotations"));
         _showCrossAction->setText(tr("Cross Reference Line"));
@@ -662,6 +675,20 @@ void ToolBar::showInfoButtonClicked()
     _showAnnotationAction->toggled(checked);
     _showScaleAction->toggled(checked);
     _showMeasurementAction->toggled(checked);
+}
+
+void ToolBar::oneViewActionTriggered()
+{
+    _oneViewAction->setChecked(true);
+    _threeViewAction->setChecked(false);
+    getGlobalWindow()->oneView();
+}
+
+void ToolBar::threeViewActionTriggered()
+{
+    _oneViewAction->setChecked(false);
+    _threeViewAction->setChecked(true);
+    getGlobalWindow()->threeView();
 }
 
 void ToolBar::FPS30ActionTriggered()
