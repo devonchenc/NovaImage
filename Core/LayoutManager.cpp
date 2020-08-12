@@ -1,7 +1,6 @@
 #include "LayoutManager.h"
 
 #include <QWidget>
-#include <QFrame>
 #include <QGridLayout>
 
 LayoutManager::LayoutManager(QWidget* parent)
@@ -11,47 +10,73 @@ LayoutManager::LayoutManager(QWidget* parent)
     , _frontalView(nullptr)
     , _profileView(nullptr)
     , _volumeView(nullptr)
+    , _gridLayout(new QGridLayout)
 {
 
 }
 
-void LayoutManager::setWidget(QFrame* top, QFrame* frontal, QFrame* profile, QFrame* volume)
+void LayoutManager::setWidget(QWidget* top, QWidget* frontal, QWidget* profile, QWidget* volume)
 {
     _topView = top;
     _frontalView = frontal;
     _profileView = profile;
     _volumeView = volume;
+
+    _parentWidget->setLayout(_gridLayout);
 }
 
 void LayoutManager::oneView()
 {
-    QLayout* layout = _parentWidget->layout();
-    if (layout)
-        delete layout;
-
+    removeWidget();
     _frontalView->hide();
     _profileView->hide();
     _volumeView->hide();
 
-    QVBoxLayout* vLayout = new QVBoxLayout;
-    vLayout->addWidget(_topView);
-    _parentWidget->setLayout(vLayout);
+    _gridLayout->addWidget(_topView, 0, 0);
+    _gridLayout->setColumnStretch(0, 0);
+    _gridLayout->setColumnStretch(1, 0);
 }
 
 void LayoutManager::threeView()
 {
-    QLayout* layout = _parentWidget->layout();
-    if (layout)
-        delete layout;
-
+    removeWidget();
     _frontalView->show();
     _profileView->show();
     _volumeView->show();
 
-    QGridLayout* gridLayout = new QGridLayout;
-    gridLayout->addWidget(_topView, 0, 0);
-    gridLayout->addWidget(_frontalView, 0, 1);
-    gridLayout->addWidget(_profileView, 1, 0);
-    gridLayout->addWidget(_volumeView, 1, 1);
-    _parentWidget->setLayout(gridLayout);
+    _gridLayout->addWidget(_topView, 0, 0);
+    _gridLayout->addWidget(_frontalView, 0, 1);
+    _gridLayout->addWidget(_profileView, 1, 0);
+    _gridLayout->addWidget(_volumeView, 1, 1);
+
+    _gridLayout->setColumnStretch(0, 1);
+    _gridLayout->setColumnStretch(1, 1);
+}
+
+void LayoutManager::volumeView()
+{
+    removeWidget();
+    _frontalView->show();
+    _profileView->show();
+    _volumeView->show();
+
+    _gridLayout->addWidget(_topView, 0, 0);
+    _gridLayout->addWidget(_frontalView, 1, 0);
+    _gridLayout->addWidget(_profileView, 2, 0);
+    _gridLayout->addWidget(_volumeView, 0, 1, 3, 1);
+
+    _gridLayout->setColumnStretch(0, 1);
+    _gridLayout->setColumnStretch(1, 3);
+}
+
+void LayoutManager::removeWidget()
+{
+    for (int i = (_gridLayout->count() - 1); i >= 0; --i)
+    {
+        QLayoutItem* item = _gridLayout->takeAt(i);
+        if (item)
+        {
+            _gridLayout->removeWidget(item->widget());
+        }
+    }
 }

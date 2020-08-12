@@ -127,12 +127,18 @@ void ToolBar::createAction()
     _showDockWidgetAction = new QAction(tr("Dock Widgets"), this);
     _showDockWidgetAction->setCheckable(true);
     _showDockWidgetAction->setChecked(true);
-    _oneViewAction = new QAction(tr("One View"), this);
-    _oneViewAction->setCheckable(true);
-    _oneViewAction->setChecked(true);
+    _singleViewAction = new QAction(tr("Single View"), this);
+    _singleViewAction->setIcon(QIcon(":/icon/svg/singleview.svg"));
+    _singleViewAction->setCheckable(true);
+    _singleViewAction->setChecked(true);
     _threeViewAction = new QAction(tr("Three View"), this);
+    _threeViewAction->setIcon(QIcon(":/icon/svg/threeview.svg"));
     _threeViewAction->setCheckable(true);
     _threeViewAction->setChecked(false);
+    _volumeViewAction = new QAction(tr("Volume View"), this);
+    _volumeViewAction->setIcon(QIcon(":/icon/svg/volumeview.svg"));
+    _volumeViewAction->setCheckable(true);
+    _volumeViewAction->setChecked(false);
     _fullScreenAction = new QAction(tr("Full Screen Mode"), this);
     _fullScreenAction->setIcon(QIcon(":/icon/svg/fullscreen.svg"));
 
@@ -249,8 +255,9 @@ void ToolBar::createAction()
 
     connect(_showMenuAction, &QAction::toggled, mainWindow, &MainWindow::showMenuBar);
     connect(_showDockWidgetAction, &QAction::toggled, mainWindow, &MainWindow::showDockWidget);
-    connect(_oneViewAction, &QAction::triggered, this, &ToolBar::oneViewActionTriggered);
+    connect(_singleViewAction, &QAction::triggered, this, &ToolBar::singleViewActionTriggered);
     connect(_threeViewAction, &QAction::triggered, this, &ToolBar::threeViewActionTriggered);
+    connect(_volumeViewAction, &QAction::triggered, this, &ToolBar::volumeViewActionTriggered);
     connect(_fullScreenAction, &QAction::triggered, mainWindow, &MainWindow::fullScreen);
 
     connect(_showAnnotationAction, &QAction::toggled, mainWindow, &MainWindow::showAnnotation);
@@ -348,8 +355,9 @@ void ToolBar::initButton()
     menu->addAction(_showMenuAction);
     menu->addAction(_showDockWidgetAction);
     menu->addSeparator();
-    menu->addAction(_oneViewAction);
+    menu->addAction(_singleViewAction);
     menu->addAction(_threeViewAction);
+    menu->addAction(_volumeViewAction);
     menu->addSeparator();
     menu->addAction(_fullScreenAction);
     _layoutButton->setMenu(menu);
@@ -485,8 +493,9 @@ void ToolBar::changeEvent(QEvent* event)
 
         _showMenuAction->setText(tr("Menu"));
         _showDockWidgetAction->setText(tr("Dock Widgets"));
-        _oneViewAction->setText(tr("One View"));
+        _singleViewAction->setText(tr("Single View"));
         _threeViewAction->setText(tr("Three View"));
+        _volumeViewAction->setText(tr("Volume View"));
         _fullScreenAction->setText(tr("Full Screen Mode"));
         _showAnnotationAction->setText(tr("Annotations"));
         _showCrossAction->setText(tr("Cross Reference Line"));
@@ -677,18 +686,28 @@ void ToolBar::showInfoButtonClicked()
     _showMeasurementAction->toggled(checked);
 }
 
-void ToolBar::oneViewActionTriggered()
+void ToolBar::singleViewActionTriggered()
 {
-    _oneViewAction->setChecked(true);
+    _singleViewAction->setChecked(true);
     _threeViewAction->setChecked(false);
-    getGlobalWindow()->oneView();
+    _volumeViewAction->setChecked(false);
+    getGlobalWindow()->singleView();
 }
 
 void ToolBar::threeViewActionTriggered()
 {
-    _oneViewAction->setChecked(false);
+    _singleViewAction->setChecked(false);
     _threeViewAction->setChecked(true);
+    _volumeViewAction->setChecked(false);
     getGlobalWindow()->threeView();
+}
+
+void ToolBar::volumeViewActionTriggered()
+{
+    _singleViewAction->setChecked(false);
+    _threeViewAction->setChecked(false);
+    _volumeViewAction->setChecked(true);
+    getGlobalWindow()->volumeView();
 }
 
 void ToolBar::FPS30ActionTriggered()

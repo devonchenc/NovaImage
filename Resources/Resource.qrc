@@ -40,5 +40,8 @@
         <file>svg/about.svg</file>
         <file>svg/slice.svg</file>
         <file>svg/cine.svg</file>
+        <file>svg/singleview.svg</file>
+        <file>svg/threeview.svg</file>
+        <file>svg/volumeview.svg</file>
     </qresource>
 </RCC>

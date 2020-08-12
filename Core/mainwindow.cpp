@@ -388,7 +388,7 @@ void MainWindow::showDockWidget(bool show)
     }
 }
 
-void MainWindow::oneView()
+void MainWindow::singleView()
 {
     _layoutManager->oneView();
 }
@@ -396,6 +396,11 @@ void MainWindow::oneView()
 void MainWindow::threeView()
 {
     _layoutManager->threeView();
+}
+
+void MainWindow::volumeView()
+{
+    _layoutManager->volumeView();
 }
 
 void MainWindow::fullScreen()

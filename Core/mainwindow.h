@@ -79,8 +79,9 @@ public slots:
     void saveAsRawImage();
     void showMenuBar(bool show);
     void showDockWidget(bool show);
-    void oneView();
+    void singleView();
     void threeView();
+    void volumeView();
     void fullScreen();
     void showAnnotation(bool show);
     void showCrossLine(bool show);

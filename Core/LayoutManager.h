@@ -4,7 +4,6 @@
 
 QT_BEGIN_NAMESPACE
 class QWidget;
-class QFrame;
 class QGridLayout;
 class QVBoxLayout;
 QT_END_NAMESPACE
@@ -17,17 +16,22 @@ public:
     LayoutManager(QWidget* parent);
 
 public:
-    void setWidget(QFrame* top, QFrame* frontal, QFrame* profile, QFrame* volume);
+    void setWidget(QWidget* top, QWidget* frontal, QWidget* profile, QWidget* volume);
 
     void oneView();
-
     void threeView();
+    void volumeView();
+
+private:
+    void removeWidget();
 
 private:
     QWidget* _parentWidget;
 
-    QFrame* _topView;
-    QFrame* _frontalView;
-    QFrame* _profileView;
-    QFrame* _volumeView;
+    QWidget* _topView;
+    QWidget* _frontalView;
+    QWidget* _profileView;
+    QWidget* _volumeView;
+
+    QGridLayout* _gridLayout;
 };
