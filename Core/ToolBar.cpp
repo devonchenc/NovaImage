@@ -265,13 +265,13 @@ void ToolBar::createAction()
     connect(_showScaleAction, &QAction::toggled, mainWindow, &MainWindow::showScale);
     connect(_showMeasurementAction, &QAction::toggled, mainWindow, &MainWindow::showMeasurement);
 
-    connect(_flipHorizontalAction, &QAction::triggered, mainWindow->getView(), &View::flipHorizontal);
-    connect(_flipVerticalAction, &QAction::triggered, mainWindow->getView(), &View::flipVertical);
+    connect(_flipHorizontalAction, &QAction::triggered, mainWindow->getDefaultView(), &View::flipHorizontal);
+    connect(_flipVerticalAction, &QAction::triggered, mainWindow->getDefaultView(), &View::flipVertical);
 
-    connect(_rotate90CWAction, &QAction::triggered, mainWindow->getView(), &View::rotate90CW);
-    connect(_rotate90CCWAction, &QAction::triggered, mainWindow->getView(), &View::rotate90CCW);
-    connect(_rotate180Action, &QAction::triggered, mainWindow->getView(), &View::rotate180);
-    connect(_resetTransformation, &QAction::triggered, mainWindow->getView(), &View::resetTransformation);
+    connect(_rotate90CWAction, &QAction::triggered, mainWindow->getDefaultView(), &View::rotate90CW);
+    connect(_rotate90CCWAction, &QAction::triggered, mainWindow->getDefaultView(), &View::rotate90CCW);
+    connect(_rotate180Action, &QAction::triggered, mainWindow->getDefaultView(), &View::rotate180);
+    connect(_resetTransformation, &QAction::triggered, mainWindow->getDefaultView(), &View::resetTransformation);
 
     connect(_FPS30Action, &QAction::triggered, this, &ToolBar::FPS30ActionTriggered);
     connect(_FPS60Action, &QAction::triggered, this, &ToolBar::FPS60ActionTriggered);
@@ -286,13 +286,13 @@ void ToolBar::createAction()
 
     connect(_zoomAction, &QAction::triggered, this, &ToolBar::zoomActionTriggered);
     connect(_magnifierAction, &QAction::triggered, this, &ToolBar::magnifierActionTriggered);
-    connect(_fitWindowAction, &QAction::triggered, mainWindow->getView(), &View::fitWindow);
-    connect(_1xAction, &QAction::triggered, mainWindow->getView(), &View::zoomNormal);
-    connect(_2xAction, &QAction::triggered, mainWindow->getView(), &View::zoom2x);
-    connect(_4xAction, &QAction::triggered, mainWindow->getView(), &View::zoom4x);
-    connect(_8xAction, &QAction::triggered, mainWindow->getView(), &View::zoom8x);
-    connect(_zoomInAction, &QAction::triggered, mainWindow->getView(), &View::zoomIn);
-    connect(_zoomOutAction, &QAction::triggered, mainWindow->getView(), &View::zoomOut);
+    connect(_fitWindowAction, &QAction::triggered, mainWindow->getDefaultView(), &View::fitWindow);
+    connect(_1xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoomNormal);
+    connect(_2xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoom2x);
+    connect(_4xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoom4x);
+    connect(_8xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoom8x);
+    connect(_zoomInAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoomIn);
+    connect(_zoomOutAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoomOut);
 
     connect(_cursorAction, &QAction::triggered, this, &ToolBar::selectItem);
     connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);

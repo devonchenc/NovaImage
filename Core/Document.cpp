@@ -326,5 +326,5 @@ void Document::restore()
 
 View* Document::getView() const
 {
-    return pMainWindow->getView();
+    return pMainWindow->getDefaultView();
 }

@@ -145,6 +145,26 @@ void MainWindow::createActions()
     _restoreAction->setIcon(QIcon(":/icon/svg/restore.svg"));
     _settingsAction = new QAction(tr("&Preferences..."), this);
 
+    _singleViewAction = new QAction(tr("Single View"), this);
+    _singleViewAction->setIcon(QIcon(":/icon/svg/singleview.svg"));
+    _singleViewAction->setCheckable(true);
+    _singleViewAction->setChecked(true);
+    _threeViewAction = new QAction(tr("Three View"), this);
+    _threeViewAction->setIcon(QIcon(":/icon/svg/threeview.svg"));
+    _threeViewAction->setCheckable(true);
+    _threeViewAction->setChecked(false);
+    _volumeViewAction = new QAction(tr("Volume View"), this);
+    _volumeViewAction->setIcon(QIcon(":/icon/svg/volumeview.svg"));
+    _volumeViewAction->setCheckable(true);
+    _volumeViewAction->setChecked(false);
+
+    QActionGroup* viewGroup = new QActionGroup(this);
+    viewGroup->addAction(_singleViewAction);
+    viewGroup->addAction(_threeViewAction);
+    viewGroup->addAction(_volumeViewAction);
+    viewGroup->setExclusive(true);
+    connect(viewGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLayout(QAction*)));
+
     _zoomInAction = new QAction(tr("Zoom &In"), this);
     _zoomInAction->setIcon(QIcon(":/icon/svg/zoomin.svg"));
     _zoomOutAction = new QAction(tr("Zoom &Out"), this);
@@ -187,6 +207,10 @@ void MainWindow::createActions()
     _editMenu->addAction(_settingsAction);
 
     _viewMenu = menuBar()->addMenu(tr("&View"));
+    _viewMenu->addAction(_singleViewAction);
+    _viewMenu->addAction(_threeViewAction);
+    _viewMenu->addAction(_volumeViewAction);
+    _viewMenu->addSeparator();
     _viewMenu->addAction(_zoomOutAction);
     _viewMenu->addAction(_zoomInAction);
     _viewMenu->addSeparator();
@@ -517,6 +541,10 @@ void MainWindow::setupShortcuts()
     _exitAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_F4));
     _userGuideAction->setShortcut(QKeySequence(Qt::Key_F1));
 
+    _singleViewAction->setShortcut(QKeySequence(Qt::Key_F2));
+    _threeViewAction->setShortcut(QKeySequence(Qt::Key_F3));
+    _volumeViewAction->setShortcut(QKeySequence(Qt::Key_F4));
+
     QList<QKeySequence> shortcuts;
     shortcuts << Qt::Key_Plus << Qt::Key_Equal;
     _zoomInAction->setShortcuts(shortcuts);
@@ -599,6 +627,22 @@ bool MainWindow::querySave()
         }
     }
     return true;
+}
+
+void MainWindow::slectLayout(QAction* action)
+{
+    if (action == _singleViewAction)
+    {
+        singleView();
+    }
+    else if (action == _threeViewAction)
+    {
+        threeView();
+    }
+    else if (action == _volumeViewAction)
+    {
+        volumeView();
+    }
 }
 
 void MainWindow::prevImage()
@@ -725,6 +769,10 @@ void MainWindow::changeEvent(QEvent* event)
         _undoAction->setText(tr("&Undo"));
         _redoAction->setText(tr("&Redo"));
         _restoreAction->setText(tr("R&estore"));
+
+        _singleViewAction->setText(tr("Single View"));
+        _threeViewAction->setText(tr("Three View"));
+        _volumeViewAction->setText(tr("Volume View"));
         _settingsAction->setText(tr("&Preferences..."));
 
         _zoomInAction->setText(tr("Zoom &In"));

@@ -2,6 +2,7 @@
 
 #include <QtMath>
 #include <QMimeData>
+#include <QDebug>
 
 #include "View.h"
 #include "MouseHandler.h"
@@ -199,7 +200,7 @@ void GraphicsView::wheelEvent(QWheelEvent* event)
                 _view->sliceMinusOne();
         }
 
-        QGraphicsView::wheelEvent(event);
+    //    QGraphicsView::wheelEvent(event);
     }
 }
 
@@ -214,6 +215,13 @@ void GraphicsView::drawForeground(QPainter*, const QRectF&)
     BaseImage* image = getGlobalImage();
     if (image == nullptr)
         return;
+
+/*    if (hasFocus())
+    {
+        QPainter painter(viewport());
+        painter.setPen(QPen(QColor(qRgb(255, 0, 0)), 2));
+        painter.drawRect(rect());
+    }*/
 
     if (_showAnnotation)
     {
@@ -242,6 +250,16 @@ bool GraphicsView::eventFilter(QObject* obj, QEvent* event)
     {
         return QGraphicsView::eventFilter(obj, event);
     }
+}
+
+void GraphicsView::focusInEvent(QFocusEvent* event)
+{
+    _view->update();
+}
+
+void GraphicsView::focusOutEvent(QFocusEvent* event)
+{
+    _view->update();
 }
 
 void GraphicsView::drawAnnotation()

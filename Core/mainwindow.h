@@ -35,7 +35,9 @@ public:
 
 public:
     Document* getDocument() { return _doc; }
-    View* getView() { return _topView; }
+    View* getDefaultView() { return _topView; }
+    View* getFrontalView() { return _frontalView; }
+    View* getProfileView() { return _profileView; }
 
     void imageOpened();
 
@@ -92,6 +94,8 @@ public slots:
     void close();
     void print();
 
+    void slectLayout(QAction* action);
+
     void prevImage();
     void nextImage();
 
@@ -131,6 +135,9 @@ private:
     QAction* _undoAction;
     QAction* _redoAction;
     QAction* _restoreAction;
+    QAction* _singleViewAction;
+    QAction* _threeViewAction;
+    QAction* _volumeViewAction;
     QAction* _zoomInAction;
     QAction* _zoomOutAction;
     QAction* _prevImageAction;

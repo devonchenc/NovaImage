@@ -33,7 +33,6 @@ View::View(QWidget* parent)
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(_view);
-
     setLayout(layout);
 
     setStyleSheet("background-color:black");
@@ -100,6 +99,16 @@ void View::changeEvent(QEvent* event)
     }
 
     QFrame::changeEvent(event);
+}
+
+void View::paintEvent(QPaintEvent*)
+{
+    if (_view->hasFocus())
+    {
+        QPainter painter(this);
+        painter.setPen(QPen(QColor(qRgb(255, 0, 0)), 3));
+        painter.drawRect(rect());
+    }
 }
 
 void View::showImage(const QImage* image, bool resetMatrix)

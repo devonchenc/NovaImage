@@ -49,6 +49,8 @@ protected:
     void drawForeground(QPainter* painter, const QRectF& rect);
 
     bool eventFilter(QObject* obj, QEvent* event) override;
+    void focusInEvent(QFocusEvent* event) override;
+    void focusOutEvent(QFocusEvent* event) override;
 
 private:
     void applyZoomValue();

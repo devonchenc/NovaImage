@@ -78,6 +78,8 @@ private slots:
 protected:
     void changeEvent(QEvent* event) override;
 
+    void paintEvent(QPaintEvent* event) override;
+
 private:
     void createItemMenus();
 

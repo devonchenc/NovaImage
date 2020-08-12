@@ -185,7 +185,7 @@ void HistogramWidget::resizeEvent(QResizeEvent* event)
     repaint();
 }
 
-void HistogramWidget::paintEvent(QPaintEvent* /*event*/)
+void HistogramWidget::paintEvent(QPaintEvent*)
 {
     QPainter painter(this);
     painter.drawRect(_rectHistogram);
