@@ -46,6 +46,10 @@ public:
 
   //  void copyImage(const std::shared_ptr<BaseImage>& image);
 
+    void showFrontalSlice();
+
+    void showProfileSlice();
+
     void repaintView();
 
     bool modified() { return _modified; }
@@ -54,7 +58,7 @@ public:
 
     void saveGraphicsItem();
 
-    static int findType(const QString& fileName);
+    static int findImageType(const QString& fileName);
 
 public:
     void ROIWindow(const QRectF& rect);
@@ -77,7 +81,11 @@ public slots:
     void restore();
 
 private:
-    View* getView() const;
+    View* getDefaultView() const;
+
+    View* getFrontalView() const;
+
+    View* getProfileView() const;
 
 private:
     MainWindow* pMainWindow;

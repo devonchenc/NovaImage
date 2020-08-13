@@ -49,6 +49,12 @@ void ToolBar::enableButton(bool flag)
     _restoreButton->setEnabled(flag);
 }
 
+void ToolBar::enableViewAction(bool flag)
+{
+    _threeViewAction->setEnabled(flag);
+    _volumeViewAction->setEnabled(flag);
+}
+
 void ToolBar::createButton()
 {
     _openButton = new QToolButton;

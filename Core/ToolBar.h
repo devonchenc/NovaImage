@@ -25,6 +25,8 @@ public:
 
     void enableButton(bool flag);
 
+    void enableViewAction(bool flag);
+
 private:
     void createButton();
 

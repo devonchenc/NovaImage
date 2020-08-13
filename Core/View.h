@@ -14,6 +14,11 @@ class View : public QFrame
     Q_OBJECT
 
 public:
+    enum ViewType
+    {
+        TopView, FrontalView, ProfileView
+    };
+
     explicit View(QWidget* parent = nullptr);
     ~View();
 
@@ -22,6 +27,8 @@ public:
     GraphicsScene* scene();
 
     int sceneMode();
+
+    void setViewType(ViewType type) { _type = type; }
 
     void showImage(const QImage* image, bool resetMatrix = false);
 
@@ -77,8 +84,8 @@ private slots:
 
 protected:
     void changeEvent(QEvent* event) override;
-
     void paintEvent(QPaintEvent* event) override;
+    void showEvent(QShowEvent* event) override;
 
 private:
     void createItemMenus();
@@ -90,6 +97,8 @@ private:
 private:
     GraphicsScene* _scene;
     GraphicsView* _view;
+
+    ViewType _type;
 
     QGraphicsPixmapItem* _currentImage;
 

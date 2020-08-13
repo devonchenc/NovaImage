@@ -8,7 +8,9 @@
 MonoImage::MonoImage()
     : BaseImage()
     , _imageData(nullptr)
-    , _byteImage(nullptr)
+    , _byteTopImage(nullptr)
+    , _byteFrontalImage(nullptr)
+    , _byteProfileImage(nullptr)
     , _slice(1)
     , _currentSlice(0)
 {
@@ -18,7 +20,9 @@ MonoImage::MonoImage()
 MonoImage::MonoImage(const QString& pathName)
     : BaseImage(pathName)
     , _imageData(nullptr)
-    , _byteImage(nullptr)
+    , _byteTopImage(nullptr)
+    , _byteFrontalImage(nullptr)
+    , _byteProfileImage(nullptr)
     , _slice(1)
     , _currentSlice(0)
 {
@@ -32,8 +36,20 @@ MonoImage::MonoImage(const MonoImage& src)
 {
     _imageData = src._imageData->copyImageData();
 
-    _byteImage = new uchar[_width * _height * 3];
-    memcpy(_byteImage, src._byteImage, sizeof(uchar) * _width * _height * 3);
+    _byteTopImage = new uchar[_width * _height * 3];
+    memcpy(_byteTopImage, src._byteTopImage, sizeof(uchar) * _width * _height * 3);
+
+    if (src._byteFrontalImage)
+    {
+        _byteFrontalImage = new uchar[_width * _slice * 3];
+        memcpy(_byteFrontalImage, src._byteFrontalImage, sizeof(uchar) * _width * _slice * 3);
+    }
+
+    if (src._byteProfileImage)
+    {
+        _byteProfileImage = new uchar[_height * _slice * 3];
+        memcpy(_byteProfileImage, src._byteProfileImage, sizeof(uchar) * _height * _slice * 3);
+    }
 }
 
 MonoImage::~MonoImage()
@@ -44,16 +60,26 @@ MonoImage::~MonoImage()
         _imageData = nullptr;
     }
 
-    if (_byteImage)
+    if (_byteTopImage)
     {
-        delete[] _byteImage;
-        _byteImage = nullptr;
+        delete[] _byteTopImage;
+        _byteTopImage = nullptr;
+    }
+    if (_byteFrontalImage)
+    {
+        delete[] _byteFrontalImage;
+        _byteFrontalImage = nullptr;
+    }
+    if (_byteProfileImage)
+    {
+        delete[] _byteProfileImage;
+        _byteProfileImage = nullptr;
     }
 }
 
 bool MonoImage::copyToImage()
 {
-    return copyByteToImage(_byteImage, _width, _height, _pImage);
+    return copyByteToImage(_byteTopImage, _width, _height, _pImage);
 }
 
 void MonoImage::setSlice(int slice)
@@ -133,7 +159,21 @@ void MonoImage::restore()
 
 bool MonoImage::convertToByte()
 {
-    return _imageData->convertToByte(_byteImage);
+    return _imageData->convertToByte(_byteTopImage);
+}
+
+QImage MonoImage::getFrontalSlice()
+{
+
+ //   _imageData->getFrontalSlice();
+//    _imageData->convertToByte(_byteImage);
+
+    return QImage();
+}
+
+QImage MonoImage::getProfileSlice()
+{
+    return QImage();
 }
 
 bool MonoImage::saveAsRaw(const QString& fileName)
@@ -153,7 +193,7 @@ bool MonoImage::allocateMemory()
 {
     _imageData->allocateMemory();
 
-    _byteImage = new uchar[_width * _height * 3];
+    _byteTopImage = new uchar[_width * _height * 3];
 
     _pImage = new QImage(_width, _height, QImage::Format_RGB888);
 

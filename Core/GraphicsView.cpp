@@ -264,7 +264,21 @@ void GraphicsView::focusOutEvent(QFocusEvent* event)
 
 void GraphicsView::drawAnnotation()
 {
-    int fontHeight = rect().height() < 800 ? 12 : 16;
+    int fontHeight = 16;
+    int a = rect().height();
+    if (rect().height() < 400)
+    {
+        fontHeight = 8;
+    }
+    else if (rect().height() < 600)
+    {
+        fontHeight = 10;
+    }
+    else if (rect().height() < 800)
+    {
+        fontHeight = 12;
+    }
+
     QFont font("Arial", fontHeight);
     QPainter painter(viewport());
     painter.setFont(font);

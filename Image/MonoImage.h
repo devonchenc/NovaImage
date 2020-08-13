@@ -43,9 +43,12 @@ public:
 
 public:
     // get uchar data
-    uchar* getBYTEImage() { return _byteImage; }
+    uchar* getBYTEImage() { return _byteTopImage; }
 
     bool convertToByte();
+
+    QImage getFrontalSlice();
+    QImage getProfileSlice();
 
 protected:
     bool saveAsRaw(const QString& fileName) override;
@@ -56,7 +59,9 @@ protected:
 protected:
     ImageData* _imageData;
 
-    uchar* _byteImage;
+    uchar* _byteTopImage;
+    uchar* _byteFrontalImage;
+    uchar* _byteProfileImage;
 
     int _slice;
 

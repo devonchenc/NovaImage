@@ -7,6 +7,7 @@
 #include <QMenu>
 #include <QAction>
 #include <QTimer>
+#include <QDebug>
 
 #include "GraphicsView.h"
 #include "GraphicsScene.h"
@@ -18,6 +19,7 @@
 
 View::View(QWidget* parent)
     : QFrame(parent)
+    , _type(TopView)
     , _currentImage(nullptr)
     , _windowWidth(0)
     , _windowLevel(0)
@@ -108,6 +110,21 @@ void View::paintEvent(QPaintEvent*)
         QPainter painter(this);
         painter.setPen(QPen(QColor(qRgb(255, 0, 0)), 3));
         painter.drawRect(rect());
+    }
+}
+
+void View::showEvent(QShowEvent*)
+{
+    if (isVisible() && _type != TopView)
+    {
+        if (_type == FrontalView)
+        {
+            getGlobalDocument()->showFrontalSlice();
+        }
+        else if (_type == ProfileView)
+        {
+            getGlobalDocument()->showProfileSlice();
+        }
     }
 }
 

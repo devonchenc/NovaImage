@@ -34,7 +34,7 @@ bool Document::openFile(const QString& fileName)
         closeFile();
     }
 
-    int type = findType(fileName);
+    int type = findImageType(fileName);
     if (type == IMAGE_FORMAT_NDR || type == IMAGE_FORMAT_NCT)
     {
         _image = std::make_shared<ScanImage>(fileName);
@@ -77,41 +77,41 @@ bool Document::openFile(const QString& fileName)
 
     _image->histogramStatistic();
 
-    getView()->showImage(_image->getImageEntity(), true);
+    getDefaultView()->showImage(_image->getImageEntity(), true);
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     int displayWindow = settings.value("Image/displayWindow", 0).toInt();
     if (displayWindow == 0)
     {
         // Default window
-        getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getDefaultView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
     }
     else
     {
         // Full window
         float windowWidth = _image->getMaxValue() - _image->getMinValue();
         float windowLevel = (_image->getMaxValue() + _image->getMinValue()) / 2;
-        getView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getDefaultView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
 
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
     if (fitWindow)
     {
-        getView()->fitWindow();
+        getDefaultView()->fitWindow();
     }
     else
     {
-        getView()->zoomNormal();
+        getDefaultView()->zoomNormal();
     }
 
-	getView()->loadGraphicsItem();
+	getDefaultView()->loadGraphicsItem();
 
     pMainWindow->imageOpened();
 
     return true;
 }
 
-int Document::findType(const QString& fileName)
+int Document::findImageType(const QString& fileName)
 {
     QString str = fileName.toLower();
     if (str.endsWith(".jpg") || str.endsWith(".jpeg"))
@@ -130,7 +130,7 @@ int Document::findType(const QString& fileName)
     {
         return IMAGE_FORMAT_BMP;
     }
-    else if (str.endsWith(".GIF"))
+    else if (str.endsWith(".gif"))
     {
         return IMAGE_FORMAT_GIF;
     }
@@ -172,7 +172,7 @@ bool Document::saveAs(const QString& fileName)
 
 void Document::closeFile()
 {
-    getView()->resetImage();
+    getDefaultView()->resetImage();
 
     _image.reset();
 
@@ -195,12 +195,60 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
     getView()->repaint();
 }*/
 
+void Document::showFrontalSlice()
+{
+    if (_image->slice() == 1)
+        return;
+
+    MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
+    if (!monoImage)
+        return;
+
+    QImage image = monoImage->getFrontalSlice();
+    getFrontalView()->showImage(&image, true);
+
+    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
+/*    if (fitWindow)
+    {
+        getFrontalView()->fitWindow();
+    }
+    else
+    {
+        getFrontalView()->zoomNormal();
+    }*/
+}
+
+void Document::showProfileSlice()
+{
+    if (_image->slice() == 1)
+        return;
+
+    MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
+    if (!monoImage)
+        return;
+
+    QImage image = monoImage->getProfileSlice();
+    getProfileView()->showImage(&image, true);
+
+    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+/*    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
+    if (fitWindow)
+    {
+        getProfileView()->fitWindow();
+    }
+    else
+    {
+        getProfileView()->zoomNormal();
+    }*/
+}
+
 // Repaint view
 void Document::repaintView()
 {
     if (_image)
     {
-        getView()->showImage(_image->getImageEntity());
+        getDefaultView()->showImage(_image->getImageEntity());
     }
 }
 
@@ -214,7 +262,7 @@ void Document::setModified(bool flag)
 
 void Document::saveGraphicsItem()
 {
-    getView()->saveGraphicsItem();
+    getDefaultView()->saveGraphicsItem();
     _modified = false;
 }
 
@@ -245,14 +293,14 @@ void Document::ROIWindow(const QRectF& rect)
         }
     }
 
-    getView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+    getDefaultView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
 }
 
 void Document::defaultImageWindow()
 {
     if (_image)
     {
-        getView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getDefaultView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
     }
 }
 
@@ -263,14 +311,14 @@ void Document::fullImageWindow()
         float maxValue = _image->getMaxValue();
         float minValue = _image->getMinValue();
 
-        getView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getDefaultView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
     }
 }
 
 void Document::applyImageWidthAndLevel()
 {
-    float windowWidth = getView()->windowWidth();
-    float windowLevel = getView()->windowLevel();
+    float windowWidth = getDefaultView()->windowWidth();
+    float windowLevel = getDefaultView()->windowLevel();
 
     LevelsProcessor processor;
     processor.setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
@@ -324,7 +372,17 @@ void Document::restore()
     }
 }
 
-View* Document::getView() const
+View* Document::getDefaultView() const
 {
     return pMainWindow->getDefaultView();
+}
+
+View* Document::getFrontalView() const
+{
+    return pMainWindow->getFrontalView();
+}
+
+View* Document::getProfileView() const
+{
+    return pMainWindow->getProfileView();
 }

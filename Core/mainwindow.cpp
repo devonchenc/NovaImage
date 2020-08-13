@@ -51,6 +51,9 @@ MainWindow::MainWindow(QWidget* parent)
     _layoutManager->setWidget(_topView, _frontalView, _profileView, _volumeView);
     _layoutManager->oneView();
 
+    _frontalView->setViewType(View::FrontalView);
+    _profileView->setViewType(View::ProfileView);
+
     initUI();
 
     loadPlugin();
@@ -386,6 +389,21 @@ void MainWindow::imageOpened()
         _recentFiles->setMostRecentFile(getGlobalImage()->getPathName());
 
         _toolBar->enableButton(true);
+
+        if (getGlobalImage()->slice() > 1)
+        {
+            _threeViewAction->setEnabled(true);
+            _volumeViewAction->setEnabled(true);
+
+            _toolBar->enableViewAction(true);
+        }
+        else
+        {
+            _threeViewAction->setEnabled(false);
+            _volumeViewAction->setEnabled(false);
+
+            _toolBar->enableViewAction(false);
+        }
     }
 }
 
@@ -806,7 +824,7 @@ void MainWindow::dragEnterEvent(QDragEnterEvent* event)
     {
         QList<QUrl> urls = event->mimeData()->urls();
         QString fileName = urls[0].toLocalFile();
-        if (Document::findType(fileName) != IMAGE_FORMAT_UNKNOWN)
+        if (Document::findImageType(fileName) != IMAGE_FORMAT_UNKNOWN)
         {
             event->acceptProposedAction();
         }
