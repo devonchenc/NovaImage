@@ -35,7 +35,7 @@ public:
     virtual void restore() = 0;
 
 public:
-    QImage* getImageEntity() const { return _pImage; }
+    QImage* getImageEntity() const { return _pImage.get(); }
 
     int width() const { return _width; }
 
@@ -76,7 +76,7 @@ protected:
     virtual bool saveAsRaw(const QString& fileName);
 
 protected:
-    QImage* _pImage;
+    std::shared_ptr<QImage> _pImage;
 
     int _width, _height;
 

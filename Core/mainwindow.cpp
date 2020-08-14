@@ -378,6 +378,11 @@ void MainWindow::openRawImage()
     }
 }
 
+void MainWindow::setActiveView(View* view)
+{
+    _activeView = view;
+}
+
 void MainWindow::imageOpened()
 {
     if (getGlobalImage())

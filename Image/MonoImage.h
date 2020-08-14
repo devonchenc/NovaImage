@@ -3,6 +3,7 @@
 #include "BaseImage.h"
 
 class ImageData;
+class MonoImageProxy;
 
 class MonoImage : public BaseImage
 {
@@ -43,12 +44,12 @@ public:
 
 public:
     // get uchar data
-    uchar* getBYTEImage() { return _byteTopImage; }
+    uchar* getBYTEImage();
 
     bool convertToByte();
 
-    QImage* getFrontalSlice() const { return _pFrontalImage; }
-    QImage* getProfileSlice() const { return _pProfileImage; }
+    std::shared_ptr<QImage> getFrontalSlice() const;
+    std::shared_ptr<QImage> getProfileSlice() const;
 
 protected:
     bool saveAsRaw(const QString& fileName) override;
@@ -59,12 +60,11 @@ protected:
 protected:
     ImageData* _imageData;
 
-    uchar* _byteTopImage;
-    uchar* _byteFrontalImage;
-    uchar* _byteProfileImage;
+    MonoImageProxy* _topProxy;
+    MonoImageProxy* _frontalProxy;
+    MonoImageProxy* _profileProxy;
 
-    QImage* _pFrontalImage;
-    QImage* _pProfileImage;
+//    uchar* _byteTopImage;
 
     int _slice;
 

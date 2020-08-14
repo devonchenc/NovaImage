@@ -13,7 +13,7 @@ GeneralImage::GeneralImage(const QString& pathName)
     : BaseImage(pathName)
     , _backupImage(nullptr)
 {
-    _pImage = new QImage(pathName);
+    _pImage = std::make_shared<QImage>(pathName);
     _openSucceed = !_pImage->isNull();
     _width = _pImage->width();
     _height = _pImage->height();
@@ -36,16 +36,6 @@ GeneralImage::GeneralImage(const GeneralImage& src)
 GeneralImage::~GeneralImage()
 {
 
-}
-
-void GeneralImage::restoreImage()
-{
-    assert(_backupImage);
-
-    _width = _backupImage->width();
-    _height = _backupImage->height();
-    delete _pImage;
-    _pImage = new QImage(*_backupImage);
 }
 
 uchar GeneralImage::calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor)
@@ -131,7 +121,14 @@ BaseImage* GeneralImage::copyImage() const
 
 void GeneralImage::restore()
 {
+    // TODO
+    QImage* temp1 = _backupImage.get();
+    QImage* temp2 = _pImage.get();
     *_pImage = *_backupImage;
+    // _pImage.reset(new QImage(*_backupImage));
+    QImage* temp3 = _backupImage.get();
+    QImage* temp4 = _pImage.get();
+    int a = 5;
 }
 
 // Backup origin QImage

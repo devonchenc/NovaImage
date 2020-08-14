@@ -4,15 +4,14 @@
 
 #include "../Core/GlobalFunc.h"
 #include "ImageData.h"
+#include "MonoImageProxy.h"
 
 MonoImage::MonoImage()
     : BaseImage()
     , _imageData(nullptr)
-    , _byteTopImage(nullptr)
-    , _byteFrontalImage(nullptr)
-    , _byteProfileImage(nullptr)
-    , _pFrontalImage(nullptr)
-    , _pProfileImage(nullptr)
+    , _topProxy(nullptr)
+    , _frontalProxy(nullptr)
+    , _profileProxy(nullptr)
     , _slice(1)
     , _currentSlice(0)
 {
@@ -22,11 +21,9 @@ MonoImage::MonoImage()
 MonoImage::MonoImage(const QString& pathName)
     : BaseImage(pathName)
     , _imageData(nullptr)
-    , _byteTopImage(nullptr)
-    , _byteFrontalImage(nullptr)
-    , _byteProfileImage(nullptr)
-    , _pFrontalImage(nullptr)
-    , _pProfileImage(nullptr)
+    , _topProxy(nullptr)
+    , _frontalProxy(nullptr)
+    , _profileProxy(nullptr)
     , _slice(1)
     , _currentSlice(0)
 {
@@ -35,16 +32,15 @@ MonoImage::MonoImage(const QString& pathName)
 
 MonoImage::MonoImage(const MonoImage& src)
     : BaseImage(src)
-    , _byteFrontalImage(nullptr)
-    , _byteProfileImage(nullptr)
-    , _pFrontalImage(nullptr)
-    , _pProfileImage(nullptr)
+    , _topProxy(nullptr)
+    , _frontalProxy(nullptr)
+    , _profileProxy(nullptr)
     , _slice(src._slice)
     , _currentSlice(src._currentSlice)
 {
     _imageData = src._imageData->copyImageData();
 
-    _byteTopImage = new uchar[_width * _height * 3];
+/*    _byteTopImage = new uchar[_width * _height * 3];
     memcpy(_byteTopImage, src._byteTopImage, sizeof(uchar) * _width * _height * 3);
 
     if (src._byteFrontalImage)
@@ -65,7 +61,7 @@ MonoImage::MonoImage(const MonoImage& src)
     if (src._pProfileImage)
     {
         _pProfileImage = new QImage(*src._pProfileImage);
-    }
+    }*/
 }
 
 MonoImage::~MonoImage()
@@ -76,7 +72,7 @@ MonoImage::~MonoImage()
         _imageData = nullptr;
     }
 
-    if (_byteTopImage)
+/*    if (_byteTopImage)
     {
         delete[] _byteTopImage;
         _byteTopImage = nullptr;
@@ -100,12 +96,23 @@ MonoImage::~MonoImage()
     {
         delete[] _pProfileImage;
         _pProfileImage = nullptr;
-    }
+    }*/
 }
 
 bool MonoImage::copyToImage()
 {
-    copyByteToImage(_byteTopImage, _width, _height, _pImage);
+    _topProxy->copyByteToImage();
+
+    if (_frontalProxy)
+    {
+        _frontalProxy->copyByteToImage();
+    }
+    if (_profileProxy)
+    {
+        _profileProxy->copyByteToImage();
+    }
+
+/*    copyByteToImage(_byteTopImage, _width, _height, _pImage);
 
     if (_byteFrontalImage)
     {
@@ -114,7 +121,7 @@ bool MonoImage::copyToImage()
     if (_byteProfileImage)
     {
         copyByteToImage(_byteProfileImage, _height, _slice, _pProfileImage);
-    }
+    }*/
 
     return true;
 }
@@ -194,11 +201,34 @@ void MonoImage::restore()
     copyToImage();
 }
 
+uchar* MonoImage::getBYTEImage()
+{
+    return _topProxy->getBYTEImage();
+}
+
 bool MonoImage::convertToByte()
 {
-    _imageData->convertAllToByte(_byteTopImage, _byteFrontalImage, _byteProfileImage);
+    _imageData->convertToByte(0, _topProxy->getBYTEImage());
+    if (_frontalProxy)
+    {
+        _imageData->convertToByte(1, _topProxy->getBYTEImage());
+    }
+    if (_profileProxy)
+    {
+        _imageData->convertToByte(2, _profileProxy->getBYTEImage());
+    }
 
     return true;
+}
+
+std::shared_ptr<QImage> MonoImage::getFrontalSlice() const
+{
+    return _frontalProxy->getImageEntity();
+}
+
+std::shared_ptr<QImage> MonoImage::getProfileSlice() const
+{
+    return _profileProxy->getImageEntity();
 }
 
 bool MonoImage::saveAsRaw(const QString& fileName)
@@ -216,16 +246,16 @@ bool MonoImage::saveAsRaw(const QString& fileName)
 
 bool MonoImage::allocateMemory()
 {
+    _topProxy = new MonoImageProxy(this, _width, _height, MonoImageProxy::TopView);
+    if (_slice > 1)
+    {
+        _frontalProxy = new MonoImageProxy(this, _width, _slice, MonoImageProxy::FrontalView);
+        _profileProxy = new MonoImageProxy(this, _height, _slice, MonoImageProxy::ProfileView);
+    }
+
+    _pImage = _topProxy->getImageEntity();
+
     _imageData->allocateMemory();
-
-    _byteTopImage = new uchar[_width * _height * 3];
-    _byteFrontalImage = new uchar[_width * _slice * 3];
-    _byteProfileImage = new uchar[_height * _slice * 3];
-
-    _pImage = new QImage(_width, _height, QImage::Format_RGB888);
-
-    _pFrontalImage = new QImage(_width, _slice, QImage::Format_RGB888);
-    _pProfileImage = new QImage(_height, _slice, QImage::Format_RGB888);
 
     return true;
 }

@@ -37,7 +37,7 @@ BaseImage::BaseImage(const BaseImage& src)
     , _pathName(src._pathName)
     , _openSucceed(src._openSucceed)
 {
-    _pImage = new QImage(*src._pImage);
+    _pImage.reset(new QImage(*src._pImage));
 
     memcpy(_grayPixelNumber, src._grayPixelNumber, sizeof(uint) * 256);
     memcpy(_redPixelNumber, src._redPixelNumber, sizeof(uint) * 256);
@@ -47,11 +47,7 @@ BaseImage::BaseImage(const BaseImage& src)
 
 BaseImage::~BaseImage()
 {
-    if (_pImage)
-    {
-        delete _pImage;
-        _pImage = nullptr;
-    }
+
 }
 
 float BaseImage::getValue(float x, float y) const

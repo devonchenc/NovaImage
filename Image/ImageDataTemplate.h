@@ -44,7 +44,7 @@ public:
     // Convert float data to uchar data
     bool convertToByte(float* data, int size, uchar* byteImage) override;
 
-    bool convertAllToByte(uchar* byteTop, uchar* byteFrontal, uchar* byteProfile) override;
+    bool convertToByte(int type, uchar* byteImage) override;
 
     // Save array to QFile
     void saveArray(QFile& file) override;
@@ -118,7 +118,7 @@ ImageDataTemplate<Type>::~ImageDataTemplate()
 {
     if (_topData)
     {
-        delete [] _topData;
+        delete[] _topData;
         _topData = nullptr;
     }
     if (_frontalData)
@@ -187,7 +187,7 @@ bool ImageDataTemplate<Type>::allocateMemory()
             qint64 offset = j * _pixelPerSlice;
             for (int i = 0; i < _height; i++)
             {
-                _frontalData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
+                _profileData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
             }
         }
     }
@@ -226,13 +226,20 @@ bool ImageDataTemplate<Type>::convertToByte(float* data, int size, uchar* byteIm
 }
 
 template <class Type>
-bool ImageDataTemplate<Type>::convertAllToByte(uchar* byteTop, uchar* byteFrontal, uchar* byteProfile)
+bool ImageDataTemplate<Type>::convertToByte(int type, uchar* byteImage)
 {
-    convertToByte(_topData, _pixelPerSlice, byteTop);
-    convertToByte(_frontalData, _width * _slice, byteFrontal);
-    convertToByte(_profileData, _height * _slice, byteProfile);
-
-    return true;
+    if (type == 0)
+    {
+        return convertToByte(_topData, _pixelPerSlice, byteImage);
+    }
+    else if (type == 1)
+    {
+        return convertToByte(_frontalData, _width * _slice, byteImage);
+    }
+    else/* if (type == 2)*/
+    {
+        return convertToByte(_profileData, _width * _slice, byteImage);
+    }
 }
 
 // Save array to QFile

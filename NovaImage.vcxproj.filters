@@ -183,6 +183,9 @@
     <ClCompile Include="Core\LayoutManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
+    <ClCompile Include="Image\MonoImageProxy.cpp">
+      <Filter>Image</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -350,6 +353,9 @@
       <Filter>Core</Filter>
     </ClInclude>
     <ClInclude Include="Image\OldDataheader.h">
+      <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\MonoImageProxy.h">
       <Filter>Image</Filter>
     </ClInclude>
   </ItemGroup>

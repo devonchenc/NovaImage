@@ -204,8 +204,8 @@ void Document::showFrontalSlice()
     if (!monoImage)
         return;
 
-    QImage* image = monoImage->getFrontalSlice();
-    getFrontalView()->showImage(image, true);
+    std::shared_ptr<QImage> image = monoImage->getFrontalSlice();
+    getFrontalView()->showImage(image.get(), true);
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
@@ -230,8 +230,8 @@ void Document::showProfileSlice()
     if (!monoImage)
         return;
 
-    QImage* image = monoImage->getProfileSlice();
-    getProfileView()->showImage(image, true);
+    std::shared_ptr<QImage> image = monoImage->getProfileSlice();
+    getProfileView()->showImage(image.get(), true);
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
@@ -256,8 +256,8 @@ void Document::repaintView()
         MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
         if (monoImage)
         {
-            getFrontalView()->showImage(monoImage->getFrontalSlice());
-            getProfileView()->showImage(monoImage->getProfileSlice());
+            getFrontalView()->showImage(monoImage->getFrontalSlice().get());
+            getProfileView()->showImage(monoImage->getProfileSlice().get());
         }
     }
 }

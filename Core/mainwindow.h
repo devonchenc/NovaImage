@@ -41,7 +41,7 @@ public:
     View* getProfileView() { return _profileView; }
 
     View* getActiveView() { return _activeView; }
-    void setActiveView(View* view) { _activeView = view; }
+    void setActiveView(View* view);
 
     void imageOpened();
 

@@ -51,7 +51,7 @@ void HistogramProcessor::processGeneralImage(GeneralImage* image)
     if (count == 0)
     {
         // Restore image by using backup image
-        image->restoreImage();
+        image->restore();
         return;
     }
 

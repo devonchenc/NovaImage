@@ -40,6 +40,7 @@
     <ClCompile Include="Image\DicomImage.cpp" />
     <ClCompile Include="Image\GeneralImage.cpp" />
     <ClCompile Include="Image\MonoImage.cpp" />
+    <ClCompile Include="Image\MonoImageProxy.cpp" />
     <ClCompile Include="Image\RawImage.cpp" />
     <ClCompile Include="Image\ScanImage.cpp" />
     <ClCompile Include="Notification\NotificationLayout.cpp" />
@@ -92,6 +93,7 @@
     <ClInclude Include="Image\ImageData.h" />
     <QtMoc Include="Image\ImageReader.h" />
     <ClInclude Include="Image\MonoImage.h" />
+    <ClInclude Include="Image\MonoImageProxy.h" />
     <ClInclude Include="Image\OldDataheader.h" />
     <ClInclude Include="Image\RawImage.h" />
     <QtMoc Include="Notification\NotificationLayout.h" />

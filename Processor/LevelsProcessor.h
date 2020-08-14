@@ -13,6 +13,8 @@ protected:
 
     void processMonoImage(MonoImage* image) override;
 
+    void processByteImage(uchar* byteImage, int width, int height);
+
     // Process float array
     virtual void processArray(float* array, int width, int height, float fMinValue, float fMaxValue, uchar* pByte) override;
 

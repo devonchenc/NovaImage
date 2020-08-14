@@ -43,7 +43,7 @@ void InverseProcessor::processGeneralImage(GeneralImage* image)
     }
     else
     {
-        image->restoreImage();
+        image->restore();
     }
 }
 

@@ -16,9 +16,6 @@ public:
     // Get backup QImage pointer
     QImage* getBackupImage() const { return _backupImage.get(); }
 
-    // Restore image by using backup image
-    void restoreImage();
-
     // Calculate new color
     uchar calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor);
 
