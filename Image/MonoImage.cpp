@@ -211,7 +211,7 @@ bool MonoImage::convertToByte()
     _imageData->convertToByte(0, _topProxy->getBYTEImage());
     if (_frontalProxy)
     {
-        _imageData->convertToByte(1, _topProxy->getBYTEImage());
+        _imageData->convertToByte(1, _frontalProxy->getBYTEImage());
     }
     if (_profileProxy)
     {

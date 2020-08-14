@@ -64,8 +64,6 @@ protected:
     MonoImageProxy* _frontalProxy;
     MonoImageProxy* _profileProxy;
 
-//    uchar* _byteTopImage;
-
     int _slice;
 
     int _currentSlice;
