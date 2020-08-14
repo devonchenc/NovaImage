@@ -47,8 +47,8 @@ public:
 
     bool convertToByte();
 
-    QImage getFrontalSlice();
-    QImage getProfileSlice();
+    QImage* getFrontalSlice() const { return _pFrontalImage; }
+    QImage* getProfileSlice() const { return _pProfileImage; }
 
 protected:
     bool saveAsRaw(const QString& fileName) override;
@@ -62,6 +62,9 @@ protected:
     uchar* _byteTopImage;
     uchar* _byteFrontalImage;
     uchar* _byteProfileImage;
+
+    QImage* _pFrontalImage;
+    QImage* _pProfileImage;
 
     int _slice;
 

@@ -21,7 +21,7 @@ Document* getGlobalDocument()
 View* getGlobalView()
 {
     MainWindow* mainWindow = getGlobalWindow();
-    return mainWindow->getDefaultView();
+    return mainWindow->getActiveView();
 }
 
 BaseImage* getGlobalImage()

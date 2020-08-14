@@ -25,13 +25,13 @@ public:
     // Get processing data pointer
     void* getProcessingData() override
     {
-        return static_cast<void*>(_processingData);
+        return static_cast<void*>(_topData);
     }
 
     // Get pixel value of processing data
     float getProcessingValue(int index) override
     {
-        return _processingData[index];
+        return _topData[index];
     }
 
     // Find top and bottom value in data
@@ -42,7 +42,9 @@ public:
     bool allocateMemory() override;
 
     // Convert float data to uchar data
-    bool convertToByte(uchar* byteImage) override;
+    bool convertToByte(float* data, int size, uchar* byteImage) override;
+
+    bool convertAllToByte(uchar* byteTop, uchar* byteFrontal, uchar* byteProfile) override;
 
     // Save array to QFile
     void saveArray(QFile& file) override;
@@ -60,21 +62,25 @@ public:
 protected:
     std::shared_ptr<Type> _originalData;
 
-    float* _processingData;
+    float* _topData;
     float* _frontalData;
     float* _profileData;
 
-    int _currentSlice;
+    int _currentTopSlice;
+    int _currentFrontalSlice;
+    int _currentProfileSlice;
 };
 
 template <class Type>
 ImageDataTemplate<Type>::ImageDataTemplate(int width, int height, int slice)
     : ImageData(width, height, slice)
     , _originalData(std::shared_ptr<Type>(new Type[_totalPixel]))
-    , _processingData(nullptr)
+    , _topData(nullptr)
     , _frontalData(nullptr)
     , _profileData(nullptr)
-    , _currentSlice(round(slice / 2.0) - 1)
+    , _currentTopSlice(round(slice / 2.0) - 1)
+    , _currentFrontalSlice(round(height / 2.0) - 1)
+    , _currentProfileSlice(round(width / 2.0) - 1)
 {
 
 }
@@ -82,13 +88,18 @@ ImageDataTemplate<Type>::ImageDataTemplate(int width, int height, int slice)
 template <class Type>
 ImageDataTemplate<Type>::ImageDataTemplate(const ImageDataTemplate& src)
     : ImageData(src)
+    , _topData(nullptr)
+    , _frontalData(nullptr)
+    , _profileData(nullptr)
     , _originalData(src._originalData)
-    , _currentSlice(src._currentSlice)
+    , _currentTopSlice(src._currentTopSlice)
+    , _currentFrontalSlice(src._currentFrontalSlice)
+    , _currentProfileSlice(src._currentProfileSlice)
 {
-    if (src._processingData)
+    if (src._topData)
     {
-        _processingData = new float[_pixelPerSlice];
-        memcpy(_processingData, src._processingData, sizeof(float) * _pixelPerSlice);
+        _topData = new float[_pixelPerSlice];
+        memcpy(_topData, src._topData, sizeof(float) * _pixelPerSlice);
     }
     if (src._frontalData)
     {
@@ -105,10 +116,20 @@ ImageDataTemplate<Type>::ImageDataTemplate(const ImageDataTemplate& src)
 template <class Type>
 ImageDataTemplate<Type>::~ImageDataTemplate()
 {
-    if (_processingData)
+    if (_topData)
     {
-        delete [] _processingData;
-        _processingData = nullptr;
+        delete [] _topData;
+        _topData = nullptr;
+    }
+    if (_frontalData)
+    {
+        delete[] _frontalData;
+        _frontalData = nullptr;
+    }
+    if (_profileData)
+    {
+        delete[] _profileData;
+        _profileData = nullptr;
     }
 }
 
@@ -144,10 +165,30 @@ bool ImageDataTemplate<Type>::allocateMemory()
 {
     try
     {
-        _processingData = new float[_pixelPerSlice];
+        _topData = new float[_pixelPerSlice];
         for (unsigned long i = 0; i < _pixelPerSlice; i++)
         {
-            _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice];
+            _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
+        }
+
+        _frontalData = new float[_width * _slice];
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _width; i++)
+            {
+                _frontalData[j * _width + i] = _originalData.get()[i + _currentFrontalSlice * _width + offset];
+            }
+        }
+
+        _profileData = new float[_height * _slice];
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _height; i++)
+            {
+                _frontalData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
+            }
         }
     }
     catch (const std::bad_alloc& e)
@@ -160,9 +201,9 @@ bool ImageDataTemplate<Type>::allocateMemory()
 
 // Convert data to byte
 template <class Type>
-bool ImageDataTemplate<Type>::convertToByte(uchar* byteImage)
+bool ImageDataTemplate<Type>::convertToByte(float* data, int size, uchar* byteImage)
 {
-    if (_processingData == nullptr)
+    if (data == nullptr)
         return false;
 
     float variable;
@@ -175,11 +216,21 @@ bool ImageDataTemplate<Type>::convertToByte(uchar* byteImage)
         variable = 0.0f;
     }
 
-    for (unsigned long i = 0; i < _pixelPerSlice; i++)
+    for (unsigned long i = 0; i < size; i++)
     {
         byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =
-                uchar((_processingData[i] - _minValue) * variable);
+                uchar((data[i] - _minValue) * variable);
     }
+
+    return true;
+}
+
+template <class Type>
+bool ImageDataTemplate<Type>::convertAllToByte(uchar* byteTop, uchar* byteFrontal, uchar* byteProfile)
+{
+    convertToByte(_topData, _pixelPerSlice, byteTop);
+    convertToByte(_frontalData, _width * _slice, byteFrontal);
+    convertToByte(_profileData, _height * _slice, byteProfile);
 
     return true;
 }
@@ -188,18 +239,18 @@ bool ImageDataTemplate<Type>::convertToByte(uchar* byteImage)
 template <class Type>
 void ImageDataTemplate<Type>::saveArray(QFile& file)
 {
-    file.write((const char*)_processingData, sizeof(Type) * _pixelPerSlice);
+    file.write((const char*)_topData, sizeof(Type) * _pixelPerSlice);
 }
 
 // Rescale array
 template <class Type>
 void ImageDataTemplate<Type>::rescaleArray(float rescaleSlope, float rescaleIntercept)
 {
-    if (_processingData)
+    if (_topData)
     {
         for (unsigned long i = 0; i < _pixelPerSlice; i++)
         {
-            _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
+            _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
         }
 
         _minValue = _minValue * rescaleSlope + rescaleIntercept;
@@ -219,16 +270,16 @@ void ImageDataTemplate<Type>::restoreData()
 {
     for (unsigned long i = 0; i < _pixelPerSlice; i++)
     {
-        _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice];
+        _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
     }
 }
 
 template <class Type>
 void ImageDataTemplate<Type>::changeSlice(int slice)
 {
-    _currentSlice = slice;
+    _currentTopSlice = slice;
     for (unsigned long i = 0; i < _pixelPerSlice; i++)
     {
-        _processingData[i] = _originalData.get()[i + _currentSlice * _pixelPerSlice];
+        _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
     }
 }

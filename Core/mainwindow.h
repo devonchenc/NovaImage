@@ -35,9 +35,13 @@ public:
 
 public:
     Document* getDocument() { return _doc; }
+
     View* getDefaultView() { return _topView; }
     View* getFrontalView() { return _frontalView; }
     View* getProfileView() { return _profileView; }
+
+    View* getActiveView() { return _activeView; }
+    void setActiveView(View* view) { _activeView = view; }
 
     void imageOpened();
 
@@ -120,6 +124,9 @@ private:
     View* _frontalView;
     View* _profileView;
     View* _volumeView;
+
+    View* _activeView;
+
     LayoutManager* _layoutManager;
 
     QMenu* _fileMenu;

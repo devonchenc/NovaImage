@@ -204,19 +204,21 @@ void Document::showFrontalSlice()
     if (!monoImage)
         return;
 
-    QImage image = monoImage->getFrontalSlice();
-    getFrontalView()->showImage(&image, true);
+    QImage* image = monoImage->getFrontalSlice();
+    getFrontalView()->showImage(image, true);
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
-/*    if (fitWindow)
+    if (fitWindow)
     {
         getFrontalView()->fitWindow();
     }
     else
     {
         getFrontalView()->zoomNormal();
-    }*/
+    }
+
+    getFrontalView()->setWindowWidthAndLevel(getDefaultView()->windowWidth(), getDefaultView()->windowLevel());
 }
 
 void Document::showProfileSlice()
@@ -228,11 +230,11 @@ void Document::showProfileSlice()
     if (!monoImage)
         return;
 
-    QImage image = monoImage->getProfileSlice();
-    getProfileView()->showImage(&image, true);
+    QImage* image = monoImage->getProfileSlice();
+    getProfileView()->showImage(image, true);
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-/*    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
+    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
     if (fitWindow)
     {
         getProfileView()->fitWindow();
@@ -240,7 +242,9 @@ void Document::showProfileSlice()
     else
     {
         getProfileView()->zoomNormal();
-    }*/
+    }
+
+    getProfileView()->setWindowWidthAndLevel(getDefaultView()->windowWidth(), getDefaultView()->windowLevel());
 }
 
 // Repaint view
@@ -249,6 +253,12 @@ void Document::repaintView()
     if (_image)
     {
         getDefaultView()->showImage(_image->getImageEntity());
+        MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
+        if (monoImage)
+        {
+            getFrontalView()->showImage(monoImage->getFrontalSlice());
+            getProfileView()->showImage(monoImage->getProfileSlice());
+        }
     }
 }
 

@@ -50,7 +50,9 @@ public:
     virtual bool findTopAndBottom() = 0;
 
     // Allocate data to byte
-    virtual bool convertToByte(uchar* byteImage) = 0;
+    virtual bool convertToByte(float* data, int size, uchar* byteImage) = 0;
+
+    virtual bool convertAllToByte(uchar* byteTop, uchar* byteFrontal, uchar* byteProfile) = 0;
 
     // Save array to QFile
     virtual void saveArray(QFile& file) = 0;

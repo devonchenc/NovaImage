@@ -41,6 +41,7 @@ MainWindow::MainWindow(QWidget* parent)
     , _frontalView(new View(this))
     , _profileView(new View(this))
     , _volumeView(new View(this))
+    , _activeView(_topView)
     , _translator(nullptr)
 {
     // main area for image display

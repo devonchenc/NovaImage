@@ -7,6 +7,7 @@
 #include "View.h"
 #include "MouseHandler.h"
 #include "GlobalFunc.h"
+#include "mainwindow.h"
 #include "../Image/BaseImage.h"
 #include "../Widget/MagnifierWidget.h"
 
@@ -254,6 +255,7 @@ bool GraphicsView::eventFilter(QObject* obj, QEvent* event)
 
 void GraphicsView::focusInEvent(QFocusEvent* event)
 {
+    getGlobalWindow()->setActiveView(_view);
     _view->update();
 }
 
