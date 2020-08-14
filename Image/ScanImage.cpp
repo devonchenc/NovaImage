@@ -166,19 +166,19 @@ bool ScanImage::readData()
     AbstractReader* reader = nullptr;
     if (_dataHeader.DataType == 0)
     {
-        _imageData = new ImageDataTemplate<float>(_width * _height, _slice);
+        _imageData = new ImageDataTemplate<float>(_width, _height, _slice);
         float* originalData = static_cast<float*>(_imageData->getOriginalData());
         reader = new ImageReader<float>(_pathName, headerSize, _width * _height, _slice, originalData);
     }
     else if (_dataHeader.DataType == 1)
     {
-        _imageData = new ImageDataTemplate<ushort>(_width * _height * _slice);
+        _imageData = new ImageDataTemplate<ushort>(_width, _height, _slice);
         ushort* originalData = static_cast<ushort*>(_imageData->getOriginalData());
         reader = new ImageReader<ushort>(_pathName, headerSize, _width * _height, _slice, originalData);
     }
     else if (_dataHeader.DataType == 2)
     {
-        _imageData = new ImageDataTemplate<uchar>(_width * _height * _slice);
+        _imageData = new ImageDataTemplate<uchar>(_width, _height, _slice);
         uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
         reader = new ImageReader<uchar>(_pathName, headerSize, _width * _height, _slice, originalData);
     }

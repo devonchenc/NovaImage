@@ -11,7 +11,7 @@ template <class Type>
 class ImageDataTemplate : public ImageData
 {
 public:
-    ImageDataTemplate(unsigned long pixelPerSlice, int slice = 1);
+    ImageDataTemplate(int width, int height, int slice = 1);
     ImageDataTemplate(const ImageDataTemplate& src);
     virtual ~ImageDataTemplate();
 
@@ -61,15 +61,19 @@ protected:
     std::shared_ptr<Type> _originalData;
 
     float* _processingData;
+    float* _frontalData;
+    float* _profileData;
 
     int _currentSlice;
 };
 
 template <class Type>
-ImageDataTemplate<Type>::ImageDataTemplate(unsigned long pixelPerSlice, int slice)
-    : ImageData(pixelPerSlice, slice)
-    , _originalData(std::shared_ptr<Type>(new Type[pixelPerSlice * slice ]))
+ImageDataTemplate<Type>::ImageDataTemplate(int width, int height, int slice)
+    : ImageData(width, height, slice)
+    , _originalData(std::shared_ptr<Type>(new Type[_totalPixel]))
     , _processingData(nullptr)
+    , _frontalData(nullptr)
+    , _profileData(nullptr)
     , _currentSlice(round(slice / 2.0) - 1)
 {
 
@@ -85,6 +89,16 @@ ImageDataTemplate<Type>::ImageDataTemplate(const ImageDataTemplate& src)
     {
         _processingData = new float[_pixelPerSlice];
         memcpy(_processingData, src._processingData, sizeof(float) * _pixelPerSlice);
+    }
+    if (src._frontalData)
+    {
+        _frontalData = new float[_width * _slice];
+        memcpy(_frontalData, src._frontalData, sizeof(float) * _width * _slice);
+    }
+    if (src._profileData)
+    {
+        _profileData = new float[_height * _slice];
+        memcpy(_profileData, src._profileData, sizeof(float) * _height * _slice);
     }
 }
 
@@ -103,7 +117,7 @@ template <class Type>
 bool ImageDataTemplate<Type>::findTopAndBottom()
 {
     _minValue = _maxValue = _originalData.get()[0];
-    for (unsigned long i = 1; i < _pixelPerSlice * _slice; i++)
+    for (unsigned long i = 1; i < _totalPixel; i++)
     {
         if ((std::is_same<Type, float>::value || std::is_same<Type, double>::value) && (std::isnan(_originalData.get()[i]) || std::isinf(_originalData.get()[i])))
         {

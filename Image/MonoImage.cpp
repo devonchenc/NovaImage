@@ -164,8 +164,7 @@ bool MonoImage::convertToByte()
 
 QImage MonoImage::getFrontalSlice()
 {
-
- //   _imageData->getFrontalSlice();
+//    _imageData->getFrontalSlice();
 //    _imageData->convertToByte(_byteImage);
 
     return QImage();
