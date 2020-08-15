@@ -2,16 +2,26 @@
 
 #include "../Core/GlobalFunc.h"
 
-MonoImageProxy::MonoImageProxy(MonoImage* image, int width, int height, Type type)
+MonoImageProxy::MonoImageProxy(MonoImage* image, int width, int height, int type)
     : _image(image)
     , _width(width)
     , _height(height)
     , _type(type)
-    , _byteImage(nullptr)
+    , _byteImage(new uchar[_width * _height * 3])
     , _pImage(nullptr)
 {
-    _byteImage = new uchar[_width * _height * 3];
     _pImage = std::make_shared<QImage>(_width, _height, QImage::Format_RGB888);
+}
+
+MonoImageProxy::MonoImageProxy(const MonoImageProxy& src)
+    : _image(src._image)
+    , _width(src._width)
+    , _height(src._height)
+    , _type(src._type)
+    , _byteImage(new uchar[_width * _height * 3])
+    , _pImage(src._pImage)
+{
+    memcpy(_byteImage, src._byteImage, sizeof(uchar) * _width * _height * 3);
 }
 
 MonoImageProxy::~MonoImageProxy()

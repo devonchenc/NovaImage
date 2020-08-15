@@ -5,12 +5,8 @@
 class MonoImageProxy
 {
 public:
-    enum Type
-    {
-        TopView, FrontalView, ProfileView
-    };
-
-    MonoImageProxy(MonoImage* image, int width, int height, Type type = TopView);
+    MonoImageProxy(MonoImage* image, int width, int height, int type = TOP_VIEW);
+    MonoImageProxy(const MonoImageProxy& src);
     ~MonoImageProxy();
 
 public:
@@ -25,7 +21,7 @@ protected:
 
     int _width, _height;
 
-    Type _type;
+    int _type;
 
     uchar* _byteImage;
 

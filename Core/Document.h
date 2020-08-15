@@ -69,7 +69,7 @@ public:
 
     void applyImageWidthAndLevel();
 
-    void inverseImage();
+    void negativeImage();
 
     void backup();
 

@@ -7,6 +7,12 @@ class DiagramItem;
 class GraphicsView;
 class PlotDialog;
 
+#ifndef VIEW_TYPE
+    #define TOP_VIEW            0
+    #define FRONTAL_VIEW        1
+    #define PROFILE_VIEW        2
+#endif
+
 #include "GraphicsScene.h"
 
 class View : public QFrame
@@ -14,11 +20,6 @@ class View : public QFrame
     Q_OBJECT
 
 public:
-    enum ViewType
-    {
-        TopView, FrontalView, ProfileView
-    };
-
     explicit View(QWidget* parent = nullptr);
     ~View();
 
@@ -28,7 +29,9 @@ public:
 
     int sceneMode();
 
-    void setViewType(ViewType type) { _type = type; }
+    void setViewType(int type) { _type = type; }
+
+    int viewType() { return _type; }
 
     void showImage(const QImage* image, bool resetMatrix = false);
 
@@ -98,7 +101,7 @@ private:
     GraphicsScene* _scene;
     GraphicsView* _view;
 
-    ViewType _type;
+    int _type;
 
     QGraphicsPixmapItem* _currentImage;
 

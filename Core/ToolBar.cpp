@@ -288,7 +288,7 @@ void ToolBar::createAction()
     connect(_ROIWidowAction, &QAction::triggered, this, &ToolBar::ROIWindowActionTriggered);
     connect(_defaultWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::defaultImageWindow);
     connect(_fullWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::fullImageWindow);
-    connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::inverseImage);
+    connect(_imageNegativeAction, &QAction::triggered, mainWindow->getDocument(), &Document::negativeImage);
 
     connect(_zoomAction, &QAction::triggered, this, &ToolBar::zoomActionTriggered);
     connect(_magnifierAction, &QAction::triggered, this, &ToolBar::magnifierActionTriggered);

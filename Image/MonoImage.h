@@ -5,6 +5,12 @@
 class ImageData;
 class MonoImageProxy;
 
+#ifndef VIEW_TYPE
+    #define TOP_VIEW            0
+    #define FRONTAL_VIEW        1
+    #define PROFILE_VIEW        2
+#endif
+
 class MonoImage : public BaseImage
 {
 public:
@@ -12,6 +18,8 @@ public:
     MonoImage(const QString& pathName);
     MonoImage(const MonoImage& src);
     virtual ~MonoImage();
+
+    bool copyToAllImage();
 
     bool copyToImage();
 
@@ -42,9 +50,11 @@ public:
 
     void restore() override;
 
+    void setType(int type) override;
+
 public:
     // get uchar data
-    uchar* getBYTEImage();
+    uchar* getBYTEImage(int& width, int& height);
 
     bool convertToByte();
 
@@ -63,6 +73,8 @@ protected:
     MonoImageProxy* _topProxy;
     MonoImageProxy* _frontalProxy;
     MonoImageProxy* _profileProxy;
+
+    int _currentType;
 
     int _slice;
 

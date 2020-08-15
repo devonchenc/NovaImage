@@ -254,7 +254,7 @@ void Document::repaintView()
     {
         getDefaultView()->showImage(_image->getImageEntity());
         MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
-        if (monoImage)
+        if (monoImage && monoImage->slice() > 1)
         {
             getFrontalView()->showImage(monoImage->getFrontalSlice().get());
             getProfileView()->showImage(monoImage->getProfileSlice().get());
@@ -337,7 +337,7 @@ void Document::applyImageWidthAndLevel()
     repaintView();
 }
 
-void Document::inverseImage()
+void Document::negativeImage()
 {
     if (_image)
     {

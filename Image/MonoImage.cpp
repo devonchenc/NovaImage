@@ -12,6 +12,7 @@ MonoImage::MonoImage()
     , _topProxy(nullptr)
     , _frontalProxy(nullptr)
     , _profileProxy(nullptr)
+    , _currentType(TOP_VIEW)
     , _slice(1)
     , _currentSlice(0)
 {
@@ -24,6 +25,7 @@ MonoImage::MonoImage(const QString& pathName)
     , _topProxy(nullptr)
     , _frontalProxy(nullptr)
     , _profileProxy(nullptr)
+    , _currentType(0)
     , _slice(1)
     , _currentSlice(0)
 {
@@ -35,33 +37,23 @@ MonoImage::MonoImage(const MonoImage& src)
     , _topProxy(nullptr)
     , _frontalProxy(nullptr)
     , _profileProxy(nullptr)
+    , _currentType(src._currentType)
     , _slice(src._slice)
     , _currentSlice(src._currentSlice)
 {
     _imageData = src._imageData->copyImageData();
 
-/*    _byteTopImage = new uchar[_width * _height * 3];
-    memcpy(_byteTopImage, src._byteTopImage, sizeof(uchar) * _width * _height * 3);
+    _topProxy = new MonoImageProxy(*src._topProxy);
 
-    if (src._byteFrontalImage)
+    if (_frontalProxy)
     {
-        _byteFrontalImage = new uchar[_width * _slice * 3];
-        memcpy(_byteFrontalImage, src._byteFrontalImage, sizeof(uchar) * _width * _slice * 3);
-    }
-    if (src._byteProfileImage)
-    {
-        _byteProfileImage = new uchar[_height * _slice * 3];
-        memcpy(_byteProfileImage, src._byteProfileImage, sizeof(uchar) * _height * _slice * 3);
+        _frontalProxy = new MonoImageProxy(*src._frontalProxy);
     }
 
-    if (src._pFrontalImage)
+    if (_profileProxy)
     {
-        _pFrontalImage = new QImage(*src._pFrontalImage);
+        _profileProxy = new MonoImageProxy(*src._profileProxy);
     }
-    if (src._pProfileImage)
-    {
-        _pProfileImage = new QImage(*src._pProfileImage);
-    }*/
 }
 
 MonoImage::~MonoImage()
@@ -71,38 +63,26 @@ MonoImage::~MonoImage()
         delete _imageData;
         _imageData = nullptr;
     }
-
-/*    if (_byteTopImage)
+    if (_topProxy)
     {
-        delete[] _byteTopImage;
-        _byteTopImage = nullptr;
+        delete[] _topProxy;
+        _topProxy = nullptr;
     }
-    if (_byteFrontalImage)
+    if (_frontalProxy)
     {
-        delete[] _byteFrontalImage;
-        _byteFrontalImage = nullptr;
+        delete[] _frontalProxy;
+        _frontalProxy = nullptr;
     }
-    if (_byteProfileImage)
+    if (_profileProxy)
     {
-        delete[] _byteProfileImage;
-        _byteProfileImage = nullptr;
+        delete[] _profileProxy;
+        _profileProxy = nullptr;
     }
-    if (_pFrontalImage)
-    {
-        delete[] _pFrontalImage;
-        _pFrontalImage = nullptr;
-    }
-    if (_pProfileImage)
-    {
-        delete[] _pProfileImage;
-        _pProfileImage = nullptr;
-    }*/
 }
 
-bool MonoImage::copyToImage()
+bool MonoImage::copyToAllImage()
 {
     _topProxy->copyByteToImage();
-
     if (_frontalProxy)
     {
         _frontalProxy->copyByteToImage();
@@ -111,18 +91,23 @@ bool MonoImage::copyToImage()
     {
         _profileProxy->copyByteToImage();
     }
+    return true;
+}
 
-/*    copyByteToImage(_byteTopImage, _width, _height, _pImage);
-
-    if (_byteFrontalImage)
+bool MonoImage::copyToImage()
+{
+    if (_currentType == TOP_VIEW)
     {
-        copyByteToImage(_byteFrontalImage, _width, _slice, _pFrontalImage);
+        _topProxy->copyByteToImage();
     }
-    if (_byteProfileImage)
+    else if (_currentType == FRONTAL_VIEW)
     {
-        copyByteToImage(_byteProfileImage, _height, _slice, _pProfileImage);
-    }*/
-
+        _frontalProxy->copyByteToImage();
+    }
+    else/* if (_currentType == TOP_VIEW)*/
+    {
+        _profileProxy->copyByteToImage();
+    }
     return true;
 }
 
@@ -201,9 +186,31 @@ void MonoImage::restore()
     copyToImage();
 }
 
-uchar* MonoImage::getBYTEImage()
+void MonoImage::setType(int type)
 {
-    return _topProxy->getBYTEImage();
+    _currentType = type;
+}
+
+uchar* MonoImage::getBYTEImage(int& width, int& height)
+{
+    if (_currentType == TOP_VIEW)
+    {
+        width = _width;
+        height = _height;
+        return _topProxy->getBYTEImage();
+    }
+    else if (_currentType == FRONTAL_VIEW)
+    {
+        width = _width;
+        height = _slice;
+        return _frontalProxy->getBYTEImage();
+    }
+    else/* if (_currentType == TOP_VIEW)*/
+    {
+        width = _height;
+        height = _slice;
+        return _profileProxy->getBYTEImage();
+    }
 }
 
 bool MonoImage::convertToByte()
@@ -246,11 +253,11 @@ bool MonoImage::saveAsRaw(const QString& fileName)
 
 bool MonoImage::allocateMemory()
 {
-    _topProxy = new MonoImageProxy(this, _width, _height, MonoImageProxy::TopView);
+    _topProxy = new MonoImageProxy(this, _width, _height, TOP_VIEW);
     if (_slice > 1)
     {
-        _frontalProxy = new MonoImageProxy(this, _width, _slice, MonoImageProxy::FrontalView);
-        _profileProxy = new MonoImageProxy(this, _height, _slice, MonoImageProxy::ProfileView);
+        _frontalProxy = new MonoImageProxy(this, _width, _slice, FRONTAL_VIEW);
+        _profileProxy = new MonoImageProxy(this, _height, _slice, PROFILE_VIEW);
     }
 
     _pImage = _topProxy->getImageEntity();

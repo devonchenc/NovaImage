@@ -19,7 +19,7 @@
 
 View::View(QWidget* parent)
     : QFrame(parent)
-    , _type(TopView)
+    , _type(TOP_VIEW)
     , _currentImage(nullptr)
     , _windowWidth(0)
     , _windowLevel(0)
@@ -115,14 +115,16 @@ void View::paintEvent(QPaintEvent*)
 
 void View::showEvent(QShowEvent*)
 {
-    if (isVisible() && _type != TopView)
+    if (isVisible() && _type != TOP_VIEW)
     {
-        if (_type == FrontalView)
+        if (_type == FRONTAL_VIEW)
         {
+            qDebug() << "show FRONTAL_VIEW";
             getGlobalDocument()->showFrontalSlice();
         }
-        else if (_type == ProfileView)
+        else if (_type == PROFILE_VIEW)
         {
+            qDebug() << "show PROFILE_VIEW";
             getGlobalDocument()->showProfileSlice();
         }
     }

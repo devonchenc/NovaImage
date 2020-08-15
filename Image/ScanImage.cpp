@@ -37,7 +37,7 @@ ScanImage::ScanImage(const QString& pathName)
         return;
     }
     // Copy to image
-    if (copyToImage() == false)
+    if (copyToAllImage() == false)
     {
         _openSucceed = false;
         return;

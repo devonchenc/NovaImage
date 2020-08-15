@@ -51,9 +51,8 @@ void InverseProcessor::processMonoImage(MonoImage* image)
 {
     assert(image);
 
-    int width = image->width();
-    int height = image->height();
-    uchar* byteImage = image->getBYTEImage();
+    int width, height;
+    uchar* byteImage = image->getBYTEImage(width, height);
 
     for (int i = 0; i < width * height * 3; i++)
     {

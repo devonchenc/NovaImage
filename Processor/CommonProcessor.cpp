@@ -63,9 +63,8 @@ void CommonProcessor::processMonoImage(MonoImage* image)
 {
     assert(image);
 
-    int width = image->width();
-    int height = image->height();
-    uchar* byteImage = image->getBYTEImage();
+    int width, height;
+    uchar* byteImage = image->getBYTEImage(width, height);
     float maxValue = image->getMaxValue();
     float minValue = image->getMinValue();
 

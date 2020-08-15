@@ -14,6 +14,7 @@
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #include <QMimeData>
+#include <QDebug>
 
 #include "mainwindow.h"
 #include "View.h"
@@ -52,8 +53,8 @@ MainWindow::MainWindow(QWidget* parent)
     _layoutManager->setWidget(_topView, _frontalView, _profileView, _volumeView);
     _layoutManager->oneView();
 
-    _frontalView->setViewType(View::FrontalView);
-    _profileView->setViewType(View::ProfileView);
+    _frontalView->setViewType(FRONTAL_VIEW);
+    _profileView->setViewType(PROFILE_VIEW);
 
     initUI();
 
@@ -381,6 +382,10 @@ void MainWindow::openRawImage()
 void MainWindow::setActiveView(View* view)
 {
     _activeView = view;
+    if (getGlobalImage())
+    {
+        getGlobalImage()->setType(view->viewType());
+    }
 }
 
 void MainWindow::imageOpened()
