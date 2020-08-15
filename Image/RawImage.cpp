@@ -14,7 +14,7 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
     _width = width;
     _height = height;
     _slice = slice;
-    _currentSlice = round(_slice / 2.0) - 1;
+    _currentTopSlice = round(_slice / 2.0) - 1;
 
     // Read data
     if (readData() == false)
@@ -32,13 +32,13 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
     initWindowWidthAndLevel();
 
     // Convert float data to uchar data
-    if (convertToByte() == false)
+    if (convertAllToByte() == false)
     {
         _openSucceed = false;
         return;
     }
     // Copy to image
-    if (copyToImage() == false)
+    if (copyToAllImage() == false)
     {
         _openSucceed = false;
         return;

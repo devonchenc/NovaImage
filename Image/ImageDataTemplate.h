@@ -29,10 +29,7 @@ public:
     }
 
     // Get pixel value of processing data
-    float getProcessingValue(int index) override
-    {
-        return _topData[index];
-    }
+    float getProcessingValue(int type, int index) override;
 
     // Find top and bottom value in data
     //	bool findTopAndBottom(Type* pData, int num);
@@ -57,7 +54,7 @@ public:
 
     void restoreData() override;
 
-    void changeSlice(int slice) override;
+    void changeSlice(int type, int slice) override;
 
 protected:
     std::shared_ptr<Type> _originalData;
@@ -130,6 +127,23 @@ ImageDataTemplate<Type>::~ImageDataTemplate()
     {
         delete[] _profileData;
         _profileData = nullptr;
+    }
+}
+
+template <class Type>
+float ImageDataTemplate<Type>::getProcessingValue(int type, int index)
+{
+    if (type == 0)
+    {
+        return _topData[index];
+    }
+    else if (type == 1)
+    {
+        return _frontalData[index];
+    }
+    else/* if (type == 2)*/
+    {
+        return _profileData[index];
     }
 }
 
@@ -282,11 +296,38 @@ void ImageDataTemplate<Type>::restoreData()
 }
 
 template <class Type>
-void ImageDataTemplate<Type>::changeSlice(int slice)
+void ImageDataTemplate<Type>::changeSlice(int type, int slice)
 {
-    _currentTopSlice = slice;
-    for (unsigned long i = 0; i < _pixelPerSlice; i++)
+    if (type == 0)
     {
-        _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
+        _currentTopSlice = slice;
+        for (unsigned long i = 0; i < _pixelPerSlice; i++)
+        {
+            _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
+        }
+    }
+    else if (type == 1)
+    {
+        _currentFrontalSlice = slice;
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _width; i++)
+            {
+                _frontalData[j * _width + i] = _originalData.get()[i + _currentFrontalSlice * _width + offset];
+            }
+        }
+    }
+    else/* if (type == 2)*/
+    {
+        _currentProfileSlice = slice;
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _height; i++)
+            {
+                _profileData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
+            }
+        }
     }
 }

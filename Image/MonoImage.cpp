@@ -14,7 +14,9 @@ MonoImage::MonoImage()
     , _profileProxy(nullptr)
     , _currentType(TOP_VIEW)
     , _slice(1)
-    , _currentSlice(0)
+    , _currentTopSlice(0)
+    , _currentFrontalSlice(0)
+    , _currentProfileSlice(0)
 {
 
 }
@@ -27,7 +29,9 @@ MonoImage::MonoImage(const QString& pathName)
     , _profileProxy(nullptr)
     , _currentType(0)
     , _slice(1)
-    , _currentSlice(0)
+    , _currentTopSlice(0)
+    , _currentFrontalSlice(0)
+    , _currentProfileSlice(0)
 {
 
 }
@@ -39,7 +43,9 @@ MonoImage::MonoImage(const MonoImage& src)
     , _profileProxy(nullptr)
     , _currentType(src._currentType)
     , _slice(src._slice)
-    , _currentSlice(src._currentSlice)
+    , _currentTopSlice(src._currentTopSlice)
+    , _currentFrontalSlice(src._currentFrontalSlice)
+    , _currentProfileSlice(src._currentProfileSlice)
 {
     _imageData = src._imageData->copyImageData();
 
@@ -65,17 +71,17 @@ MonoImage::~MonoImage()
     }
     if (_topProxy)
     {
-        delete[] _topProxy;
+        delete _topProxy;
         _topProxy = nullptr;
     }
     if (_frontalProxy)
     {
-        delete[] _frontalProxy;
+        delete _frontalProxy;
         _frontalProxy = nullptr;
     }
     if (_profileProxy)
     {
-        delete[] _profileProxy;
+        delete _profileProxy;
         _profileProxy = nullptr;
     }
 }
@@ -104,7 +110,7 @@ bool MonoImage::copyToImage()
     {
         _frontalProxy->copyByteToImage();
     }
-    else/* if (_currentType == TOP_VIEW)*/
+    else/* if (_currentType == PROFILE_VIEW)*/
     {
         _profileProxy->copyByteToImage();
     }
@@ -113,9 +119,37 @@ bool MonoImage::copyToImage()
 
 void MonoImage::setSlice(int slice)
 {
-    _currentSlice = slice;
+    if (_currentType == TOP_VIEW)
+    {
+        _currentTopSlice = slice;
+        _imageData->changeSlice(TOP_VIEW, slice);
+    }
+    else if (_currentType == FRONTAL_VIEW)
+    {
+        _currentFrontalSlice = slice;
+        _imageData->changeSlice(FRONTAL_VIEW, slice);
+    }
+    else/* if (_currentType == PROFILE_VIEW)*/
+    {
+        _currentProfileSlice = slice;
+        _imageData->changeSlice(PROFILE_VIEW, slice);
+    }
+}
 
-    _imageData->changeSlice(_currentSlice);
+int MonoImage::currentSlice() const
+{
+    if (_currentType == TOP_VIEW)
+    {
+        return _currentTopSlice;
+    }
+    else if (_currentType == FRONTAL_VIEW)
+    {
+        return _currentFrontalSlice;
+    }
+    else/* if (_currentType == PROFILE_VIEW)*/
+    {
+        return _currentProfileSlice;
+    }
 }
 
 void MonoImage::histogramStatistic()
@@ -154,7 +188,7 @@ float MonoImage::getValue(const QPoint& position) const
         return 0;
 
     int index = position.y() * _width + position.x();
-    return _imageData->getProcessingValue(index);
+    return _imageData->getProcessingValue(_currentType, index);
 }
 
 float MonoImage::getValue(int x, int y) const
@@ -164,7 +198,7 @@ float MonoImage::getValue(int x, int y) const
 
 float MonoImage::getValue(int index) const
 {
-    return _imageData->getProcessingValue(index);
+    return _imageData->getProcessingValue(_currentType, index);
 }
 
 float MonoImage::getMinValue() const
@@ -205,7 +239,7 @@ uchar* MonoImage::getBYTEImage(int& width, int& height)
         height = _slice;
         return _frontalProxy->getBYTEImage();
     }
-    else/* if (_currentType == TOP_VIEW)*/
+    else/* if (_currentType == PROFILE_VIEW)*/
     {
         width = _height;
         height = _slice;
@@ -213,7 +247,7 @@ uchar* MonoImage::getBYTEImage(int& width, int& height)
     }
 }
 
-bool MonoImage::convertToByte()
+bool MonoImage::convertAllToByte()
 {
     _imageData->convertToByte(0, _topProxy->getBYTEImage());
     if (_frontalProxy)
@@ -221,6 +255,24 @@ bool MonoImage::convertToByte()
         _imageData->convertToByte(1, _frontalProxy->getBYTEImage());
     }
     if (_profileProxy)
+    {
+        _imageData->convertToByte(2, _profileProxy->getBYTEImage());
+    }
+
+    return true;
+}
+
+bool MonoImage::convertToByte()
+{
+    if (_currentType == TOP_VIEW)
+    {
+        _imageData->convertToByte(0, _topProxy->getBYTEImage());
+    }
+    else if (_currentType == FRONTAL_VIEW)
+    {
+        _imageData->convertToByte(1, _frontalProxy->getBYTEImage());
+    }
+    else/* if (_currentType == PROFILE_VIEW)*/
     {
         _imageData->convertToByte(2, _profileProxy->getBYTEImage());
     }

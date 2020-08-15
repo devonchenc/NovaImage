@@ -41,7 +41,7 @@ public:
     virtual void* getProcessingData() = 0;
 
     // Get pixel value of processing data
-    virtual float getProcessingValue(int index) = 0;
+    virtual float getProcessingValue(int type, int index) = 0;
 
     // Allocate memory
     virtual bool allocateMemory() = 0;
@@ -65,7 +65,7 @@ public:
 
     virtual void restoreData() = 0;
 
-    virtual void changeSlice(int slice) = 0;
+    virtual void changeSlice(int type, int slice) = 0;
 
 public:
     float getMinimumValue() const { return _minValue; }

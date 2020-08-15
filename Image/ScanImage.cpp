@@ -31,7 +31,7 @@ ScanImage::ScanImage(const QString& pathName)
     initWindowWidthAndLevel();
 
     // Convert float data to uchar data
-    if (convertToByte() == false)
+    if (convertAllToByte() == false)
     {
         _openSucceed = false;
         return;
@@ -120,7 +120,9 @@ bool ScanImage::readDataHeader()
     _width = _dataHeader.Width;
     _height = _dataHeader.Height;
     _slice = _dataHeader.Slice == 0 ? 1 : _dataHeader.Slice;
-    _currentSlice = round(_slice / 2.0) - 1;
+    _currentTopSlice = round(_slice / 2.0) - 1;
+    _currentFrontalSlice = round(_height / 2.0) - 1;
+    _currentProfileSlice = round(_width / 2.0) - 1;
     if (_width * _height <= 0)
         return false;
 

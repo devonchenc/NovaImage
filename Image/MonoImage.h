@@ -28,7 +28,7 @@ public:
 
     void setSlice(int slice) override;
 
-    int currentSlice() const override { return _currentSlice; }
+    int currentSlice() const override;
 
     float getMinValue() const override;
 
@@ -56,6 +56,8 @@ public:
     // get uchar data
     uchar* getBYTEImage(int& width, int& height);
 
+    bool convertAllToByte();
+
     bool convertToByte();
 
     std::shared_ptr<QImage> getFrontalSlice() const;
@@ -78,5 +80,7 @@ protected:
 
     int _slice;
 
-    int _currentSlice;
+    int _currentTopSlice;
+    int _currentFrontalSlice;
+    int _currentProfileSlice;
 };
