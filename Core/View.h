@@ -37,6 +37,14 @@ public:
 
     QGraphicsPixmapItem* getPixmapItem() { return _currentImage; }
 
+    int imageWidth();
+
+    int imageHeight();
+
+    int imageSlice();
+
+    int imageCurrentSlice();
+
     void resetImage();
 
     void setWindowWidthAndLevel(float windowWidth, float windowLevel);

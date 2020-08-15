@@ -115,19 +115,17 @@ void View::paintEvent(QPaintEvent*)
 
 void View::showEvent(QShowEvent*)
 {
-    if (isVisible() && _type != TOP_VIEW)
+ /*   if (isVisible() && _type != TOP_VIEW)
     {
         if (_type == FRONTAL_VIEW)
         {
-            qDebug() << "show FRONTAL_VIEW";
             getGlobalDocument()->showFrontalSlice();
         }
         else if (_type == PROFILE_VIEW)
         {
-            qDebug() << "show PROFILE_VIEW";
             getGlobalDocument()->showProfileSlice();
         }
-    }
+    }*/
 }
 
 void View::showImage(const QImage* image, bool resetMatrix)
@@ -156,6 +154,55 @@ void View::showImage(const QImage* image, bool resetMatrix)
         _view->resetMatrix();
         _view->setSceneRect(pixmap.rect());
     }
+}
+
+int View::imageWidth()
+{
+    BaseImage* image = getGlobalImage();
+    if (_type == TOP_VIEW || _type == FRONTAL_VIEW)
+    {
+        return image->width();
+    }
+    else/* if (_type == PROFILE_VIEW)*/
+    {
+        return image->height();
+    }
+}
+
+int View::imageHeight()
+{
+    BaseImage* image = getGlobalImage();
+    if (_type == TOP_VIEW)
+    {
+        return image->height();
+    }
+    else/* if (_type == FRONTAL_VIEW || _type == PROFILE_VIEW)*/
+    {
+        return image->slice();
+    }
+}
+
+int View::imageSlice()
+{
+    BaseImage* image = getGlobalImage();
+    if (_type == TOP_VIEW)
+    {
+        return image->slice();
+    }
+    else if (_type == FRONTAL_VIEW)
+    {
+        return image->height();
+    }
+    else/* if (_type == PROFILE_VIEW)*/
+    {
+        return image->width();
+    }
+}
+
+int View::imageCurrentSlice()
+{
+    BaseImage* image = getGlobalImage();
+    return image->currentSlice(_type);
 }
 
 void View::resetImage()

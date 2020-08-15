@@ -295,10 +295,10 @@ void GraphicsView::drawAnnotation()
     painter.drawText(QRect(0, 0, 240, pixelsHigh), Qt::AlignLeft, str);
 
     BaseImage* image = getGlobalImage();
-    str = QString(tr("Size: %1%2%3")).arg(image->width()).arg(QString(QChar(0x00D7))).arg(image->height());
+    str = QString(tr("Size: %1%2%3")).arg(_view->imageWidth()).arg(QString(QChar(0x00D7))).arg(_view->imageHeight());
     painter.drawText(QRect(0, pixelsHigh, 350, pixelsHigh), Qt::AlignLeft, str);
 
-    str = QString(tr("Slice: %1/%2")).arg(image->currentSlice() + 1).arg(image->slice());
+    str = QString(tr("Slice: %1/%2")).arg(_view->imageCurrentSlice() + 1).arg(_view->imageSlice());
     painter.drawText(QRect(0, pixelsHigh * 2, 350, pixelsHigh), Qt::AlignLeft, str);
 
     float windowLevel = _view->windowLevel();

@@ -30,6 +30,8 @@ public:
 
     int currentSlice() const override;
 
+    int currentSlice(int type) const override;
+
     float getMinValue() const override;
 
     float getMaxValue() const override;

@@ -49,6 +49,8 @@ public:
 
     virtual int currentSlice() const { return 0; }
 
+    virtual int currentSlice(int type) const { return 0; }
+
     float windowWidth() { return _windowWidth; }
 
     float windowLevel() { return _windowLevel; }

@@ -27,7 +27,7 @@ MonoImage::MonoImage(const QString& pathName)
     , _topProxy(nullptr)
     , _frontalProxy(nullptr)
     , _profileProxy(nullptr)
-    , _currentType(0)
+    , _currentType(TOP_VIEW)
     , _slice(1)
     , _currentTopSlice(0)
     , _currentFrontalSlice(0)
@@ -147,6 +147,22 @@ int MonoImage::currentSlice() const
         return _currentFrontalSlice;
     }
     else/* if (_currentType == PROFILE_VIEW)*/
+    {
+        return _currentProfileSlice;
+    }
+}
+
+int MonoImage::currentSlice(int type) const
+{
+    if (type == TOP_VIEW)
+    {
+        return _currentTopSlice;
+    }
+    else if (type == FRONTAL_VIEW)
+    {
+        return _currentFrontalSlice;
+    }
+    else/* if (type == PROFILE_VIEW)*/
     {
         return _currentProfileSlice;
     }
