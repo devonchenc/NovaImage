@@ -65,6 +65,9 @@ public:
 
     void showPlotDialog(QGraphicsLineItem* lineItem);
 
+    bool cine30FPS();
+    bool cine60FPS();
+
 public slots:
     void setSceneMode(int mode);
 
@@ -85,9 +88,6 @@ public slots:
     void zoomIn();
     void zoomOut();
 
-    void cine30FPS();
-    void cine60FPS();
-
     void plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);
 
 private slots:
@@ -99,7 +99,7 @@ private slots:
 protected:
     void changeEvent(QEvent* event) override;
     void paintEvent(QPaintEvent* event) override;
-    void showEvent(QShowEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
 
 private:
     void createItemMenus();

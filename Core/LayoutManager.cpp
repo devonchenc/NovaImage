@@ -64,8 +64,6 @@ void LayoutManager::threeView()
 
     _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 1);
-
-    getGlobalDocument()->fitAllViewToWindow();
 }
 
 void LayoutManager::volumeView()
@@ -86,8 +84,6 @@ void LayoutManager::volumeView()
 
     _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 3);
-
-    getGlobalDocument()->fitAllViewToWindow();
 }
 
 void LayoutManager::removeWidget()

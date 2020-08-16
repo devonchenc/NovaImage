@@ -85,6 +85,8 @@ bool Document::openFile(const QString& fileName)
     {
         // Default window
         getDefaultView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getFrontalView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getProfileView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
     }
     else
     {
@@ -92,6 +94,8 @@ bool Document::openFile(const QString& fileName)
         float windowWidth = _image->getMaxValue() - _image->getMinValue();
         float windowLevel = (_image->getMaxValue() + _image->getMinValue()) / 2;
         getDefaultView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getFrontalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getProfileView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
 
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
@@ -173,6 +177,8 @@ bool Document::saveAs(const QString& fileName)
 void Document::closeFile()
 {
     getDefaultView()->resetImage();
+    getFrontalView()->resetImage();
+    getProfileView()->resetImage();
 
     _image.reset();
 
@@ -194,58 +200,6 @@ void Document::copyImage(const std::shared_ptr<BaseImage>& image)
 
     getView()->repaint();
 }*/
-
-void Document::showFrontalSlice()
-{
-    if (_image->slice() == 1)
-        return;
-
-    MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
-    if (!monoImage)
-        return;
-
-    std::shared_ptr<QImage> image = monoImage->getFrontalSlice();
-    getFrontalView()->showImage(image.get(), true);
-
-    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
-    if (fitWindow)
-    {
-        getFrontalView()->fitWindow();
-    }
-    else
-    {
-        getFrontalView()->zoomNormal();
-    }
-
-    getFrontalView()->setWindowWidthAndLevel(getDefaultView()->windowWidth(), getDefaultView()->windowLevel());
-}
-
-void Document::showProfileSlice()
-{
-    if (_image->slice() == 1)
-        return;
-
-    MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
-    if (!monoImage)
-        return;
-
-    std::shared_ptr<QImage> image = monoImage->getProfileSlice();
-    getProfileView()->showImage(image.get(), true);
-
-    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
-    if (fitWindow)
-    {
-        getProfileView()->fitWindow();
-    }
-    else
-    {
-        getProfileView()->zoomNormal();
-    }
-
-    getProfileView()->setWindowWidthAndLevel(getDefaultView()->windowWidth(), getDefaultView()->windowLevel());
-}
 
 // Repaint view
 void Document::repaintView()
@@ -303,7 +257,7 @@ void Document::ROIWindow(const QRectF& rect)
         }
     }
 
-    getDefaultView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+    getActiveView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
 }
 
 void Document::defaultImageWindow()
@@ -327,8 +281,8 @@ void Document::fullImageWindow()
 
 void Document::applyImageWidthAndLevel()
 {
-    float windowWidth = getDefaultView()->windowWidth();
-    float windowLevel = getDefaultView()->windowLevel();
+    float windowWidth = getActiveView()->windowWidth();
+    float windowLevel = getActiveView()->windowLevel();
 
     LevelsProcessor processor;
     processor.setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
@@ -351,13 +305,6 @@ void Document::negativeImage()
 void Document::backup()
 {
     _undoStack.backup(_image.get());
-}
-
-void Document::fitAllViewToWindow()
-{
-    getDefaultView()->fitWindow();
-    getFrontalView()->fitWindow();
-    getProfileView()->fitWindow();
 }
 
 void Document::undo()
@@ -387,6 +334,11 @@ void Document::restore()
         _image->restore();
         repaintView();
     }
+}
+
+View* Document::getActiveView() const
+{
+    return pMainWindow->getActiveView();
 }
 
 View* Document::getDefaultView() const

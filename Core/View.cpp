@@ -113,19 +113,9 @@ void View::paintEvent(QPaintEvent*)
     }
 }
 
-void View::showEvent(QShowEvent*)
+void View::resizeEvent(QResizeEvent* event)
 {
- /*   if (isVisible() && _type != TOP_VIEW)
-    {
-        if (_type == FRONTAL_VIEW)
-        {
-            getGlobalDocument()->showFrontalSlice();
-        }
-        else if (_type == PROFILE_VIEW)
-        {
-            getGlobalDocument()->showProfileSlice();
-        }
-    }*/
+    fitWindow();
 }
 
 void View::showImage(const QImage* image, bool resetMatrix)
@@ -291,6 +281,34 @@ void View::showPlotDialog(QGraphicsLineItem* lineItem)
     calcPlotData(lineItem, 1);
 }
 
+bool View::cine30FPS()
+{
+    if (_timer->isActive() && _timer->interval() == 33)
+    {
+        _timer->stop();
+        return false;
+    }
+    else
+    {
+        _timer->start(33);
+        return true;
+    }
+}
+
+bool View::cine60FPS()
+{
+    if (_timer->isActive() && _timer->interval() == 17)
+    {
+        _timer->stop();
+        return false;
+    }
+    else
+    {
+        _timer->start(17);
+        return true;
+    }
+}
+
 void View::setSceneMode(int mode)
 {
     if (mode == MOVE_SCENE)
@@ -397,30 +415,6 @@ void View::zoomIn()
 void View::zoomOut()
 {
     view()->zoomOut();
-}
-
-void View::cine30FPS()
-{
-    if (_timer->isActive() && _timer->interval() == 33)
-    {
-        _timer->stop();
-    }
-    else
-    {
-        _timer->start(33);
-    }
-}
-
-void View::cine60FPS()
-{
-    if (_timer->isActive() && _timer->interval() == 17)
-    {
-        _timer->stop();
-    }
-    else
-    {
-        _timer->start(17);
-    }
 }
 
 void View::plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth)

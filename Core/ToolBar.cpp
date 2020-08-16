@@ -79,6 +79,7 @@ void ToolBar::createButton()
 
     _cineButton = new QToolButton;
     _cineButton->setPopupMode(QToolButton::MenuButtonPopup);
+    _cineButton->setCheckable(true);
 
     _sliceButton = new ToolButton;
 
@@ -750,14 +751,16 @@ void ToolBar::FPS30ActionTriggered()
 {
     _FPS30Action->setChecked(true);
     _FPS60Action->setChecked(false);
-    getGlobalView()->cine30FPS();
+    bool result = getGlobalView()->cine30FPS();
+    _cineButton->setChecked(result);
 }
 
 void ToolBar::FPS60ActionTriggered()
 {
     _FPS30Action->setChecked(false);
     _FPS60Action->setChecked(true);
-    getGlobalView()->cine60FPS();
+    bool result = getGlobalView()->cine60FPS();
+    _cineButton->setChecked(result);
 }
 
 void ToolBar::sliceActionTriggered()

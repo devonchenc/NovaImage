@@ -46,10 +46,6 @@ public:
 
   //  void copyImage(const std::shared_ptr<BaseImage>& image);
 
-    void showFrontalSlice();
-
-    void showProfileSlice();
-
     void repaintView();
 
     bool modified() { return _modified; }
@@ -73,8 +69,6 @@ public:
 
     void backup();
 
-    void fitAllViewToWindow();
-
 public slots:
     void undo();
 
@@ -83,6 +77,8 @@ public slots:
     void restore();
 
 private:
+    View* getActiveView() const;
+
     View* getDefaultView() const;
 
     View* getFrontalView() const;
