@@ -3,6 +3,10 @@
 #include <QWidget>
 #include <QGridLayout>
 
+#include "GlobalFunc.h"
+#include "Document.h"
+#include "View.h"
+
 LayoutManager::LayoutManager(QWidget* parent)
     : QObject(parent)
     , _parentWidget(parent)
@@ -33,7 +37,12 @@ void LayoutManager::oneView()
     _volumeView->hide();
 
     _gridLayout->addWidget(_topView, 0, 0);
-    _gridLayout->setColumnStretch(0, 0);
+
+    _gridLayout->setRowStretch(0, 1);
+    _gridLayout->setRowStretch(1, 0);
+    _gridLayout->setRowStretch(2, 0);
+
+    _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 0);
 }
 
@@ -49,8 +58,14 @@ void LayoutManager::threeView()
     _gridLayout->addWidget(_profileView, 1, 0);
     _gridLayout->addWidget(_volumeView, 1, 1);
 
+    _gridLayout->setRowStretch(0, 1);
+    _gridLayout->setRowStretch(1, 1);
+    _gridLayout->setRowStretch(2, 0);
+
     _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 1);
+
+    getGlobalDocument()->fitAllViewToWindow();
 }
 
 void LayoutManager::volumeView()
@@ -65,8 +80,14 @@ void LayoutManager::volumeView()
     _gridLayout->addWidget(_profileView, 2, 0);
     _gridLayout->addWidget(_volumeView, 0, 1, 3, 1);
 
+    _gridLayout->setRowStretch(0, 1);
+    _gridLayout->setRowStretch(1, 1);
+    _gridLayout->setRowStretch(2, 1);
+
     _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 3);
+
+    getGlobalDocument()->fitAllViewToWindow();
 }
 
 void LayoutManager::removeWidget()

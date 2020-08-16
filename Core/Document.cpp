@@ -353,6 +353,13 @@ void Document::backup()
     _undoStack.backup(_image.get());
 }
 
+void Document::fitAllViewToWindow()
+{
+    getDefaultView()->fitWindow();
+    getFrontalView()->fitWindow();
+    getProfileView()->fitWindow();
+}
+
 void Document::undo()
 {
     if (_undoStack.isEmpty())

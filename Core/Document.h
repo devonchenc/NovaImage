@@ -73,6 +73,8 @@ public:
 
     void backup();
 
+    void fitAllViewToWindow();
+
 public slots:
     void undo();
 
