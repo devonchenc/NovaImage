@@ -445,7 +445,7 @@ void DiagramItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
         }
     }
 
-    QTransform transform = getGlobalView()->view()->transform();
+    QTransform transform = getGlobalActiveView()->view()->transform();
     QTransform transform2;
     transform2.translate(boundingRect().right() + 5, boundingRect().center().y() - 25);
 

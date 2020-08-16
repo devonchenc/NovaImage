@@ -29,7 +29,7 @@ void LayoutManager::setWidget(QWidget* top, QWidget* frontal, QWidget* profile, 
     _parentWidget->setLayout(_gridLayout);
 }
 
-void LayoutManager::oneView()
+void LayoutManager::singleView()
 {
     removeWidget();
     _frontalView->hide();

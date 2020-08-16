@@ -18,7 +18,7 @@ public:
 public:
     void setWidget(QWidget* top, QWidget* frontal, QWidget* profile, QWidget* volume);
 
-    void oneView();
+    void singleView();
     void threeView();
     void volumeView();
 

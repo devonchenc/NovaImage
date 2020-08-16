@@ -36,12 +36,14 @@ public:
 public:
     Document* getDocument() { return _doc; }
 
-    View* getDefaultView() { return _topView; }
+    View* getTopView() { return _topView; }
     View* getFrontalView() { return _frontalView; }
     View* getProfileView() { return _profileView; }
 
     View* getActiveView() { return _activeView; }
     void setActiveView(View* view);
+
+    bool isViewLinked();
 
     void imageOpened();
 
@@ -145,6 +147,7 @@ private:
     QAction* _singleViewAction;
     QAction* _threeViewAction;
     QAction* _volumeViewAction;
+    QAction* _linkViewAction;
     QAction* _zoomInAction;
     QAction* _zoomOutAction;
     QAction* _prevImageAction;

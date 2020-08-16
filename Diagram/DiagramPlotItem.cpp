@@ -71,7 +71,7 @@ void DiagramPlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
 
 void DiagramPlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    getGlobalView()->showPlotDialog(this);
+    getGlobalActiveView()->showPlotDialog(this);
 
     DiagramLineItem::mouseReleaseEvent(event);
 }
@@ -107,7 +107,7 @@ void DiagramPlotItem::drawRect(QPainter* painter)
 
 void DiagramPlotItem::drawPlotIndex(QPainter* painter)
 {
-    QTransform transform = getGlobalView()->view()->transform();
+    QTransform transform = getGlobalActiveView()->view()->transform();
     QTransform transform2;
     transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
 

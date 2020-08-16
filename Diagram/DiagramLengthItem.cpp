@@ -82,7 +82,7 @@ QString DiagramLengthItem::lengthString() const
 
 void DiagramLengthItem::drawLengthText(QPainter* painter)
 {
-    QTransform transform = getGlobalView()->view()->transform();
+    QTransform transform = getGlobalActiveView()->view()->transform();
     QTransform transform2;
     // The output text is always near the point on the right
     if (line().p1().x() < line().p2().x())

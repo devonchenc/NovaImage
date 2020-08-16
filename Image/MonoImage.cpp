@@ -241,7 +241,7 @@ void MonoImage::restore()
     copyToImage();
 }
 
-void MonoImage::setType(int type)
+void MonoImage::setViewType(int type)
 {
     _currentType = type;
 }

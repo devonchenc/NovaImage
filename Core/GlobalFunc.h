@@ -12,7 +12,11 @@ MainWindow* getGlobalWindow();
 
 Document* getGlobalDocument();
 
-View* getGlobalView();
+View* getGlobalActiveView();
+
+View* getGlobalTopView();
+View* getGlobalFrontalView();
+View* getGlobalProfileView();
 
 BaseImage* getGlobalImage();
 

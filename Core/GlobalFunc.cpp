@@ -18,10 +18,28 @@ Document* getGlobalDocument()
     return mainWindow->getDocument();
 }
 
-View* getGlobalView()
+View* getGlobalActiveView()
 {
     MainWindow* mainWindow = getGlobalWindow();
     return mainWindow->getActiveView();
+}
+
+View* getGlobalTopView()
+{
+    MainWindow* mainWindow = getGlobalWindow();
+    return mainWindow->getTopView();
+}
+
+View* getGlobalFrontalView()
+{
+    MainWindow* mainWindow = getGlobalWindow();
+    return mainWindow->getFrontalView();
+}
+
+View* getGlobalProfileView()
+{
+    MainWindow* mainWindow = getGlobalWindow();
+    return mainWindow->getProfileView();
 }
 
 BaseImage* getGlobalImage()

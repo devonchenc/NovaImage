@@ -55,6 +55,13 @@ void ToolBar::enableViewAction(bool flag)
     _volumeViewAction->setEnabled(flag);
 }
 
+void ToolBar::checkViewAction(int type)
+{
+    _singleViewAction->setChecked(type == 0);
+    _threeViewAction->setChecked(type == 1);
+    _volumeViewAction->setChecked(type == 2);
+}
+
 void ToolBar::createButton()
 {
     _openButton = new QToolButton;
@@ -298,8 +305,8 @@ void ToolBar::createAction()
     connect(_2xAction, &QAction::triggered, this, &ToolBar::_2xActionTriggered);
     connect(_4xAction, &QAction::triggered, this, &ToolBar::_4xActionTriggered);
     connect(_8xAction, &QAction::triggered, this, &ToolBar::_8xActionTriggered);
-    connect(_zoomInAction, &QAction::triggered, this, &ToolBar::zoomInActionTriggered);
-    connect(_zoomOutAction, &QAction::triggered, this, &ToolBar::zoomOutActionTriggered);
+    connect(_zoomInAction, &QAction::triggered, mainWindow, &MainWindow::zoomIn);
+    connect(_zoomOutAction, &QAction::triggered, mainWindow, &MainWindow::zoomOut);
 
     connect(_cursorAction, &QAction::triggered, this, &ToolBar::selectItem);
     connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);
@@ -695,63 +702,54 @@ void ToolBar::showInfoButtonClicked()
 
 void ToolBar::singleViewActionTriggered()
 {
-    _singleViewAction->setChecked(true);
-    _threeViewAction->setChecked(false);
-    _volumeViewAction->setChecked(false);
     getGlobalWindow()->singleView();
 }
 
 void ToolBar::threeViewActionTriggered()
 {
-    _singleViewAction->setChecked(false);
-    _threeViewAction->setChecked(true);
-    _volumeViewAction->setChecked(false);
     getGlobalWindow()->threeView();
 }
 
 void ToolBar::volumeViewActionTriggered()
 {
-    _singleViewAction->setChecked(false);
-    _threeViewAction->setChecked(false);
-    _volumeViewAction->setChecked(true);
     getGlobalWindow()->volumeView();
 }
 
 void ToolBar::flipHorizontalActionTriggered()
 {
-    getGlobalView()->flipHorizontal();
+    getGlobalActiveView()->flipHorizontal();
 }
 
 void ToolBar::flipVerticalActionTriggered()
 {
-    getGlobalView()->flipVertical();
+    getGlobalActiveView()->flipVertical();
 }
 
 void ToolBar::rotate90CWActionTriggered()
 {
-    getGlobalView()->rotate90CW();
+    getGlobalActiveView()->rotate90CW();
 }
 
 void ToolBar::rotate90CCWActionTriggered()
 {
-    getGlobalView()->rotate90CCW();
+    getGlobalActiveView()->rotate90CCW();
 }
 
 void ToolBar::rotate180ActionTriggered()
 {
-    getGlobalView()->rotate180();
+    getGlobalActiveView()->rotate180();
 }
 
 void ToolBar::resetTransformationActionTriggered()
 {
-    getGlobalView()->resetTransformation();
+    getGlobalActiveView()->resetTransformation();
 }
 
 void ToolBar::FPS30ActionTriggered()
 {
     _FPS30Action->setChecked(true);
     _FPS60Action->setChecked(false);
-    bool result = getGlobalView()->cine30FPS();
+    bool result = getGlobalActiveView()->cine30FPS();
     _cineButton->setChecked(result);
 }
 
@@ -759,7 +757,7 @@ void ToolBar::FPS60ActionTriggered()
 {
     _FPS30Action->setChecked(false);
     _FPS60Action->setChecked(true);
-    bool result = getGlobalView()->cine60FPS();
+    bool result = getGlobalActiveView()->cine60FPS();
     _cineButton->setChecked(result);
 }
 
@@ -803,38 +801,101 @@ void ToolBar::magnifierActionTriggered()
 
 void ToolBar::fitWindowActionTriggered()
 {
-    getGlobalView()->fitWindow();
+    if (getGlobalWindow()->isViewLinked())
+    {
+        getGlobalTopView()->zoomNormal();
+        getGlobalFrontalView()->zoomNormal();
+        getGlobalProfileView()->zoomNormal();
+    }
+    else
+    {
+        getGlobalActiveView()->fitWindow();
+    }
 }
 
 void ToolBar::_1xActionTriggered()
 {
-    getGlobalView()->zoomNormal();
+    if (getGlobalWindow()->isViewLinked())
+    {
+        getGlobalTopView()->zoomNormal();
+        getGlobalFrontalView()->zoomNormal();
+        getGlobalProfileView()->zoomNormal();
+    }
+    else
+    {
+        getGlobalActiveView()->zoomNormal();
+    }
 }
 
 void ToolBar::_2xActionTriggered()
 {
-    getGlobalView()->zoom2x();
+    if (getGlobalWindow()->isViewLinked())
+    {
+        getGlobalTopView()->zoom2x();
+        getGlobalFrontalView()->zoom2x();
+        getGlobalProfileView()->zoom2x();
+    }
+    else
+    {
+        getGlobalActiveView()->zoom2x();
+    }
 }
 
 void ToolBar::_4xActionTriggered()
 {
-    getGlobalView()->zoom4x();
+    if (getGlobalWindow()->isViewLinked())
+    {
+        getGlobalTopView()->zoom4x();
+        getGlobalFrontalView()->zoom4x();
+        getGlobalProfileView()->zoom4x();
+    }
+    else
+    {
+        getGlobalActiveView()->zoom4x();
+    }
 }
 
 void ToolBar::_8xActionTriggered()
 {
-    getGlobalView()->zoom8x();
+    if (getGlobalWindow()->isViewLinked())
+    {
+        getGlobalTopView()->zoom8x();
+        getGlobalFrontalView()->zoom8x();
+        getGlobalProfileView()->zoom8x();
+    }
+    else
+    {
+        getGlobalActiveView()->zoom8x();
+    }
 }
-
+/*
 void ToolBar::zoomInActionTriggered()
 {
-    getGlobalView()->zoomIn();
+    if (getGlobalWindow()->isViewLinked())
+    {
+        getGlobalTopView()->zoomIn();
+        getGlobalFrontalView()->zoomIn();
+        getGlobalProfileView()->zoomIn();
+    }
+    else
+    {
+        getGlobalActiveView()->zoomIn();
+    }
 }
 
 void ToolBar::zoomOutActionTriggered()
 {
-    getGlobalView()->zoomOut();
-}
+    if (getGlobalWindow()->isViewLinked())
+    {
+        getGlobalTopView()->zoomOut();
+        getGlobalFrontalView()->zoomOut();
+        getGlobalProfileView()->zoomOut();
+    }
+    else
+    {
+        getGlobalActiveView()->zoomOut();
+    }
+}*/
 
 void ToolBar::zoomButtonTriggered(QAction* action)
 {
@@ -846,14 +907,14 @@ void ToolBar::zoomButtonTriggered(QAction* action)
 
 void ToolBar::selectItem()
 {
-    getGlobalView()->setSceneMode(MOVE_ITEM);
+    getGlobalActiveView()->setSceneMode(MOVE_ITEM);
     _cursorButton->setIconByName(":/icon/svg/cursor.svg");
     _cursorButton->setMouseHandler(new SelectMouseHandler());
 }
 
 void ToolBar::moveScene()
 {
-    getGlobalView()->setSceneMode(MOVE_SCENE);
+    getGlobalActiveView()->setSceneMode(MOVE_SCENE);
     _cursorButton->setIconByName(":/icon/svg/move.svg");
     _cursorButton->setMouseHandler(new MoveMouseHandler());
 }
@@ -872,60 +933,60 @@ void ToolBar::measurementChanged()
     if (action == _rulerAction)
     {
         _measurementButton->setIconByName(":/icon/svg/length.svg");
-        getGlobalView()->setItemType(DiagramItem::Line);
+        getGlobalActiveView()->setItemType(DiagramItem::Line);
     }
     else if (action == _arrowAction)
     {
         _measurementButton->setIconByName(":/icon/svg/arrow.svg");
-        getGlobalView()->setItemType(DiagramItem::Arrow);
+        getGlobalActiveView()->setItemType(DiagramItem::Arrow);
     }
     else if (action == _angleAction)
     {
         _measurementButton->setIconByName(":/icon/svg/angle.svg");
-        getGlobalView()->setItemType(DiagramItem::Angle);
+        getGlobalActiveView()->setItemType(DiagramItem::Angle);
     }
     else if (action == _plotAction)
     {
         _measurementButton->setIconByName(":/icon/svg/plot.svg");
-        getGlobalView()->setItemType(DiagramItem::Plot);
+        getGlobalActiveView()->setItemType(DiagramItem::Plot);
     }
     else if (action == _rectAction)
     {
         _measurementButton->setIconByName(":/icon/svg/rectangle.svg");
-        getGlobalView()->setItemType(DiagramItem::Rect);
+        getGlobalActiveView()->setItemType(DiagramItem::Rect);
     }
     else if (action == _roundrectAction)
     {
         _measurementButton->setIconByName(":/icon/svg/roundrect.svg");
-        getGlobalView()->setItemType(DiagramItem::RoundRect);
+        getGlobalActiveView()->setItemType(DiagramItem::RoundRect);
     }
     else if (action == _circleAction)
     {
         _measurementButton->setIconByName(":/icon/svg/circle.svg");
-        getGlobalView()->setItemType(DiagramItem::Circle);
+        getGlobalActiveView()->setItemType(DiagramItem::Circle);
     }
     else if (action == _ellipseAction)
     {
         _measurementButton->setIconByName(":/icon/svg/ellipse.svg");
-        getGlobalView()->setItemType(DiagramItem::Ellipse);
+        getGlobalActiveView()->setItemType(DiagramItem::Ellipse);
     }
     else if (action == _rhombusAction)
     {
         _measurementButton->setIconByName(":/icon/svg/rhombus.svg");
-        getGlobalView()->setItemType(DiagramItem::Rhombus);
+        getGlobalActiveView()->setItemType(DiagramItem::Rhombus);
     }
     else if (action == _parallelogramAction)
     {
         _measurementButton->setIconByName(":/icon/svg/parallelogram.svg");
-        getGlobalView()->setItemType(DiagramItem::Parallelogram);
+        getGlobalActiveView()->setItemType(DiagramItem::Parallelogram);
     }
     else if (action == _textAction)
     {
         _measurementButton->setIconByName(":/icon/svg/text.svg");
-        getGlobalView()->setItemType(DiagramItem::Text);
+        getGlobalActiveView()->setItemType(DiagramItem::Text);
         mainWindow->setToolBoxWidgetVisible(false, true);
     }
-    getGlobalView()->setSceneMode(INSERT_ITEM);
+    getGlobalActiveView()->setSceneMode(INSERT_ITEM);
     _measurementButton->setMouseHandler(new DrawMouseHandler());
 }
 

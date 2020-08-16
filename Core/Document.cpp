@@ -288,6 +288,30 @@ void Document::applyImageWidthAndLevel()
     processor.setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
     processor.process(getImage());
 
+    if (pMainWindow->isViewLinked())
+    {
+        MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
+        if (monoImage && monoImage->slice() > 1)
+        {
+            int viewType = monoImage->viewType();
+            if (viewType != 0)
+            {
+                monoImage->setViewType(0);
+                processor.process(getImage());
+            }
+            if (viewType != 1)
+            {
+                monoImage->setViewType(1);
+                processor.process(getImage());
+            }
+            if (viewType != 2)
+            {
+                monoImage->setViewType(2);
+                processor.process(getImage());
+            }
+        }
+    }
+
     repaintView();
 }
 
@@ -297,6 +321,30 @@ void Document::negativeImage()
     {
         InverseProcessor processor;
         processor.process(getImage());
+
+        if (pMainWindow->isViewLinked())
+        {
+            MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
+            if (monoImage && monoImage->slice() > 1)
+            {
+                int viewType = monoImage->viewType();
+                if (viewType != 0)
+                {
+                    monoImage->setViewType(0);
+                    processor.process(getImage());
+                }
+                if (viewType != 1)
+                {
+                    monoImage->setViewType(1);
+                    processor.process(getImage());
+                }
+                if (viewType != 2)
+                {
+                    monoImage->setViewType(2);
+                    processor.process(getImage());
+                }
+            }
+        }
 
         repaintView();
     }
@@ -343,7 +391,7 @@ View* Document::getActiveView() const
 
 View* Document::getDefaultView() const
 {
-    return pMainWindow->getDefaultView();
+    return pMainWindow->getTopView();
 }
 
 View* Document::getFrontalView() const

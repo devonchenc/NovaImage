@@ -51,7 +51,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     _layoutManager = new LayoutManager(centerWidget);
     _layoutManager->setWidget(_topView, _frontalView, _profileView, _volumeView);
-    _layoutManager->oneView();
+    _layoutManager->singleView();
 
     _frontalView->setViewType(FRONTAL_VIEW);
     _profileView->setViewType(PROFILE_VIEW);
@@ -162,6 +162,10 @@ void MainWindow::createActions()
     _volumeViewAction->setIcon(QIcon(":/icon/svg/volumeview.svg"));
     _volumeViewAction->setCheckable(true);
     _volumeViewAction->setChecked(false);
+    _linkViewAction = new QAction(tr("Link View"), this);
+    _linkViewAction->setIcon(QIcon(":/icon/svg/link.svg"));
+    _linkViewAction->setCheckable(true);
+    _linkViewAction->setChecked(true);
 
     QActionGroup* viewGroup = new QActionGroup(this);
     viewGroup->addAction(_singleViewAction);
@@ -215,6 +219,7 @@ void MainWindow::createActions()
     _viewMenu->addAction(_singleViewAction);
     _viewMenu->addAction(_threeViewAction);
     _viewMenu->addAction(_volumeViewAction);
+    _viewMenu->addAction(_linkViewAction);
     _viewMenu->addSeparator();
     _viewMenu->addAction(_zoomOutAction);
     _viewMenu->addAction(_zoomInAction);
@@ -384,8 +389,13 @@ void MainWindow::setActiveView(View* view)
     _activeView = view;
     if (getGlobalImage())
     {
-        getGlobalImage()->setType(view->viewType());
+        getGlobalImage()->setViewType(view->viewType());
     }
+}
+
+bool MainWindow::isViewLinked()
+{
+    return _linkViewAction->isChecked();
 }
 
 void MainWindow::imageOpened()
@@ -443,17 +453,32 @@ void MainWindow::showDockWidget(bool show)
 
 void MainWindow::singleView()
 {
-    _layoutManager->oneView();
+    _layoutManager->singleView();
+
+    _singleViewAction->setChecked(true);
+    _threeViewAction->setChecked(false);
+    _volumeViewAction->setChecked(false);
+    _toolBar->checkViewAction(0);
 }
 
 void MainWindow::threeView()
 {
     _layoutManager->threeView();
+
+    _singleViewAction->setChecked(false);
+    _threeViewAction->setChecked(true);
+    _volumeViewAction->setChecked(false);
+    _toolBar->checkViewAction(1);
 }
 
 void MainWindow::volumeView()
 {
     _layoutManager->volumeView();
+
+    _singleViewAction->setChecked(false);
+    _threeViewAction->setChecked(false);
+    _volumeViewAction->setChecked(true);
+    _toolBar->checkViewAction(2);
 }
 
 void MainWindow::fullScreen()
@@ -470,32 +495,86 @@ void MainWindow::fullScreen()
 
 void MainWindow::showAnnotation(bool show)
 {
-    _topView->view()->showAnnotation(show);
+    if (isViewLinked())
+    {
+        getTopView()->view()->showAnnotation(show);
+        getFrontalView()->view()->showAnnotation(show);
+        getProfileView()->view()->showAnnotation(show);
+    }
+    else
+    {
+        getActiveView()->view()->showAnnotation(show);
+    }
 }
 
 void MainWindow::showCrossLine(bool show)
 {
-    _topView->view()->showCrossLine(show);
+    if (isViewLinked())
+    {
+        getTopView()->view()->showCrossLine(show);
+        getFrontalView()->view()->showCrossLine(show);
+        getProfileView()->view()->showCrossLine(show);
+    }
+    else
+    {
+        getActiveView()->view()->showCrossLine(show);
+    }
 }
 
 void MainWindow::showScale(bool show)
 {
-    _topView->view()->showLineScale(show);
+    if (isViewLinked())
+    {
+        getTopView()->view()->showLineScale(show);
+        getFrontalView()->view()->showLineScale(show);
+        getProfileView()->view()->showLineScale(show);
+    }
+    else
+    {
+        getActiveView()->view()->showLineScale(show);
+    }
 }
 
 void MainWindow::showMeasurement(bool show)
 {
-    _topView->scene()->showMeasurement(show);
+    if (isViewLinked())
+    {
+        getTopView()->scene()->showMeasurement(show);
+        getFrontalView()->scene()->showMeasurement(show);
+        getProfileView()->scene()->showMeasurement(show);
+    }
+    else
+    {
+        getActiveView()->scene()->showMeasurement(show);
+    }
 }
 
 void MainWindow::zoomIn()
 {
-    _topView->view()->zoomIn();
+    if (isViewLinked())
+    {
+        getTopView()->zoomIn();
+        getFrontalView()->zoomIn();
+        getProfileView()->zoomIn();
+    }
+    else
+    {
+        getActiveView()->zoomIn();
+    }
 }
 
 void MainWindow::zoomOut()
 {
-    _topView->view()->zoomOut();
+    if (isViewLinked())
+    {
+        getTopView()->zoomOut();
+        getFrontalView()->zoomOut();
+        getProfileView()->zoomOut();
+    }
+    else
+    {
+        getActiveView()->zoomOut();
+    }
 }
 
 void MainWindow::saveAs()
@@ -802,6 +881,7 @@ void MainWindow::changeEvent(QEvent* event)
         _singleViewAction->setText(tr("Single View"));
         _threeViewAction->setText(tr("Three View"));
         _volumeViewAction->setText(tr("Volume View"));
+        _linkViewAction->setText(tr("Link View"));
         _settingsAction->setText(tr("&Preferences..."));
 
         _zoomInAction->setText(tr("Zoom &In"));

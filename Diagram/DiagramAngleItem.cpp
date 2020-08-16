@@ -363,7 +363,7 @@ void DiagramAngleItem::calcAngle()
 
 void DiagramAngleItem::drawAngleText(QPainter* painter)
 {
-    QTransform transform = getGlobalView()->view()->transform();
+    QTransform transform = getGlobalActiveView()->view()->transform();
     QTransform transform2;
     if ((p3().x() > p2().x() && p3().x() - p2().x() > 6 * abs((p3().y() - p2().y()))) ||
             (p1().x() > p2().x() && p1().x() - p2().x() > 6 * abs((p1().y() - p2().y()))))

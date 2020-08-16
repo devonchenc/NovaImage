@@ -27,6 +27,8 @@ public:
 
     void enableViewAction(bool flag);
 
+    void checkViewAction(int type);
+
 private:
     void createButton();
 
@@ -67,8 +69,6 @@ private slots:
     void _2xActionTriggered();
     void _4xActionTriggered();
     void _8xActionTriggered();
-    void zoomInActionTriggered();
-    void zoomOutActionTriggered();
     void zoomButtonTriggered(QAction* action);
     void selectItem();
     void moveScene();

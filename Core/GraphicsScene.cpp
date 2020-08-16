@@ -196,7 +196,7 @@ void GraphicsScene::showMeasurement(bool show)
     QList<QGraphicsItem*> itemList = items();
     for (int i = 0; i < itemList.size(); i++)
     {
-        if (itemList.at(i) != getGlobalView()->getPixmapItem())
+        if (itemList.at(i) != getGlobalActiveView()->getPixmapItem())
         {
             itemList.at(i)->setVisible(show);
         }

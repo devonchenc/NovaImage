@@ -36,7 +36,7 @@ public:
 
     virtual void restore() = 0;
 
-    virtual void setType(int type) {}
+    virtual void setViewType(int type) {}
 
 public:
     QImage* getImageEntity() const { return _pImage.get(); }

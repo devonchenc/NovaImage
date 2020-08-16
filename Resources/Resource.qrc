@@ -43,5 +43,6 @@
         <file>svg/singleview.svg</file>
         <file>svg/threeview.svg</file>
         <file>svg/volumeview.svg</file>
+        <file>svg/link.svg</file>
     </qresource>
 </RCC>

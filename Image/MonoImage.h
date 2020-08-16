@@ -54,7 +54,9 @@ public:
 
     void restore() override;
 
-    void setType(int type) override;
+    void setViewType(int type) override;
+
+    int viewType() { return _currentType; }
 
 public:
     // get uchar data
