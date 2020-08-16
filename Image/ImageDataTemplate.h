@@ -252,7 +252,7 @@ bool ImageDataTemplate<Type>::convertToByte(int type, uchar* byteImage)
     }
     else/* if (type == 2)*/
     {
-        return convertToByte(_profileData, _width * _slice, byteImage);
+        return convertToByte(_profileData, _height * _slice, byteImage);
     }
 }
 

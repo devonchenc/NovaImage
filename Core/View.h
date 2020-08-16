@@ -45,6 +45,9 @@ public:
 
     int imageCurrentSlice();
 
+    int getImageValue(const QPoint& position);
+    int getImageValue(float x, float y);
+
     void resetImage();
 
     void setWindowWidthAndLevel(float windowWidth, float windowLevel);

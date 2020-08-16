@@ -43,6 +43,8 @@ public:
     float getValue(int x, int y) const override;
     float getValue(int index) const override;
 
+    float getValueWithType(int type, int index) const override;
+
     bool hasPixelSpacing() override { return false; }
 
     float horzPixelSpacing() override { return 0; }

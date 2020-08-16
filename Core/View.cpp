@@ -205,6 +205,20 @@ int View::imageCurrentSlice()
     return image->currentSlice(_type);
 }
 
+int View::getImageValue(const QPoint& position)
+{
+    if (position.x() < 0 || position.x() >= imageWidth() || position.y() < 0 || position.y() >= imageHeight())
+        return 0;
+
+    int index = position.y() * imageWidth() + position.x();
+    return getGlobalImage()->getValueWithType(_type, index);
+}
+
+int View::getImageValue(float x, float y)
+{
+    return getImageValue(QPoint(x, y));
+}
+
 void View::resetImage()
 {
     if (_currentImage)

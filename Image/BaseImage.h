@@ -24,6 +24,8 @@ public:
     virtual float getValue(int index) const = 0;
     virtual float getValue(float x, float y) const;
 
+    virtual float getValueWithType(int type, int index) const { return getValue(index); }
+
     virtual bool hasPixelSpacing()	{ return false; }
 
     virtual float horzPixelSpacing() { return 0; }

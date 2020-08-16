@@ -217,6 +217,11 @@ float MonoImage::getValue(int index) const
     return _imageData->getProcessingValue(_currentType, index);
 }
 
+float MonoImage::getValueWithType(int type, int index) const
+{
+    return _imageData->getProcessingValue(type, index);
+}
+
 float MonoImage::getMinValue() const
 {
     return _imageData->getMinimumValue();

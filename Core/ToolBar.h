@@ -48,6 +48,12 @@ private slots:
     void singleViewActionTriggered();
     void threeViewActionTriggered();
     void volumeViewActionTriggered();
+    void flipHorizontalActionTriggered();
+    void flipVerticalActionTriggered();
+    void rotate90CWActionTriggered();
+    void rotate90CCWActionTriggered();
+    void rotate180ActionTriggered();
+    void resetTransformationActionTriggered();
     void FPS30ActionTriggered();
     void FPS60ActionTriggered();
     void sliceActionTriggered();
@@ -56,6 +62,13 @@ private slots:
     void imageWindowButtonTriggered(QAction* action);
     void zoomActionTriggered();
     void magnifierActionTriggered();
+    void fitWindowActionTriggered();
+    void _1xActionTriggered();
+    void _2xActionTriggered();
+    void _4xActionTriggered();
+    void _8xActionTriggered();
+    void zoomInActionTriggered();
+    void zoomOutActionTriggered();
     void zoomButtonTriggered(QAction* action);
     void selectItem();
     void moveScene();

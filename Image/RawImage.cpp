@@ -15,6 +15,8 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
     _height = height;
     _slice = slice;
     _currentTopSlice = round(_slice / 2.0) - 1;
+    _currentFrontalSlice = round(_height / 2.0) - 1;
+    _currentProfileSlice = round(_width / 2.0) - 1;
 
     // Read data
     if (readData() == false)

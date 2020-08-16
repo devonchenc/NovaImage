@@ -271,13 +271,13 @@ void ToolBar::createAction()
     connect(_showScaleAction, &QAction::toggled, mainWindow, &MainWindow::showScale);
     connect(_showMeasurementAction, &QAction::toggled, mainWindow, &MainWindow::showMeasurement);
 
-    connect(_flipHorizontalAction, &QAction::triggered, mainWindow->getDefaultView(), &View::flipHorizontal);
-    connect(_flipVerticalAction, &QAction::triggered, mainWindow->getDefaultView(), &View::flipVertical);
+    connect(_flipHorizontalAction, &QAction::triggered, this, &ToolBar::flipHorizontalActionTriggered);
+    connect(_flipVerticalAction, &QAction::triggered, this, &ToolBar::flipVerticalActionTriggered);
 
-    connect(_rotate90CWAction, &QAction::triggered, mainWindow->getDefaultView(), &View::rotate90CW);
-    connect(_rotate90CCWAction, &QAction::triggered, mainWindow->getDefaultView(), &View::rotate90CCW);
-    connect(_rotate180Action, &QAction::triggered, mainWindow->getDefaultView(), &View::rotate180);
-    connect(_resetTransformation, &QAction::triggered, mainWindow->getDefaultView(), &View::resetTransformation);
+    connect(_rotate90CWAction, &QAction::triggered, this, &ToolBar::rotate90CWActionTriggered);
+    connect(_rotate90CCWAction, &QAction::triggered, this, &ToolBar::rotate90CCWActionTriggered);
+    connect(_rotate180Action, &QAction::triggered, this, &ToolBar::rotate180ActionTriggered);
+    connect(_resetTransformation, &QAction::triggered, this, &ToolBar::resetTransformationActionTriggered);
 
     connect(_FPS30Action, &QAction::triggered, this, &ToolBar::FPS30ActionTriggered);
     connect(_FPS60Action, &QAction::triggered, this, &ToolBar::FPS60ActionTriggered);
@@ -292,13 +292,13 @@ void ToolBar::createAction()
 
     connect(_zoomAction, &QAction::triggered, this, &ToolBar::zoomActionTriggered);
     connect(_magnifierAction, &QAction::triggered, this, &ToolBar::magnifierActionTriggered);
-    connect(_fitWindowAction, &QAction::triggered, mainWindow->getDefaultView(), &View::fitWindow);
-    connect(_1xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoomNormal);
-    connect(_2xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoom2x);
-    connect(_4xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoom4x);
-    connect(_8xAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoom8x);
-    connect(_zoomInAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoomIn);
-    connect(_zoomOutAction, &QAction::triggered, mainWindow->getDefaultView(), &View::zoomOut);
+    connect(_fitWindowAction, &QAction::triggered, this, &ToolBar::fitWindowActionTriggered);
+    connect(_1xAction, &QAction::triggered, this, &ToolBar::_1xActionTriggered);
+    connect(_2xAction, &QAction::triggered, this, &ToolBar::_2xActionTriggered);
+    connect(_4xAction, &QAction::triggered, this, &ToolBar::_4xActionTriggered);
+    connect(_8xAction, &QAction::triggered, this, &ToolBar::_8xActionTriggered);
+    connect(_zoomInAction, &QAction::triggered, this, &ToolBar::zoomInActionTriggered);
+    connect(_zoomOutAction, &QAction::triggered, this, &ToolBar::zoomOutActionTriggered);
 
     connect(_cursorAction, &QAction::triggered, this, &ToolBar::selectItem);
     connect(_moveAction, &QAction::triggered, this, &ToolBar::moveScene);
@@ -716,6 +716,36 @@ void ToolBar::volumeViewActionTriggered()
     getGlobalWindow()->volumeView();
 }
 
+void ToolBar::flipHorizontalActionTriggered()
+{
+    getGlobalView()->flipHorizontal();
+}
+
+void ToolBar::flipVerticalActionTriggered()
+{
+    getGlobalView()->flipVertical();
+}
+
+void ToolBar::rotate90CWActionTriggered()
+{
+    getGlobalView()->rotate90CW();
+}
+
+void ToolBar::rotate90CCWActionTriggered()
+{
+    getGlobalView()->rotate90CCW();
+}
+
+void ToolBar::rotate180ActionTriggered()
+{
+    getGlobalView()->rotate180();
+}
+
+void ToolBar::resetTransformationActionTriggered()
+{
+    getGlobalView()->resetTransformation();
+}
+
 void ToolBar::FPS30ActionTriggered()
 {
     _FPS30Action->setChecked(true);
@@ -766,6 +796,41 @@ void ToolBar::magnifierActionTriggered()
 {
     _zoomButton->setIconByName(":/icon/svg/magnifier.svg");
     _zoomButton->setMouseHandler(new MagnifierMouseHandler());
+}
+
+void ToolBar::fitWindowActionTriggered()
+{
+    getGlobalView()->fitWindow();
+}
+
+void ToolBar::_1xActionTriggered()
+{
+    getGlobalView()->zoomNormal();
+}
+
+void ToolBar::_2xActionTriggered()
+{
+    getGlobalView()->zoom2x();
+}
+
+void ToolBar::_4xActionTriggered()
+{
+    getGlobalView()->zoom4x();
+}
+
+void ToolBar::_8xActionTriggered()
+{
+    getGlobalView()->zoom8x();
+}
+
+void ToolBar::zoomInActionTriggered()
+{
+    getGlobalView()->zoomIn();
+}
+
+void ToolBar::zoomOutActionTriggered()
+{
+    getGlobalView()->zoomOut();
 }
 
 void ToolBar::zoomButtonTriggered(QAction* action)

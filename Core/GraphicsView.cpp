@@ -140,7 +140,7 @@ void GraphicsView::mouseMoveEvent(QMouseEvent* event)
         QImage image = pixmapItem->pixmap().toImage();
         if (pointPixmap.x() >= 0 && pointPixmap.x() < image.width() && pointPixmap.y() >= 0 && pointPixmap.y() < image.height())
         {
-            float value = getGlobalImage()->getValue(QPoint(pointPixmap.x(), pointPixmap.y()));
+            float value = _view->getImageValue(pointPixmap.x(), pointPixmap.y());
             int decimal = 4;
             if (abs(value) > 10.0f)
             {
