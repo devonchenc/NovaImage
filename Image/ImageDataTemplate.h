@@ -230,7 +230,7 @@ bool ImageDataTemplate<Type>::convertToByte(float* data, int size, uchar* byteIm
         variable = 0.0f;
     }
 
-    for (unsigned long i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
     {
         byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =
                 uchar((data[i] - _minValue) * variable);

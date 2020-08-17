@@ -13,6 +13,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Image/ScanImage.h \
     ./Image/ImageDataTemplate.h \
     ./Image/ImageReader.h \
+    ./Image/MonoImageProxy.h \
     ./Widget/Peg.h \
     ./Widget/WidgetManager.h \
     ./Widget/ColorButton.h \
@@ -63,6 +64,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Image/MonoImage.cpp \
     ./Image/RawImage.cpp \
     ./Image/ScanImage.cpp \
+    ./Image/MonoImageProxy.cpp \
     ./Widget/ChartView.cpp \
     ./Widget/ColorButton.cpp \
     ./Widget/CommonWidget.cpp \

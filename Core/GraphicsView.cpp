@@ -253,13 +253,13 @@ bool GraphicsView::eventFilter(QObject* obj, QEvent* event)
     }
 }
 
-void GraphicsView::focusInEvent(QFocusEvent* event)
+void GraphicsView::focusInEvent(QFocusEvent*)
 {
     getGlobalWindow()->setActiveView(_view);
     _view->update();
 }
 
-void GraphicsView::focusOutEvent(QFocusEvent* event)
+void GraphicsView::focusOutEvent(QFocusEvent*)
 {
     _view->update();
 }
@@ -267,7 +267,6 @@ void GraphicsView::focusOutEvent(QFocusEvent* event)
 void GraphicsView::drawAnnotation()
 {
     int fontHeight = 16;
-    int a = rect().height();
     if (rect().height() < 400)
     {
         fontHeight = 8;
@@ -294,7 +293,6 @@ void GraphicsView::drawAnnotation()
     QString str = QString(tr("Zoom: %1%")).arg(QString::number(scale * 100.0, 'f', 2));
     painter.drawText(QRect(0, 0, 240, pixelsHigh), Qt::AlignLeft, str);
 
-    BaseImage* image = getGlobalImage();
     str = QString(tr("Size: %1%2%3")).arg(_view->imageWidth()).arg(QString(QChar(0x00D7))).arg(_view->imageHeight());
     painter.drawText(QRect(0, pixelsHigh, 350, pixelsHigh), Qt::AlignLeft, str);
 

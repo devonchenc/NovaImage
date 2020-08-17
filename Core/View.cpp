@@ -113,7 +113,7 @@ void View::paintEvent(QPaintEvent*)
     }
 }
 
-void View::resizeEvent(QResizeEvent* event)
+void View::resizeEvent(QResizeEvent*)
 {
     fitWindow();
 }

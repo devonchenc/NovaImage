@@ -24,7 +24,7 @@ public:
     virtual float getValue(int index) const = 0;
     virtual float getValue(float x, float y) const;
 
-    virtual float getValueWithType(int type, int index) const { return getValue(index); }
+    virtual float getValueWithType(int type, int index) const { Q_UNUSED(type); return getValue(index); }
 
     virtual bool hasPixelSpacing()	{ return false; }
 
@@ -36,7 +36,7 @@ public:
 
     virtual void restore() = 0;
 
-    virtual void setViewType(int type) {}
+    virtual void setViewType(int type) { Q_UNUSED(type); }
 
     virtual int viewType() { return 0; }
 
@@ -53,7 +53,7 @@ public:
 
     virtual int currentSlice() const { return 0; }
 
-    virtual int currentSlice(int type) const { return 0; }
+    virtual int currentSlice(int type) const { Q_UNUSED(type); return 0; }
 
     float windowWidth() { return _windowWidth; }
 
