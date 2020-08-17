@@ -115,7 +115,7 @@ void PlotDialog::setLineWidth()
                 getGlobalActiveView()->repaint();
                 emit lineWidthChanged(plotItem, lineWidth);
             }
-            break;;
+            break;
         }
     }
 }

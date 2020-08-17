@@ -331,7 +331,7 @@ void Document::undo()
         return;
 
     BaseImage* undoImage = _undoStack.undo()->copyImage();
-    _image.reset(undoImage);;
+    _image.reset(undoImage);
     repaintView();
 }
 

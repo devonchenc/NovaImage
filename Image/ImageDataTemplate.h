@@ -293,6 +293,22 @@ void ImageDataTemplate<Type>::restoreData()
     {
         _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
     }
+    for (int j = 0; j < _slice; j++)
+    {
+        qint64 offset = j * _pixelPerSlice;
+        for (int i = 0; i < _width; i++)
+        {
+            _frontalData[j * _width + i] = _originalData.get()[i + _currentFrontalSlice * _width + offset];
+        }
+    }
+    for (int j = 0; j < _slice; j++)
+    {
+        qint64 offset = j * _pixelPerSlice;
+        for (int i = 0; i < _height; i++)
+        {
+            _profileData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
+        }
+    }
 }
 
 template <class Type>

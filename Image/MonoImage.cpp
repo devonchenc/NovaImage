@@ -236,9 +236,9 @@ void MonoImage::restore()
 {
     _imageData->restoreData();
 
-    convertToByte();
+    convertAllToByte();
 
-    copyToImage();
+    copyToAllImage();
 }
 
 void MonoImage::setViewType(int type)
