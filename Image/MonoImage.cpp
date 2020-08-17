@@ -51,12 +51,12 @@ MonoImage::MonoImage(const MonoImage& src)
 
     _topProxy = new MonoImageProxy(*src._topProxy);
 
-    if (_frontalProxy)
+    if (src._frontalProxy)
     {
         _frontalProxy = new MonoImageProxy(*src._frontalProxy);
     }
 
-    if (_profileProxy)
+    if (src._profileProxy)
     {
         _profileProxy = new MonoImageProxy(*src._profileProxy);
     }

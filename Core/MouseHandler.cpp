@@ -192,6 +192,8 @@ void ImageWindowMouseHandler::CalcImageWindow(QPoint point)
     {
         getGlobalActiveView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
+
+    getGlobalDocument()->applyImageWidthAndLevel();
 }
 
 //////////////////////////////////////////////////////////////////////////

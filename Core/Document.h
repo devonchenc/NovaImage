@@ -79,14 +79,14 @@ public slots:
 private:
     View* getActiveView() const;
 
-    View* getDefaultView() const;
+    View* getTopView() const;
 
     View* getFrontalView() const;
 
     View* getProfileView() const;
 
 private:
-    MainWindow* pMainWindow;
+    MainWindow* mainWindow;
 
     std::shared_ptr<BaseImage> _image;
 

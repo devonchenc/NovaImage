@@ -8,6 +8,7 @@
 //#include "../Image/RegionImage.h"
 #include "../Core/GlobalFunc.h"
 #include "../Core/Document.h"
+#include "../Core/mainwindow.h"
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
 
@@ -39,6 +40,30 @@ void BaseProcessor::process(BaseImage* image)
     {
         MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
         processMonoImage(monoImage);
+
+        if (getGlobalWindow()->isViewLinked())
+        {
+            if (monoImage->slice() > 1)
+            {
+                int viewType = monoImage->viewType();
+                if (viewType != 0)
+                {
+                    monoImage->setViewType(0);
+                    processMonoImage(monoImage);
+                }
+                if (viewType != 1)
+                {
+                    monoImage->setViewType(1);
+                    processMonoImage(monoImage);
+                }
+                if (viewType != 2)
+                {
+                    monoImage->setViewType(2);
+                    processMonoImage(monoImage);
+                }
+                monoImage->setViewType(viewType);
+            }
+        }
     }
     /*	else if (typeid(*pImage) == typeid(RegionImage))
     {

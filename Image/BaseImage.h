@@ -38,6 +38,8 @@ public:
 
     virtual void setViewType(int type) {}
 
+    virtual int viewType() { return 0; }
+
 public:
     QImage* getImageEntity() const { return _pImage.get(); }
 

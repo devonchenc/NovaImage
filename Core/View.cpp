@@ -225,8 +225,6 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
 {
     _windowWidth = windowWidth;
     _windowLevel = windowLevel;
-
-    getGlobalDocument()->applyImageWidthAndLevel();
 }
 
 void View::slicePlusOne()
@@ -236,7 +234,7 @@ void View::slicePlusOne()
         return;
 
     image->setSlice((image->currentSlice() + 1) >= image->slice() ? 0 : (image->currentSlice() + 1));
-
+    qDebug() << "Image type: " << image->viewType();
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
@@ -246,6 +244,7 @@ void View::sliceMinusOne()
     if (image == nullptr || image->slice() <= 1)
         return;
 
+    qDebug() << "Image view type: " << image->viewType();
     image->setSlice((image->currentSlice() - 1) < 0 ? (image->slice() - 1) : (image->currentSlice() - 1));
 
     getGlobalDocument()->applyImageWidthAndLevel();

@@ -15,7 +15,7 @@
 #include "../Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
-    : pMainWindow(pWindow)
+    : mainWindow(pWindow)
     , _image(nullptr)
     , _modified(false)
 {
@@ -77,14 +77,14 @@ bool Document::openFile(const QString& fileName)
 
     _image->histogramStatistic();
 
-    getDefaultView()->showImage(_image->getImageEntity(), true);
+    getTopView()->showImage(_image->getImageEntity(), true);
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     int displayWindow = settings.value("Image/displayWindow", 0).toInt();
     if (displayWindow == 0)
     {
         // Default window
-        getDefaultView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getTopView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
         getFrontalView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
         getProfileView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
     }
@@ -93,24 +93,29 @@ bool Document::openFile(const QString& fileName)
         // Full window
         float windowWidth = _image->getMaxValue() - _image->getMinValue();
         float windowLevel = (_image->getMaxValue() + _image->getMinValue()) / 2;
-        getDefaultView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getTopView()->setWindowWidthAndLevel(windowWidth, windowLevel);
         getFrontalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
         getProfileView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
+    applyImageWidthAndLevel();
 
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
     if (fitWindow)
     {
-        getDefaultView()->fitWindow();
+        getTopView()->fitWindow();
+        getFrontalView()->fitWindow();
+        getProfileView()->fitWindow();
     }
     else
     {
-        getDefaultView()->zoomNormal();
+        getTopView()->zoomNormal();
+        getFrontalView()->zoomNormal();
+        getProfileView()->zoomNormal();
     }
 
-	getDefaultView()->loadGraphicsItem();
+    getTopView()->loadGraphicsItem();
 
-    pMainWindow->imageOpened();
+    mainWindow->imageOpened();
 
     return true;
 }
@@ -176,7 +181,7 @@ bool Document::saveAs(const QString& fileName)
 
 void Document::closeFile()
 {
-    getDefaultView()->resetImage();
+    getTopView()->resetImage();
     getFrontalView()->resetImage();
     getProfileView()->resetImage();
 
@@ -206,7 +211,7 @@ void Document::repaintView()
 {
     if (_image)
     {
-        getDefaultView()->showImage(_image->getImageEntity());
+        getTopView()->showImage(_image->getImageEntity());
         MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
         if (monoImage && monoImage->slice() > 1)
         {
@@ -226,7 +231,7 @@ void Document::setModified(bool flag)
 
 void Document::saveGraphicsItem()
 {
-    getDefaultView()->saveGraphicsItem();
+    getTopView()->saveGraphicsItem();
     _modified = false;
 }
 
@@ -257,14 +262,26 @@ void Document::ROIWindow(const QRectF& rect)
         }
     }
 
-    getActiveView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+    if (mainWindow->isViewLinked())
+    {
+        getTopView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getFrontalView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getProfileView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+    }
+    else
+    {
+        getActiveView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+    }
+
+    applyImageWidthAndLevel();
 }
 
 void Document::defaultImageWindow()
 {
     if (_image)
     {
-        getDefaultView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getTopView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        applyImageWidthAndLevel();
     }
 }
 
@@ -275,7 +292,8 @@ void Document::fullImageWindow()
         float maxValue = _image->getMaxValue();
         float minValue = _image->getMinValue();
 
-        getDefaultView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getTopView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        applyImageWidthAndLevel();
     }
 }
 
@@ -288,30 +306,6 @@ void Document::applyImageWidthAndLevel()
     processor.setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
     processor.process(getImage());
 
-    if (pMainWindow->isViewLinked())
-    {
-        MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
-        if (monoImage && monoImage->slice() > 1)
-        {
-            int viewType = monoImage->viewType();
-            if (viewType != 0)
-            {
-                monoImage->setViewType(0);
-                processor.process(getImage());
-            }
-            if (viewType != 1)
-            {
-                monoImage->setViewType(1);
-                processor.process(getImage());
-            }
-            if (viewType != 2)
-            {
-                monoImage->setViewType(2);
-                processor.process(getImage());
-            }
-        }
-    }
-
     repaintView();
 }
 
@@ -321,30 +315,6 @@ void Document::negativeImage()
     {
         InverseProcessor processor;
         processor.process(getImage());
-
-        if (pMainWindow->isViewLinked())
-        {
-            MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
-            if (monoImage && monoImage->slice() > 1)
-            {
-                int viewType = monoImage->viewType();
-                if (viewType != 0)
-                {
-                    monoImage->setViewType(0);
-                    processor.process(getImage());
-                }
-                if (viewType != 1)
-                {
-                    monoImage->setViewType(1);
-                    processor.process(getImage());
-                }
-                if (viewType != 2)
-                {
-                    monoImage->setViewType(2);
-                    processor.process(getImage());
-                }
-            }
-        }
 
         repaintView();
     }
@@ -386,20 +356,20 @@ void Document::restore()
 
 View* Document::getActiveView() const
 {
-    return pMainWindow->getActiveView();
+    return mainWindow->getActiveView();
 }
 
-View* Document::getDefaultView() const
+View* Document::getTopView() const
 {
-    return pMainWindow->getTopView();
+    return mainWindow->getTopView();
 }
 
 View* Document::getFrontalView() const
 {
-    return pMainWindow->getFrontalView();
+    return mainWindow->getFrontalView();
 }
 
 View* Document::getProfileView() const
 {
-    return pMainWindow->getProfileView();
+    return mainWindow->getProfileView();
 }

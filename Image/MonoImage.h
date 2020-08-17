@@ -56,7 +56,7 @@ public:
 
     void setViewType(int type) override;
 
-    int viewType() { return _currentType; }
+    int viewType() override { return _currentType; }
 
 public:
     // get uchar data
