@@ -44,7 +44,7 @@ DICOMImage::DICOMImage(const QString& pathName)
         return;
     }
     // Copy to image
-    if (copyToImage() == false)
+    if (copyByteToImage() == false)
     {
         _openSucceed = false;
         return;
@@ -93,7 +93,7 @@ void DICOMImage::restore()
 
     convertToByte();
 
-    copyToImage();
+    copyByteToImage();
 }
 
 // Read data

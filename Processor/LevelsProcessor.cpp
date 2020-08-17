@@ -180,7 +180,7 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
         }
     }
 
-    image->copyToImage();
+    image->copyByteToImage();
 }
 
 // Process float array

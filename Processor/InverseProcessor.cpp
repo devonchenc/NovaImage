@@ -59,7 +59,7 @@ void InverseProcessor::processMonoImage(MonoImage* image)
         byteImage[i] = 255 - byteImage[i];
     }
 
-    image->copyToImage();
+    image->copyByteToImage();
 }
 
 // Process float array

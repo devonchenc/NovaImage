@@ -19,8 +19,8 @@ MonoImageProxy::MonoImageProxy(const MonoImageProxy& src)
     , _height(src._height)
     , _type(src._type)
     , _byteImage(new uchar[_width * _height * 3])
-    , _pImage(src._pImage)
 {
+    _pImage.reset(new QImage(*src._pImage));
     memcpy(_byteImage, src._byteImage, sizeof(uchar) * _width * _height * 3);
 }
 

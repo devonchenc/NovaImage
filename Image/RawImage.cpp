@@ -40,7 +40,7 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
         return;
     }
     // Copy to image
-    if (copyToAllImage() == false)
+    if (copyByteToAllImage() == false)
     {
         _openSucceed = false;
         return;
@@ -68,7 +68,7 @@ void RawImage::setSlice(int slice)
 
     convertToByte();
 
-    copyToImage();
+    copyByteToImage();
 }
 
 void RawImage::initWindowWidthAndLevel()

@@ -108,7 +108,7 @@ void CurvesProcessor::processMonoImage(MonoImage* image)
         }
     }
 
-    image->copyToImage();
+    image->copyByteToImage();
 
     //	PIProgressDone();
 }

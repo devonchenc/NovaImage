@@ -60,6 +60,8 @@ MonoImage::MonoImage(const MonoImage& src)
     {
         _profileProxy = new MonoImageProxy(*src._profileProxy);
     }
+
+    _pImage = _topProxy->getImageEntity();
 }
 
 MonoImage::~MonoImage()
@@ -86,7 +88,7 @@ MonoImage::~MonoImage()
     }
 }
 
-bool MonoImage::copyToAllImage()
+bool MonoImage::copyByteToAllImage()
 {
     _topProxy->copyByteToImage();
     if (_frontalProxy)
@@ -100,7 +102,7 @@ bool MonoImage::copyToAllImage()
     return true;
 }
 
-bool MonoImage::copyToImage()
+bool MonoImage::copyByteToImage()
 {
     if (_currentType == TOP_VIEW)
     {
@@ -238,7 +240,7 @@ void MonoImage::restore()
 
     convertAllToByte();
 
-    copyToAllImage();
+    copyByteToAllImage();
 }
 
 void MonoImage::setViewType(int type)

@@ -98,7 +98,7 @@ void CommonProcessor::processMonoImage(MonoImage* image)
     }
 
     // Copy to image
-    image->copyToImage();
+    image->copyByteToImage();
 }
 
 // Process float array

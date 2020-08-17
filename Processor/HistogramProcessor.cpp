@@ -123,7 +123,7 @@ void HistogramProcessor::processMonoImage(MonoImage* image)
     {
         // Convert data to byte
         image->convertToByte();
-        image->copyToImage();
+        image->copyByteToImage();
         return;
     }
 
@@ -155,7 +155,7 @@ void HistogramProcessor::processMonoImage(MonoImage* image)
         }
     }
 
-    image->copyToImage();
+    image->copyByteToImage();
 }
 
 // Process float array

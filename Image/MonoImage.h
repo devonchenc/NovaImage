@@ -19,9 +19,9 @@ public:
     MonoImage(const MonoImage& src);
     virtual ~MonoImage();
 
-    bool copyToAllImage();
+    bool copyByteToAllImage();
 
-    bool copyToImage();
+    bool copyByteToImage();
 
 public:
     int slice() const override { return _slice; }

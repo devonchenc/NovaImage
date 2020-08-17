@@ -121,14 +121,7 @@ BaseImage* GeneralImage::copyImage() const
 
 void GeneralImage::restore()
 {
-    // TODO
-    QImage* temp1 = _backupImage.get();
-    QImage* temp2 = _pImage.get();
     *_pImage = *_backupImage;
-    // _pImage.reset(new QImage(*_backupImage));
-    QImage* temp3 = _backupImage.get();
-    QImage* temp4 = _pImage.get();
-    int a = 5;
 }
 
 // Backup origin QImage

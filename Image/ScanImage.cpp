@@ -37,7 +37,7 @@ ScanImage::ScanImage(const QString& pathName)
         return;
     }
     // Copy to image
-    if (copyToAllImage() == false)
+    if (copyByteToAllImage() == false)
     {
         _openSucceed = false;
         return;
@@ -64,7 +64,7 @@ void ScanImage::setSlice(int slice)
 
     convertToByte();
 
-    copyToImage();
+    copyByteToImage();
 }
 
 bool ScanImage::saveAsDcm(const QString& fileName)
