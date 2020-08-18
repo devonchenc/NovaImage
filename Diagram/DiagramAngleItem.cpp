@@ -92,12 +92,12 @@ void DiagramAngleItem::setDrawingFinished(bool finished)
     _drawingFinished = finished;
 }
 
-QDomElement DiagramAngleItem::saveToXML(QDomDocument* doc)
+QDomElement DiagramAngleItem::saveToXML(QDomDocument& doc)
 {
-    QDomElement lineItem = doc->createElement("GraphicsItem");
+    QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramAngleItem");
 
-    QDomElement attribute = doc->createElement("Attribute");
+    QDomElement attribute = doc.createElement("Attribute");
     attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Point1", pointFToString(p1()));
     attribute.setAttribute("Point2", pointFToString(p2()));

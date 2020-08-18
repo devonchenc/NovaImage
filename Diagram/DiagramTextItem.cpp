@@ -25,12 +25,12 @@ DiagramTextItem* DiagramTextItem::clone()
     return cloned;
 }
 
-QDomElement DiagramTextItem::saveToXML(QDomDocument* doc)
+QDomElement DiagramTextItem::saveToXML(QDomDocument& doc)
 {
-    QDomElement lineItem = doc->createElement("GraphicsItem");
+    QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramTextItem");
 
-    QDomElement attribute = doc->createElement("Attribute");
+    QDomElement attribute = doc.createElement("Attribute");
     attribute.setAttribute("Text", toPlainText());
     attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("DefaultTextColor", colorToString(defaultTextColor()));

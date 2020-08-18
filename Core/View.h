@@ -61,9 +61,9 @@ public:
     void slicePlusOne();
     void sliceMinusOne();
 
-    void saveGraphicsItem();
+    void saveGraphicsItem(QDomDocument& doc, QDomElement& root);
 
-	void loadGraphicsItem();
+	void loadGraphicsItem(const QDomElement& sceneElem);
 
     void showPlotDialog(QGraphicsLineItem* lineItem);
 

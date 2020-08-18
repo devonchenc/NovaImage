@@ -245,20 +245,23 @@ void View::sliceMinusOne()
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
-void View::saveGraphicsItem()
+void View::saveGraphicsItem(QDomDocument& doc, QDomElement& root)
 {
-    QString str = getGlobalImage()->getPathName();
-    int index = str.lastIndexOf('.');
-    QString fileName = str.left(index) + ".xml";
-    _scene->saveToFile(fileName);
+    if (_scene->items().size() <= 1)
+        return;
+
+    QDomElement viewItem = doc.createElement("View");
+    viewItem.setAttribute("Type", QString::number(_type));
+
+    QDomElement sceneItem = _scene->saveToXML(doc);
+    viewItem.appendChild(sceneItem);
+
+    root.appendChild(viewItem);
 }
 
-void View::loadGraphicsItem()
+void View::loadGraphicsItem(const QDomElement& sceneElem)
 {
-    QString str = getGlobalImage()->getPathName();
-    int index = str.lastIndexOf('.');
-    QString fileName = str.left(index) + ".xml";
-    _scene->loadFromFile(fileName);
+    _scene->loadFromFile(sceneElem);
 }
 
 void View::showPlotDialog(QGraphicsLineItem* lineItem)

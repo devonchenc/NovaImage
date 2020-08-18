@@ -731,7 +731,7 @@ bool MainWindow::querySave()
         }
         else if (reply == QMessageBox::Save)
         {
-            _doc->saveGraphicsItem();
+            _doc->saveGraphicsItems();
         }
     }
     return true;

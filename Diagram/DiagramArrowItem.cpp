@@ -24,12 +24,12 @@ DiagramArrowItem::~DiagramArrowItem()
 
 }
 
-QDomElement DiagramArrowItem::saveToXML(QDomDocument* doc)
+QDomElement DiagramArrowItem::saveToXML(QDomDocument& doc)
 {
-    QDomElement lineItem = doc->createElement("GraphicsItem");
+    QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");
 
-    QDomElement attribute = doc->createElement("Attribute");
+    QDomElement attribute = doc.createElement("Attribute");
     attribute.setAttribute("Name", "Arrow");
     attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Point1", pointFToString(line().p1()));

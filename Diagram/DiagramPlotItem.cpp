@@ -30,12 +30,12 @@ DiagramPlotItem::~DiagramPlotItem()
     emit itemDeleted();
 }
 
-QDomElement DiagramPlotItem::saveToXML(QDomDocument* doc)
+QDomElement DiagramPlotItem::saveToXML(QDomDocument& doc)
 {
-    QDomElement lineItem = doc->createElement("GraphicsItem");
+    QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");
 
-    QDomElement attribute = doc->createElement("Attribute");
+    QDomElement attribute = doc.createElement("Attribute");
     attribute.setAttribute("Name", "Plot");
     attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Point1", pointFToString(line().p1()));

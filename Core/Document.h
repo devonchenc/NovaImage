@@ -52,7 +52,9 @@ public:
 
     void setModified(bool flag);
 
-    void saveGraphicsItem();
+    void saveGraphicsItems();
+
+    void loadGraphicsItems();
 
     static int findImageType(const QString& fileName);
 

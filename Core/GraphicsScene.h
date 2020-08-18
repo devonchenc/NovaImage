@@ -7,6 +7,7 @@
 
 QT_BEGIN_NAMESPACE
 class QMouseEvent;
+class QFile;
 QT_END_NAMESPACE
 
 class DiagramLineItem;
@@ -46,9 +47,9 @@ public:
 
     void mouseRelease(const QPointF& point);
 
-    bool saveToFile(const QString& fileName);
+    QDomElement saveToXML(QDomDocument& doc);
 
-    bool loadFromFile(const QString& fileName);
+    bool loadFromFile(const QDomElement& sceneElem);
 
 public slots:
     void editorLostFocus(DiagramTextItem* item);

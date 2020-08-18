@@ -17,7 +17,7 @@ public:
 
     int plotIndex() { return _plotIndex; }
 
-    QDomElement saveToXML(QDomDocument* doc) override;
+    QDomElement saveToXML(QDomDocument& doc) override;
 
     void loadFromXML(const QDomElement& e) override;
 

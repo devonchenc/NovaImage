@@ -119,12 +119,12 @@ void DiagramItem::setDrawingFinished(bool finished)
     _drawingFinished = finished;
 }
 
-QDomElement DiagramItem::saveToXML(QDomDocument* doc)
+QDomElement DiagramItem::saveToXML(QDomDocument& doc)
 {
-    QDomElement lineItem = doc->createElement("GraphicsItem");
+    QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramItem");
 
-    QDomElement attribute = doc->createElement("Attribute");
+    QDomElement attribute = doc.createElement("Attribute");
     attribute.setAttribute("DiagramType", QString::number(_diagramType));
     attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Polygon", polygonToString(_polygon));

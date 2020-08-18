@@ -7,7 +7,6 @@
 #include <QBrush>
 #include <QApplication>
 #include <QDomDocument>
-#include <QTextStream>
 #include <QTextDocument>
 
 #include "GlobalFunc.h"
@@ -402,11 +401,10 @@ void GraphicsScene::mouseRelease(const QPointF& point)
     update();
 }
 
-bool GraphicsScene::saveToFile(const QString& fileName)
+QDomElement GraphicsScene::saveToXML(QDomDocument& doc)
 {
-    QDomDocument doc("GraphicsScene");
-    QDomElement root = doc.createElement("GraphicsItems");
-    doc.appendChild(root);
+    QDomElement sceneItem = doc.createElement("GraphicsScene");
+    sceneItem.setAttribute("Number", QString::number(items().size() - 1));
 
     QList<QGraphicsItem*> itemList = items();
     for (int i = 0; i < itemList.size(); i++)
@@ -416,62 +414,41 @@ bool GraphicsScene::saveToFile(const QString& fileName)
         case DiagramItem::Type:
         {
             DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(itemList.at(i));
-            QDomElement lineItem = item->saveToXML(&doc);
-            root.appendChild(lineItem);
+            QDomElement lineItem = item->saveToXML(doc);
+            sceneItem.appendChild(lineItem);
         }
             break;
         case DiagramLineItem::Type:
         {
             DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(itemList.at(i));
-            QDomElement lineItem = item->saveToXML(&doc);
-            root.appendChild(lineItem);
+            QDomElement lineItem = item->saveToXML(doc);
+            sceneItem.appendChild(lineItem);
         }
             break;
         case DiagramAngleItem::Type:
         {
             DiagramAngleItem* item = qgraphicsitem_cast<DiagramAngleItem*>(itemList.at(i));
-            QDomElement lineItem = item->saveToXML(&doc);
-            root.appendChild(lineItem);
+            QDomElement lineItem = item->saveToXML(doc);
+            sceneItem.appendChild(lineItem);
         }
             break;
         case DiagramTextItem::Type:
         {
             DiagramTextItem* item = qgraphicsitem_cast<DiagramTextItem*>(itemList.at(i));
-            QDomElement lineItem = item->saveToXML(&doc);
-            root.appendChild(lineItem);
+            QDomElement lineItem = item->saveToXML(doc);
+            sceneItem.appendChild(lineItem);
         }
             break;
         default:
             break;
         }
     }
-
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly))
-        return false;
-
-    QTextStream txtOutput(&file);
-    txtOutput.setCodec("UTF-8");
-    txtOutput << doc.toString();
-    file.close();
-    return true;
+    return sceneItem;
 }
 
-bool GraphicsScene::loadFromFile(const QString& fileName)
+bool GraphicsScene::loadFromFile(const QDomElement& sceneElem)
 {
-    QFile file(fileName);
-    if (!file.open(QIODevice::ReadOnly))
-        return false;
-
-    QDomDocument doc;
-    if (!doc.setContent(&file))
-    {
-        file.close();
-        return false;
-    }
-    file.close();
-
-    QDomNodeList domList = doc.elementsByTagName("GraphicsItem");
+    QDomNodeList domList = sceneElem.childNodes();
     for (int i = 0; i < domList.size(); i++)
     {
         QDomElement diagramElem = domList.at(i).toElement();

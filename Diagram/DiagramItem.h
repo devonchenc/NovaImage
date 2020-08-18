@@ -38,7 +38,7 @@ public:
 
     void setDrawingFinished(bool finished);
 
-    virtual QDomElement saveToXML(QDomDocument* doc);
+    virtual QDomElement saveToXML(QDomDocument& doc);
 
     virtual void loadFromXML(const QDomElement& e);
 

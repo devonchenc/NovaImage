@@ -25,7 +25,7 @@ public:
     bool contentIsUpdated() { return _contentHasChanged; }
     DiagramTextItem* clone();
 
-    virtual QDomElement saveToXML(QDomDocument* doc);
+    virtual QDomElement saveToXML(QDomDocument& doc);
 
     virtual void loadFromXML(const QDomElement& e);
 

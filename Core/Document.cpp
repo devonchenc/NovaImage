@@ -2,6 +2,9 @@
 
 #include <QSettings>
 #include <QCoreApplication>
+#include <QFile>
+#include <QDomDocument>
+#include <QTextStream>
 
 #include "mainwindow.h"
 #include "View.h"
@@ -100,7 +103,7 @@ bool Document::openFile(const QString& fileName)
         getSagittalView()->zoomNormal();
     }
 
-    getAxialView()->loadGraphicsItem();
+    loadGraphicsItems();
 
     mainWindow->imageOpened();
 
@@ -216,10 +219,72 @@ void Document::setModified(bool flag)
     }
 }
 
-void Document::saveGraphicsItem()
+void Document::saveGraphicsItems()
 {
-    getAxialView()->saveGraphicsItem();
+    QString str = _image->getPathName();
+    int index = str.lastIndexOf('.');
+    QString fileName = str.left(index) + ".xml";
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly))
+        return;
+
+    QDomDocument doc("NovaImage");
+    QDomElement root = doc.createElement("Views");
+    doc.appendChild(root);
+
+    getAxialView()->saveGraphicsItem(doc, root);
+    getCoronalView()->saveGraphicsItem(doc, root);
+    getSagittalView()->saveGraphicsItem(doc, root);
+
+    QTextStream txtOutput(&file);
+    txtOutput.setCodec("UTF-8");
+    txtOutput << doc.toString();
+    file.close();
+
     _modified = false;
+}
+
+void Document::loadGraphicsItems()
+{
+    QString str = _image->getPathName();
+    int index = str.lastIndexOf('.');
+    QString fileName = str.left(index) + ".xml";
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly))
+        return;
+
+    QDomDocument doc;
+    if (!doc.setContent(&file))
+    {
+        file.close();
+        return;
+    }
+    file.close();
+
+    QDomNodeList domList = doc.elementsByTagName("View");
+    for (int i = 0; i < domList.size(); i++)
+    {
+        QDomElement viewElem = domList.at(i).toElement();
+        QDomElement sceneElem = viewElem.firstChild().toElement();
+        if (sceneElem.isNull())
+            break;
+
+        int type = viewElem.attribute("Type").toInt();
+        if (type == 0)
+        {
+            getAxialView()->loadGraphicsItem(sceneElem);
+        }
+        else if (type == 1)
+        {
+            getCoronalView()->loadGraphicsItem(sceneElem);
+        }
+        else if (type == 2)
+        {
+            getSagittalView()->loadGraphicsItem(sceneElem);
+        }
+    }
 }
 
 void Document::ROIWindow(const QRectF& rect)

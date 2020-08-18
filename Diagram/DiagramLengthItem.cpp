@@ -27,12 +27,12 @@ DiagramLengthItem::~DiagramLengthItem()
 
 }
 
-QDomElement DiagramLengthItem::saveToXML(QDomDocument* doc)
+QDomElement DiagramLengthItem::saveToXML(QDomDocument& doc)
 {
-    QDomElement lineItem = doc->createElement("GraphicsItem");
+    QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");
 
-    QDomElement attribute = doc->createElement("Attribute");
+    QDomElement attribute = doc.createElement("Attribute");
     attribute.setAttribute("Name", "Length");
     attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Point1", pointFToString(line().p1()));
