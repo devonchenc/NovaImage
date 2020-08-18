@@ -803,9 +803,9 @@ void ToolBar::fitWindowActionTriggered()
 {
     if (getGlobalWindow()->isViewLinked())
     {
-        getGlobalTopView()->zoomNormal();
-        getGlobalFrontalView()->zoomNormal();
-        getGlobalProfileView()->zoomNormal();
+        getGlobalAxialView()->zoomNormal();
+        getGlobalCoronalView()->zoomNormal();
+        getGlobalSagittalView()->zoomNormal();
     }
     else
     {
@@ -817,9 +817,9 @@ void ToolBar::_1xActionTriggered()
 {
     if (getGlobalWindow()->isViewLinked())
     {
-        getGlobalTopView()->zoomNormal();
-        getGlobalFrontalView()->zoomNormal();
-        getGlobalProfileView()->zoomNormal();
+        getGlobalAxialView()->zoomNormal();
+        getGlobalCoronalView()->zoomNormal();
+        getGlobalSagittalView()->zoomNormal();
     }
     else
     {
@@ -831,9 +831,9 @@ void ToolBar::_2xActionTriggered()
 {
     if (getGlobalWindow()->isViewLinked())
     {
-        getGlobalTopView()->zoom2x();
-        getGlobalFrontalView()->zoom2x();
-        getGlobalProfileView()->zoom2x();
+        getGlobalAxialView()->zoom2x();
+        getGlobalCoronalView()->zoom2x();
+        getGlobalSagittalView()->zoom2x();
     }
     else
     {
@@ -845,9 +845,9 @@ void ToolBar::_4xActionTriggered()
 {
     if (getGlobalWindow()->isViewLinked())
     {
-        getGlobalTopView()->zoom4x();
-        getGlobalFrontalView()->zoom4x();
-        getGlobalProfileView()->zoom4x();
+        getGlobalAxialView()->zoom4x();
+        getGlobalCoronalView()->zoom4x();
+        getGlobalSagittalView()->zoom4x();
     }
     else
     {
@@ -859,43 +859,15 @@ void ToolBar::_8xActionTriggered()
 {
     if (getGlobalWindow()->isViewLinked())
     {
-        getGlobalTopView()->zoom8x();
-        getGlobalFrontalView()->zoom8x();
-        getGlobalProfileView()->zoom8x();
+        getGlobalAxialView()->zoom8x();
+        getGlobalCoronalView()->zoom8x();
+        getGlobalSagittalView()->zoom8x();
     }
     else
     {
         getGlobalActiveView()->zoom8x();
     }
 }
-/*
-void ToolBar::zoomInActionTriggered()
-{
-    if (getGlobalWindow()->isViewLinked())
-    {
-        getGlobalTopView()->zoomIn();
-        getGlobalFrontalView()->zoomIn();
-        getGlobalProfileView()->zoomIn();
-    }
-    else
-    {
-        getGlobalActiveView()->zoomIn();
-    }
-}
-
-void ToolBar::zoomOutActionTriggered()
-{
-    if (getGlobalWindow()->isViewLinked())
-    {
-        getGlobalTopView()->zoomOut();
-        getGlobalFrontalView()->zoomOut();
-        getGlobalProfileView()->zoomOut();
-    }
-    else
-    {
-        getGlobalActiveView()->zoomOut();
-    }
-}*/
 
 void ToolBar::zoomButtonTriggered(QAction* action)
 {

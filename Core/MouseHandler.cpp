@@ -184,9 +184,9 @@ void ImageWindowMouseHandler::CalcImageWindow(QPoint point)
 
     if (getGlobalWindow()->isViewLinked())
     {
-        getGlobalTopView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-        getGlobalFrontalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-        getGlobalProfileView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getGlobalAxialView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getGlobalCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getGlobalSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
     else
     {

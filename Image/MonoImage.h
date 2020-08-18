@@ -6,9 +6,9 @@ class ImageData;
 class MonoImageProxy;
 
 #ifndef VIEW_TYPE
-    #define TOP_VIEW            0
-    #define FRONTAL_VIEW        1
-    #define PROFILE_VIEW        2
+#define AXIAL_VIEW              0
+#define CORONAL_VIEW            1
+#define SAGITTAL_VIEW           2
 #endif
 
 class MonoImage : public BaseImage
@@ -66,8 +66,8 @@ public:
 
     bool convertToByte();
 
-    std::shared_ptr<QImage> getFrontalSlice() const;
-    std::shared_ptr<QImage> getProfileSlice() const;
+    std::shared_ptr<QImage> getCoronalSlice() const;
+    std::shared_ptr<QImage> getSagittalSlice() const;
 
 protected:
     bool saveAsRaw(const QString& fileName) override;
@@ -78,15 +78,15 @@ protected:
 protected:
     ImageData* _imageData;
 
-    MonoImageProxy* _topProxy;
-    MonoImageProxy* _frontalProxy;
-    MonoImageProxy* _profileProxy;
+    MonoImageProxy* _axialProxy;
+    MonoImageProxy* _coronalProxy;
+    MonoImageProxy* _sagittalProxy;
 
     int _currentType;
 
     int _slice;
 
-    int _currentTopSlice;
-    int _currentFrontalSlice;
-    int _currentProfileSlice;
+    int _currentAxialSlice;
+    int _currentCoronalSlice;
+    int _currentSagittalSlice;
 };

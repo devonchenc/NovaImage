@@ -36,9 +36,9 @@ public:
 public:
     Document* getDocument() { return _doc; }
 
-    View* getTopView() { return _topView; }
-    View* getFrontalView() { return _frontalView; }
-    View* getProfileView() { return _profileView; }
+    View* getAxialView() { return _axialView; }
+    View* getCoronalView() { return _coronalView; }
+    View* getSagittalView() { return _sagittalView; }
 
     View* getActiveView() { return _activeView; }
     void setActiveView(View* view);
@@ -122,9 +122,9 @@ private:
     ToolBar* _toolBar;
 
     Document* _doc;
-    View* _topView;
-    View* _frontalView;
-    View* _profileView;
+    View* _axialView;
+    View* _coronalView;
+    View* _sagittalView;
     View* _volumeView;
 
     View* _activeView;

@@ -14,9 +14,9 @@ Document* getGlobalDocument();
 
 View* getGlobalActiveView();
 
-View* getGlobalTopView();
-View* getGlobalFrontalView();
-View* getGlobalProfileView();
+View* getGlobalAxialView();
+View* getGlobalCoronalView();
+View* getGlobalSagittalView();
 
 BaseImage* getGlobalImage();
 

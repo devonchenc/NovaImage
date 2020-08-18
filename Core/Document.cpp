@@ -77,43 +77,30 @@ bool Document::openFile(const QString& fileName)
 
     _image->histogramStatistic();
 
-    getTopView()->showImage(_image->getImageEntity(), true);
+    initViewWindowWidthAndLevel();
 
-    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-    int displayWindow = settings.value("Image/displayWindow", 0).toInt();
-    if (displayWindow == 0)
-    {
-        // Default window
-        getTopView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
-        getFrontalView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
-        getProfileView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
-    }
-    else
-    {
-        // Full window
-        float windowWidth = _image->getMaxValue() - _image->getMinValue();
-        float windowLevel = (_image->getMaxValue() + _image->getMinValue()) / 2;
-        getTopView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-        getFrontalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-        getProfileView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-    }
     applyImageWidthAndLevel();
 
+    getAxialView()->resetMatrix();
+    getCoronalView()->resetMatrix();
+    getSagittalView()->resetMatrix();
+
+    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
     if (fitWindow)
     {
-        getTopView()->fitWindow();
-        getFrontalView()->fitWindow();
-        getProfileView()->fitWindow();
+        getAxialView()->fitWindow();
+        getCoronalView()->fitWindow();
+        getSagittalView()->fitWindow();
     }
     else
     {
-        getTopView()->zoomNormal();
-        getFrontalView()->zoomNormal();
-        getProfileView()->zoomNormal();
+        getAxialView()->zoomNormal();
+        getCoronalView()->zoomNormal();
+        getSagittalView()->zoomNormal();
     }
 
-    getTopView()->loadGraphicsItem();
+    getAxialView()->loadGraphicsItem();
 
     mainWindow->imageOpened();
 
@@ -181,9 +168,9 @@ bool Document::saveAs(const QString& fileName)
 
 void Document::closeFile()
 {
-    getTopView()->resetImage();
-    getFrontalView()->resetImage();
-    getProfileView()->resetImage();
+    getAxialView()->resetImage();
+    getCoronalView()->resetImage();
+    getSagittalView()->resetImage();
 
     _image.reset();
 
@@ -211,12 +198,12 @@ void Document::repaintView()
 {
     if (_image)
     {
-        getTopView()->showImage(_image->getImageEntity());
+        getAxialView()->showImage(_image->getImageEntity());
         MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
         if (monoImage && monoImage->slice() > 1)
         {
-            getFrontalView()->showImage(monoImage->getFrontalSlice().get());
-            getProfileView()->showImage(monoImage->getProfileSlice().get());
+            getCoronalView()->showImage(monoImage->getCoronalSlice().get());
+            getSagittalView()->showImage(monoImage->getSagittalSlice().get());
         }
     }
 }
@@ -231,7 +218,7 @@ void Document::setModified(bool flag)
 
 void Document::saveGraphicsItem()
 {
-    getTopView()->saveGraphicsItem();
+    getAxialView()->saveGraphicsItem();
     _modified = false;
 }
 
@@ -264,9 +251,9 @@ void Document::ROIWindow(const QRectF& rect)
 
     if (mainWindow->isViewLinked())
     {
-        getTopView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
-        getFrontalView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
-        getProfileView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getAxialView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getCoronalView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getSagittalView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
     }
     else
     {
@@ -280,7 +267,7 @@ void Document::defaultImageWindow()
 {
     if (_image)
     {
-        getTopView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getAxialView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
         applyImageWidthAndLevel();
     }
 }
@@ -292,7 +279,7 @@ void Document::fullImageWindow()
         float maxValue = _image->getMaxValue();
         float minValue = _image->getMinValue();
 
-        getTopView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        getAxialView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
         applyImageWidthAndLevel();
     }
 }
@@ -350,7 +337,32 @@ void Document::restore()
     if (_image)
     {
         _image->restore();
+
+        initViewWindowWidthAndLevel();
+
         repaintView();
+    }
+}
+
+void Document::initViewWindowWidthAndLevel()
+{
+    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+    int displayWindow = settings.value("Image/displayWindow", 0).toInt();
+    if (displayWindow == 0)
+    {
+        // Default window
+        getAxialView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getCoronalView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        getSagittalView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+    }
+    else
+    {
+        // Full window
+        float windowWidth = _image->getMaxValue() - _image->getMinValue();
+        float windowLevel = (_image->getMaxValue() + _image->getMinValue()) / 2;
+        getAxialView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
 }
 
@@ -359,17 +371,17 @@ View* Document::getActiveView() const
     return mainWindow->getActiveView();
 }
 
-View* Document::getTopView() const
+View* Document::getAxialView() const
 {
-    return mainWindow->getTopView();
+    return mainWindow->getAxialView();
 }
 
-View* Document::getFrontalView() const
+View* Document::getCoronalView() const
 {
-    return mainWindow->getFrontalView();
+    return mainWindow->getCoronalView();
 }
 
-View* Document::getProfileView() const
+View* Document::getSagittalView() const
 {
-    return mainWindow->getProfileView();
+    return mainWindow->getSagittalView();
 }

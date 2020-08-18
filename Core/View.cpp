@@ -19,7 +19,7 @@
 
 View::View(QWidget* parent)
     : QFrame(parent)
-    , _type(TOP_VIEW)
+    , _type(AXIAL_VIEW)
     , _currentImage(nullptr)
     , _windowWidth(0)
     , _windowLevel(0)
@@ -118,42 +118,37 @@ void View::resizeEvent(QResizeEvent*)
     fitWindow();
 }
 
-void View::showImage(const QImage* image, bool resetMatrix)
+void View::showImage(const QImage* image)
 {
     if (_currentImage)
     {
-        if (resetMatrix)
-        {
-            _scene->clear();
-            _currentImage = nullptr;
-        }
-        else
-        {
-            _scene->removeItem(_currentImage);
-            delete _currentImage;
-        }
+        _scene->removeItem(_currentImage);
+        delete _currentImage;
     }
 
     QPixmap pixmap = QPixmap::fromImage(*image);
     _currentImage = _scene->addPixmap(pixmap);
     _currentImage->setZValue(-1.0);
     _scene->update();
+}
 
-    if (resetMatrix)
+void View::resetMatrix()
+{
+    _view->resetMatrix();
+    if (_currentImage)
     {
-        _view->resetMatrix();
-        _view->setSceneRect(pixmap.rect());
+        _view->setSceneRect(_currentImage->pixmap().rect());
     }
 }
 
 int View::imageWidth()
 {
     BaseImage* image = getGlobalImage();
-    if (_type == TOP_VIEW || _type == FRONTAL_VIEW)
+    if (_type == AXIAL_VIEW || _type == CORONAL_VIEW)
     {
         return image->width();
     }
-    else/* if (_type == PROFILE_VIEW)*/
+    else/* if (_type == SAGITTAL_VIEW)*/
     {
         return image->height();
     }
@@ -162,11 +157,11 @@ int View::imageWidth()
 int View::imageHeight()
 {
     BaseImage* image = getGlobalImage();
-    if (_type == TOP_VIEW)
+    if (_type == AXIAL_VIEW)
     {
         return image->height();
     }
-    else/* if (_type == FRONTAL_VIEW || _type == PROFILE_VIEW)*/
+    else/* if (_type == CORONAL_VIEW || _type == SAGITTAL_VIEW)*/
     {
         return image->slice();
     }
@@ -175,15 +170,15 @@ int View::imageHeight()
 int View::imageSlice()
 {
     BaseImage* image = getGlobalImage();
-    if (_type == TOP_VIEW)
+    if (_type == AXIAL_VIEW)
     {
         return image->slice();
     }
-    else if (_type == FRONTAL_VIEW)
+    else if (_type == CORONAL_VIEW)
     {
         return image->height();
     }
-    else/* if (_type == PROFILE_VIEW)*/
+    else/* if (_type == SAGITTAL_VIEW)*/
     {
         return image->width();
     }

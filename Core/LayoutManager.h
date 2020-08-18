@@ -16,7 +16,7 @@ public:
     LayoutManager(QWidget* parent);
 
 public:
-    void setWidget(QWidget* top, QWidget* frontal, QWidget* profile, QWidget* volume);
+    void setWidget(QWidget* axial, QWidget* coronal, QWidget* sagittal, QWidget* volume);
 
     void singleView();
     void threeView();
@@ -28,9 +28,9 @@ private:
 private:
     QWidget* _parentWidget;
 
-    QWidget* _topView;
-    QWidget* _frontalView;
-    QWidget* _profileView;
+    QWidget* _axialView;
+    QWidget* _coronalView;
+    QWidget* _sagittalView;
     QWidget* _volumeView;
 
     QGridLayout* _gridLayout;

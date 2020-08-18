@@ -77,13 +77,15 @@ public slots:
     void restore();
 
 private:
+    void initViewWindowWidthAndLevel();
+
     View* getActiveView() const;
 
-    View* getTopView() const;
+    View* getAxialView() const;
 
-    View* getFrontalView() const;
+    View* getCoronalView() const;
 
-    View* getProfileView() const;
+    View* getSagittalView() const;
 
 private:
     MainWindow* mainWindow;

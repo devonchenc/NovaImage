@@ -5,7 +5,7 @@
 class MonoImageProxy
 {
 public:
-    MonoImageProxy(MonoImage* image, int width, int height, int type = TOP_VIEW);
+    MonoImageProxy(MonoImage* image, int width, int height, int type = AXIAL_VIEW);
     MonoImageProxy(const MonoImageProxy& src);
     ~MonoImageProxy();
 

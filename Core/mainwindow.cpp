@@ -38,11 +38,11 @@
 MainWindow::MainWindow(QWidget* parent)
     : QMainWindow(parent)
     , _doc(new Document(this))
-    , _topView(new View(this))
-    , _frontalView(new View(this))
-    , _profileView(new View(this))
+    , _axialView(new View(this))
+    , _coronalView(new View(this))
+    , _sagittalView(new View(this))
     , _volumeView(new View(this))
-    , _activeView(_topView)
+    , _activeView(_axialView)
     , _translator(nullptr)
 {
     // main area for image display
@@ -50,11 +50,11 @@ MainWindow::MainWindow(QWidget* parent)
     setCentralWidget(centerWidget);
 
     _layoutManager = new LayoutManager(centerWidget);
-    _layoutManager->setWidget(_topView, _frontalView, _profileView, _volumeView);
+    _layoutManager->setWidget(_axialView, _coronalView, _sagittalView, _volumeView);
     _layoutManager->singleView();
 
-    _frontalView->setViewType(FRONTAL_VIEW);
-    _profileView->setViewType(PROFILE_VIEW);
+    _coronalView->setViewType(CORONAL_VIEW);
+    _sagittalView->setViewType(SAGITTAL_VIEW);
 
     initUI();
 
@@ -71,20 +71,20 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-    if (_topView)
+    if (_axialView)
     {
-        delete _topView;
-        _topView = nullptr;
+        delete _axialView;
+        _axialView = nullptr;
     }
-    if (_frontalView)
+    if (_coronalView)
     {
-        delete _frontalView;
-        _frontalView = nullptr;
+        delete _coronalView;
+        _coronalView = nullptr;
     }
-    if (_profileView)
+    if (_sagittalView)
     {
-        delete _profileView;
-        _profileView = nullptr;
+        delete _sagittalView;
+        _sagittalView = nullptr;
     }
     if (_volumeView)
     {
@@ -308,16 +308,16 @@ void MainWindow::createToolWidget()
 
     connect(toolbox, &ToolBoxWidget::setItemType, _toolBar, &ToolBar::setMeasurementType);
 
-    connect(toolbox, &ToolBoxWidget::setLineColor, _topView->scene(), &GraphicsScene::setLineColor);
-    connect(toolbox, &ToolBoxWidget::setEnableFillColor, _topView->scene(), &GraphicsScene::enableFillColor);
-    connect(toolbox, &ToolBoxWidget::setFillColor, _topView->scene(), &GraphicsScene::setFillColor);
-    connect(toolbox, &ToolBoxWidget::setTransparency, _topView->scene(), &GraphicsScene::setTransparency);
-    connect(toolbox, &ToolBoxWidget::setTextColor, _topView->scene(), &GraphicsScene::setTextColor);
-    connect(toolbox, &ToolBoxWidget::setTextFont, _topView->scene(), &GraphicsScene::setTextFont);
+    connect(toolbox, &ToolBoxWidget::setLineColor, _axialView->scene(), &GraphicsScene::setLineColor);
+    connect(toolbox, &ToolBoxWidget::setEnableFillColor, _axialView->scene(), &GraphicsScene::enableFillColor);
+    connect(toolbox, &ToolBoxWidget::setFillColor, _axialView->scene(), &GraphicsScene::setFillColor);
+    connect(toolbox, &ToolBoxWidget::setTransparency, _axialView->scene(), &GraphicsScene::setTransparency);
+    connect(toolbox, &ToolBoxWidget::setTextColor, _axialView->scene(), &GraphicsScene::setTextColor);
+    connect(toolbox, &ToolBoxWidget::setTextFont, _axialView->scene(), &GraphicsScene::setTextFont);
 
-    connect(_topView->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
-    connect(_topView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
-    connect(_topView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
+    connect(_axialView->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
+    connect(_axialView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
+    connect(_axialView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
     connect(this, &MainWindow::setToolBoxVisible, toolbox, &ToolBoxWidget::setWidgetVisible);
 
     CommonWidget* common = new CommonWidget();
@@ -497,9 +497,9 @@ void MainWindow::showAnnotation(bool show)
 {
     if (isViewLinked())
     {
-        getTopView()->view()->showAnnotation(show);
-        getFrontalView()->view()->showAnnotation(show);
-        getProfileView()->view()->showAnnotation(show);
+        getAxialView()->view()->showAnnotation(show);
+        getCoronalView()->view()->showAnnotation(show);
+        getSagittalView()->view()->showAnnotation(show);
     }
     else
     {
@@ -511,9 +511,9 @@ void MainWindow::showCrossLine(bool show)
 {
     if (isViewLinked())
     {
-        getTopView()->view()->showCrossLine(show);
-        getFrontalView()->view()->showCrossLine(show);
-        getProfileView()->view()->showCrossLine(show);
+        getAxialView()->view()->showCrossLine(show);
+        getCoronalView()->view()->showCrossLine(show);
+        getSagittalView()->view()->showCrossLine(show);
     }
     else
     {
@@ -525,9 +525,9 @@ void MainWindow::showScale(bool show)
 {
     if (isViewLinked())
     {
-        getTopView()->view()->showLineScale(show);
-        getFrontalView()->view()->showLineScale(show);
-        getProfileView()->view()->showLineScale(show);
+        getAxialView()->view()->showLineScale(show);
+        getCoronalView()->view()->showLineScale(show);
+        getSagittalView()->view()->showLineScale(show);
     }
     else
     {
@@ -539,9 +539,9 @@ void MainWindow::showMeasurement(bool show)
 {
     if (isViewLinked())
     {
-        getTopView()->scene()->showMeasurement(show);
-        getFrontalView()->scene()->showMeasurement(show);
-        getProfileView()->scene()->showMeasurement(show);
+        getAxialView()->scene()->showMeasurement(show);
+        getCoronalView()->scene()->showMeasurement(show);
+        getSagittalView()->scene()->showMeasurement(show);
     }
     else
     {
@@ -553,9 +553,9 @@ void MainWindow::zoomIn()
 {
     if (isViewLinked())
     {
-        getTopView()->zoomIn();
-        getFrontalView()->zoomIn();
-        getProfileView()->zoomIn();
+        getAxialView()->zoomIn();
+        getCoronalView()->zoomIn();
+        getSagittalView()->zoomIn();
     }
     else
     {
@@ -567,9 +567,9 @@ void MainWindow::zoomOut()
 {
     if (isViewLinked())
     {
-        getTopView()->zoomOut();
-        getFrontalView()->zoomOut();
-        getProfileView()->zoomOut();
+        getAxialView()->zoomOut();
+        getCoronalView()->zoomOut();
+        getSagittalView()->zoomOut();
     }
     else
     {
@@ -633,7 +633,7 @@ void MainWindow::printPreview(QPrinter* printer)
 {
     QPainter painter(printer);
     QRectF target(0, 0, printer->width(), printer->height());
-    GraphicsView* graphicsView = _topView->view();
+    GraphicsView* graphicsView = _axialView->view();
     QRectF sceneRect(graphicsView->sceneRect());
     QRect source(graphicsView->mapFromScene(sceneRect.topLeft()), graphicsView->mapFromScene(sceneRect.bottomRight()));
     graphicsView->render(&painter, target, source);

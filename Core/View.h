@@ -8,9 +8,9 @@ class GraphicsView;
 class PlotDialog;
 
 #ifndef VIEW_TYPE
-    #define TOP_VIEW            0
-    #define FRONTAL_VIEW        1
-    #define PROFILE_VIEW        2
+#define AXIAL_VIEW              0
+#define CORONAL_VIEW            1
+#define SAGITTAL_VIEW           2
 #endif
 
 #include "GraphicsScene.h"
@@ -33,7 +33,9 @@ public:
 
     int viewType() { return _type; }
 
-    void showImage(const QImage* image, bool resetMatrix = false);
+    void showImage(const QImage* image);
+    
+    void resetMatrix();
 
     QGraphicsPixmapItem* getPixmapItem() { return _currentImage; }
 

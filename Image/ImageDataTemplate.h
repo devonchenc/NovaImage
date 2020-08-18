@@ -25,7 +25,7 @@ public:
     // Get processing data pointer
     void* getProcessingData() override
     {
-        return static_cast<void*>(_topData);
+        return static_cast<void*>(_axialData);
     }
 
     // Get pixel value of processing data
@@ -59,25 +59,25 @@ public:
 protected:
     std::shared_ptr<Type> _originalData;
 
-    float* _topData;
-    float* _frontalData;
-    float* _profileData;
+    float* _axialData;
+    float* _coronalData;
+    float* _sagittalData;
 
-    int _currentTopSlice;
-    int _currentFrontalSlice;
-    int _currentProfileSlice;
+    int _currentAxialSlice;
+    int _currentCoronalSlice;
+    int _currentSagittalSlice;
 };
 
 template <class Type>
 ImageDataTemplate<Type>::ImageDataTemplate(int width, int height, int slice)
     : ImageData(width, height, slice)
     , _originalData(std::shared_ptr<Type>(new Type[_totalPixel]))
-    , _topData(nullptr)
-    , _frontalData(nullptr)
-    , _profileData(nullptr)
-    , _currentTopSlice(round(slice / 2.0) - 1)
-    , _currentFrontalSlice(round(height / 2.0) - 1)
-    , _currentProfileSlice(round(width / 2.0) - 1)
+    , _axialData(nullptr)
+    , _coronalData(nullptr)
+    , _sagittalData(nullptr)
+    , _currentAxialSlice(round(slice / 2.0) - 1)
+    , _currentCoronalSlice(round(height / 2.0) - 1)
+    , _currentSagittalSlice(round(width / 2.0) - 1)
 {
 
 }
@@ -86,47 +86,47 @@ template <class Type>
 ImageDataTemplate<Type>::ImageDataTemplate(const ImageDataTemplate& src)
     : ImageData(src)
     , _originalData(src._originalData)
-    , _topData(nullptr)
-    , _frontalData(nullptr)
-    , _profileData(nullptr)
-    , _currentTopSlice(src._currentTopSlice)
-    , _currentFrontalSlice(src._currentFrontalSlice)
-    , _currentProfileSlice(src._currentProfileSlice)
+    , _axialData(nullptr)
+    , _coronalData(nullptr)
+    , _sagittalData(nullptr)
+    , _currentAxialSlice(src._currentAxialSlice)
+    , _currentCoronalSlice(src._currentCoronalSlice)
+    , _currentSagittalSlice(src._currentSagittalSlice)
 {
-    if (src._topData)
+    if (src._axialData)
     {
-        _topData = new float[_pixelPerSlice];
-        memcpy(_topData, src._topData, sizeof(float) * _pixelPerSlice);
+        _axialData = new float[_pixelPerSlice];
+        memcpy(_axialData, src._axialData, sizeof(float) * _pixelPerSlice);
     }
-    if (src._frontalData)
+    if (src._coronalData)
     {
-        _frontalData = new float[_width * _slice];
-        memcpy(_frontalData, src._frontalData, sizeof(float) * _width * _slice);
+        _coronalData = new float[_width * _slice];
+        memcpy(_coronalData, src._coronalData, sizeof(float) * _width * _slice);
     }
-    if (src._profileData)
+    if (src._sagittalData)
     {
-        _profileData = new float[_height * _slice];
-        memcpy(_profileData, src._profileData, sizeof(float) * _height * _slice);
+        _sagittalData = new float[_height * _slice];
+        memcpy(_sagittalData, src._sagittalData, sizeof(float) * _height * _slice);
     }
 }
 
 template <class Type>
 ImageDataTemplate<Type>::~ImageDataTemplate()
 {
-    if (_topData)
+    if (_axialData)
     {
-        delete[] _topData;
-        _topData = nullptr;
+        delete[] _axialData;
+        _axialData = nullptr;
     }
-    if (_frontalData)
+    if (_coronalData)
     {
-        delete[] _frontalData;
-        _frontalData = nullptr;
+        delete[] _coronalData;
+        _coronalData = nullptr;
     }
-    if (_profileData)
+    if (_sagittalData)
     {
-        delete[] _profileData;
-        _profileData = nullptr;
+        delete[] _sagittalData;
+        _sagittalData = nullptr;
     }
 }
 
@@ -135,15 +135,15 @@ float ImageDataTemplate<Type>::getProcessingValue(int type, int index)
 {
     if (type == 0)
     {
-        return _topData[index];
+        return _axialData[index];
     }
     else if (type == 1)
     {
-        return _frontalData[index];
+        return _coronalData[index];
     }
     else/* if (type == 2)*/
     {
-        return _profileData[index];
+        return _sagittalData[index];
     }
 }
 
@@ -179,29 +179,29 @@ bool ImageDataTemplate<Type>::allocateMemory()
 {
     try
     {
-        _topData = new float[_pixelPerSlice];
+        _axialData = new float[_pixelPerSlice];
         for (unsigned long i = 0; i < _pixelPerSlice; i++)
         {
-            _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
+            _axialData[i] = _originalData.get()[i + _currentAxialSlice * _pixelPerSlice];
         }
 
-        _frontalData = new float[_width * _slice];
+        _coronalData = new float[_width * _slice];
         for (int j = 0; j < _slice; j++)
         {
             qint64 offset = j * _pixelPerSlice;
             for (int i = 0; i < _width; i++)
             {
-                _frontalData[j * _width + i] = _originalData.get()[i + _currentFrontalSlice * _width + offset];
+                _coronalData[j * _width + i] = _originalData.get()[i + _currentCoronalSlice * _width + offset];
             }
         }
 
-        _profileData = new float[_height * _slice];
+        _sagittalData = new float[_height * _slice];
         for (int j = 0; j < _slice; j++)
         {
             qint64 offset = j * _pixelPerSlice;
             for (int i = 0; i < _height; i++)
             {
-                _profileData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
+                _sagittalData[j * _height + i] = _originalData.get()[_width * i + _currentSagittalSlice + offset];
             }
         }
     }
@@ -244,15 +244,15 @@ bool ImageDataTemplate<Type>::convertToByte(int type, uchar* byteImage)
 {
     if (type == 0)
     {
-        return convertToByte(_topData, _pixelPerSlice, byteImage);
+        return convertToByte(_axialData, _pixelPerSlice, byteImage);
     }
     else if (type == 1)
     {
-        return convertToByte(_frontalData, _width * _slice, byteImage);
+        return convertToByte(_coronalData, _width * _slice, byteImage);
     }
     else/* if (type == 2)*/
     {
-        return convertToByte(_profileData, _height * _slice, byteImage);
+        return convertToByte(_sagittalData, _height * _slice, byteImage);
     }
 }
 
@@ -260,18 +260,18 @@ bool ImageDataTemplate<Type>::convertToByte(int type, uchar* byteImage)
 template <class Type>
 void ImageDataTemplate<Type>::saveArray(QFile& file)
 {
-    file.write((const char*)_topData, sizeof(Type) * _pixelPerSlice);
+    file.write((const char*)_axialData, sizeof(Type) * _pixelPerSlice);
 }
 
 // Rescale array
 template <class Type>
 void ImageDataTemplate<Type>::rescaleArray(float rescaleSlope, float rescaleIntercept)
 {
-    if (_topData)
+    if (_axialData)
     {
         for (unsigned long i = 0; i < _pixelPerSlice; i++)
         {
-            _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
+            _axialData[i] = _originalData.get()[i + _currentAxialSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
         }
 
         _minValue = _minValue * rescaleSlope + rescaleIntercept;
@@ -291,14 +291,14 @@ void ImageDataTemplate<Type>::restoreData()
 {
     for (unsigned long i = 0; i < _pixelPerSlice; i++)
     {
-        _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
+        _axialData[i] = _originalData.get()[i + _currentAxialSlice * _pixelPerSlice];
     }
     for (int j = 0; j < _slice; j++)
     {
         qint64 offset = j * _pixelPerSlice;
         for (int i = 0; i < _width; i++)
         {
-            _frontalData[j * _width + i] = _originalData.get()[i + _currentFrontalSlice * _width + offset];
+            _coronalData[j * _width + i] = _originalData.get()[i + _currentCoronalSlice * _width + offset];
         }
     }
     for (int j = 0; j < _slice; j++)
@@ -306,7 +306,7 @@ void ImageDataTemplate<Type>::restoreData()
         qint64 offset = j * _pixelPerSlice;
         for (int i = 0; i < _height; i++)
         {
-            _profileData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
+            _sagittalData[j * _height + i] = _originalData.get()[_width * i + _currentSagittalSlice + offset];
         }
     }
 }
@@ -316,33 +316,33 @@ void ImageDataTemplate<Type>::changeSlice(int type, int slice)
 {
     if (type == 0)
     {
-        _currentTopSlice = slice;
+        _currentAxialSlice = slice;
         for (unsigned long i = 0; i < _pixelPerSlice; i++)
         {
-            _topData[i] = _originalData.get()[i + _currentTopSlice * _pixelPerSlice];
+            _axialData[i] = _originalData.get()[i + _currentAxialSlice * _pixelPerSlice];
         }
     }
     else if (type == 1)
     {
-        _currentFrontalSlice = slice;
+        _currentCoronalSlice = slice;
         for (int j = 0; j < _slice; j++)
         {
             qint64 offset = j * _pixelPerSlice;
             for (int i = 0; i < _width; i++)
             {
-                _frontalData[j * _width + i] = _originalData.get()[i + _currentFrontalSlice * _width + offset];
+                _coronalData[j * _width + i] = _originalData.get()[i + _currentCoronalSlice * _width + offset];
             }
         }
     }
     else/* if (type == 2)*/
     {
-        _currentProfileSlice = slice;
+        _currentSagittalSlice = slice;
         for (int j = 0; j < _slice; j++)
         {
             qint64 offset = j * _pixelPerSlice;
             for (int i = 0; i < _height; i++)
             {
-                _profileData[j * _height + i] = _originalData.get()[_width * i + _currentProfileSlice + offset];
+                _sagittalData[j * _height + i] = _originalData.get()[_width * i + _currentSagittalSlice + offset];
             }
         }
     }

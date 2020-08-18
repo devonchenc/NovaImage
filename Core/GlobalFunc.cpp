@@ -24,22 +24,22 @@ View* getGlobalActiveView()
     return mainWindow->getActiveView();
 }
 
-View* getGlobalTopView()
+View* getGlobalAxialView()
 {
     MainWindow* mainWindow = getGlobalWindow();
-    return mainWindow->getTopView();
+    return mainWindow->getAxialView();
 }
 
-View* getGlobalFrontalView()
+View* getGlobalCoronalView()
 {
     MainWindow* mainWindow = getGlobalWindow();
-    return mainWindow->getFrontalView();
+    return mainWindow->getCoronalView();
 }
 
-View* getGlobalProfileView()
+View* getGlobalSagittalView()
 {
     MainWindow* mainWindow = getGlobalWindow();
-    return mainWindow->getProfileView();
+    return mainWindow->getSagittalView();
 }
 
 BaseImage* getGlobalImage()
