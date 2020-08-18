@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <QtGlobal>
+
 QT_BEGIN_NAMESPACE
 class QFile;
 QT_END_NAMESPACE
