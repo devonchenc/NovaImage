@@ -129,6 +129,7 @@ private:
     QAction* _arrowAction;
     QAction* _angleAction;
     QAction* _plotAction;
+    QAction* _imageQualityAction;
     QAction* _rectAction;
     QAction* _roundrectAction;
     QAction* _circleAction;
