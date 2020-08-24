@@ -30,8 +30,8 @@ ImageQualityDialog::~ImageQualityDialog()
 
 void ImageQualityDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points)
 {
-    DiagramImageQualityItem* item = qgraphicsitem_cast<DiagramImageQualityItem*>(lineItem);
-    connect(item, &DiagramImageQualityItem::itemDeleted, this, &ImageQualityDialog::close);
+    _imageQualityItem = qgraphicsitem_cast<DiagramImageQualityItem*>(lineItem);
+    connect(_imageQualityItem, &DiagramImageQualityItem::itemDeleted, this, &ImageQualityDialog::close);
 
     if (!_chartView->hasValidData())
     {
@@ -63,12 +63,12 @@ void ImageQualityDialog::setLineWidth()
 {
     bool ok;
     int lineWidth = QInputDialog::getInt(this, tr("Line Width"), tr("Width:"),
-        imageQualityItem->width(), 1, 300, 1, &ok);
+        _imageQualityItem->width(), 1, 300, 1, &ok);
     if (ok)
     {
-        imageQualityItem->setWidth(lineWidth);
+        _imageQualityItem->setWidth(lineWidth);
         getGlobalActiveView()->repaint();
-        emit lineWidthChanged(imageQualityItem, lineWidth);
+        emit lineWidthChanged(_imageQualityItem, lineWidth);
     }
 }
 

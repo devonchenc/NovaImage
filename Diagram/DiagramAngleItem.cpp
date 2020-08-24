@@ -18,8 +18,8 @@
 #define M_PI (3.14159265358979323846)
 #endif
 
-DiagramAngleItem::DiagramAngleItem()
-    : QGraphicsLineItem(QLineF(), nullptr)
+DiagramAngleItem::DiagramAngleItem(QGraphicsItem* parent)
+    : QGraphicsLineItem(QLineF(), parent)
     , _contextMenu(nullptr)
     , _previousMode(MOVE_ITEM)
 {
@@ -158,7 +158,7 @@ DiagramLineItem* DiagramLineItem::clone()
 
 void DiagramAngleItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
@@ -183,7 +183,7 @@ void DiagramAngleItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramAngleItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
@@ -235,7 +235,7 @@ void DiagramAngleItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 
     if (_drawingFinished)
     {
-        GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+        GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
         if (closeToHandlerPoint)
         {
             // Close to handler points
@@ -252,7 +252,7 @@ void DiagramAngleItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 
 void DiagramAngleItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     _previousMode = scene->mode();
 
     QGraphicsLineItem::hoverEnterEvent(event);
@@ -261,7 +261,7 @@ void DiagramAngleItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 void DiagramAngleItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
     // Restore mode
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     scene->setMode(_previousMode);
 
     QGraphicsLineItem::hoverLeaveEvent(event);

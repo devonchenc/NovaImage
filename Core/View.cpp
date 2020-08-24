@@ -30,7 +30,7 @@ View::View(QWidget* parent)
 {
     createItemMenus();
 
-    _scene = new GraphicsScene(_itemMenu, parent);
+    _scene = new GraphicsScene(_itemMenu, this);
     _view = new GraphicsView(this, _scene);
 
     connect(_timer, &QTimer::timeout, this, &View::slicePlusOne);
@@ -148,7 +148,7 @@ void View::resetMatrix()
     }
 }
 
-int View::imageWidth()
+int View::imageWidth() const
 {
     BaseImage* image = getGlobalImage();
     if (_type == AXIAL_VIEW || _type == CORONAL_VIEW)
@@ -161,7 +161,7 @@ int View::imageWidth()
     }
 }
 
-int View::imageHeight()
+int View::imageHeight() const
 {
     BaseImage* image = getGlobalImage();
     if (_type == AXIAL_VIEW)
@@ -174,7 +174,7 @@ int View::imageHeight()
     }
 }
 
-int View::imageSlice()
+int View::imageSlice() const
 {
     BaseImage* image = getGlobalImage();
     if (_type == AXIAL_VIEW)
@@ -197,18 +197,43 @@ int View::imageCurrentSlice()
     return image->currentSlice(_type);
 }
 
-int View::getImageValue(const QPoint& position)
+float View::getImageValue(int x, int y) const
 {
-    if (position.x() < 0 || position.x() >= imageWidth() || position.y() < 0 || position.y() >= imageHeight())
+    if (x < 0 || x >= imageWidth() || y < 0 || y >= imageHeight())
         return 0;
 
-    int index = position.y() * imageWidth() + position.x();
+    int index = y * imageWidth() + x;
     return getGlobalImage()->getValueWithType(_type, index);
 }
 
-int View::getImageValue(float x, float y)
+float View::getImageValue(const QPoint& position) const
 {
-    return getImageValue(QPoint(x, y));
+    return getImageValue(position.x(), position.y());
+}
+
+float View::getImageValue(qreal x, qreal y) const
+{
+    if (x < 0 || x >= imageWidth() || y < 0 || y >= imageHeight())
+        return 0;
+
+    int x0 = (int)floor(x);
+    int x1 = (int)ceil(x);
+    int y0 = (int)floor(y);
+    int y1 = (int)ceil(y);
+
+    qreal lambda_x = x - x0;
+    qreal lambda_y = y - y0;
+
+    float v00 = getImageValue(x0, y0);
+    float v10 = getImageValue(x1, y0);
+    float v01 = getImageValue(x0, y1);
+    float v11 = getImageValue(x1, y1);
+
+    // Bilinear interpolation
+    float value = (1 - lambda_x) * (1 - lambda_y) * v00 + lambda_x * (1 - lambda_y) * v10
+        + (1 - lambda_x) * lambda_y * v01 + lambda_x * lambda_y * v11;
+
+    return value;
 }
 
 void View::resetImage()
@@ -533,7 +558,7 @@ QVector<qreal> View::calcPlotData(QGraphicsLineItem* lineItem, int lineWidth)
             // Calculate vertical offset
             float offset = (-lineWidth + 1) / 2.0f + n;
             QPointF temp = p1 + orthoSlope * offset + slope / distance * i;
-            float fValue = getGlobalImage()->getValue(float(temp.x()), float(temp.y()));
+            float fValue = getImageValue(float(temp.x()), float(temp.y()));
             if (fValue != -1.0f)
             {
                 average += fValue;

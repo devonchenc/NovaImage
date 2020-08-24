@@ -35,5 +35,5 @@ private slots:
 private:
     ChartView* _chartView;
 
-    DiagramImageQualityItem* imageQualityItem;
+    DiagramImageQualityItem* _imageQualityItem;
 };

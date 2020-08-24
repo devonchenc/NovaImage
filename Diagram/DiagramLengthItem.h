@@ -7,7 +7,7 @@ class DiagramLengthItem : public DiagramLineItem
     Q_OBJECT
 
 public:
-    DiagramLengthItem();
+    DiagramLengthItem(QGraphicsItem* parent = nullptr);
     DiagramLengthItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramLengthItem();
 

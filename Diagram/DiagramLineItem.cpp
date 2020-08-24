@@ -89,7 +89,7 @@ DiagramLineItem* DiagramLineItem::clone()
 
 void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
@@ -114,7 +114,7 @@ void DiagramLineItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
@@ -162,7 +162,7 @@ void DiagramLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 
     if (_drawingFinished)
     {
-        GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+        GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
         if (closeToHandlerPoint)
         {
             // Close to handler points
@@ -179,7 +179,7 @@ void DiagramLineItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 
 void DiagramLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     _previousMode = scene->mode();
 
     QGraphicsLineItem::hoverEnterEvent(event);
@@ -188,7 +188,7 @@ void DiagramLineItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 void DiagramLineItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
     // Restore mode
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     scene->setMode(_previousMode);
 
     QGraphicsLineItem::hoverLeaveEvent(event);

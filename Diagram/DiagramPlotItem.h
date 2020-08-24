@@ -7,7 +7,7 @@ class DiagramPlotItem : public DiagramLineItem
     Q_OBJECT
 
 public:
-    DiagramPlotItem();
+    DiagramPlotItem(QGraphicsItem* parent = nullptr);
     DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramPlotItem();
 

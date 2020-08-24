@@ -64,6 +64,7 @@ float BaseImage::getValue(float x, float y) const
     float v10 = getValue(x1, y0);
     float v01 = getValue(x0, y1);
     float v11 = getValue(x1, y1);
+
     // Bilinear interpolation
     // f(x,y)=f(0,0)(1-x)(1-y)+f(0,1)(1-x)y+f(1,1)xy+f(1,0)x(1-y)
     float value = (1 - lambda_x) * (1 - lambda_y) * v00 + lambda_x * (1 - lambda_y) * v10

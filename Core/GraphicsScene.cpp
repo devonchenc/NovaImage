@@ -468,10 +468,10 @@ bool GraphicsScene::loadFromFile(const QDomElement& sceneElem)
         if (type == "DiagramItem")
         {
             DiagramItem* item = new DiagramItem;
+            addItem(item);
             item->loadFromXML(attribute);
             connect(item, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
             connect(item, &DiagramItem::itemChanged, this, &GraphicsScene::itemChanged);
-            addItem(item);
         }
         else if (type == "DiagramLineItem")
         {
@@ -489,28 +489,32 @@ bool GraphicsScene::loadFromFile(const QDomElement& sceneElem)
             {
                 item = new DiagramPlotItem;
             }
-            
+            else if (name == "ImageQuality")
+            {
+                item = new DiagramImageQualityItem;
+            }
+
+            addItem(item);
             item->loadFromXML(attribute);
             connect(item, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
             connect(item, &DiagramLineItem::itemChanged, this, &GraphicsScene::itemChanged);
-            addItem(item);
         }
         else if (type == "DiagramAngleItem")
         {
             DiagramAngleItem* item = new DiagramAngleItem;
+            addItem(item);
             item->loadFromXML(attribute);
             connect(item, &DiagramAngleItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
             connect(item, &DiagramAngleItem::itemChanged, this, &GraphicsScene::itemChanged);
-            addItem(item);
         }
         else if (type == "DiagramTextItem")
         {
             DiagramTextItem* item = new DiagramTextItem;
+            addItem(item);
             item->loadFromXML(attribute);
             connect(item, &DiagramTextItem::lostFocus, this, &GraphicsScene::editorLostFocus);
             connect(item, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
             connect(item->document(), &QTextDocument::contentsChanged, this, &GraphicsScene::itemChanged);
-            addItem(item);
         }
     }
 

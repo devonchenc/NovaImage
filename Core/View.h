@@ -40,16 +40,17 @@ public:
 
     QGraphicsPixmapItem* getPixmapItem() { return _currentImage; }
 
-    int imageWidth();
+    int imageWidth() const;
 
-    int imageHeight();
+    int imageHeight() const;
 
-    int imageSlice();
+    int imageSlice() const;
 
     int imageCurrentSlice();
 
-    int getImageValue(const QPoint& position);
-    int getImageValue(float x, float y);
+    float getImageValue(int x, int y) const;
+    float getImageValue(const QPoint& position) const;
+    float getImageValue(qreal x, qreal y) const;
 
     void resetImage();
 

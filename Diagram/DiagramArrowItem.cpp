@@ -7,8 +7,8 @@
 
 #include "../Core/GlobalFunc.h"
 
-DiagramArrowItem::DiagramArrowItem()
-    : DiagramLineItem(QLineF(), nullptr, nullptr)
+DiagramArrowItem::DiagramArrowItem(QGraphicsItem* parent)
+    : DiagramLineItem(QLineF(), nullptr, parent)
 {
 
 }

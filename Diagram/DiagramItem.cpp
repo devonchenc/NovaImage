@@ -16,8 +16,8 @@
 #include "../Core/GraphicsScene.h"
 #include "../Image/BaseImage.h"
 
-DiagramItem::DiagramItem()
-    : QGraphicsPolygonItem(nullptr)
+DiagramItem::DiagramItem(QGraphicsItem* parent)
+    : QGraphicsPolygonItem(parent)
     , _diagramType(None)
     , _contextMenu(nullptr)
     , _previousMode(MOVE_ITEM)
@@ -297,7 +297,7 @@ DiagramItem* DiagramItem::clone()
 
 void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
@@ -326,7 +326,7 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
@@ -346,7 +346,7 @@ void DiagramItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     emit itemChanged();
 
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
@@ -397,7 +397,7 @@ void DiagramItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 
     if (_drawingFinished)
     {
-        GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+        GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
         if (closeToHandlerPoint)
         {
             // Close to handler points
@@ -414,7 +414,7 @@ void DiagramItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
 
 void DiagramItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 {
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     _previousMode = scene->mode();
 
     QGraphicsPolygonItem::hoverEnterEvent(event);
@@ -423,7 +423,7 @@ void DiagramItem::hoverEnterEvent(QGraphicsSceneHoverEvent* event)
 void DiagramItem::hoverLeaveEvent(QGraphicsSceneHoverEvent* event)
 {
     // Restore mode
-    GraphicsScene* scene = dynamic_cast<GraphicsScene*>(this->scene());
+    GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     scene->setMode(_previousMode);
 
     QGraphicsPolygonItem::hoverLeaveEvent(event);

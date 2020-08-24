@@ -20,7 +20,7 @@ public:
         Point1, Point2, Point3
     };
 
-    DiagramAngleItem();
+    DiagramAngleItem(QGraphicsItem* parent = nullptr);
     DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramAngleItem();
 

@@ -7,7 +7,7 @@ class DiagramImageQualityItem : public DiagramLineItem
     Q_OBJECT
 
 public:
-    DiagramImageQualityItem();
+    DiagramImageQualityItem(QGraphicsItem* parent = nullptr);
     DiagramImageQualityItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramImageQualityItem();
 
@@ -19,6 +19,12 @@ public:
 
     void loadFromXML(const QDomElement& e) override;
 
+    float leftRate() { return _leftRate; }
+    float rightRate() { return _rightRate; }
+
+    void setLeftRate(float rate) { _leftRate = rate; }
+    void setRightRate(float rate) { _rightRate = rate; }
+
 signals:
     void itemDeleted();
 
@@ -29,8 +35,8 @@ protected:
 private:
     void drawRect(QPainter* painter);
 
-    void drawPlotIndex(QPainter* painter);
-
 private:
     int _lineWidth;
+
+    float _leftRate, _rightRate;
 };

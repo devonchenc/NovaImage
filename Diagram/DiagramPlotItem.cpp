@@ -11,8 +11,8 @@
 
 int DiagramPlotItem::_plotCount = 0;
 
-DiagramPlotItem::DiagramPlotItem()
-    : DiagramLineItem(QLineF(), nullptr, nullptr)
+DiagramPlotItem::DiagramPlotItem(QGraphicsItem* parent)
+    : DiagramLineItem(QLineF(), nullptr, parent)
     , _lineWidth(1)
 {
 
@@ -59,6 +59,12 @@ void DiagramPlotItem::loadFromXML(const QDomElement& e)
     _plotIndex = e.attribute("Index").toInt();
 
     _plotCount = qMax(_plotCount, _plotIndex);
+
+    View* view = qobject_cast<View*>(scene()->parent());
+    if (view)
+    {
+        view->showPlotDialog(this);
+    }
 }
 
 void DiagramPlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)

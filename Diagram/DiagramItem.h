@@ -20,7 +20,7 @@ public:
     };
     enum Direction { TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
 
-    DiagramItem();
+    DiagramItem(QGraphicsItem* parent = nullptr);
     DiagramItem(DiagramType diagramType, QMenu* contextMenu = nullptr, QGraphicsItem* parent = nullptr);
     ~DiagramItem();
 

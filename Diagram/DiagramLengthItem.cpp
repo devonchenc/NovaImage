@@ -10,8 +10,8 @@
 #include "../Core/GraphicsView.h"
 #include "../Image/BaseImage.h"
 
-DiagramLengthItem::DiagramLengthItem()
-    : DiagramLineItem(QLineF(), nullptr, nullptr)
+DiagramLengthItem::DiagramLengthItem(QGraphicsItem* parent)
+    : DiagramLineItem(QLineF(), nullptr, parent)
 {
 
 }

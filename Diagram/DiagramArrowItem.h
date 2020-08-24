@@ -7,7 +7,7 @@ class DiagramArrowItem : public DiagramLineItem
     Q_OBJECT
 
 public:
-    DiagramArrowItem();
+    DiagramArrowItem(QGraphicsItem* parent = nullptr);
     DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramArrowItem();
 
