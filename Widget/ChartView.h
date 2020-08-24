@@ -36,6 +36,8 @@ public:
     ChartView(QWidget* parent = nullptr);
     ~ChartView();
 
+    bool hasValidData();
+
     void setData(const QVector<qreal>& points);
 
     void updateData(const QVector<qreal>& points);

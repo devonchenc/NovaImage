@@ -31,6 +31,7 @@
     <ClCompile Include="Core\View.cpp" />
     <ClCompile Include="Diagram\DiagramAngleItem.cpp" />
     <ClCompile Include="Diagram\DiagramArrowItem.cpp" />
+    <ClCompile Include="Diagram\DiagramImageQualityItem.cpp" />
     <ClCompile Include="Diagram\DiagramItem.cpp" />
     <ClCompile Include="Diagram\DiagramLengthItem.cpp" />
     <ClCompile Include="Diagram\DiagramLineItem.cpp" />
@@ -57,6 +58,7 @@
     <ClCompile Include="Widget\CurveSquare.cpp" />
     <ClCompile Include="Widget\CurvesWidget.cpp" />
     <ClCompile Include="Widget\HistogramWidget.cpp" />
+    <ClCompile Include="Widget\ImageQualityDialog.cpp" />
     <ClCompile Include="Widget\LevelsWidget.cpp" />
     <ClCompile Include="Widget\MagnifierWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
@@ -89,6 +91,7 @@
     <QtMoc Include="Diagram\DiagramPlotItem.h" />
     <QtMoc Include="Diagram\DiagramArrowItem.h" />
     <QtMoc Include="Diagram\DiagramLengthItem.h" />
+    <QtMoc Include="Diagram\DiagramImageQualityItem.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
     <QtMoc Include="Image\ImageReader.h" />
@@ -106,6 +109,7 @@
     <ClInclude Include="Processor\LevelsProcessor.h" />
     <QtMoc Include="Widget\MagnifierWidget.h" />
     <QtMoc Include="Widget\ChartView.h" />
+    <QtMoc Include="Widget\ImageQualityDialog.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />

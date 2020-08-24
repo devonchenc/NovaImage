@@ -130,6 +130,11 @@ ChartView::~ChartView()
     }
 }
 
+bool ChartView::hasValidData()
+{
+    return chart()->series().size() > 0;
+}
+
 void ChartView::setData(const QVector<qreal>& points)
 {
     qreal minValue = points[0];
@@ -233,8 +238,22 @@ void ChartView::mouseMoveEvent(QMouseEvent* event)
         if (_callout == nullptr)
             _callout = new Callout(chart());
 
-        _callout->setText(QString::number(_hSeries->at(0).y(), 'f', 3));
-        _callout->setAnchor(QPointF(_vSeries->at(0).x(), _hSeries->at(0).y()));
+        float value = _hSeries->at(0).y();
+        int decimal = 4;
+        if (abs(value) > 10.0f)
+        {
+            decimal = 1;
+        }
+        else if (abs(value) > 1.0f)
+        {
+            decimal = 2;
+        }
+        else if (abs(value) > 0.1f)
+        {
+            decimal = 3;
+        }
+        _callout->setText(QString::number(value, 'f', decimal));
+        _callout->setAnchor(QPointF(_vSeries->at(0).x(), value));
         _callout->setZValue(11);
         _callout->updateGeometry();
         _callout->show();

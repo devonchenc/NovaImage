@@ -6,6 +6,7 @@
 class DiagramItem;
 class GraphicsView;
 class PlotDialog;
+class ImageQualityDialog;
 
 #ifndef VIEW_TYPE
 #define AXIAL_VIEW              0
@@ -67,6 +68,8 @@ public:
 
     void showPlotDialog(QGraphicsLineItem* lineItem);
 
+    void showImageQualityDialog(QGraphicsLineItem* lineItem);
+
     bool cine30FPS();
     bool cine60FPS();
 
@@ -91,6 +94,7 @@ public slots:
     void zoomOut();
 
     void plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);
+    void imageQualityLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);
 
 private slots:
     void cutItem();
@@ -108,7 +112,7 @@ private:
 
     QList<QGraphicsItem*> cloneItems(const QList<QGraphicsItem*>& items);
 
-    void calcPlotData(QGraphicsLineItem* lineItem, int lineWidth);
+    QVector<qreal> calcPlotData(QGraphicsLineItem* lineItem, int lineWidth);
 
 private:
     GraphicsScene* _scene;
@@ -131,6 +135,7 @@ private:
     float _windowLevel;
 
     PlotDialog* _plotDlg;
+    ImageQualityDialog* _imageQualityDlg;
 
     QTimer* _timer;
 };

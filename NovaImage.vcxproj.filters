@@ -186,6 +186,12 @@
     <ClCompile Include="Image\MonoImageProxy.cpp">
       <Filter>Image</Filter>
     </ClCompile>
+    <ClCompile Include="Diagram\DiagramImageQualityItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget\ImageQualityDialog.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -289,6 +295,12 @@
     </QtMoc>
     <QtMoc Include="Core\LayoutManager.h">
       <Filter>Core</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramImageQualityItem.h">
+      <Filter>Diagram</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\ImageQualityDialog.h">
+      <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

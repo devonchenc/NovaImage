@@ -936,7 +936,7 @@ void ToolBar::measurementChanged()
     else if (action == _imageQualityAction)
     {
         _measurementButton->setIconByName(":/icon/svg/imagequality.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Plot);
+        getGlobalActiveView()->setItemType(DiagramItem::ImageQuality);
     }
     else if (action == _rectAction)
     {

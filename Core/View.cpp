@@ -13,6 +13,7 @@
 #include "GraphicsScene.h"
 #include "../Processor/LevelsProcessor.h"
 #include "../Widget/PlotDialog.h"
+#include "../Widget/ImageQualityDialog.h"
 #include "GlobalFunc.h"
 #include "Document.h"
 #include "../Image/BaseImage.h"
@@ -24,6 +25,7 @@ View::View(QWidget* parent)
     , _windowWidth(0)
     , _windowLevel(0)
     , _plotDlg(nullptr)
+    , _imageQualityDlg(nullptr)
     , _timer(new QTimer(this))
 {
     createItemMenus();
@@ -46,6 +48,11 @@ View::~View()
     {
         delete _plotDlg;
         _plotDlg = nullptr;
+    }
+    if (_imageQualityDlg)
+    {
+        delete _imageQualityDlg;
+        _imageQualityDlg = nullptr;
     }
 }
 
@@ -275,7 +282,27 @@ void View::showPlotDialog(QGraphicsLineItem* lineItem)
         connect(_plotDlg, &PlotDialog::lineWidthChanged, this, &View::plotLineWidthChanged);
     }
 
-    calcPlotData(lineItem, 1);
+    QVector<qreal> dataVec = calcPlotData(lineItem, 1);
+
+    _plotDlg->setData(lineItem, dataVec);
+    _plotDlg->show();
+}
+
+void View::showImageQualityDialog(QGraphicsLineItem* lineItem)
+{
+    if (getGlobalImage() == nullptr)
+        return;
+
+    if (_imageQualityDlg == nullptr)
+    {
+        _imageQualityDlg = new ImageQualityDialog(this);
+        connect(_imageQualityDlg, &ImageQualityDialog::lineWidthChanged, this, &View::imageQualityLineWidthChanged);
+    }
+
+    QVector<qreal> dataVec = calcPlotData(lineItem, 21);
+
+    _imageQualityDlg->setData(lineItem, dataVec);
+    _imageQualityDlg->show();
 }
 
 bool View::cine30FPS()
@@ -416,7 +443,18 @@ void View::zoomOut()
 
 void View::plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth)
 {
-    calcPlotData(lineItem, lineWidth);
+    QVector<qreal> dataVec = calcPlotData(lineItem, lineWidth);
+
+    _plotDlg->setData(lineItem, dataVec);
+    _plotDlg->show();
+}
+
+void View::imageQualityLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth)
+{
+    QVector<qreal> dataVec = calcPlotData(lineItem, lineWidth);
+
+    _imageQualityDlg->setData(lineItem, dataVec);
+    _imageQualityDlg->show();
 }
 
 void View::cutItem()
@@ -473,7 +511,7 @@ QList<QGraphicsItem*> View::cloneItems(const QList<QGraphicsItem*>& items)
     return copyMap.values();
 }
 
-void View::calcPlotData(QGraphicsLineItem* lineItem, int lineWidth)
+QVector<qreal> View::calcPlotData(QGraphicsLineItem* lineItem, int lineWidth)
 {
     QPointF p1 = lineItem->line().p1();
     QPointF p2 = lineItem->line().p2();
@@ -513,7 +551,5 @@ void View::calcPlotData(QGraphicsLineItem* lineItem, int lineWidth)
         }
         dataVec.push_back(average);
     }
-
-    _plotDlg->setData(lineItem, dataVec);
-    _plotDlg->show();
+    return dataVec;
 }

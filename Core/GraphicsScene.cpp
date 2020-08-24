@@ -17,6 +17,7 @@
 #include "../Diagram/DiagramLengthItem.h"
 #include "../Diagram/DiagramArrowItem.h"
 #include "../Diagram/DiagramPlotItem.h"
+#include "../Diagram/DiagramImageQualityItem.h"
 #include "../Diagram/DiagramAngleItem.h"
 
 #define MIN_SIZE		10
@@ -255,7 +256,8 @@ void GraphicsScene::mousePress(const QPointF& point)
             itemChanged();
             emit itemInserted(textItem);
         }
-        else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot)
+        else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow ||
+            _itemType == DiagramItem::Plot || _itemType == DiagramItem::ImageQuality)
         {
             if (_itemType == DiagramItem::Line)
             {
@@ -268,6 +270,10 @@ void GraphicsScene::mousePress(const QPointF& point)
             else if (_itemType == DiagramItem::Plot)
             {
                 _currentDrawingLine = new DiagramPlotItem(QLineF(_startPoint, _startPoint), _itemMenu);
+            }
+            else if (_itemType == DiagramItem::ImageQuality)
+            {
+                _currentDrawingLine = new DiagramImageQualityItem(QLineF(_startPoint, _startPoint), _itemMenu);
             }
             _currentDrawingLine->setPen(QPen(_lineColor, 2));
             _currentDrawingLine->setEndpointPen(QPen(_fillColor));
@@ -302,7 +308,8 @@ void GraphicsScene::mousePress(const QPointF& point)
 
 void GraphicsScene::mouseMove(const QPointF& point)
 {
-    if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot) && _currentDrawingLine != nullptr)
+    if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow ||
+        _itemType == DiagramItem::Plot || _itemType == DiagramItem::ImageQuality) && _currentDrawingLine != nullptr)
     {
         QPointF p1 = _currentDrawingLine->line().p1();
         if (QApplication::keyboardModifiers() == Qt::ShiftModifier)
@@ -359,7 +366,8 @@ void GraphicsScene::mouseRelease(const QPointF& point)
             _currentDrawingItem = nullptr;
         }
     }
-    else if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow || _itemType == DiagramItem::Plot) && _currentDrawingLine != nullptr)
+    else if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow ||
+        _itemType == DiagramItem::Plot || _itemType == DiagramItem::ImageQuality) && _currentDrawingLine != nullptr)
     {
         QRectF rect = _currentDrawingLine->boundingRect();
         if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)

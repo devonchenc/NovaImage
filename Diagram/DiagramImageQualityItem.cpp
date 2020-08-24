@@ -1,83 +1,74 @@
-#include "DiagramPlotItem.h"
+#include "DiagramImageQualityItem.h"
 
-#include <cmath>
+#include <float.h>
 #include <QPainter>
 #include <QDomDocument>
 #include <QGraphicsOpacityEffect>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
-#include "../Core/GraphicsView.h"
 
-int DiagramPlotItem::_plotCount = 0;
-
-DiagramPlotItem::DiagramPlotItem()
+DiagramImageQualityItem::DiagramImageQualityItem()
     : DiagramLineItem(QLineF(), nullptr, nullptr)
-    , _lineWidth(1)
+    , _lineWidth(21)
 {
 
 }
 
-DiagramPlotItem::DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
+DiagramImageQualityItem::DiagramImageQualityItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
     : DiagramLineItem(line, contextMenu, parent)
-    , _lineWidth(1)
+    , _lineWidth(21)
 {
-    _plotCount++;
-    _plotIndex = _plotCount;
+
 }
 
-DiagramPlotItem::~DiagramPlotItem()
+DiagramImageQualityItem::~DiagramImageQualityItem()
 {
     emit itemDeleted();
 }
 
-QDomElement DiagramPlotItem::saveToXML(QDomDocument& doc)
+QDomElement DiagramImageQualityItem::saveToXML(QDomDocument& doc)
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");
 
     QDomElement attribute = doc.createElement("Attribute");
-    attribute.setAttribute("Name", "Plot");
+    attribute.setAttribute("Name", "Arrow");
     attribute.setAttribute("Position", pointFToString(pos()));
     attribute.setAttribute("Point1", pointFToString(line().p1()));
     attribute.setAttribute("Point2", pointFToString(line().p2()));
     attribute.setAttribute("Color", colorToString(pen().color()));
     attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
     attribute.setAttribute("LineWidth", QString::number(_lineWidth));
-    attribute.setAttribute("Index", QString::number(_plotIndex));
     attribute.setAttribute("Opacity", QString::number(_effect->opacity(), 'f', 2));
 
     lineItem.appendChild(attribute);
     return lineItem;
 }
 
-void DiagramPlotItem::loadFromXML(const QDomElement& e)
+void DiagramImageQualityItem::loadFromXML(const QDomElement& e)
 {
     DiagramLineItem::loadFromXML(e);
 
     _lineWidth = e.attribute("LineWidth").toInt();
-    _plotIndex = e.attribute("Index").toInt();
-
-    _plotCount = qMax(_plotCount, _plotIndex);
 }
 
-void DiagramPlotItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
+void DiagramImageQualityItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
     DiagramLineItem::paint(painter, option, widget);
 
     drawRect(painter);
     drawResizeHandle(painter);
-    drawPlotIndex(painter);
 }
 
-void DiagramPlotItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
+void DiagramImageQualityItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    getGlobalActiveView()->showPlotDialog(this);
+    getGlobalActiveView()->showImageQualityDialog(this);
 
     DiagramLineItem::mouseReleaseEvent(event);
 }
 
-void DiagramPlotItem::drawRect(QPainter* painter)
+void DiagramImageQualityItem::drawRect(QPainter* painter)
 {
     if (_lineWidth <= 1)
         return;
@@ -104,16 +95,4 @@ void DiagramPlotItem::drawRect(QPainter* painter)
     painter->drawConvexPolygon(polygon);
 
     painter->setRenderHint(QPainter::Antialiasing, false);
-}
-
-void DiagramPlotItem::drawPlotIndex(QPainter* painter)
-{
-    QTransform transform = getGlobalActiveView()->view()->transform();
-    QTransform transform2;
-    transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
-
-    painter->setWorldTransform(transform.inverted() * transform2, true);
-    painter->setFont(QFont("Arial", 10));
-    painter->setPen(QPen(Qt::yellow));
-    painter->drawText(0, 0, QString::number(_plotIndex));
 }
