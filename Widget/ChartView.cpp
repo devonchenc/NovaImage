@@ -169,7 +169,7 @@ void ChartView::setData(const QVector<qreal>& points)
         axesList[i]->setRange(minValue, maxValue);
     }
     chart->legend()->hide();
-    chart->setAnimationOptions(QChart::SeriesAnimations);
+    chart->setAnimationOptions(QChart::AllAnimations);
 
     setChart(chart);
 }
@@ -274,10 +274,15 @@ ChartView2::ChartView2(QWidget* parent)
     : ChartView(parent)
     , _leftRate(1 / 3.0f)
     , _rightRate(2 / 3.0f)
+    , _dragLeft(false)
+    , _dragRight(false)
     , _leftSeries(new QLineSeries)
     , _rightSeries(new QLineSeries)
 {
+    setRubberBand(QChartView::NoRubberBand);
 
+    connect(_leftSeries, &QLineSeries::hovered, this, &ChartView2::hoverLine);
+    connect(_rightSeries, &QLineSeries::hovered, this, &ChartView2::hoverLine);
 }
 
 ChartView2::~ChartView2()
@@ -298,15 +303,12 @@ void ChartView2::setData(const QVector<qreal>& points)
 {
     ChartView::setData(points);
 
-    float pos = qMax(points.size() * _leftRate - 1, 0.0f);
- //   QPointF position = chart()->mapToValue(QPointF(pos, 0));
+    chart()->setAnimationOptions(QChart::GridAxisAnimations);
 
     QList<QAbstractAxis*> axesList = chart()->axes(Qt::Vertical);
     QValueAxis* valueAxis = qobject_cast<QValueAxis*>(axesList[0]);
 
-    qDebug() << valueAxis->min() << valueAxis->max();
-    qDebug() << pos << points[pos];
-
+    float pos = qMax(points.size() * _leftRate - 1, 0.0f);
     *_leftSeries << QPointF(pos, valueAxis->min()) << QPointF(pos, valueAxis->max());
 
     pos = qMax(points.size() * _rightRate - 1, 0.0f);
@@ -314,14 +316,7 @@ void ChartView2::setData(const QVector<qreal>& points)
 
     chart()->addSeries(_leftSeries);
     chart()->addSeries(_rightSeries);
-
-    QPen pen = _leftSeries->pen();
-    pen.setStyle(Qt::DashLine);
-    _leftSeries->setPen(pen);
-
-    pen = _rightSeries->pen();
-    pen.setStyle(Qt::DashLine);
-    _rightSeries->setPen(pen);
+    chart()->createDefaultAxes();
 }
 
 void ChartView2::updateData(const QVector<qreal>& points)
@@ -339,4 +334,74 @@ void ChartView2::updateData(const QVector<qreal>& points)
 
     pos = qMax(points.size() * _rightRate - 1, 0.0f);
     *_rightSeries << QPointF(pos, valueAxis->min()) << QPointF(pos, valueAxis->max());
+}
+
+void ChartView2::mousePressEvent(QMouseEvent* event)
+{
+    QPointF leftLine = _leftSeries->at(0);
+    QPointF rightLine = _rightSeries->at(0);
+    QPointF mousePos = chart()->mapToValue(event->pos());
+    if (abs(mousePos.x() - leftLine.x()) < 3)
+    {
+        _dragLeft = true;
+    }
+    else if (abs(mousePos.x() - rightLine.x()) < 3)
+    {
+        _dragRight = true;
+    }
+
+    QChartView::mousePressEvent(event);
+}
+
+void ChartView2::mouseMoveEvent(QMouseEvent* event)
+{
+    QPointF mousePos = chart()->mapToValue(event->pos());
+
+    QList<QAbstractAxis*> axesList = chart()->axes(Qt::Vertical);
+    QValueAxis* valueAxis = qobject_cast<QValueAxis*>(axesList[0]);
+    if (_dragLeft)
+    {
+        _leftSeries->clear();
+        *_leftSeries << QPointF(mousePos.x(), valueAxis->min()) << QPointF(mousePos.x(), valueAxis->max());
+    }
+    else if (_dragRight)
+    {
+        _rightSeries->clear();
+        *_rightSeries << QPointF(mousePos.x(), valueAxis->min()) << QPointF(mousePos.x(), valueAxis->max());
+    }
+
+    int count = _dataSeries->count();
+    QChartView::mouseMoveEvent(event);
+}
+
+void ChartView2::mouseReleaseEvent(QMouseEvent* event)
+{
+    _dragLeft = false;
+    _dragRight = false;
+
+    QChartView::mouseReleaseEvent(event);
+}
+
+void ChartView2::hoverLine(const QPointF& point, bool state)
+{
+    if (state)
+    {
+        setCursor(Qt::SizeHorCursor);
+    }
+    else
+    {
+        setCursor(Qt::ArrowCursor);
+    }
+}
+
+void ChartView2::hoverRightLine(const QPointF& point, bool state)
+{
+    if (state)
+    {
+        setCursor(Qt::SizeHorCursor);
+    }
+    else
+    {
+        setCursor(Qt::ArrowCursor);
+    }
 }

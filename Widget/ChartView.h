@@ -45,7 +45,7 @@ public:
 protected:
     void mouseMoveEvent(QMouseEvent* event) override;
 
-private:
+protected:
     QLineSeries* _dataSeries;
     QLineSeries* _hSeries;
     QLineSeries* _vSeries;
@@ -66,8 +66,18 @@ public:
 
     void updateData(const QVector<qreal>& points);
 
+public slots:
+    void hoverLine(const QPointF& point, bool state);
+    void hoverRightLine(const QPointF& point, bool state);
+
+protected:
+    void mousePressEvent(QMouseEvent* event) override;
+    void mouseMoveEvent(QMouseEvent* event) override;
+    void mouseReleaseEvent(QMouseEvent* event) override;
+
 private:
     float _leftRate, _rightRate;
+    bool _dragLeft, _dragRight;
     QLineSeries* _leftSeries;
     QLineSeries* _rightSeries;
 };

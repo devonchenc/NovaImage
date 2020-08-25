@@ -24,6 +24,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Widget/ProgressDialog.h \
     ./Widget/SettingsDialog.h \
     ./Widget/PlotDialog.h \
+	./Widget/ImageQualityDialog.h \
     ./Widget/LevelsWidget.h \
     ./Widget/HistogramWidget.h \
     ./Widget/CurvesWidget.h \
@@ -57,7 +58,8 @@ HEADERS += ./Image/DicomImage.h \
     ./Diagram/DiagramTextItem.h \
     ./Diagram/DiagramPlotItem.h \
     ./Diagram/DiagramArrowItem.h \
-    ./Diagram/DiagramLengthItem.h
+    ./Diagram/DiagramLengthItem.h \
+    ./Diagram/DiagramImageQualityItem.h
 SOURCES += ./Image/BaseImage.cpp \
     ./Image/DicomImage.cpp \
     ./Image/GeneralImage.cpp \
@@ -75,6 +77,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/MagnifierWidget.cpp \
     ./Widget/Peg.cpp \
     ./Widget/PlotDialog.cpp \
+	./Widget/ImageQualityDialog.cpp \
     ./Widget/RawParameterDialog.cpp \
     ./Widget/ProgressDialog.cpp \
     ./Widget/SettingsDialog.cpp \
@@ -107,6 +110,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Diagram/DiagramLengthItem.cpp \
     ./Diagram/DiagramLineItem.cpp \
     ./Diagram/DiagramPlotItem.cpp \
-    ./Diagram/DiagramTextItem.cpp
+    ./Diagram/DiagramTextItem.cpp \
+    ./Diagram/DiagramImageQualityItem.cpp
 TRANSLATIONS += ./novaimage_zh.ts
 RESOURCES += Resources/Resource.qrc
