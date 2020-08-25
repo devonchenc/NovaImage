@@ -20,54 +20,54 @@ CurvesWidget::CurvesWidget(QWidget* parent)
 {
     setName(tr("Curves"));
 
-    _labelChannel = new QLabel(tr("Channel"));
-    _comboboxChannel = new QComboBox();
-    _comboboxChannel->addItem("RGB");
-    _comboboxChannel->addItem(tr("Red"));
-    _comboboxChannel->addItem(tr("Green"));
-    _comboboxChannel->addItem(tr("Blue"));
-    connect(_comboboxChannel, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &CurvesWidget::channelChanged);
-    _buttonReset = new QPushButton(tr("&Reset"));
-    connect(_buttonReset, &QPushButton::clicked, this, &CurvesWidget::clickReset);
-    _buttonReverse = new QPushButton(tr("R&everse"));
-    connect(_buttonReverse, &QPushButton::clicked, this, &CurvesWidget::clickReverse);
+    _channelLabel = new QLabel(tr("Channel"));
+    _channelComboBox = new QComboBox();
+    _channelComboBox->addItem("RGB");
+    _channelComboBox->addItem(tr("Red"));
+    _channelComboBox->addItem(tr("Green"));
+    _channelComboBox->addItem(tr("Blue"));
+    connect(_channelComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &CurvesWidget::channelChanged);
+    _resetButton = new QPushButton(tr("&Reset"));
+    connect(_resetButton, &QPushButton::clicked, this, &CurvesWidget::clickReset);
+    _reverseButton = new QPushButton(tr("R&everse"));
+    connect(_reverseButton, &QPushButton::clicked, this, &CurvesWidget::clickReverse);
 
     QHBoxLayout* layoutHead = new QHBoxLayout();
-    layoutHead->addWidget(_labelChannel);
-    layoutHead->addWidget(_comboboxChannel);
-    layoutHead->addWidget(_buttonReset);
-    layoutHead->addWidget(_buttonReverse);
+    layoutHead->addWidget(_channelLabel);
+    layoutHead->addWidget(_channelComboBox);
+    layoutHead->addWidget(_resetButton);
+    layoutHead->addWidget(_reverseButton);
 
-    _labelInput = new QLabel(tr("Input:"));
-    _labelInputValue = new QLabel();
-    _labelOutput = new QLabel(tr("Output:"));
-    _labelOutputValue = new QLabel(tr(""));
-    QGridLayout* grid = new QGridLayout();
-    grid->addWidget(_labelInput, 0, 0);
-    grid->addWidget(_labelInputValue, 0, 1);
-    grid->addWidget(_labelOutput, 1, 0);
-    grid->addWidget(_labelOutputValue, 1, 1);
+    _inputLabel = new QLabel(tr("Input:"));
+    _inputValueLabel = new QLabel();
+    _outputLabel = new QLabel(tr("Output:"));
+    _outputValueLabel = new QLabel(tr(""));
+    QGridLayout* grid = new QGridLayout;
+    grid->addWidget(_inputLabel, 0, 0);
+    grid->addWidget(_inputValueLabel, 0, 1);
+    grid->addWidget(_outputLabel, 1, 0);
+    grid->addWidget(_outputValueLabel, 1, 1);
     QGroupBox* groupBox1 = new QGroupBox(tr(""));
     groupBox1->setLayout(grid);
 
-    _radioCurve = new QRadioButton(tr("&Curve"));
-    _radioLinear = new QRadioButton(tr("&Line"));
-    connect(_radioCurve, &QRadioButton::toggled, this, &CurvesWidget::toggleCurveRadio);
-    connect(_radioLinear, &QRadioButton::toggled, this, &CurvesWidget::toggleLinearRadio);
-    _radioCurve->setChecked(true);
+    _curveRadio = new QRadioButton(tr("&Curve"));
+    _linearRadio = new QRadioButton(tr("&Line"));
+    connect(_curveRadio, &QRadioButton::toggled, this, &CurvesWidget::toggleCurveRadio);
+    connect(_linearRadio, &QRadioButton::toggled, this, &CurvesWidget::toggleLinearRadio);
+    _curveRadio->setChecked(true);
     QVBoxLayout* vbox = new QVBoxLayout();
-    vbox->addWidget(_radioCurve);
-    vbox->addWidget(_radioLinear);
+    vbox->addWidget(_curveRadio);
+    vbox->addWidget(_linearRadio);
     QGroupBox* groupBox2 = new QGroupBox(tr(""));
     groupBox2->setLayout(vbox);
 
-    _buttonSave = new QPushButton(tr("&Save"));
-    connect(_buttonSave, &QPushButton::clicked, this, &CurvesWidget::clickSave);
-    _buttonLoad = new QPushButton(tr("L&oad"));
-    connect(_buttonLoad, &QPushButton::clicked, this, &CurvesWidget::clickLoad);
+    _saveButton = new QPushButton(tr("&Save"));
+    connect(_saveButton, &QPushButton::clicked, this, &CurvesWidget::clickSave);
+    _loadButton = new QPushButton(tr("L&oad"));
+    connect(_loadButton, &QPushButton::clicked, this, &CurvesWidget::clickLoad);
     QVBoxLayout* vbox2 = new QVBoxLayout();
-    vbox2->addWidget(_buttonSave);
-    vbox2->addWidget(_buttonLoad);
+    vbox2->addWidget(_saveButton);
+    vbox2->addWidget(_loadButton);
     QHBoxLayout* layoutBottom = new QHBoxLayout();
     layoutBottom->addWidget(groupBox1);
     layoutBottom->addWidget(groupBox2);
@@ -103,7 +103,7 @@ void CurvesWidget::init()
     _square->setChannel(CURVE_CHANNEL_GRAY);
     _square->init();
 
-    _comboboxChannel->setCurrentIndex(CURVE_CHANNEL_GRAY);
+    _channelComboBox->setCurrentIndex(CURVE_CHANNEL_GRAY);
     generateHistogram();
 }
 
@@ -141,7 +141,7 @@ void CurvesWidget::clickReverse()
 
 void CurvesWidget::toggleCurveRadio()
 {
-    if (_square && _radioCurve->isChecked())
+    if (_square && _curveRadio->isChecked())
     {
         _square->setCurveOrLinear(true);
     }
@@ -149,7 +149,7 @@ void CurvesWidget::toggleCurveRadio()
 
 void CurvesWidget::toggleLinearRadio()
 {
-    if (_square && _radioLinear->isChecked())
+    if (_square && _linearRadio->isChecked())
     {
         _square->setCurveOrLinear(false);
     }
@@ -196,8 +196,8 @@ void CurvesWidget::clickLoad()
             stream >> channel;
             stream >> curveOrLinear;
             _square->setCurveOrLinear(curveOrLinear);
-            _radioCurve->setChecked(curveOrLinear);
-            _radioLinear->setChecked(!curveOrLinear);
+            _curveRadio->setChecked(curveOrLinear);
+            _linearRadio->setChecked(!curveOrLinear);
 
             _square->setChannel(CURVE_CHANNEL_GRAY);
             loadPegArray(stream, _square->getIntensityPegsArray());
@@ -209,7 +209,7 @@ void CurvesWidget::clickLoad()
             loadPegArray(stream, _square->getBluePegsArray());
 
             _square->setChannel(channel);
-            _comboboxChannel->setCurrentIndex(channel);
+            _channelComboBox->setCurrentIndex(channel);
 
             updateImage();
         }
@@ -252,8 +252,8 @@ void CurvesWidget::updateImage()
 
 void CurvesWidget::updateLabelText(QString input, QString output)
 {
-    _labelInputValue->setText(input);
-    _labelOutputValue->setText(output);
+    _inputValueLabel->setText(input);
+    _outputValueLabel->setText(output);
 }
 
 void CurvesWidget::changeEvent(QEvent* event)
@@ -262,23 +262,23 @@ void CurvesWidget::changeEvent(QEvent* event)
     {
         parentWidget()->setWindowTitle(tr("Curves"));
 
-        _labelChannel->setText(tr("Channel"));
-        _buttonReset->setText(tr("&Reset"));
-        _buttonReverse->setText(tr("R&everse"));
-        _labelInput->setText(tr("Input:"));
-        _labelOutput->setText(tr("Output:"));
+        _channelLabel->setText(tr("Channel"));
+        _resetButton->setText(tr("&Reset"));
+        _reverseButton->setText(tr("R&everse"));
+        _inputLabel->setText(tr("Input:"));
+        _outputLabel->setText(tr("Output:"));
 
-        _comboboxChannel->clear();
-        _comboboxChannel->addItem("RGB");
-        _comboboxChannel->addItem(tr("Red"));
-        _comboboxChannel->addItem(tr("Green"));
-        _comboboxChannel->addItem(tr("Blue"));
+        _channelComboBox->clear();
+        _channelComboBox->addItem("RGB");
+        _channelComboBox->addItem(tr("Red"));
+        _channelComboBox->addItem(tr("Green"));
+        _channelComboBox->addItem(tr("Blue"));
 
-        _radioCurve->setText(tr("&Curve"));
-        _radioLinear->setText(tr("&Line"));
+        _curveRadio->setText(tr("&Curve"));
+        _linearRadio->setText(tr("&Line"));
 
-        _buttonSave->setText(tr("&Save"));
-        _buttonLoad->setText(tr("L&oad"));
+        _saveButton->setText(tr("&Save"));
+        _loadButton->setText(tr("L&oad"));
     }
     BaseWidget::changeEvent(event);
 }

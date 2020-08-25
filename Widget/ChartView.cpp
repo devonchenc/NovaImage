@@ -1,9 +1,10 @@
 #include "ChartView.h"
 
+#include <cmath>
 #include <QtGui/QMouseEvent>
 #include <QValueAxis>
 #include <QGraphicsSceneMouseEvent>
-#include <cmath>
+#include <QDebug>
 
 Callout::Callout(QChart* chart)
     : QGraphicsItem(chart)
@@ -265,4 +266,77 @@ void ChartView::mouseMoveEvent(QMouseEvent* event)
     }
 
     QChartView::mouseMoveEvent(event);
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+ChartView2::ChartView2(QWidget* parent)
+    : ChartView(parent)
+    , _leftRate(1 / 3.0f)
+    , _rightRate(2 / 3.0f)
+    , _leftSeries(new QLineSeries)
+    , _rightSeries(new QLineSeries)
+{
+
+}
+
+ChartView2::~ChartView2()
+{
+    if (_leftSeries)
+    {
+        delete _leftSeries;
+        _leftSeries = nullptr;
+    }
+    if (_rightSeries)
+    {
+        delete _rightSeries;
+        _rightSeries = nullptr;
+    }
+}
+
+void ChartView2::setData(const QVector<qreal>& points)
+{
+    ChartView::setData(points);
+
+    float pos = qMax(points.size() * _leftRate - 1, 0.0f);
+ //   QPointF position = chart()->mapToValue(QPointF(pos, 0));
+
+    QList<QAbstractAxis*> axesList = chart()->axes(Qt::Vertical);
+    QValueAxis* valueAxis = qobject_cast<QValueAxis*>(axesList[0]);
+
+    qDebug() << valueAxis->min() << valueAxis->max();
+    qDebug() << pos << points[pos];
+
+    *_leftSeries << QPointF(pos, valueAxis->min()) << QPointF(pos, valueAxis->max());
+
+    pos = qMax(points.size() * _rightRate - 1, 0.0f);
+    *_rightSeries << QPointF(pos, valueAxis->min()) << QPointF(pos, valueAxis->max());
+
+    chart()->addSeries(_leftSeries);
+    chart()->addSeries(_rightSeries);
+
+    QPen pen = _leftSeries->pen();
+    pen.setStyle(Qt::DashLine);
+    _leftSeries->setPen(pen);
+
+    pen = _rightSeries->pen();
+    pen.setStyle(Qt::DashLine);
+    _rightSeries->setPen(pen);
+}
+
+void ChartView2::updateData(const QVector<qreal>& points)
+{
+    ChartView::updateData(points);
+
+    _leftSeries->clear();
+    _rightSeries->clear();
+
+    QList<QAbstractAxis*> axesList = chart()->axes(Qt::Vertical);
+    QValueAxis* valueAxis = qobject_cast<QValueAxis*>(axesList[0]);
+
+    float pos = qMax(points.size() * _leftRate - 1, 0.0f);
+    *_leftSeries << QPointF(pos, valueAxis->min()) << QPointF(pos, valueAxis->max());
+
+    pos = qMax(points.size() * _rightRate - 1, 0.0f);
+    *_rightSeries << QPointF(pos, valueAxis->min()) << QPointF(pos, valueAxis->max());
 }

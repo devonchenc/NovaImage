@@ -26,7 +26,7 @@ CommonWidget::CommonWidget(QWidget* parent)
     _contrastValueLabel = new QLabel("0");
     _contrastValueLabel->setFixedWidth(20);
 
-    QGridLayout* layout = new QGridLayout();
+    QGridLayout* layout = new QGridLayout;
     layout->addWidget(_brightLabel, 0, 0);
     layout->addWidget(_brightSlider, 0, 1);
     layout->addWidget(_brightValueLabel, 0, 2);

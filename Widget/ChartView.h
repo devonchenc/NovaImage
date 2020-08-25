@@ -51,3 +51,23 @@ private:
     QLineSeries* _vSeries;
     Callout* _callout;
 };
+
+//////////////////////////////////////////////////////////////////////////
+
+class ChartView2 : public ChartView
+{
+    Q_OBJECT
+
+public:
+    ChartView2(QWidget* parent = nullptr);
+    ~ChartView2();
+
+    void setData(const QVector<qreal>& points);
+
+    void updateData(const QVector<qreal>& points);
+
+private:
+    float _leftRate, _rightRate;
+    QLineSeries* _leftSeries;
+    QLineSeries* _rightSeries;
+};

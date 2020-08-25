@@ -188,6 +188,24 @@
     </message>
 </context>
 <context>
+    <name>ImageQualityDialog</name>
+    <message>
+        <location filename="Widget/ImageQualityDialog.cpp" line="16"/>
+        <source>Image Quality</source>
+        <translation type="unfinished">调制度</translation>
+    </message>
+    <message>
+        <location filename="Widget/ImageQualityDialog.cpp" line="66"/>
+        <source>Line Width</source>
+        <translation type="unfinished">线条宽度</translation>
+    </message>
+    <message>
+        <location filename="Widget/ImageQualityDialog.cpp" line="66"/>
+        <source>Width:</source>
+        <translation type="unfinished">宽度：</translation>
+    </message>
+</context>
+<context>
     <name>LevelsWidget</name>
     <message>
         <location filename="Widget/LevelsWidget.cpp" line="15"/>
@@ -1150,7 +1168,7 @@
     </message>
 </context>
 <context>
-    <name>Type</name>
+    <name>ImageReader</name>
     <message>
         <location filename="Image/ImageReader.h" line="77"/>
         <source>Loading file...</source>
@@ -1160,26 +1178,26 @@
 <context>
     <name>View</name>
     <message>
-        <location filename="Core/View.cpp" line="69"/>
-        <location filename="Core/View.cpp" line="97"/>
+        <location filename="Core/View.cpp" line="76"/>
+        <location filename="Core/View.cpp" line="104"/>
         <source>Cu&amp;t</source>
         <translation type="unfinished">剪切(&amp;T)</translation>
     </message>
     <message>
-        <location filename="Core/View.cpp" line="73"/>
-        <location filename="Core/View.cpp" line="98"/>
+        <location filename="Core/View.cpp" line="80"/>
+        <location filename="Core/View.cpp" line="105"/>
         <source>&amp;Copy</source>
         <translation type="unfinished">复制(&amp;C)</translation>
     </message>
     <message>
-        <location filename="Core/View.cpp" line="77"/>
-        <location filename="Core/View.cpp" line="99"/>
+        <location filename="Core/View.cpp" line="84"/>
+        <location filename="Core/View.cpp" line="106"/>
         <source>&amp;Paste</source>
         <translation type="unfinished">粘贴(&amp;P)</translation>
     </message>
     <message>
-        <location filename="Core/View.cpp" line="81"/>
-        <location filename="Core/View.cpp" line="100"/>
+        <location filename="Core/View.cpp" line="88"/>
+        <location filename="Core/View.cpp" line="107"/>
         <source>&amp;Delete</source>
         <translation type="unfinished">删除(&amp;D)</translation>
     </message>

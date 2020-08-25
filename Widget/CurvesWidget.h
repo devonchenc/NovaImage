@@ -60,20 +60,20 @@ private:
     void loadPegArray(QTextStream& stream, PegArray& pegs);
 
 private:
-    QLabel* _labelChannel;
-    QLabel* _labelInput;
-    QLabel* _labelInputValue;
-    QLabel* _labelOutput;
-    QLabel* _labelOutputValue;
+    QLabel* _channelLabel;
+    QLabel* _inputLabel;
+    QLabel* _inputValueLabel;
+    QLabel* _outputLabel;
+    QLabel* _outputValueLabel;
 
-    QComboBox* _comboboxChannel;
-    QRadioButton* _radioCurve;
-    QRadioButton* _radioLinear;
+    QComboBox* _channelComboBox;
+    QRadioButton* _curveRadio;
+    QRadioButton* _linearRadio;
 
-    QPushButton* _buttonReset;
-    QPushButton* _buttonReverse;
-    QPushButton* _buttonSave;
-    QPushButton* _buttonLoad;
+    QPushButton* _resetButton;
+    QPushButton* _reverseButton;
+    QPushButton* _saveButton;
+    QPushButton* _loadButton;
 
     CurveSquare* _square;
 

@@ -46,7 +46,7 @@ void RawParameterDialog::initUI()
     QLabel* expectedSize = new QLabel(tr("Expected Size:"));
     _expectedSizeLabel = new QLabel;
 
-    QGridLayout* grid1 = new QGridLayout();
+    QGridLayout* grid1 = new QGridLayout;
     grid1->addWidget(nameLabel, 0, 0);
     grid1->addWidget(new QLabel(_fileName), 0, 1, 1, 2);
     grid1->addWidget(actualSize, 1, 0);
@@ -100,7 +100,7 @@ void RawParameterDialog::initUI()
     connect(_headerEdit, &QLineEdit::textChanged, this, &RawParameterDialog::updateExpectedSize);
     QLabel* header2Label = new QLabel(tr("bytes"));
 
-    QGridLayout* grid2 = new QGridLayout();
+    QGridLayout* grid2 = new QGridLayout;
     grid2->addWidget(dataLabel, 0, 0);
     grid2->addWidget(_typeComboBox, 0, 1);
     grid2->addWidget(widthLabel, 1, 0);

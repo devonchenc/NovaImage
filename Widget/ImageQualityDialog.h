@@ -8,10 +8,11 @@ QT_CHARTS_USE_NAMESPACE
 
 QT_BEGIN_NAMESPACE
 class QGraphicsLineItem;
+class QLabel;
 QT_END_NAMESPACE
 
 class DiagramImageQualityItem;
-class ChartView;
+class ChartView2;
 
 class ImageQualityDialog : public QDialog
 {
@@ -33,7 +34,12 @@ private slots:
     void setLineWidth();
 
 private:
-    ChartView* _chartView;
+    ChartView2* _chartView;
 
     DiagramImageQualityItem* _imageQualityItem;
+
+    QLabel* _aValueLabel;
+    QLabel* _bValueLabel;
+    QLabel* _cValueLabel;
+    QLabel* _resultLabel;
 };

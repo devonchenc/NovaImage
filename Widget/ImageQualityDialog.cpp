@@ -4,6 +4,7 @@
 #include <QVBoxLayout>
 #include <QMenuBar>
 #include <QInputDialog>
+#include <QLabel>
 
 #include "ChartView.h"
 #include "../Diagram/DiagramImageQualityItem.h"
@@ -26,6 +27,11 @@ ImageQualityDialog::ImageQualityDialog(QWidget* parent)
 
 ImageQualityDialog::~ImageQualityDialog()
 {
+    if (_chartView)
+    {
+        delete _chartView;
+        _chartView = nullptr;
+    }
 }
 
 void ImageQualityDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points)
@@ -46,16 +52,33 @@ void ImageQualityDialog::setData(QGraphicsLineItem* lineItem, const QVector<qrea
 
 void ImageQualityDialog::initUI()
 {
-    QMenuBar* menuBar = new QMenuBar(this);
-    QMenu* menu = menuBar->addMenu(tr("&Settings"));
-    QAction* widthAction = menu->addAction(tr("&Line Width"));
-    connect(widthAction, &QAction::triggered, this, &ImageQualityDialog::setLineWidth);
+    QLabel* aLabel = new QLabel("A:");
+    _aValueLabel = new QLabel;
+    _aValueLabel->setMaximumWidth(20);
+    QLabel* bLabel = new QLabel("B:");
+    _bValueLabel = new QLabel;
+    _bValueLabel->setMaximumWidth(20);
+    QLabel* cLabel = new QLabel("C:");
+    _cValueLabel = new QLabel;
+    _cValueLabel->setMaximumWidth(20);
+    QLabel* resultLabel = new QLabel("Image Quality:");
+    _resultLabel = new QLabel;
+    _resultLabel->setMaximumWidth(20);
 
-    _chartView = new ChartView;
+    QGridLayout* grid = new QGridLayout;
+    grid->addWidget(aLabel, 0, 0);
+    grid->addWidget(_aValueLabel, 0, 1);
+    grid->addWidget(bLabel, 1, 0);
+    grid->addWidget(_bValueLabel, 1, 1);
+    grid->addWidget(cLabel, 2, 0);
+    grid->addWidget(_cValueLabel, 2, 1);
+    grid->addWidget(resultLabel, 3, 0);
+    grid->addWidget(_resultLabel, 3, 1);
 
-    QVBoxLayout* globalLayout = new QVBoxLayout;
-    globalLayout->setMenuBar(menuBar);
+    _chartView = new ChartView2;
+    QHBoxLayout* globalLayout = new QHBoxLayout;
     globalLayout->addWidget(_chartView);
+    globalLayout->addLayout(grid);
     setLayout(globalLayout);
 }
 
@@ -67,7 +90,7 @@ void ImageQualityDialog::setLineWidth()
     if (ok)
     {
         _imageQualityItem->setWidth(lineWidth);
-        getGlobalActiveView()->repaint();
+        _imageQualityItem->scene()->update();
         emit lineWidthChanged(_imageQualityItem, lineWidth);
     }
 }
