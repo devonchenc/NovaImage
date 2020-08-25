@@ -890,14 +890,20 @@ void ToolBar::zoomButtonTriggered(QAction* action)
 
 void ToolBar::selectItem()
 {
-    getGlobalActiveView()->setSceneMode(MOVE_ITEM);
+    getGlobalAxialView()->setSceneMode(MOVE_ITEM);
+    getGlobalCoronalView()->setSceneMode(MOVE_ITEM);
+    getGlobalSagittalView()->setSceneMode(MOVE_ITEM);
+
     _cursorButton->setIconByName(":/icon/svg/cursor.svg");
     _cursorButton->setMouseHandler(new SelectMouseHandler());
 }
 
 void ToolBar::moveScene()
 {
-    getGlobalActiveView()->setSceneMode(MOVE_SCENE);
+    getGlobalAxialView()->setSceneMode(MOVE_SCENE);
+    getGlobalCoronalView()->setSceneMode(MOVE_SCENE);
+    getGlobalSagittalView()->setSceneMode(MOVE_SCENE);
+
     _cursorButton->setIconByName(":/icon/svg/move.svg");
     _cursorButton->setMouseHandler(new MoveMouseHandler());
 }
@@ -916,65 +922,91 @@ void ToolBar::measurementChanged()
     if (action == _rulerAction)
     {
         _measurementButton->setIconByName(":/icon/svg/length.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Line);
+        getGlobalAxialView()->setItemType(DiagramItem::Line);
+        getGlobalCoronalView()->setItemType(DiagramItem::Line);
+        getGlobalSagittalView()->setItemType(DiagramItem::Line);
     }
     else if (action == _arrowAction)
     {
         _measurementButton->setIconByName(":/icon/svg/arrow.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Arrow);
+        getGlobalAxialView()->setItemType(DiagramItem::Arrow);
+        getGlobalCoronalView()->setItemType(DiagramItem::Arrow);
+        getGlobalSagittalView()->setItemType(DiagramItem::Arrow);
     }
     else if (action == _angleAction)
     {
         _measurementButton->setIconByName(":/icon/svg/angle.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Angle);
+        getGlobalAxialView()->setItemType(DiagramItem::Angle);
+        getGlobalCoronalView()->setItemType(DiagramItem::Angle);
+        getGlobalSagittalView()->setItemType(DiagramItem::Angle);
     }
     else if (action == _plotAction)
     {
         _measurementButton->setIconByName(":/icon/svg/plot.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Plot);
+        getGlobalAxialView()->setItemType(DiagramItem::Plot);
+        getGlobalCoronalView()->setItemType(DiagramItem::Plot);
+        getGlobalSagittalView()->setItemType(DiagramItem::Plot);
     }
     else if (action == _imageQualityAction)
     {
         _measurementButton->setIconByName(":/icon/svg/imagequality.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::ImageQuality);
+        getGlobalAxialView()->setItemType(DiagramItem::ImageQuality);
+        getGlobalCoronalView()->setItemType(DiagramItem::ImageQuality);
+        getGlobalSagittalView()->setItemType(DiagramItem::ImageQuality);
     }
     else if (action == _rectAction)
     {
         _measurementButton->setIconByName(":/icon/svg/rectangle.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Rect);
+        getGlobalAxialView()->setItemType(DiagramItem::Rect);
+        getGlobalCoronalView()->setItemType(DiagramItem::Rect);
+        getGlobalSagittalView()->setItemType(DiagramItem::Rect);
     }
     else if (action == _roundrectAction)
     {
         _measurementButton->setIconByName(":/icon/svg/roundrect.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::RoundRect);
+        getGlobalAxialView()->setItemType(DiagramItem::RoundRect);
+        getGlobalCoronalView()->setItemType(DiagramItem::RoundRect);
+        getGlobalSagittalView()->setItemType(DiagramItem::RoundRect);
     }
     else if (action == _circleAction)
     {
         _measurementButton->setIconByName(":/icon/svg/circle.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Circle);
+        getGlobalAxialView()->setItemType(DiagramItem::Circle);
+        getGlobalCoronalView()->setItemType(DiagramItem::Circle);
+        getGlobalSagittalView()->setItemType(DiagramItem::Circle);
     }
     else if (action == _ellipseAction)
     {
         _measurementButton->setIconByName(":/icon/svg/ellipse.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Ellipse);
+        getGlobalAxialView()->setItemType(DiagramItem::Ellipse);
+        getGlobalCoronalView()->setItemType(DiagramItem::Ellipse);
+        getGlobalSagittalView()->setItemType(DiagramItem::Ellipse);
     }
     else if (action == _rhombusAction)
     {
         _measurementButton->setIconByName(":/icon/svg/rhombus.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Rhombus);
+        getGlobalAxialView()->setItemType(DiagramItem::Rhombus);
+        getGlobalCoronalView()->setItemType(DiagramItem::Rhombus);
+        getGlobalSagittalView()->setItemType(DiagramItem::Rhombus);
     }
     else if (action == _parallelogramAction)
     {
         _measurementButton->setIconByName(":/icon/svg/parallelogram.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Parallelogram);
+        getGlobalAxialView()->setItemType(DiagramItem::Parallelogram);
+        getGlobalCoronalView()->setItemType(DiagramItem::Parallelogram);
+        getGlobalSagittalView()->setItemType(DiagramItem::Parallelogram);
     }
     else if (action == _textAction)
     {
         _measurementButton->setIconByName(":/icon/svg/text.svg");
-        getGlobalActiveView()->setItemType(DiagramItem::Text);
+        getGlobalAxialView()->setItemType(DiagramItem::Text);
+        getGlobalCoronalView()->setItemType(DiagramItem::Text);
+        getGlobalSagittalView()->setItemType(DiagramItem::Text);
         mainWindow->setToolBoxWidgetVisible(false, true);
     }
-    getGlobalActiveView()->setSceneMode(INSERT_ITEM);
+    getGlobalAxialView()->setSceneMode(INSERT_ITEM);
+    getGlobalCoronalView()->setSceneMode(INSERT_ITEM);
+    getGlobalSagittalView()->setSceneMode(INSERT_ITEM);
     _measurementButton->setMouseHandler(new DrawMouseHandler());
 }
 
