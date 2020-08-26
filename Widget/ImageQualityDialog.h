@@ -24,6 +24,11 @@ public:
 
     void setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points);
 
+    void setRatio(float leftRatio, float rightRatio);
+
+public slots:
+    void updateResult(qreal AHeight, qreal BHeight, qreal CHeight, qreal quality);
+
 signals:
     void lineWidthChanged(QGraphicsLineItem* plotItem, int lineWidth);
 

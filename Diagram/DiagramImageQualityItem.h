@@ -19,11 +19,12 @@ public:
 
     void loadFromXML(const QDomElement& e) override;
 
-    float leftRate() { return _leftRate; }
-    float rightRate() { return _rightRate; }
+    float leftRatio() { return _leftRatio; }
+    float rightRatio() { return _rightRatio; }
 
-    void setLeftRate(float rate) { _leftRate = rate; }
-    void setRightRate(float rate) { _rightRate = rate; }
+public slots:
+    void setLeftRatio(float ratio);
+    void setRightRatio(float ratio);
 
 signals:
     void itemDeleted();
@@ -38,5 +39,5 @@ private:
 private:
     int _lineWidth;
 
-    float _leftRate, _rightRate;
+    float _leftRatio, _rightRatio;
 };

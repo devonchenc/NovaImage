@@ -313,7 +313,7 @@ void View::showPlotDialog(QGraphicsLineItem* lineItem)
     _plotDlg->show();
 }
 
-void View::showImageQualityDialog(QGraphicsLineItem* lineItem)
+void View::showImageQualityDialog(QGraphicsLineItem* lineItem, float leftRatio, float rightRatio)
 {
     if (getGlobalImage() == nullptr)
         return;
@@ -324,8 +324,10 @@ void View::showImageQualityDialog(QGraphicsLineItem* lineItem)
         connect(_imageQualityDlg, &ImageQualityDialog::lineWidthChanged, this, &View::imageQualityLineWidthChanged);
     }
 
+    // Set the default line width as 21
     QVector<qreal> dataVec = calcPlotData(lineItem, 21);
 
+    _imageQualityDlg->setRatio(leftRatio, rightRatio);
     _imageQualityDlg->setData(lineItem, dataVec);
     _imageQualityDlg->show();
 }

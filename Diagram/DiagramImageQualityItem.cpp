@@ -11,8 +11,8 @@
 DiagramImageQualityItem::DiagramImageQualityItem(QGraphicsItem* parent)
     : DiagramLineItem(QLineF(), nullptr, parent)
     , _lineWidth(21)
-    , _leftRate(1 / 3.0f)
-    , _rightRate(2 / 3.0f)
+    , _leftRatio(1 / 3.0f)
+    , _rightRatio(2 / 3.0f)
 {
 
 }
@@ -20,8 +20,8 @@ DiagramImageQualityItem::DiagramImageQualityItem(QGraphicsItem* parent)
 DiagramImageQualityItem::DiagramImageQualityItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
     : DiagramLineItem(line, contextMenu, parent)
     , _lineWidth(21)
-    , _leftRate(1 / 3.0f)
-    , _rightRate(2 / 3.0f)
+    , _leftRatio(1 / 3.0f)
+    , _rightRatio(2 / 3.0f)
 {
 
 }
@@ -44,8 +44,8 @@ QDomElement DiagramImageQualityItem::saveToXML(QDomDocument& doc)
     attribute.setAttribute("Color", colorToString(pen().color()));
     attribute.setAttribute("EndPointColor", colorToString(_endpointPen.color()));
     attribute.setAttribute("LineWidth", QString::number(_lineWidth));
-    attribute.setAttribute("LeftRate", QString::number(_leftRate, 'f', 3));
-    attribute.setAttribute("RightRate", QString::number(_rightRate, 'f', 3));
+    attribute.setAttribute("LeftRatio", QString::number(_leftRatio, 'f', 3));
+    attribute.setAttribute("RightRatio", QString::number(_rightRatio, 'f', 3));
     attribute.setAttribute("Opacity", QString::number(_effect->opacity(), 'f', 2));
 
     lineItem.appendChild(attribute);
@@ -57,14 +57,26 @@ void DiagramImageQualityItem::loadFromXML(const QDomElement& e)
     DiagramLineItem::loadFromXML(e);
 
     _lineWidth = e.attribute("LineWidth").toInt();
-    _leftRate = e.attribute("LeftRate").toFloat();
-    _rightRate = e.attribute("RightRate").toFloat();
+    _leftRatio = e.attribute("LeftRatio").toFloat();
+    _rightRatio = e.attribute("RightRatio").toFloat();
 
     View* view = qobject_cast<View*>(scene()->parent());
     if (view)
     {
-        view->showImageQualityDialog(this);
+        view->showImageQualityDialog(this, _leftRatio, _rightRatio);
     }
+}
+
+void DiagramImageQualityItem::setLeftRatio(float ratio)
+{
+    _leftRatio = ratio;
+    scene()->update();
+}
+
+void DiagramImageQualityItem::setRightRatio(float ratio)
+{
+    _rightRatio = ratio;
+    scene()->update();
 }
 
 void DiagramImageQualityItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
@@ -77,7 +89,7 @@ void DiagramImageQualityItem::paint(QPainter* painter, const QStyleOptionGraphic
 
 void DiagramImageQualityItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    getGlobalActiveView()->showImageQualityDialog(this);
+    getGlobalActiveView()->showImageQualityDialog(this, _leftRatio, _rightRatio);
 
     DiagramLineItem::mouseReleaseEvent(event);
 }
@@ -110,9 +122,9 @@ void DiagramImageQualityItem::drawRect(QPainter* painter)
     painter->drawConvexPolygon(polygon);
 
     painter->setPen(QPen(qRgb(255, 100, 100)));
-    QPointF left(p1 + _leftRate * slope);
+    QPointF left(p1 + _leftRatio * slope);
     painter->drawLine(left - _lineWidth / 2 * orthoSlope, left + _lineWidth / 2 * orthoSlope);
-    QPointF right(p1 + _rightRate * slope);
+    QPointF right(p1 + _rightRatio * slope);
     painter->drawLine(right - _lineWidth / 2 * orthoSlope, right + _lineWidth / 2 * orthoSlope);
 
     painter->setRenderHint(QPainter::Antialiasing, false);

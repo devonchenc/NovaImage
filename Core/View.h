@@ -69,7 +69,7 @@ public:
 
     void showPlotDialog(QGraphicsLineItem* lineItem);
 
-    void showImageQualityDialog(QGraphicsLineItem* lineItem);
+    void showImageQualityDialog(QGraphicsLineItem* lineItem, float leftRatio, float rightRatio);
 
     bool cine30FPS();
     bool cine60FPS();

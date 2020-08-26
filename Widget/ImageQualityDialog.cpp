@@ -2,6 +2,7 @@
 
 #include <QTabWidget>
 #include <QVBoxLayout>
+#include <QGridLayout>
 #include <QMenuBar>
 #include <QInputDialog>
 #include <QLabel>
@@ -38,6 +39,8 @@ void ImageQualityDialog::setData(QGraphicsLineItem* lineItem, const QVector<qrea
 {
     _imageQualityItem = qgraphicsitem_cast<DiagramImageQualityItem*>(lineItem);
     connect(_imageQualityItem, &DiagramImageQualityItem::itemDeleted, this, &ImageQualityDialog::close);
+    connect(_chartView, &ImageQualityChartView::leftRatioChanged, _imageQualityItem, &DiagramImageQualityItem::setLeftRatio);
+    connect(_chartView, &ImageQualityChartView::rightRatioChanged, _imageQualityItem, &DiagramImageQualityItem::setRightRatio);
 
     if (!_chartView->hasValidData())
     {
@@ -50,20 +53,40 @@ void ImageQualityDialog::setData(QGraphicsLineItem* lineItem, const QVector<qrea
     }
 }
 
+void ImageQualityDialog::setRatio(float leftRatio, float rightRatio)
+{
+    _chartView->setRatio(leftRatio, rightRatio);
+}
+
+void ImageQualityDialog::updateResult(qreal AHeight, qreal BHeight, qreal CHeight, qreal quality)
+{
+    _aValueLabel->setText(QString::number(AHeight, 'f', 2));
+    _bValueLabel->setText(QString::number(BHeight, 'f', 2));
+    _cValueLabel->setText(QString::number(CHeight, 'f', 2));
+    _resultLabel->setText(QString::number(quality, 'f', 2) + "%");
+}
+
 void ImageQualityDialog::initUI()
 {
     QLabel* aLabel = new QLabel("A:");
+    aLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     _aValueLabel = new QLabel;
-    _aValueLabel->setMaximumWidth(20);
+    _aValueLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    _aValueLabel->setFixedWidth(30);
     QLabel* bLabel = new QLabel("B:");
+    bLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     _bValueLabel = new QLabel;
-    _bValueLabel->setMaximumWidth(20);
+    _bValueLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    _bValueLabel->setFixedWidth(30);
     QLabel* cLabel = new QLabel("C:");
+    cLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     _cValueLabel = new QLabel;
-    _cValueLabel->setMaximumWidth(20);
-    QLabel* resultLabel = new QLabel("Image Quality:");
+    _cValueLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    _cValueLabel->setFixedWidth(30);
+    QLabel* resultLabel = new QLabel("Quality:");
     _resultLabel = new QLabel;
-    _resultLabel->setMaximumWidth(20);
+    _resultLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
+    _resultLabel->setFixedWidth(30);
 
     QGridLayout* grid = new QGridLayout;
     grid->addWidget(aLabel, 0, 0);
@@ -76,6 +99,8 @@ void ImageQualityDialog::initUI()
     grid->addWidget(_resultLabel, 3, 1);
 
     _chartView = new ImageQualityChartView;
+    connect(_chartView, &ImageQualityChartView::sendResult, this, &ImageQualityDialog::updateResult);
+
     QHBoxLayout* globalLayout = new QHBoxLayout;
     globalLayout->addWidget(_chartView);
     globalLayout->addLayout(grid);
