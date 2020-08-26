@@ -6,7 +6,7 @@
 #include <QInputDialog>
 #include <QLabel>
 
-#include "ChartView.h"
+#include "ImageQualityChartView.h"
 #include "../Diagram/DiagramImageQualityItem.h"
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -20,7 +20,7 @@ ImageQualityDialog::ImageQualityDialog(QWidget* parent)
 
     initUI();
 
-    resize(500, 300);
+    resize(700, 300);
 
     setStyleSheet("background-color:none");
 }
@@ -75,7 +75,7 @@ void ImageQualityDialog::initUI()
     grid->addWidget(resultLabel, 3, 0);
     grid->addWidget(_resultLabel, 3, 1);
 
-    _chartView = new ChartView2;
+    _chartView = new ImageQualityChartView;
     QHBoxLayout* globalLayout = new QHBoxLayout;
     globalLayout->addWidget(_chartView);
     globalLayout->addLayout(grid);

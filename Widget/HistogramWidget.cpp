@@ -31,12 +31,12 @@ HistogramWidget::HistogramWidget(QWidget* parent)
     , _mid(1.0f)
     , _top(255)
 {
-    _buttonReset = new QPushButton(tr("&Reset"));
-    _buttonReset->setMaximumWidth(80);
-    connect(_buttonReset, &QPushButton::clicked, this, &HistogramWidget::clickReset);
+    _resetButton = new QPushButton(tr("&Reset"));
+    _resetButton->setMaximumWidth(80);
+    connect(_resetButton, &QPushButton::clicked, this, &HistogramWidget::clickReset);
     QHBoxLayout* hbox = new QHBoxLayout;
     hbox->addStretch();
-    hbox->addWidget(_buttonReset);
+    hbox->addWidget(_resetButton);
     QVBoxLayout* vbox = new QVBoxLayout;
     vbox->addLayout(hbox);
     vbox->addStretch();
@@ -397,7 +397,7 @@ void HistogramWidget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {
-        _buttonReset->setText(tr("&Reset"));
+        _resetButton->setText(tr("&Reset"));
     }
     QWidget::changeEvent(event);
 }

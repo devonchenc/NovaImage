@@ -58,6 +58,7 @@
     <ClCompile Include="Widget\CurveSquare.cpp" />
     <ClCompile Include="Widget\CurvesWidget.cpp" />
     <ClCompile Include="Widget\HistogramWidget.cpp" />
+    <ClCompile Include="Widget\ImageQualityChartView.cpp" />
     <ClCompile Include="Widget\ImageQualityDialog.cpp" />
     <ClCompile Include="Widget\LevelsWidget.cpp" />
     <ClCompile Include="Widget\MagnifierWidget.cpp" />
@@ -110,6 +111,7 @@
     <QtMoc Include="Widget\MagnifierWidget.h" />
     <QtMoc Include="Widget\ChartView.h" />
     <QtMoc Include="Widget\ImageQualityDialog.h" />
+    <QtMoc Include="Widget\ImageQualityChartView.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />

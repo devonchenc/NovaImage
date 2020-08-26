@@ -192,6 +192,9 @@
     <ClCompile Include="Widget\ImageQualityDialog.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\ImageQualityChartView.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -300,6 +303,9 @@
       <Filter>Diagram</Filter>
     </QtMoc>
     <QtMoc Include="Widget\ImageQualityDialog.h">
+      <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\ImageQualityChartView.h">
       <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>

@@ -115,7 +115,7 @@ private:
     float _mid;
     float _top;
 
-    QPushButton* _buttonReset;
+    QPushButton* _resetButton;
 
     // Image processor
     HistogramProcessor* _processor;

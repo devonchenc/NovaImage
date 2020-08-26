@@ -51,33 +51,3 @@ protected:
     QLineSeries* _vSeries;
     Callout* _callout;
 };
-
-//////////////////////////////////////////////////////////////////////////
-
-class ChartView2 : public ChartView
-{
-    Q_OBJECT
-
-public:
-    ChartView2(QWidget* parent = nullptr);
-    ~ChartView2();
-
-    void setData(const QVector<qreal>& points);
-
-    void updateData(const QVector<qreal>& points);
-
-public slots:
-    void hoverLine(const QPointF& point, bool state);
-    void hoverRightLine(const QPointF& point, bool state);
-
-protected:
-    void mousePressEvent(QMouseEvent* event) override;
-    void mouseMoveEvent(QMouseEvent* event) override;
-    void mouseReleaseEvent(QMouseEvent* event) override;
-
-private:
-    float _leftRate, _rightRate;
-    bool _dragLeft, _dragRight;
-    QLineSeries* _leftSeries;
-    QLineSeries* _rightSeries;
-};
