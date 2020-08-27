@@ -190,17 +190,22 @@
 <context>
     <name>ImageQualityDialog</name>
     <message>
-        <location filename="Widget/ImageQualityDialog.cpp" line="16"/>
+        <location filename="Widget/ImageQualityDialog.cpp" line="18"/>
         <source>Image Quality</source>
         <translation type="unfinished">调制度</translation>
     </message>
     <message>
-        <location filename="Widget/ImageQualityDialog.cpp" line="66"/>
+        <location filename="Widget/ImageQualityDialog.cpp" line="86"/>
+        <source>Quality:</source>
+        <translation type="unfinished">调制度:</translation>
+    </message>
+    <message>
+        <location filename="Widget/ImageQualityDialog.cpp" line="113"/>
         <source>Line Width</source>
         <translation type="unfinished">线条宽度</translation>
     </message>
     <message>
-        <location filename="Widget/ImageQualityDialog.cpp" line="66"/>
+        <location filename="Widget/ImageQualityDialog.cpp" line="113"/>
         <source>Width:</source>
         <translation type="unfinished">宽度：</translation>
     </message>
@@ -1168,7 +1173,7 @@
     </message>
 </context>
 <context>
-    <name>ImageReader</name>
+    <name>Type</name>
     <message>
         <location filename="Image/ImageReader.h" line="77"/>
         <source>Loading file...</source>

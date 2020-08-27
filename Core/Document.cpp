@@ -18,7 +18,8 @@
 #include "../Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
-    : mainWindow(pWindow)
+    : QObject(pWindow)
+    , _mainWindow(pWindow)
     , _image(nullptr)
     , _modified(false)
 {
@@ -105,7 +106,7 @@ bool Document::openFile(const QString& fileName)
 
     loadGraphicsItems();
 
-    mainWindow->imageOpened();
+    _mainWindow->imageOpened();
 
     return true;
 }
@@ -314,7 +315,7 @@ void Document::ROIWindow(const QRectF& rect)
         }
     }
 
-    if (mainWindow->isViewLinked())
+    if (_mainWindow->isViewLinked())
     {
         getAxialView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
         getCoronalView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
@@ -433,20 +434,20 @@ void Document::initViewWindowWidthAndLevel()
 
 View* Document::getActiveView() const
 {
-    return mainWindow->getActiveView();
+    return _mainWindow->getActiveView();
 }
 
 View* Document::getAxialView() const
 {
-    return mainWindow->getAxialView();
+    return _mainWindow->getAxialView();
 }
 
 View* Document::getCoronalView() const
 {
-    return mainWindow->getCoronalView();
+    return _mainWindow->getCoronalView();
 }
 
 View* Document::getSagittalView() const
 {
-    return mainWindow->getSagittalView();
+    return _mainWindow->getSagittalView();
 }

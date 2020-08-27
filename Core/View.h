@@ -22,7 +22,6 @@ class View : public QFrame
 
 public:
     explicit View(QWidget* parent = nullptr);
-    ~View();
 
     GraphicsView* view() const;
 

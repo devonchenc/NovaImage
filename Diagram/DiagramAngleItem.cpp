@@ -44,14 +44,14 @@ DiagramAngleItem::DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setAcceptHoverEvents(true);
 
-    _effect = new QGraphicsOpacityEffect;
+    _effect = new QGraphicsOpacityEffect(this);
     _effect->setOpacity(1.0);
     setGraphicsEffect(_effect);
 }
 
 DiagramAngleItem::~DiagramAngleItem()
 {
-    delete _effect;
+
 }
 
 void DiagramAngleItem::setEndpointPen(const QPen& pen)

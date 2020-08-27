@@ -8,7 +8,6 @@ class ImageQualityChartView : public ChartView
 
 public:
     ImageQualityChartView(QWidget* parent = nullptr);
-    ~ImageQualityChartView();
 
     void setData(const QVector<qreal>& points);
 
@@ -32,6 +31,7 @@ protected:
     void mouseMoveEvent(QMouseEvent* event) override;
     void mouseReleaseEvent(QMouseEvent* event) override;
     void mouseDoubleClickEvent(QMouseEvent* event) override;
+    void resizeEvent(QResizeEvent* event) override;
 
 private:
     void addDataPoint(int length);
@@ -50,4 +50,7 @@ private:
     QLineSeries* _ASeries;
     QLineSeries* _BSeries;
     QLineSeries* _CSeries;
+    QGraphicsSimpleTextItem* _ALabel;
+    QGraphicsSimpleTextItem* _BLabel;
+    QGraphicsSimpleTextItem* _CLabel;
 };

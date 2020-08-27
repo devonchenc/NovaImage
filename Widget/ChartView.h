@@ -34,7 +34,6 @@ class ChartView : public QChartView
 
 public:
     ChartView(QWidget* parent = nullptr);
-    ~ChartView();
 
     bool hasValidData();
 

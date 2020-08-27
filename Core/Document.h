@@ -90,7 +90,7 @@ private:
     View* getSagittalView() const;
 
 private:
-    MainWindow* mainWindow;
+    MainWindow* _mainWindow;
 
     std::shared_ptr<BaseImage> _image;
 

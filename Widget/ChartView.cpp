@@ -97,37 +97,13 @@ void Callout::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, Q
 
 ChartView::ChartView(QWidget* parent)
     : QChartView(parent)
-    , _dataSeries(new QLineSeries)
-    , _hSeries(new QLineSeries)
-    , _vSeries(new QLineSeries)
+    , _dataSeries(new QLineSeries(this))
+    , _hSeries(new QLineSeries(this))
+    , _vSeries(new QLineSeries(this))
     , _callout(nullptr)
 {
     setRenderHint(QPainter::Antialiasing);
     setRubberBand(QChartView::VerticalRubberBand);
-}
-
-ChartView::~ChartView()
-{
-    if (_dataSeries)
-    {
-        delete _dataSeries;
-        _dataSeries = nullptr;
-    }
-    if (_hSeries)
-    {
-        delete _hSeries;
-        _hSeries = nullptr;
-    }
-    if (_vSeries)
-    {
-        delete _vSeries;
-        _vSeries = nullptr;
-    }
-    if (_callout)
-    {
-        delete _callout;
-        _callout = nullptr;
-    }
 }
 
 bool ChartView::hasValidData()

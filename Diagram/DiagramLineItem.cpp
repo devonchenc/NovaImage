@@ -22,14 +22,14 @@ DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphi
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setAcceptHoverEvents(true);
 
-    _effect = new QGraphicsOpacityEffect;
+    _effect = new QGraphicsOpacityEffect(this);
     _effect->setOpacity(1.0);
     setGraphicsEffect(_effect);
 }
 
 DiagramLineItem::~DiagramLineItem()
 {
-    delete _effect;
+
 }
 
 void DiagramLineItem::setEndpointPen(const QPen& pen)

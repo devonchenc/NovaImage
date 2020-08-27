@@ -11,7 +11,7 @@ class NotificationLayout : public QObject
     Q_OBJECT
 
 public:
-    NotificationLayout();
+    NotificationLayout(QObject* parent = nullptr);
     ~NotificationLayout() override;
 
     void addNotification(const NotificationParams& params);

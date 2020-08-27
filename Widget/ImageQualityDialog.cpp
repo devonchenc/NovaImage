@@ -28,11 +28,7 @@ ImageQualityDialog::ImageQualityDialog(QWidget* parent)
 
 ImageQualityDialog::~ImageQualityDialog()
 {
-    if (_chartView)
-    {
-        delete _chartView;
-        _chartView = nullptr;
-    }
+
 }
 
 void ImageQualityDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points)
@@ -83,7 +79,7 @@ void ImageQualityDialog::initUI()
     _cValueLabel = new QLabel;
     _cValueLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     _cValueLabel->setFixedWidth(30);
-    QLabel* resultLabel = new QLabel("Quality:");
+    QLabel* resultLabel = new QLabel(tr("Quality:"));
     _resultLabel = new QLabel;
     _resultLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     _resultLabel->setFixedWidth(30);
@@ -98,7 +94,7 @@ void ImageQualityDialog::initUI()
     grid->addWidget(resultLabel, 3, 0);
     grid->addWidget(_resultLabel, 3, 1);
 
-    _chartView = new ImageQualityChartView;
+    _chartView = new ImageQualityChartView(this);
     connect(_chartView, &ImageQualityChartView::sendResult, this, &ImageQualityDialog::updateResult);
 
     QHBoxLayout* globalLayout = new QHBoxLayout;

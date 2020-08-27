@@ -19,7 +19,7 @@ MagnifierWidget::MagnifierWidget(QWidget* parent)
     , _magnifyTimes(8)
     , _magnifierSize((_magnifyAeraSize - QSize(2, 2)) * _magnifyTimes)
     , _totalSize(_magnifyAeraSize + _magnifierSize)
-    , _timer(new QTimer)
+    , _timer(new QTimer(this))
 {
     setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground);

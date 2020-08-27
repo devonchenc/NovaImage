@@ -36,8 +36,8 @@ struct NotificationLayout::NotificationWidgetParams
     QPropertyAnimation* opacityAnimation = nullptr;
 };
 
-NotificationLayout::NotificationLayout()
-    : QObject(nullptr)
+NotificationLayout::NotificationLayout(QObject* parent)
+    : QObject(parent)
 {
     _basicTimer.start(60, this);
 }

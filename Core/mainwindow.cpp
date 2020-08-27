@@ -64,38 +64,13 @@ MainWindow::MainWindow(QWidget* parent)
 
     setAcceptDrops(true);
 
-    _notification = new NotificationLayout;
+    _notification = new NotificationLayout(this);
     _recentFiles = new RecentFiles(this);
     _recentFiles->attachToMenuAfterItem(_fileMenu, _printAction, SLOT(openFile(const QString&)));
 }
 
 MainWindow::~MainWindow()
 {
-    if (_axialView)
-    {
-        delete _axialView;
-        _axialView = nullptr;
-    }
-    if (_coronalView)
-    {
-        delete _coronalView;
-        _coronalView = nullptr;
-    }
-    if (_sagittalView)
-    {
-        delete _sagittalView;
-        _sagittalView = nullptr;
-    }
-    if (_volumeView)
-    {
-        delete _volumeView;
-        _volumeView = nullptr;
-    }
-    if (_doc)
-    {
-        delete _doc;
-        _doc = nullptr;
-    }
     if (_translator)
     {
         delete _translator;
@@ -106,16 +81,6 @@ MainWindow::~MainWindow()
         delete _vecPluginTranslator[i];
     }
     _vecPluginTranslator.clear();
-    if (_notification)
-    {
-        delete _notification;
-        _notification = nullptr;
-    }
-    if (_recentFiles)
-    {
-        delete _recentFiles;
-        _recentFiles = nullptr;
-    }
 }
 
 void MainWindow::initUI()

@@ -43,14 +43,14 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsI
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
     setAcceptHoverEvents(true);
 
-    _effect = new QGraphicsOpacityEffect;
+    _effect = new QGraphicsOpacityEffect(this);
     _effect->setOpacity(1.0);
     setGraphicsEffect(_effect);
 }
 
 DiagramItem::~DiagramItem()
 {
-    delete _effect;
+
 }
 
 void DiagramItem::setRectF(const QRectF& rect)

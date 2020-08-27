@@ -20,7 +20,6 @@ class PlotDialog : public QDialog
 
 public:
     PlotDialog(QWidget* parent = nullptr);
-    ~PlotDialog();
 
     void setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points);
 

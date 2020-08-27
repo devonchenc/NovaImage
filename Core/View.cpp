@@ -42,20 +42,6 @@ View::View(QWidget* parent)
     setStyleSheet("background-color:black");
 }
 
-View::~View()
-{
-    if (_plotDlg)
-    {
-        delete _plotDlg;
-        _plotDlg = nullptr;
-    }
-    if (_imageQualityDlg)
-    {
-        delete _imageQualityDlg;
-        _imageQualityDlg = nullptr;
-    }
-}
-
 GraphicsView* View::view() const
 {
     return _view;

@@ -15,51 +15,20 @@ ImageQualityChartView::ImageQualityChartView(QWidget* parent)
     , _APosition(0)
     , _BPosition(0)
     , _CPosition(0)
-    , _leftSeries(new QLineSeries)
-    , _rightSeries(new QLineSeries)
-    , _leftToRightSeries(new QLineSeries)
-    , _ASeries(new QLineSeries)
-    , _BSeries(new QLineSeries)
-    , _CSeries(new QLineSeries)
+    , _leftSeries(new QLineSeries(this))
+    , _rightSeries(new QLineSeries(this))
+    , _leftToRightSeries(new QLineSeries(this))
+    , _ASeries(new QLineSeries(this))
+    , _BSeries(new QLineSeries(this))
+    , _CSeries(new QLineSeries(this))
+    , _ALabel(nullptr)
+    , _BLabel(nullptr)
+    , _CLabel(nullptr)
 {
     setRubberBand(QChartView::NoRubberBand);
 
     connect(_leftSeries, &QLineSeries::hovered, this, &ImageQualityChartView::hoverLine);
     connect(_rightSeries, &QLineSeries::hovered, this, &ImageQualityChartView::hoverLine);
-}
-
-ImageQualityChartView::~ImageQualityChartView()
-{
-    if (_leftSeries)
-    {
-        delete _leftSeries;
-        _leftSeries = nullptr;
-    }
-    if (_rightSeries)
-    {
-        delete _rightSeries;
-        _rightSeries = nullptr;
-    }
-    if (_leftToRightSeries)
-    {
-        delete _leftToRightSeries;
-        _leftToRightSeries = nullptr;
-    }
-    if (_ASeries)
-    {
-        delete _ASeries;
-        _ASeries = nullptr;
-    }
-    if (_BSeries)
-    {
-        delete _BSeries;
-        _BSeries = nullptr;
-    }
-    if (_CSeries)
-    {
-        delete _CSeries;
-        _CSeries = nullptr;
-    }
 }
 
 void ImageQualityChartView::setData(const QVector<qreal>& points)
@@ -96,6 +65,16 @@ void ImageQualityChartView::setData(const QVector<qreal>& points)
     {
         axesList[i]->setRange(minValue, maxValue);
     }
+
+    _ALabel = new QGraphicsSimpleTextItem(chart());
+    _ALabel->setText("A");
+    _BLabel = new QGraphicsSimpleTextItem(chart());
+    _BLabel->setText("B");
+    _CLabel = new QGraphicsSimpleTextItem(chart());
+    _CLabel->setText("C");
+    _ALabel->hide();
+    _BLabel->hide();
+    _CLabel->hide();
 }
 
 void ImageQualityChartView::updateData(const QVector<qreal>& points)
@@ -282,6 +261,7 @@ void ImageQualityChartView::mouseDoubleClickEvent(QMouseEvent* event)
     {
         // This means there is only one peak
         _APosition = _BPosition = _CPosition = 0;
+        delete[] pSearchedFlag;
         return;
     }
 
@@ -315,7 +295,20 @@ void ImageQualityChartView::mouseDoubleClickEvent(QMouseEvent* event)
 
     appendABCLine();
 
-    QChartView::mouseDoubleClickEvent(event);
+    ChartView::mouseDoubleClickEvent(event);
+}
+
+void ImageQualityChartView::resizeEvent(QResizeEvent* event)
+{
+    QPointF ABottom(_APosition, _dataSeries->at(_APosition).y());
+    QPointF BBottom(_BPosition, _dataSeries->at(_BPosition).y());
+    QPointF CBottom(_CPosition, _dataSeries->at(_CPosition).y());
+
+    _ALabel->setPos(chart()->mapToPosition(ABottom));
+    _BLabel->setPos(chart()->mapToPosition(BBottom));
+    _CLabel->setPos(chart()->mapToPosition(CBottom));
+
+    ChartView::resizeEvent(event);
 }
 
 void ImageQualityChartView::addDataPoint(int length)
@@ -365,28 +358,31 @@ void ImageQualityChartView::appendABCLine()
     QPointF rightPoint = _leftToRightSeries->at(1);
 
     qreal ratio = (_APosition - leftPoint.x()) / (rightPoint.x() - leftPoint.x());
-    qreal ATop = leftPoint.y() * (1 - ratio) + rightPoint.y() * ratio;
-
-    *_ASeries << QPointF(_APosition, _dataSeries->at(_APosition).y()) << QPointF(_APosition, ATop);
+    QPointF ATop = QPointF(_APosition, leftPoint.y() * (1 - ratio) + rightPoint.y() * ratio);
+    QPointF ABottom(_APosition, _dataSeries->at(_APosition).y());
+    *_ASeries << ABottom << ATop;
 
     ratio = (_BPosition - leftPoint.x()) / (rightPoint.x() - leftPoint.x());
-    qreal BTop = leftPoint.y() * (1 - ratio) + rightPoint.y() * ratio;
-    *_BSeries << QPointF(_BPosition, _dataSeries->at(_BPosition).y()) << QPointF(_BPosition, BTop);
+    QPointF BTop = QPointF(_BPosition, leftPoint.y() * (1 - ratio) + rightPoint.y() * ratio);
+    QPointF BBottom(_BPosition, _dataSeries->at(_BPosition).y());
+    *_BSeries << BBottom << BTop;
 
     ratio = (_CPosition - leftPoint.x()) / (rightPoint.x() - leftPoint.x());
-    qreal CTop = leftPoint.y() * (1 - ratio) + rightPoint.y() * ratio;
-    *_CSeries << QPointF(_CPosition, _dataSeries->at(_CPosition).y()) << QPointF(_CPosition, CTop);
+    QPointF CTop = QPointF(_CPosition, leftPoint.y() * (1 - ratio) + rightPoint.y() * ratio);
+    QPointF CBottom(_CPosition, _dataSeries->at(_CPosition).y());
+    *_CSeries << CBottom << CTop;
 
-    QList<QAbstractAxis*> axesList = chart()->axes(Qt::Vertical);
-    QValueAxis* valueAxis = qobject_cast<QValueAxis*>(axesList[0]);
-    qreal minValue = valueAxis->min();
-    qreal maxValue = valueAxis->max();
-    qreal temp = height() / (maxValue - minValue);
-
-    qreal AHeight = (ATop - _dataSeries->at(_APosition).y()) * temp;
-    qreal BHeight = (BTop - _dataSeries->at(_BPosition).y()) * temp;
-    qreal CHeight = (CTop - _dataSeries->at(_CPosition).y()) * temp;
+    qreal AHeight = chart()->mapToPosition(ABottom).y() - chart()->mapToPosition(ATop).y();
+    qreal BHeight = chart()->mapToPosition(BBottom).y() - chart()->mapToPosition(BTop).y();
+    qreal CHeight = chart()->mapToPosition(CBottom).y() - chart()->mapToPosition(CTop).y();
     qreal quality = (AHeight + BHeight - 2 * CHeight) / (AHeight + BHeight) * 100.0;
 
     emit sendResult(AHeight, BHeight, CHeight, quality);
+
+    _ALabel->setPos(chart()->mapToPosition(ABottom));
+    _BLabel->setPos(chart()->mapToPosition(BBottom));
+    _CLabel->setPos(chart()->mapToPosition(CBottom));
+    _ALabel->show();
+    _BLabel->show();
+    _CLabel->show();
 }

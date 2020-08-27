@@ -25,15 +25,6 @@ PlotDialog::PlotDialog(QWidget* parent)
     setStyleSheet("background-color:none");
 }
 
-PlotDialog::~PlotDialog()
-{
-    if (_tabWidget)
-    {
-        delete _tabWidget;
-        _tabWidget = nullptr;
-    }
-}
-
 void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points)
 {
     DiagramPlotItem* item = qgraphicsitem_cast<DiagramPlotItem*>(lineItem);
@@ -43,7 +34,7 @@ void PlotDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& poin
     if (iter == _map.end())
     {
         // Add new ChartView
-        ChartView* chartView = new ChartView;
+        ChartView* chartView = new ChartView(this);
         chartView->setData(points);
 
         QString str = QString(tr("Plot")) + QString::number(item->plotIndex());
