@@ -1,6 +1,7 @@
 #include "ImageQualityChartView.h"
 
 #include <cmath>
+#include <float.h>
 #include <QtGui/QMouseEvent>
 #include <QValueAxis>
 #include <QGraphicsSceneMouseEvent>
@@ -168,7 +169,7 @@ void ImageQualityChartView::mouseReleaseEvent(QMouseEvent* event)
     QChartView::mouseReleaseEvent(event);
 }
 
-void ImageQualityChartView::hoverLine(const QPointF& point, bool state)
+void ImageQualityChartView::hoverLine(const QPointF&, bool state)
 {
     if (state)
     {
@@ -180,7 +181,7 @@ void ImageQualityChartView::hoverLine(const QPointF& point, bool state)
     }
 }
 
-void ImageQualityChartView::hoverRightLine(const QPointF& point, bool state)
+void ImageQualityChartView::hoverRightLine(const QPointF&, bool state)
 {
     if (state)
     {

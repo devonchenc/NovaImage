@@ -19,12 +19,13 @@ HEADERS += ./Image/DicomImage.h \
     ./Widget/ColorButton.h \
     ./Widget/MagnifierWidget.h \
     ./Widget/ChartView.h \
+    ./Widget/ImageQualityChartView.h \
     ./Widget/ToolBoxWidget.h \
     ./Widget/RawParameterDialog.h \
     ./Widget/ProgressDialog.h \
     ./Widget/SettingsDialog.h \
     ./Widget/PlotDialog.h \
-	./Widget/ImageQualityDialog.h \
+    ./Widget/ImageQualityDialog.h \
     ./Widget/LevelsWidget.h \
     ./Widget/HistogramWidget.h \
     ./Widget/CurvesWidget.h \
@@ -49,7 +50,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Core/ToolButton.h \
     ./Core/View.h \
     ./Core/RecentFiles.h \
-	./Core/LayoutManager.h \
+    ./Core/LayoutManager.h \
     ./Notification/NotificationLayout.h \
     ./Notification/NotificationWidget.h \
     ./Diagram/DiagramAngleItem.h \
@@ -68,6 +69,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Image/ScanImage.cpp \
     ./Image/MonoImageProxy.cpp \
     ./Widget/ChartView.cpp \
+    ./Widget/ImageQualityChartView.cpp \
     ./Widget/ColorButton.cpp \
     ./Widget/CommonWidget.cpp \
     ./Widget/CurveSquare.cpp \
@@ -77,7 +79,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/MagnifierWidget.cpp \
     ./Widget/Peg.cpp \
     ./Widget/PlotDialog.cpp \
-	./Widget/ImageQualityDialog.cpp \
+    ./Widget/ImageQualityDialog.cpp \
     ./Widget/RawParameterDialog.cpp \
     ./Widget/ProgressDialog.cpp \
     ./Widget/SettingsDialog.cpp \

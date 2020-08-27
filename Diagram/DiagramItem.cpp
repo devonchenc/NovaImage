@@ -98,6 +98,7 @@ void DiagramItem::setRectF(const QRectF& rect)
     case Line:
     case Arrow:
     case Plot:
+    case ImageQuality:
     case Angle:
         break;
     }

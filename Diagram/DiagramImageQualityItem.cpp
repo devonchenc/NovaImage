@@ -1,5 +1,6 @@
 #include "DiagramImageQualityItem.h"
 
+#include <cmath>
 #include <float.h>
 #include <QPainter>
 #include <QDomDocument>
