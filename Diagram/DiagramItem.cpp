@@ -27,7 +27,7 @@ DiagramItem::DiagramItem(QGraphicsItem* parent)
     setFlag(QGraphicsItem::ItemSendsGeometryChanges, true);
     setAcceptHoverEvents(true);
 
-    _effect = new QGraphicsOpacityEffect;
+    _effect = new QGraphicsOpacityEffect(this);
     _effect->setOpacity(1.0);
     setGraphicsEffect(_effect);
 }

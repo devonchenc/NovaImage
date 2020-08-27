@@ -52,7 +52,7 @@ NotificationWidget::NotificationWidget(const NotificationParams& params, QWidget
     setAttribute(Qt::WA_TranslucentBackground); // Indicates that the background will be transparent
     setAttribute(Qt::WA_ShowWithoutActivating); // At the show, the widget does not get the focus automatically
 
-    _effect = new QGraphicsOpacityEffect;
+    _effect = new QGraphicsOpacityEffect(this);
     _effect->setOpacity(0.85);
     setGraphicsEffect(_effect);
 

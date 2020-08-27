@@ -27,7 +27,7 @@ DiagramAngleItem::DiagramAngleItem(QGraphicsItem* parent)
     setFlag(QGraphicsItem::ItemIsSelectable, true);
     setAcceptHoverEvents(true);
 
-    _effect = new QGraphicsOpacityEffect;
+    _effect = new QGraphicsOpacityEffect(this);
     _effect->setOpacity(1.0);
     setGraphicsEffect(_effect);
 }
