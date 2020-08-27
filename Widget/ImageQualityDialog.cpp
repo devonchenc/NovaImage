@@ -67,17 +67,21 @@ void ImageQualityDialog::initUI()
     QLabel* aLabel = new QLabel("A:");
     aLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     _aValueLabel = new QLabel;
+    _aValueLabel->setFixedWidth(40);
     _aValueLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     QLabel* bLabel = new QLabel("B:");
     bLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     _bValueLabel = new QLabel;
+    _bValueLabel->setFixedWidth(40);
     _bValueLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     QLabel* cLabel = new QLabel("C:");
     cLabel->setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
     _cValueLabel = new QLabel;
+    _cValueLabel->setFixedWidth(40);
     _cValueLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
     QLabel* resultLabel = new QLabel(tr("Quality:"));
     _resultLabel = new QLabel;
+    _resultLabel->setFixedWidth(40);
     _resultLabel->setAlignment(Qt::AlignLeft | Qt::AlignVCenter);
 
     QGridLayout* grid = new QGridLayout;

@@ -88,6 +88,9 @@ void ImageQualityChartView::updateData(const QVector<qreal>& points)
     _ASeries->clear();
     _BSeries->clear();
     _CSeries->clear();
+    _ALabel->hide();
+    _BLabel->hide();
+    _CLabel->hide();
 }
 
 void ImageQualityChartView::setRatio(float leftRatio, float rightRatio)

@@ -83,6 +83,60 @@ MainWindow::~MainWindow()
     _vecPluginTranslator.clear();
 }
 
+void MainWindow::setActiveView(View* view)
+{
+    _activeView = view;
+    if (getGlobalImage())
+    {
+        getGlobalImage()->setViewType(view->viewType());
+    }
+}
+
+bool MainWindow::isViewLinked()
+{
+    return _linkViewAction->isChecked();
+}
+
+void MainWindow::imageOpened()
+{
+    if (getGlobalImage())
+    {
+        WidgetManager::getInstance()->init();
+
+        QString title = QString("%1 - NovaImage").arg(getGlobalImage()->getPathName());
+        setWindowTitle(title);
+
+        _recentFiles->setMostRecentFile(getGlobalImage()->getPathName());
+
+        _toolBar->enableButton(true);
+
+        if (getGlobalImage()->slice() > 1)
+        {
+            _threeViewAction->setEnabled(true);
+            _volumeViewAction->setEnabled(true);
+
+            _toolBar->enableViewAction(true);
+        }
+        else
+        {
+            _threeViewAction->setEnabled(false);
+            _volumeViewAction->setEnabled(false);
+
+            _toolBar->enableViewAction(false);
+        }
+    }
+}
+
+void MainWindow::setToolBoxWidgetVisible(bool line, bool text)
+{
+    emit setToolBoxVisible(line, text);
+}
+
+QVector<QAction*> MainWindow::mouseActionVector()
+{
+    return _toolBar->actionVector();
+}
+
 void MainWindow::initUI()
 {
     createActions();
@@ -157,6 +211,8 @@ void MainWindow::createActions()
     languageGroup->setExclusive(true);
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
 
+    _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
+
     _userGuideAction = new QAction(tr("&User's Guide"));
     _userGuideAction->setIcon(QIcon(":/icon/svg/guide.svg"));
     _aboutAction = new QAction(tr("&About"));
@@ -196,6 +252,9 @@ void MainWindow::createActions()
     languageMenu->addAction(_engAction);
     languageMenu->addAction(_chsAction);
 
+    _processingMenu = menuBar()->addMenu(tr("&Image Processing"));
+    _processingMenu->addAction(_equalizationAction);
+
     _helpMenu = menuBar()->addMenu(tr("&Help"));
     _helpMenu->addAction(_userGuideAction);
     _helpMenu->addSeparator();
@@ -217,6 +276,8 @@ void MainWindow::createActions()
     connect(_zoomOutAction, &QAction::triggered, this, &MainWindow::zoomOut);
     connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
     connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
+
+    connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
 
     connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
     connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
@@ -348,59 +409,66 @@ void MainWindow::openRawImage()
         _doc->openFile(fileName);
     }
 }
-
-void MainWindow::setActiveView(View* view)
+void MainWindow::saveAs()
 {
-    _activeView = view;
-    if (getGlobalImage())
+    if (getGlobalImage() == nullptr)
+        return;
+
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
+        "/", tr("JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm);;RAW image (*.raw)"));
+    if (!fileName.isEmpty())
     {
-        getGlobalImage()->setViewType(view->viewType());
+        _doc->saveAs(fileName);
     }
 }
 
-bool MainWindow::isViewLinked()
+void MainWindow::saveAsRawImage()
 {
-    return _linkViewAction->isChecked();
-}
+    if (getGlobalImage() == nullptr)
+        return;
 
-void MainWindow::imageOpened()
-{
-    if (getGlobalImage())
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
+        "/", tr("RAW image (*.raw)"));
+    if (!fileName.isEmpty())
     {
-        WidgetManager::getInstance()->init();
-
-        QString title = QString("%1 - NovaImage").arg(getGlobalImage()->getPathName());
-        setWindowTitle(title);
-
-        _recentFiles->setMostRecentFile(getGlobalImage()->getPathName());
-
-        _toolBar->enableButton(true);
-
-        if (getGlobalImage()->slice() > 1)
-        {
-            _threeViewAction->setEnabled(true);
-            _volumeViewAction->setEnabled(true);
-
-            _toolBar->enableViewAction(true);
-        }
-        else
-        {
-            _threeViewAction->setEnabled(false);
-            _volumeViewAction->setEnabled(false);
-
-            _toolBar->enableViewAction(false);
-        }
+        _doc->saveAs(fileName);
     }
 }
 
-void MainWindow::setToolBoxWidgetVisible(bool line, bool text)
+void MainWindow::close()
 {
-    emit setToolBoxVisible(line, text);
+    if (!querySave())
+        return;
+
+    _doc->closeFile();
+
+    setWindowTitle("NovaImage");
+
+    WidgetManager::getInstance()->reset();
+
+    _toolBar->enableButton(false);
 }
 
-QVector<QAction*> MainWindow::mouseActionVector()
+void MainWindow::print()
 {
-    return _toolBar->actionVector();
+    QPrinter printer(QPrinter::ScreenResolution);
+    printer.setPageSize(QPrinter::A4);
+    printer.setOrientation(QPrinter::Portrait);
+
+    QPrintPreviewDialog preview(&printer, this);
+    connect(&preview, &QPrintPreviewDialog::paintRequested, this, &MainWindow::printPreview);
+    preview.resize(size().height() * 0.8, size().height());
+    preview.exec();
+}
+
+void MainWindow::printPreview(QPrinter* printer)
+{
+    QPainter painter(printer);
+    QRectF target(0, 0, printer->width(), printer->height());
+    GraphicsView* graphicsView = _axialView->view();
+    QRectF sceneRect(graphicsView->sceneRect());
+    QRect source(graphicsView->mapFromScene(sceneRect.topLeft()), graphicsView->mapFromScene(sceneRect.bottomRight()));
+    graphicsView->render(&painter, target, source);
 }
 
 void MainWindow::showMenuBar(bool show)
@@ -414,6 +482,13 @@ void MainWindow::showDockWidget(bool show)
     {
         _vecDockWidget[i]->setVisible(show);
     }
+}
+
+void MainWindow::setting()
+{
+    SettingsDialog dlg;
+    connect(&dlg, SIGNAL(changeLanguage(int)), this, SLOT(slectLanguage(int)));
+    dlg.exec();
 }
 
 void MainWindow::singleView()
@@ -540,68 +615,6 @@ void MainWindow::zoomOut()
     {
         getActiveView()->zoomOut();
     }
-}
-
-void MainWindow::saveAs()
-{
-    if (getGlobalImage() == nullptr)
-        return;
-
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
-                                                    "/", tr("JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm);;RAW image (*.raw)"));
-    if (!fileName.isEmpty())
-    {
-        _doc->saveAs(fileName);
-    }
-}
-
-void MainWindow::saveAsRawImage()
-{
-    if (getGlobalImage() == nullptr)
-        return;
-
-    QString fileName = QFileDialog::getSaveFileName(this, tr("Save Image As ..."),
-                                                    "/", tr("RAW image (*.raw)"));
-    if (!fileName.isEmpty())
-    {
-        _doc->saveAs(fileName);
-    }
-}
-
-void MainWindow::close()
-{
-    if (!querySave())
-        return;
-
-    _doc->closeFile();
-
-    setWindowTitle("NovaImage");
-
-    WidgetManager::getInstance()->reset();
-
-    _toolBar->enableButton(false);
-}
-
-void MainWindow::print()
-{
-    QPrinter printer(QPrinter::ScreenResolution);
-    printer.setPageSize(QPrinter::A4);
-    printer.setOrientation(QPrinter::Portrait);
-
-    QPrintPreviewDialog preview(&printer, this);
-    connect(&preview, &QPrintPreviewDialog::paintRequested, this, &MainWindow::printPreview);
-    preview.resize(size().height() * 0.8, size().height());
-    preview.exec();
-}
-
-void MainWindow::printPreview(QPrinter* printer)
-{
-    QPainter painter(printer);
-    QRectF target(0, 0, printer->width(), printer->height());
-    GraphicsView* graphicsView = _axialView->view();
-    QRectF sceneRect(graphicsView->sceneRect());
-    QRect source(graphicsView->mapFromScene(sceneRect.topLeft()), graphicsView->mapFromScene(sceneRect.bottomRight()));
-    graphicsView->render(&painter, target, source);
 }
 
 void MainWindow::setupShortcuts()
@@ -797,11 +810,9 @@ void MainWindow::slectLanguage(int language)
     }
 }
 
-void MainWindow::setting()
+void MainWindow::equalization()
 {
-    SettingsDialog dlg;
-    connect(&dlg, SIGNAL(changeLanguage(int)), this, SLOT(slectLanguage(int)));
-    dlg.exec();
+
 }
 
 void MainWindow::userGuide()
@@ -831,6 +842,7 @@ void MainWindow::changeEvent(QEvent* event)
         _fileMenu->setTitle(tr("&File"));
         _editMenu->setTitle(tr("&Edit"));
         _viewMenu->setTitle(tr("&View"));
+        _processingMenu->setTitle(tr("&Image Processing"));
         _helpMenu->setTitle(tr("&Help"));
 
         _openAction->setText(tr("&Open..."));
@@ -842,17 +854,19 @@ void MainWindow::changeEvent(QEvent* event)
         _undoAction->setText(tr("&Undo"));
         _redoAction->setText(tr("&Redo"));
         _restoreAction->setText(tr("R&estore"));
+        _settingsAction->setText(tr("&Preferences..."));
 
         _singleViewAction->setText(tr("Single View"));
         _threeViewAction->setText(tr("Three View"));
         _volumeViewAction->setText(tr("Volume View"));
         _linkViewAction->setText(tr("Link View"));
-        _settingsAction->setText(tr("&Preferences..."));
-
         _zoomInAction->setText(tr("Zoom &In"));
         _zoomOutAction->setText(tr("Zoom &Out"));
         _prevImageAction->setText(tr("&Prev Image"));
         _nextImageAction->setText(tr("&Next Image"));
+
+        _equalizationAction->setText(tr("&Histogram Equalization"));
+
         _userGuideAction->setText(tr("&User's Guide"));
         _aboutAction->setText(tr("&About"));
 

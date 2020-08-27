@@ -85,8 +85,13 @@ public slots:
     void openRawImage();
     void saveAs();
     void saveAsRawImage();
+    void close();
+    void print();
+    void printPreview(QPrinter* printer);
     void showMenuBar(bool show);
     void showDockWidget(bool show);
+    void setting();
+
     void singleView();
     void threeView();
     void volumeView();
@@ -97,8 +102,6 @@ public slots:
     void showMeasurement(bool show);
     void zoomIn();
     void zoomOut();
-    void close();
-    void print();
 
     void slectLayout(QAction* action);
 
@@ -108,15 +111,14 @@ public slots:
     void slectLanguage(QAction* action);
     void slectLanguage(int language);
 
-    void setting();
+    void equalization();
+
     void userGuide();
     void about();
 
     void openFile(const QString& fileName);
 
     void notify(const QString& title, const QString& message, int type);
-
-    void printPreview(QPrinter* printer);
 
 private:
     ToolBar* _toolBar;
@@ -134,6 +136,7 @@ private:
     QMenu* _fileMenu;
     QMenu* _editMenu;
     QMenu* _viewMenu;
+    QMenu* _processingMenu;
     QMenu* _helpMenu;
 
     QAction* _openAction;
@@ -144,6 +147,7 @@ private:
     QAction* _undoAction;
     QAction* _redoAction;
     QAction* _restoreAction;
+    QAction* _settingsAction;
     QAction* _singleViewAction;
     QAction* _threeViewAction;
     QAction* _volumeViewAction;
@@ -154,7 +158,7 @@ private:
     QAction* _nextImageAction;
     QAction* _engAction;
     QAction* _chsAction;
-    QAction* _settingsAction;
+    QAction* _equalizationAction;
     QAction* _userGuideAction;
     QAction* _aboutAction;
 
