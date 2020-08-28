@@ -78,6 +78,10 @@ public slots:
 
     void restore();
 
+    void thresholdSegmentation();
+
+    void equalization();
+
 private:
     void initViewWindowWidthAndLevel();
 

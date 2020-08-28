@@ -41,28 +41,25 @@ void BaseProcessor::process(BaseImage* image)
         MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
         processMonoImage(monoImage);
 
-        if (getGlobalWindow()->isViewLinked())
+        if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
         {
-            if (monoImage->slice() > 1)
+            int viewType = monoImage->viewType();
+            if (viewType != 0)
             {
-                int viewType = monoImage->viewType();
-                if (viewType != 0)
-                {
-                    monoImage->setViewType(0);
-                    processMonoImage(monoImage);
-                }
-                if (viewType != 1)
-                {
-                    monoImage->setViewType(1);
-                    processMonoImage(monoImage);
-                }
-                if (viewType != 2)
-                {
-                    monoImage->setViewType(2);
-                    processMonoImage(monoImage);
-                }
-                monoImage->setViewType(viewType);
+                monoImage->setViewType(0);
+                processMonoImage(monoImage);
             }
+            if (viewType != 1)
+            {
+                monoImage->setViewType(1);
+                processMonoImage(monoImage);
+            }
+            if (viewType != 2)
+            {
+                monoImage->setViewType(2);
+                processMonoImage(monoImage);
+            }
+            monoImage->setViewType(viewType);
         }
     }
     /*	else if (typeid(*pImage) == typeid(RegionImage))

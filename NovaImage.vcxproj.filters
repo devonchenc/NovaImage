@@ -195,6 +195,9 @@
     <ClCompile Include="Widget\ImageQualityChartView.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
+    <ClCompile Include="Processor\ThresholdSegmentationProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -375,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="Image\MonoImageProxy.h">
       <Filter>Image</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\ThresholdSegmentationProcessor.h">
+      <Filter>Processor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

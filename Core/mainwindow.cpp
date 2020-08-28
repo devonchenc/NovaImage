@@ -211,6 +211,7 @@ void MainWindow::createActions()
     languageGroup->setExclusive(true);
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
 
+    _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
 
     _userGuideAction = new QAction(tr("&User's Guide"));
@@ -227,7 +228,6 @@ void MainWindow::createActions()
     _fileMenu->addAction(_printAction);
     _fileMenu->addSeparator();
     _fileMenu->addAction(_exitAction);
-
     _editMenu = menuBar()->addMenu(tr("&Edit"));
     _editMenu->addAction(_undoAction);
     _editMenu->addAction(_redoAction);
@@ -253,6 +253,8 @@ void MainWindow::createActions()
     languageMenu->addAction(_chsAction);
 
     _processingMenu = menuBar()->addMenu(tr("&Image Processing"));
+    _processingMenu->addAction(_thresholdSegmentationAction);
+    _processingMenu->addSeparator();
     _processingMenu->addAction(_equalizationAction);
 
     _helpMenu = menuBar()->addMenu(tr("&Help"));
@@ -277,7 +279,8 @@ void MainWindow::createActions()
     connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
     connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
 
-    connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
+    connect(_thresholdSegmentationAction, &QAction::triggered, _doc, &Document::thresholdSegmentation);
+    connect(_equalizationAction, &QAction::triggered, _doc, &Document::equalization);
 
     connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
     connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
@@ -810,11 +813,6 @@ void MainWindow::slectLanguage(int language)
     }
 }
 
-void MainWindow::equalization()
-{
-
-}
-
 void MainWindow::userGuide()
 {
 
@@ -865,6 +863,7 @@ void MainWindow::changeEvent(QEvent* event)
         _prevImageAction->setText(tr("&Prev Image"));
         _nextImageAction->setText(tr("&Next Image"));
 
+        _thresholdSegmentationAction->setText(tr("&Threshold Segmentation"));
         _equalizationAction->setText(tr("&Histogram Equalization"));
 
         _userGuideAction->setText(tr("&User's Guide"));

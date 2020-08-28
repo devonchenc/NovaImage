@@ -111,8 +111,6 @@ public slots:
     void slectLanguage(QAction* action);
     void slectLanguage(int language);
 
-    void equalization();
-
     void userGuide();
     void about();
 
@@ -158,6 +156,7 @@ private:
     QAction* _nextImageAction;
     QAction* _engAction;
     QAction* _chsAction;
+    QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
     QAction* _userGuideAction;
     QAction* _aboutAction;

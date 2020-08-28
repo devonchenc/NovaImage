@@ -15,6 +15,7 @@
 #include "../Image/RawImage.h"
 #include "../Processor/LevelsProcessor.h"
 #include "../Processor/InverseProcessor.h"
+#include "../Processor/ThresholdSegmentationProcessor.h"
 #include "../Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
@@ -408,6 +409,22 @@ void Document::restore()
 
         repaintView();
     }
+}
+
+void Document::thresholdSegmentation()
+{
+    if (_image)
+    {
+        ThresholdSegmentationProcessor processor;
+        processor.process(getImage());
+
+        repaintView();
+    }
+}
+
+void Document::equalization()
+{
+
 }
 
 void Document::initViewWindowWidthAndLevel()
