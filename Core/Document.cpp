@@ -16,6 +16,7 @@
 #include "../Processor/LevelsProcessor.h"
 #include "../Processor/InverseProcessor.h"
 #include "../Processor/ThresholdSegmentationProcessor.h"
+#include "../Processor/EqualizationProcessor.h"
 #include "../Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
@@ -424,7 +425,13 @@ void Document::thresholdSegmentation()
 
 void Document::equalization()
 {
+    if (_image)
+    {
+        EqualizationProcessor processor;
+        processor.process(getImage());
 
+        repaintView();
+    }
 }
 
 void Document::initViewWindowWidthAndLevel()

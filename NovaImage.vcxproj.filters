@@ -198,6 +198,12 @@
     <ClCompile Include="Processor\ThresholdSegmentationProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Processor\EqualizationProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
+    <ClCompile Include="Processor\CLAHE.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -380,6 +386,12 @@
       <Filter>Image</Filter>
     </ClInclude>
     <ClInclude Include="Processor\ThresholdSegmentationProcessor.h">
+      <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\EqualizationProcessor.h">
+      <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\CLAHE.h">
       <Filter>Processor</Filter>
     </ClInclude>
   </ItemGroup>

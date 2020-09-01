@@ -47,8 +47,10 @@
     <ClCompile Include="Notification\NotificationLayout.cpp" />
     <ClCompile Include="Notification\NotificationWidget.cpp" />
     <ClCompile Include="Processor\BaseProcessor.cpp" />
+    <ClCompile Include="Processor\CLAHE.cpp" />
     <ClCompile Include="Processor\CommonProcessor.cpp" />
     <ClCompile Include="Processor\CurvesProcessor.cpp" />
+    <ClCompile Include="Processor\EqualizationProcessor.cpp" />
     <ClCompile Include="Processor\HistogramProcessor.cpp" />
     <ClCompile Include="Processor\InverseProcessor.cpp" />
     <ClCompile Include="Processor\LevelsProcessor.cpp" />
@@ -104,8 +106,10 @@
     <QtMoc Include="Notification\NotificationLayout.h" />
     <QtMoc Include="Notification\NotificationWidget.h" />
     <ClInclude Include="Processor\BaseProcessor.h" />
+    <ClInclude Include="Processor\CLAHE.h" />
     <ClInclude Include="Processor\CommonProcessor.h" />
     <ClInclude Include="Processor\CurvesProcessor.h" />
+    <ClInclude Include="Processor\EqualizationProcessor.h" />
     <ClInclude Include="Processor\HistogramProcessor.h" />
     <ClInclude Include="Processor\InverseProcessor.h" />
     <ClInclude Include="Processor\LevelsProcessor.h" />
@@ -170,8 +174,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\DCMTK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\DCMTK\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\DCMTK\include;D:\opencv\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\DCMTK\lib;D:\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Program Files\DCMTK\include;$(IncludePath)</IncludePath>
@@ -203,7 +207,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dcmtk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dcmtk.lib;opencv_world440d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
