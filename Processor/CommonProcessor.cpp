@@ -37,7 +37,7 @@ void CommonProcessor::processGeneralImage(GeneralImage* image)
         {
             uchar* pPixel = pImageData + j * pitch + i;
             uchar* pBackupPixel = pBackupImageData + j * pitch + i;
-            float result = (*(pBackupPixel)-127.0f) * (_contrast + 100) / 100.0f + 127.0f;
+            float result = (*(pBackupPixel) - 127.0f) * (_contrast + 100) / 100.0f + 127.0f;
             result *= (100.0f + _brightness / 2.0f) / 100.0f;
             if (result >= 255)
             {
