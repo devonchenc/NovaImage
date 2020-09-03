@@ -26,9 +26,11 @@ public:
     // Process image
     void process(BaseImage* image);
 
+    virtual void initUI() {}
+
     // Process float array
     virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
-    {Q_UNUSED(array);Q_UNUSED(width);Q_UNUSED(height);Q_UNUSED(minValue);Q_UNUSED(maxValue);Q_UNUSED(pByte);}
+    { Q_UNUSED(array);Q_UNUSED(width);Q_UNUSED(height);Q_UNUSED(minValue);Q_UNUSED(maxValue);Q_UNUSED(pByte); }
 
 protected:
     virtual void processGeneralImage(GeneralImage* image) { Q_UNUSED(image); }

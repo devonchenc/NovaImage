@@ -45,6 +45,10 @@ void ImageQualityChartView::setData(const QVector<qreal>& points)
     chart()->addSeries(_rightSeries);
     chart()->addSeries(_leftToRightSeries);
 
+    QPen pen = _leftToRightSeries->pen();
+    pen.setStyle(Qt::DashLine);
+    _leftToRightSeries->setPen(pen);
+
     chart()->addSeries(_ASeries);
     chart()->addSeries(_BSeries);
     chart()->addSeries(_CSeries);
