@@ -359,6 +359,9 @@ void MainWindow::createToolWidget()
     QDockWidget* curveDockWidget = createDockWidget(curves);
 
     tabifyDockWidget(levelDockWidget, curveDockWidget);
+
+    _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
+    tabifyDockWidget(levelDockWidget, _imageProcessingDockWidget);
 }
 
 QDockWidget* MainWindow::createDockWidget(BaseWidget* widget)
@@ -833,6 +836,17 @@ void MainWindow::notify(const QString& title, const QString& message, int type)
     _notification->addNotification(title, message, static_cast<NotificationParams::Type>(type));
 }
 
+void MainWindow::createProcessorWidget(QWidget* widget)
+{
+    QWidget* oldWidget = _imageProcessingDockWidget->widget();
+    if (oldWidget)
+    {
+    // TODO
+    // delete widget;
+    }
+    _imageProcessingDockWidget->setWidget(widget);
+}
+
 void MainWindow::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
@@ -868,6 +882,8 @@ void MainWindow::changeEvent(QEvent* event)
 
         _userGuideAction->setText(tr("&User's Guide"));
         _aboutAction->setText(tr("&About"));
+
+        _imageProcessingDockWidget->setWindowTitle(tr("Image Processing"));
 
         _recentFiles->resetText();
     }

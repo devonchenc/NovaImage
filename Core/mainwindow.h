@@ -118,6 +118,8 @@ public slots:
 
     void notify(const QString& title, const QString& message, int type);
 
+    void createProcessorWidget(QWidget* widget);
+
 private:
     ToolBar* _toolBar;
 
@@ -168,6 +170,7 @@ private:
 
     QVector<QDockWidget*> _vecDockWidget;
     QDockWidget* _toolboxDockWidget;
+    QDockWidget* _imageProcessingDockWidget;
 
     NotificationLayout* _notification;
 

@@ -10,10 +10,17 @@ class MonoImage;
 class RegionImage;
 
 #include <QtGlobal>
+#include <QObject>
+
+QT_BEGIN_NAMESPACE
+class QWidget;
+QT_END_NAMESPACE
 
 // Base class of image processing algorithm
-class BaseProcessor
+class BaseProcessor : public QObject
 {
+    Q_OBJECT
+
 public:
     BaseProcessor();
     virtual ~BaseProcessor();
@@ -23,10 +30,10 @@ public:
 
     BaseProcessor* setCurrentProcessor();
 
+    virtual QWidget* initUI() { return nullptr; }
+
     // Process image
     void process(BaseImage* image);
-
-    virtual void initUI() {}
 
     // Process float array
     virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
@@ -41,6 +48,9 @@ protected:
 
     // Convert float data to uchar data
     void convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte);
+
+signals:
+    void createWidget(QWidget* widget);
 
 private:
     static BaseProcessor* _currentProcessor;

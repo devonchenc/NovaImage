@@ -1,5 +1,7 @@
 #include "ThresholdSegmentationProcessor.h"
 
+#include <QHBoxLayout>
+
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
@@ -11,6 +13,23 @@ ThresholdSegmentationProcessor::ThresholdSegmentationProcessor()
 ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
 {
 
+}
+
+QWidget* ThresholdSegmentationProcessor::initUI()
+{
+    _thresholdLabel = new QLabel(tr("Threshold:"));
+    _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
+    _thresholdSlider->setMinimum(0);
+    _thresholdSlider->setMaximum(255);
+
+    QHBoxLayout* hLayout = new QHBoxLayout;
+    hLayout->addWidget(_thresholdLabel);
+    hLayout->addWidget(_thresholdSlider);
+
+    QWidget* widget = new QWidget;
+    widget->setLayout(hLayout);
+    emit createWidget(widget);
+    return widget;
 }
 
 void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)

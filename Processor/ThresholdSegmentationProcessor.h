@@ -1,5 +1,8 @@
 #pragma once
 
+#include <QSlider>
+#include <QLabel>
+
 #include "BaseProcessor.h"
 
 class ThresholdSegmentationProcessor : public BaseProcessor
@@ -7,6 +10,8 @@ class ThresholdSegmentationProcessor : public BaseProcessor
 public:
     ThresholdSegmentationProcessor();
     virtual ~ThresholdSegmentationProcessor();
+
+    QWidget* initUI() override;
 
 protected:
     void processGeneralImage(GeneralImage* image) override;
@@ -18,4 +23,8 @@ protected:
 
 private:
     int findOtsuThreshold(uint* grayPixelArray, int pixelNumber);
+
+private:
+    QLabel* _thresholdLabel;
+    QSlider* _thresholdSlider;
 };

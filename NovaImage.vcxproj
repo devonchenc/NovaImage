@@ -105,7 +105,7 @@
     <ClInclude Include="Image\RawImage.h" />
     <QtMoc Include="Notification\NotificationLayout.h" />
     <QtMoc Include="Notification\NotificationWidget.h" />
-    <ClInclude Include="Processor\BaseProcessor.h" />
+    <QtMoc Include="Processor\BaseProcessor.h" />
     <ClInclude Include="Processor\CLAHE.h" />
     <ClInclude Include="Processor\CommonProcessor.h" />
     <ClInclude Include="Processor\CurvesProcessor.h" />

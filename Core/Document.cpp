@@ -416,8 +416,12 @@ void Document::thresholdSegmentation()
 {
     if (_image)
     {
-        ThresholdSegmentationProcessor processor;
-        processor.process(getImage());
+    //    ThresholdSegmentationProcessor processor;
+    //    processor.process(getImage());
+        ThresholdSegmentationProcessor* processor = new ThresholdSegmentationProcessor;
+        connect(processor, &BaseProcessor::createWidget, _mainWindow, &MainWindow::createProcessorWidget);
+        processor->initUI();
+        processor->process(getImage());
 
         repaintView();
     }

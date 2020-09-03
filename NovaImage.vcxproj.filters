@@ -317,6 +317,9 @@
     <QtMoc Include="Widget\ImageQualityChartView.h">
       <Filter>Widget</Filter>
     </QtMoc>
+    <QtMoc Include="Processor\BaseProcessor.h">
+      <Filter>Processor</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image\BaseImage.h">
@@ -348,9 +351,6 @@
     </ClInclude>
     <ClInclude Include="Image\MonoImage.h">
       <Filter>Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\BaseProcessor.h">
-      <Filter>Processor</Filter>
     </ClInclude>
     <ClInclude Include="Processor\CommonProcessor.h">
       <Filter>Processor</Filter>
