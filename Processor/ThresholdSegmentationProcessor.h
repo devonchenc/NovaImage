@@ -5,6 +5,20 @@
 
 #include "BaseProcessor.h"
 
+class ThresholdSegmentationWidget : public QWidget
+{
+public:
+    ThresholdSegmentationWidget(QWidget* parent = nullptr);
+
+public slots:
+    void valueChanged(int value);
+
+private:
+    QLabel* _thresholdLabel;
+    QSlider* _thresholdSlider;
+    QLabel* _thresholdValueLabel;
+};
+
 class ThresholdSegmentationProcessor : public BaseProcessor
 {
 public:
@@ -25,6 +39,5 @@ private:
     int findOtsuThreshold(uint* grayPixelArray, int pixelNumber);
 
 private:
-    QLabel* _thresholdLabel;
-    QSlider* _thresholdSlider;
+    ThresholdSegmentationWidget* _widget;
 };

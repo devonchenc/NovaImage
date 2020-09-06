@@ -5,6 +5,32 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
+ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
+    : QWidget(parent)
+{
+    _thresholdLabel = new QLabel(tr("Threshold:"));
+    _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
+    _thresholdSlider->setMinimum(0);
+    _thresholdSlider->setMaximum(255);
+    connect(_thresholdSlider, &QSlider::valueChanged, this, &ThresholdSegmentationWidget::valueChanged);
+    _thresholdValueLabel = new QLabel;
+    _thresholdValueLabel->setFixedWidth(20);
+
+    QHBoxLayout* hLayout = new QHBoxLayout;
+    hLayout->addWidget(_thresholdLabel);
+    hLayout->addWidget(_thresholdSlider);
+    hLayout->addWidget(_thresholdValueLabel);
+    
+    setLayout(hLayout);
+}
+
+void ThresholdSegmentationWidget::valueChanged(int value)
+{
+    _thresholdValueLabel->setText(QString::number(value));
+
+    setThreshold();
+}
+
 ThresholdSegmentationProcessor::ThresholdSegmentationProcessor()
 {
 
@@ -17,19 +43,9 @@ ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
 
 QWidget* ThresholdSegmentationProcessor::initUI()
 {
-    _thresholdLabel = new QLabel(tr("Threshold:"));
-    _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
-    _thresholdSlider->setMinimum(0);
-    _thresholdSlider->setMaximum(255);
-
-    QHBoxLayout* hLayout = new QHBoxLayout;
-    hLayout->addWidget(_thresholdLabel);
-    hLayout->addWidget(_thresholdSlider);
-
-    QWidget* widget = new QWidget;
-    widget->setLayout(hLayout);
-    emit createWidget(widget);
-    return widget;
+    _widget = new ThresholdSegmentationWidget;
+    emit createWidget(_widget);
+    return _widget;
 }
 
 void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)

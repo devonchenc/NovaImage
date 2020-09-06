@@ -29,7 +29,7 @@ protected:
     void changeEvent(QEvent* event) override;
 
 private:
-    void SetBrightnessAndContrast();
+    void setBrightnessAndContrast();
 
 private:
     QSlider* _brightSlider;

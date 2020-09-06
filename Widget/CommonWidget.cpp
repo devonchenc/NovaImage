@@ -64,14 +64,14 @@ void CommonWidget::brightValueChanged(int value)
 {
     _brightValueLabel->setText(QString::number(value));
 
-    SetBrightnessAndContrast();
+    setBrightnessAndContrast();
 }
 
 void CommonWidget::contrastValueChanged(int value)
 {
     _contrastValueLabel->setText(QString::number(value));
 
-    SetBrightnessAndContrast();
+    setBrightnessAndContrast();
 }
 
 void CommonWidget::changeEvent(QEvent* event)
@@ -86,7 +86,7 @@ void CommonWidget::changeEvent(QEvent* event)
     BaseWidget::changeEvent(event);
 }
 
-void CommonWidget::SetBrightnessAndContrast()
+void CommonWidget::setBrightnessAndContrast()
 {
     BaseImage* image = getGlobalImage();
     if (image)
