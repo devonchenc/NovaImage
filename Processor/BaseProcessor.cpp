@@ -13,6 +13,7 @@
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
 
 BaseProcessor::BaseProcessor()
+    : _image(nullptr)
 {
     _currentProcessor = this;
 }
@@ -27,18 +28,18 @@ BaseProcessor* BaseProcessor::getProcessor()
     return _currentProcessor;
 }
 
-void BaseProcessor::process(BaseImage* image)
+void BaseProcessor::process()
 {
     setCurrentProcessor();
 
-    if (typeid(*image) == typeid(GeneralImage))
+    if (typeid(*_image) == typeid(GeneralImage))
     {
-        GeneralImage* generalImage = dynamic_cast<GeneralImage*>(image);
+        GeneralImage* generalImage = dynamic_cast<GeneralImage*>(_image);
         processGeneralImage(generalImage);
     }
-    else if (dynamic_cast<MonoImage*>(image))
+    else if (dynamic_cast<MonoImage*>(_image))
     {
-        MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
+        MonoImage* monoImage = dynamic_cast<MonoImage*>(_image);
         processMonoImage(monoImage);
 
         if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)

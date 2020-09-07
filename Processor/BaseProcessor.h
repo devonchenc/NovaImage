@@ -30,8 +30,12 @@ public:
 
     BaseProcessor* setCurrentProcessor();
 
+    virtual QWidget* initUI() { return nullptr; }
+
+    void setImage(BaseImage* image) { _image = image; }
+
     // Process image
-    void process(BaseImage* image);
+    void process();
 
     // Process float array
     virtual void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
@@ -49,6 +53,9 @@ protected:
 
 signals:
     void createWidget(QWidget* widget);
+
+protected:
+    BaseImage* _image;
 
 private:
     static BaseProcessor* _currentProcessor;

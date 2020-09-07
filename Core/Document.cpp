@@ -359,7 +359,8 @@ void Document::applyImageWidthAndLevel()
 
     LevelsProcessor processor;
     processor.setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
-    processor.process(getImage());
+    processor.setImage(getImage());
+    processor.process();
 
     repaintView();
 }
@@ -369,7 +370,8 @@ void Document::negativeImage()
     if (_image)
     {
         InverseProcessor processor;
-        processor.process(getImage());
+        processor.setImage(getImage());
+        processor.process();
 
         repaintView();
     }
@@ -420,7 +422,9 @@ void Document::thresholdSegmentation()
     //    processor.process(getImage());
         ThresholdSegmentationProcessor* processor = new ThresholdSegmentationProcessor;
         connect(processor, &BaseProcessor::createWidget, _mainWindow, &MainWindow::createProcessorWidget);
-        processor->process(getImage());
+        processor->setImage(getImage());
+        processor->initUI();
+        processor->process();
 
         repaintView();
     }
@@ -431,7 +435,8 @@ void Document::equalization()
     if (_image)
     {
         EqualizationProcessor processor;
-        processor.process(getImage());
+        processor.setImage(getImage());
+        processor.process();
 
         repaintView();
     }

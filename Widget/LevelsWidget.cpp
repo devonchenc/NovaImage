@@ -182,7 +182,8 @@ void LevelsWidget::levelsAdjust()
         float mid = _editMid->text().toFloat();
         float top = _editMax->text().toFloat();
         _processor->setPara(bottom, mid, top);
-        _processor->process(image);
+        _processor->setImage(image);
+        _processor->process();
 
         repaintView();
     }

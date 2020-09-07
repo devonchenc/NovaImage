@@ -10,6 +10,8 @@ class ThresholdSegmentationWidget : public QWidget
 public:
     ThresholdSegmentationWidget(QWidget* parent = nullptr);
 
+    void setThreshold(int threshold);
+
 public slots:
     void valueChanged(int value);
 
@@ -24,6 +26,8 @@ class ThresholdSegmentationProcessor : public BaseProcessor
 public:
     ThresholdSegmentationProcessor();
     virtual ~ThresholdSegmentationProcessor();
+
+    QWidget* initUI() override;
 
 protected:
     void processGeneralImage(GeneralImage* image) override;

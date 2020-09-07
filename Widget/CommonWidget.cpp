@@ -92,7 +92,8 @@ void CommonWidget::setBrightnessAndContrast()
     if (image)
     {
         _processor->setBrightnessAndContrast(_brightSlider->value(), _contrastSlider->value());
-        _processor->process(image);
+        _processor->setImage(image);
+        _processor->process();
 
         repaintView();
     }

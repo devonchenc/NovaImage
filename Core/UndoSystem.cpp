@@ -41,4 +41,5 @@ void UndoSystem::reset()
         delete _imageStack[i];
     }
     _imageStack.clear();
+    _currentIndex = -1;
 }

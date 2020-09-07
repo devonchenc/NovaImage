@@ -243,7 +243,8 @@ void CurvesWidget::updateImage()
     BaseImage* image = getGlobalImage();
     if (image)
     {
-        _processor->process(image);
+        _processor->setImage(image);
+        _processor->process();
 
         repaintView();
     }

@@ -409,7 +409,8 @@ void HistogramWidget::setBottomAndTop(bool* array, int arrayNum)
     if (image)
     {
         _processor->setWindowArray(array, arrayNum);
-        _processor->process(image);
+        _processor->setImage(image);
+        _processor->process();
 
         repaintView();
     }

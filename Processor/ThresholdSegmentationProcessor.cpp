@@ -24,21 +24,47 @@ ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
     setLayout(hLayout);
 }
 
+void ThresholdSegmentationWidget::setThreshold(int threshold)
+{
+    _thresholdSlider->setValue(threshold);
+}
+
 void ThresholdSegmentationWidget::valueChanged(int value)
 {
     _thresholdValueLabel->setText(QString::number(value));
-//    setThreshold();
+
+ //   setThreshold();
 }
 
 ThresholdSegmentationProcessor::ThresholdSegmentationProcessor()
 {
-    _widget = new ThresholdSegmentationWidget;
-    emit createWidget(_widget);
+
 }
 
 ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
 {
 
+}
+
+QWidget* ThresholdSegmentationProcessor::initUI()
+{
+    _widget = new ThresholdSegmentationWidget;
+    emit createWidget(_widget);
+
+    if (_image)
+    {
+        int width = _image->width();
+        int height = _image->height();
+        if (dynamic_cast<MonoImage*>(_image))
+        {
+            MonoImage* monoImage = dynamic_cast<MonoImage*>(_image);
+            monoImage->getBYTEImage(width, height);
+        }
+        int threshold = findOtsuThreshold(_image->getGrayPixelArray(), width * height);
+        _widget->setThreshold(threshold);
+    }
+
+    return _widget;
 }
 
 void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)
