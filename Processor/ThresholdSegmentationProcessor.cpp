@@ -27,25 +27,18 @@ ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
 void ThresholdSegmentationWidget::valueChanged(int value)
 {
     _thresholdValueLabel->setText(QString::number(value));
-
-    setThreshold();
+//    setThreshold();
 }
 
 ThresholdSegmentationProcessor::ThresholdSegmentationProcessor()
 {
-
+    _widget = new ThresholdSegmentationWidget;
+    emit createWidget(_widget);
 }
 
 ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
 {
 
-}
-
-QWidget* ThresholdSegmentationProcessor::initUI()
-{
-    _widget = new ThresholdSegmentationWidget;
-    emit createWidget(_widget);
-    return _widget;
 }
 
 void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)

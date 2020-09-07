@@ -25,8 +25,6 @@ public:
     ThresholdSegmentationProcessor();
     virtual ~ThresholdSegmentationProcessor();
 
-    QWidget* initUI() override;
-
 protected:
     void processGeneralImage(GeneralImage* image) override;
 
