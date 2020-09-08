@@ -20,9 +20,8 @@ void InverseProcessor::processGeneralImage(GeneralImage* image)
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    QImage* backupImageEntity = image->getBackupImage();
-    uchar* pImageData = (uchar*)imageEntity->bits();
-    uchar* pBackupImageData = (uchar*)backupImageEntity->bits();
+    uchar* pImageData = imageEntity->bits();
+    uchar* pBackupImageData = image->getBackupImage()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 

@@ -109,7 +109,7 @@
     <ClInclude Include="Processor\CLAHE.h" />
     <ClInclude Include="Processor\CommonProcessor.h" />
     <ClInclude Include="Processor\CurvesProcessor.h" />
-    <ClInclude Include="Processor\EqualizationProcessor.h" />
+    <QtMoc Include="Processor\EqualizationProcessor.h" />
     <ClInclude Include="Processor\HistogramProcessor.h" />
     <ClInclude Include="Processor\InverseProcessor.h" />
     <ClInclude Include="Processor\LevelsProcessor.h" />
@@ -117,7 +117,7 @@
     <QtMoc Include="Widget\ChartView.h" />
     <QtMoc Include="Widget\ImageQualityDialog.h" />
     <QtMoc Include="Widget\ImageQualityChartView.h" />
-    <ClInclude Include="Processor\ThresholdSegmentationProcessor.h" />
+    <QtMoc Include="Processor\ThresholdSegmentationProcessor.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />

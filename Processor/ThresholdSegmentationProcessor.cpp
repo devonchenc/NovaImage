@@ -1,13 +1,17 @@
 #include "ThresholdSegmentationProcessor.h"
 
 #include <QHBoxLayout>
+#include <QGroupBox>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
+#include "../Core/GlobalFunc.h"
 
 ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
     : QWidget(parent)
 {
+    QGroupBox* groupBox = new QGroupBox(tr("Threshold Segmentation"));
+
     _thresholdLabel = new QLabel(tr("Threshold:"));
     _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
     _thresholdSlider->setMinimum(0);
@@ -20,8 +24,13 @@ ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
     hLayout->addWidget(_thresholdLabel);
     hLayout->addWidget(_thresholdSlider);
     hLayout->addWidget(_thresholdValueLabel);
+
+    groupBox->setLayout(hLayout);
     
-    setLayout(hLayout);
+    QVBoxLayout* vLayout = new QVBoxLayout;
+    vLayout->addWidget(groupBox);
+    vLayout->addLayout(hLayout);
+    setLayout(vLayout);
 }
 
 void ThresholdSegmentationWidget::setThreshold(int threshold)
@@ -33,10 +42,11 @@ void ThresholdSegmentationWidget::valueChanged(int value)
 {
     _thresholdValueLabel->setText(QString::number(value));
 
- //   setThreshold();
+    emit thresholdChanged(value);
 }
 
 ThresholdSegmentationProcessor::ThresholdSegmentationProcessor()
+    : _threshold(128)
 {
 
 }
@@ -46,9 +56,10 @@ ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
 
 }
 
-QWidget* ThresholdSegmentationProcessor::initUI()
+void ThresholdSegmentationProcessor::initUI()
 {
     _widget = new ThresholdSegmentationWidget;
+    connect(_widget, &ThresholdSegmentationWidget::thresholdChanged, this, &ThresholdSegmentationProcessor::thresholdChanged);
     emit createWidget(_widget);
 
     if (_image)
@@ -63,8 +74,15 @@ QWidget* ThresholdSegmentationProcessor::initUI()
         int threshold = findOtsuThreshold(_image->getGrayPixelArray(), width * height);
         _widget->setThreshold(threshold);
     }
+}
 
-    return _widget;
+void ThresholdSegmentationProcessor::thresholdChanged(int value)
+{
+    _threshold = value;
+
+    process();
+
+    repaintView();
 }
 
 void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)
@@ -74,18 +92,18 @@ void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    uchar* pImageData = (uchar*)imageEntity->bits();
+    uchar* pImageData = imageEntity->bits();
+    uchar* pBackupImageData = image->getBackupImage()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
-
-    int threshold = findOtsuThreshold(image->getGrayPixelArray(), width * height);
 
     for (int j = 0; j < height; j++)
     {
         for (int i = 0; i < width; i++)
         {
             uchar* pPixel = pImageData + j * pitch + i * depth;
-            if (*pPixel > threshold)
+            uchar* pBackupPixel = pBackupImageData + j * pitch + i * depth;
+            if (*pBackupPixel > _threshold)
             {
                 for (int n = 0; n < qMin(depth, 3); n++)
                 {
@@ -110,11 +128,9 @@ void ThresholdSegmentationProcessor::processMonoImage(MonoImage* image)
     int width, height;
     uchar* byteImage = image->getBYTEImage(width, height);
 
-    int threshold = findOtsuThreshold(image->getGrayPixelArray(), width * height);
-
     for (int i = 0; i < width * height; i++)
     {
-        if (byteImage[3 * i] > threshold)
+        if (byteImage[3 * i] > _threshold)
         {
             byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
         }

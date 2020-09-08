@@ -30,7 +30,7 @@ public:
 
     BaseProcessor* setCurrentProcessor();
 
-    virtual QWidget* initUI() { return nullptr; }
+    virtual void initUI() {}
 
     void setImage(BaseImage* image) { _image = image; }
 

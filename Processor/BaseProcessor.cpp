@@ -16,6 +16,8 @@ BaseProcessor::BaseProcessor()
     : _image(nullptr)
 {
     _currentProcessor = this;
+
+    connect(this, &BaseProcessor::createWidget, getGlobalWindow(), &MainWindow::createProcessorWidget);
 }
 
 BaseProcessor::~BaseProcessor()
@@ -30,6 +32,9 @@ BaseProcessor* BaseProcessor::getProcessor()
 
 void BaseProcessor::process()
 {
+    if (_image == nullptr)
+        return;
+
     setCurrentProcessor();
 
     if (typeid(*_image) == typeid(GeneralImage))

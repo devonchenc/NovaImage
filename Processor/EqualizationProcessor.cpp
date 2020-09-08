@@ -1,8 +1,50 @@
 #include "EqualizationProcessor.h"
 
+#include <QHBoxLayout>
+#include <QGroupBox>
+
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
+#include "../Core/GlobalFunc.h"
 #include "CLAHE.h"
+
+EqualizationWidget::EqualizationWidget(QWidget* parent)
+    : QWidget(parent)
+{
+    QGroupBox* groupBox = new QGroupBox(tr("Equalization"));
+
+    _thresholdLabel = new QLabel(tr("Threshold:"));
+    _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
+    _thresholdSlider->setMinimum(0);
+    _thresholdSlider->setMaximum(255);
+    connect(_thresholdSlider, &QSlider::valueChanged, this, &EqualizationWidget::valueChanged);
+    _thresholdValueLabel = new QLabel;
+    _thresholdValueLabel->setFixedWidth(20);
+
+    QHBoxLayout* hLayout = new QHBoxLayout;
+    hLayout->addWidget(_thresholdLabel);
+    hLayout->addWidget(_thresholdSlider);
+    hLayout->addWidget(_thresholdValueLabel);
+
+    groupBox->setLayout(hLayout);
+
+    QVBoxLayout* vLayout = new QVBoxLayout;
+    vLayout->addWidget(groupBox);
+    vLayout->addLayout(hLayout);
+    setLayout(vLayout);
+}
+
+void EqualizationWidget::setThreshold(int threshold)
+{
+    _thresholdSlider->setValue(threshold);
+}
+
+void EqualizationWidget::valueChanged(int value)
+{
+    _thresholdValueLabel->setText(QString::number(value));
+
+    emit thresholdChanged(value);
+}
 
 EqualizationProcessor::EqualizationProcessor()
 {
@@ -14,6 +56,23 @@ EqualizationProcessor::~EqualizationProcessor()
 
 }
 
+
+void EqualizationProcessor::initUI()
+{
+    _widget = new EqualizationWidget;
+    connect(_widget, &EqualizationWidget::thresholdChanged, this, &EqualizationProcessor::thresholdChanged);
+    emit createWidget(_widget);
+}
+
+void EqualizationProcessor::thresholdChanged(int value)
+{
+    _threshold = value;
+
+    process();
+
+    repaintView();
+}
+
 void EqualizationProcessor::processGeneralImage(GeneralImage* image)
 {
     assert(image);
@@ -21,7 +80,7 @@ void EqualizationProcessor::processGeneralImage(GeneralImage* image)
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    uchar* pImageData = (uchar*)imageEntity->bits();
+    uchar* pImageData = imageEntity->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 

@@ -7,6 +7,8 @@
 
 class ThresholdSegmentationWidget : public QWidget
 {
+    Q_OBJECT
+
 public:
     ThresholdSegmentationWidget(QWidget* parent = nullptr);
 
@@ -14,6 +16,9 @@ public:
 
 public slots:
     void valueChanged(int value);
+
+signals:
+    void thresholdChanged(int value);
 
 private:
     QLabel* _thresholdLabel;
@@ -23,11 +28,16 @@ private:
 
 class ThresholdSegmentationProcessor : public BaseProcessor
 {
+    Q_OBJECT
+
 public:
     ThresholdSegmentationProcessor();
     virtual ~ThresholdSegmentationProcessor();
 
-    QWidget* initUI() override;
+    void initUI() override;
+
+public slots:
+    void thresholdChanged(int value);
 
 protected:
     void processGeneralImage(GeneralImage* image) override;
@@ -42,4 +52,5 @@ private:
 
 private:
     ThresholdSegmentationWidget* _widget;
+    int _threshold;
 };

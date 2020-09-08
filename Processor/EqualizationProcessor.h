@@ -1,12 +1,43 @@
 #pragma once
 
+#include <QSlider>
+#include <QLabel>
+
 #include "BaseProcessor.h"
+
+class EqualizationWidget : public QWidget
+{
+    Q_OBJECT
+
+public:
+    EqualizationWidget(QWidget* parent = nullptr);
+
+    void setThreshold(int threshold);
+
+public slots:
+    void valueChanged(int value);
+
+signals:
+    void thresholdChanged(int value);
+
+private:
+    QLabel* _thresholdLabel;
+    QSlider* _thresholdSlider;
+    QLabel* _thresholdValueLabel;
+};
 
 class EqualizationProcessor : public BaseProcessor
 {
+    Q_OBJECT
+
 public:
     EqualizationProcessor();
     virtual ~EqualizationProcessor();
+
+    void initUI() override;
+
+public slots:
+    void thresholdChanged(int value);
 
 protected:
     void processGeneralImage(GeneralImage* image) override;
@@ -19,4 +50,8 @@ protected:
 private:
     void RGB2HSV(uchar R, uchar G, uchar B, int& H, float& S, uchar& V);
     void HSV2RGB(int H, float S, uchar V, uchar& R, uchar& G, uchar& B);
+
+private:
+    EqualizationWidget* _widget;
+    int _threshold;
 };

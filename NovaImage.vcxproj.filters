@@ -320,6 +320,12 @@
     <QtMoc Include="Processor\BaseProcessor.h">
       <Filter>Processor</Filter>
     </QtMoc>
+    <QtMoc Include="Processor\ThresholdSegmentationProcessor.h">
+      <Filter>Processor</Filter>
+    </QtMoc>
+    <QtMoc Include="Processor\EqualizationProcessor.h">
+      <Filter>Processor</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Image\BaseImage.h">
@@ -384,12 +390,6 @@
     </ClInclude>
     <ClInclude Include="Image\MonoImageProxy.h">
       <Filter>Image</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\ThresholdSegmentationProcessor.h">
-      <Filter>Processor</Filter>
-    </ClInclude>
-    <ClInclude Include="Processor\EqualizationProcessor.h">
-      <Filter>Processor</Filter>
     </ClInclude>
     <ClInclude Include="Processor\CLAHE.h">
       <Filter>Processor</Filter>

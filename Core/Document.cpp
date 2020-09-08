@@ -418,10 +418,7 @@ void Document::thresholdSegmentation()
 {
     if (_image)
     {
-    //    ThresholdSegmentationProcessor processor;
-    //    processor.process(getImage());
         ThresholdSegmentationProcessor* processor = new ThresholdSegmentationProcessor;
-        connect(processor, &BaseProcessor::createWidget, _mainWindow, &MainWindow::createProcessorWidget);
         processor->setImage(getImage());
         processor->initUI();
         processor->process();
@@ -434,9 +431,10 @@ void Document::equalization()
 {
     if (_image)
     {
-        EqualizationProcessor processor;
-        processor.setImage(getImage());
-        processor.process();
+        EqualizationProcessor* processor = new EqualizationProcessor;
+        processor->setImage(getImage());
+        processor->initUI();
+        processor->process();
 
         repaintView();
     }

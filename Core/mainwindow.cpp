@@ -352,16 +352,18 @@ void MainWindow::createToolWidget()
     CommonWidget* common = new CommonWidget();
     createDockWidget(common);
 
-    LevelsWidget* levels = new LevelsWidget();
-    QDockWidget* levelDockWidget = createDockWidget(levels);
-
     CurvesWidget* curves = new CurvesWidget();
     QDockWidget* curveDockWidget = createDockWidget(curves);
 
-    tabifyDockWidget(levelDockWidget, curveDockWidget);
+    LevelsWidget* levels = new LevelsWidget();
+    QDockWidget* levelDockWidget = createDockWidget(levels);
+
+    tabifyDockWidget(curveDockWidget, levelDockWidget);
 
     _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
     tabifyDockWidget(levelDockWidget, _imageProcessingDockWidget);
+
+    curveDockWidget->raise();
 }
 
 QDockWidget* MainWindow::createDockWidget(BaseWidget* widget)
