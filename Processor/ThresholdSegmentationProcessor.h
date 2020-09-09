@@ -5,6 +5,7 @@
 #include "BaseProcessor.h"
 
 QT_BEGIN_NAMESPACE
+class QCheckBox;
 class QSlider;
 class QLabel;
 QT_END_NAMESPACE
@@ -16,17 +17,21 @@ class ThresholdSegmentationWidget : public QWidget
 public:
     ThresholdSegmentationWidget(QWidget* parent = nullptr);
 
-    void setThreshold(int threshold);
+    void setOTSUThreshold(int threshold);
 
 public slots:
     void valueChanged(int value);
+
+    void autoCheckBoxClicked();
 
 signals:
     void thresholdChanged(int value);
 
 private:
+    QCheckBox* _autoCheckBox;
     QSlider* _thresholdSlider;
     QLabel* _thresholdValueLabel;
+    int _OSTUThreshold;
 };
 
 class ThresholdSegmentationProcessor : public BaseProcessor

@@ -72,16 +72,6 @@ MainWindow::MainWindow(QWidget* parent)
 
 MainWindow::~MainWindow()
 {
-    if (_translator)
-    {
-        delete _translator;
-        _translator = nullptr;
-    }
-    for (int i = 0; i < _vecPluginTranslator.size(); i++)
-    {
-        delete _vecPluginTranslator[i];
-    }
-    _vecPluginTranslator.clear();
 }
 
 void MainWindow::setActiveView(View* view)
@@ -364,7 +354,7 @@ void MainWindow::createToolWidget()
     _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
     tabifyDockWidget(levelDockWidget, _imageProcessingDockWidget);
 
-    curveDockWidget->raise();
+//    curveDockWidget->raise();
 }
 
 QDockWidget* MainWindow::createDockWidget(BaseWidget* widget)
@@ -688,14 +678,14 @@ void MainWindow::loadPlugin()
 
 void MainWindow::loadTranslator()
 {
-    _translator = new QTranslator;
+    _translator = new QTranslator(this);
     _translator->load("novaimage_zh.qm");
 
     for (int i = 0; i < _vecPlugin.size(); i++)
     {
         QString name = _vecPlugin[i]->name();
         QString qmName = QCoreApplication::applicationDirPath() + "/plugin/" + name + "_zh.qm";
-        QTranslator* tran = new QTranslator;
+        QTranslator* tran = new QTranslator(this);
         if (tran->load(qmName))
         {
             _vecPluginTranslator.append(tran);
@@ -844,8 +834,7 @@ void MainWindow::createProcessorWidget(QWidget* processorWidget)
     QWidget* oldWidget = _imageProcessingDockWidget->widget();
     if (oldWidget)
     {
-    // TODO
-    // delete widget;
+        delete oldWidget;
     }
 
     QPushButton* applyButton = new QPushButton(tr("&Apply"));

@@ -5,8 +5,7 @@
 #include "BaseProcessor.h"
 
 QT_BEGIN_NAMESPACE
-class QSlider;
-class QLabel;
+class QLineEdit;
 QT_END_NAMESPACE
 
 class EqualizationWidget : public QWidget
@@ -16,17 +15,15 @@ class EqualizationWidget : public QWidget
 public:
     EqualizationWidget(QWidget* parent = nullptr);
 
-    void setThreshold(int threshold);
-
 public slots:
-    void valueChanged(int value);
+    void editChanged();
 
 signals:
-    void thresholdChanged(int value);
+    void valueChanged(int gridSize, int clipLimit);
 
 private:
-    QSlider* _thresholdSlider;
-    QLabel* _thresholdValueLabel;
+    QLineEdit* _gridSizeEdit;
+    QLineEdit* _clipLimitEdit;
 };
 
 class EqualizationProcessor : public BaseProcessor
@@ -40,7 +37,7 @@ public:
     void initUI() override;
 
 public slots:
-    void thresholdChanged(int value);
+    void valueChanged(int gridSize, int clipLimit);
 
 protected:
     void processGeneralImage(GeneralImage* image) override;
@@ -56,5 +53,6 @@ private:
 
 private:
     EqualizationWidget* _widget;
-    int _threshold;
+    int _gridSize;
+    int _clipLimit;
 };

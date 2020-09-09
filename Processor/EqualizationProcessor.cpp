@@ -5,6 +5,8 @@
 #include <QGridLayout>
 #include <QGroupBox>
 #include <QLineEdit>
+#include <QIntValidator>
+#include <QDebug>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
@@ -16,41 +18,39 @@ EqualizationWidget::EqualizationWidget(QWidget* parent)
 {
     QGroupBox* groupBox = new QGroupBox(tr("Equalization"));
 
-    QLabel* blockLabel = new QLabel(tr("Block Size:"));
-    QLineEdit* blockSizeEdit = new QLineEdit;
-    _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
-    _thresholdSlider->setMinimum(0);
-    _thresholdSlider->setMaximum(255);
-    connect(_thresholdSlider, &QSlider::valueChanged, this, &EqualizationWidget::valueChanged);
-    _thresholdValueLabel = new QLabel;
-    _thresholdValueLabel->setFixedWidth(20);
+    _gridSizeEdit = new QLineEdit("8");
+    _gridSizeEdit->setValidator(new QIntValidator(2, 16, this));
+    connect(_gridSizeEdit, &QLineEdit::editingFinished, this, &EqualizationWidget::editChanged);
+    _clipLimitEdit = new QLineEdit("4");
+    _clipLimitEdit->setValidator(new QIntValidator(1, 100, this));
+    connect(_clipLimitEdit, &QLineEdit::editingFinished, this, &EqualizationWidget::editChanged);
 
-    QGridLayout* hLayout = new QGridLayout;
-    hLayout->addWidget(blockLabel, 0, 0);
-    hLayout->addWidget(blockSizeEdit, 0, 1);
-    hLayout->addWidget(_thresholdValueLabel);
+    QGridLayout* gridLayout = new QGridLayout;
+    gridLayout->addWidget(new QLabel(tr("Tiles Grid Size:")), 0, 0);
+    gridLayout->addWidget(_gridSizeEdit, 0, 1);
+    gridLayout->addWidget(new QLabel(tr("Clip Limit:")), 1, 0);
+    gridLayout->addWidget(_clipLimitEdit, 1, 1);
 
-    groupBox->setLayout(hLayout);
+    groupBox->setLayout(gridLayout);
 
     QVBoxLayout* vLayout = new QVBoxLayout;
     vLayout->addWidget(groupBox);
-    vLayout->addLayout(hLayout);
     setLayout(vLayout);
 }
 
-void EqualizationWidget::setThreshold(int threshold)
+void EqualizationWidget::editChanged()
 {
-    _thresholdSlider->setValue(threshold);
-}
+    int gridSize = _gridSizeEdit->text().toInt();
+    int clipLimit = _clipLimitEdit->text().toInt();
 
-void EqualizationWidget::valueChanged(int value)
-{
-    _thresholdValueLabel->setText(QString::number(value));
+    qDebug() << gridSize << clipLimit;
 
-    emit thresholdChanged(value);
+    emit valueChanged(gridSize, clipLimit);
 }
 
 EqualizationProcessor::EqualizationProcessor()
+    : _gridSize(8)
+    , _clipLimit(4)
 {
 
 }
@@ -64,13 +64,14 @@ EqualizationProcessor::~EqualizationProcessor()
 void EqualizationProcessor::initUI()
 {
     _widget = new EqualizationWidget;
-    connect(_widget, &EqualizationWidget::thresholdChanged, this, &EqualizationProcessor::thresholdChanged);
+    connect(_widget, &EqualizationWidget::valueChanged, this, &EqualizationProcessor::valueChanged);
     emit createWidget(_widget);
 }
 
-void EqualizationProcessor::thresholdChanged(int value)
+void EqualizationProcessor::valueChanged(int gridSize, int clipLimit)
 {
-    _threshold = value;
+    _gridSize = gridSize;
+    _clipLimit = clipLimit;
 
     process();
 
@@ -85,8 +86,10 @@ void EqualizationProcessor::processGeneralImage(GeneralImage* image)
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
     uchar* pImageData = imageEntity->bits();
+    uchar* pBackupImageData = _backupImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
+    int temp = imageEntity->depth();
 
     int* H = new int[width * height];
     float* S = new float[width * height];
@@ -95,21 +98,37 @@ void EqualizationProcessor::processGeneralImage(GeneralImage* image)
     {
         for (int i = 0; i < width; i++)
         {
-            int index = j * pitch + depth * i;
-            RGB2HSV(pImageData[index + 2], pImageData[index + 1], pImageData[index],
-                H[j * width + i], S[j * width + i], V[j * width + i]);
+            int index = j * pitch + i * depth;
+            if (depth < 3)
+            {
+                RGB2HSV(pBackupImageData[index], pBackupImageData[index], pBackupImageData[index],
+                    H[j * width + i], S[j * width + i], V[j * width + i]);
+            }
+            else
+            {
+                RGB2HSV(pBackupImageData[index + 2], pBackupImageData[index + 1], pBackupImageData[index],
+                    H[j * width + i], S[j * width + i], V[j * width + i]);
+            }
         }
     }
 
-    CLAHE(V, width, height, 0, 255, 8, 8, 256, 8);
+    CLAHE(V, width, height, 0, 255, _gridSize, _gridSize, 256, _clipLimit);
 
     for (int j = 0; j < height; j++)
     {
         for (int i = 0; i < width; i++)
         {
-            int index = j * pitch + depth * i;
-            HSV2RGB(H[j * width + i], S[j * width + i], V[j * width + i],
-                pImageData[index + 2], pImageData[index + 1], pImageData[index]);
+            int index = j * pitch + i * depth;
+            if (depth < 3)
+            {
+                HSV2RGB(H[j * width + i], S[j * width + i], V[j * width + i],
+                    pImageData[index], pImageData[index], pImageData[index]);
+            }
+            else
+            {
+                HSV2RGB(H[j * width + i], S[j * width + i], V[j * width + i],
+                    pImageData[index + 2], pImageData[index + 1], pImageData[index]);
+            }
         }
     }
 
@@ -131,7 +150,7 @@ void EqualizationProcessor::processMonoImage(MonoImage* image)
         temp[i] = byteImage[3 * i];
     }
 
-    CLAHE(temp, width, height, 0, 255, 8, 8, 256, 8);
+    CLAHE(temp, width, height, 0, 255, _gridSize, _gridSize, 256, _clipLimit);
 
     for (int i = 0; i < width * height; i++)
     {
