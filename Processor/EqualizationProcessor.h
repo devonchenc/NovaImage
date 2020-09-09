@@ -1,9 +1,13 @@
 #pragma once
 
-#include <QSlider>
-#include <QLabel>
+#include <QWidget>
 
 #include "BaseProcessor.h"
+
+QT_BEGIN_NAMESPACE
+class QSlider;
+class QLabel;
+QT_END_NAMESPACE
 
 class EqualizationWidget : public QWidget
 {
@@ -21,7 +25,6 @@ signals:
     void thresholdChanged(int value);
 
 private:
-    QLabel* _thresholdLabel;
     QSlider* _thresholdSlider;
     QLabel* _thresholdValueLabel;
 };

@@ -32,7 +32,7 @@ public:
 
     virtual void initUI() {}
 
-    void setImage(BaseImage* image) { _image = image; }
+    void setImage(BaseImage* image);
 
     // Process image
     void process();
@@ -55,7 +55,8 @@ signals:
     void createWidget(QWidget* widget);
 
 protected:
-    BaseImage* _image;
+    BaseImage* _currentImage;
+    BaseImage* _backupImage;
 
 private:
     static BaseProcessor* _currentProcessor;

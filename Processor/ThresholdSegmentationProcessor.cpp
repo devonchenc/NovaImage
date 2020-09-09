@@ -1,5 +1,7 @@
 #include "ThresholdSegmentationProcessor.h"
 
+#include <QLabel>
+#include <QSlider>
 #include <QHBoxLayout>
 #include <QGroupBox>
 
@@ -12,7 +14,6 @@ ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
 {
     QGroupBox* groupBox = new QGroupBox(tr("Threshold Segmentation"));
 
-    _thresholdLabel = new QLabel(tr("Threshold:"));
     _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
     _thresholdSlider->setMinimum(0);
     _thresholdSlider->setMaximum(255);
@@ -21,7 +22,7 @@ ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
     _thresholdValueLabel->setFixedWidth(20);
 
     QHBoxLayout* hLayout = new QHBoxLayout;
-    hLayout->addWidget(_thresholdLabel);
+    hLayout->addWidget(new QLabel(tr("Threshold:")));
     hLayout->addWidget(_thresholdSlider);
     hLayout->addWidget(_thresholdValueLabel);
 
@@ -62,16 +63,16 @@ void ThresholdSegmentationProcessor::initUI()
     connect(_widget, &ThresholdSegmentationWidget::thresholdChanged, this, &ThresholdSegmentationProcessor::thresholdChanged);
     emit createWidget(_widget);
 
-    if (_image)
+    if (_currentImage)
     {
-        int width = _image->width();
-        int height = _image->height();
-        if (dynamic_cast<MonoImage*>(_image))
+        int width = _currentImage->width();
+        int height = _currentImage->height();
+        if (dynamic_cast<MonoImage*>(_currentImage))
         {
-            MonoImage* monoImage = dynamic_cast<MonoImage*>(_image);
+            MonoImage* monoImage = dynamic_cast<MonoImage*>(_currentImage);
             monoImage->getBYTEImage(width, height);
         }
-        int threshold = findOtsuThreshold(_image->getGrayPixelArray(), width * height);
+        int threshold = findOtsuThreshold(_currentImage->getGrayPixelArray(), width * height);
         _widget->setThreshold(threshold);
     }
 }
@@ -93,7 +94,7 @@ void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
     uchar* pImageData = imageEntity->bits();
-    uchar* pBackupImageData = image->getBackupImage()->bits();
+    uchar* pBackupImageData = _backupImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 

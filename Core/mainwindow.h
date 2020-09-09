@@ -118,7 +118,7 @@ public slots:
 
     void notify(const QString& title, const QString& message, int type);
 
-    void createProcessorWidget(QWidget* widget);
+    void createProcessorWidget(QWidget* processorWidget);
 
 private:
     ToolBar* _toolBar;

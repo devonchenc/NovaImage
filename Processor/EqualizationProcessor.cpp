@@ -1,7 +1,10 @@
 #include "EqualizationProcessor.h"
 
-#include <QHBoxLayout>
+#include <QLabel>
+#include <QSlider>
+#include <QGridLayout>
 #include <QGroupBox>
+#include <QLineEdit>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
@@ -13,7 +16,8 @@ EqualizationWidget::EqualizationWidget(QWidget* parent)
 {
     QGroupBox* groupBox = new QGroupBox(tr("Equalization"));
 
-    _thresholdLabel = new QLabel(tr("Threshold:"));
+    QLabel* blockLabel = new QLabel(tr("Block Size:"));
+    QLineEdit* blockSizeEdit = new QLineEdit;
     _thresholdSlider = new QSlider(Qt::Orientation::Horizontal);
     _thresholdSlider->setMinimum(0);
     _thresholdSlider->setMaximum(255);
@@ -21,9 +25,9 @@ EqualizationWidget::EqualizationWidget(QWidget* parent)
     _thresholdValueLabel = new QLabel;
     _thresholdValueLabel->setFixedWidth(20);
 
-    QHBoxLayout* hLayout = new QHBoxLayout;
-    hLayout->addWidget(_thresholdLabel);
-    hLayout->addWidget(_thresholdSlider);
+    QGridLayout* hLayout = new QGridLayout;
+    hLayout->addWidget(blockLabel, 0, 0);
+    hLayout->addWidget(blockSizeEdit, 0, 1);
     hLayout->addWidget(_thresholdValueLabel);
 
     groupBox->setLayout(hLayout);

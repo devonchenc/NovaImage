@@ -6,6 +6,7 @@
 #include <QDockWidget>
 #include <QHBoxLayout>
 #include <QToolButton>
+#include <QPushButton>
 #include <QMenuBar>
 #include <QToolBar>
 #include <QStatusBar>
@@ -838,7 +839,7 @@ void MainWindow::notify(const QString& title, const QString& message, int type)
     _notification->addNotification(title, message, static_cast<NotificationParams::Type>(type));
 }
 
-void MainWindow::createProcessorWidget(QWidget* widget)
+void MainWindow::createProcessorWidget(QWidget* processorWidget)
 {
     QWidget* oldWidget = _imageProcessingDockWidget->widget();
     if (oldWidget)
@@ -846,6 +847,17 @@ void MainWindow::createProcessorWidget(QWidget* widget)
     // TODO
     // delete widget;
     }
+
+    QPushButton* applyButton = new QPushButton(tr("&Apply"));
+
+    QVBoxLayout* vLayout = new QVBoxLayout;
+    vLayout->addWidget(processorWidget);
+    vLayout->addStretch();
+    vLayout->addWidget(applyButton);
+
+    QWidget* widget = new QWidget;
+    widget->setLayout(vLayout);
+
     _imageProcessingDockWidget->setWidget(widget);
 }
 
