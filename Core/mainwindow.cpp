@@ -128,6 +128,11 @@ QVector<QAction*> MainWindow::mouseActionVector()
     return _toolBar->actionVector();
 }
 
+LevelsProcessor* MainWindow::getLevelsProcessor()
+{
+    return _levelsWidget->getProcessor();
+}
+
 void MainWindow::initUI()
 {
     createActions();
@@ -343,11 +348,11 @@ void MainWindow::createToolWidget()
     CommonWidget* common = new CommonWidget();
     createDockWidget(common);
 
-    CurvesWidget* curves = new CurvesWidget();
-    QDockWidget* curveDockWidget = createDockWidget(curves);
+    _curvesWidget = new CurvesWidget();
+    QDockWidget* curveDockWidget = createDockWidget(_curvesWidget);
 
-    LevelsWidget* levels = new LevelsWidget();
-    QDockWidget* levelDockWidget = createDockWidget(levels);
+    _levelsWidget = new LevelsWidget();
+    QDockWidget* levelDockWidget = createDockWidget(_levelsWidget);
 
     tabifyDockWidget(curveDockWidget, levelDockWidget);
 

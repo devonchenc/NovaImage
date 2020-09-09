@@ -6,7 +6,6 @@
 #include <QGroupBox>
 #include <QLineEdit>
 #include <QIntValidator>
-#include <QDebug>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
@@ -42,8 +41,6 @@ void EqualizationWidget::editChanged()
 {
     int gridSize = _gridSizeEdit->text().toInt();
     int clipLimit = _clipLimitEdit->text().toInt();
-
-    qDebug() << gridSize << clipLimit;
 
     emit valueChanged(gridSize, clipLimit);
 }
@@ -144,10 +141,14 @@ void EqualizationProcessor::processMonoImage(MonoImage* image)
     int width, height;
     uchar* byteImage = image->getBYTEImage(width, height);
 
+    MonoImage* backupMonoImage = dynamic_cast<MonoImage*>(_backupImage);
+    backupMonoImage->setViewType(image->viewType());
+    uchar* backupByteImage = backupMonoImage->getBYTEImage(width, height);
+
     uchar* temp = new uchar[width * height];
     for (int i = 0; i < width * height; i++)
     {
-        temp[i] = byteImage[3 * i];
+        temp[i] = backupByteImage[3 * i];
     }
 
     CLAHE(temp, width, height, 0, 255, _gridSize, _gridSize, 256, _clipLimit);

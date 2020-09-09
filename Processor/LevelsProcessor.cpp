@@ -41,22 +41,10 @@ void LevelsProcessor::processGeneralImage(GeneralImage* image)
         {
             uchar* pPixel = pImageData + j * pitch + i * depth;
             uchar* pBackupPixel = pBackupImageData + j * pitch + i * depth;
-            switch (channel)
+
+            for (int n = 0; n < qMin(depth, 3); n++)
             {
-            case 0:
-                *(pPixel) = image->calcNewColor(*(pBackupPixel), _bottom, _mid, _top, minColor, maxColor);
-                *(pPixel + 1) = image->calcNewColor(*(pBackupPixel + 1), _bottom, _mid, _top, minColor, maxColor);
-                *(pPixel + 2) = image->calcNewColor(*(pBackupPixel + 2), _bottom, _mid, _top, minColor, maxColor);
-                break;
-            case 1:
-                *(pPixel + 2) = image->calcNewColor(*(pBackupPixel + 2), _bottom, _mid, _top, minColor, maxColor);
-                break;
-            case 2:
-                *(pPixel + 1) = image->calcNewColor(*(pBackupPixel + 1), _bottom, _mid, _top, minColor, maxColor);
-                break;
-            case 3:
-                *(pPixel) = image->calcNewColor(*(pBackupPixel), _bottom, _mid, _top, minColor, maxColor);
-                break;
+                pPixel[n] = image->calcNewColor(pBackupPixel[n], _bottom, _mid, _top, minColor, maxColor);
             }
         }
     }

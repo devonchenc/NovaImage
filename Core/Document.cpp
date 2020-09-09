@@ -183,6 +183,11 @@ void Document::closeFile()
     _undoStack.reset();
 
     _modified = false;
+
+    if (BaseProcessor::getProcessor())
+    {
+        BaseProcessor::getProcessor()->setImage(nullptr);
+    }
 }
 /*
 void Document::copyImage(const std::shared_ptr<BaseImage>& image)
@@ -357,10 +362,10 @@ void Document::applyImageWidthAndLevel()
     float windowWidth = getActiveView()->windowWidth();
     float windowLevel = getActiveView()->windowLevel();
 
-    LevelsProcessor processor;
-    processor.setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
-    processor.setImage(getImage());
-    processor.process();
+    LevelsProcessor* processor = _mainWindow->getLevelsProcessor();
+    processor->setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
+    processor->setImage(getImage());
+    processor->process();
 
     repaintView();
 }

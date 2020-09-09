@@ -24,6 +24,9 @@ class ToolBar;
 class PluginInterface;
 class NotificationLayout;
 class RecentFiles;
+class CurvesWidget;
+class LevelsWidget;
+class LevelsProcessor;
 
 class MainWindow : public QMainWindow
 {
@@ -50,6 +53,8 @@ public:
     void setToolBoxWidgetVisible(bool line, bool text);
 
     QVector<QAction*> mouseActionVector();
+
+    LevelsProcessor* getLevelsProcessor();
 
 protected:
     void changeEvent(QEvent* event) override;
@@ -167,6 +172,9 @@ private:
     QVector<QTranslator*> _vecPluginTranslator;
 
     QVector<PluginInterface*> _vecPlugin;
+
+    CurvesWidget* _curvesWidget;
+    LevelsWidget* _levelsWidget;
 
     QVector<QDockWidget*> _vecDockWidget;
     QDockWidget* _toolboxDockWidget;

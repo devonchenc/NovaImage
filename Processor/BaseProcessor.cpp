@@ -28,6 +28,10 @@ BaseProcessor::~BaseProcessor()
         delete _backupImage;
         _backupImage = nullptr;
     }
+    if (this == _currentProcessor)
+    {
+        _currentProcessor = nullptr;
+    }
 }
 
 BaseProcessor* BaseProcessor::getProcessor()
@@ -41,8 +45,12 @@ void BaseProcessor::setImage(BaseImage* image)
     if (_backupImage)
     {
         delete _backupImage;
+        _backupImage = nullptr;
     }
-    _backupImage = image->copyImage();
+    if (image)
+    {
+        _backupImage = image->copyImage();
+    }
 }
 
 void BaseProcessor::process()

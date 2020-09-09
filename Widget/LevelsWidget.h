@@ -21,6 +21,8 @@ public:
 
     void reset() override;
 
+    LevelsProcessor* getProcessor() { return _processor; }
+
 public slots:
     void updateHistogram();
 
