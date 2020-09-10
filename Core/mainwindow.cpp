@@ -33,6 +33,7 @@
 #include "../Widget/CommonWidget.h"
 #include "../Widget/CurvesWidget.h"
 #include "../Widget/LevelsWidget.h"
+#include "../Widget/ProcessorWidget.h"
 #include "../Widget/SettingsDialog.h"
 #include "../Notification/NotificationLayout.h"
 
@@ -345,8 +346,8 @@ void MainWindow::createToolWidget()
     connect(_axialView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
     connect(this, &MainWindow::setToolBoxVisible, toolbox, &ToolBoxWidget::setWidgetVisible);
 
-    CommonWidget* common = new CommonWidget();
-    createDockWidget(common);
+    CommonWidget* commonWidget = new CommonWidget();
+    createDockWidget(commonWidget);
 
     _curvesWidget = new CurvesWidget();
     QDockWidget* curveDockWidget = createDockWidget(_curvesWidget);
@@ -354,10 +355,12 @@ void MainWindow::createToolWidget()
     _levelsWidget = new LevelsWidget();
     QDockWidget* levelDockWidget = createDockWidget(_levelsWidget);
 
-    tabifyDockWidget(curveDockWidget, levelDockWidget);
+    ProcessorWidget* processorWidget = new ProcessorWidget();
+    _imageProcessingDockWidget = createDockWidget(processorWidget);
 
-    _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
-    _vecDockWidget.append(_imageProcessingDockWidget);
+//    _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
+//    _vecDockWidget.append(_imageProcessingDockWidget);
+    tabifyDockWidget(curveDockWidget, levelDockWidget);
     tabifyDockWidget(levelDockWidget, _imageProcessingDockWidget);
 
 //    curveDockWidget->raise();
@@ -837,23 +840,26 @@ void MainWindow::notify(const QString& title, const QString& message, int type)
 
 void MainWindow::createProcessorWidget(QWidget* processorWidget)
 {
-    QWidget* oldWidget = _imageProcessingDockWidget->widget();
+    ProcessorWidget* widget = qobject_cast<ProcessorWidget*>(_imageProcessingDockWidget->widget());
+/*    QWidget* oldWidget = ;
     if (oldWidget)
     {
         delete oldWidget;
-    }
+    }*/
 
-    QPushButton* applyButton = new QPushButton(tr("&Apply"));
+    widget->setProcessorWidget(processorWidget);
+
+/*    QPushButton* applyButton = new QPushButton(tr("&Apply"));
 
     QVBoxLayout* vLayout = new QVBoxLayout;
     vLayout->addWidget(processorWidget);
     vLayout->addStretch();
-    vLayout->addWidget(applyButton);
+    vLayout->addWidget(applyButton);*/
 
-    QWidget* widget = new QWidget;
-    widget->setLayout(vLayout);
+//    QWidget* widget = new QWidget;
+//    widget->setLayout(vLayout);
 
-    _imageProcessingDockWidget->setWidget(widget);
+ //   _imageProcessingDockWidget->setWidget(widget);
 }
 
 void MainWindow::changeEvent(QEvent* event)

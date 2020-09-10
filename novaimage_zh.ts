@@ -5,19 +5,19 @@
     <name>CommonWidget</name>
     <message>
         <location filename="Widget/CommonWidget.cpp" line="12"/>
-        <location filename="Widget/CommonWidget.cpp" line="81"/>
+        <location filename="Widget/CommonWidget.cpp" line="78"/>
         <source>Common</source>
         <translation type="unfinished">通用</translation>
     </message>
     <message>
         <location filename="Widget/CommonWidget.cpp" line="14"/>
-        <location filename="Widget/CommonWidget.cpp" line="83"/>
+        <location filename="Widget/CommonWidget.cpp" line="80"/>
         <source>Bright</source>
         <translation type="unfinished">亮度</translation>
     </message>
     <message>
         <location filename="Widget/CommonWidget.cpp" line="15"/>
-        <location filename="Widget/CommonWidget.cpp" line="84"/>
+        <location filename="Widget/CommonWidget.cpp" line="81"/>
         <source>Contrast</source>
         <translation type="unfinished">对比度</translation>
     </message>
@@ -26,95 +26,95 @@
     <name>CurvesWidget</name>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="21"/>
-        <location filename="Widget/CurvesWidget.cpp" line="264"/>
+        <location filename="Widget/CurvesWidget.cpp" line="261"/>
         <source>Curves</source>
         <translation type="unfinished">曲线</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="23"/>
-        <location filename="Widget/CurvesWidget.cpp" line="266"/>
+        <location filename="Widget/CurvesWidget.cpp" line="263"/>
         <source>Channel</source>
         <translation type="unfinished">通道</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="26"/>
-        <location filename="Widget/CurvesWidget.cpp" line="274"/>
+        <location filename="Widget/CurvesWidget.cpp" line="271"/>
         <source>Red</source>
         <translation type="unfinished">红</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="27"/>
-        <location filename="Widget/CurvesWidget.cpp" line="275"/>
+        <location filename="Widget/CurvesWidget.cpp" line="272"/>
         <source>Green</source>
         <translation type="unfinished">绿</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="28"/>
-        <location filename="Widget/CurvesWidget.cpp" line="276"/>
+        <location filename="Widget/CurvesWidget.cpp" line="273"/>
         <source>Blue</source>
         <translation type="unfinished">蓝</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="30"/>
-        <location filename="Widget/CurvesWidget.cpp" line="267"/>
+        <location filename="Widget/CurvesWidget.cpp" line="264"/>
         <source>&amp;Reset</source>
         <translation type="unfinished">重置(&amp;R)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="32"/>
-        <location filename="Widget/CurvesWidget.cpp" line="268"/>
+        <location filename="Widget/CurvesWidget.cpp" line="265"/>
         <source>R&amp;everse</source>
         <translation type="unfinished">翻转(&amp;E)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="41"/>
-        <location filename="Widget/CurvesWidget.cpp" line="269"/>
+        <location filename="Widget/CurvesWidget.cpp" line="266"/>
         <source>Input:</source>
         <translation type="unfinished">输入：</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="43"/>
-        <location filename="Widget/CurvesWidget.cpp" line="270"/>
+        <location filename="Widget/CurvesWidget.cpp" line="267"/>
         <source>Output:</source>
         <translation type="unfinished">输出：</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="53"/>
-        <location filename="Widget/CurvesWidget.cpp" line="278"/>
+        <location filename="Widget/CurvesWidget.cpp" line="275"/>
         <source>&amp;Curve</source>
         <translation type="unfinished">曲线(&amp;C)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="54"/>
-        <location filename="Widget/CurvesWidget.cpp" line="279"/>
+        <location filename="Widget/CurvesWidget.cpp" line="276"/>
         <source>&amp;Line</source>
         <translation type="unfinished">线性(&amp;L)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="64"/>
-        <location filename="Widget/CurvesWidget.cpp" line="281"/>
+        <location filename="Widget/CurvesWidget.cpp" line="278"/>
         <source>&amp;Save</source>
         <translation type="unfinished">保存(&amp;S)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="66"/>
-        <location filename="Widget/CurvesWidget.cpp" line="282"/>
+        <location filename="Widget/CurvesWidget.cpp" line="279"/>
         <source>L&amp;oad</source>
         <translation type="unfinished">加载(&amp;O)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="160"/>
+        <location filename="Widget/CurvesWidget.cpp" line="157"/>
         <source>Save Curve</source>
         <translation type="unfinished">保存曲线</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="160"/>
-        <location filename="Widget/CurvesWidget.cpp" line="188"/>
+        <location filename="Widget/CurvesWidget.cpp" line="157"/>
+        <location filename="Widget/CurvesWidget.cpp" line="185"/>
         <source>Curve file (*.cur)</source>
         <translation type="unfinished">曲线 (*.cur)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="188"/>
+        <location filename="Widget/CurvesWidget.cpp" line="185"/>
         <source>Load Curve</source>
         <translation type="unfinished">载入曲线</translation>
     </message>
@@ -153,17 +153,17 @@
 <context>
     <name>EqualizationWidget</name>
     <message>
-        <location filename="Processor/EqualizationProcessor.cpp" line="19"/>
+        <location filename="Processor/EqualizationProcessor.cpp" line="18"/>
         <source>Equalization</source>
         <translation type="unfinished">直方图均衡化</translation>
     </message>
     <message>
-        <location filename="Processor/EqualizationProcessor.cpp" line="29"/>
+        <location filename="Processor/EqualizationProcessor.cpp" line="28"/>
         <source>Tiles Grid Size:</source>
         <translation type="unfinished">网格尺寸：</translation>
     </message>
     <message>
-        <location filename="Processor/EqualizationProcessor.cpp" line="31"/>
+        <location filename="Processor/EqualizationProcessor.cpp" line="30"/>
         <source>Clip Limit:</source>
         <translation type="unfinished">对比度阈值：</translation>
     </message>
@@ -240,258 +240,252 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="Core/mainwindow.cpp" line="146"/>
-        <location filename="Core/mainwindow.cpp" line="863"/>
+        <location filename="Core/mainwindow.cpp" line="152"/>
+        <location filename="Core/mainwindow.cpp" line="875"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="148"/>
-        <location filename="Core/mainwindow.cpp" line="864"/>
+        <location filename="Core/mainwindow.cpp" line="154"/>
+        <location filename="Core/mainwindow.cpp" line="876"/>
         <source>&amp;Save As...</source>
         <translation type="unfinished">另存为(&amp;A)...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="150"/>
-        <location filename="Core/mainwindow.cpp" line="865"/>
+        <location filename="Core/mainwindow.cpp" line="156"/>
+        <location filename="Core/mainwindow.cpp" line="877"/>
         <source>&amp;Close</source>
         <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="151"/>
-        <location filename="Core/mainwindow.cpp" line="866"/>
+        <location filename="Core/mainwindow.cpp" line="157"/>
+        <location filename="Core/mainwindow.cpp" line="878"/>
         <source>&amp;Print...</source>
         <translation type="unfinished">打印(&amp;P)...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="153"/>
-        <location filename="Core/mainwindow.cpp" line="867"/>
+        <location filename="Core/mainwindow.cpp" line="159"/>
+        <location filename="Core/mainwindow.cpp" line="879"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">退出(&amp;X)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="155"/>
-        <location filename="Core/mainwindow.cpp" line="869"/>
+        <location filename="Core/mainwindow.cpp" line="161"/>
+        <location filename="Core/mainwindow.cpp" line="881"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">撤销(&amp;U)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="157"/>
-        <location filename="Core/mainwindow.cpp" line="870"/>
+        <location filename="Core/mainwindow.cpp" line="163"/>
+        <location filename="Core/mainwindow.cpp" line="882"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">重做(&amp;R)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="159"/>
-        <location filename="Core/mainwindow.cpp" line="871"/>
+        <location filename="Core/mainwindow.cpp" line="165"/>
+        <location filename="Core/mainwindow.cpp" line="883"/>
         <source>R&amp;estore</source>
         <translation type="unfinished">恢复图像(&amp;E)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="161"/>
-        <location filename="Core/mainwindow.cpp" line="872"/>
+        <location filename="Core/mainwindow.cpp" line="167"/>
+        <location filename="Core/mainwindow.cpp" line="884"/>
         <source>&amp;Preferences...</source>
         <translation type="unfinished">选项(&amp;R)...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="163"/>
-        <location filename="Core/mainwindow.cpp" line="874"/>
+        <location filename="Core/mainwindow.cpp" line="169"/>
+        <location filename="Core/mainwindow.cpp" line="886"/>
         <source>Single View</source>
         <translation type="unfinished">单视图</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="167"/>
-        <location filename="Core/mainwindow.cpp" line="875"/>
+        <location filename="Core/mainwindow.cpp" line="173"/>
+        <location filename="Core/mainwindow.cpp" line="887"/>
         <source>Three View</source>
         <translation type="unfinished">三视图</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="171"/>
-        <location filename="Core/mainwindow.cpp" line="876"/>
+        <location filename="Core/mainwindow.cpp" line="177"/>
+        <location filename="Core/mainwindow.cpp" line="888"/>
         <source>Volume View</source>
         <translation type="unfinished">体视图</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="175"/>
-        <location filename="Core/mainwindow.cpp" line="877"/>
+        <location filename="Core/mainwindow.cpp" line="181"/>
+        <location filename="Core/mainwindow.cpp" line="889"/>
         <source>Link View</source>
         <translation type="unfinished">视图联动</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="187"/>
-        <location filename="Core/mainwindow.cpp" line="878"/>
+        <location filename="Core/mainwindow.cpp" line="193"/>
+        <location filename="Core/mainwindow.cpp" line="890"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="189"/>
-        <location filename="Core/mainwindow.cpp" line="879"/>
+        <location filename="Core/mainwindow.cpp" line="195"/>
+        <location filename="Core/mainwindow.cpp" line="891"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="191"/>
-        <location filename="Core/mainwindow.cpp" line="880"/>
+        <location filename="Core/mainwindow.cpp" line="197"/>
+        <location filename="Core/mainwindow.cpp" line="892"/>
         <source>&amp;Prev Image</source>
         <translation type="unfinished">前一张图像(&amp;P)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="192"/>
-        <location filename="Core/mainwindow.cpp" line="881"/>
+        <location filename="Core/mainwindow.cpp" line="198"/>
+        <location filename="Core/mainwindow.cpp" line="893"/>
         <source>&amp;Next Image</source>
         <translation type="unfinished">后一张图像(&amp;N)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="205"/>
-        <location filename="Core/mainwindow.cpp" line="883"/>
+        <location filename="Core/mainwindow.cpp" line="211"/>
+        <location filename="Core/mainwindow.cpp" line="895"/>
         <source>&amp;Threshold Segmentation</source>
         <translation type="unfinished">阈值分割(&amp;T)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="206"/>
-        <location filename="Core/mainwindow.cpp" line="884"/>
+        <location filename="Core/mainwindow.cpp" line="212"/>
+        <location filename="Core/mainwindow.cpp" line="896"/>
         <source>&amp;Histogram Equalization</source>
         <translation type="unfinished">直方图均衡化(&amp;H)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="208"/>
-        <location filename="Core/mainwindow.cpp" line="886"/>
+        <location filename="Core/mainwindow.cpp" line="214"/>
+        <location filename="Core/mainwindow.cpp" line="898"/>
         <source>&amp;User&apos;s Guide</source>
         <translation type="unfinished">用户手册(&amp;U)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="210"/>
-        <location filename="Core/mainwindow.cpp" line="887"/>
+        <location filename="Core/mainwindow.cpp" line="216"/>
+        <location filename="Core/mainwindow.cpp" line="899"/>
         <source>&amp;About</source>
         <translation type="unfinished">关于(&amp;A)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="214"/>
-        <location filename="Core/mainwindow.cpp" line="857"/>
+        <location filename="Core/mainwindow.cpp" line="220"/>
+        <location filename="Core/mainwindow.cpp" line="869"/>
         <source>&amp;File</source>
         <translation type="unfinished">文件(&amp;F)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="222"/>
-        <location filename="Core/mainwindow.cpp" line="858"/>
+        <location filename="Core/mainwindow.cpp" line="228"/>
+        <location filename="Core/mainwindow.cpp" line="870"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">编辑(&amp;E)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="230"/>
-        <location filename="Core/mainwindow.cpp" line="859"/>
+        <location filename="Core/mainwindow.cpp" line="236"/>
+        <location filename="Core/mainwindow.cpp" line="871"/>
         <source>&amp;View</source>
         <translation type="unfinished">视图(&amp;V)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="242"/>
+        <location filename="Core/mainwindow.cpp" line="248"/>
         <source>&amp;Language</source>
         <translation type="unfinished">语言Language(&amp;L)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="246"/>
-        <location filename="Core/mainwindow.cpp" line="860"/>
+        <location filename="Core/mainwindow.cpp" line="252"/>
+        <location filename="Core/mainwindow.cpp" line="872"/>
         <source>&amp;Image Processing</source>
         <translation type="unfinished">图像处理(&amp;I)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="251"/>
-        <location filename="Core/mainwindow.cpp" line="861"/>
+        <location filename="Core/mainwindow.cpp" line="257"/>
+        <location filename="Core/mainwindow.cpp" line="873"/>
         <source>&amp;Help</source>
         <translation type="unfinished">帮助(&amp;H)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="286"/>
+        <location filename="Core/mainwindow.cpp" line="292"/>
         <source>Toolbar</source>
         <translation type="unfinished">工具栏</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="291"/>
-        <location filename="Core/mainwindow.cpp" line="292"/>
+        <location filename="Core/mainwindow.cpp" line="297"/>
+        <location filename="Core/mainwindow.cpp" line="298"/>
         <source>None</source>
         <translation type="unfinished">&lt;无&gt;</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="354"/>
-        <location filename="Core/mainwindow.cpp" line="889"/>
+        <location filename="Core/mainwindow.cpp" line="901"/>
         <source>Image Processing</source>
         <translation type="unfinished">图像处理</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="375"/>
+        <location filename="Core/mainwindow.cpp" line="384"/>
         <source>Open Image</source>
         <translation type="unfinished">打开图像</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="378"/>
+        <location filename="Core/mainwindow.cpp" line="387"/>
         <source>All support file (*.dr *.ndr *.dcm *.raw *.dat *.png *.bmp *.jpg *.tif)</source>
         <translation type="unfinished">所有支持的文件 (*.dr *.ndr *.dcm *.raw *.dat *.png *.bmp *.jpg *.tif)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="379"/>
+        <location filename="Core/mainwindow.cpp" line="388"/>
         <source>Scan file (*.dr *.ndr)</source>
         <translation type="unfinished">扫描文件 (*.dr *.ndr)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="382"/>
+        <location filename="Core/mainwindow.cpp" line="391"/>
         <source>Image file (*.png *.bmp *.jpg *.tif)</source>
         <translation type="unfinished">图像文件 (*.png *.bmp *.jpg *.tif)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="703"/>
+        <location filename="Core/mainwindow.cpp" line="712"/>
         <source>Save file</source>
         <translation type="unfinished">保存文件</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="704"/>
+        <location filename="Core/mainwindow.cpp" line="713"/>
         <source>Do you want to save the changes you made to %1?</source>
         <translation type="unfinished">是否将更改保存到 %1？</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="840"/>
-        <source>&amp;Apply</source>
-        <translation type="unfinished">应用(&amp;A)</translation>
-    </message>
-    <message>
-        <location filename="Core/mainwindow.cpp" line="380"/>
-        <location filename="Core/mainwindow.cpp" line="395"/>
+        <location filename="Core/mainwindow.cpp" line="389"/>
+        <location filename="Core/mainwindow.cpp" line="404"/>
         <source>DICOM file (*.dcm)</source>
         <translation type="unfinished">DICOM 文件 (*.dcm)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="381"/>
-        <location filename="Core/mainwindow.cpp" line="405"/>
+        <location filename="Core/mainwindow.cpp" line="390"/>
+        <location filename="Core/mainwindow.cpp" line="414"/>
         <source>Raw file (*.raw *.dat)</source>
         <translation type="unfinished">Raw 文件 (*.raw *.dat)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="383"/>
+        <location filename="Core/mainwindow.cpp" line="392"/>
         <source>Any file (*)</source>
         <translation type="unfinished">所有文件 (*)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="430"/>
+        <location filename="Core/mainwindow.cpp" line="439"/>
         <source>RAW image (*.raw)</source>
         <translation type="unfinished">RAW 图像 (*.raw)</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="394"/>
+        <location filename="Core/mainwindow.cpp" line="403"/>
         <source>Open DICOM Image</source>
         <translation type="unfinished">打开 DICOM 文件</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="404"/>
+        <location filename="Core/mainwindow.cpp" line="413"/>
         <source>Open Raw Image</source>
         <translation type="unfinished">打开 RAW 图像</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="416"/>
-        <location filename="Core/mainwindow.cpp" line="429"/>
+        <location filename="Core/mainwindow.cpp" line="425"/>
+        <location filename="Core/mainwindow.cpp" line="438"/>
         <source>Save Image As ...</source>
         <translation type="unfinished">图像另存为...</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="417"/>
+        <location filename="Core/mainwindow.cpp" line="426"/>
         <source>JPG image (*.jpg);;PNG image (*.png);;BMP image (*.bmp);;TIFF image (*.tif);;DICOM image (*.dcm);;RAW image (*.raw)</source>
         <translation type="unfinished">JPG 图像 (*.jpg);;PNG 图像 (*.png);;BMP 图像 (*.bmp);;TIFF 图像 (*.tif);;DICOM 图像 (*.dcm);;RAW 图像 (*.raw)</translation>
     </message>
@@ -531,6 +525,19 @@
         <location filename="Widget/PlotDialog.cpp" line="101"/>
         <source>Width:</source>
         <translation type="unfinished">宽度：</translation>
+    </message>
+</context>
+<context>
+    <name>ProcessorWidget</name>
+    <message>
+        <location filename="Widget/ProcessorWidget.cpp" line="12"/>
+        <source>Image Processing</source>
+        <translation type="unfinished">图像处理</translation>
+    </message>
+    <message>
+        <location filename="Widget/ProcessorWidget.cpp" line="14"/>
+        <source>&amp;Apply</source>
+        <translation type="unfinished">应用(&amp;A)</translation>
     </message>
 </context>
 <context>

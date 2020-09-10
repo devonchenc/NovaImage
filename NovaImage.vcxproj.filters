@@ -204,6 +204,9 @@
     <ClCompile Include="Processor\CLAHE.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Widget\ProcessorWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -325,6 +328,9 @@
     </QtMoc>
     <QtMoc Include="Processor\EqualizationProcessor.h">
       <Filter>Processor</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\ProcessorWidget.h">
+      <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

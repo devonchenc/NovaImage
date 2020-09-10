@@ -67,6 +67,7 @@
     <ClCompile Include="Widget\MagnifierWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
     <ClCompile Include="Widget\PlotDialog.cpp" />
+    <ClCompile Include="Widget\ProcessorWidget.cpp" />
     <ClCompile Include="Widget\ProgressDialog.cpp" />
     <ClCompile Include="Widget\RawParameterDialog.cpp" />
     <ClCompile Include="Widget\SettingsDialog.cpp" />
@@ -124,6 +125,7 @@
     <QtMoc Include="Widget\SettingsDialog.h" />
     <QtMoc Include="Widget\PlotDialog.h" />
     <QtMoc Include="Widget\ProgressDialog.h" />
+    <QtMoc Include="Widget\ProcessorWidget.h" />
     <ClInclude Include="Widget\WidgetManager.h" />
     <QtMoc Include="Widget\LevelsWidget.h" />
     <QtMoc Include="Widget\HistogramWidget.h" />
