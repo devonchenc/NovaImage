@@ -5,8 +5,9 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
-HistogramProcessor::HistogramProcessor()
-    : _array(nullptr)
+HistogramProcessor::HistogramProcessor(QObject* parent)
+    : BaseProcessor(false, parent)
+    , _array(nullptr)
 {
 
 }

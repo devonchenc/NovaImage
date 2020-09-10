@@ -32,7 +32,7 @@ CurvesWidget::CurvesWidget(QWidget* parent)
     _reverseButton = new QPushButton(tr("R&everse"));
     connect(_reverseButton, &QPushButton::clicked, this, &CurvesWidget::clickReverse);
 
-    QHBoxLayout* layoutHead = new QHBoxLayout();
+    QHBoxLayout* layoutHead = new QHBoxLayout;
     layoutHead->addWidget(_channelLabel);
     layoutHead->addWidget(_channelComboBox);
     layoutHead->addWidget(_resetButton);
@@ -68,34 +68,31 @@ CurvesWidget::CurvesWidget(QWidget* parent)
     QVBoxLayout* vbox2 = new QVBoxLayout();
     vbox2->addWidget(_saveButton);
     vbox2->addWidget(_loadButton);
-    QHBoxLayout* layoutBottom = new QHBoxLayout();
+    QHBoxLayout* layoutBottom = new QHBoxLayout;
     layoutBottom->addWidget(groupBox1);
     layoutBottom->addWidget(groupBox2);
     layoutBottom->addLayout(vbox2);
 
-    _square = new CurveSquare();
+    _square = new CurveSquare;
     connect(_square, &CurveSquare::resize, this, &CurvesWidget::resizeSquare);
     connect(_square, &CurveSquare::updateImage, this, &CurvesWidget::updateImage);
     connect(_square, &CurveSquare::updateLabelText, this, &CurvesWidget::updateLabelText);
 
-    QVBoxLayout* layout = new QVBoxLayout();
+    QVBoxLayout* layout = new QVBoxLayout;
     layout->addLayout(layoutHead);
     layout->addWidget(_square);
     layout->addLayout(layoutBottom);
 
     setLayout(layout);
 
-    _processor = new CurvesProcessor;
+    _processor = new CurvesProcessor(this);
     _processor->setArray(_square->getArraySize(), _square->getIntensity(), _square->getRed(), _square->getGreen(), _square->getBlue());
     _processor->setChannel(_square->getChannel());
 }
 
 CurvesWidget::~CurvesWidget()
 {
-    if (_processor)
-    {
-        delete _processor;
-    }
+
 }
 
 void CurvesWidget::init()

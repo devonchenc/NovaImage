@@ -44,7 +44,7 @@ HistogramWidget::HistogramWidget(QWidget* parent)
 
     allocateMemory();
 
-    _processor = new HistogramProcessor;
+    _processor = new HistogramProcessor(this);
 }
 
 HistogramWidget::~HistogramWidget()

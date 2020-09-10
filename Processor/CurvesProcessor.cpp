@@ -4,7 +4,8 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
-CurvesProcessor::CurvesProcessor()
+CurvesProcessor::CurvesProcessor(QObject* parent)
+    : BaseProcessor(false, parent)
 {
 
 }

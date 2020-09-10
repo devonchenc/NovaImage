@@ -3,7 +3,8 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
-InverseProcessor::InverseProcessor()
+InverseProcessor::InverseProcessor(QObject* parent)
+    : BaseProcessor(true, parent)
 {
 
 }

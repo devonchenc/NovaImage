@@ -5,7 +5,7 @@
 class LevelsProcessor : public BaseProcessor
 {
 public:
-    LevelsProcessor();
+    LevelsProcessor(QObject* parent = nullptr);
     virtual ~LevelsProcessor();
 
 protected:

@@ -5,7 +5,7 @@
 class InverseProcessor : public BaseProcessor
 {
 public:
-    InverseProcessor();
+    InverseProcessor(QObject* parent = nullptr);
     virtual ~InverseProcessor();
 
 protected:

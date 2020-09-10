@@ -65,8 +65,9 @@ void ThresholdSegmentationWidget::autoCheckBoxClicked()
     }
 }
 
-ThresholdSegmentationProcessor::ThresholdSegmentationProcessor()
-    : _threshold(128)
+ThresholdSegmentationProcessor::ThresholdSegmentationProcessor(QObject* parent)
+    : BaseProcessor(true, parent)
+    , _threshold(128)
 {
 
 }

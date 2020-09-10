@@ -36,15 +36,12 @@ CommonWidget::CommonWidget(QWidget* parent)
 
     setLayout(layout);
 
-    _processor = new CommonProcessor;
+    _processor = new CommonProcessor(this);
 }
 
 CommonWidget::~CommonWidget()
 {
-    if (_processor)
-    {
-        delete _processor;
-    }
+
 }
 
 void CommonWidget::init()

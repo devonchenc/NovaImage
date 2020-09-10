@@ -4,8 +4,9 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
-CommonProcessor::CommonProcessor()
-    : _brightness(0)
+CommonProcessor::CommonProcessor(QObject* parent)
+    : BaseProcessor(false, parent)
+    , _brightness(0)
     , _contrast(0)
 {
 

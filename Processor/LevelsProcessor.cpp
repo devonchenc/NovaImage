@@ -5,8 +5,9 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
-LevelsProcessor::LevelsProcessor()
-    : _bottom(0)
+LevelsProcessor::LevelsProcessor(QObject* parent)
+    : BaseProcessor(false, parent)
+    , _bottom(0)
     , _mid(0)
     , _top(0)
 {

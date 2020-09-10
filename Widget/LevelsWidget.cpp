@@ -46,7 +46,7 @@ LevelsWidget::LevelsWidget(QWidget* parent)
 
     setLayout(layout);
 
-    _processor = new LevelsProcessor;
+    _processor = new LevelsProcessor(this);
 }
 
 LevelsWidget::~LevelsWidget()

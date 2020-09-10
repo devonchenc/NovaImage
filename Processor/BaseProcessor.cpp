@@ -12,11 +12,20 @@
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
 
-BaseProcessor::BaseProcessor()
-    : _currentImage(nullptr)
+BaseProcessor::BaseProcessor(bool temporary, QObject* parent)
+    : QObject(parent)
+    , _currentImage(nullptr)
     , _backupImage(nullptr)
+    , _temporary(temporary)
 {
-    _currentProcessor = this;
+    if (temporary)
+    {
+        if (_currentProcessor)
+        {
+            delete _currentProcessor;
+        }
+        _currentProcessor = this;
+    }
 
     connect(this, &BaseProcessor::createWidget, getGlobalWindow(), &MainWindow::createProcessorWidget);
 }
@@ -111,9 +120,16 @@ void BaseProcessor::ProcessRegionImage(RegionImage* pImage)
 
 BaseProcessor* BaseProcessor::setCurrentProcessor()
 {
-    BaseProcessor* oldProcessor = _currentProcessor;
-    _currentProcessor = this;
-    return oldProcessor;
+    if (_temporary)
+    {
+        BaseProcessor* oldProcessor = _currentProcessor;
+        _currentProcessor = this;
+        return oldProcessor;
+    }
+    else
+    {
+        return nullptr;
+    }
 }
 
 void BaseProcessor::convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)

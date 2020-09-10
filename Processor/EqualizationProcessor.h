@@ -31,7 +31,7 @@ class EqualizationProcessor : public BaseProcessor
     Q_OBJECT
 
 public:
-    EqualizationProcessor();
+    EqualizationProcessor(QObject* parent = nullptr);
     virtual ~EqualizationProcessor();
 
     void initUI() override;

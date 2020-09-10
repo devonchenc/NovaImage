@@ -374,9 +374,9 @@ void Document::negativeImage()
 {
     if (_image)
     {
-        InverseProcessor processor;
-        processor.setImage(getImage());
-        processor.process();
+        InverseProcessor* processor = new InverseProcessor(this);
+        processor->setImage(getImage());
+        processor->process();
 
         repaintView();
     }
@@ -423,7 +423,7 @@ void Document::thresholdSegmentation()
 {
     if (_image)
     {
-        ThresholdSegmentationProcessor* processor = new ThresholdSegmentationProcessor;
+        ThresholdSegmentationProcessor* processor = new ThresholdSegmentationProcessor(this);
         processor->setImage(getImage());
         processor->initUI();
         processor->process();
@@ -436,7 +436,7 @@ void Document::equalization()
 {
     if (_image)
     {
-        EqualizationProcessor* processor = new EqualizationProcessor;
+        EqualizationProcessor* processor = new EqualizationProcessor(this);
         processor->setImage(getImage());
         processor->initUI();
         processor->process();

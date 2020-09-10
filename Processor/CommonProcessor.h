@@ -5,7 +5,7 @@
 class CommonProcessor : public BaseProcessor
 {
 public:
-    CommonProcessor();
+    CommonProcessor(QObject* parent = nullptr);
     virtual ~CommonProcessor();
 
 protected:

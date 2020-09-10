@@ -5,7 +5,7 @@
 class HistogramProcessor : public BaseProcessor
 {
 public:
-    HistogramProcessor();
+    HistogramProcessor(QObject* parent = nullptr);
     virtual ~HistogramProcessor();
 
 protected:

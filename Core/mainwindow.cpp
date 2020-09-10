@@ -357,6 +357,7 @@ void MainWindow::createToolWidget()
     tabifyDockWidget(curveDockWidget, levelDockWidget);
 
     _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
+    _vecDockWidget.append(_imageProcessingDockWidget);
     tabifyDockWidget(levelDockWidget, _imageProcessingDockWidget);
 
 //    curveDockWidget->raise();

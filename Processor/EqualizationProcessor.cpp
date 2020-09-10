@@ -45,8 +45,9 @@ void EqualizationWidget::editChanged()
     emit valueChanged(gridSize, clipLimit);
 }
 
-EqualizationProcessor::EqualizationProcessor()
-    : _gridSize(8)
+EqualizationProcessor::EqualizationProcessor(QObject* parent)
+    : BaseProcessor(true, parent)
+    , _gridSize(8)
     , _clipLimit(4)
 {
 
@@ -56,7 +57,6 @@ EqualizationProcessor::~EqualizationProcessor()
 {
 
 }
-
 
 void EqualizationProcessor::initUI()
 {

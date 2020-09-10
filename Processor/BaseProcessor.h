@@ -22,7 +22,7 @@ class BaseProcessor : public QObject
     Q_OBJECT
 
 public:
-    BaseProcessor();
+    BaseProcessor(bool temporary, QObject* parent);
     virtual ~BaseProcessor();
 
 public:
@@ -33,6 +33,8 @@ public:
     virtual void initUI() {}
 
     void setImage(BaseImage* image);
+
+    bool isTemporary() { return _temporary; }
 
     // Process image
     void process();
@@ -60,4 +62,6 @@ protected:
 
 private:
     static BaseProcessor* _currentProcessor;
+
+    bool _temporary;
 };

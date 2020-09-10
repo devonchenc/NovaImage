@@ -13,7 +13,7 @@
 class CurvesProcessor : public BaseProcessor
 {
 public:
-    CurvesProcessor();
+    CurvesProcessor(QObject* parent = nullptr);
     virtual ~CurvesProcessor();
 
 protected:

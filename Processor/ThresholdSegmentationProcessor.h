@@ -39,7 +39,7 @@ class ThresholdSegmentationProcessor : public BaseProcessor
     Q_OBJECT
 
 public:
-    ThresholdSegmentationProcessor();
+    ThresholdSegmentationProcessor(QObject* parent = nullptr);
     virtual ~ThresholdSegmentationProcessor();
 
     void initUI() override;
