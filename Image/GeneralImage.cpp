@@ -40,6 +40,9 @@ GeneralImage::~GeneralImage()
 
 GeneralImage& GeneralImage::operator=(const GeneralImage& src)
 {
+    if (this == &src)
+        return *this;
+
     BaseImage::operator=(src);
 
     _backupImage = src._backupImage;

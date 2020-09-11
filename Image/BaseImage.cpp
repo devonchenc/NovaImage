@@ -52,6 +52,9 @@ BaseImage::~BaseImage()
 
 BaseImage& BaseImage::operator=(const BaseImage& src)
 {
+    if (this == &src)
+        return *this;
+
     _pImage.reset(new QImage(*src._pImage));
 
     memcpy(_grayPixelNumber, src._grayPixelNumber, sizeof(uint) * 256);
