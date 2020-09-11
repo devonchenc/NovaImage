@@ -17,6 +17,9 @@ public:
 
     void setProcessorWidget(QWidget* processorWidget);
 
+public slots:
+    void apply();
+
 protected:
     void changeEvent(QEvent* event) override;
 

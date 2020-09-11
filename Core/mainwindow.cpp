@@ -841,25 +841,10 @@ void MainWindow::notify(const QString& title, const QString& message, int type)
 void MainWindow::createProcessorWidget(QWidget* processorWidget)
 {
     ProcessorWidget* widget = qobject_cast<ProcessorWidget*>(_imageProcessingDockWidget->widget());
-/*    QWidget* oldWidget = ;
-    if (oldWidget)
+    if (widget)
     {
-        delete oldWidget;
-    }*/
-
-    widget->setProcessorWidget(processorWidget);
-
-/*    QPushButton* applyButton = new QPushButton(tr("&Apply"));
-
-    QVBoxLayout* vLayout = new QVBoxLayout;
-    vLayout->addWidget(processorWidget);
-    vLayout->addStretch();
-    vLayout->addWidget(applyButton);*/
-
-//    QWidget* widget = new QWidget;
-//    widget->setLayout(vLayout);
-
- //   _imageProcessingDockWidget->setWidget(widget);
+        widget->setProcessorWidget(processorWidget);
+    }
 }
 
 void MainWindow::changeEvent(QEvent* event)

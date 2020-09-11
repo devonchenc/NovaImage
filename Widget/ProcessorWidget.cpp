@@ -3,6 +3,8 @@
 #include <QGridLayout>
 #include <QPushButton>
 #include <QEvent>
+#include <QCustomEvent>
+#include <QApplication>
 
 #include "../Processor/CommonProcessor.h"
 #include "../Core/GlobalFunc.h"
@@ -13,6 +15,7 @@ ProcessorWidget::ProcessorWidget(QWidget* parent)
     setName(tr("Image Processing"));
 
     _applyButton = new QPushButton(tr("&Apply"));
+    connect(_applyButton, &QPushButton::clicked, this, &ProcessorWidget::apply);
 
     _vLayout = new QVBoxLayout;
     _vLayout->addStretch();
@@ -35,6 +38,18 @@ void ProcessorWidget::setProcessorWidget(QWidget* processorWidget)
     }
 
     _vLayout->insertWidget(0, processorWidget);
+}
+
+void ProcessorWidget::apply()
+{
+    QWidget* widget = qobject_cast<QWidget*>(_vLayout->itemAt(0)->widget());
+    if (widget)
+    {
+        // TODO
+     //   widget->accept();
+        const QEvent::Type MyEvent = (QEvent::Type)9393;
+        QApplication::postEvent(widget, new QCustomEvent(MyEvent));
+    }
 }
 
 void ProcessorWidget::changeEvent(QEvent* event)
