@@ -50,6 +50,18 @@ BaseImage::~BaseImage()
 
 }
 
+BaseImage& BaseImage::operator=(const BaseImage& src)
+{
+    _pImage.reset(new QImage(*src._pImage));
+
+    memcpy(_grayPixelNumber, src._grayPixelNumber, sizeof(uint) * 256);
+    memcpy(_redPixelNumber, src._redPixelNumber, sizeof(uint) * 256);
+    memcpy(_greenPixelNumber, src._greenPixelNumber, sizeof(uint) * 256);
+    memcpy(_bluePixelNumber, src._bluePixelNumber, sizeof(uint) * 256);
+
+    return *this;
+}
+
 float BaseImage::getValue(float x, float y) const
 {
     int x0 = (int)floor(x);

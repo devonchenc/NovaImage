@@ -82,6 +82,15 @@ BaseImage* RawImage::copyImage() const
     return new RawImage(*this);
 }
 
+bool RawImage::copyToImage(BaseImage* image) const
+{
+    RawImage* destImage = dynamic_cast<RawImage*>(image);
+    if (!destImage)
+        return false;
+
+    return true;
+}
+
 // Read data
 bool RawImage::readData()
 {

@@ -83,6 +83,15 @@ BaseImage* DICOMImage::copyImage() const
     return new DICOMImage(*this);
 }
 
+bool DICOMImage::copyToImage(BaseImage* image) const
+{
+    DICOMImage* destImage = dynamic_cast<DICOMImage*>(image);
+    if (!destImage)
+        return false;
+
+    return true;
+}
+
 void DICOMImage::restore()
 {
     _imageData->restoreData();

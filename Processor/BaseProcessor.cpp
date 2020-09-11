@@ -106,7 +106,6 @@ void BaseProcessor::process()
         assert(pRegionImage);
         ProcessRegionImage(pRegionImage);
     }*/
-
     getGlobalDocument()->backup();
 }
 /* TODO
@@ -130,6 +129,11 @@ BaseProcessor* BaseProcessor::setCurrentProcessor()
     {
         return nullptr;
     }
+}
+
+void BaseProcessor::apply()
+{
+    getGlobalDocument()->backup();
 }
 
 void BaseProcessor::convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)

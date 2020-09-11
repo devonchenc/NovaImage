@@ -204,7 +204,13 @@
     <ClCompile Include="Processor\CLAHE.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\ProcessorWidget.cpp">
+    <ClCompile Include="Widget\CustomEvent.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget\ProcessorShellWidget.cpp">
+      <Filter>Widget</Filter>
+    </ClCompile>
+    <ClCompile Include="Widget\ProcessorBaseWidget.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
   </ItemGroup>
@@ -329,7 +335,10 @@
     <QtMoc Include="Processor\EqualizationProcessor.h">
       <Filter>Processor</Filter>
     </QtMoc>
-    <QtMoc Include="Widget\ProcessorWidget.h">
+    <QtMoc Include="Widget\ProcessorShellWidget.h">
+      <Filter>Widget</Filter>
+    </QtMoc>
+    <QtMoc Include="Widget\ProcessorBaseWidget.h">
       <Filter>Widget</Filter>
     </QtMoc>
   </ItemGroup>
@@ -399,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="Processor\CLAHE.h">
       <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Widget\CustomEvent.h">
+      <Filter>Widget</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

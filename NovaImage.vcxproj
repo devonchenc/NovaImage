@@ -60,6 +60,7 @@
     <ClCompile Include="Widget\CommonWidget.cpp" />
     <ClCompile Include="Widget\CurveSquare.cpp" />
     <ClCompile Include="Widget\CurvesWidget.cpp" />
+    <ClCompile Include="Widget\CustomEvent.cpp" />
     <ClCompile Include="Widget\HistogramWidget.cpp" />
     <ClCompile Include="Widget\ImageQualityChartView.cpp" />
     <ClCompile Include="Widget\ImageQualityDialog.cpp" />
@@ -67,7 +68,8 @@
     <ClCompile Include="Widget\MagnifierWidget.cpp" />
     <ClCompile Include="Widget\Peg.cpp" />
     <ClCompile Include="Widget\PlotDialog.cpp" />
-    <ClCompile Include="Widget\ProcessorWidget.cpp" />
+    <ClCompile Include="Widget\ProcessorShellWidget.cpp" />
+    <ClCompile Include="Widget\ProcessorBaseWidget.cpp" />
     <ClCompile Include="Widget\ProgressDialog.cpp" />
     <ClCompile Include="Widget\RawParameterDialog.cpp" />
     <ClCompile Include="Widget\SettingsDialog.cpp" />
@@ -119,13 +121,15 @@
     <QtMoc Include="Widget\ImageQualityDialog.h" />
     <QtMoc Include="Widget\ImageQualityChartView.h" />
     <QtMoc Include="Processor\ThresholdSegmentationProcessor.h" />
+    <ClInclude Include="Widget\CustomEvent.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />
     <QtMoc Include="Widget\RawParameterDialog.h" />
     <QtMoc Include="Widget\SettingsDialog.h" />
     <QtMoc Include="Widget\PlotDialog.h" />
     <QtMoc Include="Widget\ProgressDialog.h" />
-    <QtMoc Include="Widget\ProcessorWidget.h" />
+    <QtMoc Include="Widget\ProcessorBaseWidget.h" />
+    <QtMoc Include="Widget\ProcessorShellWidget.h" />
     <ClInclude Include="Widget\WidgetManager.h" />
     <QtMoc Include="Widget\LevelsWidget.h" />
     <QtMoc Include="Widget\HistogramWidget.h" />

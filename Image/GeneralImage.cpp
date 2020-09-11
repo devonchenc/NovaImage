@@ -38,6 +38,15 @@ GeneralImage::~GeneralImage()
 
 }
 
+GeneralImage& GeneralImage::operator=(const GeneralImage& src)
+{
+    BaseImage::operator=(src);
+
+    _backupImage = src._backupImage;
+
+    return *this;
+}
+
 uchar GeneralImage::calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor)
 {
     if (color <= bottom)
@@ -117,6 +126,17 @@ float GeneralImage::getValue(int index) const
 BaseImage* GeneralImage::copyImage() const
 {
     return new GeneralImage(*this);
+}
+
+bool GeneralImage::copyToImage(BaseImage* image) const
+{
+    GeneralImage* destImage = dynamic_cast<GeneralImage*>(image);
+    if (!destImage)
+        return false;
+
+    *destImage = *this;
+
+    return true;
 }
 
 void GeneralImage::restore()

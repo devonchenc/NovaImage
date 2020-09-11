@@ -1,7 +1,6 @@
 #pragma once
 
-#include <QWidget>
-
+#include "../Widget/ProcessorBaseWidget.h"
 #include "BaseProcessor.h"
 
 QT_BEGIN_NAMESPACE
@@ -10,12 +9,12 @@ class QSlider;
 class QLabel;
 QT_END_NAMESPACE
 
-class ThresholdSegmentationWidget : public QWidget
+class ThresholdSegmentationWidget : public ProcessorBaseWidget
 {
     Q_OBJECT
 
 public:
-    ThresholdSegmentationWidget(QWidget* parent = nullptr);
+    ThresholdSegmentationWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
     void setOTSUThreshold(int threshold);
 

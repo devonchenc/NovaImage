@@ -92,6 +92,15 @@ BaseImage* ScanImage::copyImage() const
     return new ScanImage(*this);
 }
 
+bool ScanImage::copyToImage(BaseImage* image) const
+{
+    ScanImage* destImage = dynamic_cast<ScanImage*>(image);
+    if (!destImage)
+        return false;
+
+    return true;
+}
+
 // Read data header
 bool ScanImage::readDataHeader()
 {

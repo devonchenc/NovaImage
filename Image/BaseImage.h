@@ -12,6 +12,8 @@ public:
     BaseImage(const BaseImage& src);
     virtual ~BaseImage();
 
+    BaseImage& BaseImage::operator=(const BaseImage& src);
+
 public:
     // Get min and max value of image
     virtual float getMinValue() const = 0;
@@ -34,6 +36,8 @@ public:
 
     // Create a deep copy of image
     virtual BaseImage* copyImage() const = 0;
+
+    virtual bool copyToImage(BaseImage* image) const = 0;
 
     virtual void restore() = 0;
 

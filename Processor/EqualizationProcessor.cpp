@@ -10,10 +10,11 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 #include "../Core/GlobalFunc.h"
+#include "../Widget/CustomEvent.h"
 #include "CLAHE.h"
 
-EqualizationWidget::EqualizationWidget(QWidget* parent)
-    : QWidget(parent)
+EqualizationWidget::EqualizationWidget(BaseProcessor* processor, QWidget* parent)
+    : ProcessorBaseWidget(processor, parent)
 {
     QGroupBox* groupBox = new QGroupBox(tr("Equalization"));
 
@@ -60,7 +61,7 @@ EqualizationProcessor::~EqualizationProcessor()
 
 void EqualizationProcessor::initUI()
 {
-    _widget = new EqualizationWidget;
+    _widget = new EqualizationWidget(this);
     connect(_widget, &EqualizationWidget::valueChanged, this, &EqualizationProcessor::valueChanged);
     emit createWidget(_widget);
 }

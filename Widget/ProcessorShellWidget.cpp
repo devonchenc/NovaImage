@@ -1,21 +1,21 @@
-#include "ProcessorWidget.h"
+#include "ProcessorShellWidget.h"
 
 #include <QGridLayout>
 #include <QPushButton>
 #include <QEvent>
-#include <QCustomEvent>
 #include <QApplication>
 
 #include "../Processor/CommonProcessor.h"
 #include "../Core/GlobalFunc.h"
+#include "CustomEvent.h"
 
-ProcessorWidget::ProcessorWidget(QWidget* parent)
+ProcessorShellWidget::ProcessorShellWidget(QWidget* parent)
     : BaseWidget(parent)
 {
     setName(tr("Image Processing"));
 
     _applyButton = new QPushButton(tr("&Apply"));
-    connect(_applyButton, &QPushButton::clicked, this, &ProcessorWidget::apply);
+    connect(_applyButton, &QPushButton::clicked, this, &ProcessorShellWidget::apply);
 
     _vLayout = new QVBoxLayout;
     _vLayout->addStretch();
@@ -24,12 +24,12 @@ ProcessorWidget::ProcessorWidget(QWidget* parent)
     setLayout(_vLayout);
 }
 
-ProcessorWidget::~ProcessorWidget()
+ProcessorShellWidget::~ProcessorShellWidget()
 {
 
 }
 
-void ProcessorWidget::setProcessorWidget(QWidget* processorWidget)
+void ProcessorShellWidget::setProcessorWidget(QWidget* processorWidget)
 {
     QWidgetItem* item = dynamic_cast<QWidgetItem*>(_vLayout->itemAt(0));
     if (item && item->widget())
@@ -40,19 +40,16 @@ void ProcessorWidget::setProcessorWidget(QWidget* processorWidget)
     _vLayout->insertWidget(0, processorWidget);
 }
 
-void ProcessorWidget::apply()
+void ProcessorShellWidget::apply()
 {
     QWidget* widget = qobject_cast<QWidget*>(_vLayout->itemAt(0)->widget());
     if (widget)
     {
-        // TODO
-     //   widget->accept();
-        const QEvent::Type MyEvent = (QEvent::Type)9393;
-        QApplication::postEvent(widget, new QCustomEvent(MyEvent));
+        QApplication::postEvent(widget, new CustomEvent);
     }
 }
 
-void ProcessorWidget::changeEvent(QEvent* event)
+void ProcessorShellWidget::changeEvent(QEvent* event)
 {
     if (event->type() == QEvent::LanguageChange)
     {

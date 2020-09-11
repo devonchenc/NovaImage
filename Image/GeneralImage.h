@@ -12,6 +12,8 @@ public:
     GeneralImage(const GeneralImage& src);
     virtual ~GeneralImage();
 
+    GeneralImage& GeneralImage::operator=(const GeneralImage& src);
+
 public:
     // Get backup QImage pointer
     QImage* getBackupImage() const { return _backupImage.get(); }
@@ -32,6 +34,8 @@ public:
     float getMaxValue() const override { return 255.0f; }
 
     BaseImage* copyImage() const override;
+
+    bool copyToImage(BaseImage* image) const override;
 
     void restore() override;
 

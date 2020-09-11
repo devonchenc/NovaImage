@@ -25,6 +25,8 @@ public:
 
     BaseImage* copyImage() const override;
 
+    bool copyToImage(BaseImage* image) const override;
+
 public:
     // Get reference of DataHeader
     DataHeader& getDataHeader()		{ return _dataHeader; }

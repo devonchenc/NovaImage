@@ -10,8 +10,8 @@
 #include "../Image/MonoImage.h"
 #include "../Core/GlobalFunc.h"
 
-ThresholdSegmentationWidget::ThresholdSegmentationWidget(QWidget* parent)
-    : QWidget(parent)
+ThresholdSegmentationWidget::ThresholdSegmentationWidget(BaseProcessor* processor, QWidget* parent)
+    : ProcessorBaseWidget(processor, parent)
 {
     QGroupBox* groupBox = new QGroupBox(tr("Threshold Segmentation"));
 
@@ -79,7 +79,7 @@ ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
 
 void ThresholdSegmentationProcessor::initUI()
 {
-    _widget = new ThresholdSegmentationWidget;
+    _widget = new ThresholdSegmentationWidget(this);
     connect(_widget, &ThresholdSegmentationWidget::thresholdChanged, this, &ThresholdSegmentationProcessor::thresholdChanged);
     emit createWidget(_widget);
 

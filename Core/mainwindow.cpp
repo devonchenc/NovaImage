@@ -33,7 +33,7 @@
 #include "../Widget/CommonWidget.h"
 #include "../Widget/CurvesWidget.h"
 #include "../Widget/LevelsWidget.h"
-#include "../Widget/ProcessorWidget.h"
+#include "../Widget/ProcessorShellWidget.h"
 #include "../Widget/SettingsDialog.h"
 #include "../Notification/NotificationLayout.h"
 
@@ -355,8 +355,8 @@ void MainWindow::createToolWidget()
     _levelsWidget = new LevelsWidget();
     QDockWidget* levelDockWidget = createDockWidget(_levelsWidget);
 
-    ProcessorWidget* processorWidget = new ProcessorWidget();
-    _imageProcessingDockWidget = createDockWidget(processorWidget);
+    ProcessorShellWidget* processorShellWidget = new ProcessorShellWidget();
+    _imageProcessingDockWidget = createDockWidget(processorShellWidget);
 
 //    _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
 //    _vecDockWidget.append(_imageProcessingDockWidget);
@@ -840,10 +840,10 @@ void MainWindow::notify(const QString& title, const QString& message, int type)
 
 void MainWindow::createProcessorWidget(QWidget* processorWidget)
 {
-    ProcessorWidget* widget = qobject_cast<ProcessorWidget*>(_imageProcessingDockWidget->widget());
-    if (widget)
+    ProcessorShellWidget* shellWidget = qobject_cast<ProcessorShellWidget*>(_imageProcessingDockWidget->widget());
+    if (shellWidget)
     {
-        widget->setProcessorWidget(processorWidget);
+        shellWidget->setProcessorWidget(processorWidget);
     }
 }
 

@@ -16,6 +16,8 @@ public:
 
     BaseImage* copyImage() const override;
 
+    bool copyToImage(BaseImage* image) const override;
+
 private:
     // Read data
     bool readData();

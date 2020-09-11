@@ -32,6 +32,8 @@ public:
 
     virtual void initUI() {}
 
+    virtual void apply();
+
     void setImage(BaseImage* image);
 
     bool isTemporary() { return _temporary; }

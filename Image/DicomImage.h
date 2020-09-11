@@ -21,6 +21,8 @@ public:
 
     BaseImage* copyImage() const override;
 
+    bool copyToImage(BaseImage* image) const override;
+
     void restore() override;
 
 private:

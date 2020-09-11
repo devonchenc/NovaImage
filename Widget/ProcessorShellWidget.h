@@ -7,13 +7,13 @@ class QVBoxLayout;
 class QPushButton;
 QT_END_NAMESPACE
 
-class ProcessorWidget : public BaseWidget
+class ProcessorShellWidget : public BaseWidget
 {
     Q_OBJECT
 
 public:
-    ProcessorWidget(QWidget* parent = nullptr);
-    virtual ~ProcessorWidget();
+    ProcessorShellWidget(QWidget* parent = nullptr);
+    virtual ~ProcessorShellWidget();
 
     void setProcessorWidget(QWidget* processorWidget);
 

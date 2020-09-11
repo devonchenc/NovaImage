@@ -1,19 +1,18 @@
 #pragma once
 
-#include <QWidget>
-
+#include "../Widget/ProcessorBaseWidget.h"
 #include "BaseProcessor.h"
 
 QT_BEGIN_NAMESPACE
 class QLineEdit;
 QT_END_NAMESPACE
 
-class EqualizationWidget : public QWidget
+class EqualizationWidget : public ProcessorBaseWidget
 {
     Q_OBJECT
 
 public:
-    EqualizationWidget(QWidget* parent = nullptr);
+    EqualizationWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
 public slots:
     void editChanged();
