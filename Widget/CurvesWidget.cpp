@@ -240,10 +240,10 @@ void CurvesWidget::updateImage()
     BaseImage* image = getGlobalImage();
     if (image)
     {
-        _processor->setImage(image);
-        _processor->process();
+     //   _processor->setImage(image);
+        _processor->processForView(image);
 
-        repaintView();
+    //    repaintView();
     }
     //	_isProcessing = false;
 }

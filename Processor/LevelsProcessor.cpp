@@ -19,15 +19,15 @@ LevelsProcessor::~LevelsProcessor()
 
 }
 
-void LevelsProcessor::processGeneralImage(GeneralImage* image)
+void LevelsProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
 {
     assert(image);
 
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    uchar* pImageData = imageEntity->bits();
-    uchar* pBackupImageData = image->getBackupImage()->bits();
+    uchar* imageData = imageEntity->bits();
+    uchar* dstData = dstImage->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
@@ -40,18 +40,18 @@ void LevelsProcessor::processGeneralImage(GeneralImage* image)
     {
         for (int i = 0; i < width; i++)
         {
-            uchar* pPixel = pImageData + j * pitch + i * depth;
-            uchar* pBackupPixel = pBackupImageData + j * pitch + i * depth;
+            uchar* dstPixel = dstData + j * pitch + i * depth;
+            uchar* imagePixel = imageData + j * pitch + i * depth;
 
             for (int n = 0; n < qMin(depth, 3); n++)
             {
-                pPixel[n] = image->calcNewColor(pBackupPixel[n], _bottom, _mid, _top, minColor, maxColor);
+                dstPixel[n] = image->calcNewColor(imagePixel[n], _bottom, _mid, _top, minColor, maxColor);
             }
         }
     }
 }
 
-void LevelsProcessor::processMonoImage(MonoImage* image)
+void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 {
     assert(image);
 
@@ -168,7 +168,7 @@ void LevelsProcessor::processMonoImage(MonoImage* image)
         }
     }
 
-    image->copyByteToImage();
+    image->copyByteToImage(dstImage);
 }
 
 // Process float array

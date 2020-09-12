@@ -219,6 +219,40 @@ void Document::repaintView()
     }
 }
 
+void Document::repaintView(QImage* image)
+{
+    getAxialView()->showImage(image);
+}
+
+void Document::repaintView(std::shared_ptr<QImage> dstImage, int viewType)
+{
+    if (viewType == 0)
+    {
+        getAxialView()->showImage(dstImage.get());
+    }
+    else if (viewType == 1)
+    {
+        getCoronalView()->showImage(dstImage.get());
+    }
+    else if (viewType == 2)
+    {
+        getSagittalView()->showImage(dstImage.get());
+    }
+}
+
+void Document::repaintView(std::vector<std::shared_ptr<QImage>> imageVec)
+{
+    getAxialView()->showImage(imageVec[0].get());
+    if (imageVec[1].get())
+    {
+        getCoronalView()->showImage(imageVec[1].get());
+    }
+    if (imageVec[2].get())
+    {
+        getSagittalView()->showImage(imageVec[2].get());
+    }
+}
+
 void Document::setModified(bool flag)
 {
     if (_image)

@@ -14,26 +14,26 @@ InverseProcessor::~InverseProcessor()
 
 }
 
-void InverseProcessor::processGeneralImage(GeneralImage* image)
+void InverseProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
 {
     assert(image);
 
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    uchar* pImageData = imageEntity->bits();
-    uchar* pBackupImageData = image->getBackupImage()->bits();
+    uchar* imageData = imageEntity->bits();
+    uchar* dstData = dstImage->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    if (pImageData[0] == pBackupImageData[0])
+    if (imageData[0] == dstData[0])
     {
         for (int j = 0; j < height; j++)
         {
             for (int i = 0; i < width; i++)
             {
-                uchar* pPixel = pImageData + j * pitch + i * depth;
-                uchar* pBackupPixel = pBackupImageData + j * pitch + i * depth;
+                uchar* pPixel = dstData + j * pitch + i * depth;
+                uchar* pBackupPixel = imageData + j * pitch + i * depth;
                 for (int n = 0; n < qMin(depth, 3); n++)
                 {
                     *(pPixel + n) = 255 - *(pBackupPixel + n);
@@ -43,11 +43,11 @@ void InverseProcessor::processGeneralImage(GeneralImage* image)
     }
     else
     {
-        image->restore();
+        *dstImage = *image->getImageEntity();
     }
 }
 
-void InverseProcessor::processMonoImage(MonoImage* image)
+void InverseProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 {
     assert(image);
 
@@ -59,7 +59,7 @@ void InverseProcessor::processMonoImage(MonoImage* image)
         byteImage[i] = 255 - byteImage[i];
     }
 
-    image->copyByteToImage();
+    image->copyByteToImage(dstImage);
 }
 
 // Process float array

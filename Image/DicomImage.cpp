@@ -69,6 +69,23 @@ DICOMImage::~DICOMImage()
 
 }
 
+DICOMImage& DICOMImage::operator=(const DICOMImage& src)
+{
+    if (this == &src)
+        return *this;
+
+    MonoImage::operator=(src);
+
+    _horzPixelSpacing = src._horzPixelSpacing;
+    _vertPixelSpacing = src._vertPixelSpacing;
+    _imagerPixelSpacing = src._imagerPixelSpacing;
+
+    _rescaleSlope = src._rescaleSlope;
+    _rescaleIntercept = src._rescaleIntercept;
+
+    return *this;
+}
+
 void DICOMImage::initWindowWidthAndLevel()
 {
     if (_windowWidth == 0 && _windowLevel == 0)

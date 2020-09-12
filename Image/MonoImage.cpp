@@ -62,6 +62,12 @@ MonoImage::MonoImage(const MonoImage& src)
     }
 
     _pImage = _axialProxy->getImageEntity();
+
+    _currentType = src._currentType;
+    _slice = src._slice;
+    _currentAxialSlice = src._currentAxialSlice;
+    _currentCoronalSlice = src._currentCoronalSlice;
+    _currentSagittalSlice = src._currentSagittalSlice;
 }
 
 MonoImage::~MonoImage()
@@ -86,6 +92,38 @@ MonoImage::~MonoImage()
         delete _sagittalProxy;
         _sagittalProxy = nullptr;
     }
+}
+
+MonoImage& MonoImage::operator=(const MonoImage& src)
+{
+    if (this == &src)
+        return *this;
+
+    BaseImage::operator=(src);
+
+    _imageData = src._imageData->copyImageData();
+
+    _axialProxy = new MonoImageProxy(*src._axialProxy);
+
+    if (src._coronalProxy)
+    {
+        _coronalProxy = new MonoImageProxy(*src._coronalProxy);
+    }
+
+    if (src._sagittalProxy)
+    {
+        _sagittalProxy = new MonoImageProxy(*src._sagittalProxy);
+    }
+
+    _pImage = _axialProxy->getImageEntity();
+
+    _currentType = src._currentType;
+    _slice = src._slice;
+    _currentAxialSlice = src._currentAxialSlice;
+    _currentCoronalSlice = src._currentCoronalSlice;
+    _currentSagittalSlice = src._currentSagittalSlice;
+
+    return *this;
 }
 
 bool MonoImage::copyByteToAllImage()
@@ -115,6 +153,23 @@ bool MonoImage::copyByteToImage()
     else/* if (_currentType == SAGITTAL_VIEW)*/
     {
         _sagittalProxy->copyByteToImage();
+    }
+    return true;
+}
+
+bool MonoImage::copyByteToImage(QImage* dstImage)
+{
+    if (_currentType == AXIAL_VIEW)
+    {
+        _axialProxy->copyByteToImage(dstImage);
+    }
+    else if (_currentType == CORONAL_VIEW)
+    {
+        _coronalProxy->copyByteToImage(dstImage);
+    }
+    else/* if (_currentType == SAGITTAL_VIEW)*/
+    {
+        _sagittalProxy->copyByteToImage(dstImage);
     }
     return true;
 }

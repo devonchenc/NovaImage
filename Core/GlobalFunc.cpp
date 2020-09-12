@@ -64,6 +64,33 @@ void repaintView()
     }
 }
 
+void repaintView(QImage* image)
+{
+    Document* document = getGlobalDocument();
+    if (document)
+    {
+        document->repaintView(image);
+    }
+}
+
+void repaintView(std::shared_ptr<QImage> dstImage, int viewType)
+{
+    Document* document = getGlobalDocument();
+    if (document)
+    {
+        document->repaintView(dstImage, viewType);
+    }
+}
+
+void repaintView(std::vector<std::shared_ptr<QImage>> imageVec)
+{
+    Document* document = getGlobalDocument();
+    if (document)
+    {
+        document->repaintView(imageVec);
+    }
+}
+
 QPointF stringToPointF(const QString& str)
 {
     int index = str.indexOf(' ');

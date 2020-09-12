@@ -47,6 +47,9 @@ public:
   //  void copyImage(const std::shared_ptr<BaseImage>& image);
 
     void repaintView();
+    void repaintView(QImage* image);
+    void repaintView(std::shared_ptr<QImage> dstImage, int viewType = 0);
+    void repaintView(std::vector<std::shared_ptr<QImage>> imageVec);
 
     bool modified() { return _modified; }
 

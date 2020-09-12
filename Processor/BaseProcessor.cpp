@@ -72,12 +72,12 @@ void BaseProcessor::process()
     if (typeid(*_currentImage) == typeid(GeneralImage))
     {
         GeneralImage* generalImage = dynamic_cast<GeneralImage*>(_currentImage);
-        processGeneralImage(generalImage);
+        processImageImpl(generalImage, generalImage->getImageEntity());
     }
     else if (dynamic_cast<MonoImage*>(_currentImage))
     {
         MonoImage* monoImage = dynamic_cast<MonoImage*>(_currentImage);
-        processMonoImage(monoImage);
+        processImageImpl(monoImage, monoImage->getImageEntity());
 
         if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
         {
@@ -85,17 +85,17 @@ void BaseProcessor::process()
             if (viewType != 0)
             {
                 monoImage->setViewType(0);
-                processMonoImage(monoImage);
+                processImageImpl(monoImage, monoImage->getImageEntity());
             }
             if (viewType != 1)
             {
                 monoImage->setViewType(1);
-                processMonoImage(monoImage);
+                processImageImpl(monoImage, monoImage->getImageEntity());
             }
             if (viewType != 2)
             {
                 monoImage->setViewType(2);
-                processMonoImage(monoImage);
+                processImageImpl(monoImage, monoImage->getImageEntity());
             }
             monoImage->setViewType(viewType);
         }
@@ -107,6 +107,53 @@ void BaseProcessor::process()
         ProcessRegionImage(pRegionImage);
     }*/
     getGlobalDocument()->backup();
+}
+
+void BaseProcessor::processForView(BaseImage* image)
+{
+    setCurrentProcessor();
+
+    std::shared_ptr<QImage> dstImage;
+    dstImage.reset(new QImage(*image->getImageEntity()));
+
+    if (typeid(*image) == typeid(GeneralImage))
+    {
+        GeneralImage* generalImage = dynamic_cast<GeneralImage*>(image);
+        processImageImpl(generalImage, dstImage.get());
+
+        repaintView(dstImage);
+    }
+    else if (dynamic_cast<MonoImage*>(image))
+    {
+        MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
+        processImageImpl(monoImage, dstImage.get());
+
+        repaintView(dstImage, 0);
+
+        if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
+        {
+            int viewType = monoImage->viewType();
+            if (viewType != 0)
+            {
+                monoImage->setViewType(0);
+                processImageImpl(monoImage, dstImage.get());
+                repaintView(dstImage, 0);
+            }
+            if (viewType != 1)
+            {
+                monoImage->setViewType(1);
+                processImageImpl(monoImage, dstImage.get());
+                repaintView(dstImage, 1);
+            }
+            if (viewType != 2)
+            {
+                monoImage->setViewType(2);
+                processImageImpl(monoImage, dstImage.get());
+                repaintView(dstImage, 2);
+            }
+            monoImage->setViewType(viewType);
+        }
+    }
 }
 /* TODO
 void BaseProcessor::ProcessRegionImage(RegionImage* pImage)

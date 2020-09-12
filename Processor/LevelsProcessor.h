@@ -9,9 +9,9 @@ public:
     virtual ~LevelsProcessor();
 
 protected:
-    void processGeneralImage(GeneralImage* image) override;
+    void processImageImpl(GeneralImage* image, QImage* dstImage) override;
 
-    void processMonoImage(MonoImage* image) override;
+    void processImageImpl(MonoImage* image, QImage* dstImage) override;
 
     void processByteImage(uchar* byteImage, int width, int height);
 

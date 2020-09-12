@@ -106,15 +106,15 @@ void ThresholdSegmentationProcessor::thresholdChanged(int value)
     repaintView();
 }
 
-void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)
+void ThresholdSegmentationProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
 {
     assert(image);
 
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    uchar* pImageData = imageEntity->bits();
-    uchar* pBackupImageData = _backupImage->getImageEntity()->bits();
+    uchar* imageData = imageEntity->bits();
+    uchar* dstData = dstImage->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
@@ -122,24 +122,24 @@ void ThresholdSegmentationProcessor::processGeneralImage(GeneralImage* image)
     {
         for (int i = 0; i < width; i++)
         {
-            uchar* pPixel = pImageData + j * pitch + i * depth;
-            uchar* pBackupPixel = pBackupImageData + j * pitch + i * depth;
+            uchar* dstPixel = dstData + j * pitch + i * depth;
+            uchar* imagePixel = imageData + j * pitch + i * depth;
             for (int n = 0; n < qMin(depth, 3); n++)
             {
-                if (pBackupPixel[n] > _threshold)
+                if (imagePixel[n] > _threshold)
                 {
-                    pPixel[n] = 255;
+                    dstPixel[n] = 255;
                 }
                 else
                 {
-                    pPixel[n] = 0;
+                    dstPixel[n] = 0;
                 }
             }
         }
     }
 }
 
-void ThresholdSegmentationProcessor::processMonoImage(MonoImage* image)
+void ThresholdSegmentationProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 {
     assert(image);
 
@@ -161,7 +161,7 @@ void ThresholdSegmentationProcessor::processMonoImage(MonoImage* image)
         }
     }
 
-    image->copyByteToImage();
+    image->copyByteToImage(dstImage);
 }
 
 // Process float array

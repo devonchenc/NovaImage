@@ -76,15 +76,15 @@ void EqualizationProcessor::valueChanged(int gridSize, int clipLimit)
     repaintView();
 }
 
-void EqualizationProcessor::processGeneralImage(GeneralImage* image)
+void EqualizationProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
 {
     assert(image);
 
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    uchar* pImageData = imageEntity->bits();
-    uchar* pBackupImageData = _backupImage->getImageEntity()->bits();
+    uchar* imageData = imageEntity->bits();
+    uchar* dstData = dstImage->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
     int temp = imageEntity->depth();
@@ -99,12 +99,12 @@ void EqualizationProcessor::processGeneralImage(GeneralImage* image)
             int index = j * pitch + i * depth;
             if (depth < 3)
             {
-                RGB2HSV(pBackupImageData[index], pBackupImageData[index], pBackupImageData[index],
+                RGB2HSV(imageData[index], imageData[index], imageData[index],
                     H[j * width + i], S[j * width + i], V[j * width + i]);
             }
             else
             {
-                RGB2HSV(pBackupImageData[index + 2], pBackupImageData[index + 1], pBackupImageData[index],
+                RGB2HSV(imageData[index + 2], imageData[index + 1], imageData[index],
                     H[j * width + i], S[j * width + i], V[j * width + i]);
             }
         }
@@ -120,12 +120,12 @@ void EqualizationProcessor::processGeneralImage(GeneralImage* image)
             if (depth < 3)
             {
                 HSV2RGB(H[j * width + i], S[j * width + i], V[j * width + i],
-                    pImageData[index], pImageData[index], pImageData[index]);
+                    dstData[index], dstData[index], dstData[index]);
             }
             else
             {
                 HSV2RGB(H[j * width + i], S[j * width + i], V[j * width + i],
-                    pImageData[index + 2], pImageData[index + 1], pImageData[index]);
+                    dstData[index + 2], dstData[index + 1], dstData[index]);
             }
         }
     }
@@ -135,7 +135,7 @@ void EqualizationProcessor::processGeneralImage(GeneralImage* image)
     delete[] H;
 }
 
-void EqualizationProcessor::processMonoImage(MonoImage* image)
+void EqualizationProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 {
     assert(image);
 

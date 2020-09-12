@@ -19,9 +19,13 @@ public:
     MonoImage(const MonoImage& src);
     virtual ~MonoImage();
 
+    MonoImage& MonoImage::operator=(const MonoImage& src);
+
     bool copyByteToAllImage();
 
     bool copyByteToImage();
+
+    bool copyByteToImage(QImage* dstImage);
 
 public:
     int slice() const override { return _slice; }

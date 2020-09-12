@@ -39,9 +39,9 @@ public slots:
     void valueChanged(int gridSize, int clipLimit);
 
 protected:
-    void processGeneralImage(GeneralImage* image) override;
+    void processImageImpl(GeneralImage* image, QImage* dstImage) override;
 
-    void processMonoImage(MonoImage* image) override;
+    void processImageImpl(MonoImage* image, QImage* dstImage) override;
 
     // Process float array
     void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;

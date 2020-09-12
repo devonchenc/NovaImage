@@ -17,15 +17,15 @@ HistogramProcessor::~HistogramProcessor()
 
 }
 
-void HistogramProcessor::processGeneralImage(GeneralImage* image)
+void HistogramProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
 {
     assert(image);
 
     int width = image->width();
     int height = image->height();
     QImage* imageEntity = image->getImageEntity();
-    uchar* pImageData = imageEntity->bits();
-    uchar* pBackupImageData = image->getBackupImage()->bits();
+    uchar* imageData = imageEntity->bits();
+    uchar* dstData = dstImage->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
@@ -64,34 +64,34 @@ void HistogramProcessor::processGeneralImage(GeneralImage* image)
     {
         for (int i = 0; i < width * depth; i++)
         {
-            uchar* pPixel = pImageData + j * pitch + i;
-            uchar* pBackupPixel = pBackupImageData + j * pitch + i;
+            uchar* dstPixel = dstData + j * pitch + i;
+            uchar* imagePixel = imageData + j * pitch + i;
 
-            if (*(pBackupPixel) >= actualMax)
+            if (*(imagePixel) >= actualMax)
             {
-                *(pPixel) = 255;
+                *(dstPixel) = 255;
             }
-            else if (*(pBackupPixel) <= actualMin)
+            else if (*(imagePixel) <= actualMin)
             {
-                *(pPixel) = 0;
+                *(dstPixel) = 0;
             }
             else
             {
-                int index = round(*(pBackupPixel) * variable);
+                int index = round(*(imagePixel) * variable);
                 if (_array[index])
                 {
-                    *(pPixel) = (*(pBackupPixel) - actualMin) * 255 / (actualMax - actualMin);
+                    *(dstPixel) = (*(imagePixel) - actualMin) * 255 / (actualMax - actualMin);
                 }
                 else
                 {
-                    *(pPixel) = 0;
+                    *(dstPixel) = 0;
                 }
             }
         }
     }
 }
 
-void HistogramProcessor::processMonoImage(MonoImage* image)
+void HistogramProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 {
     assert(image);
 
@@ -155,7 +155,7 @@ void HistogramProcessor::processMonoImage(MonoImage* image)
         }
     }
 
-    image->copyByteToImage();
+    image->copyByteToImage(dstImage);
 }
 
 // Process float array

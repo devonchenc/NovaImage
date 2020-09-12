@@ -58,6 +58,19 @@ ScanImage::~ScanImage()
 
 }
 
+ScanImage& ScanImage::operator=(const ScanImage& src)
+{
+    if (this == &src)
+        return *this;
+
+    MonoImage::operator=(src);
+
+    _dataHeader = src._dataHeader;
+
+    return *this;
+}
+
+
 void ScanImage::setSlice(int slice)
 {
     MonoImage::setSlice(slice);
