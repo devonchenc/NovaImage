@@ -79,9 +79,10 @@ ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
 
 void ThresholdSegmentationProcessor::initUI()
 {
-    _widget = new ThresholdSegmentationWidget(this);
-    connect(_widget, &ThresholdSegmentationWidget::thresholdChanged, this, &ThresholdSegmentationProcessor::thresholdChanged);
-    emit createWidget(_widget);
+    ThresholdSegmentationWidget* widget = new ThresholdSegmentationWidget(this);
+    _processorWidget = widget;
+    connect(widget, &ThresholdSegmentationWidget::thresholdChanged, this, &ThresholdSegmentationProcessor::thresholdChanged);
+    emit createWidget(widget);
 
     if (_currentImage)
     {
@@ -93,7 +94,7 @@ void ThresholdSegmentationProcessor::initUI()
             monoImage->getBYTEImage(width, height);
         }
         int threshold = findOtsuThreshold(_currentImage->getGrayPixelArray(), width * height);
-        _widget->setOTSUThreshold(threshold);
+        widget->setOTSUThreshold(threshold);
     }
 }
 
@@ -101,9 +102,7 @@ void ThresholdSegmentationProcessor::thresholdChanged(int value)
 {
     _threshold = value;
 
-    process();
-
-    repaintView();
+    processForView(getGlobalImage());
 }
 
 void ThresholdSegmentationProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)

@@ -163,6 +163,7 @@ private:
     QAction* _nextImageAction;
     QAction* _engAction;
     QAction* _chsAction;
+    QAction* _brightnessAndContrastAction;
     QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
     QAction* _userGuideAction;

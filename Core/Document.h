@@ -81,6 +81,8 @@ public slots:
 
     void restore();
 
+    void brightnessAndContrastAction();
+
     void thresholdSegmentation();
 
     void equalization();

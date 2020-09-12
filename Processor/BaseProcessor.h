@@ -4,13 +4,14 @@ typedef unsigned char uchar;
 typedef unsigned short ushort;
 typedef unsigned int uint;
 
+#include <QtGlobal>
+#include <QObject>
+
 class BaseImage;
 class GeneralImage;
 class MonoImage;
 class RegionImage;
-
-#include <QtGlobal>
-#include <QObject>
+class ProcessorBaseWidget;
 
 QT_BEGIN_NAMESPACE
 class QWidget;
@@ -63,6 +64,8 @@ signals:
 protected:
     BaseImage* _currentImage;
     BaseImage* _backupImage;
+
+    ProcessorBaseWidget* _processorWidget;
 
 private:
     static BaseProcessor* _currentProcessor;

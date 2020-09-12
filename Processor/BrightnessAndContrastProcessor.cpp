@@ -1,10 +1,62 @@
-#include "CommonProcessor.h"
+#include "BrightnessAndContrastProcessor.h"
 
 #include <cmath>
+#include <QLabel>
+#include <QSlider>
+#include <QHBoxLayout>
+#include <QGroupBox>
+#include <QCheckBox>
+
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
+#include "../Core/GlobalFunc.h"
 
-CommonProcessor::CommonProcessor(QObject* parent)
+BrightnessAndContrastWidget::BrightnessAndContrastWidget(BaseProcessor* processor, QWidget* parent)
+    : ProcessorBaseWidget(processor, parent)
+{
+    QGroupBox* groupBox = new QGroupBox(tr("Brightness/Contrast"));
+
+    _brightnessLabel = new QLabel(tr("Bright"));
+    _contrastLabel = new QLabel(tr("Contrast"));
+    _brightnessSlider = new QSlider(Qt::Orientation::Horizontal);
+    _brightnessSlider->setMinimum(-100);
+    _brightnessSlider->setMaximum(100);
+    connect(_brightnessSlider, &QSlider::valueChanged, this, &BrightnessAndContrastWidget::brightnessValueChanged);
+    _contrastSlider = new QSlider(Qt::Orientation::Horizontal);
+    _contrastSlider->setMinimum(-100);
+    _contrastSlider->setMaximum(100);
+    connect(_contrastSlider, &QSlider::valueChanged, this, &BrightnessAndContrastWidget::contrastValueChanged);
+    _brightnessValueLabel = new QLabel("0");
+    _brightnessValueLabel->setFixedWidth(20);
+    _contrastValueLabel = new QLabel("0");
+    _contrastValueLabel->setFixedWidth(20);
+
+    QGridLayout* layout = new QGridLayout;
+    layout->addWidget(_brightnessLabel, 0, 0);
+    layout->addWidget(_brightnessSlider, 0, 1);
+    layout->addWidget(_brightnessValueLabel, 0, 2);
+    layout->addWidget(_contrastLabel, 1, 0);
+    layout->addWidget(_contrastSlider, 1, 1);
+    layout->addWidget(_contrastValueLabel, 1, 2);
+
+    setLayout(layout);
+}
+
+void BrightnessAndContrastWidget::brightnessValueChanged(int value)
+{
+    _brightnessValueLabel->setText(QString::number(value));
+
+    emit parametersChanged(value, _contrastSlider->value());
+}
+
+void BrightnessAndContrastWidget::contrastValueChanged(int value)
+{
+    _contrastValueLabel->setText(QString::number(value));
+
+    emit parametersChanged(_brightnessSlider->value(), value);
+}
+
+BrightnessAndContrastProcessor::BrightnessAndContrastProcessor(QObject* parent)
     : BaseProcessor(false, parent)
     , _brightness(0)
     , _contrast(0)
@@ -12,12 +64,23 @@ CommonProcessor::CommonProcessor(QObject* parent)
 
 }
 
-CommonProcessor::~CommonProcessor()
+BrightnessAndContrastProcessor::~BrightnessAndContrastProcessor()
 {
 
 }
 
-void CommonProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
+
+void BrightnessAndContrastProcessor::initUI()
+{
+    BrightnessAndContrastWidget* widget = new BrightnessAndContrastWidget(this);
+    _processorWidget = widget;
+    connect(widget, &BrightnessAndContrastWidget::parametersChanged, this, &BrightnessAndContrastProcessor::setBrightnessAndContrast);
+    emit createWidget(_processorWidget);
+
+
+}
+
+void BrightnessAndContrastProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
 {
     assert(image);
 
@@ -59,7 +122,7 @@ void CommonProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
     //	PIProgressDone();
 }
 
-void CommonProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
+void BrightnessAndContrastProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 {
     assert(image);
 
@@ -102,7 +165,7 @@ void CommonProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 }
 
 // Process float array
-void CommonProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
+void BrightnessAndContrastProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
 {
     Q_UNUSED(width);
     Q_UNUSED(height);
@@ -140,8 +203,10 @@ void CommonProcessor::processArray(float* array, int width, int height, float mi
     }*/
 }
 
-void CommonProcessor::setBrightnessAndContrast(int brightness, int contrast)
+void BrightnessAndContrastProcessor::setBrightnessAndContrast(int brightness, int contrast)
 {
     _brightness = brightness;
     _contrast = contrast;
+
+    processForView(getGlobalImage());
 }

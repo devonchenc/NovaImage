@@ -16,6 +16,7 @@ BaseProcessor::BaseProcessor(bool temporary, QObject* parent)
     : QObject(parent)
     , _currentImage(nullptr)
     , _backupImage(nullptr)
+    , _processorWidget(nullptr)
     , _temporary(temporary)
 {
     if (temporary)

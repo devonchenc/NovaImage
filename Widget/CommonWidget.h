@@ -5,7 +5,7 @@
 
 #include "BaseWidget.h"
 
-class CommonProcessor;
+class BrightnessAndContrastProcessor;
 
 class CommonWidget : public BaseWidget
 {
@@ -41,5 +41,5 @@ private:
     QLabel* _contrastLabel;
 
     // Image processor
-    CommonProcessor* _processor;
+    BrightnessAndContrastProcessor* _processor;
 };

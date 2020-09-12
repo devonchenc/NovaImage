@@ -15,6 +15,7 @@
 #include "../Image/RawImage.h"
 #include "../Processor/LevelsProcessor.h"
 #include "../Processor/InverseProcessor.h"
+#include "../Processor/BrightnessAndContrastProcessor.h"
 #include "../Processor/ThresholdSegmentationProcessor.h"
 #include "../Processor/EqualizationProcessor.h"
 #include "../Widget/RawParameterDialog.h"
@@ -451,6 +452,18 @@ void Document::restore()
         _image->restore();
 
         initViewWindowWidthAndLevel();
+
+        repaintView();
+    }
+}
+
+void Document::brightnessAndContrastAction()
+{
+    if (_image)
+    {
+        BrightnessAndContrastProcessor* processor = new BrightnessAndContrastProcessor(this);
+        processor->initUI();
+        processor->processForView(_image.get());
 
         repaintView();
     }

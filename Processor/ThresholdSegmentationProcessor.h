@@ -58,6 +58,5 @@ private:
     int findOtsuThreshold(uint* grayPixelArray, int pixelNumber);
 
 private:
-    ThresholdSegmentationWidget* _widget;
     int _threshold;
 };

@@ -3,7 +3,7 @@
 #include <QGridLayout>
 #include <QEvent>
 
-#include "../Processor/CommonProcessor.h"
+#include "../Processor/BrightnessAndContrastProcessor.h"
 #include "../Core/GlobalFunc.h"
 
 CommonWidget::CommonWidget(QWidget* parent)
@@ -36,7 +36,7 @@ CommonWidget::CommonWidget(QWidget* parent)
 
     setLayout(layout);
 
-    _processor = new CommonProcessor(this);
+    _processor = new BrightnessAndContrastProcessor(this);
 }
 
 CommonWidget::~CommonWidget()

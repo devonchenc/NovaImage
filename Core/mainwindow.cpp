@@ -208,6 +208,7 @@ void MainWindow::createActions()
     languageGroup->setExclusive(true);
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
 
+    _brightnessAndContrastAction = new QAction(tr("&Brightness/Contrast"), this);
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
 
@@ -250,6 +251,8 @@ void MainWindow::createActions()
     languageMenu->addAction(_chsAction);
 
     _processingMenu = menuBar()->addMenu(tr("&Image Processing"));
+    _processingMenu->addAction(_brightnessAndContrastAction);
+    _processingMenu->addSeparator();
     _processingMenu->addAction(_thresholdSegmentationAction);
     _processingMenu->addSeparator();
     _processingMenu->addAction(_equalizationAction);
@@ -276,6 +279,7 @@ void MainWindow::createActions()
     connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
     connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
 
+    connect(_brightnessAndContrastAction, &QAction::triggered, _doc, &Document::brightnessAndContrastAction);
     connect(_thresholdSegmentationAction, &QAction::triggered, _doc, &Document::thresholdSegmentation);
     connect(_equalizationAction, &QAction::triggered, _doc, &Document::equalization);
 
@@ -877,6 +881,7 @@ void MainWindow::changeEvent(QEvent* event)
         _prevImageAction->setText(tr("&Prev Image"));
         _nextImageAction->setText(tr("&Next Image"));
 
+        _brightnessAndContrastAction->setText(tr("&Brightness/Contrast"));
         _thresholdSegmentationAction->setText(tr("&Threshold Segmentation"));
         _equalizationAction->setText(tr("&Histogram Equalization"));
 
