@@ -38,95 +38,101 @@
     <name>CurvesWidget</name>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="21"/>
-        <location filename="Widget/CurvesWidget.cpp" line="258"/>
+        <location filename="Widget/CurvesWidget.cpp" line="270"/>
         <source>Curves</source>
         <translation type="unfinished">曲线</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="23"/>
-        <location filename="Widget/CurvesWidget.cpp" line="260"/>
+        <location filename="Widget/CurvesWidget.cpp" line="272"/>
         <source>Channel</source>
         <translation type="unfinished">通道</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="26"/>
-        <location filename="Widget/CurvesWidget.cpp" line="268"/>
+        <location filename="Widget/CurvesWidget.cpp" line="281"/>
         <source>Red</source>
         <translation type="unfinished">红</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="27"/>
-        <location filename="Widget/CurvesWidget.cpp" line="269"/>
+        <location filename="Widget/CurvesWidget.cpp" line="282"/>
         <source>Green</source>
         <translation type="unfinished">绿</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="28"/>
-        <location filename="Widget/CurvesWidget.cpp" line="270"/>
+        <location filename="Widget/CurvesWidget.cpp" line="283"/>
         <source>Blue</source>
         <translation type="unfinished">蓝</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="30"/>
-        <location filename="Widget/CurvesWidget.cpp" line="261"/>
+        <location filename="Widget/CurvesWidget.cpp" line="273"/>
         <source>&amp;Reset</source>
         <translation type="unfinished">重置(&amp;R)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="32"/>
-        <location filename="Widget/CurvesWidget.cpp" line="262"/>
+        <location filename="Widget/CurvesWidget.cpp" line="33"/>
+        <location filename="Widget/CurvesWidget.cpp" line="274"/>
         <source>R&amp;everse</source>
         <translation type="unfinished">翻转(&amp;E)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="41"/>
-        <location filename="Widget/CurvesWidget.cpp" line="263"/>
+        <location filename="Widget/CurvesWidget.cpp" line="36"/>
+        <location filename="Widget/CurvesWidget.cpp" line="275"/>
+        <source>&amp;Apply</source>
+        <translation type="unfinished">应用(&amp;A)</translation>
+    </message>
+    <message>
+        <location filename="Widget/CurvesWidget.cpp" line="47"/>
+        <location filename="Widget/CurvesWidget.cpp" line="276"/>
         <source>Input:</source>
         <translation type="unfinished">输入：</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="43"/>
-        <location filename="Widget/CurvesWidget.cpp" line="264"/>
+        <location filename="Widget/CurvesWidget.cpp" line="49"/>
+        <location filename="Widget/CurvesWidget.cpp" line="277"/>
         <source>Output:</source>
         <translation type="unfinished">输出：</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="53"/>
-        <location filename="Widget/CurvesWidget.cpp" line="272"/>
+        <location filename="Widget/CurvesWidget.cpp" line="59"/>
+        <location filename="Widget/CurvesWidget.cpp" line="285"/>
         <source>&amp;Curve</source>
         <translation type="unfinished">曲线(&amp;C)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="54"/>
-        <location filename="Widget/CurvesWidget.cpp" line="273"/>
+        <location filename="Widget/CurvesWidget.cpp" line="60"/>
+        <location filename="Widget/CurvesWidget.cpp" line="286"/>
         <source>&amp;Line</source>
         <translation type="unfinished">线性(&amp;L)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="64"/>
-        <location filename="Widget/CurvesWidget.cpp" line="275"/>
+        <location filename="Widget/CurvesWidget.cpp" line="70"/>
+        <location filename="Widget/CurvesWidget.cpp" line="288"/>
         <source>&amp;Save</source>
         <translation type="unfinished">保存(&amp;S)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="66"/>
-        <location filename="Widget/CurvesWidget.cpp" line="276"/>
+        <location filename="Widget/CurvesWidget.cpp" line="72"/>
+        <location filename="Widget/CurvesWidget.cpp" line="289"/>
         <source>L&amp;oad</source>
         <translation type="unfinished">加载(&amp;O)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="157"/>
+        <location filename="Widget/CurvesWidget.cpp" line="172"/>
         <source>Save Curve</source>
         <translation type="unfinished">保存曲线</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="157"/>
-        <location filename="Widget/CurvesWidget.cpp" line="185"/>
+        <location filename="Widget/CurvesWidget.cpp" line="172"/>
+        <location filename="Widget/CurvesWidget.cpp" line="200"/>
         <source>Curve file (*.cur)</source>
         <translation type="unfinished">曲线 (*.cur)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="185"/>
+        <location filename="Widget/CurvesWidget.cpp" line="200"/>
         <source>Load Curve</source>
         <translation type="unfinished">载入曲线</translation>
     </message>
@@ -212,9 +218,15 @@
     <name>HistogramWidget</name>
     <message>
         <location filename="Widget/HistogramWidget.cpp" line="34"/>
-        <location filename="Widget/HistogramWidget.cpp" line="400"/>
+        <location filename="Widget/HistogramWidget.cpp" line="416"/>
         <source>&amp;Reset</source>
         <translation type="unfinished">重置(&amp;R)</translation>
+    </message>
+    <message>
+        <location filename="Widget/HistogramWidget.cpp" line="38"/>
+        <location filename="Widget/HistogramWidget.cpp" line="417"/>
+        <source>&amp;Apply</source>
+        <translation type="unfinished">应用(&amp;A)</translation>
     </message>
 </context>
 <context>

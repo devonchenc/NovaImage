@@ -21,33 +21,39 @@ CurvesWidget::CurvesWidget(QWidget* parent)
     setName(tr("Curves"));
 
     _channelLabel = new QLabel(tr("Channel"));
-    _channelComboBox = new QComboBox();
+    _channelComboBox = new QComboBox;
     _channelComboBox->addItem("RGB");
     _channelComboBox->addItem(tr("Red"));
     _channelComboBox->addItem(tr("Green"));
     _channelComboBox->addItem(tr("Blue"));
     connect(_channelComboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), this, &CurvesWidget::channelChanged);
     _resetButton = new QPushButton(tr("&Reset"));
-    connect(_resetButton, &QPushButton::clicked, this, &CurvesWidget::clickReset);
+    _resetButton->setMinimumWidth(20);
+    connect(_resetButton, &QPushButton::clicked, this, &CurvesWidget::resetButtonClicked);
     _reverseButton = new QPushButton(tr("R&everse"));
-    connect(_reverseButton, &QPushButton::clicked, this, &CurvesWidget::clickReverse);
+    _reverseButton->setMinimumWidth(20);
+    connect(_reverseButton, &QPushButton::clicked, this, &CurvesWidget::reverseButtonClicked);
+    _applyButton = new QPushButton(tr("&Apply"));
+    _applyButton->setMinimumWidth(20);
+    connect(_applyButton, &QPushButton::clicked, this, &CurvesWidget::applyButtonClicked);
 
     QHBoxLayout* layoutHead = new QHBoxLayout;
     layoutHead->addWidget(_channelLabel);
     layoutHead->addWidget(_channelComboBox);
     layoutHead->addWidget(_resetButton);
     layoutHead->addWidget(_reverseButton);
+    layoutHead->addWidget(_applyButton);
 
     _inputLabel = new QLabel(tr("Input:"));
-    _inputValueLabel = new QLabel();
+    _inputValueLabel = new QLabel;
     _outputLabel = new QLabel(tr("Output:"));
-    _outputValueLabel = new QLabel(tr(""));
+    _outputValueLabel = new QLabel;
     QGridLayout* grid = new QGridLayout;
     grid->addWidget(_inputLabel, 0, 0);
     grid->addWidget(_inputValueLabel, 0, 1);
     grid->addWidget(_outputLabel, 1, 0);
     grid->addWidget(_outputValueLabel, 1, 1);
-    QGroupBox* groupBox1 = new QGroupBox(tr(""));
+    QGroupBox* groupBox1 = new QGroupBox;
     groupBox1->setLayout(grid);
 
     _curveRadio = new QRadioButton(tr("&Curve"));
@@ -55,19 +61,20 @@ CurvesWidget::CurvesWidget(QWidget* parent)
     connect(_curveRadio, &QRadioButton::toggled, this, &CurvesWidget::toggleCurveRadio);
     connect(_linearRadio, &QRadioButton::toggled, this, &CurvesWidget::toggleLinearRadio);
     _curveRadio->setChecked(true);
-    QVBoxLayout* vbox = new QVBoxLayout();
+    QVBoxLayout* vbox = new QVBoxLayout;
     vbox->addWidget(_curveRadio);
     vbox->addWidget(_linearRadio);
-    QGroupBox* groupBox2 = new QGroupBox(tr(""));
+    QGroupBox* groupBox2 = new QGroupBox;
     groupBox2->setLayout(vbox);
 
     _saveButton = new QPushButton(tr("&Save"));
     connect(_saveButton, &QPushButton::clicked, this, &CurvesWidget::clickSave);
     _loadButton = new QPushButton(tr("L&oad"));
     connect(_loadButton, &QPushButton::clicked, this, &CurvesWidget::clickLoad);
-    QVBoxLayout* vbox2 = new QVBoxLayout();
+    QVBoxLayout* vbox2 = new QVBoxLayout;
     vbox2->addWidget(_saveButton);
     vbox2->addWidget(_loadButton);
+
     QHBoxLayout* layoutBottom = new QHBoxLayout;
     layoutBottom->addWidget(groupBox1);
     layoutBottom->addWidget(groupBox2);
@@ -124,16 +131,23 @@ void CurvesWidget::channelChanged(int value)
     generateHistogram();
 }
 
-void CurvesWidget::clickReset()
+void CurvesWidget::resetButtonClicked()
 {
     reset();
 
     updateImage();
 }
 
-void CurvesWidget::clickReverse()
+void CurvesWidget::reverseButtonClicked()
 {
     _square->reverse();
+}
+
+void CurvesWidget::applyButtonClicked()
+{
+    reset();
+
+    _processor->apply();
 }
 
 void CurvesWidget::toggleCurveRadio()
@@ -235,14 +249,11 @@ void CurvesWidget::resizeSquare()
 
 void CurvesWidget::updateImage()
 {
-    //	_isProcessing = true;
-
     BaseImage* image = getGlobalImage();
     if (image)
     {
         _processor->processForView(image);
     }
-    //	_isProcessing = false;
 }
 
 void CurvesWidget::updateLabelText(QString input, QString output)
@@ -260,6 +271,7 @@ void CurvesWidget::changeEvent(QEvent* event)
         _channelLabel->setText(tr("Channel"));
         _resetButton->setText(tr("&Reset"));
         _reverseButton->setText(tr("R&everse"));
+        _applyButton->setText(tr("&Apply"));
         _inputLabel->setText(tr("Input:"));
         _outputLabel->setText(tr("Output:"));
 

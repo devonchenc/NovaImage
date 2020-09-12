@@ -29,9 +29,11 @@ public:
 public slots:
     void channelChanged(int value);
 
-    void clickReset();
+    void resetButtonClicked();
 
-    void clickReverse();
+    void reverseButtonClicked();
+
+    void applyButtonClicked();
 
     void toggleCurveRadio();
     void toggleLinearRadio();
@@ -74,6 +76,8 @@ private:
     QPushButton* _reverseButton;
     QPushButton* _saveButton;
     QPushButton* _loadButton;
+
+    QPushButton* _applyButton;
 
     CurveSquare* _square;
 

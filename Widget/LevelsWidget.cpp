@@ -15,7 +15,8 @@ LevelsWidget::LevelsWidget(QWidget* parent)
     setName(tr("Levels"));
 
     _histogram = new HistogramWidget();
-    connect(_histogram, &HistogramWidget::resetControl, this, &LevelsWidget::reset);
+    connect(_histogram, &HistogramWidget::resetControl, this, &LevelsWidget::resetButtonClicked);
+    connect(_histogram, &HistogramWidget::apply, this, &LevelsWidget::apply);
     connect(_histogram, &HistogramWidget::updateBottom, this, &LevelsWidget::updateBottom);
     connect(_histogram, &HistogramWidget::updateMid, this, &LevelsWidget::updateMid);
     connect(_histogram, &HistogramWidget::updateTop, this, &LevelsWidget::updateTop);
@@ -94,8 +95,20 @@ void LevelsWidget::reset()
     }
 
     _histogram->reset();
+}
+
+void LevelsWidget::resetButtonClicked()
+{
+    reset();
 
     levelsAdjust();
+}
+
+void LevelsWidget::apply()
+{
+    reset();
+
+    _processor->apply();
 }
 
 void LevelsWidget::updateHistogram()
@@ -182,10 +195,7 @@ void LevelsWidget::levelsAdjust()
         float mid = _editMid->text().toFloat();
         float top = _editMax->text().toFloat();
         _processor->setPara(bottom, mid, top);
-        _processor->setImage(image);
-        _processor->process();
-
-        repaintView();
+        _processor->processForView(image);
     }
 }
 

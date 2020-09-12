@@ -31,10 +31,14 @@ public:
     void setParameters(float bottom, float mid, float top);
 
 public slots:
-    void clickReset();
+    void resetButtonClicked();
+
+    void applyButtonClicked();
 
 signals:
     void resetControl();
+
+    void apply();
 
     void updateBottom(float bottom);
 
@@ -110,12 +114,13 @@ private:
     // Min and max value of image
     float _minValue, _maxValue;
 
-    // 色阶调整对应的控件
+    // Variables corresponding to levels widget
     float _bottom;
     float _mid;
     float _top;
 
     QPushButton* _resetButton;
+    QPushButton* _applyButton;
 
     // Image processor
     HistogramProcessor* _processor;

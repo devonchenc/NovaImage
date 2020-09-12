@@ -33,12 +33,23 @@ HistogramWidget::HistogramWidget(QWidget* parent)
 {
     _resetButton = new QPushButton(tr("&Reset"));
     _resetButton->setMaximumWidth(80);
-    connect(_resetButton, &QPushButton::clicked, this, &HistogramWidget::clickReset);
-    QHBoxLayout* hbox = new QHBoxLayout;
-    hbox->addStretch();
-    hbox->addWidget(_resetButton);
+    connect(_resetButton, &QPushButton::clicked, this, &HistogramWidget::resetButtonClicked);
+
+    _applyButton = new QPushButton(tr("&Apply"));
+    _applyButton->setMaximumWidth(80);
+    connect(_applyButton, &QPushButton::clicked, this, &HistogramWidget::applyButtonClicked);
+
+    QHBoxLayout* hbox1 = new QHBoxLayout;
+    hbox1->addStretch();
+    hbox1->addWidget(_resetButton);
+
+    QHBoxLayout* hbox2 = new QHBoxLayout;
+    hbox2->addStretch();
+    hbox2->addWidget(_applyButton);
+
     QVBoxLayout* vbox = new QVBoxLayout;
-    vbox->addLayout(hbox);
+    vbox->addLayout(hbox1);
+    vbox->addLayout(hbox2);
     vbox->addStretch();
     setLayout(vbox);
 
@@ -136,9 +147,14 @@ void HistogramWidget::setParameters(float bottom, float mid, float top)
     repaint();
 }
 
-void HistogramWidget::clickReset()
+void HistogramWidget::resetButtonClicked()
 {
     emit resetControl();
+}
+
+void HistogramWidget::applyButtonClicked()
+{
+    emit apply();
 }
 
 QSize HistogramWidget::sizeHint() const
@@ -197,7 +213,7 @@ void HistogramWidget::paintEvent(QPaintEvent*)
 void HistogramWidget::paintCursor()
 {
     int left = _rectHistogram.left();
-    int height = _rectHistogram.bottom();
+    int height = _rectHistogram.bottom() + 1;
 
     QPoint pt[3];
     pt[0].setX(_cursorPos[0] + left);
@@ -398,6 +414,7 @@ void HistogramWidget::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         _resetButton->setText(tr("&Reset"));
+        _applyButton->setText(tr("&Apply"));
     }
     QWidget::changeEvent(event);
 }

@@ -24,6 +24,10 @@ public:
     LevelsProcessor* getProcessor() { return _processor; }
 
 public slots:
+    void resetButtonClicked();
+
+    void apply();
+
     void updateHistogram();
 
     void updateBottom(float bottom);
