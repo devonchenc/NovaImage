@@ -30,7 +30,6 @@
 #include "../Image/BaseImage.h"
 #include "../Widget/ToolBoxWidget.h"
 #include "../Widget/WidgetManager.h"
-#include "../Widget/CommonWidget.h"
 #include "../Widget/CurvesWidget.h"
 #include "../Widget/LevelsWidget.h"
 #include "../Widget/ProcessorShellWidget.h"
@@ -349,9 +348,6 @@ void MainWindow::createToolWidget()
     connect(_axialView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
     connect(_axialView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
     connect(this, &MainWindow::setToolBoxVisible, toolbox, &ToolBoxWidget::setWidgetVisible);
-
-    CommonWidget* commonWidget = new CommonWidget();
-    createDockWidget(commonWidget);
 
     _curvesWidget = new CurvesWidget();
     QDockWidget* curveDockWidget = createDockWidget(_curvesWidget);

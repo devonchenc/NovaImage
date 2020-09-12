@@ -19,15 +19,16 @@ LevelsProcessor::~LevelsProcessor()
 
 }
 
-void LevelsProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
+void LevelsProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
-    int width = image->width();
-    int height = image->height();
-    QImage* imageEntity = image->getImageEntity();
-    uchar* imageData = imageEntity->bits();
-    uchar* dstData = dstImage->bits();
+    int width = srcImage->width();
+    int height = srcImage->height();
+    QImage* imageEntity = srcImage->getImageEntity();
+    uchar* srcData = imageEntity->bits();
+    uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
@@ -41,22 +42,23 @@ void LevelsProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
         for (int i = 0; i < width; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i * depth;
-            uchar* imagePixel = imageData + j * pitch + i * depth;
+            uchar* imagePixel = srcData + j * pitch + i * depth;
 
             for (int n = 0; n < qMin(depth, 3); n++)
             {
-                dstPixel[n] = image->calcNewColor(imagePixel[n], _bottom, _mid, _top, minColor, maxColor);
+                dstPixel[n] = srcImage->calcNewColor(imagePixel[n], _bottom, _mid, _top, minColor, maxColor);
             }
         }
     }
 }
 
-void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
+void LevelsProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
     int width, height;
-    uchar* byteImage = image->getBYTEImage(width, height);
+    uchar* byteImage = srcImage->getBYTEImage(width, height);
 
     int channel = 0;
 
@@ -67,7 +69,7 @@ void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 
     for (int i = 0; i < width * height; i++)
     {
-        if (image->getValue(i) <= _bottom)
+        if (srcImage->getValue(i) <= _bottom)
         {
             switch (channel)
             {
@@ -85,7 +87,7 @@ void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
                 break;
             }
         }
-        else if (image->getValue(i) >= _top)
+        else if (srcImage->getValue(i) >= _top)
         {
             switch (channel)
             {
@@ -107,7 +109,7 @@ void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
         {
             if (_mid == 1)
             {
-                uchar value = uchar((image->getValue(i) - _bottom) * variable1);
+                uchar value = uchar((srcImage->getValue(i) - _bottom) * variable1);
                 switch (channel)
                 {
                 case 0:
@@ -126,9 +128,9 @@ void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
             }
             else	// if mid is not equal to 1
             {
-                if (image->getValue(i) < (_bottom + _top) / 2)
+                if (srcImage->getValue(i) < (_bottom + _top) / 2)
                 {
-                    uchar value = uchar((image->getValue(i) - _bottom) * variable2);
+                    uchar value = uchar((srcImage->getValue(i) - _bottom) * variable2);
                     switch (channel)
                     {
                     case 0:
@@ -147,7 +149,7 @@ void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
                 }
                 else
                 {
-                    uchar value = uchar((image->getValue(i) - (_bottom + _top) / 2) * variable3 + midColor);
+                    uchar value = uchar((srcImage->getValue(i) - (_bottom + _top) / 2) * variable3 + midColor);
                     switch (channel)
                     {
                     case 0:
@@ -168,7 +170,7 @@ void LevelsProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
         }
     }
 
-    image->copyByteToImage(dstImage);
+//    srcImage->copyByteToImage(dstImage);
 }
 
 // Process float array

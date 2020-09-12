@@ -76,19 +76,18 @@ void BrightnessAndContrastProcessor::initUI()
     _processorWidget = widget;
     connect(widget, &BrightnessAndContrastWidget::parametersChanged, this, &BrightnessAndContrastProcessor::setBrightnessAndContrast);
     emit createWidget(_processorWidget);
-
-
 }
 
-void BrightnessAndContrastProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
+void BrightnessAndContrastProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
-    int width = image->width();
-    int height = image->height();
-    QImage* imageEntity = image->getImageEntity();
-    uchar* imageData = imageEntity->bits();
-    uchar* dstData = dstImage->bits();
+    int width = srcImage->width();
+    int height = srcImage->height();
+    QImage* imageEntity = srcImage->getImageEntity();
+    uchar* srcData = imageEntity->bits();
+    uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
@@ -99,7 +98,7 @@ void BrightnessAndContrastProcessor::processImageImpl(GeneralImage* image, QImag
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i;
-            uchar* imagePixel = imageData + j * pitch + i;
+            uchar* imagePixel = srcData + j * pitch + i;
             float result = (*(imagePixel) - 127.0f) * (_contrast + 100) / 100.0f + 127.0f;
             result *= (100.0f + _brightness / 2.0f) / 100.0f;
             if (result >= 255)
@@ -122,14 +121,15 @@ void BrightnessAndContrastProcessor::processImageImpl(GeneralImage* image, QImag
     //	PIProgressDone();
 }
 
-void BrightnessAndContrastProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
+void BrightnessAndContrastProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
     int width, height;
-    uchar* byteImage = image->getBYTEImage(width, height);
-    float maxValue = image->getMaxValue();
-    float minValue = image->getMinValue();
+    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    float maxValue = srcImage->getMaxValue();
+    float minValue = srcImage->getMinValue();
 
     float average = float(minValue + maxValue) / 2.0f;
     float variable;
@@ -144,7 +144,7 @@ void BrightnessAndContrastProcessor::processImageImpl(MonoImage* image, QImage* 
 
     for (int i = 0; i < width * height; i++)
     {
-        float result = float(image->getValue(i) - average) * (_contrast + 100) / 100.0f + average;
+        float result = float(srcImage->getValue(i) - average) * (_contrast + 100) / 100.0f + average;
         result *= (100.0f + _brightness / 2.0f) / 100.0f;
         if (result >= maxValue)
         {
@@ -161,7 +161,7 @@ void BrightnessAndContrastProcessor::processImageImpl(MonoImage* image, QImage* 
     }
 
     // Copy to image
-    image->copyByteToImage(dstImage);
+//    srcImage->copyByteToImage(dstImage);
 }
 
 // Process float array

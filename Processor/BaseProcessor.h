@@ -49,9 +49,9 @@ public:
     { Q_UNUSED(array);Q_UNUSED(width);Q_UNUSED(height);Q_UNUSED(minValue);Q_UNUSED(maxValue);Q_UNUSED(pByte); }
 
 protected:
-    virtual void processImageImpl(GeneralImage*, QImage*) {}
+    virtual void processImage(GeneralImage*, GeneralImage*) {}
 
-    virtual void processImageImpl(MonoImage*, QImage*) {}
+    virtual void processImage(MonoImage*, MonoImage*) {}
 
     //	virtual void ProcessRegionImage(RegionImage* pImage);
 
@@ -62,8 +62,8 @@ signals:
     void createWidget(QWidget* widget);
 
 protected:
-    BaseImage* _currentImage;
-    BaseImage* _backupImage;
+    BaseImage* _srcImage;
+    BaseImage* _dstImage;
 
     ProcessorBaseWidget* _processorWidget;
 

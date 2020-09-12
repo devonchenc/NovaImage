@@ -220,9 +220,20 @@ void Document::repaintView()
     }
 }
 
-void Document::repaintView(QImage* image)
+void Document::repaintView(QImage* image, int viewType)
 {
-    getAxialView()->showImage(image);
+    if (viewType == 0)
+    {
+        getAxialView()->showImage(image);
+    }
+    else if (viewType == 1)
+    {
+        getCoronalView()->showImage(image);
+    }
+    else if (viewType == 2)
+    {
+        getSagittalView()->showImage(image);
+    }
 }
 
 void Document::repaintView(std::shared_ptr<QImage> dstImage, int viewType)
@@ -399,8 +410,7 @@ void Document::applyImageWidthAndLevel()
 
     LevelsProcessor* processor = _mainWindow->getLevelsProcessor();
     processor->setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
-    processor->setImage(getImage());
-    processor->process();
+    processor->processForView(getImage());
     processor->apply();
 
     repaintView();
@@ -428,8 +438,6 @@ void Document::undo()
     if (_undoStack.isEmpty())
         return;
 
-  //  BaseImage* undoImage = _undoStack.undo()->copyImage();
- //   _image.reset(undoImage);
     _undoStack.undo()->copyToImage(_image.get());
     repaintView();
 }
@@ -439,8 +447,6 @@ void Document::redo()
     if (_undoStack.isTop())
         return;
 
-//    BaseImage* undoImage = _undoStack.redo()->copyImage();
-//    _image.reset(undoImage);
     _undoStack.redo()->copyToImage(_image.get());
     repaintView();
 }

@@ -14,26 +14,27 @@ InverseProcessor::~InverseProcessor()
 
 }
 
-void InverseProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
+void InverseProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
-    int width = image->width();
-    int height = image->height();
-    QImage* imageEntity = image->getImageEntity();
-    uchar* imageData = imageEntity->bits();
-    uchar* dstData = dstImage->bits();
+    int width = srcImage->width();
+    int height = srcImage->height();
+    QImage* imageEntity = srcImage->getImageEntity();
+    uchar* srcData = imageEntity->bits();
+    uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    if (imageData[0] == dstData[0])
+    if (srcData[0] == dstData[0])
     {
         for (int j = 0; j < height; j++)
         {
             for (int i = 0; i < width; i++)
             {
                 uchar* pPixel = dstData + j * pitch + i * depth;
-                uchar* pBackupPixel = imageData + j * pitch + i * depth;
+                uchar* pBackupPixel = srcData + j * pitch + i * depth;
                 for (int n = 0; n < qMin(depth, 3); n++)
                 {
                     *(pPixel + n) = 255 - *(pBackupPixel + n);
@@ -43,23 +44,24 @@ void InverseProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
     }
     else
     {
-        *dstImage = *image->getImageEntity();
+        *dstImage = *srcImage;
     }
 }
 
-void InverseProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
+void InverseProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
     int width, height;
-    uchar* byteImage = image->getBYTEImage(width, height);
+    uchar* byteImage = srcImage->getBYTEImage(width, height);
 
     for (int i = 0; i < width * height * 3; i++)
     {
         byteImage[i] = 255 - byteImage[i];
     }
 
-    image->copyByteToImage(dstImage);
+ //   srcImage->copyByteToImage(dstImage);
 }
 
 // Process float array

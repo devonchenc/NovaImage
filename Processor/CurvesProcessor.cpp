@@ -15,15 +15,16 @@ CurvesProcessor::~CurvesProcessor()
 
 }
 
-void CurvesProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
+void CurvesProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
-    int width = image->width();
-    int height = image->height();
-    QImage* imageEntity = image->getImageEntity();
-    uchar* imageData = imageEntity->bits();
-    uchar* dstData = dstImage->bits();
+    int width = srcImage->width();
+    int height = srcImage->height();
+    QImage* imageEntity = srcImage->getImageEntity();
+    uchar* srcData = imageEntity->bits();
+    uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
@@ -38,7 +39,7 @@ void CurvesProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
             for (int i = 0; i < width * depth; i++)
             {
                 uchar* dstPixel = dstData + j * pitch + i;
-                uchar* imagePixel = imageData + j * pitch + i;
+                uchar* imagePixel = srcData + j * pitch + i;
                 *(dstPixel) = interpolation(*imagePixel, _arrayIntensity, _arrayNum, variable);
             }
 
@@ -52,7 +53,7 @@ void CurvesProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
             for (int i = 0; i < width; i++)
             {
                 uchar* dstPixel = dstData + j * pitch + i * depth;
-                uchar* imagePixel = imageData + j * pitch + i * depth;
+                uchar* imagePixel = srcData + j * pitch + i * depth;
                 *(dstPixel) = interpolation(*(imagePixel), _arrayBlue, _arrayNum, variable);
                 *(dstPixel + 1) = interpolation(*(imagePixel + 1), _arrayGreen, _arrayNum, variable);
                 *(dstPixel + 2) = interpolation(*(imagePixel + 2), _arrayRed, _arrayNum, variable);
@@ -63,14 +64,15 @@ void CurvesProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
     }
 }
 
-void CurvesProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
+void CurvesProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
     int width, height;
-    uchar* byteImage = image->getBYTEImage(width, height);
-    float maxValue = image->getMaxValue();
-    float minValue = image->getMinValue();
+    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    float maxValue = srcImage->getMaxValue();
+    float minValue = srcImage->getMinValue();
 
     float fVariable1 = float(maxValue - minValue) / (_arrayNum - 1);
     float fVariable2 = 255.0f / (_arrayNum - 1);
@@ -83,7 +85,7 @@ void CurvesProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
             {
                 int n = j * width + i;
                 byteImage[3 * n] = byteImage[3 * n + 1] = byteImage[3 * n + 2] =
-                    interpolation(image->getValue(n) - minValue, _arrayIntensity, _arrayNum, fVariable1, fVariable2);
+                    interpolation(srcImage->getValue(n) - minValue, _arrayIntensity, _arrayNum, fVariable1, fVariable2);
             }
 
             //	PIProgressSetPercent(j + 1, height);
@@ -97,16 +99,16 @@ void CurvesProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
             for (int i = 0; i < width; i++)
             {
                 int n = j * width + i;
-                byteImage[3 * n] = interpolation(image->getValue(n) - minValue, _arrayRed, _arrayNum, fVariable1, fVariable2);
-                byteImage[3 * n + 1] = interpolation(image->getValue(n) - minValue, _arrayGreen, _arrayNum, fVariable1, fVariable2);
-                byteImage[3 * n + 2] = interpolation(image->getValue(n) - minValue, _arrayBlue, _arrayNum, fVariable1, fVariable2);
+                byteImage[3 * n] = interpolation(srcImage->getValue(n) - minValue, _arrayRed, _arrayNum, fVariable1, fVariable2);
+                byteImage[3 * n + 1] = interpolation(srcImage->getValue(n) - minValue, _arrayGreen, _arrayNum, fVariable1, fVariable2);
+                byteImage[3 * n + 2] = interpolation(srcImage->getValue(n) - minValue, _arrayBlue, _arrayNum, fVariable1, fVariable2);
             }
 
             //	PIProgressSetPercent(j + 1, height);
         }
     }
 
-    image->copyByteToImage(dstImage);
+//    srcImage->copyByteToImage(dstImage);
 
     //	PIProgressDone();
 }

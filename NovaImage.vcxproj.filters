@@ -45,9 +45,6 @@
     <ClCompile Include="Image\ScanImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\CommonWidget.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Widget\CurveSquare.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
@@ -216,9 +213,6 @@
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
-    <QtMoc Include="Widget\CommonWidget.h">
       <Filter>Widget</Filter>
     </QtMoc>
     <QtMoc Include="Widget\CurveSquare.h">

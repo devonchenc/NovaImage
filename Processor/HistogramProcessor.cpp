@@ -17,15 +17,15 @@ HistogramProcessor::~HistogramProcessor()
 
 }
 
-void HistogramProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
+void HistogramProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
 
-    int width = image->width();
-    int height = image->height();
-    QImage* imageEntity = image->getImageEntity();
-    uchar* imageData = imageEntity->bits();
-    uchar* dstData = dstImage->bits();
+    int width = srcImage->width();
+    int height = srcImage->height();
+    QImage* imageEntity = srcImage->getImageEntity();
+    uchar* srcData = imageEntity->bits();
+    uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
@@ -51,7 +51,7 @@ void HistogramProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
     if (count == 0)
     {
         // Restore image by using backup image
-        image->restore();
+        *dstImage = *srcImage;
         return;
     }
 
@@ -65,7 +65,7 @@ void HistogramProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i;
-            uchar* imagePixel = imageData + j * pitch + i;
+            uchar* imagePixel = srcData + j * pitch + i;
 
             if (*(imagePixel) >= actualMax)
             {
@@ -91,14 +91,15 @@ void HistogramProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
     }
 }
 
-void HistogramProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
+void HistogramProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
     int width, height;
-    uchar* byteImage = image->getBYTEImage(width, height);
-    float maxValue = image->getMaxValue();
-    float minValue = image->getMinValue();
+    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    float maxValue = srcImage->getMaxValue();
+    float minValue = srcImage->getMinValue();
 
     // Statistical non-zero number
     int count = 0;
@@ -122,8 +123,8 @@ void HistogramProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
     if (count == 0)
     {
         // Convert data to byte
-        image->convertToByte();
-        image->copyByteToImage();
+        srcImage->convertToByte();
+        srcImage->copyByteToImage();
         return;
     }
 
@@ -132,21 +133,21 @@ void HistogramProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 
     for (int i = 0; i < width * height; i++)
     {
-        if (image->getValue(i) >= actualMax)
+        if (srcImage->getValue(i) >= actualMax)
         {
             byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
         }
-        else if (image->getValue(i) <= actualMin)
+        else if (srcImage->getValue(i) <= actualMin)
         {
             byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
         }
         else
         {
-            int index = round(float(image->getValue(i) - minValue) * (_arrayNum - 1) / float(maxValue - minValue));
+            int index = round(float(srcImage->getValue(i) - minValue) * (_arrayNum - 1) / float(maxValue - minValue));
             if (_array[index])
             {
                 byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =
-                        round((image->getValue(i) - actualMin) * 255.0f / (actualMax - actualMin));
+                        round((srcImage->getValue(i) - actualMin) * 255.0f / (actualMax - actualMin));
             }
             else
             {
@@ -155,7 +156,7 @@ void HistogramProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
         }
     }
 
-    image->copyByteToImage(dstImage);
+//    srcImage->copyByteToImage(dstImage);
 }
 
 // Process float array

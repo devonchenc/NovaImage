@@ -64,12 +64,12 @@ void repaintView()
     }
 }
 
-void repaintView(QImage* image)
+void repaintView(QImage* image, int viewType)
 {
     Document* document = getGlobalDocument();
     if (document)
     {
-        document->repaintView(image);
+        document->repaintView(image, viewType);
     }
 }
 

@@ -57,7 +57,6 @@
     <ClCompile Include="Processor\ThresholdSegmentationProcessor.cpp" />
     <ClCompile Include="Widget\ChartView.cpp" />
     <ClCompile Include="Widget\ColorButton.cpp" />
-    <ClCompile Include="Widget\CommonWidget.cpp" />
     <ClCompile Include="Widget\CurveSquare.cpp" />
     <ClCompile Include="Widget\CurvesWidget.cpp" />
     <ClCompile Include="Widget\CustomEvent.cpp" />
@@ -135,7 +134,6 @@
     <QtMoc Include="Widget\HistogramWidget.h" />
     <QtMoc Include="Widget\CurvesWidget.h" />
     <QtMoc Include="Widget\CurveSquare.h" />
-    <QtMoc Include="Widget\CommonWidget.h" />
     <QtMoc Include="Widget\BaseWidget.h" />
     <ClInclude Include="Image\BaseImage.h" />
     <ClInclude Include="Image\Dataheader.h" />

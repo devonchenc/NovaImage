@@ -76,15 +76,16 @@ void EqualizationProcessor::valueChanged(int gridSize, int clipLimit)
     repaintView();
 }
 
-void EqualizationProcessor::processImageImpl(GeneralImage* image, QImage* dstImage)
+void EqualizationProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
-    int width = image->width();
-    int height = image->height();
-    QImage* imageEntity = image->getImageEntity();
-    uchar* imageData = imageEntity->bits();
-    uchar* dstData = dstImage->bits();
+    int width = srcImage->width();
+    int height = srcImage->height();
+    QImage* imageEntity = srcImage->getImageEntity();
+    uchar* srcData = imageEntity->bits();
+    uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
     int temp = imageEntity->depth();
@@ -99,12 +100,12 @@ void EqualizationProcessor::processImageImpl(GeneralImage* image, QImage* dstIma
             int index = j * pitch + i * depth;
             if (depth < 3)
             {
-                RGB2HSV(imageData[index], imageData[index], imageData[index],
+                RGB2HSV(srcData[index], srcData[index], srcData[index],
                     H[j * width + i], S[j * width + i], V[j * width + i]);
             }
             else
             {
-                RGB2HSV(imageData[index + 2], imageData[index + 1], imageData[index],
+                RGB2HSV(srcData[index + 2], srcData[index + 1], srcData[index],
                     H[j * width + i], S[j * width + i], V[j * width + i]);
             }
         }
@@ -135,15 +136,16 @@ void EqualizationProcessor::processImageImpl(GeneralImage* image, QImage* dstIma
     delete[] H;
 }
 
-void EqualizationProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
+void EqualizationProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
 {
-    assert(image);
+    assert(srcImage);
+    assert(dstImage);
 
     int width, height;
-    uchar* byteImage = image->getBYTEImage(width, height);
+    uchar* byteImage = srcImage->getBYTEImage(width, height);
 
-    MonoImage* backupMonoImage = dynamic_cast<MonoImage*>(_backupImage);
-    backupMonoImage->setViewType(image->viewType());
+    MonoImage* backupMonoImage = dynamic_cast<MonoImage*>(_dstImage);
+    backupMonoImage->setViewType(srcImage->viewType());
     uchar* backupByteImage = backupMonoImage->getBYTEImage(width, height);
 
     uchar* temp = new uchar[width * height];
@@ -161,7 +163,7 @@ void EqualizationProcessor::processImageImpl(MonoImage* image, QImage* dstImage)
 
     delete[] temp;
 
-    image->copyByteToImage();
+//    srcImage->copyByteToImage();
 }
 
 // Process float array

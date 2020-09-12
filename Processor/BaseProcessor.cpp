@@ -14,8 +14,8 @@ BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
 
 BaseProcessor::BaseProcessor(bool temporary, QObject* parent)
     : QObject(parent)
-    , _currentImage(nullptr)
-    , _backupImage(nullptr)
+    , _srcImage(nullptr)
+    , _dstImage(nullptr)
     , _processorWidget(nullptr)
     , _temporary(temporary)
 {
@@ -33,10 +33,10 @@ BaseProcessor::BaseProcessor(bool temporary, QObject* parent)
 
 BaseProcessor::~BaseProcessor()
 {
-    if (_backupImage)
+    if (_dstImage)
     {
-        delete _backupImage;
-        _backupImage = nullptr;
+        delete _dstImage;
+        _dstImage = nullptr;
     }
     if (this == _currentProcessor)
     {
@@ -51,34 +51,37 @@ BaseProcessor* BaseProcessor::getProcessor()
 
 void BaseProcessor::setImage(BaseImage* image)
 {
-    _currentImage = image;
-    if (_backupImage)
+    if (_srcImage == image)
+        return;
+
+    _srcImage = image;
+    if (_dstImage)
     {
-        delete _backupImage;
-        _backupImage = nullptr;
+        delete _dstImage;
+        _dstImage = nullptr;
     }
     if (image)
     {
-        _backupImage = image->copyImage();
+        _dstImage = image->copyImage();
     }
 }
 
 void BaseProcessor::process()
 {
-    if (_currentImage == nullptr)
+    if (_srcImage == nullptr)
         return;
 
     setCurrentProcessor();
 
-    if (typeid(*_currentImage) == typeid(GeneralImage))
+/*    if (typeid(*_srcImage) == typeid(GeneralImage))
     {
-        GeneralImage* generalImage = dynamic_cast<GeneralImage*>(_currentImage);
-        processImageImpl(generalImage, generalImage->getImageEntity());
+        GeneralImage* generalImage = dynamic_cast<GeneralImage*>(_srcImage);
+        processImage(generalImage, generalImage->getImageEntity());
     }
-    else if (dynamic_cast<MonoImage*>(_currentImage))
+    else if (dynamic_cast<MonoImage*>(_srcImage))
     {
-        MonoImage* monoImage = dynamic_cast<MonoImage*>(_currentImage);
-        processImageImpl(monoImage, monoImage->getImageEntity());
+        MonoImage* monoImage = dynamic_cast<MonoImage*>(_srcImage);
+        processImage(monoImage, monoImage->getImageEntity());
 
         if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
         {
@@ -101,35 +104,36 @@ void BaseProcessor::process()
             monoImage->setViewType(viewType);
         }
     }
-    /*	else if (typeid(*pImage) == typeid(RegionImage))
-    {
-        RegionImage* pRegionImage = dynamic_cast<RegionImage*>(pImage);
-        assert(pRegionImage);
-        ProcessRegionImage(pRegionImage);
-    }*/
-    getGlobalDocument()->backup();
+//   	else if (typeid(*pImage) == typeid(RegionImage))
+//    {
+//        RegionImage* pRegionImage = dynamic_cast<RegionImage*>(pImage);
+//        assert(pRegionImage);
+//        ProcessRegionImage(pRegionImage);
+//    }
+    getGlobalDocument()->backup();*/
 }
 
 void BaseProcessor::processForView(BaseImage* image)
 {
-    setCurrentProcessor();
+    setImage(image);
 
-    std::shared_ptr<QImage> dstImage;
-    dstImage.reset(new QImage(*image->getImageEntity()));
+    setCurrentProcessor();
 
     if (typeid(*image) == typeid(GeneralImage))
     {
         GeneralImage* generalImage = dynamic_cast<GeneralImage*>(image);
-        processImageImpl(generalImage, dstImage.get());
+        GeneralImage* dstImage = dynamic_cast<GeneralImage*>(_dstImage);
+        processImage(generalImage, dstImage);
 
-        repaintView(dstImage);
+        repaintView(_dstImage->getImageEntity());
     }
     else if (dynamic_cast<MonoImage*>(image))
     {
         MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
-        processImageImpl(monoImage, dstImage.get());
+        MonoImage* dstImage = dynamic_cast<MonoImage*>(_dstImage);
+        processImage(monoImage, dstImage);
 
-        repaintView(dstImage, 0);
+        repaintView(_dstImage->getImageEntity(), 0);
 
         if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
         {
@@ -137,20 +141,20 @@ void BaseProcessor::processForView(BaseImage* image)
             if (viewType != 0)
             {
                 monoImage->setViewType(0);
-                processImageImpl(monoImage, dstImage.get());
-                repaintView(dstImage, 0);
+                processImage(monoImage, dstImage);
+                repaintView(_dstImage->getImageEntity(), 0);
             }
             if (viewType != 1)
             {
                 monoImage->setViewType(1);
-                processImageImpl(monoImage, dstImage.get());
-                repaintView(dstImage, 1);
+                processImage(monoImage, dstImage);
+                repaintView(_dstImage->getImageEntity(), 1);
             }
             if (viewType != 2)
             {
                 monoImage->setViewType(2);
-                processImageImpl(monoImage, dstImage.get());
-                repaintView(dstImage, 2);
+                processImage(monoImage, dstImage);
+                repaintView(_dstImage->getImageEntity(), 2);
             }
             monoImage->setViewType(viewType);
         }
@@ -181,6 +185,11 @@ BaseProcessor* BaseProcessor::setCurrentProcessor()
 
 void BaseProcessor::apply()
 {
+    if (_srcImage == nullptr || _dstImage == nullptr)
+        return;
+
+    *_srcImage = *_dstImage;
+
     getGlobalDocument()->backup();
 }
 

@@ -42,9 +42,9 @@ public:
     void initUI() override;
 
 protected:
-    void processImageImpl(GeneralImage* image, QImage* dstImage) override;
+    void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
 
-    void processImageImpl(MonoImage* image, QImage* dstImage) override;
+    void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
 
     // Process float array
     void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
