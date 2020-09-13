@@ -15,6 +15,8 @@ class BrightnessAndContrastWidget : public ProcessorBaseWidget
 public:
     BrightnessAndContrastWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
+    void reset() override;
+
 public slots:
     void brightnessValueChanged(int value);
 

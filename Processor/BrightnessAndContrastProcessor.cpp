@@ -42,6 +42,12 @@ BrightnessAndContrastWidget::BrightnessAndContrastWidget(BaseProcessor* processo
     setLayout(layout);
 }
 
+void BrightnessAndContrastWidget::reset()
+{
+    _brightnessSlider->setValue(0);
+    _contrastSlider->setValue(0);
+}
+
 void BrightnessAndContrastWidget::brightnessValueChanged(int value)
 {
     _brightnessValueLabel->setText(QString::number(value));

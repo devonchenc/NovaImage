@@ -33,7 +33,7 @@ public:
 
     virtual void initUI() {}
 
-    virtual void apply();
+    void apply();
 
     void setImage(BaseImage* image);
 

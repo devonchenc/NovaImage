@@ -20,6 +20,7 @@ EqualizationWidget::EqualizationWidget(BaseProcessor* processor, QWidget* parent
 
     _gridSizeEdit = new QLineEdit("8");
     _gridSizeEdit->setValidator(new QIntValidator(2, 16, this));
+    _gridSizeEdit->setToolTip(tr("The Image size should be divisible by grid size, \nand the maximum grid size is 16."));
     connect(_gridSizeEdit, &QLineEdit::editingFinished, this, &EqualizationWidget::editChanged);
     _clipLimitEdit = new QLineEdit("4");
     _clipLimitEdit->setValidator(new QIntValidator(1, 100, this));
@@ -71,9 +72,7 @@ void EqualizationProcessor::valueChanged(int gridSize, int clipLimit)
     _gridSize = gridSize;
     _clipLimit = clipLimit;
 
-    process();
-
-    repaintView();
+    processForView(getGlobalImage());
 }
 
 void EqualizationProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)

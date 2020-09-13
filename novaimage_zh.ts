@@ -20,119 +20,104 @@
     </message>
 </context>
 <context>
-    <name>CommonWidget</name>
-    <message>
-        <source>Common</source>
-        <translation type="obsolete">通用</translation>
-    </message>
-    <message>
-        <source>Bright</source>
-        <translation type="obsolete">亮度</translation>
-    </message>
-    <message>
-        <source>Contrast</source>
-        <translation type="obsolete">对比度</translation>
-    </message>
-</context>
-<context>
     <name>CurvesWidget</name>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="21"/>
-        <location filename="Widget/CurvesWidget.cpp" line="270"/>
+        <location filename="Widget/CurvesWidget.cpp" line="269"/>
         <source>Curves</source>
         <translation type="unfinished">曲线</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="23"/>
-        <location filename="Widget/CurvesWidget.cpp" line="272"/>
+        <location filename="Widget/CurvesWidget.cpp" line="271"/>
         <source>Channel</source>
         <translation type="unfinished">通道</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="26"/>
-        <location filename="Widget/CurvesWidget.cpp" line="281"/>
+        <location filename="Widget/CurvesWidget.cpp" line="280"/>
         <source>Red</source>
         <translation type="unfinished">红</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="27"/>
-        <location filename="Widget/CurvesWidget.cpp" line="282"/>
+        <location filename="Widget/CurvesWidget.cpp" line="281"/>
         <source>Green</source>
         <translation type="unfinished">绿</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="28"/>
-        <location filename="Widget/CurvesWidget.cpp" line="283"/>
+        <location filename="Widget/CurvesWidget.cpp" line="282"/>
         <source>Blue</source>
         <translation type="unfinished">蓝</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="30"/>
-        <location filename="Widget/CurvesWidget.cpp" line="273"/>
+        <location filename="Widget/CurvesWidget.cpp" line="272"/>
         <source>&amp;Reset</source>
         <translation type="unfinished">重置(&amp;R)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="33"/>
-        <location filename="Widget/CurvesWidget.cpp" line="274"/>
+        <location filename="Widget/CurvesWidget.cpp" line="273"/>
         <source>R&amp;everse</source>
         <translation type="unfinished">翻转(&amp;E)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="36"/>
-        <location filename="Widget/CurvesWidget.cpp" line="275"/>
+        <location filename="Widget/CurvesWidget.cpp" line="274"/>
         <source>&amp;Apply</source>
         <translation type="unfinished">应用(&amp;A)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="47"/>
-        <location filename="Widget/CurvesWidget.cpp" line="276"/>
+        <location filename="Widget/CurvesWidget.cpp" line="275"/>
         <source>Input:</source>
         <translation type="unfinished">输入：</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="49"/>
-        <location filename="Widget/CurvesWidget.cpp" line="277"/>
+        <location filename="Widget/CurvesWidget.cpp" line="276"/>
         <source>Output:</source>
         <translation type="unfinished">输出：</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="59"/>
-        <location filename="Widget/CurvesWidget.cpp" line="285"/>
+        <location filename="Widget/CurvesWidget.cpp" line="284"/>
         <source>&amp;Curve</source>
         <translation type="unfinished">曲线(&amp;C)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="60"/>
-        <location filename="Widget/CurvesWidget.cpp" line="286"/>
+        <location filename="Widget/CurvesWidget.cpp" line="285"/>
         <source>&amp;Line</source>
         <translation type="unfinished">线性(&amp;L)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="70"/>
-        <location filename="Widget/CurvesWidget.cpp" line="288"/>
+        <location filename="Widget/CurvesWidget.cpp" line="287"/>
         <source>&amp;Save</source>
         <translation type="unfinished">保存(&amp;S)</translation>
     </message>
     <message>
         <location filename="Widget/CurvesWidget.cpp" line="72"/>
-        <location filename="Widget/CurvesWidget.cpp" line="289"/>
+        <location filename="Widget/CurvesWidget.cpp" line="288"/>
         <source>L&amp;oad</source>
         <translation type="unfinished">加载(&amp;O)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="172"/>
+        <location filename="Widget/CurvesWidget.cpp" line="171"/>
         <source>Save Curve</source>
         <translation type="unfinished">保存曲线</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="172"/>
-        <location filename="Widget/CurvesWidget.cpp" line="200"/>
+        <location filename="Widget/CurvesWidget.cpp" line="171"/>
+        <location filename="Widget/CurvesWidget.cpp" line="199"/>
         <source>Curve file (*.cur)</source>
         <translation type="unfinished">曲线 (*.cur)</translation>
     </message>
     <message>
-        <location filename="Widget/CurvesWidget.cpp" line="200"/>
+        <location filename="Widget/CurvesWidget.cpp" line="199"/>
         <source>Load Curve</source>
         <translation type="unfinished">载入曲线</translation>
     </message>
@@ -176,12 +161,18 @@
         <translation type="unfinished">直方图均衡化</translation>
     </message>
     <message>
-        <location filename="Processor/EqualizationProcessor.cpp" line="29"/>
+        <location filename="Processor/EqualizationProcessor.cpp" line="23"/>
+        <source>The Image size should be divisible by grid size, 
+and the maximum grid size is 16.</source>
+        <translation type="unfinished">图片大小应可被网格尺寸整除，最大网格尺寸为16。</translation>
+    </message>
+    <message>
+        <location filename="Processor/EqualizationProcessor.cpp" line="30"/>
         <source>Tiles Grid Size:</source>
         <translation type="unfinished">网格尺寸：</translation>
     </message>
     <message>
-        <location filename="Processor/EqualizationProcessor.cpp" line="31"/>
+        <location filename="Processor/EqualizationProcessor.cpp" line="32"/>
         <source>Clip Limit:</source>
         <translation type="unfinished">对比度阈值：</translation>
     </message>
@@ -256,7 +247,7 @@
     <name>LevelsWidget</name>
     <message>
         <location filename="Widget/LevelsWidget.cpp" line="15"/>
-        <location filename="Widget/LevelsWidget.cpp" line="196"/>
+        <location filename="Widget/LevelsWidget.cpp" line="206"/>
         <source>Levels</source>
         <translation type="unfinished">色阶</translation>
     </message>
@@ -560,27 +551,16 @@
 <context>
     <name>ProcessorShellWidget</name>
     <message>
-        <location filename="Widget/ProcessorShellWidget.cpp" line="15"/>
-        <location filename="Widget/ProcessorShellWidget.cpp" line="56"/>
+        <location filename="Widget/ProcessorShellWidget.cpp" line="13"/>
+        <location filename="Widget/ProcessorShellWidget.cpp" line="54"/>
         <source>Image Processing</source>
         <translation type="unfinished">图像处理</translation>
     </message>
     <message>
-        <location filename="Widget/ProcessorShellWidget.cpp" line="17"/>
-        <location filename="Widget/ProcessorShellWidget.cpp" line="58"/>
+        <location filename="Widget/ProcessorShellWidget.cpp" line="15"/>
+        <location filename="Widget/ProcessorShellWidget.cpp" line="56"/>
         <source>&amp;Apply</source>
         <translation type="unfinished">应用(&amp;A)</translation>
-    </message>
-</context>
-<context>
-    <name>ProcessorWidget</name>
-    <message>
-        <source>Image Processing</source>
-        <translation type="obsolete">图像处理</translation>
-    </message>
-    <message>
-        <source>&amp;Apply</source>
-        <translation type="obsolete">应用(&amp;A)</translation>
     </message>
 </context>
 <context>

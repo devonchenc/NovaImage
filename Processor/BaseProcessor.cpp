@@ -9,6 +9,7 @@
 #include "../Core/GlobalFunc.h"
 #include "../Core/Document.h"
 #include "../Core/mainwindow.h"
+#include "../Widget/ProcessorBaseWidget.h"
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
 
@@ -189,6 +190,11 @@ void BaseProcessor::apply()
         return;
 
     *_srcImage = *_dstImage;
+
+    if (_processorWidget)
+    {
+        _processorWidget->reset();
+    }
 
     getGlobalDocument()->backup();
 }

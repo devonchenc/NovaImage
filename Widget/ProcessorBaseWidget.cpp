@@ -5,8 +5,7 @@
 #include <QEvent>
 #include <QApplication>
 
-#include "../Processor/CommonProcessor.h"
-#include "../Core/GlobalFunc.h"
+#include "../Processor/BaseProcessor.h"
 #include "CustomEvent.h"
 
 ProcessorBaseWidget::ProcessorBaseWidget(BaseProcessor* processor, QWidget* parent)

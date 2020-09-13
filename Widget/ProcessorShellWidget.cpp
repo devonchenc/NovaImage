@@ -1,12 +1,10 @@
 #include "ProcessorShellWidget.h"
 
-#include <QGridLayout>
 #include <QPushButton>
+#include <QVBoxLayout>
 #include <QEvent>
 #include <QApplication>
 
-#include "../Processor/CommonProcessor.h"
-#include "../Core/GlobalFunc.h"
 #include "CustomEvent.h"
 
 ProcessorShellWidget::ProcessorShellWidget(QWidget* parent)

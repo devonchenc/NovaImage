@@ -470,8 +470,6 @@ void Document::brightnessAndContrastAction()
         BrightnessAndContrastProcessor* processor = new BrightnessAndContrastProcessor(this);
         processor->initUI();
         processor->processForView(_image.get());
-
-        repaintView();
     }
 }
 
@@ -482,9 +480,7 @@ void Document::thresholdSegmentation()
         ThresholdSegmentationProcessor* processor = new ThresholdSegmentationProcessor(this);
         processor->setImage(getImage());
         processor->initUI();
-        processor->process();
-
-        repaintView();
+        processor->processForView(getImage());
     }
 }
 
@@ -493,11 +489,8 @@ void Document::equalization()
     if (_image)
     {
         EqualizationProcessor* processor = new EqualizationProcessor(this);
-        processor->setImage(getImage());
         processor->initUI();
-        processor->process();
-
-        repaintView();
+        processor->processForView(getImage());
     }
 }
 
