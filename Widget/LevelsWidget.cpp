@@ -106,9 +106,9 @@ void LevelsWidget::resetButtonClicked()
 
 void LevelsWidget::apply()
 {
-    reset();
-
     _processor->apply();
+
+    reset();
 }
 
 void LevelsWidget::updateHistogram()

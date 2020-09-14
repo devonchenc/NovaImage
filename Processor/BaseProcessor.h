@@ -27,7 +27,7 @@ public:
     virtual ~BaseProcessor();
 
 public:
-    static BaseProcessor* getProcessor();
+    static BaseProcessor* currentProcessor();
 
     BaseProcessor* setCurrentProcessor();
 

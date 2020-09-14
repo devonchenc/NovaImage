@@ -22,7 +22,7 @@ BaseProcessor::BaseProcessor(bool temporary, QObject* parent)
 {
     if (temporary)
     {
-        if (_currentProcessor)
+        if (_currentProcessor && _currentProcessor->isTemporary())
         {
             delete _currentProcessor;
         }
@@ -45,7 +45,7 @@ BaseProcessor::~BaseProcessor()
     }
 }
 
-BaseProcessor* BaseProcessor::getProcessor()
+BaseProcessor* BaseProcessor::currentProcessor()
 {
     return _currentProcessor;
 }
@@ -172,16 +172,9 @@ void BaseProcessor::ProcessRegionImage(RegionImage* pImage)
 
 BaseProcessor* BaseProcessor::setCurrentProcessor()
 {
-    if (_temporary)
-    {
-        BaseProcessor* oldProcessor = _currentProcessor;
-        _currentProcessor = this;
-        return oldProcessor;
-    }
-    else
-    {
-        return nullptr;
-    }
+    BaseProcessor* oldProcessor = _currentProcessor;
+    _currentProcessor = this;
+    return oldProcessor;
 }
 
 void BaseProcessor::apply()

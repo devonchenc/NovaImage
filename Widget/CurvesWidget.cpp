@@ -145,9 +145,9 @@ void CurvesWidget::reverseButtonClicked()
 
 void CurvesWidget::applyButtonClicked()
 {
-    reset();
-
     _processor->apply();
+
+    reset();
 }
 
 void CurvesWidget::toggleCurveRadio()

@@ -185,9 +185,9 @@ void Document::closeFile()
 
     _modified = false;
 
-    if (BaseProcessor::getProcessor())
+    if (BaseProcessor::currentProcessor())
     {
-        BaseProcessor::getProcessor()->setImage(nullptr);
+        BaseProcessor::currentProcessor()->setImage(nullptr);
     }
 }
 /*
@@ -421,10 +421,7 @@ void Document::negativeImage()
     if (_image)
     {
         InverseProcessor* processor = new InverseProcessor(this);
-        processor->setImage(getImage());
-        processor->process();
-
-        repaintView();
+        processor->processForView(getImage());
     }
 }
 
@@ -469,7 +466,7 @@ void Document::brightnessAndContrastAction()
     {
         BrightnessAndContrastProcessor* processor = new BrightnessAndContrastProcessor(this);
         processor->initUI();
-        processor->processForView(_image.get());
+        processor->processForView(getImage());
     }
 }
 

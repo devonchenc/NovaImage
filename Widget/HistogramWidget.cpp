@@ -154,7 +154,16 @@ void HistogramWidget::resetButtonClicked()
 
 void HistogramWidget::applyButtonClicked()
 {
-    emit apply();
+    if (_processor == BaseProcessor::currentProcessor())
+    {
+        _processor->apply();
+
+        emit resetControl();
+    }
+    else
+    {
+        emit apply();
+    }
 }
 
 QSize HistogramWidget::sizeHint() const
@@ -426,10 +435,7 @@ void HistogramWidget::setBottomAndTop(bool* array, int arrayNum)
     if (image)
     {
         _processor->setWindowArray(array, arrayNum);
-        _processor->setImage(image);
-        _processor->process();
-
-        repaintView();
+        _processor->processForView(image);
     }
 }
 
