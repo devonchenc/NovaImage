@@ -31,6 +31,9 @@ public:
     // Get pixel value of processing data
     float getProcessingValue(int type, int index) override;
 
+    // Set pixel value of processing data
+    void setProcessingValue(int type, int index, float value) override;
+
     // Find top and bottom value in data
     //	bool findTopAndBottom(Type* pData, int num);
     bool findTopAndBottom() override;
@@ -144,6 +147,27 @@ float ImageDataTemplate<Type>::getProcessingValue(int type, int index)
     else/* if (type == 2)*/
     {
         return _sagittalData[index];
+    }
+}
+
+// Set pixel value of processing data
+template <class Type>
+void ImageDataTemplate<Type>::setProcessingValue(int type, int index, float value)
+{
+    if (type == 0)
+    {
+        assert(index < _pixelPerSlice);
+        _axialData[index] = value;
+    }
+    else if (type == 1)
+    {
+        assert(index < _width * _slice);
+        _coronalData[index] = value;
+    }
+    else/* if (type == 2)*/
+    {
+        assert(index < _height * _slice);
+        _sagittalData[index] = value;
     }
 }
 

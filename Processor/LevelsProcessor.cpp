@@ -58,119 +58,55 @@ void LevelsProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
     assert(dstImage);
 
     int width, height;
-    uchar* byteImage = srcImage->getBYTEImage(width, height);
-
-    int channel = 0;
+    uchar* byteImage = dstImage->getBYTEImage(width, height);
 
     float variable1 = 255.0f / (float)(_top - _bottom);
-    int midColor = round(255 * _mid / (1 + _mid));
-    float variable2 = (float)(midColor) / (float)((_bottom + _top) / 2.0f - _bottom);
-    float variable3 = (float)(255.0f - midColor) / (float)(_top - (_bottom + _top) / 2.0f);
+    float midFactor = _mid / (1.0f + _mid);
+    float variable2 = midFactor / ((_bottom + _top) / 2.0f - _bottom);
+    float variable3 = (float)(1.0f - midFactor) / (float)(_top - (_bottom + _top) / 2.0f);
 
     for (int i = 0; i < width * height; i++)
     {
-        if (srcImage->getValue(i) <= _bottom)
+        float srcValue = srcImage->getValue(i);
+        if (srcValue <= _bottom)
         {
-            switch (channel)
-            {
-            case 0:
-                byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
-                break;
-            case 1:
-                byteImage[3 * i + 2] = 0;
-                break;
-            case 2:
-                byteImage[3 * i + 1] = 0;
-                break;
-            case 3:
-                byteImage[3 * i] = 0;
-                break;
-            }
+            dstImage->setValue(i, _bottom);
+            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
         }
-        else if (srcImage->getValue(i) >= _top)
+        else if (srcValue >= _top)
         {
-            switch (channel)
-            {
-            case 0:
-                byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
-                break;
-            case 1:
-                byteImage[3 * i + 2] = 255;
-                break;
-            case 2:
-                byteImage[3 * i + 1] = 255;
-                break;
-            case 3:
-                byteImage[3 * i] = 255;
-                break;
-            }
+            dstImage->setValue(i, _top);
+            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
         }
         else
         {
             if (_mid == 1)
             {
-                uchar value = uchar((srcImage->getValue(i) - _bottom) * variable1);
-                switch (channel)
-                {
-                case 0:
-                    byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
-                    break;
-                case 1:
-                    byteImage[3 * i + 2] = value;
-                    break;
-                case 2:
-                    byteImage[3 * i + 1] = value;
-                    break;
-                case 3:
-                    byteImage[3 * i] = value;
-                    break;
-                }
+                dstImage->setValue(i, srcValue);
+                uchar value = uchar((srcValue - _bottom) * variable1);
+                byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
+
             }
             else	// if mid is not equal to 1
             {
-                if (srcImage->getValue(i) < (_bottom + _top) / 2)
+                float dstValue;
+                if (srcValue < (_bottom + _top) / 2.0f)
                 {
-                    uchar value = uchar((srcImage->getValue(i) - _bottom) * variable2);
-                    switch (channel)
-                    {
-                    case 0:
-                        byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
-                        break;
-                    case 1:
-                        byteImage[3 * i + 2] = value;
-                        break;
-                    case 2:
-                        byteImage[3 * i + 1] = value;
-                        break;
-                    case 3:
-                        byteImage[3 * i] = value;
-                        break;
-                    }
+                    dstValue = (srcValue - _bottom) * variable2 * (_top - _bottom) + _bottom;
                 }
                 else
                 {
-                    uchar value = uchar((srcImage->getValue(i) - (_bottom + _top) / 2) * variable3 + midColor);
-                    switch (channel)
-                    {
-                    case 0:
-                        byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
-                        break;
-                    case 1:
-                        byteImage[3 * i + 2] = value;
-                        break;
-                    case 2:
-                        byteImage[3 * i + 1] = value;
-                        break;
-                    case 3:
-                        byteImage[3 * i] = value;
-                        break;
-                    }
+                    dstValue = ((srcValue - (_bottom + _top) / 2.0f) * variable3  + midFactor)* (_top - _bottom) + _bottom;
+                    dstImage->setValue(i, dstValue);
                 }
+                dstImage->setValue(i, dstValue);
+                uchar value = uchar((dstValue - _bottom) * variable1);
+                byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
             }
         }
     }
 
-//    srcImage->copyByteToImage(dstImage);
+    dstImage->copyByteToImage();
 }
 
 // Process float array

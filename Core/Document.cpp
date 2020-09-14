@@ -368,17 +368,7 @@ void Document::ROIWindow(const QRectF& rect)
         }
     }
 
-    if (_mainWindow->isViewLinked())
-    {
-        getAxialView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
-        getCoronalView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
-        getSagittalView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
-    }
-    else
-    {
-        getActiveView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
-    }
-
+    setViewWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
     applyImageWidthAndLevel();
 }
 
@@ -386,7 +376,7 @@ void Document::defaultImageWindow()
 {
     if (_image)
     {
-        getAxialView()->setWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
+        setViewWindowWidthAndLevel(_image->windowWidth(), _image->windowLevel());
         applyImageWidthAndLevel();
     }
 }
@@ -398,7 +388,7 @@ void Document::fullImageWindow()
         float maxValue = _image->getMaxValue();
         float minValue = _image->getMinValue();
 
-        getAxialView()->setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+        setViewWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
         applyImageWidthAndLevel();
     }
 }
@@ -505,6 +495,20 @@ void Document::initViewWindowWidthAndLevel()
         getAxialView()->setWindowWidthAndLevel(windowWidth, windowLevel);
         getCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
         getSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+    }
+}
+
+void Document::setViewWindowWidthAndLevel(float windowWidth, float windowLevel)
+{
+    if (_mainWindow->isViewLinked())
+    {
+        getAxialView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+    }
+    else
+    {
+        getActiveView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
 }
 

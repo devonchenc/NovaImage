@@ -45,6 +45,9 @@ public:
     // Get pixel value of processing data
     virtual float getProcessingValue(int type, int index) = 0;
 
+    // Set pixel value of processing data
+    virtual void setProcessingValue(int type, int index, float value) = 0;
+
     // Allocate memory
     virtual bool allocateMemory() = 0;
 

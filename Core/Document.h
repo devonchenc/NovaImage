@@ -90,6 +90,8 @@ public slots:
 private:
     void initViewWindowWidthAndLevel();
 
+    void setViewWindowWidthAndLevel(float windowWidth, float windowLevel);
+
     View* getActiveView() const;
 
     View* getAxialView() const;

@@ -63,6 +63,8 @@ public:
     int viewType() override { return _currentType; }
 
 public:
+    void setValue(int index, float value);
+
     // get uchar data
     uchar* getBYTEImage(int& width, int& height);
 

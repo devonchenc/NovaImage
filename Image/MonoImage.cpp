@@ -303,6 +303,11 @@ void MonoImage::setViewType(int type)
     _currentType = type;
 }
 
+void MonoImage::setValue(int index, float value)
+{
+    _imageData->setProcessingValue(_currentType, index, value);
+}
+
 uchar* MonoImage::getBYTEImage(int& width, int& height)
 {
     if (_currentType == AXIAL_VIEW)
