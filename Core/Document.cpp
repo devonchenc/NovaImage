@@ -408,12 +408,7 @@ void Document::applyImageWidthAndLevel()
     float windowWidth = getActiveView()->windowWidth();
     float windowLevel = getActiveView()->windowLevel();
 
-    LevelsProcessor* processor = _mainWindow->getLevelsProcessor();
-    processor->setPara(windowLevel - windowWidth / 2, 1.0f, windowLevel + windowWidth / 2);
-    processor->processForView(getImage());
-    processor->apply();
-
-    repaintView();
+    _mainWindow->levelsAdjust(windowLevel - windowWidth / 2, windowLevel + windowWidth / 2);
 }
 
 void Document::negativeImage()

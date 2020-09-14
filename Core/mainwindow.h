@@ -54,6 +54,8 @@ public:
 
     QVector<QAction*> mouseActionVector();
 
+    void levelsAdjust(float bottom, float top);
+
     LevelsProcessor* getLevelsProcessor();
 
 protected:

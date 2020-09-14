@@ -128,6 +128,12 @@ QVector<QAction*> MainWindow::mouseActionVector()
     return _toolBar->actionVector();
 }
 
+void MainWindow::levelsAdjust(float bottom, float top)
+{
+    _levelsWidget->setParameters(bottom, 1.0f, top);
+    _levelsWidget->levelsAdjust(bottom, 1.0f, top);
+}
+
 LevelsProcessor* MainWindow::getLevelsProcessor()
 {
     return _levelsWidget->getProcessor();

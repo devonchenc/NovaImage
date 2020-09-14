@@ -138,8 +138,6 @@ void ImageWindowMouseHandler::move(QMouseEvent* event)
         CalcImageWindow(_mousePos - event->pos());
 
         _mousePos = event->pos();
-
-        repaintView();
     }
 }
 

@@ -20,6 +20,10 @@ public:
     void init() override;
 
     void reset() override;
+    // Levels adjust
+    void levelsAdjust(float bottom, float mid, float top);
+
+    void setParameters(float bottom, float mid, float top);
 
     LevelsProcessor* getProcessor() { return _processor; }
 
@@ -38,10 +42,6 @@ public slots:
 
 protected:
     void changeEvent(QEvent* event) override;
-
-private:
-    // Levels adjust
-    void levelsAdjust();
 
 private:
     HistogramWidget* _histogram;
