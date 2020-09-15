@@ -86,7 +86,7 @@ bool Document::openFile(const QString& fileName)
 
     initViewWindowWidthAndLevel();
 
-    applyImageWidthAndLevel();
+    applyImageWidthAndLevel(true);
 
     getAxialView()->resetMatrix();
     getCoronalView()->resetMatrix();
@@ -393,12 +393,17 @@ void Document::fullImageWindow()
     }
 }
 
-void Document::applyImageWidthAndLevel()
+void Document::applyImageWidthAndLevel(bool apply)
 {
     float windowWidth = getActiveView()->windowWidth();
     float windowLevel = getActiveView()->windowLevel();
 
     _mainWindow->levelsAdjust(windowLevel - windowWidth / 2, windowLevel + windowWidth / 2);
+
+    if (apply)
+    {
+        BaseProcessor::currentProcessor()->apply();
+    }
 }
 
 void Document::negativeImage()

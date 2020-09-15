@@ -106,6 +106,8 @@ bool DICOMImage::copyToImage(BaseImage* image) const
     if (!destImage)
         return false;
 
+    *destImage = *this;
+
     return true;
 }
 

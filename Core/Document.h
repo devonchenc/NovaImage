@@ -68,7 +68,7 @@ public:
 
     void fullImageWindow();
 
-    void applyImageWidthAndLevel();
+    void applyImageWidthAndLevel(bool apply = false);
 
     void negativeImage();
 

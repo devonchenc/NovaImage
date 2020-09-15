@@ -69,48 +69,42 @@ void CurvesProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
     assert(srcImage);
     assert(dstImage);
 
-    int width, height;
-    uchar* byteImage = srcImage->getBYTEImage(width, height);
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();
+    if (maxValue == minValue)
+        return;
 
-    float fVariable1 = float(maxValue - minValue) / (_arrayNum - 1);
-    float fVariable2 = 255.0f / (_arrayNum - 1);
+    int width, height;
+    uchar* byteImage = dstImage->getBYTEImage(width, height);
 
     if (_channel == CURVE_CHANNEL_GRAY)
     {
-        for (int j = 0; j < height; j++)
+        float fVariable1 = float(_arrayNum - 1) / (maxValue - minValue);
+        float fVariable2 = (maxValue - minValue) / float(_arrayNum - 1);
+        float fVariable3 = 255.0f / (maxValue - minValue);
+        for (int i = 0; i < width * height; i++)
         {
-            for (int i = 0; i < width; i++)
-            {
-                int n = j * width + i;
-                byteImage[3 * n] = byteImage[3 * n + 1] = byteImage[3 * n + 2] =
-                    interpolation(srcImage->getValue(n) - minValue, _arrayIntensity, _arrayNum, fVariable1, fVariable2);
-            }
+            float srcValue = srcImage->getValue(i);
+            float dstValue = interpolation2(srcImage->getValue(i) - minValue, _arrayIntensity, _arrayNum, fVariable1, fVariable2) + minValue;
+            dstImage->setValue(i, dstValue);
 
-            //	PIProgressSetPercent(j + 1, height);
+            uchar value = uchar((dstValue - minValue) * fVariable3);
+            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
         }
     }
     else
     {
-        // Pseudo-color
-        for (int j = 0; j < height; j++)
+        float fVariable1 = float(maxValue - minValue) / (_arrayNum - 1);
+        float fVariable2 = 255.0f / (_arrayNum - 1);
+        for (int i = 0; i < width * height; i++)
         {
-            for (int i = 0; i < width; i++)
-            {
-                int n = j * width + i;
-                byteImage[3 * n] = interpolation(srcImage->getValue(n) - minValue, _arrayRed, _arrayNum, fVariable1, fVariable2);
-                byteImage[3 * n + 1] = interpolation(srcImage->getValue(n) - minValue, _arrayGreen, _arrayNum, fVariable1, fVariable2);
-                byteImage[3 * n + 2] = interpolation(srcImage->getValue(n) - minValue, _arrayBlue, _arrayNum, fVariable1, fVariable2);
-            }
-
-            //	PIProgressSetPercent(j + 1, height);
+            byteImage[3 * i] = interpolation(srcImage->getValue(i) - minValue, _arrayRed, _arrayNum, fVariable1, fVariable2);
+            byteImage[3 * i + 1] = interpolation(srcImage->getValue(i) - minValue, _arrayGreen, _arrayNum, fVariable1, fVariable2);
+            byteImage[3 * i + 2] = interpolation(srcImage->getValue(i) - minValue, _arrayBlue, _arrayNum, fVariable1, fVariable2);
         }
     }
 
-//    srcImage->copyByteToImage(dstImage);
-
-    //	PIProgressDone();
+    dstImage->copyByteToImage();
 }
 
 // Process float array
@@ -168,5 +162,23 @@ uchar CurvesProcessor::interpolation(Type target, uint* array, int arrayNum, flo
     else
     {
         return (uchar(round((array[integer] * (1.0f - fraction) + array[integer + 1] * fraction) * variable2)));
+    }
+}
+
+float CurvesProcessor::interpolation2(float src, uint* array, int arrayNum, float variable1, float variable2)
+{
+    if (variable1 == 0)
+        return 0;
+
+    float percentage = src * variable1;
+    int integer = int(percentage);
+    float fraction = percentage - integer;
+    if (integer == arrayNum - 1)
+    {
+        return array[integer] * variable2;
+    }
+    else
+    {
+        return (array[integer] * (1.0f - fraction) + array[integer + 1] * fraction) * variable2;
     }
 }

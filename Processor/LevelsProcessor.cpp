@@ -85,7 +85,6 @@ void LevelsProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
                 dstImage->setValue(i, srcValue);
                 uchar value = uchar((srcValue - _bottom) * variable1);
                 byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
-
             }
             else	// if mid is not equal to 1
             {

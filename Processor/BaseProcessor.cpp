@@ -132,32 +132,38 @@ void BaseProcessor::processForView(BaseImage* image)
     {
         MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
         MonoImage* dstImage = dynamic_cast<MonoImage*>(_dstImage);
+
+        int viewType = monoImage->viewType();
+        dstImage->setViewType(viewType);
         processImage(monoImage, dstImage);
 
         repaintView(_dstImage->getImageEntity(), 0);
 
         if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
         {
-            int viewType = monoImage->viewType();
             if (viewType != 0)
             {
                 monoImage->setViewType(0);
+                dstImage->setViewType(0);
                 processImage(monoImage, dstImage);
                 repaintView(_dstImage->getImageEntity(), 0);
             }
             if (viewType != 1)
             {
                 monoImage->setViewType(1);
+                dstImage->setViewType(1);
                 processImage(monoImage, dstImage);
                 repaintView(_dstImage->getImageEntity(), 1);
             }
             if (viewType != 2)
             {
                 monoImage->setViewType(2);
+                dstImage->setViewType(2);
                 processImage(monoImage, dstImage);
                 repaintView(_dstImage->getImageEntity(), 2);
             }
             monoImage->setViewType(viewType);
+            dstImage->setViewType(viewType);
         }
     }
 }
@@ -182,7 +188,7 @@ void BaseProcessor::apply()
     if (_srcImage == nullptr || _dstImage == nullptr)
         return;
 
-    *_srcImage = *_dstImage;
+    _dstImage->copyToImage(_srcImage);
 
     if (_processorWidget)
     {

@@ -70,7 +70,6 @@ ScanImage& ScanImage::operator=(const ScanImage& src)
     return *this;
 }
 
-
 void ScanImage::setSlice(int slice)
 {
     MonoImage::setSlice(slice);
@@ -110,6 +109,8 @@ bool ScanImage::copyToImage(BaseImage* image) const
     ScanImage* destImage = dynamic_cast<ScanImage*>(image);
     if (!destImage)
         return false;
+
+    *destImage = *this;
 
     return true;
 }

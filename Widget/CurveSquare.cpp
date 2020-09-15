@@ -347,7 +347,7 @@ void CurveSquare::initPegsArray()
     _activePegs = &_pegsIntensity;
 }
 
-// 由x、y值计算出在控件客户区上的坐标
+// Calculate the coordinates on the control according to the x and y values
 QPoint CurveSquare::getCoordinate(int x, int y)
 {
     return QPoint(x + _rectSquare.left(), _size - y + _rectSquare.top());
@@ -366,12 +366,12 @@ void CurveSquare::mousePressEvent(QMouseEvent* event)
             _activePegIndex = ptInAnyPeg(ptDummy);
             if (_activePegIndex == NONE_PEG)
             {
-                // 点没落在任何peg上
+                // The mouse point is not on any peg
                 if (prepareAddPeg(ptDummy.x()))
                 {
-                    // 增加新的peg，并刷新
+                    // Add new peg
                     _activePegIndex = addPeg(ptDummy);
-                    // 改变数组m_Array值
+                    // Change m_Array value
                     calcArrayValue(_activePegIndex, true);
                     repaintPeg();
                 }
@@ -383,7 +383,7 @@ void CurveSquare::mousePressEvent(QMouseEvent* event)
         PegArray& pegs = *_activePegs;
         if (_activePegIndex != NONE_PEG)
         {
-            // 刷新原m_nActivePegIndex所在的黑点
+            // Refresh the black spot where the original m_nActivePegIndex is located
             QRect rect(pegs[_activePegIndex].x() - 2, pegs[_activePegIndex].y() - 2,
                        pegs[_activePegIndex].x() + 2, pegs[_activePegIndex].y() + 2);
             repaint(rect);
@@ -391,7 +391,7 @@ void CurveSquare::mousePressEvent(QMouseEvent* event)
 
         QPoint ptDummy(point.x() - _rectSquare.left(), point.y() - _rectSquare.top());
         _activePegIndex = ptInAnyPeg(ptDummy);
-        // peg数目至少三个以上，才允许删除操作
+        // The number of pegs is at least three before the delete operation is allowed
         if (_activePegIndex != NONE_PEG && pegs.size() >= 3)
         {
             removePeg(_activePegIndex);
@@ -410,7 +410,6 @@ void CurveSquare::mouseMoveEvent(QMouseEvent* event)
     QPoint point = event->pos();
     QPoint ptDummy(point.x() - _rectSquare.left(), point.y() - _rectSquare.top());
 
-    // 之所以没有直接用m_rectSquare，而是把m_rectSquare.right+1&bottom+1，是为了能够使输入输出能达到255
     QRect rect(_rectSquare.left(), _rectSquare.top(), _rectSquare.width() + 1, _rectSquare.height() + 1);
     if (rect.contains(point))
     {
@@ -438,7 +437,7 @@ void CurveSquare::mouseMoveEvent(QMouseEvent* event)
     if ((event->buttons() & Qt::LeftButton) == false)
         return;
 
-    // 不允许把peg拉出m_rectSquare外
+    // Not allowed to pull peg out of m_rectSquare
     if (!_rectSquare.contains(point))
         return;
 
@@ -467,7 +466,7 @@ void CurveSquare::mouseMoveEvent(QMouseEvent* event)
         if ((ptDummy.x() > pegs[_activePegIndex - 1].x() + PEG_DISTANCE) &&
                 (ptDummy.x() < pegs[_activePegIndex + 1].x() - PEG_DISTANCE))
         {
-            int flag = 0;				// 标志是否发生peg合并事件
+            int flag = 0;				// Whether a peg merge event has occurred
 
             pegs[_activePegIndex].setPoint(ptDummy);
 
@@ -492,26 +491,18 @@ void CurveSquare::mouseMoveEvent(QMouseEvent* event)
             calcArrayValue(_activePegIndex, true);
             if (flag)
             {
-                // nFlag==1对应减1, nFlag==2对应减0
+                // nFlag==1 : minus 1, nFlag==2 : minus 0
                 _activePegIndex -= (2 - flag);
                 return;
             }
         }
     }
-
-    // Update image
-    //	if (!m_bIsProcessing)
-    //	{
-    //		AfxBeginThread(UpdateImageThread, this);
-    //	}
 }
 
 void CurveSquare::mouseReleaseEvent(QMouseEvent* event)
 {
     Q_UNUSED(event);
     setCursor(Qt::ArrowCursor);
-    // Update image
-    //	AfxBeginThread(UpdateImageThread, this);
 
     emit updateImage();
 }
@@ -563,13 +554,11 @@ bool CurveSquare::prepareAddPeg(int xCoordinate)
     return true;
 }
 
-// 增加peg
 int CurveSquare::addPeg(const QPoint& point)
 {
     Peg peg(point);
-    // 插入链表
     _activePegs->append(peg);
-    // 按照peg的横坐标大小排序
+    // Sort according to the coordinate of peg
     return sortPegs(peg);
 }
 
@@ -645,7 +634,7 @@ void CurveSquare::setLinearArrayValue(int index, bool flag)
     if (index == 0)
     {
         QSize size = getCurrentValue(index);
-        // 第一个peg之前的那些值置成与它的cy一样
+        // The values before the first peg are set to be the same as its cy
         for (int i = 0; i <= size.width(); i++)
         {
             _activeArray[i] = size.height();
@@ -674,7 +663,7 @@ void CurveSquare::setLinearArrayValue(int index, bool flag)
         }
         else
         {
-            // 删除倒数第二个peg时的情况
+            // When deleting the penultimate peg
             setLinearValue(index - 1);
         }
     }
@@ -687,7 +676,7 @@ void CurveSquare::setLinearArrayValue(int index, bool flag)
         }
         else
         {
-            // 删除peg的时候
+            // When deleting peg
             setLinearValue(index - 1);
         }
     }
@@ -740,7 +729,7 @@ void CurveSquare::setCurveArrayValue()
         *(y + i) = (float)getCurrentValue(i).height();
     }
 
-    // m为要插值点的范围
+    // m is the range of points to be interpolated
     int m = getCurrentValue(num - 1).width() - getCurrentValue(0).width() - 1;
     float* t = new float[m];
     for (int i = 0; i < m; i++)

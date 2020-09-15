@@ -36,6 +36,8 @@ private:
     template <typename Type>
     uchar interpolation(Type target, uint* array, int arrayNum, float variable1, float variable2);
 
+    float interpolation2(float src, uint* array, int arrayNum, float variable1, float variable2);
+
 private:
     int _channel;
 
