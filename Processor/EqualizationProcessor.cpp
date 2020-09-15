@@ -87,7 +87,6 @@ void EqualizationProcessor::processImage(GeneralImage* srcImage, GeneralImage* d
     uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
-    int temp = imageEntity->depth();
 
     int* H = new int[width * height];
     float* S = new float[width * height];

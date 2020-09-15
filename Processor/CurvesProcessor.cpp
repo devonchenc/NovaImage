@@ -85,7 +85,7 @@ void CurvesProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
         for (int i = 0; i < width * height; i++)
         {
             float srcValue = srcImage->getValue(i);
-            float dstValue = interpolation2(srcImage->getValue(i) - minValue, _arrayIntensity, _arrayNum, fVariable1, fVariable2) + minValue;
+            float dstValue = interpolation2(srcValue - minValue, _arrayIntensity, _arrayNum, fVariable1, fVariable2) + minValue;
             dstImage->setValue(i, dstValue);
 
             uchar value = uchar((dstValue - minValue) * fVariable3);

@@ -156,7 +156,7 @@ void ImageDataTemplate<Type>::setProcessingValue(int type, int index, float valu
 {
     if (type == 0)
     {
-        assert(index < _pixelPerSlice);
+        assert((unsigned long)index < _pixelPerSlice);
         _axialData[index] = value;
     }
     else if (type == 1)

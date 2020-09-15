@@ -31,14 +31,18 @@ BrightnessAndContrastWidget::BrightnessAndContrastWidget(BaseProcessor* processo
     _contrastValueLabel = new QLabel("0");
     _contrastValueLabel->setFixedWidth(20);
 
-    QGridLayout* layout = new QGridLayout;
-    layout->addWidget(_brightnessLabel, 0, 0);
-    layout->addWidget(_brightnessSlider, 0, 1);
-    layout->addWidget(_brightnessValueLabel, 0, 2);
-    layout->addWidget(_contrastLabel, 1, 0);
-    layout->addWidget(_contrastSlider, 1, 1);
-    layout->addWidget(_contrastValueLabel, 1, 2);
+    QGridLayout* gridLayout = new QGridLayout;
+    gridLayout->addWidget(_brightnessLabel, 0, 0);
+    gridLayout->addWidget(_brightnessSlider, 0, 1);
+    gridLayout->addWidget(_brightnessValueLabel, 0, 2);
+    gridLayout->addWidget(_contrastLabel, 1, 0);
+    gridLayout->addWidget(_contrastSlider, 1, 1);
+    gridLayout->addWidget(_contrastValueLabel, 1, 2);
 
+    groupBox->setLayout(gridLayout);
+
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->addWidget(groupBox);
     setLayout(layout);
 }
 

@@ -32,8 +32,6 @@ void LevelsProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImag
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    int channel = 0;
-
     int minColor = 0;
     int maxColor = 255;
 

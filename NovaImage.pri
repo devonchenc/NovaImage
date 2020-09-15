@@ -30,14 +30,19 @@ HEADERS += ./Image/DicomImage.h \
     ./Widget/HistogramWidget.h \
     ./Widget/CurvesWidget.h \
     ./Widget/CurveSquare.h \
-    ./Widget/CommonWidget.h \
+    ./Widget/CustomEvent.h \
     ./Widget/BaseWidget.h \
+    ./Widget/ProcessorShellWidget.h \
+    ./Widget/ProcessorBaseWidget.h \
     ./Processor/BaseProcessor.h \
-    ./Processor/CommonProcessor.h \
     ./Processor/CurvesProcessor.h \
     ./Processor/HistogramProcessor.h \
     ./Processor/InverseProcessor.h \
     ./Processor/LevelsProcessor.h \
+    ./Processor/BrightnessAndContrastProcessor.h \
+    ./Processor/ThresholdSegmentationProcessor.h \
+    ./Processor/EqualizationProcessor.h \
+    ./Processor/CLAHE.h \
     ./Core/GlobalFunc.h \
     ./Core/MouseHandler.h \
     ./Core/UndoSystem.h \
@@ -71,9 +76,9 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/ChartView.cpp \
     ./Widget/ImageQualityChartView.cpp \
     ./Widget/ColorButton.cpp \
-    ./Widget/CommonWidget.cpp \
     ./Widget/CurveSquare.cpp \
     ./Widget/CurvesWidget.cpp \
+    ./Widget/CustomEvent.cpp \
     ./Widget/HistogramWidget.cpp \
     ./Widget/LevelsWidget.cpp \
     ./Widget/MagnifierWidget.cpp \
@@ -85,12 +90,17 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/SettingsDialog.cpp \
     ./Widget/ToolBoxWidget.cpp \
     ./Widget/WidgetManager.cpp \
+    ./Widget/ProcessorShellWidget.h \
+    ./Widget/ProcessorBaseWidget.h \
     ./Processor/BaseProcessor.cpp \
-    ./Processor/CommonProcessor.cpp \
     ./Processor/CurvesProcessor.cpp \
     ./Processor/HistogramProcessor.cpp \
     ./Processor/InverseProcessor.cpp \
     ./Processor/LevelsProcessor.cpp \
+    ./Processor/BrightnessAndContrastProcessor.cpp \
+    ./Processor/ThresholdSegmentationProcessor.cpp \
+    ./Processor/EqualizationProcessor.cpp \
+    ./Processor/CLAHE.cpp \
     ./Core/Document.cpp \
     ./Core/GlobalFunc.cpp \
     ./Core/GraphicsScene.cpp \
