@@ -90,8 +90,8 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/SettingsDialog.cpp \
     ./Widget/ToolBoxWidget.cpp \
     ./Widget/WidgetManager.cpp \
-    ./Widget/ProcessorShellWidget.h \
-    ./Widget/ProcessorBaseWidget.h \
+    ./Widget/ProcessorShellWidget.cpp \
+    ./Widget/ProcessorBaseWidget.cpp \
     ./Processor/BaseProcessor.cpp \
     ./Processor/CurvesProcessor.cpp \
     ./Processor/HistogramProcessor.cpp \

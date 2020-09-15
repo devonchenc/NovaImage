@@ -12,7 +12,7 @@ public:
     BaseImage(const BaseImage& src);
     virtual ~BaseImage();
 
-    BaseImage& BaseImage::operator=(const BaseImage& src);
+    BaseImage& operator=(const BaseImage& src);
 
 public:
     // Get min and max value of image

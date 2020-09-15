@@ -19,7 +19,7 @@ public:
     MonoImage(const MonoImage& src);
     virtual ~MonoImage();
 
-    MonoImage& MonoImage::operator=(const MonoImage& src);
+    MonoImage& operator=(const MonoImage& src);
 
     bool copyByteToAllImage();
 

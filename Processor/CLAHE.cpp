@@ -19,7 +19,7 @@ const unsigned int uiMAX_REG_Y = 16;	  /* max. # contextual regions in y-directi
 
 /************************** main function CLAHE ******************/
 int CLAHE(uchar* pImage, unsigned int uiXRes, unsigned int uiYRes,
-    uchar Min, uchar Max, unsigned int uiNrX, unsigned int uiNrY,
+    unsigned int Min, unsigned int Max, unsigned int uiNrX, unsigned int uiNrY,
     unsigned int uiNrBins, float fCliplimit)
     /*   pImage - Pointer to the input/output image
      *   uiXRes - Image resolution in the X direction

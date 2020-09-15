@@ -11,7 +11,7 @@ public:
     DICOMImage(const DICOMImage& src);
     virtual ~DICOMImage();
 
-    DICOMImage& DICOMImage::operator=(const DICOMImage& src);
+    DICOMImage& operator=(const DICOMImage& src);
 
 public:
     bool hasPixelSpacing() override { return true; }

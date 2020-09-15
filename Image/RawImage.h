@@ -9,6 +9,8 @@ public:
     RawImage(const RawImage& src);
     virtual ~RawImage();
 
+    RawImage& operator=(const RawImage& src);
+
 public:
     void setSlice(int slice) override;
 

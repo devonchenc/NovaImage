@@ -62,6 +62,19 @@ RawImage::~RawImage()
 
 }
 
+RawImage& RawImage::operator=(const RawImage& src)
+{
+    if (this == &src)
+        return *this;
+
+    MonoImage::operator=(src);
+
+    _dataType = src._dataType;
+    _headerSize= src._headerSize;
+
+    return *this;
+}
+
 void RawImage::setSlice(int slice)
 {
     MonoImage::setSlice(slice);

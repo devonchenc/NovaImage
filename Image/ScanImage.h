@@ -13,7 +13,7 @@ public:
     ScanImage(const ScanImage& src);
     virtual ~ScanImage();
 
-    ScanImage& ScanImage::operator=(const ScanImage& src);
+    ScanImage& operator=(const ScanImage& src);
 
 public:
     void setSlice(int slice) override;

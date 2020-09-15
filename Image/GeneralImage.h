@@ -12,7 +12,7 @@ public:
     GeneralImage(const GeneralImage& src);
     virtual ~GeneralImage();
 
-    GeneralImage& GeneralImage::operator=(const GeneralImage& src);
+    GeneralImage& operator=(const GeneralImage& src);
 
 public:
     // Get backup QImage pointer
