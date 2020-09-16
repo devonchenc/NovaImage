@@ -62,6 +62,8 @@ public:
 
     int viewType() override { return _currentVIewType; }
 
+    QImage* getImageEntity() const override;
+
 public:
     void setValue(int index, float value);
 

@@ -137,7 +137,7 @@ void BaseProcessor::processForView(BaseImage* image)
         dstImage->setViewType(viewType);
         processImage(monoImage, dstImage);
 
-        repaintView(dstImage->getImageEntity(), 0);
+        repaintView(dstImage->getImageEntity(), viewType);
 
         if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
         {

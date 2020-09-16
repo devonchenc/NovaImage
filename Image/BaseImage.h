@@ -45,9 +45,9 @@ public:
 
     virtual int viewType() { return 0; }
 
-public:
-    QImage* getImageEntity() const { return _pImage.get(); }
+    virtual QImage* getImageEntity() const { return _pImage.get(); }
 
+public:
     int width() const { return _width; }
 
     int height() const { return _height; }

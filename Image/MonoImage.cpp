@@ -295,6 +295,22 @@ void MonoImage::setViewType(int viewType)
     _currentVIewType = viewType;
 }
 
+QImage* MonoImage::getImageEntity() const
+{
+    if (_currentVIewType == AXIAL_VIEW)
+    {
+        return _pImage.get();
+    }
+    else if (_currentVIewType == CORONAL_VIEW)
+    {
+        return _coronalProxy->getImageEntity().get();
+    }
+    else/* if (_currentType == SAGITTAL_VIEW)*/
+    {
+        return _sagittalProxy->getImageEntity().get();
+    }
+}
+
 void MonoImage::setValue(int index, float value)
 {
     _imageData->setProcessingValue(_currentVIewType, index, value);
