@@ -88,42 +88,46 @@ void EqualizationProcessor::processImage(GeneralImage* srcImage, GeneralImage* d
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    int* H = new int[width * height];
-    float* S = new float[width * height];
-    uchar* V = new uchar[width * height];
-    for (int j = 0; j < height; j++)
+    // Make sure newWidth and newHeight is divisible by _gridSize
+    int newWidth = width / _gridSize * _gridSize;
+    int newHeight = height / _gridSize * _gridSize;
+
+    int* H = new int[newWidth * newHeight];
+    float* S = new float[newWidth * newHeight];
+    uchar* V = new uchar[newWidth * newHeight];
+    for (int j = 0; j < newHeight; j++)
     {
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < newWidth; i++)
         {
             int index = j * pitch + i * depth;
             if (depth < 3)
             {
                 RGB2HSV(srcData[index], srcData[index], srcData[index],
-                    H[j * width + i], S[j * width + i], V[j * width + i]);
+                    H[j * newWidth + i], S[j * newWidth + i], V[j * newWidth + i]);
             }
             else
             {
                 RGB2HSV(srcData[index + 2], srcData[index + 1], srcData[index],
-                    H[j * width + i], S[j * width + i], V[j * width + i]);
+                    H[j * newWidth + i], S[j * newWidth + i], V[j * newWidth + i]);
             }
         }
     }
 
-    CLAHE(V, width, height, 0, 255, _gridSize, _gridSize, 256, _clipLimit);
+    CLAHE(V, newWidth, newHeight, 0, 255, _gridSize, _gridSize, 256, _clipLimit);
 
-    for (int j = 0; j < height; j++)
+    for (int j = 0; j < newHeight; j++)
     {
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < newWidth; i++)
         {
             int index = j * pitch + i * depth;
             if (depth < 3)
             {
-                HSV2RGB(H[j * width + i], S[j * width + i], V[j * width + i],
+                HSV2RGB(H[j * newWidth + i], S[j * newWidth + i], V[j * newWidth + i],
                     dstData[index], dstData[index], dstData[index]);
             }
             else
             {
-                HSV2RGB(H[j * width + i], S[j * width + i], V[j * width + i],
+                HSV2RGB(H[j * newWidth + i], S[j * newWidth + i], V[j * newWidth + i],
                     dstData[index + 2], dstData[index + 1], dstData[index]);
             }
         }
@@ -140,28 +144,43 @@ void EqualizationProcessor::processImage(MonoImage* srcImage, MonoImage* dstImag
     assert(dstImage);
 
     int width, height;
-    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
+    uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
-    MonoImage* backupMonoImage = dynamic_cast<MonoImage*>(_dstImage);
-    backupMonoImage->setViewType(srcImage->viewType());
-    uchar* backupByteImage = backupMonoImage->getBYTEImage(width, height);
+    // Make sure newWidth and newHeight is divisible by _gridSize
+    int newWidth = width / _gridSize * _gridSize;
+    int newHeight = height / _gridSize * _gridSize;
 
-    uchar* temp = new uchar[width * height];
-    for (int i = 0; i < width * height; i++)
+    float maxValue = srcImage->getMaxValue();
+    float minValue = srcImage->getMinValue();
+
+    uchar* temp = new uchar[newWidth * newHeight];
+    for (int j = 0; j < newHeight; j++)
     {
-        temp[i] = backupByteImage[3 * i];
+        for (int i = 0; i < newWidth; i++)
+        {
+            int index = j * width + i;
+            temp[index] = srcByteImage[3 * index];
+        }
     }
 
-    CLAHE(temp, width, height, 0, 255, _gridSize, _gridSize, 256, _clipLimit);
+    CLAHE(temp, newWidth, newHeight, 0, 255, _gridSize, _gridSize, 256, _clipLimit);
 
-    for (int i = 0; i < width * height; i++)
+    float variable = (maxValue - minValue) / 255.0f;
+    for (int j = 0; j < newHeight; j++)
     {
-        byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = temp[i];
+        for (int i = 0; i < newWidth; i++)
+        {
+            int index = j * width + i;
+            dstByteImage[3 * index] = dstByteImage[3 * index + 1] = dstByteImage[3 * index + 2] = temp[index];
+            float dstValue = temp[index] * variable + minValue;
+            dstImage->setValue(index, dstValue);
+        }
     }
 
     delete[] temp;
 
-//    srcImage->copyByteToImage();
+    dstImage->copyByteToImage();
 }
 
 // Process float array
@@ -172,7 +191,6 @@ void EqualizationProcessor::processArray(float* array, int width, int height, fl
     Q_UNUSED(minValue);
     Q_UNUSED(maxValue);
     assert(array && pByte);
-
 }
 
 void EqualizationProcessor::RGB2HSV(uchar R, uchar G, uchar B, int& H, float& S, uchar& V)

@@ -145,11 +145,11 @@ void ThresholdSegmentationProcessor::processImage(MonoImage* srcImage, MonoImage
     assert(dstImage);
 
     int width, height;
+    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();
-    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
 
     for (int i = 0; i < width * height; i++)
     {
@@ -176,7 +176,6 @@ void ThresholdSegmentationProcessor::processArray(float* array, int width, int h
     Q_UNUSED(minValue);
     Q_UNUSED(maxValue);
     assert(array && pByte);
-
 }
 
 int ThresholdSegmentationProcessor::findOtsuThreshold(uint* grayPixelArray, int pixelNumber)
