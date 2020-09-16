@@ -115,6 +115,10 @@ public slots:
     void prevImage();
     void nextImage();
 
+    void brightnessAndContrast();
+    void thresholdSegmentation();
+    void equalization();
+
     void slectLanguage(QAction* action);
     void slectLanguage(int language);
 

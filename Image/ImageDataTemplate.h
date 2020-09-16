@@ -15,6 +15,8 @@ public:
     ImageDataTemplate(const ImageDataTemplate& src);
     virtual ~ImageDataTemplate();
 
+    ImageDataTemplate& operator=(const ImageDataTemplate& src);
+
 public:
     // Get original data pointer
     void* getOriginalData() override
@@ -131,6 +133,27 @@ ImageDataTemplate<Type>::~ImageDataTemplate()
         delete[] _sagittalData;
         _sagittalData = nullptr;
     }
+}
+
+template <class Type>
+ImageDataTemplate<Type>& ImageDataTemplate<Type>::operator=(const ImageDataTemplate<Type>& src)
+{
+    if (this == &src)
+        return *this;
+
+    ImageData::operator=(src);
+
+    _originalData = src._originalData;
+
+    memcpy(_axialData, src._axialData, sizeof(float) * _pixelPerSlice);
+    memcpy(_coronalData, src._coronalData, sizeof(float) * _width * _slice);
+    memcpy(_sagittalData, src._sagittalData, sizeof(float) * _height * _slice);
+
+    _currentAxialSlice = src._currentAxialSlice;
+    _currentCoronalSlice = src._currentCoronalSlice;
+    _currentSagittalSlice = src._currentSagittalSlice;
+
+    return *this;
 }
 
 template <class Type>

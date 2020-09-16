@@ -137,7 +137,7 @@ void BaseProcessor::processForView(BaseImage* image)
         dstImage->setViewType(viewType);
         processImage(monoImage, dstImage);
 
-        repaintView(_dstImage->getImageEntity(), 0);
+        repaintView(dstImage->getImageEntity(), 0);
 
         if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
         {
@@ -146,21 +146,21 @@ void BaseProcessor::processForView(BaseImage* image)
                 monoImage->setViewType(0);
                 dstImage->setViewType(0);
                 processImage(monoImage, dstImage);
-                repaintView(_dstImage->getImageEntity(), 0);
+                repaintView(dstImage->getImageEntity(), 0);
             }
             if (viewType != 1)
             {
                 monoImage->setViewType(1);
                 dstImage->setViewType(1);
                 processImage(monoImage, dstImage);
-                repaintView(_dstImage->getImageEntity(), 1);
+                repaintView(dstImage->getCoronalImage().get(), 1);
             }
             if (viewType != 2)
             {
                 monoImage->setViewType(2);
                 dstImage->setViewType(2);
                 processImage(monoImage, dstImage);
-                repaintView(_dstImage->getImageEntity(), 2);
+                repaintView(dstImage->getSagittalImage().get(), 2);
             }
             monoImage->setViewType(viewType);
             dstImage->setViewType(viewType);

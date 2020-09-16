@@ -20,8 +20,8 @@ MonoImageProxy::MonoImageProxy(const MonoImageProxy& src)
     , _type(src._type)
     , _byteImage(new uchar[_width * _height * 3])
 {
-    _pImage.reset(new QImage(*src._pImage));
     memcpy(_byteImage, src._byteImage, sizeof(uchar) * _width * _height * 3);
+    _pImage.reset(new QImage(*src._pImage));
 }
 
 MonoImageProxy::~MonoImageProxy()
@@ -31,6 +31,22 @@ MonoImageProxy::~MonoImageProxy()
         delete[] _byteImage;
         _byteImage = nullptr;
     }
+}
+
+MonoImageProxy& MonoImageProxy::operator=(const MonoImageProxy& src)
+{
+    if (this == &src)
+        return *this;
+
+    _image = src._image;
+    _width = src._width;
+    _height = src._height;
+    _type = src._type;
+
+    memcpy(_byteImage, src._byteImage, sizeof(uchar) * _width * _height * 3);
+    _pImage.reset(new QImage(*src._pImage));
+
+    return *this;
 }
 
 void MonoImageProxy::copyByteToImage()

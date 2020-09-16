@@ -35,6 +35,24 @@ public:
 
     virtual ~ImageData() {}
 
+    ImageData& operator=(const ImageData& src)
+    {
+        if (this == &src)
+            return *this;
+
+        _width = src._width;
+        _height = src._height;
+        _slice = src._slice;
+
+        _pixelPerSlice = src._pixelPerSlice;
+        _totalPixel = src._totalPixel;
+
+        _minValue = src._minValue;
+        _maxValue = src._maxValue;
+
+        return *this;
+    }
+
 public:
     // Get original data pointer
     virtual void* getOriginalData() = 0;

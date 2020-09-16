@@ -60,7 +60,7 @@ public:
 
     void setViewType(int type) override;
 
-    int viewType() override { return _currentType; }
+    int viewType() override { return _currentVIewType; }
 
 public:
     void setValue(int index, float value);
@@ -72,8 +72,8 @@ public:
 
     bool convertToByte();
 
-    std::shared_ptr<QImage> getCoronalSlice() const;
-    std::shared_ptr<QImage> getSagittalSlice() const;
+    std::shared_ptr<QImage> getCoronalImage() const;
+    std::shared_ptr<QImage> getSagittalImage() const;
 
 protected:
     bool saveAsRaw(const QString& fileName) override;
@@ -88,7 +88,7 @@ protected:
     MonoImageProxy* _coronalProxy;
     MonoImageProxy* _sagittalProxy;
 
-    int _currentType;
+    int _currentVIewType;
 
     int _slice;
 

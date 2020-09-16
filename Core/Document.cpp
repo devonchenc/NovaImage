@@ -214,8 +214,8 @@ void Document::repaintView()
         MonoImage* monoImage = dynamic_cast<MonoImage*>(_image.get());
         if (monoImage && monoImage->slice() > 1)
         {
-            getCoronalView()->showImage(monoImage->getCoronalSlice().get());
-            getSagittalView()->showImage(monoImage->getSagittalSlice().get());
+            getCoronalView()->showImage(monoImage->getCoronalImage().get());
+            getSagittalView()->showImage(monoImage->getSagittalImage().get());
         }
     }
 }
@@ -450,7 +450,7 @@ void Document::restore()
     }
 }
 
-void Document::brightnessAndContrastAction()
+void Document::brightnessAndContrast()
 {
     if (_image)
     {

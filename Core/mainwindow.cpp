@@ -284,9 +284,9 @@ void MainWindow::createActions()
     connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
     connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
 
-    connect(_brightnessAndContrastAction, &QAction::triggered, _doc, &Document::brightnessAndContrastAction);
-    connect(_thresholdSegmentationAction, &QAction::triggered, _doc, &Document::thresholdSegmentation);
-    connect(_equalizationAction, &QAction::triggered, _doc, &Document::equalization);
+    connect(_brightnessAndContrastAction, &QAction::triggered, this, &MainWindow::brightnessAndContrast);
+    connect(_thresholdSegmentationAction, &QAction::triggered, this, &MainWindow::thresholdSegmentation);
+    connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
 
     connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
     connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
@@ -784,6 +784,24 @@ void MainWindow::nextImage()
         index = -1;
 
     _doc->openFile(dir.absoluteFilePath(fileNames.at(index + 1)));
+}
+
+void MainWindow::brightnessAndContrast()
+{
+    _imageProcessingDockWidget->raise();
+    _doc->brightnessAndContrast();
+}
+
+void MainWindow::thresholdSegmentation()
+{
+    _imageProcessingDockWidget->raise();
+    _doc->thresholdSegmentation();
+}
+
+void MainWindow::equalization()
+{
+    _imageProcessingDockWidget->raise();
+    _doc->equalization();
 }
 
 void MainWindow::slectLanguage(QAction* action)

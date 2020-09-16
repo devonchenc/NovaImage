@@ -12,7 +12,7 @@ MonoImage::MonoImage()
     , _axialProxy(nullptr)
     , _coronalProxy(nullptr)
     , _sagittalProxy(nullptr)
-    , _currentType(AXIAL_VIEW)
+    , _currentVIewType(AXIAL_VIEW)
     , _slice(1)
     , _currentAxialSlice(0)
     , _currentCoronalSlice(0)
@@ -27,7 +27,7 @@ MonoImage::MonoImage(const QString& pathName)
     , _axialProxy(nullptr)
     , _coronalProxy(nullptr)
     , _sagittalProxy(nullptr)
-    , _currentType(AXIAL_VIEW)
+    , _currentVIewType(AXIAL_VIEW)
     , _slice(1)
     , _currentAxialSlice(0)
     , _currentCoronalSlice(0)
@@ -41,7 +41,7 @@ MonoImage::MonoImage(const MonoImage& src)
     , _axialProxy(nullptr)
     , _coronalProxy(nullptr)
     , _sagittalProxy(nullptr)
-    , _currentType(src._currentType)
+    , _currentVIewType(src._currentVIewType)
     , _slice(src._slice)
     , _currentAxialSlice(src._currentAxialSlice)
     , _currentCoronalSlice(src._currentCoronalSlice)
@@ -63,7 +63,7 @@ MonoImage::MonoImage(const MonoImage& src)
 
     _pImage = _axialProxy->getImageEntity();
 
-    _currentType = src._currentType;
+    _currentVIewType = src._currentVIewType;
     _slice = src._slice;
     _currentAxialSlice = src._currentAxialSlice;
     _currentCoronalSlice = src._currentCoronalSlice;
@@ -103,21 +103,13 @@ MonoImage& MonoImage::operator=(const MonoImage& src)
 
     _imageData = src._imageData->copyImageData();
 
-    _axialProxy = new MonoImageProxy(*src._axialProxy);
-
-    if (src._coronalProxy)
-    {
-        _coronalProxy = new MonoImageProxy(*src._coronalProxy);
-    }
-
-    if (src._sagittalProxy)
-    {
-        _sagittalProxy = new MonoImageProxy(*src._sagittalProxy);
-    }
+    *_axialProxy = *src._axialProxy;
+    *_coronalProxy = *src._coronalProxy;
+    *_sagittalProxy = *src._sagittalProxy;
 
     _pImage = _axialProxy->getImageEntity();
 
-    _currentType = src._currentType;
+    _currentVIewType = src._currentVIewType;
     _slice = src._slice;
     _currentAxialSlice = src._currentAxialSlice;
     _currentCoronalSlice = src._currentCoronalSlice;
@@ -142,11 +134,11 @@ bool MonoImage::copyByteToAllImage()
 
 bool MonoImage::copyByteToImage()
 {
-    if (_currentType == AXIAL_VIEW)
+    if (_currentVIewType == AXIAL_VIEW)
     {
         _axialProxy->copyByteToImage();
     }
-    else if (_currentType == CORONAL_VIEW)
+    else if (_currentVIewType == CORONAL_VIEW)
     {
         _coronalProxy->copyByteToImage();
     }
@@ -159,11 +151,11 @@ bool MonoImage::copyByteToImage()
 
 bool MonoImage::copyByteToImage(QImage* dstImage)
 {
-    if (_currentType == AXIAL_VIEW)
+    if (_currentVIewType == AXIAL_VIEW)
     {
         _axialProxy->copyByteToImage(dstImage);
     }
-    else if (_currentType == CORONAL_VIEW)
+    else if (_currentVIewType == CORONAL_VIEW)
     {
         _coronalProxy->copyByteToImage(dstImage);
     }
@@ -176,12 +168,12 @@ bool MonoImage::copyByteToImage(QImage* dstImage)
 
 void MonoImage::setSlice(int slice)
 {
-    if (_currentType == AXIAL_VIEW)
+    if (_currentVIewType == AXIAL_VIEW)
     {
         _currentAxialSlice = slice;
         _imageData->changeSlice(AXIAL_VIEW, slice);
     }
-    else if (_currentType == CORONAL_VIEW)
+    else if (_currentVIewType == CORONAL_VIEW)
     {
         _currentCoronalSlice = slice;
         _imageData->changeSlice(CORONAL_VIEW, slice);
@@ -195,11 +187,11 @@ void MonoImage::setSlice(int slice)
 
 int MonoImage::currentSlice() const
 {
-    if (_currentType == AXIAL_VIEW)
+    if (_currentVIewType == AXIAL_VIEW)
     {
         return _currentAxialSlice;
     }
-    else if (_currentType == CORONAL_VIEW)
+    else if (_currentVIewType == CORONAL_VIEW)
     {
         return _currentCoronalSlice;
     }
@@ -261,7 +253,7 @@ float MonoImage::getValue(const QPoint& position) const
         return 0;
 
     int index = position.y() * _width + position.x();
-    return _imageData->getProcessingValue(_currentType, index);
+    return _imageData->getProcessingValue(_currentVIewType, index);
 }
 
 float MonoImage::getValue(int x, int y) const
@@ -271,7 +263,7 @@ float MonoImage::getValue(int x, int y) const
 
 float MonoImage::getValue(int index) const
 {
-    return _imageData->getProcessingValue(_currentType, index);
+    return _imageData->getProcessingValue(_currentVIewType, index);
 }
 
 float MonoImage::getValueWithType(int type, int index) const
@@ -298,25 +290,25 @@ void MonoImage::restore()
     copyByteToAllImage();
 }
 
-void MonoImage::setViewType(int type)
+void MonoImage::setViewType(int viewType)
 {
-    _currentType = type;
+    _currentVIewType = viewType;
 }
 
 void MonoImage::setValue(int index, float value)
 {
-    _imageData->setProcessingValue(_currentType, index, value);
+    _imageData->setProcessingValue(_currentVIewType, index, value);
 }
 
 uchar* MonoImage::getBYTEImage(int& width, int& height)
 {
-    if (_currentType == AXIAL_VIEW)
+    if (_currentVIewType == AXIAL_VIEW)
     {
         width = _width;
         height = _height;
         return _axialProxy->getBYTEImage();
     }
-    else if (_currentType == CORONAL_VIEW)
+    else if (_currentVIewType == CORONAL_VIEW)
     {
         width = _width;
         height = _slice;
@@ -347,11 +339,11 @@ bool MonoImage::convertAllToByte()
 
 bool MonoImage::convertToByte()
 {
-    if (_currentType == AXIAL_VIEW)
+    if (_currentVIewType == AXIAL_VIEW)
     {
         _imageData->convertToByte(0, _axialProxy->getBYTEImage());
     }
-    else if (_currentType == CORONAL_VIEW)
+    else if (_currentVIewType == CORONAL_VIEW)
     {
         _imageData->convertToByte(1, _coronalProxy->getBYTEImage());
     }
@@ -363,12 +355,12 @@ bool MonoImage::convertToByte()
     return true;
 }
 
-std::shared_ptr<QImage> MonoImage::getCoronalSlice() const
+std::shared_ptr<QImage> MonoImage::getCoronalImage() const
 {
     return _coronalProxy->getImageEntity();
 }
 
-std::shared_ptr<QImage> MonoImage::getSagittalSlice() const
+std::shared_ptr<QImage> MonoImage::getSagittalImage() const
 {
     return _sagittalProxy->getImageEntity();
 }

@@ -9,6 +9,8 @@ public:
     MonoImageProxy(const MonoImageProxy& src);
     ~MonoImageProxy();
 
+    MonoImageProxy& operator=(const MonoImageProxy& src);
+
 public:
     uchar* getBYTEImage() const { return _byteImage; }
 
