@@ -145,24 +145,27 @@ void ThresholdSegmentationProcessor::processImage(MonoImage* srcImage, MonoImage
     assert(dstImage);
 
     int width, height;
-    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
-    MonoImage* backupMonoImage = dynamic_cast<MonoImage*>(_dstImage);
-    uchar* backupByteImage = backupMonoImage->getBYTEImage(width, height);
+    float maxValue = srcImage->getMaxValue();
+    float minValue = srcImage->getMinValue();
+    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
 
     for (int i = 0; i < width * height; i++)
     {
-        if (backupByteImage[3 * i] > _threshold)
+        if (srcByteImage[3 * i] > _threshold)
         {
-            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
+            dstImage->setValue(i, maxValue);
+            dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = 255;
         }
         else
         {
-            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
+            dstImage->setValue(i, minValue);
+            dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = 0;
         }
     }
 
-//    srcImage->copyByteToImage(dstImage);
+    dstImage->copyByteToImage();
 }
 
 // Process float array

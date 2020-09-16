@@ -101,8 +101,6 @@ void BrightnessAndContrastProcessor::processImage(GeneralImage* srcImage, Genera
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    //	PIProgressInit(VS_PROGRESS_STATUS_BAR, _T("Brightness&Contrast"));
-
     for (int j = 0; j < height; j++)
     {
         for (int i = 0; i < width * depth; i++)
@@ -124,11 +122,7 @@ void BrightnessAndContrastProcessor::processImage(GeneralImage* srcImage, Genera
                 *(dstPixel) = round(result);
             }
         }
-
-        //	PIProgressSetPercent((j + 1), height);
     }
-
-    //	PIProgressDone();
 }
 
 void BrightnessAndContrastProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
@@ -137,7 +131,8 @@ void BrightnessAndContrastProcessor::processImage(MonoImage* srcImage, MonoImage
     assert(dstImage);
 
     int width, height;
-    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    uchar* byteImage = dstImage->getBYTEImage(width, height);
+
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();
 
@@ -154,24 +149,27 @@ void BrightnessAndContrastProcessor::processImage(MonoImage* srcImage, MonoImage
 
     for (int i = 0; i < width * height; i++)
     {
-        float result = float(srcImage->getValue(i) - average) * (_contrast + 100) / 100.0f + average;
-        result *= (100.0f + _brightness / 2.0f) / 100.0f;
-        if (result >= maxValue)
+        float dstValue = float(srcImage->getValue(i) - average) * (_contrast + 100) / 100.0f + average;
+        dstValue *= (100.0f + _brightness / 2.0f) / 100.0f;
+        if (dstValue >= maxValue)
         {
+            dstImage->setValue(i, maxValue);
             byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
         }
-        else if (result <= minValue)
+        else if (dstValue <= minValue)
         {
+            dstImage->setValue(i, minValue);
             byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
         }
         else
         {
-            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = uchar((result - minValue) * variable);
+            dstImage->setValue(i, dstValue);
+            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = uchar((dstValue - minValue) * variable);
         }
     }
 
     // Copy to image
-//    srcImage->copyByteToImage(dstImage);
+    dstImage->copyByteToImage();
 }
 
 // Process float array
