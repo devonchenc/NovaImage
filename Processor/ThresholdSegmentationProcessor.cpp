@@ -123,10 +123,10 @@ void ThresholdSegmentationProcessor::processImage(GeneralImage* srcImage, Genera
         for (int i = 0; i < width; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i * depth;
-            uchar* imagePixel = srcData + j * pitch + i * depth;
+            uchar* srcPixel = srcData + j * pitch + i * depth;
             for (int n = 0; n < qMin(depth, 3); n++)
             {
-                if (imagePixel[n] > _threshold)
+                if (srcPixel[n] > _threshold)
                 {
                     dstPixel[n] = 255;
                 }

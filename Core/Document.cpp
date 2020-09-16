@@ -16,6 +16,7 @@
 #include "../Processor/LevelsProcessor.h"
 #include "../Processor/InverseProcessor.h"
 #include "../Processor/BrightnessAndContrastProcessor.h"
+#include "../Processor/GammaTransformationProcessor.h"
 #include "../Processor/ThresholdSegmentationProcessor.h"
 #include "../Processor/EqualizationProcessor.h"
 #include "../Widget/RawParameterDialog.h"
@@ -455,6 +456,16 @@ void Document::brightnessAndContrast()
     if (_image)
     {
         BrightnessAndContrastProcessor* processor = new BrightnessAndContrastProcessor(this);
+        processor->initUI();
+        processor->processForView(getImage());
+    }
+}
+
+void Document::gammaTransformation()
+{
+    if (_image)
+    {
+        GammaTransformationProcessor* processor = new GammaTransformationProcessor(this);
         processor->initUI();
         processor->processForView(getImage());
     }

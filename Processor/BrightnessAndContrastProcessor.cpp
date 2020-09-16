@@ -79,7 +79,6 @@ BrightnessAndContrastProcessor::~BrightnessAndContrastProcessor()
 
 }
 
-
 void BrightnessAndContrastProcessor::initUI()
 {
     BrightnessAndContrastWidget* widget = new BrightnessAndContrastWidget(this);
@@ -106,8 +105,8 @@ void BrightnessAndContrastProcessor::processImage(GeneralImage* srcImage, Genera
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i;
-            uchar* imagePixel = srcData + j * pitch + i;
-            float result = (*(imagePixel) - 127.0f) * (_contrast + 100) / 100.0f + 127.0f;
+            uchar* srcPixel = srcData + j * pitch + i;
+            float result = (*srcPixel - 127.0f) * (_contrast + 100) / 100.0f + 127.0f;
             result *= (100.0f + _brightness / 2.0f) / 100.0f;
             if (result >= 255)
             {
@@ -140,7 +139,7 @@ void BrightnessAndContrastProcessor::processImage(MonoImage* srcImage, MonoImage
     float variable;
     if (maxValue != minValue)
     {
-        variable = 255.0f / float(maxValue - minValue);
+        variable = 255.0f / (maxValue - minValue);
     }
     else
     {
@@ -180,35 +179,6 @@ void BrightnessAndContrastProcessor::processArray(float* array, int width, int h
     Q_UNUSED(minValue);
     Q_UNUSED(maxValue);
     assert(array && pByte);
-
-    /*	float fAverage = float(minValue + maxValue) / 2.0f;
-    float fVariable;
-    if (maxValue != minValue)
-    {
-        fVariable = 255.0f / float(maxValue - minValue);
-    }
-    else
-    {
-        fVariable = 0.0f;
-    }
-
-    for (int i = 0; i < width * height; i++)
-    {
-        float fResult = float(pArray[i] - fAverage) * (m_nContrast + 100) / 100.0f + fAverage;
-        fResult *= (100.0f + m_nBrightness / 2.0f) / 100.0f;
-        if (fResult >= maxValue)
-        {
-            pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = 255;
-        }
-        else if (fResult <= minValue)
-        {
-            pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = 0;
-        }
-        else
-        {
-            pByte[3 * i] = pByte[3 * i + 1] = pByte[3 * i + 2] = BYTE((fResult - minValue) * fVariable);
-        }
-    }*/
 }
 
 void BrightnessAndContrastProcessor::setBrightnessAndContrast(int brightness, int contrast)

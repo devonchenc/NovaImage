@@ -26,13 +26,12 @@ signals:
     void parametersChanged(int brightness, int contrast);
 
 private:
+    QLabel* _brightnessLabel;
+    QLabel* _contrastLabel;
     QSlider* _brightnessSlider;
     QSlider* _contrastSlider;
     QLabel* _brightnessValueLabel;
     QLabel* _contrastValueLabel;
-
-    QLabel* _brightnessLabel;
-    QLabel* _contrastLabel;
 };
 
 class BrightnessAndContrastProcessor : public BaseProcessor

@@ -28,8 +28,6 @@ void CurvesProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImag
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    //	PIProgressInit(VS_PROGRESS_STATUS_BAR, _T("Curves"));
-
     float variable = 255.0f / float(_arrayNum - 1);
 
     if (_channel == CURVE_CHANNEL_GRAY)
@@ -39,11 +37,9 @@ void CurvesProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImag
             for (int i = 0; i < width * depth; i++)
             {
                 uchar* dstPixel = dstData + j * pitch + i;
-                uchar* imagePixel = srcData + j * pitch + i;
-                *(dstPixel) = interpolation(*imagePixel, _arrayIntensity, _arrayNum, variable);
+                uchar* srcPixel = srcData + j * pitch + i;
+                *(dstPixel) = interpolation(*srcPixel, _arrayIntensity, _arrayNum, variable);
             }
-
-            //	PIProgressSetPercent((j + 1), height);
         }
     }
     else
@@ -53,13 +49,11 @@ void CurvesProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImag
             for (int i = 0; i < width; i++)
             {
                 uchar* dstPixel = dstData + j * pitch + i * depth;
-                uchar* imagePixel = srcData + j * pitch + i * depth;
-                *(dstPixel) = interpolation(*(imagePixel), _arrayBlue, _arrayNum, variable);
-                *(dstPixel + 1) = interpolation(*(imagePixel + 1), _arrayGreen, _arrayNum, variable);
-                *(dstPixel + 2) = interpolation(*(imagePixel + 2), _arrayRed, _arrayNum, variable);
+                uchar* srcPixel = srcData + j * pitch + i * depth;
+                *(dstPixel) = interpolation(*srcPixel, _arrayBlue, _arrayNum, variable);
+                *(dstPixel + 1) = interpolation(*(srcPixel + 1), _arrayGreen, _arrayNum, variable);
+                *(dstPixel + 2) = interpolation(*(srcPixel + 2), _arrayRed, _arrayNum, variable);
             }
-
-            //	PIProgressSetPercent((j + 1), height);
         }
     }
 }
@@ -94,7 +88,7 @@ void CurvesProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
     }
     else
     {
-        float fVariable1 = float(maxValue - minValue) / (_arrayNum - 1);
+        float fVariable1 = (maxValue - minValue) / (_arrayNum - 1);
         float fVariable2 = 255.0f / (_arrayNum - 1);
         for (int i = 0; i < width * height; i++)
         {

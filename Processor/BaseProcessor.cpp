@@ -205,7 +205,7 @@ void BaseProcessor::convertToByte(float* array, int width, int height, float min
     float variable;
     if (maxValue != minValue)
     {
-        variable = 255.0f / float(maxValue - minValue);
+        variable = 255.0f / (maxValue - minValue);
     }
     else
     {

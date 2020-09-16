@@ -65,22 +65,22 @@ void HistogramProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstI
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i;
-            uchar* imagePixel = srcData + j * pitch + i;
+            uchar* srcPixel = srcData + j * pitch + i;
 
-            if (*(imagePixel) >= actualMax)
+            if (*srcPixel >= actualMax)
             {
                 *(dstPixel) = 255;
             }
-            else if (*(imagePixel) <= actualMin)
+            else if (*srcPixel <= actualMin)
             {
                 *(dstPixel) = 0;
             }
             else
             {
-                int index = round(*(imagePixel) * variable);
+                int index = round(*srcPixel * variable);
                 if (_array[index])
                 {
-                    *(dstPixel) = (*(imagePixel) - actualMin) * 255 / (actualMax - actualMin);
+                    *(dstPixel) = (*srcPixel - actualMin) * 255 / (actualMax - actualMin);
                 }
                 else
                 {
@@ -128,8 +128,8 @@ void HistogramProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
         return;
     }
 
-    float actualMin = float(min * float(maxValue - minValue) / (_arrayNum - 1) + minValue);
-    float actualMax = float(max * float(maxValue - minValue) / (_arrayNum - 1) + minValue);
+    float actualMin = float(min * (maxValue - minValue) / (_arrayNum - 1) + minValue);
+    float actualMax = float(max * (maxValue - minValue) / (_arrayNum - 1) + minValue);
 
     for (int i = 0; i < width * height; i++)
     {
@@ -143,7 +143,7 @@ void HistogramProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
         }
         else
         {
-            int index = round(float(srcImage->getValue(i) - minValue) * (_arrayNum - 1) / float(maxValue - minValue));
+            int index = round(float(srcImage->getValue(i) - minValue) * (_arrayNum - 1) / (maxValue - minValue));
             if (_array[index])
             {
                 byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =

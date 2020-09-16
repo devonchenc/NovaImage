@@ -40,11 +40,11 @@ void LevelsProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImag
         for (int i = 0; i < width; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i * depth;
-            uchar* imagePixel = srcData + j * pitch + i * depth;
+            uchar* srcPixel = srcData + j * pitch + i * depth;
 
             for (int n = 0; n < qMin(depth, 3); n++)
             {
-                dstPixel[n] = srcImage->calcNewColor(imagePixel[n], _bottom, _mid, _top, minColor, maxColor);
+                dstPixel[n] = srcImage->calcNewColor(srcPixel[n], _bottom, _mid, _top, minColor, maxColor);
             }
         }
     }

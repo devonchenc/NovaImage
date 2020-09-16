@@ -115,6 +115,7 @@ public slots:
     void prevImage();
     void nextImage();
 
+    void gammaTransformation();
     void brightnessAndContrast();
     void thresholdSegmentation();
     void equalization();
@@ -148,6 +149,7 @@ private:
     QMenu* _editMenu;
     QMenu* _viewMenu;
     QMenu* _processingMenu;
+    QMenu* _intensityMenu;
     QMenu* _helpMenu;
 
     QAction* _openAction;
@@ -170,6 +172,7 @@ private:
     QAction* _engAction;
     QAction* _chsAction;
     QAction* _brightnessAndContrastAction;
+    QAction* _gammaTransformationAction;
     QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
     QAction* _userGuideAction;

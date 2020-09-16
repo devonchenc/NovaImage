@@ -214,6 +214,7 @@ void MainWindow::createActions()
     connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
 
     _brightnessAndContrastAction = new QAction(tr("&Brightness/Contrast"), this);
+    _gammaTransformationAction = new QAction(tr("&Gamma Transformation"), this);
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
 
@@ -256,7 +257,9 @@ void MainWindow::createActions()
     languageMenu->addAction(_chsAction);
 
     _processingMenu = menuBar()->addMenu(tr("&Image Processing"));
-    _processingMenu->addAction(_brightnessAndContrastAction);
+    _intensityMenu = _processingMenu->addMenu(tr("&Intensity Transformation"));
+    _intensityMenu->addAction(_brightnessAndContrastAction);
+    _intensityMenu->addAction(_gammaTransformationAction);
     _processingMenu->addSeparator();
     _processingMenu->addAction(_thresholdSegmentationAction);
     _processingMenu->addSeparator();
@@ -284,6 +287,7 @@ void MainWindow::createActions()
     connect(_prevImageAction, &QAction::triggered, this, &MainWindow::prevImage);
     connect(_nextImageAction, &QAction::triggered, this, &MainWindow::nextImage);
 
+    connect(_gammaTransformationAction, &QAction::triggered, this, &MainWindow::gammaTransformation);
     connect(_brightnessAndContrastAction, &QAction::triggered, this, &MainWindow::brightnessAndContrast);
     connect(_thresholdSegmentationAction, &QAction::triggered, this, &MainWindow::thresholdSegmentation);
     connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
@@ -786,6 +790,12 @@ void MainWindow::nextImage()
     _doc->openFile(dir.absoluteFilePath(fileNames.at(index + 1)));
 }
 
+void MainWindow::gammaTransformation()
+{
+    _imageProcessingDockWidget->raise();
+    _doc->gammaTransformation();
+}
+
 void MainWindow::brightnessAndContrast()
 {
     _imageProcessingDockWidget->raise();
@@ -901,7 +911,9 @@ void MainWindow::changeEvent(QEvent* event)
         _prevImageAction->setText(tr("&Prev Image"));
         _nextImageAction->setText(tr("&Next Image"));
 
+        _intensityMenu->setTitle(tr("&Intensity Transformation"));
         _brightnessAndContrastAction->setText(tr("&Brightness/Contrast"));
+        _gammaTransformationAction->setText(tr("&Gamma Transformation"));
         _thresholdSegmentationAction->setText(tr("&Threshold Segmentation"));
         _equalizationAction->setText(tr("&Histogram Equalization"));
 

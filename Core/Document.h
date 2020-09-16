@@ -82,9 +82,8 @@ public slots:
     void restore();
 
     void brightnessAndContrast();
-
+    void gammaTransformation();
     void thresholdSegmentation();
-
     void equalization();
 
 private:
