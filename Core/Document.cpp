@@ -19,6 +19,7 @@
 #include "../Processor/GammaTransformationProcessor.h"
 #include "../Processor/ThresholdSegmentationProcessor.h"
 #include "../Processor/EqualizationProcessor.h"
+#include "../Processor/EnhancementProcessor.h"
 #include "../Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
@@ -487,6 +488,16 @@ void Document::equalization()
     if (_image)
     {
         EqualizationProcessor* processor = new EqualizationProcessor(this);
+        processor->initUI();
+        processor->processForView(getImage());
+    }
+}
+
+void Document::enhancement()
+{
+    if (_image)
+    {
+        EnhancementProcessor* processor = new EnhancementProcessor(this);
         processor->initUI();
         processor->processForView(getImage());
     }

@@ -119,6 +119,7 @@ public slots:
     void brightnessAndContrast();
     void thresholdSegmentation();
     void equalization();
+    void enhancement();
 
     void slectLanguage(QAction* action);
     void slectLanguage(int language);
@@ -171,10 +172,13 @@ private:
     QAction* _nextImageAction;
     QAction* _engAction;
     QAction* _chsAction;
+
     QAction* _brightnessAndContrastAction;
     QAction* _gammaTransformationAction;
     QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
+    QAction* _enhancementAction;
+
     QAction* _userGuideAction;
     QAction* _aboutAction;
 

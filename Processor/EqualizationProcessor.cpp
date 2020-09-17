@@ -183,16 +183,6 @@ void EqualizationProcessor::processImage(MonoImage* srcImage, MonoImage* dstImag
     dstImage->copyByteToImage();
 }
 
-// Process float array
-void EqualizationProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
-{
-    Q_UNUSED(width);
-    Q_UNUSED(height);
-    Q_UNUSED(minValue);
-    Q_UNUSED(maxValue);
-    assert(array && pByte);
-}
-
 void EqualizationProcessor::RGB2HSV(uchar R, uchar G, uchar B, int& H, float& S, uchar& V)
 {
     uchar C_max = qMax(qMax(R, G), qMax(G, B));

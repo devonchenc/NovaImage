@@ -101,16 +101,6 @@ void CurvesProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
     dstImage->copyByteToImage();
 }
 
-// Process float array
-void CurvesProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
-{
-    Q_UNUSED(width);
-    Q_UNUSED(height);
-    Q_UNUSED(minValue);
-    Q_UNUSED(maxValue);
-    assert(array && pByte);
-}
-
 void CurvesProcessor::setArray(int arrayNum, uint* arrayIntensity, uint* arrayRed, uint* arrayGreen, uint* arrayBlue)
 {
     _arrayNum = arrayNum;

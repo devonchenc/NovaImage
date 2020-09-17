@@ -217,6 +217,7 @@ void MainWindow::createActions()
     _gammaTransformationAction = new QAction(tr("&Gamma Transformation"), this);
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
+    _enhancementAction = new QAction(tr("Image &Enhancement"), this);
 
     _userGuideAction = new QAction(tr("&User's Guide"));
     _userGuideAction->setIcon(QIcon(":/icon/svg/guide.svg"));
@@ -259,11 +260,14 @@ void MainWindow::createActions()
     _processingMenu = menuBar()->addMenu(tr("&Image Processing"));
     _intensityMenu = _processingMenu->addMenu(tr("&Intensity Transformation"));
     _intensityMenu->addAction(_brightnessAndContrastAction);
+    _intensityMenu->addSeparator();
     _intensityMenu->addAction(_gammaTransformationAction);
+    _intensityMenu->addSeparator();
+    _intensityMenu->addAction(_equalizationAction);
     _processingMenu->addSeparator();
     _processingMenu->addAction(_thresholdSegmentationAction);
     _processingMenu->addSeparator();
-    _processingMenu->addAction(_equalizationAction);
+    _processingMenu->addAction(_enhancementAction);
 
     _helpMenu = menuBar()->addMenu(tr("&Help"));
     _helpMenu->addAction(_userGuideAction);
@@ -291,6 +295,7 @@ void MainWindow::createActions()
     connect(_brightnessAndContrastAction, &QAction::triggered, this, &MainWindow::brightnessAndContrast);
     connect(_thresholdSegmentationAction, &QAction::triggered, this, &MainWindow::thresholdSegmentation);
     connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
+    connect(_enhancementAction, &QAction::triggered, this, &MainWindow::enhancement);
 
     connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
     connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
@@ -814,6 +819,12 @@ void MainWindow::equalization()
     _doc->equalization();
 }
 
+void MainWindow::enhancement()
+{
+    _imageProcessingDockWidget->raise();
+    _doc->enhancement();
+}
+
 void MainWindow::slectLanguage(QAction* action)
 {
     if (action == _engAction)
@@ -916,6 +927,7 @@ void MainWindow::changeEvent(QEvent* event)
         _gammaTransformationAction->setText(tr("&Gamma Transformation"));
         _thresholdSegmentationAction->setText(tr("&Threshold Segmentation"));
         _equalizationAction->setText(tr("&Histogram Equalization"));
+        _enhancementAction->setText(tr("Image &Enhancement"));
 
         _userGuideAction->setText(tr("&User's Guide"));
         _aboutAction->setText(tr("&About"));

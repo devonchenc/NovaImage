@@ -50,6 +50,7 @@
     <ClCompile Include="Processor\CLAHE.cpp" />
     <ClCompile Include="Processor\BrightnessAndContrastProcessor.cpp" />
     <ClCompile Include="Processor\CurvesProcessor.cpp" />
+    <ClCompile Include="Processor\EnhancementProcessor..cpp" />
     <ClCompile Include="Processor\EqualizationProcessor.cpp" />
     <ClCompile Include="Processor\GammaTransformationProcessor.cpp" />
     <ClCompile Include="Processor\HistogramProcessor.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="Processor\CurvesProcessor.h" />
     <QtMoc Include="Processor\EqualizationProcessor.h" />
     <QtMoc Include="Processor\GammaTransformationProcessor.h" />
+    <QtMoc Include="Processor\EnhancementProcessor.h" />
     <ClInclude Include="Processor\HistogramProcessor.h" />
     <ClInclude Include="Processor\InverseProcessor.h" />
     <ClInclude Include="Processor\LevelsProcessor.h" />

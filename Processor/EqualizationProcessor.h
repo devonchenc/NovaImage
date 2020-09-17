@@ -43,9 +43,6 @@ protected:
 
     void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
 
-    // Process float array
-    void processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte) override;
-
 private:
     void RGB2HSV(uchar R, uchar G, uchar B, int& H, float& S, uchar& V);
     void HSV2RGB(int H, float S, uchar V, uchar& R, uchar& G, uchar& B);

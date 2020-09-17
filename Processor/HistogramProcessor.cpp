@@ -159,17 +159,6 @@ void HistogramProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
 //    srcImage->copyByteToImage(dstImage);
 }
 
-// Process float array
-void HistogramProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
-{
-    Q_UNUSED(width);
-    Q_UNUSED(height);
-    Q_UNUSED(minValue);
-    Q_UNUSED(maxValue);
-    assert(array && pByte);
-
-}
-
 void HistogramProcessor::setWindowArray(bool* array, int arrayNum)
 {
     _array = array;

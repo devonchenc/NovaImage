@@ -9,12 +9,12 @@ class QSlider;
 class QLabel;
 QT_END_NAMESPACE
 
-class ThresholdSegmentationWidget : public ProcessorBaseWidget
+class EnhancementWidget : public ProcessorBaseWidget
 {
     Q_OBJECT
 
 public:
-    ThresholdSegmentationWidget(BaseProcessor* processor, QWidget* parent = nullptr);
+    EnhancementWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
     void setOTSUThreshold(int threshold);
 
@@ -33,13 +33,13 @@ private:
     int _OSTUThreshold;
 };
 
-class ThresholdSegmentationProcessor : public BaseProcessor
+class EnhancementProcessor : public BaseProcessor
 {
     Q_OBJECT
 
 public:
-    ThresholdSegmentationProcessor(QObject* parent = nullptr);
-    virtual ~ThresholdSegmentationProcessor();
+    EnhancementProcessor(QObject* parent = nullptr);
+    virtual ~EnhancementProcessor();
 
     void initUI() override;
 
@@ -52,7 +52,7 @@ protected:
     void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
-    int findOtsuThreshold(uint* grayPixelArray, int pixelNumber);
+
 
 private:
     int _threshold;

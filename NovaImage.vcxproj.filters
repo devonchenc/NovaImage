@@ -213,6 +213,9 @@
     <ClCompile Include="Processor\GammaTransformationProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Processor\EnhancementProcessor..cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -342,6 +345,9 @@
       <Filter>Processor</Filter>
     </QtMoc>
     <QtMoc Include="Processor\GammaTransformationProcessor.h">
+      <Filter>Processor</Filter>
+    </QtMoc>
+    <QtMoc Include="Processor\EnhancementProcessor.h">
       <Filter>Processor</Filter>
     </QtMoc>
   </ItemGroup>

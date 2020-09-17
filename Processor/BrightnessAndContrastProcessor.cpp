@@ -171,16 +171,6 @@ void BrightnessAndContrastProcessor::processImage(MonoImage* srcImage, MonoImage
     dstImage->copyByteToImage();
 }
 
-// Process float array
-void BrightnessAndContrastProcessor::processArray(float* array, int width, int height, float minValue, float maxValue, uchar* pByte)
-{
-    Q_UNUSED(width);
-    Q_UNUSED(height);
-    Q_UNUSED(minValue);
-    Q_UNUSED(maxValue);
-    assert(array && pByte);
-}
-
 void BrightnessAndContrastProcessor::setBrightnessAndContrast(int brightness, int contrast)
 {
     _brightness = brightness;

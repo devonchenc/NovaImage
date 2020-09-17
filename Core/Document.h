@@ -85,6 +85,7 @@ public slots:
     void gammaTransformation();
     void thresholdSegmentation();
     void equalization();
+    void enhancement();
 
 private:
     void initViewWindowWidthAndLevel();
