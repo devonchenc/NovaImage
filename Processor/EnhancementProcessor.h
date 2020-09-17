@@ -19,17 +19,17 @@ public:
     void setOTSUThreshold(int threshold);
 
 public slots:
-    void valueChanged(int value);
+    void laplacianValueChanged(int value);
 
     void autoCheckBoxClicked();
 
 signals:
-    void thresholdChanged(int value);
+    void laplacianChanged(float value);
 
 private:
     QCheckBox* _autoCheckBox;
-    QSlider* _thresholdSlider;
-    QLabel* _thresholdValueLabel;
+    QSlider* _laplacianSlider;
+    QLabel* _laplacianValueLabel;
     int _OSTUThreshold;
 };
 
@@ -44,7 +44,7 @@ public:
     void initUI() override;
 
 public slots:
-    void thresholdChanged(int value);
+    void laplacianChanged(float value);
 
 protected:
     void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
@@ -55,5 +55,5 @@ private:
 
 
 private:
-    int _threshold;
+    float _laplacianFactor;
 };
