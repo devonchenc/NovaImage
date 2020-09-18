@@ -12,8 +12,31 @@
 
 EnhancementWidget::EnhancementWidget(BaseProcessor* processor, QWidget* parent)
     : ProcessorBaseWidget(processor, parent)
+    , _sobelFactor(0.2f)
+    , _laplacianFactor(0.5f)
 {
     QGroupBox* groupBox = new QGroupBox(tr("Image Enhancement"));
+
+    _sobelCheckBox = new QCheckBox(tr("Sobel"));
+    _sobelCheckBox->setChecked(true);
+    connect(_sobelCheckBox, &QCheckBox::clicked, this, &EnhancementWidget::sobelCheckBoxClicked);
+
+    _sobelSlider = new QSlider(Qt::Orientation::Horizontal);
+    _sobelSlider->setMinimum(0);
+    _sobelSlider->setMaximum(100);
+    _sobelSlider->setValue(20);
+    connect(_sobelSlider, &QSlider::valueChanged, this, &EnhancementWidget::sobelValueChanged);
+    _sobelValueLabel = new QLabel("0.2");
+    _sobelValueLabel->setFixedWidth(25);
+
+    QHBoxLayout* h1Layout = new QHBoxLayout;
+    h1Layout->addWidget(new QLabel(tr("Sharpness:")));
+    h1Layout->addWidget(_sobelSlider);
+    h1Layout->addWidget(_sobelValueLabel);
+
+    _laplacianCheckBox = new QCheckBox(tr("Laplacian"));
+    _laplacianCheckBox->setChecked(true);
+    connect(_laplacianCheckBox, &QCheckBox::clicked, this, &EnhancementWidget::laplacianCheckBoxClicked);
 
     _laplacianSlider = new QSlider(Qt::Orientation::Horizontal);
     _laplacianSlider->setMinimum(0);
@@ -21,20 +44,18 @@ EnhancementWidget::EnhancementWidget(BaseProcessor* processor, QWidget* parent)
     _laplacianSlider->setValue(25);
     connect(_laplacianSlider, &QSlider::valueChanged, this, &EnhancementWidget::laplacianValueChanged);
     _laplacianValueLabel = new QLabel("0.5");
-    _laplacianValueLabel->setFixedWidth(22);
+    _laplacianValueLabel->setFixedWidth(25);
 
-    QHBoxLayout* hLayout = new QHBoxLayout;
-    hLayout->addWidget(new QLabel(tr("Sharpness:")));
-    hLayout->addWidget(_laplacianSlider);
-    hLayout->addWidget(_laplacianValueLabel);
-
-    _autoCheckBox = new QCheckBox(tr("OTSU Threshold"));
-    _autoCheckBox->setChecked(true);
-    connect(_autoCheckBox, &QCheckBox::clicked, this, &EnhancementWidget::autoCheckBoxClicked);
+    QHBoxLayout* h2Layout = new QHBoxLayout;
+    h2Layout->addWidget(new QLabel(tr("Sharpness:")));
+    h2Layout->addWidget(_laplacianSlider);
+    h2Layout->addWidget(_laplacianValueLabel);
 
     QVBoxLayout* vLayout = new QVBoxLayout;
-    vLayout->addWidget(_autoCheckBox);
-    vLayout->addLayout(hLayout);
+    vLayout->addWidget(_sobelCheckBox);
+    vLayout->addLayout(h1Layout);
+    vLayout->addWidget(_laplacianCheckBox);
+    vLayout->addLayout(h2Layout);
 
     groupBox->setLayout(vLayout);
     
@@ -43,30 +64,49 @@ EnhancementWidget::EnhancementWidget(BaseProcessor* processor, QWidget* parent)
     setLayout(layout);
 }
 
-void EnhancementWidget::setOTSUThreshold(int threshold)
+void EnhancementWidget::sobelCheckBoxClicked()
 {
-    _OSTUThreshold = threshold;
-    _laplacianSlider->setValue(threshold);
+    if (_sobelCheckBox->isChecked())
+    {
+        emit sobelChanged(_sobelFactor);
+    }
+    else
+    {
+        emit sobelChanged(0);
+    }
+}
+
+void EnhancementWidget::laplacianCheckBoxClicked()
+{
+    if (_laplacianCheckBox->isChecked())
+    {
+        emit laplacianChanged(_laplacianFactor);
+    }
+    else
+    {
+        emit laplacianChanged(0);
+    }
+}
+
+void EnhancementWidget::sobelValueChanged(int value)
+{
+    _sobelFactor = value / 100.0f;
+    _sobelValueLabel->setText(QString::number(_sobelFactor));
+
+    emit sobelChanged(_sobelFactor);
 }
 
 void EnhancementWidget::laplacianValueChanged(int value)
 {
-    float sharpness = value / 50.0f;
-    _laplacianValueLabel->setText(QString::number(sharpness));
+    _laplacianFactor = value / 50.0f;
+    _laplacianValueLabel->setText(QString::number(_laplacianFactor));
 
-    emit laplacianChanged(sharpness);
-}
-
-void EnhancementWidget::autoCheckBoxClicked()
-{
-    if (_autoCheckBox->isChecked())
-    {
-        _laplacianSlider->setValue(_OSTUThreshold);
-    }
+    emit laplacianChanged(_laplacianFactor);
 }
 
 EnhancementProcessor::EnhancementProcessor(QObject* parent)
     : BaseProcessor(true, parent)
+    , _sobelFactor(0.2f)
     , _laplacianFactor(0.5f)
 {
 
@@ -81,8 +121,16 @@ void EnhancementProcessor::initUI()
 {
     EnhancementWidget* widget = new EnhancementWidget(this);
     _processorWidget = widget;
+    connect(widget, &EnhancementWidget::sobelChanged, this, &EnhancementProcessor::sobelChanged);
     connect(widget, &EnhancementWidget::laplacianChanged, this, &EnhancementProcessor::laplacianChanged);
     emit createWidget(widget);
+}
+
+void EnhancementProcessor::sobelChanged(float value)
+{
+    _sobelFactor = value;
+
+    processForView(getGlobalImage());
 }
 
 void EnhancementProcessor::laplacianChanged(float value)
@@ -113,23 +161,36 @@ void EnhancementProcessor::processImage(GeneralImage* srcImage, GeneralImage* ds
             uchar* dstPixel = dstData + j * pitch + i * depth;
             for (int n = 0; n < qMin(depth, 3); n++)
             {
-                float laplacianValue = srcPixel[n - pitch - depth] + srcPixel[n - pitch] + srcPixel[n - pitch + depth]
-                    + srcPixel[n - depth] + srcPixel[n + depth]
-                    + srcPixel[n + pitch - depth] + srcPixel[n + pitch] + srcPixel[n + pitch + depth]
-                    - 8 * srcPixel[n];
-                laplacianValue = srcPixel[n] - _laplacianFactor * laplacianValue;
+                float value = srcPixel[n];
+                if (_sobelFactor > 0)
+                {
+                    float sobelValue = abs(srcPixel[n - pitch - depth] + 2 * srcPixel[n - pitch] + srcPixel[n - pitch + depth]
+                        - srcPixel[n + pitch - depth] - 2 * srcPixel[n + pitch] - srcPixel[n + pitch + depth])
+                        + abs(srcPixel[n - pitch - depth] + 2 * srcPixel[n - depth] + srcPixel[n + pitch - depth]
+                            - srcPixel[n - pitch + depth] - 2 * srcPixel[n + depth] - srcPixel[n + pitch + depth]);
+                    value += _sobelFactor * sobelValue;
+                }
 
-                if (laplacianValue > 255)
+                if (_laplacianFactor > 0)
+                {
+                    float laplacianValue = srcPixel[n - pitch - depth] + srcPixel[n - pitch] + srcPixel[n - pitch + depth]
+                        + srcPixel[n - depth] + srcPixel[n + depth]
+                        + srcPixel[n + pitch - depth] + srcPixel[n + pitch] + srcPixel[n + pitch + depth]
+                        - 8 * srcPixel[n];
+                    value -= _laplacianFactor * laplacianValue;
+                }
+
+                if (value > 255)
                 {
                     dstPixel[n] = 255;
                 }
-                else if (laplacianValue < 0)
+                else if (value < 0)
                 {
                     dstPixel[n] = 0;
                 }
                 else
                 {
-                    dstPixel[n] = laplacianValue;
+                    dstPixel[n] = value;
                 }
             }
         }
@@ -162,26 +223,40 @@ void EnhancementProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage
         for (int i = 1; i < width - 1; i++)
         {
             int n = j * width + i;
-            float laplacianValue = srcImage->getValue(n - width - 1) + srcImage->getValue(n - width) + srcImage->getValue(n - width + 1)
-                + srcImage->getValue(n - 1) + srcImage->getValue(n + 1)
-                + srcImage->getValue(n + width - 1) + srcImage->getValue(n + width) + srcImage->getValue(n + width + 1)
-                - 8 * srcImage->getValue(n);
-            laplacianValue = srcImage->getValue(n) - _laplacianFactor * laplacianValue;
+            float value = srcImage->getValue(n);
 
-            if (laplacianValue > maxValue)
+            if (_sobelFactor > 0)
+            {
+                float sobelValue = abs(srcImage->getValue(n - width - 1) + 2 * srcImage->getValue(n - width) + srcImage->getValue(n - width + 1)
+                    - srcImage->getValue(n + width - 1) - 2 * srcImage->getValue(n + width) - srcImage->getValue(n + width + 1))
+                    + abs(srcImage->getValue(n - width - 1) + 2 * srcImage->getValue(n - 1) + srcImage->getValue(n + width - 1)
+                        - srcImage->getValue(n - width + 1) - 2 * srcImage->getValue(n + 1) - srcImage->getValue(n + width + 1));
+                value += _sobelFactor * sobelValue;
+            }
+
+            if (_laplacianFactor > 0)
+            {
+                float laplacianValue = srcImage->getValue(n - width - 1) + srcImage->getValue(n - width) + srcImage->getValue(n - width + 1)
+                    + srcImage->getValue(n - 1) + srcImage->getValue(n + 1)
+                    + srcImage->getValue(n + width - 1) + srcImage->getValue(n + width) + srcImage->getValue(n + width + 1)
+                    - 8 * srcImage->getValue(n);
+                value -= _laplacianFactor * laplacianValue;
+            }
+
+            if (value > maxValue)
             {
                 dstImage->setValue(n, maxValue);
                 dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = 255;
             }
-            else if (laplacianValue < minValue)
+            else if (value < minValue)
             {
                 dstImage->setValue(n, minValue);
                 dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = 0;
             }
             else
             {
-                dstImage->setValue(n, laplacianValue);
-                dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = uchar((laplacianValue - minValue) * variable);
+                dstImage->setValue(n, value);
+                dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = uchar((value - minValue) * variable);
             }
         }
     }

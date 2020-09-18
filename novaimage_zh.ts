@@ -154,6 +154,30 @@
     </message>
 </context>
 <context>
+    <name>EnhancementWidget</name>
+    <message>
+        <location filename="Processor/EnhancementProcessor..cpp" line="18"/>
+        <source>Image Enhancement</source>
+        <translation type="unfinished">图像增强</translation>
+    </message>
+    <message>
+        <location filename="Processor/EnhancementProcessor..cpp" line="33"/>
+        <location filename="Processor/EnhancementProcessor..cpp" line="50"/>
+        <source>Sharpness:</source>
+        <translation type="unfinished">清晰度：</translation>
+    </message>
+    <message>
+        <location filename="Processor/EnhancementProcessor..cpp" line="37"/>
+        <source>Laplacian</source>
+        <translation type="unfinished">二阶微分</translation>
+    </message>
+    <message>
+        <location filename="Processor/EnhancementProcessor..cpp" line="20"/>
+        <source>Sobel</source>
+        <translation type="unfinished">一阶微分</translation>
+    </message>
+</context>
+<context>
     <name>EqualizationWidget</name>
     <message>
         <location filename="Processor/EqualizationProcessor.cpp" line="19"/>
@@ -269,163 +293,163 @@ and the maximum grid size is 16.</source>
     <name>MainWindow</name>
     <message>
         <location filename="Core/mainwindow.cpp" line="157"/>
-        <location filename="Core/mainwindow.cpp" line="904"/>
+        <location filename="Core/mainwindow.cpp" line="905"/>
         <source>&amp;Open...</source>
         <translation type="unfinished">打开(&amp;O)...</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="159"/>
-        <location filename="Core/mainwindow.cpp" line="905"/>
+        <location filename="Core/mainwindow.cpp" line="906"/>
         <source>&amp;Save As...</source>
         <translation type="unfinished">另存为(&amp;A)...</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="161"/>
-        <location filename="Core/mainwindow.cpp" line="906"/>
+        <location filename="Core/mainwindow.cpp" line="907"/>
         <source>&amp;Close</source>
         <translation type="unfinished">关闭(&amp;C)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="162"/>
-        <location filename="Core/mainwindow.cpp" line="907"/>
+        <location filename="Core/mainwindow.cpp" line="908"/>
         <source>&amp;Print...</source>
         <translation type="unfinished">打印(&amp;P)...</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="164"/>
-        <location filename="Core/mainwindow.cpp" line="908"/>
+        <location filename="Core/mainwindow.cpp" line="909"/>
         <source>E&amp;xit</source>
         <translation type="unfinished">退出(&amp;X)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="166"/>
-        <location filename="Core/mainwindow.cpp" line="910"/>
+        <location filename="Core/mainwindow.cpp" line="911"/>
         <source>&amp;Undo</source>
         <translation type="unfinished">撤销(&amp;U)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="168"/>
-        <location filename="Core/mainwindow.cpp" line="911"/>
+        <location filename="Core/mainwindow.cpp" line="912"/>
         <source>&amp;Redo</source>
         <translation type="unfinished">重做(&amp;R)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="170"/>
-        <location filename="Core/mainwindow.cpp" line="912"/>
+        <location filename="Core/mainwindow.cpp" line="913"/>
         <source>R&amp;estore</source>
         <translation type="unfinished">恢复图像(&amp;E)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="172"/>
-        <location filename="Core/mainwindow.cpp" line="913"/>
+        <location filename="Core/mainwindow.cpp" line="914"/>
         <source>&amp;Preferences...</source>
         <translation type="unfinished">选项(&amp;R)...</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="174"/>
-        <location filename="Core/mainwindow.cpp" line="915"/>
+        <location filename="Core/mainwindow.cpp" line="916"/>
         <source>Single View</source>
         <translation type="unfinished">单视图</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="178"/>
-        <location filename="Core/mainwindow.cpp" line="916"/>
+        <location filename="Core/mainwindow.cpp" line="917"/>
         <source>Three View</source>
         <translation type="unfinished">三视图</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="182"/>
-        <location filename="Core/mainwindow.cpp" line="917"/>
+        <location filename="Core/mainwindow.cpp" line="918"/>
         <source>Volume View</source>
         <translation type="unfinished">体视图</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="186"/>
-        <location filename="Core/mainwindow.cpp" line="918"/>
+        <location filename="Core/mainwindow.cpp" line="919"/>
         <source>Link View</source>
         <translation type="unfinished">视图联动</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="198"/>
-        <location filename="Core/mainwindow.cpp" line="919"/>
+        <location filename="Core/mainwindow.cpp" line="920"/>
         <source>Zoom &amp;In</source>
         <translation type="unfinished">放大(&amp;I)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="200"/>
-        <location filename="Core/mainwindow.cpp" line="920"/>
+        <location filename="Core/mainwindow.cpp" line="921"/>
         <source>Zoom &amp;Out</source>
         <translation type="unfinished">缩小(&amp;O)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="202"/>
-        <location filename="Core/mainwindow.cpp" line="921"/>
+        <location filename="Core/mainwindow.cpp" line="922"/>
         <source>&amp;Prev Image</source>
         <translation type="unfinished">前一张图像(&amp;P)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="203"/>
-        <location filename="Core/mainwindow.cpp" line="922"/>
+        <location filename="Core/mainwindow.cpp" line="923"/>
         <source>&amp;Next Image</source>
         <translation type="unfinished">后一张图像(&amp;N)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="216"/>
-        <location filename="Core/mainwindow.cpp" line="925"/>
+        <location filename="Core/mainwindow.cpp" line="926"/>
         <source>&amp;Brightness/Contrast</source>
         <translation type="unfinished">亮度/对比度(&amp;B)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="217"/>
-        <location filename="Core/mainwindow.cpp" line="926"/>
+        <location filename="Core/mainwindow.cpp" line="927"/>
         <source>&amp;Gamma Transformation</source>
         <translation type="unfinished">伽马变换(&amp;G)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="218"/>
-        <location filename="Core/mainwindow.cpp" line="927"/>
+        <location filename="Core/mainwindow.cpp" line="928"/>
         <source>&amp;Threshold Segmentation</source>
         <translation type="unfinished">阈值分割(&amp;T)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="219"/>
-        <location filename="Core/mainwindow.cpp" line="928"/>
+        <location filename="Core/mainwindow.cpp" line="929"/>
         <source>&amp;Histogram Equalization</source>
         <translation type="unfinished">直方图均衡化(&amp;H)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="220"/>
-        <location filename="Core/mainwindow.cpp" line="929"/>
+        <location filename="Core/mainwindow.cpp" line="930"/>
         <source>Image &amp;Enhancement</source>
         <translation type="unfinished">图像增强(&amp;E)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="222"/>
-        <location filename="Core/mainwindow.cpp" line="931"/>
+        <location filename="Core/mainwindow.cpp" line="932"/>
         <source>&amp;User&apos;s Guide</source>
         <translation type="unfinished">用户手册(&amp;U)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="224"/>
-        <location filename="Core/mainwindow.cpp" line="932"/>
+        <location filename="Core/mainwindow.cpp" line="933"/>
         <source>&amp;About</source>
         <translation type="unfinished">关于(&amp;A)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="228"/>
-        <location filename="Core/mainwindow.cpp" line="898"/>
+        <location filename="Core/mainwindow.cpp" line="899"/>
         <source>&amp;File</source>
         <translation type="unfinished">文件(&amp;F)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="236"/>
-        <location filename="Core/mainwindow.cpp" line="899"/>
+        <location filename="Core/mainwindow.cpp" line="900"/>
         <source>&amp;Edit</source>
         <translation type="unfinished">编辑(&amp;E)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="244"/>
-        <location filename="Core/mainwindow.cpp" line="900"/>
+        <location filename="Core/mainwindow.cpp" line="901"/>
         <source>&amp;View</source>
         <translation type="unfinished">视图(&amp;V)</translation>
     </message>
@@ -436,19 +460,19 @@ and the maximum grid size is 16.</source>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="260"/>
-        <location filename="Core/mainwindow.cpp" line="901"/>
+        <location filename="Core/mainwindow.cpp" line="902"/>
         <source>&amp;Image Processing</source>
         <translation type="unfinished">图像处理(&amp;I)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="261"/>
-        <location filename="Core/mainwindow.cpp" line="924"/>
+        <location filename="Core/mainwindow.cpp" line="925"/>
         <source>&amp;Intensity Transformation</source>
         <translation type="unfinished">灰度变换(&amp;I)</translation>
     </message>
     <message>
         <location filename="Core/mainwindow.cpp" line="272"/>
-        <location filename="Core/mainwindow.cpp" line="902"/>
+        <location filename="Core/mainwindow.cpp" line="903"/>
         <source>&amp;Help</source>
         <translation type="unfinished">帮助(&amp;H)</translation>
     </message>
@@ -464,7 +488,7 @@ and the maximum grid size is 16.</source>
         <translation type="unfinished">&lt;无&gt;</translation>
     </message>
     <message>
-        <location filename="Core/mainwindow.cpp" line="934"/>
+        <location filename="Core/mainwindow.cpp" line="935"/>
         <source>Image Processing</source>
         <translation type="unfinished">图像处理</translation>
     </message>

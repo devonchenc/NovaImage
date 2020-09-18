@@ -16,21 +16,28 @@ class EnhancementWidget : public ProcessorBaseWidget
 public:
     EnhancementWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
-    void setOTSUThreshold(int threshold);
-
 public slots:
-    void laplacianValueChanged(int value);
+    void laplacianCheckBoxClicked();
+    void sobelCheckBoxClicked();
 
-    void autoCheckBoxClicked();
+    void laplacianValueChanged(int value);
+    void sobelValueChanged(int value);
 
 signals:
+    void sobelChanged(float value);
     void laplacianChanged(float value);
 
 private:
-    QCheckBox* _autoCheckBox;
+
+    QCheckBox* _sobelCheckBox;
+    QSlider* _sobelSlider;
+    QLabel* _sobelValueLabel;
+    QCheckBox* _laplacianCheckBox;
     QSlider* _laplacianSlider;
     QLabel* _laplacianValueLabel;
-    int _OSTUThreshold;
+
+    float _sobelFactor;
+    float _laplacianFactor;
 };
 
 class EnhancementProcessor : public BaseProcessor
@@ -44,6 +51,8 @@ public:
     void initUI() override;
 
 public slots:
+    void sobelChanged(float value);
+
     void laplacianChanged(float value);
 
 protected:
@@ -52,8 +61,6 @@ protected:
     void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
-
-
-private:
+    float _sobelFactor;
     float _laplacianFactor;
 };
