@@ -814,9 +814,9 @@ void ToolBar::fitWindowActionTriggered()
 {
     if (getGlobalWindow()->isViewLinked())
     {
-        getGlobalAxialView()->zoomNormal();
-        getGlobalCoronalView()->zoomNormal();
-        getGlobalSagittalView()->zoomNormal();
+        getGlobalAxialView()->fitWindow();
+        getGlobalCoronalView()->fitWindow();
+        getGlobalSagittalView()->fitWindow();
     }
     else
     {
