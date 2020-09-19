@@ -45,5 +45,6 @@
         <file>svg/volumeview.svg</file>
         <file>svg/link.svg</file>
         <file>svg/imagequality.svg</file>
+        <file>svg/fitwindow.svg</file>
     </qresource>
 </RCC>

@@ -52,7 +52,8 @@ BaseProcessor* BaseProcessor::currentProcessor()
 
 void BaseProcessor::setImage(BaseImage* image)
 {
-    if (_srcImage == image)
+    if (_srcImage == image && _srcImage->width() == image->width()
+        && _srcImage->height() == image->height())
         return;
 
     _srcImage = image;

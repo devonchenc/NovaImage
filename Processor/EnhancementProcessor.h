@@ -61,6 +61,9 @@ protected:
     void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
+    void getGaussianArray(float* kernel, int width, int height, float sigma);
+
+private:
     float _sobelFactor;
     float _laplacianFactor;
 };

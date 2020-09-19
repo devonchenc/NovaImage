@@ -212,6 +212,7 @@ void ToolBar::createAction()
     _magnifierAction->setObjectName("magnifier");
     _magnifierAction->setIcon(QIcon(":/icon/svg/magnifier.svg"));
     _fitWindowAction = new QAction(tr("Fit Window"), this);
+    _fitWindowAction->setIcon(QIcon(":/icon/svg/fitwindow.svg"));
     _1xAction = new QAction("100%", this);
     _2xAction = new QAction("200%", this);
     _4xAction = new QAction("400%", this);

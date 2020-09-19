@@ -203,7 +203,6 @@ void EnhancementProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage
     assert(dstImage);
 
     int width, height;
-    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
     float maxValue = srcImage->getMaxValue();
@@ -218,6 +217,32 @@ void EnhancementProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage
         variable = 0.0f;
     }
 
+    int kernelWidth = width / 4;
+    int kernelHeight = height / 4;
+    float sigma = kernelWidth / 4;
+    float* kernel = new float[kernelWidth * kernelHeight];
+    getGaussianArray(kernel, kernelWidth, kernelHeight, sigma);
+
+    for (int j = kernelHeight / 2; j < height - kernelHeight / 2 - 1; j++)
+    {
+        for (int i = kernelWidth / 2; i < width - kernelWidth / 2 - 1; i++)
+        {
+            float sum = 0;
+            for (int k = 0; k < kernelHeight; k++)
+            {
+                for (int l = 0; l < kernelWidth; l++)
+                {
+                    int index = (j + k - kernelHeight / 2) * width + i + l - kernelWidth / 2;
+                    sum += kernel[k * kernelWidth + l] * srcImage->getValue(index);
+                }
+            }
+            int n = j * width + i;
+            dstImage->setValue(n, sum);
+            dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = uchar((sum - minValue) * variable);
+        }
+    }
+
+/*
     for (int j = 1; j < height - 1; j++)
     {
         for (int i = 1; i < width - 1; i++)
@@ -259,7 +284,28 @@ void EnhancementProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage
                 dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = uchar((value - minValue) * variable);
             }
         }
-    }
+    }*/
 
     dstImage->copyByteToImage();
+}
+
+void EnhancementProcessor::getGaussianArray(float* kernel, int width, int height, float sigma)
+{
+    int xCenter = width / 2;
+    int yCenter = height / 2;
+    float sum = 0.0f;
+    for (int j = 0; j < height; j++)
+    {
+        for (int i = 0; i < width; i++)
+        {
+            kernel[j * width + i] = exp(-1.0f * ((i - xCenter) * (i - xCenter) + (j - yCenter) * (j - yCenter)) / (2.0f * sigma * sigma));
+            sum += kernel[j * width + i];
+        }
+    }
+
+    // Normalized
+    for (int i = 0; i < width * height; i++)
+    {
+        kernel[i] /= sum;
+    }
 }

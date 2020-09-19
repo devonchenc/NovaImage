@@ -414,6 +414,7 @@ void Document::negativeImage()
     {
         InverseProcessor* processor = new InverseProcessor(this);
         processor->processForView(getImage());
+        processor->apply();
     }
 }
 

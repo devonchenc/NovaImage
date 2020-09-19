@@ -27,24 +27,17 @@ void InverseProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstIma
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    if (srcData[0] == dstData[0])
+    for (int j = 0; j < height; j++)
     {
-        for (int j = 0; j < height; j++)
+        for (int i = 0; i < width; i++)
         {
-            for (int i = 0; i < width; i++)
+            uchar* pPixel = dstData + j * pitch + i * depth;
+            uchar* pBackupPixel = srcData + j * pitch + i * depth;
+            for (int n = 0; n < qMin(depth, 3); n++)
             {
-                uchar* pPixel = dstData + j * pitch + i * depth;
-                uchar* pBackupPixel = srcData + j * pitch + i * depth;
-                for (int n = 0; n < qMin(depth, 3); n++)
-                {
-                    *(pPixel + n) = 255 - *(pBackupPixel + n);
-                }
+                *(pPixel + n) = 255 - *(pBackupPixel + n);
             }
         }
-    }
-    else
-    {
-        *dstImage = *srcImage;
     }
 }
 
@@ -54,12 +47,16 @@ void InverseProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
     assert(dstImage);
 
     int width, height;
-    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
+    uchar* dstByteImage = dstImage->getBYTEImage(width, height);
+    float maxValue = srcImage->getMaxValue();
+    float minValue = srcImage->getMinValue();
 
-    for (int i = 0; i < width * height * 3; i++)
+    for (int i = 0; i < width * height; i++)
     {
-        byteImage[i] = 255 - byteImage[i];
+        dstImage->setValue(i, maxValue + minValue - srcImage->getValue(i));
+        dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = 255 - srcByteImage[3 * i];
     }
 
- //   srcImage->copyByteToImage(dstImage);
+    dstImage->copyByteToImage();
 }
