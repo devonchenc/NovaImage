@@ -52,7 +52,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     _layoutManager = new LayoutManager(centerWidget);
     _layoutManager->setWidget(_axialView, _coronalView, _sagittalView, _volumeView);
-    _layoutManager->singleView();
+    _layoutManager->singleView(0);
 
     _coronalView->setViewType(CORONAL_VIEW);
     _sagittalView->setViewType(SAGITTAL_VIEW);
@@ -516,7 +516,22 @@ void MainWindow::setting()
 
 void MainWindow::singleView()
 {
-    _layoutManager->singleView();
+    if (_activeView == _axialView)
+    {
+        _layoutManager->singleView(0);
+    }
+    else if (_activeView == _coronalView)
+    {
+        _layoutManager->singleView(1);
+    }
+    else if (_activeView == _sagittalView)
+    {
+        _layoutManager->singleView(2);
+    }
+    else if (_activeView == _volumeView)
+    {
+        _layoutManager->singleView(3);
+    }
 
     _singleViewAction->setChecked(true);
     _threeViewAction->setChecked(false);

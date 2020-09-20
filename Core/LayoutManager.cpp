@@ -29,14 +29,35 @@ void LayoutManager::setWidget(QWidget* axial, QWidget* coronal, QWidget* sagitta
     _parentWidget->setLayout(_gridLayout);
 }
 
-void LayoutManager::singleView()
+void LayoutManager::singleView(int viewType)
 {
     removeWidget();
+
+    _axialView->hide();
     _coronalView->hide();
     _sagittalView->hide();
     _volumeView->hide();
 
-    _gridLayout->addWidget(_axialView, 0, 0);
+    if (viewType == 0)
+    {
+        _axialView->show();
+        _gridLayout->addWidget(_axialView, 0, 0);
+    }
+    else if (viewType == 1)
+    {
+        _coronalView->show();
+        _gridLayout->addWidget(_coronalView, 0, 0);
+    }
+    else if (viewType == 2)
+    {
+        _sagittalView->show();
+        _gridLayout->addWidget(_sagittalView, 0, 0);
+    }
+    else if (viewType == 3)
+    {
+        _volumeView->show();
+        _gridLayout->addWidget(_volumeView, 0, 0);
+    }
 
     _gridLayout->setRowStretch(0, 1);
     _gridLayout->setRowStretch(1, 0);
@@ -49,6 +70,8 @@ void LayoutManager::singleView()
 void LayoutManager::threeView()
 {
     removeWidget();
+
+    _axialView->show();
     _coronalView->show();
     _sagittalView->show();
     _volumeView->show();

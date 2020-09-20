@@ -18,7 +18,7 @@ public:
 public:
     void setWidget(QWidget* axial, QWidget* coronal, QWidget* sagittal, QWidget* volume);
 
-    void singleView();
+    void singleView(int viewType);
     void threeView();
     void volumeView();
 

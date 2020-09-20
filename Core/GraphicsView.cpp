@@ -179,6 +179,13 @@ void GraphicsView::mouseReleaseEvent(QMouseEvent* event)
     QGraphicsView::mouseReleaseEvent(event);
 }
 
+void GraphicsView::mouseDoubleClickEvent(QMouseEvent* event)
+{
+    getGlobalWindow()->singleView();
+
+    QGraphicsView::mouseDoubleClickEvent(event);
+}
+
 void GraphicsView::wheelEvent(QWheelEvent* event)
 {
     if (event->modifiers() & Qt::ControlModifier)
@@ -216,13 +223,6 @@ void GraphicsView::drawForeground(QPainter*, const QRectF&)
     BaseImage* image = getGlobalImage();
     if (image == nullptr)
         return;
-
-/*    if (hasFocus())
-    {
-        QPainter painter(viewport());
-        painter.setPen(QPen(QColor(qRgb(255, 0, 0)), 2));
-        painter.drawRect(rect());
-    }*/
 
     if (_showAnnotation)
     {
