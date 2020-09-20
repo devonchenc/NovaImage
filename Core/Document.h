@@ -86,6 +86,7 @@ public slots:
     void thresholdSegmentation();
     void equalization();
     void enhancement();
+    void lightFieldCorrection();
 
 private:
     void initViewWindowWidthAndLevel();

@@ -216,6 +216,9 @@
     <ClCompile Include="Processor\EnhancementProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Processor\LightFieldCorrectionProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -348,6 +351,9 @@
       <Filter>Processor</Filter>
     </QtMoc>
     <QtMoc Include="Processor\EnhancementProcessor.h">
+      <Filter>Processor</Filter>
+    </QtMoc>
+    <QtMoc Include="Processor\LightFieldCorrectionProcessor.h">
       <Filter>Processor</Filter>
     </QtMoc>
   </ItemGroup>

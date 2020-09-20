@@ -120,6 +120,7 @@ public slots:
     void thresholdSegmentation();
     void equalization();
     void enhancement();
+    void lightFieldCorrection();
 
     void slectLanguage(QAction* action);
     void slectLanguage(int language);
@@ -178,6 +179,7 @@ private:
     QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
     QAction* _enhancementAction;
+    QAction* _lightFieldCorrectionAction;
 
     QAction* _userGuideAction;
     QAction* _aboutAction;

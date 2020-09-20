@@ -20,6 +20,7 @@
 #include "../Processor/ThresholdSegmentationProcessor.h"
 #include "../Processor/EqualizationProcessor.h"
 #include "../Processor/EnhancementProcessor.h"
+#include "../Processor/LightFieldCorrectionProcessor.h"
 #include "../Widget/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
@@ -499,6 +500,16 @@ void Document::enhancement()
     if (_image)
     {
         EnhancementProcessor* processor = new EnhancementProcessor(this);
+        processor->initUI();
+        processor->processForView(getImage());
+    }
+}
+
+void Document::lightFieldCorrection()
+{
+    if (_image)
+    {
+        LightFieldCorrectionProcessor* processor = new LightFieldCorrectionProcessor(this);
         processor->initUI();
         processor->processForView(getImage());
     }

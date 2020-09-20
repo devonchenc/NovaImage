@@ -218,6 +218,7 @@ void MainWindow::createActions()
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
     _enhancementAction = new QAction(tr("Image &Enhancement"), this);
+    _lightFieldCorrectionAction = new QAction(tr("&Light Field Correction"), this);
 
     _userGuideAction = new QAction(tr("&User's Guide"));
     _userGuideAction->setIcon(QIcon(":/icon/svg/guide.svg"));
@@ -268,6 +269,8 @@ void MainWindow::createActions()
     _processingMenu->addAction(_thresholdSegmentationAction);
     _processingMenu->addSeparator();
     _processingMenu->addAction(_enhancementAction);
+    _processingMenu->addSeparator();
+    _processingMenu->addAction(_lightFieldCorrectionAction);
 
     _helpMenu = menuBar()->addMenu(tr("&Help"));
     _helpMenu->addAction(_userGuideAction);
@@ -296,6 +299,7 @@ void MainWindow::createActions()
     connect(_thresholdSegmentationAction, &QAction::triggered, this, &MainWindow::thresholdSegmentation);
     connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
     connect(_enhancementAction, &QAction::triggered, this, &MainWindow::enhancement);
+    connect(_lightFieldCorrectionAction, &QAction::triggered, this, &MainWindow::lightFieldCorrection);
 
     connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
     connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
@@ -840,6 +844,12 @@ void MainWindow::enhancement()
     _doc->enhancement();
 }
 
+void MainWindow::lightFieldCorrection()
+{
+    _imageProcessingDockWidget->raise();
+    _doc->lightFieldCorrection();
+}
+
 void MainWindow::slectLanguage(QAction* action)
 {
     if (action == _engAction)
@@ -943,6 +953,7 @@ void MainWindow::changeEvent(QEvent* event)
         _thresholdSegmentationAction->setText(tr("&Threshold Segmentation"));
         _equalizationAction->setText(tr("&Histogram Equalization"));
         _enhancementAction->setText(tr("Image &Enhancement"));
+        _lightFieldCorrectionAction->setText(tr("&Light Field Correction"));
 
         _userGuideAction->setText(tr("&User's Guide"));
         _aboutAction->setText(tr("&About"));

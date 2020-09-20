@@ -9,12 +9,12 @@ class QSlider;
 class QLabel;
 QT_END_NAMESPACE
 
-class EnhancementWidget : public ProcessorBaseWidget
+class LightFieldCorrectionWidget : public ProcessorBaseWidget
 {
     Q_OBJECT
 
 public:
-    EnhancementWidget(BaseProcessor* processor, QWidget* parent = nullptr);
+    LightFieldCorrectionWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
 public slots:
     void laplacianCheckBoxClicked();
@@ -40,13 +40,13 @@ private:
     float _laplacianFactor;
 };
 
-class EnhancementProcessor : public BaseProcessor
+class LightFieldCorrectionProcessor : public BaseProcessor
 {
     Q_OBJECT
 
 public:
-    EnhancementProcessor(QObject* parent = nullptr);
-    virtual ~EnhancementProcessor();
+    LightFieldCorrectionProcessor(QObject* parent = nullptr);
+    virtual ~LightFieldCorrectionProcessor();
 
     void initUI() override;
 
@@ -59,6 +59,9 @@ protected:
     void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
 
     void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
+
+private:
+    void getGaussianArray(float* kernel, int width, int height, float sigma);
 
 private:
     float _sobelFactor;
