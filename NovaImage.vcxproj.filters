@@ -213,7 +213,7 @@
     <ClCompile Include="Processor\GammaTransformationProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
-    <ClCompile Include="Processor\EnhancementProcessor..cpp">
+    <ClCompile Include="Processor\EnhancementProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
   </ItemGroup>

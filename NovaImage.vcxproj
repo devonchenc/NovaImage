@@ -50,7 +50,7 @@
     <ClCompile Include="Processor\CLAHE.cpp" />
     <ClCompile Include="Processor\BrightnessAndContrastProcessor.cpp" />
     <ClCompile Include="Processor\CurvesProcessor.cpp" />
-    <ClCompile Include="Processor\EnhancementProcessor..cpp" />
+    <ClCompile Include="Processor\EnhancementProcessor.cpp" />
     <ClCompile Include="Processor\EqualizationProcessor.cpp" />
     <ClCompile Include="Processor\GammaTransformationProcessor.cpp" />
     <ClCompile Include="Processor\HistogramProcessor.cpp" />
@@ -182,8 +182,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>C:\Program Files\DCMTK\include;D:\opencv\build\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\DCMTK\lib;D:\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Program Files\DCMTK\include;C:\Program Files\FFTW;D:\opencv\build\include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\DCMTK\lib;C:\Program Files\FFTW;D:\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <IncludePath>C:\Program Files\DCMTK\include;$(IncludePath)</IncludePath>
@@ -215,7 +215,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>dcmtk.lib;opencv_world440d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dcmtk.lib;libfftw3-3.lib;opencv_world440d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

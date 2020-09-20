@@ -52,9 +52,11 @@ BaseProcessor* BaseProcessor::currentProcessor()
 
 void BaseProcessor::setImage(BaseImage* image)
 {
-    if (_srcImage == image && _srcImage->width() == image->width()
-        && _srcImage->height() == image->height())
-        return;
+    if (_srcImage == image && _dstImage)
+    {
+        if (_dstImage->width() == image->width() && _dstImage->height() == image->height() && _dstImage->slice() == image->slice())
+            return;
+    }
 
     _srcImage = image;
     if (_dstImage)
@@ -123,47 +125,47 @@ void BaseProcessor::processForView(BaseImage* image)
 
     if (typeid(*image) == typeid(GeneralImage))
     {
-        GeneralImage* generalImage = dynamic_cast<GeneralImage*>(image);
+        GeneralImage* srcImage = dynamic_cast<GeneralImage*>(image);
         GeneralImage* dstImage = dynamic_cast<GeneralImage*>(_dstImage);
-        processImage(generalImage, dstImage);
+        processImage(srcImage, dstImage);
 
         repaintView(_dstImage->getImageEntity());
     }
     else if (dynamic_cast<MonoImage*>(image))
     {
-        MonoImage* monoImage = dynamic_cast<MonoImage*>(image);
+        MonoImage* srcImage = dynamic_cast<MonoImage*>(image);
         MonoImage* dstImage = dynamic_cast<MonoImage*>(_dstImage);
 
-        int viewType = monoImage->viewType();
+        int viewType = srcImage->viewType();
         dstImage->setViewType(viewType);
-        processImage(monoImage, dstImage);
+        processImage(srcImage, dstImage);
 
         repaintView(dstImage->getImageEntity(), viewType);
 
-        if (getGlobalWindow()->isViewLinked() && monoImage->slice() > 1)
+        if (getGlobalWindow()->isViewLinked() && srcImage->slice() > 1)
         {
             if (viewType != 0)
             {
-                monoImage->setViewType(0);
+                srcImage->setViewType(0);
                 dstImage->setViewType(0);
-                processImage(monoImage, dstImage);
+                processImage(srcImage, dstImage);
                 repaintView(dstImage->getImageEntity(), 0);
             }
             if (viewType != 1)
             {
-                monoImage->setViewType(1);
+                srcImage->setViewType(1);
                 dstImage->setViewType(1);
-                processImage(monoImage, dstImage);
+                processImage(srcImage, dstImage);
                 repaintView(dstImage->getCoronalImage().get(), 1);
             }
             if (viewType != 2)
             {
-                monoImage->setViewType(2);
+                srcImage->setViewType(2);
                 dstImage->setViewType(2);
-                processImage(monoImage, dstImage);
+                processImage(srcImage, dstImage);
                 repaintView(dstImage->getSagittalImage().get(), 2);
             }
-            monoImage->setViewType(viewType);
+            srcImage->setViewType(viewType);
             dstImage->setViewType(viewType);
         }
     }

@@ -35,14 +35,16 @@ HEADERS += ./Image/DicomImage.h \
     ./Widget/ProcessorShellWidget.h \
     ./Widget/ProcessorBaseWidget.h \
     ./Processor/BaseProcessor.h \
+    ./Processor/BrightnessAndContrastProcessor.h \
+    ./Processor/CLAHE.h \
     ./Processor/CurvesProcessor.h \
+    ./Processor/EnhancementProcessor.h \
+    ./Processor/EqualizationProcessor.h \
+    ./Processor/GammaTransformationProcessor.h \
     ./Processor/HistogramProcessor.h \
     ./Processor/InverseProcessor.h \
     ./Processor/LevelsProcessor.h \
-    ./Processor/BrightnessAndContrastProcessor.h \
     ./Processor/ThresholdSegmentationProcessor.h \
-    ./Processor/EqualizationProcessor.h \
-    ./Processor/CLAHE.h \
     ./Core/GlobalFunc.h \
     ./Core/MouseHandler.h \
     ./Core/UndoSystem.h \
@@ -93,14 +95,16 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/ProcessorShellWidget.cpp \
     ./Widget/ProcessorBaseWidget.cpp \
     ./Processor/BaseProcessor.cpp \
+    ./Processor/BrightnessAndContrastProcessor.cpp \
+    ./Processor/CLAHE.cpp \
     ./Processor/CurvesProcessor.cpp \
+    ./Processor/EnhancementProcessor.cpp \
+    ./Processor/EqualizationProcessor.cpp \
+    ./Processor/GammaTransformationProcessor.cpp \
     ./Processor/HistogramProcessor.cpp \
     ./Processor/InverseProcessor.cpp \
     ./Processor/LevelsProcessor.cpp \
-    ./Processor/BrightnessAndContrastProcessor.cpp \
     ./Processor/ThresholdSegmentationProcessor.cpp \
-    ./Processor/EqualizationProcessor.cpp \
-    ./Processor/CLAHE.cpp \
     ./Core/Document.cpp \
     ./Core/GlobalFunc.cpp \
     ./Core/GraphicsScene.cpp \
