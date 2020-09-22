@@ -218,7 +218,8 @@ void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage*
         variable = 0.0f;
     }
 
-    float sigma = width / 16;//32;// 
+    // Variance
+    float sigma = width / 16;
     float* kernel = new float[width * height];
     getGaussianArray(kernel, width, height, sigma);
 
@@ -264,17 +265,15 @@ void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage*
     fftw_execute(pf);
     fftw_destroy_plan(pf);
 
+    // Shift
+    for (int j = 0; j < height; j++)
     {
-        // Shift
-        for (int j = 0; j < height; j++)
+        for (int i = 0; i < width; i++)
         {
-            for (int i = 0; i < width; i++)
-            {
-                int x = (i + width / 2) % width;
-                int y = (j + height / 2) % height;
-                imageOut[y * width + x][0] = imageOut2[j * width + i][0];
-                imageOut[y * width + x][1] = imageOut2[j * width + i][1];
-            }
+            int x = (i + width / 2) % width;
+            int y = (j + height / 2) % height;
+            imageOut[y * width + x][0] = imageOut2[j * width + i][0];
+            imageOut[y * width + x][1] = imageOut2[j * width + i][1];
         }
     }
 
