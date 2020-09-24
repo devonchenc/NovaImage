@@ -206,6 +206,10 @@ void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage*
     int width, height;
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
+    // Set new image width as pow of 2
+    int newWidth = int(pow(2, ceil(log2(width))));
+    int newHeight = int(pow(2, ceil(log2(height))));
+
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();
     float variable;
@@ -220,39 +224,42 @@ void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage*
 
     // Variance
     float sigma = width / 16;
-    float* kernel = new float[width * height];
-    getGaussianArray(kernel, width, height, sigma);
+    float* kernel = new float[newWidth * newHeight];
+    getGaussianArray(kernel, newWidth, newHeight, sigma);
 
     // Kernel
-    fftw_complex* kernelIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * width * height);
-    fftw_complex* kernelOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * width * height);
-    for (int i = 0; i < width * height; i++)
+    fftw_complex* kernelIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+    fftw_complex* kernelOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+    for (int i = 0; i < newWidth * newHeight; i++)
     {
         kernelIn[i][0] = kernel[i];
         kernelIn[i][1] = 0;
     }
-    fftw_plan pf = fftw_plan_dft_2d(width, height, kernelIn, kernelOut, FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_plan pf = fftw_plan_dft_2d(newWidth, newHeight, kernelIn, kernelOut, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute(pf);
     fftw_destroy_plan(pf);
 
     delete[] kernel;
 
     // FFT
-    fftw_complex* imageIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * width * height);
-    fftw_complex* imageOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * width * height);
-    memset(imageIn, 0, sizeof(fftw_complex) * width * height);
-    for (int i = 0; i < width * height; i++)
+    fftw_complex* imageIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+    fftw_complex* imageOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+    memset(imageIn, 0, sizeof(fftw_complex) * newWidth * newHeight);
+    for (int j = 0; j < height; j++)
     {
-        imageIn[i][0] = srcImage->getValue(i);
-        imageIn[i][1] = 0;
+        for (int i = 0; i < width; i++)
+        {
+            imageIn[j * newWidth + i][0] = srcImage->getValue(j * width + i);
+            imageIn[j * newWidth + i][1] = 0;
+        }
     }
 
-    pf = fftw_plan_dft_2d(width, height, imageIn, imageOut, FFTW_FORWARD, FFTW_ESTIMATE);
+    pf = fftw_plan_dft_2d(newWidth, newHeight, imageIn, imageOut, FFTW_FORWARD, FFTW_ESTIMATE);
     fftw_execute(pf);
     fftw_destroy_plan(pf);
 
     // Convolution
-    for (int i = 0; i < width * height; i++)
+    for (int i = 0; i < newWidth * newHeight; i++)
     {
         double a = imageOut[i][0] * kernelOut[i][0] - imageOut[i][1] * kernelOut[i][1];
         double b = imageOut[i][0] * kernelOut[i][1] + imageOut[i][1] * kernelOut[i][0];
@@ -260,28 +267,32 @@ void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage*
         imageOut[i][1] = b;
     }
 
-    fftw_complex* imageOut2 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * width * height);
-    pf = fftw_plan_dft_2d(width, height, imageOut, imageOut2, FFTW_BACKWARD, FFTW_ESTIMATE);
+    fftw_complex* imageOut2 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+    pf = fftw_plan_dft_2d(newWidth, newHeight, imageOut, imageOut2, FFTW_BACKWARD, FFTW_ESTIMATE);
     fftw_execute(pf);
     fftw_destroy_plan(pf);
 
     // Shift
-    for (int j = 0; j < height; j++)
+    for (int j = 0; j < newHeight; j++)
     {
-        for (int i = 0; i < width; i++)
+        for (int i = 0; i < newWidth; i++)
         {
-            int x = (i + width / 2) % width;
-            int y = (j + height / 2) % height;
+            int x = (i + newWidth / 2) % newWidth;
+            int y = (j + newHeight / 2) % newHeight;
             imageOut[y * width + x][0] = imageOut2[j * width + i][0];
             imageOut[y * width + x][1] = imageOut2[j * width + i][1];
         }
     }
 
-    for (int i = 0; i < width * height; i++)
+    for (int j = 0; j < height; j++)
     {
-        float value = imageOut[i][0] / (width * height);
-        dstImage->setValue(i, value);
-        dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = uchar((value - minValue) * variable);
+        for (int i = 0; i < width; i++)
+        {
+            int n = j * width + i;
+            float value = imageOut[j * newWidth + i][0] / (newWidth * newHeight);
+            dstImage->setValue(n, value);
+            dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = uchar((value - minValue) * variable);
+        }
     }
 
     fftw_free(kernelIn);
