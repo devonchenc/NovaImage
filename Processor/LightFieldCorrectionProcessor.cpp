@@ -5,6 +5,11 @@
 #include <QHBoxLayout>
 #include <QGroupBox>
 #include <QCheckBox>
+#include <QRadioButton>
+#include <QPushButton>
+#include <QButtonGroup>
+#include <QLineEdit>
+#include <QFileDialog>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
@@ -16,7 +21,24 @@ LightFieldCorrectionWidget::LightFieldCorrectionWidget(BaseProcessor* processor,
     , _sobelFactor(0.2f)
     , _laplacianFactor(0.5f)
 {
-    QGroupBox* groupBox = new QGroupBox(tr("Image Enhancement"));
+    QGroupBox* groupBox = new QGroupBox(tr("Light Field Correction"));
+
+    QRadioButton* fileButton = new QRadioButton(tr("Select Light Field File"));
+    QRadioButton* autoButton = new QRadioButton(tr("Automatic Correction"));
+    _radioGroup = new QButtonGroup;
+    _radioGroup->addButton(fileButton, 0);
+    _radioGroup->addButton(autoButton, 1);
+
+    _pathEdit = new QLineEdit("");
+    QPushButton* browseButton = new QPushButton("...");
+    browseButton->setMaximumWidth(30);
+    connect(browseButton, &QPushButton::clicked, this, &LightFieldCorrectionWidget::browseButtonClicked);
+
+
+    /*
+    grid2->addWidget(new QLabel(tr("File save path:")), 2, 0);
+    grid2->addWidget(_pathEdit, 2, 1, 1, 2);
+    grid2->addWidget(browseButton, 2, 3);*/
 
     _sobelCheckBox = new QCheckBox(tr("Sobel"));
     _sobelCheckBox->setChecked(true);
@@ -53,6 +75,8 @@ LightFieldCorrectionWidget::LightFieldCorrectionWidget(BaseProcessor* processor,
     h2Layout->addWidget(_laplacianValueLabel);
 
     QVBoxLayout* vLayout = new QVBoxLayout;
+    vLayout->addWidget(fileButton);
+    vLayout->addWidget(autoButton);
     vLayout->addWidget(_sobelCheckBox);
     vLayout->addLayout(h1Layout);
     vLayout->addWidget(_laplacianCheckBox);
@@ -63,6 +87,15 @@ LightFieldCorrectionWidget::LightFieldCorrectionWidget(BaseProcessor* processor,
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(groupBox);
     setLayout(layout);
+}
+
+void LightFieldCorrectionWidget::browseButtonClicked()
+{
+    QString filePath = QFileDialog::getExistingDirectory(this, tr("Select file save directory"), _pathEdit->text());
+    if (filePath.isEmpty() == false)
+    {
+        _pathEdit->setText(filePath);
+    }
 }
 
 void LightFieldCorrectionWidget::sobelCheckBoxClicked()

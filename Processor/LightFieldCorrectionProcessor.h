@@ -4,9 +4,11 @@
 #include "BaseProcessor.h"
 
 QT_BEGIN_NAMESPACE
+class QButtonGroup;
 class QCheckBox;
 class QSlider;
 class QLabel;
+class QLineEdit;
 QT_END_NAMESPACE
 
 class LightFieldCorrectionWidget : public ProcessorBaseWidget
@@ -23,11 +25,16 @@ public slots:
     void laplacianValueChanged(int value);
     void sobelValueChanged(int value);
 
+private slots:
+    void browseButtonClicked();
+
 signals:
     void sobelChanged(float value);
     void laplacianChanged(float value);
 
 private:
+    QButtonGroup* _radioGroup;
+    QLineEdit* _pathEdit;
 
     QCheckBox* _sobelCheckBox;
     QSlider* _sobelSlider;
