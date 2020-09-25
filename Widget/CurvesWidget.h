@@ -35,8 +35,8 @@ public slots:
 
     void applyButtonClicked();
 
-    void toggleCurveRadio();
-    void toggleLinearRadio();
+    void curveRadioToggled();
+    void linearRadioToggled();
 
     void clickSave();
 

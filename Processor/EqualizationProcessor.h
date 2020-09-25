@@ -14,7 +14,7 @@ class EqualizationWidget : public ProcessorBaseWidget
 public:
     EqualizationWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
-public slots:
+private slots:
     void editChanged();
 
 signals:

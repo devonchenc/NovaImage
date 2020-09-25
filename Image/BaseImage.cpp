@@ -144,8 +144,7 @@ bool BaseImage::copyFromArray(uchar* array, int width, int height)
         for (int i = 0; i < width; i++)
         {
             uchar* pixel = pData + j * pitch + i * depth;
-            *pixel = array[j * width + i];
-            for (int n = 1; n < depth - 1; n++)
+            for (int n = 0; n < qMin(depth, 3); n++)
             {
                 *(pixel + n) = array[j * width + i];
             }

@@ -16,7 +16,7 @@ class EnhancementWidget : public ProcessorBaseWidget
 public:
     EnhancementWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
-public slots:
+private slots:
     void laplacianCheckBoxClicked();
     void sobelCheckBoxClicked();
 
@@ -28,7 +28,6 @@ signals:
     void laplacianChanged(float value);
 
 private:
-
     QCheckBox* _sobelCheckBox;
     QSlider* _sobelSlider;
     QLabel* _sobelValueLabel;

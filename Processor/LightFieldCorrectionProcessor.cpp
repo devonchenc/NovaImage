@@ -10,77 +10,40 @@
 #include <QButtonGroup>
 #include <QLineEdit>
 #include <QFileDialog>
+#include <QMessageBox>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 #include "../Core/GlobalFunc.h"
-#include "fftw3.h"
 
 LightFieldCorrectionWidget::LightFieldCorrectionWidget(BaseProcessor* processor, QWidget* parent)
     : ProcessorBaseWidget(processor, parent)
-    , _sobelFactor(0.2f)
-    , _laplacianFactor(0.5f)
 {
     QGroupBox* groupBox = new QGroupBox(tr("Light Field Correction"));
 
-    QRadioButton* fileButton = new QRadioButton(tr("Select Light Field File"));
     QRadioButton* autoButton = new QRadioButton(tr("Automatic Correction"));
+    autoButton->setChecked(true);
+    QRadioButton* fileButton = new QRadioButton(tr("Select Light Field File"));
+    connect(autoButton, &QRadioButton::clicked, this, &LightFieldCorrectionWidget::autoButtonToggled);
+    connect(fileButton, &QRadioButton::clicked, this, &LightFieldCorrectionWidget::fileButtonToggled);
     _radioGroup = new QButtonGroup;
-    _radioGroup->addButton(fileButton, 0);
-    _radioGroup->addButton(autoButton, 1);
+    _radioGroup->addButton(autoButton, 0);
+    _radioGroup->addButton(fileButton, 1);
 
     _pathEdit = new QLineEdit("");
     QPushButton* browseButton = new QPushButton("...");
     browseButton->setMaximumWidth(30);
     connect(browseButton, &QPushButton::clicked, this, &LightFieldCorrectionWidget::browseButtonClicked);
 
-
-    /*
-    grid2->addWidget(new QLabel(tr("File save path:")), 2, 0);
-    grid2->addWidget(_pathEdit, 2, 1, 1, 2);
-    grid2->addWidget(browseButton, 2, 3);*/
-
-    _sobelCheckBox = new QCheckBox(tr("Sobel"));
-    _sobelCheckBox->setChecked(true);
-    connect(_sobelCheckBox, &QCheckBox::clicked, this, &LightFieldCorrectionWidget::sobelCheckBoxClicked);
-
-    _sobelSlider = new QSlider(Qt::Orientation::Horizontal);
-    _sobelSlider->setMinimum(0);
-    _sobelSlider->setMaximum(100);
-    _sobelSlider->setValue(20);
-    connect(_sobelSlider, &QSlider::valueChanged, this, &LightFieldCorrectionWidget::sobelValueChanged);
-    _sobelValueLabel = new QLabel("0.2");
-    _sobelValueLabel->setFixedWidth(25);
-
     QHBoxLayout* h1Layout = new QHBoxLayout;
-    h1Layout->addWidget(new QLabel(tr("Sharpness:")));
-    h1Layout->addWidget(_sobelSlider);
-    h1Layout->addWidget(_sobelValueLabel);
-
-    _laplacianCheckBox = new QCheckBox(tr("Laplacian"));
-    _laplacianCheckBox->setChecked(true);
-    connect(_laplacianCheckBox, &QCheckBox::clicked, this, &LightFieldCorrectionWidget::laplacianCheckBoxClicked);
-
-    _laplacianSlider = new QSlider(Qt::Orientation::Horizontal);
-    _laplacianSlider->setMinimum(0);
-    _laplacianSlider->setMaximum(100);
-    _laplacianSlider->setValue(25);
-    connect(_laplacianSlider, &QSlider::valueChanged, this, &LightFieldCorrectionWidget::laplacianValueChanged);
-    _laplacianValueLabel = new QLabel("0.5");
-    _laplacianValueLabel->setFixedWidth(25);
-
-    QHBoxLayout* h2Layout = new QHBoxLayout;
-    h2Layout->addWidget(new QLabel(tr("Sharpness:")));
-    h2Layout->addWidget(_laplacianSlider);
-    h2Layout->addWidget(_laplacianValueLabel);
+    h1Layout->addWidget(new QLabel(tr("File save path:")));
+    h1Layout->addWidget(_pathEdit);
+    h1Layout->addWidget(browseButton);
 
     QVBoxLayout* vLayout = new QVBoxLayout;
-    vLayout->addWidget(fileButton);
     vLayout->addWidget(autoButton);
-    vLayout->addWidget(_sobelCheckBox);
+    vLayout->addWidget(fileButton);
     vLayout->addLayout(h1Layout);
-    vLayout->addWidget(_laplacianCheckBox);
-    vLayout->addLayout(h2Layout);
 
     groupBox->setLayout(vLayout);
     
@@ -89,59 +52,37 @@ LightFieldCorrectionWidget::LightFieldCorrectionWidget(BaseProcessor* processor,
     setLayout(layout);
 }
 
+void LightFieldCorrectionWidget::autoButtonToggled()
+{
+    if (_radioGroup->button(0)->isChecked())
+    {
+        emit typeChanged(0, _fileName);
+    }
+}
+
+void LightFieldCorrectionWidget::fileButtonToggled()
+{
+    if (_radioGroup->button(1)->isChecked())
+    {
+        emit typeChanged(1, _fileName);
+    }
+}
+
 void LightFieldCorrectionWidget::browseButtonClicked()
 {
-    QString filePath = QFileDialog::getExistingDirectory(this, tr("Select file save directory"), _pathEdit->text());
-    if (filePath.isEmpty() == false)
+    QString fileName = QFileDialog::getOpenFileName(this, tr("Select light field file"), "/", tr("Scan file (*.ndr *.dr *.dcm)"));
+    if (!fileName.isEmpty())
     {
-        _pathEdit->setText(filePath);
+        _pathEdit->setText(fileName);
+        _fileName = fileName;
+        _radioGroup->button(0)->setChecked(false);
+        _radioGroup->button(1)->setChecked(true);
     }
-}
-
-void LightFieldCorrectionWidget::sobelCheckBoxClicked()
-{
-    if (_sobelCheckBox->isChecked())
-    {
-        emit sobelChanged(_sobelFactor);
-    }
-    else
-    {
-        emit sobelChanged(0);
-    }
-}
-
-void LightFieldCorrectionWidget::laplacianCheckBoxClicked()
-{
-    if (_laplacianCheckBox->isChecked())
-    {
-        emit laplacianChanged(_laplacianFactor);
-    }
-    else
-    {
-        emit laplacianChanged(0);
-    }
-}
-
-void LightFieldCorrectionWidget::sobelValueChanged(int value)
-{
-    _sobelFactor = value / 100.0f;
-    _sobelValueLabel->setText(QString::number(_sobelFactor));
-
-    emit sobelChanged(_sobelFactor);
-}
-
-void LightFieldCorrectionWidget::laplacianValueChanged(int value)
-{
-    _laplacianFactor = value / 50.0f;
-    _laplacianValueLabel->setText(QString::number(_laplacianFactor));
-
-    emit laplacianChanged(_laplacianFactor);
 }
 
 LightFieldCorrectionProcessor::LightFieldCorrectionProcessor(QObject* parent)
     : BaseProcessor(true, parent)
-    , _sobelFactor(0.2f)
-    , _laplacianFactor(0.5f)
+    , _type(0)
 {
 
 }
@@ -155,21 +96,14 @@ void LightFieldCorrectionProcessor::initUI()
 {
     LightFieldCorrectionWidget* widget = new LightFieldCorrectionWidget(this);
     _processorWidget = widget;
-    connect(widget, &LightFieldCorrectionWidget::sobelChanged, this, &LightFieldCorrectionProcessor::sobelChanged);
-    connect(widget, &LightFieldCorrectionWidget::laplacianChanged, this, &LightFieldCorrectionProcessor::laplacianChanged);
+    connect(widget, &LightFieldCorrectionWidget::typeChanged, this, &LightFieldCorrectionProcessor::typeChanged);
     emit createWidget(widget);
 }
 
-void LightFieldCorrectionProcessor::sobelChanged(float value)
+void LightFieldCorrectionProcessor::typeChanged(int type, QString fileName)
 {
-    _sobelFactor = value;
-
-    processForView(getGlobalImage());
-}
-
-void LightFieldCorrectionProcessor::laplacianChanged(float value)
-{
-    _laplacianFactor = value;
+    _type = type;
+    _fileName = fileName;
 
     processForView(getGlobalImage());
 }
@@ -187,44 +121,126 @@ void LightFieldCorrectionProcessor::processImage(GeneralImage* srcImage, General
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
 
-    for (int j = 1; j < height - 1; j++)
+    if (_type == 0)
     {
-        for (int i = 1; i < width - 1; i++)
+        // Set new image width as pow of 2
+        int newWidth = int(pow(2, ceil(log2(width))));
+        int newHeight = int(pow(2, ceil(log2(height))));
+
+        // Variance
+        float sigma = width / 16;
+        fftw_complex* kernelOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        generateKernel(kernelOut, newWidth, newHeight, sigma);
+
+        // FFT image
+        fftw_complex* imageIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        fftw_complex* imageOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        memset(imageIn, 0, sizeof(fftw_complex) * newWidth * newHeight);
+        for (int j = 0; j < height; j++)
         {
-            uchar* srcPixel = srcData + j * pitch + i * depth;
-            uchar* dstPixel = dstData + j * pitch + i * depth;
-            for (int n = 0; n < qMin(depth, 3); n++)
+            for (int i = 0; i < width; i++)
             {
-                float value = srcPixel[n];
-                if (_sobelFactor > 0)
-                {
-                    float sobelValue = abs(srcPixel[n - pitch - depth] + 2 * srcPixel[n - pitch] + srcPixel[n - pitch + depth]
-                        - srcPixel[n + pitch - depth] - 2 * srcPixel[n + pitch] - srcPixel[n + pitch + depth])
-                        + abs(srcPixel[n - pitch - depth] + 2 * srcPixel[n - depth] + srcPixel[n + pitch - depth]
-                            - srcPixel[n - pitch + depth] - 2 * srcPixel[n + depth] - srcPixel[n + pitch + depth]);
-                    value += _sobelFactor * sobelValue;
-                }
+                imageIn[j * newWidth + i][0] = srcData[j * pitch + i * depth];
+                imageIn[j * newWidth + i][1] = 0;
+            }
+        }
 
-                if (_laplacianFactor > 0)
-                {
-                    float laplacianValue = srcPixel[n - pitch - depth] + srcPixel[n - pitch] + srcPixel[n - pitch + depth]
-                        + srcPixel[n - depth] + srcPixel[n + depth]
-                        + srcPixel[n + pitch - depth] + srcPixel[n + pitch] + srcPixel[n + pitch + depth]
-                        - 8 * srcPixel[n];
-                    value -= _laplacianFactor * laplacianValue;
-                }
+        fftw_plan pf = fftw_plan_dft_2d(newWidth, newHeight, imageIn, imageOut, FFTW_FORWARD, FFTW_ESTIMATE);
+        fftw_execute(pf);
+        fftw_destroy_plan(pf);
 
-                if (value > 255)
+        // Convolution
+        for (int i = 0; i < newWidth * newHeight; i++)
+        {
+            double a = imageOut[i][0] * kernelOut[i][0] - imageOut[i][1] * kernelOut[i][1];
+            double b = imageOut[i][0] * kernelOut[i][1] + imageOut[i][1] * kernelOut[i][0];
+            imageOut[i][0] = a;
+            imageOut[i][1] = b;
+        }
+
+        fftw_complex* imageOut2 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        pf = fftw_plan_dft_2d(newWidth, newHeight, imageOut, imageOut2, FFTW_BACKWARD, FFTW_ESTIMATE);
+        fftw_execute(pf);
+        fftw_destroy_plan(pf);
+
+        // Shift
+        for (int j = 0; j < newHeight; j++)
+        {
+            for (int i = 0; i < newWidth; i++)
+            {
+                int x = (i + newWidth / 2) % newWidth;
+                int y = (j + newHeight / 2) % newHeight;
+                imageOut[y * width + x][0] = imageOut2[j * width + i][0];
+                imageOut[y * width + x][1] = imageOut2[j * width + i][1];
+            }
+        }
+
+        for (int j = 0; j < height; j++)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                uchar* srcPixel = srcData + j * pitch + i * depth;
+                uchar* dstPixel = dstData + j * pitch + i * depth;
+                float value = imageOut[j * newWidth + i][0] / (newWidth * newHeight);
+                value = srcPixel[0] * 255.0f / value;
+                for (int n = 0; n < qMin(depth, 3); n++)
                 {
-                    dstPixel[n] = 255;
+                    if (value > 255)
+                    {
+                        dstPixel[n] = 255;
+                    }
+                    else if (value < 0)
+                    {
+                        dstPixel[n] = 0;
+                    }
+                    else
+                    {
+                        dstPixel[n] = uchar(value);
+                    }
                 }
-                else if (value < 0)
+            }
+        }
+    }
+    else
+    {
+        std::shared_ptr<BaseImage> lightImage = std::make_shared<GeneralImage>(_fileName);
+        if (lightImage.get())
+        {
+            if (lightImage->isOpenSucceed() == false)
+                return;
+
+            QImage* lightImageEntity = lightImage->getImageEntity();
+            if (lightImage->width() != width || lightImage->height() != height || lightImageEntity->depth() /8 != depth)
+            {
+                QMessageBox::critical(nullptr, QObject::tr("Light field file error"),
+                    QObject::tr("The light field image size does not match the size of opened file!"), QMessageBox::Ok);
+                return;
+            }
+
+            uchar* lightData = lightImageEntity->bits();
+            for (int j = 0; j < height; j++)
+            {
+                for (int i = 0; i < width; i++)
                 {
-                    dstPixel[n] = 0;
-                }
-                else
-                {
-                    dstPixel[n] = value;
+                    uchar* srcPixel = srcData + j * pitch + i * depth;
+                    uchar* dstPixel = dstData + j * pitch + i * depth;
+                    uchar* lightPixel = lightData + j * pitch + i * depth;
+                    for (int n = 0; n < qMin(depth, 3); n++)
+                    {
+                        float value = srcPixel[n] * 255.0f / lightPixel[n];
+                        if (value > 255)
+                        {
+                            dstPixel[n] = 255;
+                        }
+                        else if (value < 0)
+                        {
+                            dstPixel[n] = 0;
+                        }
+                        else
+                        {
+                            dstPixel[n] = uchar(value);
+                        }
+                    }
                 }
             }
         }
@@ -239,102 +255,141 @@ void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage*
     int width, height;
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
-    // Set new image width as pow of 2
-    int newWidth = int(pow(2, ceil(log2(width))));
-    int newHeight = int(pow(2, ceil(log2(height))));
-
-    float maxValue = srcImage->getMaxValue();
-    float minValue = srcImage->getMinValue();
-    float variable;
-    if (maxValue != minValue)
+    if (_type == 0)
     {
-        variable = 255.0f / (maxValue - minValue);
+        // Set new image width as pow of 2
+        int newWidth = int(pow(2, ceil(log2(width))));
+        int newHeight = int(pow(2, ceil(log2(height))));
+
+        float maxValue = srcImage->getMaxValue();
+        float minValue = srcImage->getMinValue();
+
+        // Variance
+        float sigma = width / 16;
+        fftw_complex* kernelOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        generateKernel(kernelOut, newWidth, newHeight, sigma);
+
+        // FFT image
+        fftw_complex* imageIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        fftw_complex* imageOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        memset(imageIn, 0, sizeof(fftw_complex) * newWidth * newHeight);
+        for (int j = 0; j < height; j++)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                imageIn[j * newWidth + i][0] = srcImage->getValue(j * width + i);
+                imageIn[j * newWidth + i][1] = 0;
+            }
+        }
+
+        fftw_plan pf = fftw_plan_dft_2d(newWidth, newHeight, imageIn, imageOut, FFTW_FORWARD, FFTW_ESTIMATE);
+        fftw_execute(pf);
+        fftw_destroy_plan(pf);
+
+        // Convolution
+        for (int i = 0; i < newWidth * newHeight; i++)
+        {
+            double a = imageOut[i][0] * kernelOut[i][0] - imageOut[i][1] * kernelOut[i][1];
+            double b = imageOut[i][0] * kernelOut[i][1] + imageOut[i][1] * kernelOut[i][0];
+            imageOut[i][0] = a;
+            imageOut[i][1] = b;
+        }
+
+        fftw_complex* imageOut2 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
+        pf = fftw_plan_dft_2d(newWidth, newHeight, imageOut, imageOut2, FFTW_BACKWARD, FFTW_ESTIMATE);
+        fftw_execute(pf);
+        fftw_destroy_plan(pf);
+
+        // Shift
+        for (int j = 0; j < newHeight; j++)
+        {
+            for (int i = 0; i < newWidth; i++)
+            {
+                int x = (i + newWidth / 2) % newWidth;
+                int y = (j + newHeight / 2) % newHeight;
+                imageOut[y * width + x][0] = imageOut2[j * width + i][0];
+                imageOut[y * width + x][1] = imageOut2[j * width + i][1];
+            }
+        }
+
+        for (int j = 0; j < height; j++)
+        {
+            for (int i = 0; i < width; i++)
+            {
+                int n = j * width + i;
+                float value = srcImage->getValue(n) / (imageOut[j * newWidth + i][0] / (newWidth * newHeight));
+                dstImage->setValue(n, value);
+            }
+        }
+
+        fftw_free(kernelOut);
+        fftw_free(imageIn);
+        fftw_free(imageOut);
+        fftw_free(imageOut2);
+
+        float newMax = dstImage->getValue(0);
+        float newMin = dstImage->getValue(0);
+        for (int i = 0; i < width * height; i++)
+        {
+            float value = dstImage->getValue(i);
+            if (newMax < value)
+            {
+                newMax = value;
+            }
+            if (newMin > value)
+            {
+                newMin = value;
+            }
+        }
+        float variable;
+        if (newMax != newMin)
+        {
+            variable = 255.0f / (newMax - newMin);
+        }
+        else
+        {
+            variable = 0.0f;
+        }
+        for (int i = 0; i < width * height; i++)
+        {
+            float value = dstImage->getValue(i);
+            dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = uchar((value - newMin) * variable);
+        }
     }
     else
     {
-        variable = 0.0f;
-    }
-
-    // Variance
-    float sigma = width / 16;
-    float* kernel = new float[newWidth * newHeight];
-    getGaussianArray(kernel, newWidth, newHeight, sigma);
-
-    // Kernel
-    fftw_complex* kernelIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
-    fftw_complex* kernelOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
-    for (int i = 0; i < newWidth * newHeight; i++)
-    {
-        kernelIn[i][0] = kernel[i];
-        kernelIn[i][1] = 0;
-    }
-    fftw_plan pf = fftw_plan_dft_2d(newWidth, newHeight, kernelIn, kernelOut, FFTW_FORWARD, FFTW_ESTIMATE);
-    fftw_execute(pf);
-    fftw_destroy_plan(pf);
-
-    delete[] kernel;
-
-    // FFT
-    fftw_complex* imageIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
-    fftw_complex* imageOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
-    memset(imageIn, 0, sizeof(fftw_complex) * newWidth * newHeight);
-    for (int j = 0; j < height; j++)
-    {
-        for (int i = 0; i < width; i++)
+        for (int j = 0; j < height; j++)
         {
-            imageIn[j * newWidth + i][0] = srcImage->getValue(j * width + i);
-            imageIn[j * newWidth + i][1] = 0;
+            for (int i = 0; i < width; i++)
+            {
+                int n = j * width + i;
+                float value = srcImage->getValue(n);
+                dstImage->setValue(n, value);
+            }
         }
     }
-
-    pf = fftw_plan_dft_2d(newWidth, newHeight, imageIn, imageOut, FFTW_FORWARD, FFTW_ESTIMATE);
-    fftw_execute(pf);
-    fftw_destroy_plan(pf);
-
-    // Convolution
-    for (int i = 0; i < newWidth * newHeight; i++)
-    {
-        double a = imageOut[i][0] * kernelOut[i][0] - imageOut[i][1] * kernelOut[i][1];
-        double b = imageOut[i][0] * kernelOut[i][1] + imageOut[i][1] * kernelOut[i][0];
-        imageOut[i][0] = a;
-        imageOut[i][1] = b;
-    }
-
-    fftw_complex* imageOut2 = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
-    pf = fftw_plan_dft_2d(newWidth, newHeight, imageOut, imageOut2, FFTW_BACKWARD, FFTW_ESTIMATE);
-    fftw_execute(pf);
-    fftw_destroy_plan(pf);
-
-    // Shift
-    for (int j = 0; j < newHeight; j++)
-    {
-        for (int i = 0; i < newWidth; i++)
-        {
-            int x = (i + newWidth / 2) % newWidth;
-            int y = (j + newHeight / 2) % newHeight;
-            imageOut[y * width + x][0] = imageOut2[j * width + i][0];
-            imageOut[y * width + x][1] = imageOut2[j * width + i][1];
-        }
-    }
-
-    for (int j = 0; j < height; j++)
-    {
-        for (int i = 0; i < width; i++)
-        {
-            int n = j * width + i;
-            float value = imageOut[j * newWidth + i][0] / (newWidth * newHeight);
-            dstImage->setValue(n, value);
-            dstByteImage[3 * n] = dstByteImage[3 * n + 1] = dstByteImage[3 * n + 2] = uchar((value - minValue) * variable);
-        }
-    }
-
-    fftw_free(kernelIn);
-    fftw_free(kernelOut);
-    fftw_free(imageIn);
-    fftw_free(imageOut);
-    fftw_free(imageOut2);
 
     dstImage->copyByteToImage();
+}
+
+void LightFieldCorrectionProcessor::generateKernel(fftw_complex* kernel, int kernelWidth, int kernelHeight, float sigma)
+{
+    float* kernelArray = new float[kernelWidth * kernelHeight];
+    getGaussianArray(kernelArray, kernelWidth, kernelHeight, sigma);
+
+    // Kernel
+    fftw_complex* kernelIn = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * kernelWidth * kernelHeight);
+    for (int i = 0; i < kernelWidth * kernelHeight; i++)
+    {
+        kernelIn[i][0] = kernelArray[i];
+        kernelIn[i][1] = 0;
+    }
+    fftw_plan pf = fftw_plan_dft_2d(kernelWidth, kernelHeight, kernelIn, kernel, FFTW_FORWARD, FFTW_ESTIMATE);
+    fftw_execute(pf);
+    fftw_destroy_plan(pf);
+
+    delete[] kernelArray;
+    fftw_free(kernelIn);
 }
 
 void LightFieldCorrectionProcessor::getGaussianArray(float* kernel, int width, int height, float sigma)

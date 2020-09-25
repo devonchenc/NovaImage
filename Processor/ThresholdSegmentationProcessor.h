@@ -18,7 +18,7 @@ public:
 
     void setOTSUThreshold(int threshold);
 
-public slots:
+private slots:
     void valueChanged(int value);
 
     void autoCheckBoxClicked();

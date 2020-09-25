@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fftw3.h>
+
 #include "../Widget/ProcessorBaseWidget.h"
 #include "BaseProcessor.h"
 
@@ -19,32 +21,22 @@ public:
     LightFieldCorrectionWidget(BaseProcessor* processor, QWidget* parent = nullptr);
 
 public slots:
-    void laplacianCheckBoxClicked();
-    void sobelCheckBoxClicked();
-
-    void laplacianValueChanged(int value);
-    void sobelValueChanged(int value);
 
 private slots:
+    void autoButtonToggled();
+
+    void fileButtonToggled();
+
     void browseButtonClicked();
 
 signals:
-    void sobelChanged(float value);
-    void laplacianChanged(float value);
+    void typeChanged(int type, QString fileName);
 
 private:
     QButtonGroup* _radioGroup;
     QLineEdit* _pathEdit;
 
-    QCheckBox* _sobelCheckBox;
-    QSlider* _sobelSlider;
-    QLabel* _sobelValueLabel;
-    QCheckBox* _laplacianCheckBox;
-    QSlider* _laplacianSlider;
-    QLabel* _laplacianValueLabel;
-
-    float _sobelFactor;
-    float _laplacianFactor;
+    QString _fileName;
 };
 
 class LightFieldCorrectionProcessor : public BaseProcessor
@@ -58,9 +50,7 @@ public:
     void initUI() override;
 
 public slots:
-    void sobelChanged(float value);
-
-    void laplacianChanged(float value);
+    void typeChanged(int type, QString fileName);
 
 protected:
     void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
@@ -68,9 +58,11 @@ protected:
     void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
+    void generateKernel(fftw_complex* kernelOut, int kernelWidth, int kernelHeight, float sigma);
+
     void getGaussianArray(float* kernel, int width, int height, float sigma);
 
 private:
-    float _sobelFactor;
-    float _laplacianFactor;
+    int _type;
+    QString _fileName;
 };

@@ -17,7 +17,7 @@ public:
 
     void reset() override;
 
-public slots:
+private slots:
     void gammaValueChanged(int value);
 
 signals:

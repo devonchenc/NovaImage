@@ -58,8 +58,8 @@ CurvesWidget::CurvesWidget(QWidget* parent)
 
     _curveRadio = new QRadioButton(tr("&Curve"));
     _linearRadio = new QRadioButton(tr("&Line"));
-    connect(_curveRadio, &QRadioButton::toggled, this, &CurvesWidget::toggleCurveRadio);
-    connect(_linearRadio, &QRadioButton::toggled, this, &CurvesWidget::toggleLinearRadio);
+    connect(_curveRadio, &QRadioButton::toggled, this, &CurvesWidget::curveRadioToggled);
+    connect(_linearRadio, &QRadioButton::toggled, this, &CurvesWidget::linearRadioToggled);
     _curveRadio->setChecked(true);
     QVBoxLayout* vbox = new QVBoxLayout;
     vbox->addWidget(_curveRadio);
@@ -150,7 +150,7 @@ void CurvesWidget::applyButtonClicked()
     reset();
 }
 
-void CurvesWidget::toggleCurveRadio()
+void CurvesWidget::curveRadioToggled()
 {
     if (_square && _curveRadio->isChecked())
     {
@@ -158,7 +158,7 @@ void CurvesWidget::toggleCurveRadio()
     }
 }
 
-void CurvesWidget::toggleLinearRadio()
+void CurvesWidget::linearRadioToggled()
 {
     if (_square && _linearRadio->isChecked())
     {
