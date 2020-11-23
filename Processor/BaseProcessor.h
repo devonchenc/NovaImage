@@ -66,5 +66,6 @@ protected:
 private:
     static BaseProcessor* _currentProcessor;
 
+    // Indicates whether it is a temporary processor
     bool _temporary;
 };

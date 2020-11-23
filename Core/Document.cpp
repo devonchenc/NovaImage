@@ -89,7 +89,7 @@ bool Document::openFile(const QString& fileName)
 
     initViewWindowWidthAndLevel();
 
-    applyImageWidthAndLevel(true);
+    applyImageWidthAndLevel();
 
     getAxialView()->resetMatrix();
     getCoronalView()->resetMatrix();
