@@ -119,6 +119,7 @@ public slots:
     void brightnessAndContrast();
     void thresholdSegmentation();
     void equalization();
+    void rainbow();
     void enhancement();
     void lightFieldCorrection();
 
@@ -152,6 +153,7 @@ private:
     QMenu* _viewMenu;
     QMenu* _processingMenu;
     QMenu* _intensityMenu;
+    QMenu* _lookupTableMenu;
     QMenu* _helpMenu;
 
     QAction* _openAction;
@@ -178,6 +180,8 @@ private:
     QAction* _gammaTransformationAction;
     QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
+    QAction* _LUT_rainbowAction;
+    QAction* _LUT_seismicAction;
     QAction* _enhancementAction;
     QAction* _lightFieldCorrectionAction;
 

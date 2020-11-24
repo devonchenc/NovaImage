@@ -217,8 +217,16 @@ void MainWindow::createActions()
     _gammaTransformationAction = new QAction(tr("&Gamma Transformation"), this);
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
+    _LUT_rainbowAction = new QAction(tr("&Rainbow"), this);
+    _LUT_rainbowAction->setCheckable(true);
+    _LUT_seismicAction = new QAction(tr("&Seismic"), this);
+    _LUT_seismicAction->setCheckable(true);
     _enhancementAction = new QAction(tr("Image &Enhancement"), this);
     _lightFieldCorrectionAction = new QAction(tr("&Light Field Correction"), this);
+
+    QActionGroup* LUTGroup = new QActionGroup(this);
+    LUTGroup->addAction(_LUT_rainbowAction);
+    LUTGroup->addAction(_LUT_seismicAction);
 
     _userGuideAction = new QAction(tr("&User's Guide"));
     _userGuideAction->setIcon(QIcon(":/icon/svg/guide.svg"));
@@ -265,6 +273,11 @@ void MainWindow::createActions()
     _intensityMenu->addAction(_gammaTransformationAction);
     _intensityMenu->addSeparator();
     _intensityMenu->addAction(_equalizationAction);
+    _intensityMenu->addSeparator();
+    _lookupTableMenu = _intensityMenu->addMenu(tr("&Lookup Table"));
+    _lookupTableMenu->addAction(_LUT_rainbowAction);
+    _lookupTableMenu->addAction(_LUT_seismicAction);
+
     _processingMenu->addSeparator();
     _processingMenu->addAction(_thresholdSegmentationAction);
     _processingMenu->addSeparator();
@@ -298,6 +311,7 @@ void MainWindow::createActions()
     connect(_brightnessAndContrastAction, &QAction::triggered, this, &MainWindow::brightnessAndContrast);
     connect(_thresholdSegmentationAction, &QAction::triggered, this, &MainWindow::thresholdSegmentation);
     connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
+    connect(_LUT_rainbowAction, &QAction::triggered, this, &MainWindow::rainbow);
     connect(_enhancementAction, &QAction::triggered, this, &MainWindow::enhancement);
     connect(_lightFieldCorrectionAction, &QAction::triggered, this, &MainWindow::lightFieldCorrection);
 
@@ -836,6 +850,11 @@ void MainWindow::equalization()
 {
     _imageProcessingDockWidget->raise();
     _doc->equalization();
+}
+
+void MainWindow::rainbow()
+{
+
 }
 
 void MainWindow::enhancement()
