@@ -16,7 +16,7 @@ LayoutManager::LayoutManager(QWidget* parent)
     , _volumeView(nullptr)
     , _gridLayout(new QGridLayout)
 {
-
+    _gridLayout->setContentsMargins(0, 0, 0, 0);
 }
 
 void LayoutManager::setWidget(QWidget* axial, QWidget* coronal, QWidget* sagittal, QWidget* volume)
