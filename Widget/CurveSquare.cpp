@@ -243,19 +243,19 @@ void CurveSquare::paintBackground()
     switch (_channel)
     {
     case CURVE_CHANNEL_GRAY:
-        color = QColor(0, 0, 0);
+        color = Qt::black;
         break;
     case CURVE_CHANNEL_RED:
-        color = QColor(255, 0, 0);
+        color = Qt::red;
         break;
     case CURVE_CHANNEL_GREEN:
-        color = QColor(0, 255, 0);
+        color = Qt::green;
         break;
     case CURVE_CHANNEL_BLUE:
-        color = QColor(0, 0, 255);
+        color = Qt::blue;
         break;
     default:
-        color = QColor(0, 0, 0);
+        color = Qt::black;
         break;
     }
 

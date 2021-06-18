@@ -101,7 +101,7 @@ void View::paintEvent(QPaintEvent*)
     if (_view->hasFocus())
     {
         QPainter painter(this);
-        painter.setPen(QPen(QColor(qRgb(255, 0, 0)), 3));
+        painter.setPen(QPen(Qt::red, 3));
         painter.drawRect(rect());
     }
 }

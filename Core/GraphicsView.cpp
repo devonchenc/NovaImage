@@ -113,10 +113,10 @@ void GraphicsView::applyZoomValue()
 {
     _zoomFactor = qMax(0, _zoomFactor);
     _zoomFactor = qMin(_zoomFactor, MAX_ZOOM);
-    qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
+    qreal ratio = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
 
     QTransform transform;
-    transform.scale(scale, scale);
+    transform.scale(ratio, ratio);
     setTransform(transform);
 }
 
