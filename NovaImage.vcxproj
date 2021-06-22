@@ -188,8 +188,8 @@
     <LibraryPath>C:\Program Files\DCMTK\lib;C:\Program Files\FFTW;D:\opencv\build\x64\vc15\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>C:\Program Files\DCMTK\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files\DCMTK\lib;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <IncludePath>C:\Program Files\DCMTK\include;C:\Program Files\FFTW;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Program Files\DCMTK\lib;C:\Program Files\FFTW;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
   </PropertyGroup>
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt_defaults.props')">
     <Import Project="$(QtMsBuild)\qt_defaults.props" />
@@ -231,7 +231,7 @@
       <SubSystem>Windows</SubSystem>
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>dcmtk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>dcmtk.lib;libfftw3-3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
