@@ -5,15 +5,15 @@
 
 typedef QVector<Peg> PegArray;
 
-#define NONE_PEG				-1
-#define PEG_DISTANCE			3
+#define NONE_PEG                -1
+#define PEG_DISTANCE            3
 
 #ifndef CURVE_CHANNEL
 #define CURVE_CHANNEL
-#define CURVE_CHANNEL_GRAY		0
-#define CURVE_CHANNEL_RED		1
-#define CURVE_CHANNEL_GREEN		2
-#define CURVE_CHANNEL_BLUE		3
+#define CURVE_CHANNEL_GRAY      0
+#define CURVE_CHANNEL_RED       1
+#define CURVE_CHANNEL_GREEN     2
+#define CURVE_CHANNEL_BLUE      3
 #endif
 
 class CurveSquare : public QWidget
@@ -38,11 +38,11 @@ public:
     // Generate histogram
     bool generateHistogram(uint* pArray);
 
-    int getSize()		{ return _size; }
+    int getSize()       { return _size; }
 
-    int getArraySize()	{ return _arraySize; }
+    int getArraySize()  { return _arraySize; }
 
-    int getChannel()	{ return _channel; }
+    int getChannel()    { return _channel; }
 
     void setChannel(int channel);
 
@@ -113,7 +113,7 @@ private:
     bool prepareAddPeg(int xCoordinate);
 
     // Add peg
-    int	addPeg(const QPoint& point);
+    int addPeg(const QPoint& point);
 
     // Repaint
     void repaintPeg();
@@ -164,7 +164,7 @@ private:
     int _channel;
 
     // Index of active peg
-    int	_activePegIndex;
+    int _activePegIndex;
 
     // Active peg array
     PegArray* _activePegs;

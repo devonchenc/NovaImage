@@ -103,7 +103,7 @@ void ToolBar::createButton()
     _measurementButton->setPopupMode(QToolButton::MenuButtonPopup);
 
     _undoButton = new QToolButton;
-//	_undoButton->setPopupMode(QToolButton::MenuButtonPopup);
+//  _undoButton->setPopupMode(QToolButton::MenuButtonPopup);
 
     _restoreButton = new QToolButton;
 
@@ -175,7 +175,7 @@ void ToolBar::createAction()
     _flipVerticalAction->setCheckable(true);
     _flipVerticalAction->setIcon(QIcon(":/icon/svg/flip_vertical.svg"));
 
-    _rotate90CWAction = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this);	//0x00B0:degree sign
+    _rotate90CWAction = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CW"), this); //0x00B0:degree sign
     _rotate90CWAction->setIcon(QIcon(":/icon/svg/rotate_cw.svg"));
     _rotate90CCWAction = new QAction(tr("Rotate 90 ") + QString(QChar(0x00B0)) + tr(" CCW"), this);
     _rotate90CCWAction->setIcon(QIcon(":/icon/svg/rotate_ccw.svg"));

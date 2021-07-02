@@ -64,7 +64,7 @@ public:
 
     void saveGraphicsItem(QDomDocument& doc, QDomElement& root);
 
-	void loadGraphicsItem(const QDomElement& sceneElem);
+    void loadGraphicsItem(const QDomElement& sceneElem);
 
     void showPlotDialog(QGraphicsLineItem* lineItem);
 

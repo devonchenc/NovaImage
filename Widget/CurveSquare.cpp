@@ -466,7 +466,7 @@ void CurveSquare::mouseMoveEvent(QMouseEvent* event)
         if ((ptDummy.x() > pegs[_activePegIndex - 1].x() + PEG_DISTANCE) &&
                 (ptDummy.x() < pegs[_activePegIndex + 1].x() - PEG_DISTANCE))
         {
-            int flag = 0;				// Whether a peg merge event has occurred
+            int flag = 0;           // Whether a peg merge event has occurred
 
             pegs[_activePegIndex].setPoint(ptDummy);
 

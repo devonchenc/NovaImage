@@ -108,7 +108,7 @@ void BaseProcessor::process()
             monoImage->setViewType(viewType);
         }
     }
-//   	else if (typeid(*pImage) == typeid(RegionImage))
+//      else if (typeid(*pImage) == typeid(RegionImage))
 //    {
 //        RegionImage* pRegionImage = dynamic_cast<RegionImage*>(pImage);
 //        assert(pRegionImage);

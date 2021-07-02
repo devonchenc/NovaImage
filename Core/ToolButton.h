@@ -10,20 +10,20 @@ class ToolButton : public QToolButton
 
 public:
     ToolButton(QWidget* parent = nullptr);
-    virtual	~ToolButton();
+    virtual ~ToolButton();
 
 public:
     void setIconByName(const QString& fileName);
 
     void setCurrentAction(QAction* action);
 
-    QAction* currentAction()		{ return _currentAction; }
+    QAction* currentAction()        { return _currentAction; }
 
     void activeAction(QAction* action, bool leftMouseButton = true);
 
     void setMouseHandler(MouseHandler* handler);
 
-    MouseHandler* mouseHandler()	{ return _handler; }
+    MouseHandler* mouseHandler()    { return _handler; }
 
     static void setLeftMouseButton(ToolButton* toolButton);
 

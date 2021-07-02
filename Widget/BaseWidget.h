@@ -16,10 +16,10 @@ public:
     virtual void reset() {}
 
     // Set name
-    void setName(QString name)	{ _name = name; }
+    void setName(QString name)  { _name = name; }
 
     // Get name
-    QString getName()			{ return _name; }
+    QString getName()           { return _name; }
 
 protected:
     // Widget name

@@ -95,7 +95,7 @@ public:
 
     void setMinimumValue(float minValue) { _minValue = minValue; }
 
-    float getMaximumValue()	const { return _maxValue; }
+    float getMaximumValue() const { return _maxValue; }
 
     void setMaximumValue(float maxValue) { _maxValue = maxValue; }
 

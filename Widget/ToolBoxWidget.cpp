@@ -237,7 +237,7 @@ QWidget* ToolBoxWidget::createCellWidget(const QString& text, DiagramItem::Diagr
 
     QGridLayout* layout = new QGridLayout;
     layout->addWidget(button, 0, 0, Qt::AlignHCenter);
-    //	layout->addWidget(new QLabel(text), 1, 0, Qt::AlignCenter);
+    // layout->addWidget(new QLabel(text), 1, 0, Qt::AlignCenter);
 
     QWidget* widget = new QWidget;
     widget->setLayout(layout);

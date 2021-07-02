@@ -11,11 +11,11 @@
 #include "../Processor/HistogramProcessor.h"
 #include "../Image/BaseImage.h"
 
-#define DRAG_NONE		-1
-#define DRAG_CURSOR0	0
-#define DRAG_CURSOR1	1
-#define DRAG_CURSOR2	2
-#define DRAG_HISTOGRAM	3
+#define DRAG_NONE       -1
+#define DRAG_CURSOR0    0
+#define DRAG_CURSOR1    1
+#define DRAG_CURSOR2    2
+#define DRAG_HISTOGRAM  3
 
 HistogramWidget::HistogramWidget(QWidget* parent)
     : QWidget(parent)
@@ -476,10 +476,10 @@ void HistogramWidget::allocateMemory(int oldWidth)
         memset(_selectTemp, 0, sizeof(bool) * histogramWidth);
     }
 
-    //	if (m_pWindowProcessor)
-    //	{
-    //		m_pWindowProcessor->SetWindowArray(m_pSelect, &m_nHistogramWidth);
-    //	}
+    // if (m_pWindowProcessor)
+    // {
+    //      m_pWindowProcessor->SetWindowArray(m_pSelect, &m_nHistogramWidth);
+    // }
 }
 
 void HistogramWidget::copySelectArray(bool* array, int arrayNum)

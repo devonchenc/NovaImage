@@ -2,8 +2,8 @@
 
 #include <QWidget>
 
-#define HS_MARGIN				10
-#define CURSOR_SIZE				9
+#define HS_MARGIN           10
+#define CURSOR_SIZE         9
 
 QT_BEGIN_NAMESPACE
 class QPushButton;

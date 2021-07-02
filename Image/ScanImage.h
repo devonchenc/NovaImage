@@ -31,7 +31,7 @@ public:
 
 public:
     // Get reference of DataHeader
-    DataHeader& getDataHeader()		{ return _dataHeader; }
+    DataHeader& getDataHeader()     { return _dataHeader; }
 
 protected:
     bool saveAsDcm(const QString& fileName) override;

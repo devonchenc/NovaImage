@@ -29,7 +29,7 @@ public:
 
     virtual float getValueWithType(int type, int index) const { Q_UNUSED(type); return getValue(index); }
 
-    virtual bool hasPixelSpacing()	{ return false; }
+    virtual bool hasPixelSpacing()  { return false; }
 
     virtual float horzPixelSpacing() { return 0; }
     virtual float vertPixelSpacing() { return 0; }
@@ -64,15 +64,15 @@ public:
 
     float windowLevel() { return _windowLevel; }
 
-    bool isOpenSucceed()			{ return _openSucceed; }
+    bool isOpenSucceed()            { return _openSucceed; }
 
-    QString getPathName() const		{ return _pathName; }
+    QString getPathName() const     { return _pathName; }
 
     // Get each channel's pixel array
-    uint* getGrayPixelArray()		{ return _grayPixelNumber; }
-    uint* getRedPixelArray()		{ return _redPixelNumber; }
-    uint* getGreenPixelArray()		{ return _greenPixelNumber; }
-    uint* getBluePixelArray()		{ return _bluePixelNumber; }
+    uint* getGrayPixelArray()       { return _grayPixelNumber; }
+    uint* getRedPixelArray()        { return _redPixelNumber; }
+    uint* getGreenPixelArray()      { return _greenPixelNumber; }
+    uint* getBluePixelArray()       { return _bluePixelNumber; }
 
     QRgb getPixel(const QPoint& position) const;
     QRgb getPixel(int x, int y) const;

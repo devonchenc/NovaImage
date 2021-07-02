@@ -198,21 +198,21 @@ void DICOMImage::readMoreInfo(DcmDataset* dataset)
     dataset->findAndGetString(DCM_DistanceSourceToPatient, tagValue);
     if (tagValue)
     {
-        //	m_DataHeader.MESOD = float(atof(tagValue));
+        // m_DataHeader.MESOD = float(atof(tagValue));
     }
 
     tagValue = nullptr;
     dataset->findAndGetString(DCM_DistanceSourceToDetector, tagValue);
     if (tagValue)
     {
-        //	m_DataHeader.MESOD = float(atof(tagValue));
+        // m_DataHeader.MESOD = float(atof(tagValue));
     }
 
     tagValue = nullptr;
     dataset->findAndGetString(DCM_DetectorElementSize, tagValue);
     if (tagValue)
     {
-        //	m_DataHeader.MEUnitWidth = float(atof(tagValue));
+        // m_DataHeader.MEUnitWidth = float(atof(tagValue));
     }
 
     tagValue = nullptr;

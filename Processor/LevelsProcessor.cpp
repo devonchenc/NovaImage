@@ -84,7 +84,7 @@ void LevelsProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
                 uchar value = uchar((srcValue - _bottom) * variable1);
                 byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = value;
             }
-            else	// if mid is not equal to 1
+            else // if mid is not equal to 1
             {
                 float dstValue;
                 if (srcValue < (_bottom + _top) / 2.0f)

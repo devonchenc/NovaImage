@@ -49,7 +49,7 @@ protected:
 
     virtual void processImage(MonoImage*, MonoImage*) {}
 
-    //	virtual void ProcessRegionImage(RegionImage* pImage);
+    // virtual void ProcessRegionImage(RegionImage* pImage);
 
     // Convert float data to uchar data
     void convertToByte(float* array, int width, int height, float minValue, float maxValue, uchar* pByte);

@@ -42,7 +42,7 @@ signals:
 public slots:
     void buttonGroupClicked(int id);
 
-    //	void textButtonTriggered();
+    // void textButtonTriggered();
     void lineColorButtonTriggered();
     void enableFillColor(int state);
     void fillColorButtonTriggered();

@@ -3,8 +3,8 @@
 #include <QGraphicsView>
 #include <QWheelEvent>
 
-#define MAX_ZOOM		1200
-#define ZOOM_STEP		200
+#define MAX_ZOOM        1200
+#define ZOOM_STEP       200
 
 class View;
 class MagnifierWidget;

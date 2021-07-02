@@ -204,7 +204,7 @@ void RecentFiles::updateRecentFiles(QSettings& settings)
         if (i < recentFileList.count() && i < numOfRecentFiles)
         {
             QString text = strippedName(recentFileList[i]);
-            //	_recentFileActions[j]->setText(text);
+            // _recentFileActions[j]->setText(text);
             _recentFileActions[i]->setText(QString::number(i + 1) + " " + recentFileList[i]);
             _recentFileActions[i]->setData(recentFileList[i]);
 

@@ -4,10 +4,10 @@
 
 #ifndef CURVE_CHANNEL
 #define CURVE_CHANNEL
-#define CURVE_CHANNEL_GRAY		0
-#define CURVE_CHANNEL_RED		1
-#define CURVE_CHANNEL_GREEN		2
-#define CURVE_CHANNEL_BLUE		3
+#define CURVE_CHANNEL_GRAY      0
+#define CURVE_CHANNEL_RED       1
+#define CURVE_CHANNEL_GREEN     2
+#define CURVE_CHANNEL_BLUE      3
 #endif
 
 class CurvesProcessor : public BaseProcessor

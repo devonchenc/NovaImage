@@ -37,7 +37,7 @@ public:
     void setProcessingValue(int type, int index, float value) override;
 
     // Find top and bottom value in data
-    //	bool findTopAndBottom(Type* pData, int num);
+    // bool findTopAndBottom(Type* pData, int num);
     bool findTopAndBottom() override;
 
     // Allocate memory

@@ -20,7 +20,7 @@
 #include "../Diagram/DiagramImageQualityItem.h"
 #include "../Diagram/DiagramAngleItem.h"
 
-#define MIN_SIZE		10
+#define MIN_SIZE        10
 
 GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
     : QGraphicsScene(parent)
@@ -81,8 +81,8 @@ void GraphicsScene::enableFillColor(bool enable)
         }
         else if (p->type() == DiagramLineItem::Type)
         {
-            //	DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(p);
-            //	item->setPointPen(QPen(color));
+            // DiagramLineItem* item = qgraphicsitem_cast<DiagramLineItem*>(p);
+            // item->setPointPen(QPen(color));
         }
     }
 }

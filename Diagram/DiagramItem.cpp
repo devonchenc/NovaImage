@@ -216,7 +216,7 @@ void DiagramItem::statisticsInfo()
     {
         _info = QString(tr("Area=%1 px")).arg(totalPixelCount);
     }
-    _info += QString(QChar(0x00B2));	// 0x00B2:superscript 2
+    _info += QString(QChar(0x00B2));    // 0x00B2:superscript 2
 
     if (vecValue.size() > 1)
     {

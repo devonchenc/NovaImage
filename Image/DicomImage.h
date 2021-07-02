@@ -38,7 +38,7 @@ private:
 private:
     float _horzPixelSpacing;
     float _vertPixelSpacing;
-    float _imagerPixelSpacing;		// Detector pixel size
+    float _imagerPixelSpacing;      // Detector pixel size
 
     float _rescaleSlope;
     float _rescaleIntercept;
