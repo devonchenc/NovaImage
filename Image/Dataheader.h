@@ -85,16 +85,21 @@ public:
     float   DetectorRadius;     // CL扫描探测器运动半径
     float   StageRadius;        // CL扫描样品台运动半径
     float   SourceRadius;       // CL扫描射线源运动半径
+    float   PCBThickness;       // PCB厚度
+    float   HeightOnPCB;        // 物体在PCB板上高度
+    float   HeightUnderPCB;     // 物体在PCB板下高度
+    float   Reserved7;
+    float   Reserved8;
 
     float   Pitch;              // Pitch of Spiral scan
     int     RotaionNumber;      // Number of turns of Spiral scan
     int     LimitedScanAngle;   // Angle of limited angle scan
     float   ShortScanDistance;  // Detector offset of LFOV scan
 
-    float   Reserved7;
-    float   Reserved8;
     float   Reserved9;
     float   Reserved10;
+    float   Reserved11;
+    float   Reserved12;
 
     // Reconstruct
     int     Algorithm;          // 0:None, 1:FDK, 2:Iteration
@@ -112,10 +117,10 @@ public:
     float   DetectorRandomMoveFactor;
     int     OutOfView;
     float   Gamma;
-    float   Reserved11;
-    float   Reserved12;
     float   Reserved13;
     float   Reserved14;
+    float   Reserved15;
+    float   Reserved16;
 
     // Image cropping parameters
     int     CutOrNot;
@@ -125,7 +130,6 @@ public:
     int     CutEndY;
     int     OriginWidth;
     int     OriginHeight;
-    float   Reserved16;
     float   Reserved17;
     float   Reserved18;
 
