@@ -80,24 +80,25 @@ public:
     float   CCDDetectorOffset;
     float   SourceOffset;
     float   TROffset;
+    float   Reserved7;
+    float   Reserved8;
 
     float   TiltAngle;          // CL扫描倾斜角度
     float   DetectorRadius;     // CL扫描探测器运动半径
     float   StageRadius;        // CL扫描样品台运动半径
     float   SourceRadius;       // CL扫描射线源运动半径
     float   PCBThickness;       // PCB厚度
+    float   ObjectCenterHeight; // 物体中心高度
     float   HeightOnPCB;        // 物体在PCB板上高度
     float   HeightUnderPCB;     // 物体在PCB板下高度
-    float   Reserved7;
-    float   Reserved8;
+    float   ObjectType;
+    float   Reserved9;
+    float   Reserved10;
 
     float   Pitch;              // Pitch of Spiral scan
     int     RotaionNumber;      // Number of turns of Spiral scan
     int     LimitedScanAngle;   // Angle of limited angle scan
     float   ShortScanDistance;  // Detector offset of LFOV scan
-
-    float   Reserved9;
-    float   Reserved10;
     float   Reserved11;
     float   Reserved12;
 
@@ -117,6 +118,7 @@ public:
     float   DetectorRandomMoveFactor;
     int     OutOfView;
     float   Gamma;
+    int     FeedbackAfterRecon;     // 0:No, 1:Yes
     float   Reserved13;
     float   Reserved14;
     float   Reserved15;
@@ -173,7 +175,7 @@ public:
     char	Date[40];           // 操作时间
 
     // Object Information
-    char    ObjectType[40];     // 型号
+    char    ObjectTypeName[40];     // 型号
     char    PartNum[40];        // 零件图号
     char    SerialNum[40];      // 零件编号
     char    LocationNum[40];    // 部位序号
