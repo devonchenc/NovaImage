@@ -146,7 +146,7 @@ void ImageWindowMouseHandler::release(QMouseEvent*)
     _horzOrVert = 0;
 }
 
-void ImageWindowMouseHandler::CalcImageWindow(QPoint point)
+void ImageWindowMouseHandler::CalcImageWindow(QPoint offset)
 {
     BaseImage* image = getGlobalImage();
     if (image == nullptr)
@@ -159,24 +159,24 @@ void ImageWindowMouseHandler::CalcImageWindow(QPoint point)
     float maxValue = image->getMaxValue();
 
     QRect rect = getGlobalActiveView()->rect();
-    if (abs(point.x()) > abs(point.y()) * 1.5f && _horzOrVert != -1)
+    if (abs(offset.x()) > abs(offset.y()) * 1.5f && _horzOrVert != -1)
     {
         // Modify window width
         _horzOrVert = 1;
 
-        float fRatio = float(point.x()) / rect.width() * 2;
+        float fRatio = float(offset.x()) / rect.width() * 2;
         // Define the minimum value of window width
         float threshold = (maxValue - minValue) * 0.01f;
 
         float tempWidth = windowWidth - (maxValue - minValue) * fRatio;
         windowWidth = (tempWidth > threshold) ? tempWidth : threshold;
     }
-    else if(abs(point.y()) > abs(point.x()) * 1.5f && _horzOrVert != 1)
+    else if(abs(offset.y()) > abs(offset.x()) * 1.5f && _horzOrVert != 1)
     {
         // Modify window level
         _horzOrVert = -1;
 
-        float fRatio = float(point.y()) / rect.height() * 2;
+        float fRatio = float(offset.y()) / rect.height() * 2;
         windowLevel += (maxValue - minValue) * fRatio;
     }
 
