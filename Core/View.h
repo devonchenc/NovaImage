@@ -62,6 +62,9 @@ public:
     void slicePlusOne();
     void sliceMinusOne();
 
+    void slicePlus(int plus);
+    void sliceMinus(int minus);
+
     void saveGraphicsItem(QDomDocument& doc, QDomElement& root);
 
     void loadGraphicsItem(const QDomElement& sceneElem);

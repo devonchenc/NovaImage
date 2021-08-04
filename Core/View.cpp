@@ -243,20 +243,58 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
 void View::slicePlusOne()
 {
     BaseImage* image = getGlobalImage();
-    if (image == nullptr || image->slice() <= 1)
+    if (image == nullptr || imageSlice() <= 1)
         return;
 
-    image->setSlice((image->currentSlice() + 1) >= image->slice() ? 0 : (image->currentSlice() + 1));
+    image->setSlice((image->currentSlice() + 1) >= imageSlice() ? 0 : (image->currentSlice() + 1));
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
 void View::sliceMinusOne()
 {
     BaseImage* image = getGlobalImage();
+    if (image == nullptr || imageSlice() <= 1)
+        return;
+
+    image->setSlice((image->currentSlice() - 1) < 0 ? (imageSlice() - 1) : (image->currentSlice() - 1));
+    getGlobalDocument()->applyImageWidthAndLevel();
+}
+
+void View::slicePlus(int plus)
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr || imageSlice() <= 1)
+        return;
+
+    int tempSlice = image->currentSlice() + plus;
+    while (tempSlice >= imageSlice())
+    {
+        tempSlice -= imageSlice();
+    }
+    while (tempSlice < 0)
+    {
+        tempSlice += imageSlice();
+    }
+    image->setSlice(tempSlice);
+    getGlobalDocument()->applyImageWidthAndLevel();
+}
+
+void View::sliceMinus(int minus)
+{
+    BaseImage* image = getGlobalImage();
     if (image == nullptr || image->slice() <= 1)
         return;
 
-    image->setSlice((image->currentSlice() - 1) < 0 ? (image->slice() - 1) : (image->currentSlice() - 1));
+    int tempSlice = image->currentSlice() - minus;
+    while (tempSlice >= imageSlice())
+    {
+        tempSlice -= imageSlice();
+    }
+    while (tempSlice < 0)
+    {
+        tempSlice += imageSlice();
+    }
+    image->setSlice(tempSlice);
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 

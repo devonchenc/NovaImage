@@ -65,6 +65,8 @@ void LayoutManager::singleView(int viewType)
 
     _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 0);
+
+    _gridLayout->setSpacing(2);
 }
 
 void LayoutManager::threeView()
@@ -87,6 +89,8 @@ void LayoutManager::threeView()
 
     _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 1);
+
+    _gridLayout->setSpacing(2);
 }
 
 void LayoutManager::volumeView()
@@ -107,6 +111,8 @@ void LayoutManager::volumeView()
 
     _gridLayout->setColumnStretch(0, 1);
     _gridLayout->setColumnStretch(1, 3);
+
+    _gridLayout->setSpacing(2);
 }
 
 void LayoutManager::removeWidget()

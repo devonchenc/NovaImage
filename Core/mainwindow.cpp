@@ -391,12 +391,10 @@ void MainWindow::createToolWidget()
     ProcessorShellWidget* processorShellWidget = new ProcessorShellWidget();
     _imageProcessingDockWidget = createDockWidget(processorShellWidget);
 
-//    _imageProcessingDockWidget = new QDockWidget(tr("Image Processing"), this);
-//    _vecDockWidget.append(_imageProcessingDockWidget);
     tabifyDockWidget(curveDockWidget, levelDockWidget);
     tabifyDockWidget(levelDockWidget, _imageProcessingDockWidget);
 
-//    curveDockWidget->raise();
+    curveDockWidget->raise();
 }
 
 QDockWidget* MainWindow::createDockWidget(BaseWidget* widget)
