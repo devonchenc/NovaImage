@@ -706,10 +706,6 @@ void ToolBar::showInfoButtonClicked()
     _showAnnotationAction->setChecked(checked);
     _showScaleAction->setChecked(checked);
     _showMeasurementAction->setChecked(checked);
-
-    _showAnnotationAction->toggled(checked);
-    _showScaleAction->toggled(checked);
-    _showMeasurementAction->toggled(checked);
 }
 
 void ToolBar::singleViewActionTriggered()

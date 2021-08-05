@@ -10,6 +10,7 @@ class QMouseEvent;
 class QFile;
 QT_END_NAMESPACE
 
+class View;
 class DiagramLineItem;
 class DiagramAngleItem;
 
@@ -24,7 +25,7 @@ class GraphicsScene : public QGraphicsScene
     Q_OBJECT
 
 public:
-    explicit GraphicsScene(QMenu* itemMenu, QObject* parent = nullptr);
+    explicit GraphicsScene(QMenu* itemMenu, View* parent = nullptr);
     QFont font() const { return _font; }
     QColor textColor() const { return _textColor; }
     QColor itemColor() const { return _fillColor; }
@@ -73,6 +74,8 @@ protected:
     void keyPressEvent(QKeyEvent* keyEvent) override;
 
 private:
+    View* _view;
+
     DiagramItem::DiagramType _itemType;
     QMenu* _itemMenu;
     int _mode;

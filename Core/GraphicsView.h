@@ -66,6 +66,7 @@ private:
 
 private:
     View* _view;
+
     int _zoomFactor;
     QString _strCoord;
     QString _strValue;

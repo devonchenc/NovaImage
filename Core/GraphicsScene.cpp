@@ -22,8 +22,9 @@
 
 #define MIN_SIZE        10
 
-GraphicsScene::GraphicsScene(QMenu* itemMenu, QObject* parent)
+GraphicsScene::GraphicsScene(QMenu* itemMenu, View* parent)
     : QGraphicsScene(parent)
+    , _view(parent)
     , _itemType(DiagramItem::Rect)
     , _itemMenu(itemMenu)
     , _mode(MOVE_ITEM)
@@ -196,7 +197,7 @@ void GraphicsScene::showMeasurement(bool show)
     QList<QGraphicsItem*> itemList = items();
     for (int i = 0; i < itemList.size(); i++)
     {
-        if (itemList.at(i) != getGlobalActiveView()->getPixmapItem())
+        if (itemList.at(i) != _view->getPixmapItem())
         {
             itemList.at(i)->setVisible(show);
         }
