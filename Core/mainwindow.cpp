@@ -56,6 +56,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     _coronalView->setViewType(CORONAL_VIEW);
     _sagittalView->setViewType(SAGITTAL_VIEW);
+    _volumeView->setViewType(VOLUME_VIEW);
 
     initUI();
 
@@ -68,10 +69,6 @@ MainWindow::MainWindow(QWidget* parent)
     _notification = new NotificationLayout(this);
     _recentFiles = new RecentFiles(this);
     _recentFiles->attachToMenuAfterItem(_fileMenu, _printAction, SLOT(openFile(const QString&)));
-}
-
-MainWindow::~MainWindow()
-{
 }
 
 void MainWindow::setActiveView(View* view)

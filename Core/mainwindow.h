@@ -34,7 +34,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow();
+    ~MainWindow() {}
 
 public:
     Document* getDocument() { return _doc; }

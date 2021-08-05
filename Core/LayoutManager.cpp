@@ -96,6 +96,8 @@ void LayoutManager::threeView()
 void LayoutManager::volumeView()
 {
     removeWidget();
+
+    _axialView->show();
     _coronalView->show();
     _sagittalView->show();
     _volumeView->show();

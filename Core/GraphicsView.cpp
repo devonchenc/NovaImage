@@ -122,6 +122,8 @@ void GraphicsView::applyZoomValue()
 
 void GraphicsView::mousePressEvent(QMouseEvent* event)
 {
+    getGlobalWindow()->setActiveView(_view);
+
     MouseHandler::handlePress(event);
 
     QGraphicsView::mousePressEvent(event);
@@ -255,12 +257,13 @@ bool GraphicsView::eventFilter(QObject* obj, QEvent* event)
 
 void GraphicsView::focusInEvent(QFocusEvent*)
 {
-    getGlobalWindow()->setActiveView(_view);
+    //getGlobalWindow()->setActiveView(_view);
     _view->update();
 }
 
 void GraphicsView::focusOutEvent(QFocusEvent*)
 {
+    //getGlobalWindow()->deactiveView(_view);
     _view->update();
 }
 

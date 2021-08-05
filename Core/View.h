@@ -12,6 +12,7 @@ class ImageQualityDialog;
 #define AXIAL_VIEW              0
 #define CORONAL_VIEW            1
 #define SAGITTAL_VIEW           2
+#define VOLUME_VIEW             3
 #endif
 
 #include "GraphicsScene.h"

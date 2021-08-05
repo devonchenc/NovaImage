@@ -9,6 +9,7 @@ class MonoImageProxy;
 #define AXIAL_VIEW              0
 #define CORONAL_VIEW            1
 #define SAGITTAL_VIEW           2
+#define VOLUME_VIEW             3
 #endif
 
 class MonoImage : public BaseImage
@@ -60,7 +61,7 @@ public:
 
     void setViewType(int type) override;
 
-    int viewType() override { return _currentVIewType; }
+    int viewType() override { return _currentViewType; }
 
     QImage* getImageEntity() const override;
 
@@ -90,7 +91,7 @@ protected:
     MonoImageProxy* _coronalProxy;
     MonoImageProxy* _sagittalProxy;
 
-    int _currentVIewType;
+    int _currentViewType;
 
     int _slice;
 
