@@ -193,9 +193,9 @@ void GraphicsView::wheelEvent(QWheelEvent* event)
     if (event->modifiers() & Qt::ControlModifier)
     {
         if (event->angleDelta().y() > 0)
-            zoomIn();
+            getGlobalWindow()->zoomIn();
         else
-            zoomOut();
+            getGlobalWindow()->zoomOut();
 
         event->accept();
     }
