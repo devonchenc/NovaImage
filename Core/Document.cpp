@@ -365,6 +365,20 @@ void Document::fullImageWindow()
     }
 }
 
+void Document::setViewWindowWidthAndLevel(float windowWidth, float windowLevel)
+{
+    if (_mainWindow->isViewLinked())
+    {
+        getAxialView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+        getSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+    }
+    else
+    {
+        getActiveView()->setWindowWidthAndLevel(windowWidth, windowLevel);
+    }
+}
+
 void Document::applyImageWidthAndLevel(bool apply)
 {
     float windowWidth = getActiveView()->windowWidth();
@@ -503,20 +517,6 @@ void Document::initViewWindowWidthAndLevel()
         getAxialView()->setWindowWidthAndLevel(windowWidth, windowLevel);
         getCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
         getSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-    }
-}
-
-void Document::setViewWindowWidthAndLevel(float windowWidth, float windowLevel)
-{
-    if (_mainWindow->isViewLinked())
-    {
-        getAxialView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-        getCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-        getSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
-    }
-    else
-    {
-        getActiveView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
 }
 

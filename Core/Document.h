@@ -66,6 +66,8 @@ public:
 
     void fullImageWindow();
 
+    void setViewWindowWidthAndLevel(float windowWidth, float windowLevel);
+
     void applyImageWidthAndLevel(bool apply = false);
 
     void negativeImage();
@@ -89,7 +91,6 @@ public slots:
 private:
     void initViewWindowWidthAndLevel();
 
-    void setViewWindowWidthAndLevel(float windowWidth, float windowLevel);
 
     View* getActiveView() const;
 

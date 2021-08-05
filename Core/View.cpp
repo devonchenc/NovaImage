@@ -411,7 +411,7 @@ void View::ROIWindow(const QRectF& rect)
         }
     }
 
-    setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+    getGlobalDocument()->setViewWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
