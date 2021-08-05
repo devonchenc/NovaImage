@@ -161,14 +161,17 @@ float ImageDataTemplate<Type>::getProcessingValue(int type, int index)
 {
     if (type == 0)
     {
+        assert((unsigned long)index < _pixelPerSlice);
         return _axialData[index];
     }
     else if (type == 1)
     {
+        assert(index < _width * _slice);
         return _coronalData[index];
     }
     else/* if (type == 2)*/
     {
+        assert(index < _height * _slice);
         return _sagittalData[index];
     }
 }

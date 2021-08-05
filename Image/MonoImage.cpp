@@ -249,10 +249,32 @@ void MonoImage::histogramStatistic()
 
 float MonoImage::getValue(const QPoint& position) const
 {
-    if (position.x() < 0 || position.x() >= _width || position.y() < 0 || position.y() >= _height)
+    if (position.x() < 0 || position.y() < 0)
         return 0;
 
-    int index = position.y() * _width + position.x();
+    int index;
+    if (_currentViewType == AXIAL_VIEW)
+    {
+        if (position.x() >= _width  || position.y() >= _height)
+            return 0;
+
+        index = position.y() * _width + position.x();
+    }
+    else if (_currentViewType == CORONAL_VIEW)
+    {
+        if (position.x() >= _width || position.y() >= _slice)
+            return 0;
+
+        index = position.y() * _width + position.x();
+    }
+    else/* if (_currentType == SAGITTAL_VIEW)*/
+    {
+        if (position.x() >= _height || position.y() >= _slice)
+            return 0;
+
+        index = position.y() * _height + position.x();
+    }
+
     return _imageData->getProcessingValue(_currentViewType, index);
 }
 

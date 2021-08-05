@@ -344,37 +344,6 @@ void Document::loadGraphicsItems()
     }
 }
 
-void Document::ROIWindow(const QRectF& rect)
-{
-    if (_image == nullptr)
-        return;
-
-    QRectF intersectedRect = rect.intersected(QRectF(0, 0, _image->width(), _image->height()));
-    if (intersectedRect.isEmpty())
-        return;
-
-    float minValue = _image->getMaxValue();
-    float maxValue = _image->getMinValue();
-    for (int j = 0; j < intersectedRect.height(); j++)
-    {
-        for (int i = 0; i < intersectedRect.width(); i++)
-        {
-            float value = _image->getValue(i + int(intersectedRect.x()), j + int(intersectedRect.y()));
-            if (minValue > value)
-            {
-                minValue = value;
-            }
-            if (maxValue < value)
-            {
-                maxValue = value;
-            }
-        }
-    }
-
-    setViewWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
-    applyImageWidthAndLevel();
-}
-
 void Document::defaultImageWindow()
 {
     if (_image)

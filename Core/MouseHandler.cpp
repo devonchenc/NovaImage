@@ -111,17 +111,7 @@ void SliceMouseHandler::move(QMouseEvent* event)
     _mousePos = event->pos();
 }
 
-void SliceMouseHandler::release(QMouseEvent*)
-{
-
-}
-
 //////////////////////////////////////////////////////////////////////////
-
-void ImageWindowMouseHandler::press(QMouseEvent*)
-{
-
-}
 
 void ImageWindowMouseHandler::move(QMouseEvent* event)
 {
@@ -199,15 +189,10 @@ void ROIWindowMouseHandler::press(QMouseEvent*)
     getGlobalActiveView()->view()->setDragMode(QGraphicsView::RubberBandDrag);
 }
 
-void ROIWindowMouseHandler::move(QMouseEvent*)
-{
-
-}
-
 void ROIWindowMouseHandler::release(QMouseEvent* event)
 {
-    getGlobalDocument()->ROIWindow(QRectF(getGlobalActiveView()->view()->mapToScene(_mousePos),
-                                          getGlobalActiveView()->view()->mapToScene(event->pos())));
+    View* view = getGlobalActiveView();
+    view->ROIWindow(QRectF(view->view()->mapToScene(_mousePos), view->view()->mapToScene(event->pos())));
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -224,11 +209,6 @@ void ZoomMouseHandler::move(QMouseEvent* event)
     _mousePos = event->pos();
 }
 
-void ZoomMouseHandler::release(QMouseEvent*)
-{
-
-}
-
 //////////////////////////////////////////////////////////////////////////
 
 void MagnifierMouseHandler::press(QMouseEvent*)
@@ -236,16 +216,6 @@ void MagnifierMouseHandler::press(QMouseEvent*)
     getGlobalActiveView()->view()->setDragMode(QGraphicsView::NoDrag);
     getGlobalActiveView()->view()->setCursor(Qt::CrossCursor);
     getGlobalActiveView()->view()->showMagnifier();
-}
-
-void MagnifierMouseHandler::move(QMouseEvent*)
-{
-
-}
-
-void MagnifierMouseHandler::release(QMouseEvent*)
-{
-
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -263,11 +233,6 @@ void SelectMouseHandler::press(QMouseEvent*)
 void SelectMouseHandler::move(QMouseEvent*)
 {
     getGlobalActiveView()->scene()->update();
-}
-
-void SelectMouseHandler::release(QMouseEvent*)
-{
-
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -292,11 +257,6 @@ void MoveMouseHandler::move(QMouseEvent* event)
         QRectF rect = getGlobalActiveView()->view()->sceneRect();
         getGlobalActiveView()->view()->setSceneRect(rect.x() + delta.x(), rect.y() + delta.y(), rect.width(), rect.height());
     }
-}
-
-void MoveMouseHandler::release(QMouseEvent*)
-{
-
 }
 
 //////////////////////////////////////////////////////////////////////////

@@ -29,11 +29,11 @@ public:
     virtual void unbounded() {}
 
 protected:
-    virtual void press(QMouseEvent* event) = 0;
+    virtual void press(QMouseEvent* event) {}
 
-    virtual void move(QMouseEvent* event) = 0;
+    virtual void move(QMouseEvent* event) {}
 
-    virtual void release(QMouseEvent* event) = 0;
+    virtual void release(QMouseEvent* event) {}
 
 protected:
     static QPoint _mousePos;
@@ -49,15 +49,11 @@ protected:
     void press(QMouseEvent* event) override;
 
     void move(QMouseEvent* event) override;
-
-    void release(QMouseEvent* event) override;
 };
 
 class ImageWindowMouseHandler : public MouseHandler
 {
 protected:
-    void press(QMouseEvent* event) override;
-
     void move(QMouseEvent* event) override;
 
     void release(QMouseEvent* event) override;
@@ -76,8 +72,6 @@ public:
 protected:
     void press(QMouseEvent* event) override;
 
-    void move(QMouseEvent* event) override;
-
     void release(QMouseEvent* event) override;
 };
 
@@ -87,18 +81,12 @@ protected:
     void press(QMouseEvent* event) override;
 
     void move(QMouseEvent* event) override;
-
-    void release(QMouseEvent* event) override;
 };
 
 class MagnifierMouseHandler : public MouseHandler
 {
 protected:
     void press(QMouseEvent* event) override;
-
-    void move(QMouseEvent* event) override;
-
-    void release(QMouseEvent* event) override;
 };
 
 class SelectMouseHandler : public MouseHandler
@@ -110,8 +98,6 @@ protected:
     void press(QMouseEvent* event) override;
 
     void move(QMouseEvent* event) override;
-
-    void release(QMouseEvent* event) override;
 };
 
 class MoveMouseHandler : public MouseHandler
@@ -123,8 +109,6 @@ protected:
     void press(QMouseEvent* event) override;
 
     void move(QMouseEvent* event) override;
-
-    void release(QMouseEvent* event) override;
 };
 
 class DrawMouseHandler : public MouseHandler

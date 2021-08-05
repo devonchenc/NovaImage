@@ -62,8 +62,6 @@ public:
     static int findImageType(const QString& fileName);
 
 public:
-    void ROIWindow(const QRectF& rect);
-
     void defaultImageWindow();
 
     void fullImageWindow();

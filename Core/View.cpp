@@ -381,6 +381,40 @@ bool View::cine60FPS()
     }
 }
 
+void View::ROIWindow(const QRectF& rect)
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr)
+        return;
+
+    int width = imageWidth();
+    int height = imageHeight();
+    QRectF intersectedRect = rect.intersected(QRectF(0, 0, imageWidth(), imageHeight()));
+    if (intersectedRect.isEmpty())
+        return;
+
+    float minValue = image->getMaxValue();
+    float maxValue = image->getMinValue();
+    for (int j = 0; j < intersectedRect.height(); j++)
+    {
+        for (int i = 0; i < intersectedRect.width(); i++)
+        {
+            float value = image->getValue(i + int(intersectedRect.x()), j + int(intersectedRect.y()));
+            if (minValue > value)
+            {
+                minValue = value;
+            }
+            if (maxValue < value)
+            {
+                maxValue = value;
+            }
+        }
+    }
+
+    setWindowWidthAndLevel(maxValue - minValue, (maxValue + minValue) / 2);
+    getGlobalDocument()->applyImageWidthAndLevel();
+}
+
 void View::setSceneMode(int mode)
 {
     if (mode == MOVE_SCENE)

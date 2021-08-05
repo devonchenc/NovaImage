@@ -77,6 +77,8 @@ public:
     bool cine30FPS();
     bool cine60FPS();
 
+    void ROIWindow(const QRectF& rect);
+
 public slots:
     void setSceneMode(int mode);
 
