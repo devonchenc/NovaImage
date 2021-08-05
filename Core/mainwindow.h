@@ -109,6 +109,7 @@ public slots:
     void showMeasurement(bool show);
     void zoomIn();
     void zoomOut();
+    void setZoomValueOffset(int offset);
 
     void slectLayout(QAction* action);
 

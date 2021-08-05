@@ -98,6 +98,7 @@ public slots:
     void zoom8x();
     void zoomIn();
     void zoomOut();
+    void setZoomValueOffset(int offset);
 
     void plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);
     void imageQualityLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);

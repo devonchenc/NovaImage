@@ -523,6 +523,11 @@ void View::zoomOut()
     view()->zoomOut();
 }
 
+void View::setZoomValueOffset(int offset)
+{
+    view()->setZoomValueOffset(offset);
+}
+
 void View::plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth)
 {
     QVector<qreal> dataVec = calcPlotData(lineItem, lineWidth);

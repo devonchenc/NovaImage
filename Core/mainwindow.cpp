@@ -668,6 +668,20 @@ void MainWindow::zoomOut()
     }
 }
 
+void MainWindow::setZoomValueOffset(int offset)
+{
+    if (isViewLinked())
+    {
+        getAxialView()->setZoomValueOffset(offset);
+        getCoronalView()->setZoomValueOffset(offset);
+        getSagittalView()->setZoomValueOffset(offset);
+    }
+    else
+    {
+        getActiveView()->setZoomValueOffset(offset);
+    }
+}
+
 void MainWindow::setupShortcuts()
 {
     _openAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));

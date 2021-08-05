@@ -205,7 +205,7 @@ void ZoomMouseHandler::press(QMouseEvent*)
 void ZoomMouseHandler::move(QMouseEvent* event)
 {
     QPoint delta = _mousePos - event->pos();
-    getGlobalActiveView()->view()->setZoomValueOffset(delta.y());
+    getGlobalWindow()->setZoomValueOffset(delta.y());
     _mousePos = event->pos();
 }
 
