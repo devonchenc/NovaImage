@@ -811,6 +811,9 @@ void MainWindow::prevImage()
     nameFilters << "*.png" << "*.bmp" << "*.jpg" << "*.dcm";
     QStringList fileNames = dir.entryList(nameFilters, QDir::Files, QDir::Name);
     int index = fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
+    if (index == -1)        // not found
+        return;
+
     if (index == 0)
         index = fileNames.size();
     _doc->openFile(dir.absoluteFilePath(fileNames.at(index - 1)));
@@ -831,6 +834,9 @@ void MainWindow::nextImage()
     nameFilters << "*.png" << "*.bmp" << "*.jpg" << "*.dcm";
     QStringList fileNames = dir.entryList(nameFilters, QDir::Files, QDir::Name);
     int index = fileNames.indexOf(QRegExp(QRegExp::escape(current.fileName())));
+    if (index == -1)        // not found
+        return;
+
     if (index == fileNames.size() - 1)
         index = -1;
 
