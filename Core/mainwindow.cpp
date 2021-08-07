@@ -15,6 +15,7 @@
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #include <QMimeData>
+#include <QTimer>
 #include <QDebug>
 
 #include "mainwindow.h"
@@ -45,6 +46,7 @@ MainWindow::MainWindow(QWidget* parent)
     , _volumeView(new View(this))
     , _activeView(_axialView)
     , _translator(nullptr)
+    , _timer(new QTimer(this))
 {
     // main area for image display
     QWidget* centerWidget = new QWidget;
@@ -134,6 +136,40 @@ void MainWindow::levelsAdjust(float bottom, float top)
 LevelsProcessor* MainWindow::getLevelsProcessor()
 {
     return _levelsWidget->getProcessor();
+}
+
+bool MainWindow::cine30FPS()
+{
+    _timer->disconnect();
+
+    if (_timer->isActive() && _timer->interval() == 33)
+    {
+        _timer->stop();
+        return false;
+    }
+    else
+    {
+        connect(_timer, &QTimer::timeout, _activeView, &View::slicePlusOne);
+        _timer->start(33);
+        return true;
+    }
+}
+
+bool MainWindow::cine60FPS()
+{
+    _timer->disconnect();
+
+    if (_timer->isActive() && _timer->interval() == 17)
+    {
+        _timer->stop();
+        return false;
+    }
+    else
+    {
+        connect(_timer, &QTimer::timeout, _activeView, &View::slicePlusOne);
+        _timer->start(17);
+        return true;
+    }
 }
 
 void MainWindow::initUI()

@@ -171,18 +171,33 @@ void MonoImage::setSlice(int slice)
     if (_currentViewType == AXIAL_VIEW)
     {
         _currentAxialSlice = slice;
-        _imageData->changeSlice(AXIAL_VIEW, slice);
     }
     else if (_currentViewType == CORONAL_VIEW)
     {
         _currentCoronalSlice = slice;
-        _imageData->changeSlice(CORONAL_VIEW, slice);
     }
     else/* if (_currentType == SAGITTAL_VIEW)*/
     {
         _currentSagittalSlice = slice;
-        _imageData->changeSlice(SAGITTAL_VIEW, slice);
     }
+    _imageData->changeSlice(_currentViewType, slice);
+}
+
+void MonoImage::setSlice(int type, int slice)
+{
+    if (type == AXIAL_VIEW)
+    {
+        _currentAxialSlice = slice;
+    }
+    else if (type == CORONAL_VIEW)
+    {
+        _currentCoronalSlice = slice;
+    }
+    else/* if (type == SAGITTAL_VIEW)*/
+    {
+        _currentSagittalSlice = slice;
+    }
+    _imageData->changeSlice(type, slice);
 }
 
 int MonoImage::currentSlice() const

@@ -54,10 +54,10 @@ public:
 
     virtual int slice() const { return 1; }
 
-    virtual void setSlice(int) {}
+    virtual void setSlice(int slice) {}
+    virtual void setSlice(int type, int slice) { Q_UNUSED(type); }
 
     virtual int currentSlice() const { return 0; }
-
     virtual int currentSlice(int type) const { Q_UNUSED(type); return 0; }
 
     float windowWidth() { return _windowWidth; }

@@ -58,6 +58,9 @@ public:
 
     LevelsProcessor* getLevelsProcessor();
 
+    bool cine30FPS();
+    bool cine60FPS();
+
 protected:
     void changeEvent(QEvent* event) override;
     void closeEvent(QCloseEvent* event) override;
@@ -204,4 +207,6 @@ private:
     NotificationLayout* _notification;
 
     RecentFiles* _recentFiles;
+
+    QTimer* _timer;
 };

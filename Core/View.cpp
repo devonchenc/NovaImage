@@ -6,7 +6,6 @@
 #include <QIcon>
 #include <QMenu>
 #include <QAction>
-#include <QTimer>
 #include <QDebug>
 
 #include "GraphicsView.h"
@@ -26,14 +25,11 @@ View::View(QWidget* parent)
     , _windowLevel(0)
     , _plotDlg(nullptr)
     , _imageQualityDlg(nullptr)
-    , _timer(new QTimer(this))
 {
     createItemMenus();
 
     _scene = new GraphicsScene(_itemMenu, this);
     _view = new GraphicsView(this, _scene);
-
-    connect(_timer, &QTimer::timeout, this, &View::slicePlusOne);
 
     QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(_view);
@@ -246,7 +242,7 @@ void View::slicePlusOne()
     if (image == nullptr || imageSlice() <= 1)
         return;
 
-    image->setSlice((image->currentSlice() + 1) >= imageSlice() ? 0 : (image->currentSlice() + 1));
+    image->setSlice(_type, (image->currentSlice(_type) + 1) >= imageSlice() ? 0 : (image->currentSlice(_type) + 1));
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
@@ -256,7 +252,7 @@ void View::sliceMinusOne()
     if (image == nullptr || imageSlice() <= 1)
         return;
 
-    image->setSlice((image->currentSlice() - 1) < 0 ? (imageSlice() - 1) : (image->currentSlice() - 1));
+    image->setSlice(_type, (image->currentSlice(_type) - 1) < 0 ? (imageSlice() - 1) : (image->currentSlice(_type) - 1));
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
@@ -353,42 +349,12 @@ void View::showImageQualityDialog(QGraphicsLineItem* lineItem, float leftRatio, 
     _imageQualityDlg->show();
 }
 
-bool View::cine30FPS()
-{
-    if (_timer->isActive() && _timer->interval() == 33)
-    {
-        _timer->stop();
-        return false;
-    }
-    else
-    {
-        _timer->start(33);
-        return true;
-    }
-}
-
-bool View::cine60FPS()
-{
-    if (_timer->isActive() && _timer->interval() == 17)
-    {
-        _timer->stop();
-        return false;
-    }
-    else
-    {
-        _timer->start(17);
-        return true;
-    }
-}
-
 void View::ROIWindow(const QRectF& rect)
 {
     BaseImage* image = getGlobalImage();
     if (image == nullptr)
         return;
 
-    int width = imageWidth();
-    int height = imageHeight();
     QRectF intersectedRect = rect.intersected(QRectF(0, 0, imageWidth(), imageHeight()));
     if (intersectedRect.isEmpty())
         return;

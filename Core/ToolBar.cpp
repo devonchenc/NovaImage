@@ -757,7 +757,7 @@ void ToolBar::FPS30ActionTriggered()
 {
     _FPS30Action->setChecked(true);
     _FPS60Action->setChecked(false);
-    bool result = getGlobalActiveView()->cine30FPS();
+    bool result = getGlobalWindow()->cine30FPS();
     _cineButton->setChecked(result);
 }
 
@@ -765,7 +765,7 @@ void ToolBar::FPS60ActionTriggered()
 {
     _FPS30Action->setChecked(false);
     _FPS60Action->setChecked(true);
-    bool result = getGlobalActiveView()->cine60FPS();
+    bool result = getGlobalWindow()->cine60FPS();
     _cineButton->setChecked(result);
 }
 

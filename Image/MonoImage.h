@@ -32,9 +32,9 @@ public:
     int slice() const override { return _slice; }
 
     void setSlice(int slice) override;
+    void setSlice(int type, int slice) override;
 
     int currentSlice() const override;
-
     int currentSlice(int type) const override;
 
     float getMinValue() const override;

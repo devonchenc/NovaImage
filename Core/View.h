@@ -74,9 +74,6 @@ public:
 
     void showImageQualityDialog(QGraphicsLineItem* lineItem, float leftRatio, float rightRatio);
 
-    bool cine30FPS();
-    bool cine60FPS();
-
     void ROIWindow(const QRectF& rect);
 
 public slots:
@@ -143,6 +140,4 @@ private:
 
     PlotDialog* _plotDlg;
     ImageQualityDialog* _imageQualityDlg;
-
-    QTimer* _timer;
 };
