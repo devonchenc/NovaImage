@@ -78,6 +78,7 @@ private slots:
 
 private:
     QAction* _openDicomAction;
+    QAction* _openDicomFolderAction;
     QAction* _openRawAction;
     QAction* _saveAsRawAction;
 

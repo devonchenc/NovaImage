@@ -180,6 +180,8 @@ bool DICOMImage::readData()
 
     readMoreInfo(dataset);
 
+    delete pDicomImg;
+
     DJDecoderRegistration::cleanup();
 
     return true;

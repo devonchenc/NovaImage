@@ -33,10 +33,12 @@ class Document : public QObject
 
 public:
     Document(MainWindow* pWindow);
-    ~Document();
+    ~Document() {}
 
 public:
     bool openFile(const QString& fileName);
+
+    bool openFolder(const QString& pathName);
 
     bool saveAs(const QString& fileName);
 

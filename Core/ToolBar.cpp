@@ -132,6 +132,7 @@ void ToolBar::createButton()
 void ToolBar::createAction()
 {
     _openDicomAction = new QAction(tr("Open &DICOM File..."), this);
+    _openDicomFolderAction = new QAction(tr("Open DICOM &Folder..."), this);
     _openRawAction = new QAction(tr("Open &Raw File..."), this);
     _saveAsRawAction = new QAction(tr("Save As &Raw File..."), this);
 
@@ -268,6 +269,7 @@ void ToolBar::createAction()
 
     MainWindow* mainWindow = getGlobalWindow();
     connect(_openDicomAction, &QAction::triggered, mainWindow, &MainWindow::openDicomImage);
+    connect(_openDicomFolderAction, &QAction::triggered, mainWindow, &MainWindow::openDicomFolderImage);
     connect(_openRawAction, &QAction::triggered, mainWindow, &MainWindow::openRawImage);
     connect(_saveAsRawAction, &QAction::triggered, mainWindow, &MainWindow::saveAsRawImage);
 
@@ -354,6 +356,8 @@ void ToolBar::initButton()
     MainWindow* mainWindow = getGlobalWindow();
     QMenu* menu = new QMenu(this);
     menu->addAction(_openDicomAction);
+    menu->addAction(_openDicomFolderAction);
+    menu->addSeparator();
     menu->addAction(_openRawAction);
     _openButton->setMenu(menu);
     _openButton->setIcon(QIcon(":/icon/svg/open.svg"));
@@ -509,6 +513,7 @@ void ToolBar::changeEvent(QEvent* event)
     if (event->type() == QEvent::LanguageChange)
     {
         _openDicomAction->setText(tr("Open &DICOM File..."));
+        _openDicomFolderAction->setText(tr("Open DICOM &Folder..."));
         _openRawAction->setText(tr("Open &Raw File..."));
         _saveAsRawAction->setText(tr("Save As &Raw File..."));
 

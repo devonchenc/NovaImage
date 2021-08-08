@@ -92,6 +92,7 @@ signals:
 public slots:
     void openImage();
     void openDicomImage();
+    void openDicomFolderImage();
     void openRawImage();
     void saveAs();
     void saveAsRawImage();

@@ -3,6 +3,7 @@
 #include <QSettings>
 #include <QCoreApplication>
 #include <QFile>
+#include <QDir>
 #include <QDomDocument>
 #include <QTextStream>
 
@@ -28,11 +29,6 @@ Document::Document(MainWindow* pWindow)
     , _mainWindow(pWindow)
     , _image(nullptr)
     , _modified(false)
-{
-
-}
-
-Document::~Document()
 {
 
 }
@@ -113,6 +109,32 @@ bool Document::openFile(const QString& fileName)
     loadGraphicsItems();
 
     _mainWindow->imageOpened();
+
+    return true;
+}
+
+bool Document::openFolder(const QString& pathName)
+{
+    QDir dir(pathName);
+    QStringList nameFilters;
+    nameFilters << "*.dcm";
+    QStringList fileList = dir.entryList(nameFilters, QDir::Files | QDir::Readable, QDir::Name);
+    if (fileList.isEmpty())
+        return false;
+
+    if (_image)
+    {
+        closeFile();
+    }
+
+    _image = std::make_shared<DICOMImage>(pathName);
+
+    // Judge whether open file successfully
+    if (_image->isOpenSucceed() == false)
+    {
+        _image = nullptr;
+        return false;
+    }
 
     return true;
 }

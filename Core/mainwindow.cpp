@@ -472,6 +472,15 @@ void MainWindow::openDicomImage()
     }
 }
 
+void MainWindow::openDicomFolderImage()
+{
+    QString path = QFileDialog::getExistingDirectory(this, tr("Open DICOM Folder"), "/");
+    if (!path.isEmpty())
+    {
+        _doc->openFolder(path);
+    }
+}
+
 void MainWindow::openRawImage()
 {
     QString fileName = QFileDialog::getOpenFileName(this, tr("Open Raw Image"),
