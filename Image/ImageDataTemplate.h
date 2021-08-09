@@ -61,6 +61,8 @@ public:
 
     void changeSlice(int type, int slice) override;
 
+    int getElementSize() override { return sizeof(Type); }
+
 protected:
     std::shared_ptr<Type> _originalData;
 

@@ -81,34 +81,7 @@ bool Document::openFile(const QString& fileName)
         return false;
     }
 
-    _image->histogramStatistic();
-
-    initViewWindowWidthAndLevel();
-
-    applyImageWidthAndLevel();
-
-    getAxialView()->resetMatrix();
-    getCoronalView()->resetMatrix();
-    getSagittalView()->resetMatrix();
-
-    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
-    if (fitWindow)
-    {
-        getAxialView()->fitWindow();
-        getCoronalView()->fitWindow();
-        getSagittalView()->fitWindow();
-    }
-    else
-    {
-        getAxialView()->zoomNormal();
-        getCoronalView()->zoomNormal();
-        getSagittalView()->zoomNormal();
-    }
-
-    loadGraphicsItems();
-
-    _mainWindow->imageOpened();
+    imageOpened();
 
     return true;
 }
@@ -127,7 +100,20 @@ bool Document::openFolder(const QString& pathName)
         closeFile();
     }
 
-    _image = std::make_shared<DICOMImage>(pathName);
+    QVector<std::shared_ptr<DICOMImage>> imageVector;
+    for (int i = 0; i < fileList.size(); i++)
+    {
+        QString fileName = dir.absoluteFilePath(fileList[i]);
+        std::shared_ptr<DICOMImage> dicomImage = std::make_shared<DICOMImage>(fileName);
+
+        // Judge whether open file successfully
+        if (dicomImage->isOpenSucceed() == true)
+        {
+            imageVector.append(dicomImage);
+        }
+    }
+
+    _image = std::make_shared<DICOMImage>(imageVector);
 
     // Judge whether open file successfully
     if (_image->isOpenSucceed() == false)
@@ -135,6 +121,8 @@ bool Document::openFolder(const QString& pathName)
         _image = nullptr;
         return false;
     }
+
+    imageOpened();
 
     return true;
 }
@@ -518,6 +506,41 @@ void Document::lightFieldCorrection()
         processor->initUI();
         processor->processForView(getImage());
     }
+}
+
+void Document::imageOpened()
+{
+    if (_image == nullptr || _image->isOpenSucceed() == false)
+        return;
+
+    _image->histogramStatistic();
+
+    initViewWindowWidthAndLevel();
+
+    applyImageWidthAndLevel();
+
+    getAxialView()->resetMatrix();
+    getCoronalView()->resetMatrix();
+    getSagittalView()->resetMatrix();
+
+    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+    bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
+    if (fitWindow)
+    {
+        getAxialView()->fitWindow();
+        getCoronalView()->fitWindow();
+        getSagittalView()->fitWindow();
+    }
+    else
+    {
+        getAxialView()->zoomNormal();
+        getCoronalView()->zoomNormal();
+        getSagittalView()->zoomNormal();
+    }
+
+    loadGraphicsItems();
+
+    _mainWindow->imageOpened();
 }
 
 void Document::initViewWindowWidthAndLevel()

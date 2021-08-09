@@ -8,8 +8,9 @@ class DICOMImage : public MonoImage
 {
 public:
     DICOMImage(const QString& pathName);
+    DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector);
     DICOMImage(const DICOMImage& src);
-    virtual ~DICOMImage();
+    virtual ~DICOMImage() {}
 
     DICOMImage& operator=(const DICOMImage& src);
 
@@ -39,6 +40,12 @@ private:
     float _horzPixelSpacing;
     float _vertPixelSpacing;
     float _imagerPixelSpacing;      // Detector pixel size
+
+    float _SOD;
+    float _SDD;
+
+    ushort _bitsAllocated;
+    ushort _bitsStored;
 
     float _rescaleSlope;
     float _rescaleIntercept;

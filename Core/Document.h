@@ -91,8 +91,9 @@ public slots:
     void lightFieldCorrection();
 
 private:
-    void initViewWindowWidthAndLevel();
+    void imageOpened();
 
+    void initViewWindowWidthAndLevel();
 
     View* getActiveView() const;
 

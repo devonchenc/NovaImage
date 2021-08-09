@@ -90,6 +90,8 @@ public:
 
     virtual void changeSlice(int type, int slice) = 0;
 
+    virtual int getElementSize() = 0;
+
 public:
     float getMinimumValue() const { return _minValue; }
 
