@@ -162,6 +162,7 @@ private:
     QMenu* _helpMenu;
 
     QAction* _openAction;
+    QAction* _openDicomFolderAction;
     QAction* _saveAsAction;
     QAction* _closeAction;
     QAction* _printAction;

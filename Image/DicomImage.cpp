@@ -42,6 +42,8 @@ DICOMImage::DICOMImage(const QString& pathName)
 
     rescaleArray();
 
+    rescaleTopAndBottom();
+
     initWindowWidthAndLevel();
 
     // Convert float data to uchar data
@@ -61,11 +63,15 @@ DICOMImage::DICOMImage(const QString& pathName)
 }
 
 DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
+    : MonoImage()
 {
     _width = imageVector[0]->width();
     _height = imageVector[0]->height();
     _slice = 0;
     int elementSize = imageVector[0]->_imageData->getElementSize();
+
+    _windowWidth = imageVector[0]->_windowWidth;
+    _windowLevel = imageVector[0]->_windowLevel;
 
     _horzPixelSpacing = imageVector[0]->_horzPixelSpacing;
     _vertPixelSpacing = imageVector[0]->_vertPixelSpacing;
@@ -77,6 +83,9 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     _rescaleSlope = imageVector[0]->_rescaleSlope;
     _rescaleIntercept = imageVector[0]->_rescaleIntercept;
 
+    _pathName = imageVector[0]->_pathName;
+
+    // Count slice
     for (int i = 0; i < imageVector.size(); i++)
     {
         if (imageVector[i]->width() != _width || imageVector[i]->height() != _height)
@@ -118,6 +127,10 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
         currentSlice += singleSlice;
     }
 
+    _currentAxialSlice = round(_slice / 2.0) - 1;
+    _currentCoronalSlice = round(_height / 2.0) - 1;
+    _currentSagittalSlice = round(_width / 2.0) - 1;
+
     // Allocate memory
     if (allocateMemory() == false)
     {
@@ -133,6 +146,8 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     }
 
     rescaleArray();
+
+    rescaleTopAndBottom();
 
     initWindowWidthAndLevel();
 
@@ -190,6 +205,20 @@ DICOMImage& DICOMImage::operator=(const DICOMImage& src)
     return *this;
 }
 
+void DICOMImage::setSlice(int slice)
+{
+    MonoImage::setSlice(slice);
+
+    rescaleArray();
+}
+
+void DICOMImage::setSlice(int type, int slice)
+{
+    MonoImage::setSlice(type, slice);
+
+    rescaleArray(type);
+}
+
 void DICOMImage::initWindowWidthAndLevel()
 {
     if (_windowWidth == 0 && _windowLevel == 0)
@@ -222,6 +251,8 @@ void DICOMImage::restore()
     _imageData->findTopAndBottom();
 
     rescaleArray();
+
+    rescaleTopAndBottom();
 
     convertToByte();
 
@@ -360,5 +391,21 @@ void DICOMImage::rescaleArray()
     if (_rescaleSlope != 0)
     {
         _imageData->rescaleArray(_rescaleSlope * 0.5f, _rescaleIntercept);
+    }
+}
+
+void DICOMImage::rescaleArray(int type)
+{
+    if (_rescaleSlope != 0)
+    {
+        _imageData->rescaleArray(type, _rescaleSlope * 0.5f, _rescaleIntercept);
+    }
+}
+
+void DICOMImage::rescaleTopAndBottom()
+{
+    if (_rescaleSlope != 0)
+    {
+        _imageData->rescaleTopAndBottom(_rescaleSlope * 0.5f, _rescaleIntercept);
     }
 }

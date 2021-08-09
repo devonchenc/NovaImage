@@ -189,6 +189,7 @@ void MainWindow::createActions()
     // create actions, add them to menus
     _openAction = new QAction(tr("&Open..."), this);
     _openAction->setIcon(QIcon(":/icon/svg/open.svg"));
+    _openDicomFolderAction = new QAction(tr("Open DICOM &Folder..."), this);
     _saveAsAction = new QAction(tr("&Save As..."), this);
     _saveAsAction->setIcon(QIcon(":/icon/svg/save.svg"));
     _closeAction = new QAction(tr("&Close"), this);
@@ -269,6 +270,7 @@ void MainWindow::createActions()
     // setup menubar
     _fileMenu = menuBar()->addMenu(tr("&File"));
     _fileMenu->addAction(_openAction);
+    _fileMenu->addAction(_openDicomFolderAction);
     _fileMenu->addAction(_saveAsAction);
     _fileMenu->addAction(_closeAction);
     _fileMenu->addSeparator();
@@ -325,6 +327,7 @@ void MainWindow::createActions()
 
     // connect the signals and slots
     connect(_openAction, &QAction::triggered, this, &MainWindow::openImage);
+    connect(_openDicomFolderAction, &QAction::triggered, this, &MainWindow::openDicomFolderImage);
     connect(_saveAsAction, &QAction::triggered, this, &MainWindow::saveAs);
     connect(_closeAction, &QAction::triggered, this, &MainWindow::close);
     connect(_printAction, &QAction::triggered, this, &MainWindow::print);
@@ -730,6 +733,7 @@ void MainWindow::setZoomValueOffset(int offset)
 void MainWindow::setupShortcuts()
 {
     _openAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_O));
+    _openDicomFolderAction->setShortcut(QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_O));
     _closeAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_W));
     _printAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_P));
     _undoAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
@@ -1007,6 +1011,7 @@ void MainWindow::changeEvent(QEvent* event)
         _helpMenu->setTitle(tr("&Help"));
 
         _openAction->setText(tr("&Open..."));
+        _openDicomFolderAction->setText(tr("Open DICOM &Folder..."));
         _saveAsAction->setText(tr("&Save As..."));
         _closeAction->setText(tr("&Close"));
         _printAction->setText(tr("&Print..."));

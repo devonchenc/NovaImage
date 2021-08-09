@@ -103,7 +103,7 @@ void SliceMouseHandler::move(QMouseEvent* event)
     if (image == nullptr || image->slice() <= 1)
         return;
 
-    QPoint offset = _mousePos - event->pos();
+    QPoint offset = event->pos() - _mousePos;
     getGlobalActiveView()->slicePlus(offset.y());
 
     getGlobalDocument()->applyImageWidthAndLevel();

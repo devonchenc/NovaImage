@@ -53,6 +53,10 @@ public:
 
     // Rescale array
     void rescaleArray(float rescaleSlope, float rescaleIntercept) override;
+    void rescaleArray(int type, float rescaleSlope, float rescaleIntercept) override;
+
+    // Rescale top and bottom
+    void rescaleTopAndBottom(float rescaleSlope, float rescaleIntercept) override;
 
     // Create a deep copy of image data
     ImageData* copyImageData() const override;
@@ -312,7 +316,8 @@ bool ImageDataTemplate<Type>::convertToByte(int type, uchar* byteImage)
 template <class Type>
 void ImageDataTemplate<Type>::saveArray(QFile& file)
 {
-    file.write((const char*)_axialData, sizeof(Type) * _pixelPerSlice);
+ //   file.write((const char*)_axialData, sizeof(float) * _pixelPerSlice);
+    file.write((const char*)_originalData.get(), sizeof(Type) * _totalPixel);
 }
 
 // Rescale array
@@ -325,10 +330,73 @@ void ImageDataTemplate<Type>::rescaleArray(float rescaleSlope, float rescaleInte
         {
             _axialData[i] = _originalData.get()[i + _currentAxialSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
         }
-
-        _minValue = _minValue * rescaleSlope + rescaleIntercept;
-        _maxValue = _maxValue * rescaleSlope + rescaleIntercept;
     }
+
+    if (_coronalData)
+    {
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _width; i++)
+            {
+                _coronalData[j * _width + i] = _originalData.get()[i + _currentCoronalSlice * _width + offset] * rescaleSlope + rescaleIntercept;
+            }
+        }
+    }
+
+    if (_sagittalData)
+    {
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _height; i++)
+            {
+                _sagittalData[j * _height + i] = _originalData.get()[_width * i + _currentSagittalSlice + offset] * rescaleSlope + rescaleIntercept;
+            }
+        }
+    }
+}
+
+template <class Type>
+void ImageDataTemplate<Type>::rescaleArray(int type, float rescaleSlope, float rescaleIntercept)
+{
+    if (type == 0)
+    {
+        for (unsigned long i = 0; i < _pixelPerSlice; i++)
+        {
+            _axialData[i] = _originalData.get()[i + _currentAxialSlice * _pixelPerSlice] * rescaleSlope + rescaleIntercept;
+        }
+    }
+    else if (type == 1)
+    {
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _width; i++)
+            {
+                _coronalData[j * _width + i] = _originalData.get()[i + _currentCoronalSlice * _width + offset] * rescaleSlope + rescaleIntercept;
+            }
+        }
+    }
+    else if (type == 2)
+    {
+        for (int j = 0; j < _slice; j++)
+        {
+            qint64 offset = j * _pixelPerSlice;
+            for (int i = 0; i < _height; i++)
+            {
+                _sagittalData[j * _height + i] = _originalData.get()[_width * i + _currentSagittalSlice + offset] * rescaleSlope + rescaleIntercept;
+            }
+        }
+    }
+}
+
+// Rescale top and bottom
+template <class Type>
+void ImageDataTemplate<Type>::rescaleTopAndBottom(float rescaleSlope, float rescaleIntercept)
+{
+    _minValue = _minValue * rescaleSlope + rescaleIntercept;
+    _maxValue = _maxValue * rescaleSlope + rescaleIntercept;
 }
 
 // Create a deep copy of image data

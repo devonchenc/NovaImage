@@ -15,6 +15,9 @@ public:
     DICOMImage& operator=(const DICOMImage& src);
 
 public:
+    void setSlice(int slice) override;
+    void setSlice(int type, int slice) override;
+
     bool hasPixelSpacing() override { return true; }
 
     float horzPixelSpacing() override { return _horzPixelSpacing; }
@@ -35,6 +38,9 @@ private:
     void readMoreInfo(DcmDataset* dataset);
 
     void rescaleArray();
+    void rescaleArray(int type);
+
+    void rescaleTopAndBottom();
 
 private:
     float _horzPixelSpacing;

@@ -149,7 +149,17 @@ bool ScanImage::readDataHeader()
     if (_width * _height <= 0)
         return false;
 
-    qint64 expectSize = _width * _height * _slice * sizeof(float);
+    int elementSize = sizeof(float);
+    if (_dataHeader.DataType == 1)
+    {
+        elementSize = sizeof(ushort);
+    }
+    else if (_dataHeader.DataType == 2)
+    {
+        elementSize = sizeof(uchar);
+    }
+
+    qint64 expectSize = _width * _height * _slice * elementSize;
     if (isNew)
     {
         expectSize += DATA_HEADER_SIZE;

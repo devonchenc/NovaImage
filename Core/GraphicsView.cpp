@@ -205,9 +205,9 @@ void GraphicsView::wheelEvent(QWheelEvent* event)
         if (image)
         {
             if (event->angleDelta().y() > 0)
-                _view->slicePlusOne();
-            else
                 _view->sliceMinusOne();
+            else
+                _view->slicePlusOne();
         }
 
     //    QGraphicsView::wheelEvent(event);

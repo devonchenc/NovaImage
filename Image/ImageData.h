@@ -82,6 +82,10 @@ public:
 
     // Rescale array
     virtual void rescaleArray(float rescaleSlope, float rescaleIntercept) = 0;
+    virtual void rescaleArray(int type, float rescaleSlope, float rescaleIntercept) = 0;
+
+    // Rescale top and bottom
+    virtual void rescaleTopAndBottom(float rescaleSlope, float rescaleIntercept) = 0;
 
     // Create a deep copy of image data
     virtual ImageData* copyImageData() const = 0;
