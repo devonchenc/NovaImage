@@ -19,7 +19,7 @@
 
 View::View(QWidget* parent)
     : QFrame(parent)
-    , _type(AXIAL_VIEW)
+    , _viewType(AXIAL_VIEW)
     , _currentImage(nullptr)
     , _windowWidth(0)
     , _windowLevel(0)
@@ -133,7 +133,7 @@ void View::resetMatrix()
 int View::imageWidth() const
 {
     BaseImage* image = getGlobalImage();
-    if (_type == AXIAL_VIEW || _type == CORONAL_VIEW)
+    if (_viewType == AXIAL_VIEW || _viewType == CORONAL_VIEW)
     {
         return image->width();
     }
@@ -146,7 +146,7 @@ int View::imageWidth() const
 int View::imageHeight() const
 {
     BaseImage* image = getGlobalImage();
-    if (_type == AXIAL_VIEW)
+    if (_viewType == AXIAL_VIEW)
     {
         return image->height();
     }
@@ -159,11 +159,11 @@ int View::imageHeight() const
 int View::imageSlice() const
 {
     BaseImage* image = getGlobalImage();
-    if (_type == AXIAL_VIEW)
+    if (_viewType == AXIAL_VIEW)
     {
         return image->slice();
     }
-    else if (_type == CORONAL_VIEW)
+    else if (_viewType == CORONAL_VIEW)
     {
         return image->height();
     }
@@ -176,7 +176,7 @@ int View::imageSlice() const
 int View::imageCurrentSlice()
 {
     BaseImage* image = getGlobalImage();
-    return image->currentSlice(_type);
+    return image->currentSlice(_viewType);
 }
 
 float View::getImageValue(int x, int y) const
@@ -185,7 +185,7 @@ float View::getImageValue(int x, int y) const
         return 0;
 
     int index = y * imageWidth() + x;
-    return getGlobalImage()->getValueWithType(_type, index);
+    return getGlobalImage()->getValueWithType(_viewType, index);
 }
 
 float View::getImageValue(const QPoint& position) const
@@ -242,7 +242,7 @@ void View::slicePlusOne()
     if (image == nullptr || imageSlice() <= 1)
         return;
 
-    image->setSlice(_type, (image->currentSlice(_type) + 1) >= imageSlice() ? 0 : (image->currentSlice(_type) + 1));
+    image->setSlice(_viewType, (image->currentSlice(_viewType) + 1) >= imageSlice() ? 0 : (image->currentSlice(_viewType) + 1));
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
@@ -252,7 +252,7 @@ void View::sliceMinusOne()
     if (image == nullptr || imageSlice() <= 1)
         return;
 
-    image->setSlice(_type, (image->currentSlice(_type) - 1) < 0 ? (imageSlice() - 1) : (image->currentSlice(_type) - 1));
+    image->setSlice(_viewType, (image->currentSlice(_viewType) - 1) < 0 ? (imageSlice() - 1) : (image->currentSlice(_viewType) - 1));
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
@@ -300,7 +300,7 @@ void View::saveGraphicsItem(QDomDocument& doc, QDomElement& root)
         return;
 
     QDomElement viewItem = doc.createElement("View");
-    viewItem.setAttribute("Type", QString::number(_type));
+    viewItem.setAttribute("Type", QString::number(_viewType));
 
     QDomElement sceneItem = _scene->saveToXML(doc);
     viewItem.appendChild(sceneItem);

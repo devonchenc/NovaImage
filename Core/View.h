@@ -30,9 +30,9 @@ public:
 
     int sceneMode();
 
-    void setViewType(int type) { _type = type; }
+    void setViewType(int type) { _viewType = type; }
 
-    int viewType() { return _type; }
+    int viewType() { return _viewType; }
 
     void showImage(const QImage* image);
     
@@ -122,7 +122,7 @@ private:
     GraphicsScene* _scene;
     GraphicsView* _view;
 
-    int _type;
+    int _viewType;
 
     QGraphicsPixmapItem* _currentImage;
 

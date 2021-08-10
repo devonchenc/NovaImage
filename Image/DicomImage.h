@@ -46,6 +46,7 @@ private:
     float _horzPixelSpacing;
     float _vertPixelSpacing;
     float _imagerPixelSpacing;      // Detector pixel size
+    float _sliceThickness;
 
     float _SOD;
     float _SDD;

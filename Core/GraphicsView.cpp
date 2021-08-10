@@ -325,14 +325,46 @@ void GraphicsView::drawAnnotation()
 
 void GraphicsView::drawCrossLine()
 {
-    QRectF rect = _view->getPixmapItem()->sceneBoundingRect();
-    QPoint topLeft = mapFromScene(rect.topLeft());
-    QPoint center = mapFromScene(rect.center());
-    QPoint bottomRight = mapFromScene(rect.bottomRight());
+    QRectF pixmapRect = _view->getPixmapItem()->sceneBoundingRect();
     QPainter painter(viewport());
-    painter.setPen(QPen(qRgb(255, 50, 50)));
-    painter.drawLine(topLeft.x(), center.y(), bottomRight.x(), center.y());
-    painter.drawLine(center.x(), topLeft.y(), center.x(), bottomRight.y());
+
+    QRect viewRect = rect();
+    BaseImage* image = getGlobalImage();
+
+    int xOffset, yOffset;
+    QColor horzColor, vertColor;
+    if (_view->viewType() == AXIAL_VIEW)
+    {
+        xOffset = image->currentSlice(SAGITTAL_VIEW);
+        yOffset = image->currentSlice(CORONAL_VIEW);
+
+        horzColor = qRgb(255, 60, 135);
+        vertColor = qRgb(50, 185, 255);
+    }
+    else if (_view->viewType() == CORONAL_VIEW)
+    {
+        xOffset = image->currentSlice(SAGITTAL_VIEW);
+        yOffset = image->currentSlice(AXIAL_VIEW);
+
+        horzColor = qRgb(255, 225, 15);
+        vertColor = qRgb(50, 185, 255);
+    }
+    else if (_view->viewType() == SAGITTAL_VIEW)
+    {
+        xOffset = image->currentSlice(CORONAL_VIEW);
+        yOffset = image->currentSlice(AXIAL_VIEW);
+
+        horzColor = qRgb(255, 225, 15);
+        vertColor = qRgb(255, 60, 135);
+    }
+    // Horizontal line
+    QPoint center = mapFromScene(pixmapRect.left() + xOffset, pixmapRect.top() + yOffset);
+    painter.setPen(QPen(horzColor));
+    painter.drawLine(viewRect.left(), center.y(), viewRect.right(), center.y());
+
+    // Vertical line
+    painter.setPen(QPen(vertColor));
+    painter.drawLine(center.x(), viewRect.top(), center.x(), viewRect.bottom());
 }
 
 void GraphicsView::drawLineScale()

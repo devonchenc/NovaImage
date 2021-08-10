@@ -12,6 +12,7 @@ DICOMImage::DICOMImage(const QString& pathName)
     , _horzPixelSpacing(0)
     , _vertPixelSpacing(0)
     , _imagerPixelSpacing(0)
+    , _sliceThickness(0)
     , _SOD(0)
     , _SDD(0)
     , _bitsAllocated(0)
@@ -76,6 +77,7 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     _horzPixelSpacing = imageVector[0]->_horzPixelSpacing;
     _vertPixelSpacing = imageVector[0]->_vertPixelSpacing;
     _imagerPixelSpacing = imageVector[0]->_imagerPixelSpacing;
+    _sliceThickness = imageVector[0]->_sliceThickness;
     _SOD = imageVector[0]->_SOD;
     _SDD = imageVector[0]->_SDD;
     _bitsAllocated = imageVector[0]->_bitsAllocated;
@@ -172,6 +174,7 @@ DICOMImage::DICOMImage(const DICOMImage& src)
     , _horzPixelSpacing(src._horzPixelSpacing)
     , _vertPixelSpacing(src._vertPixelSpacing)
     , _imagerPixelSpacing(src._imagerPixelSpacing)
+    , _sliceThickness(src._sliceThickness)
     , _SOD(src._SOD)
     , _SDD(src._SDD)
     , _bitsAllocated(src._bitsAllocated)
@@ -192,6 +195,7 @@ DICOMImage& DICOMImage::operator=(const DICOMImage& src)
     _horzPixelSpacing = src._horzPixelSpacing;
     _vertPixelSpacing = src._vertPixelSpacing;
     _imagerPixelSpacing = src._imagerPixelSpacing;
+    _sliceThickness = src._sliceThickness;
 
     _SOD = src._SOD;
     _SDD = src._SDD;
@@ -330,6 +334,13 @@ void DICOMImage::readMoreInfo(DcmDataset* dataset)
     if (condition.good() && tagValue)
     {
         _horzPixelSpacing = _vertPixelSpacing = atof(tagValue);
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_SliceThickness, tagValue);
+    if (condition.good() && tagValue)
+    {
+        _sliceThickness = float(atof(tagValue));
     }
 
     tagValue = nullptr;
