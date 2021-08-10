@@ -54,8 +54,8 @@ public:
 
     virtual int slice() const { return 1; }
 
-    virtual void setSlice(int slice) {}
-    virtual void setSlice(int type, int slice) { Q_UNUSED(type); }
+    virtual void setSlice(int slice) { Q_UNUSED(slice); }
+    virtual void setSlice(int type, int slice) { Q_UNUSED(type); Q_UNUSED(slice); }
 
     virtual int currentSlice() const { return 0; }
     virtual int currentSlice(int type) const { Q_UNUSED(type); return 0; }

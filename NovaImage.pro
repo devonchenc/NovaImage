@@ -19,7 +19,9 @@ DESTDIR = ./bin
 
 win32{
 INCLUDEPATH += "C:/Program Files/DCMTK/include"
+INCLUDEPATH += "C:/Program Files/FFTW"
 LIBS += -L"C:/Program Files/DCMTK/lib" -ldcmtk
+LIBS += -L"C:/Program Files/FFTW" -llibfftw3-3
 }
 
 unix{

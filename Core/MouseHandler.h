@@ -29,11 +29,11 @@ public:
     virtual void unbounded() {}
 
 protected:
-    virtual void press(QMouseEvent* event) {}
+    virtual void press(QMouseEvent* event) { Q_UNUSED(event); }
 
-    virtual void move(QMouseEvent* event) {}
+    virtual void move(QMouseEvent* event) { Q_UNUSED(event); }
 
-    virtual void release(QMouseEvent* event) {}
+    virtual void release(QMouseEvent* event) { Q_UNUSED(event); }
 
 protected:
     static QPoint _mousePos;
