@@ -134,6 +134,13 @@ public slots:
     void userGuide();
     void about();
 
+    void setLineColor(const QColor& color);
+    void enableFillColor(bool enable);
+    void setFillColor(const QColor& color);
+    void setTransparency(int value);
+    void setTextColor(const QColor& color);
+    void setTextFont(const QFont& font);
+
     void openFile(const QString& fileName);
 
     void notify(const QString& title, const QString& message, int type);

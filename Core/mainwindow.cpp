@@ -406,16 +406,22 @@ void MainWindow::createToolWidget()
 
     connect(toolbox, &ToolBoxWidget::setItemType, _toolBar, &ToolBar::setMeasurementType);
 
-    connect(toolbox, &ToolBoxWidget::setLineColor, _axialView->scene(), &GraphicsScene::setLineColor);
-    connect(toolbox, &ToolBoxWidget::setEnableFillColor, _axialView->scene(), &GraphicsScene::enableFillColor);
-    connect(toolbox, &ToolBoxWidget::setFillColor, _axialView->scene(), &GraphicsScene::setFillColor);
-    connect(toolbox, &ToolBoxWidget::setTransparency, _axialView->scene(), &GraphicsScene::setTransparency);
-    connect(toolbox, &ToolBoxWidget::setTextColor, _axialView->scene(), &GraphicsScene::setTextColor);
-    connect(toolbox, &ToolBoxWidget::setTextFont, _axialView->scene(), &GraphicsScene::setTextFont);
+    connect(toolbox, &ToolBoxWidget::setLineColor, this, &MainWindow::setLineColor);
+    connect(toolbox, &ToolBoxWidget::setEnableFillColor, this, &MainWindow::enableFillColor);
+    connect(toolbox, &ToolBoxWidget::setFillColor, this, &MainWindow::setFillColor);
+    connect(toolbox, &ToolBoxWidget::setTransparency, this, &MainWindow::setTransparency);
+    connect(toolbox, &ToolBoxWidget::setTextColor, this, &MainWindow::setTextColor);
+    connect(toolbox, &ToolBoxWidget::setTextFont, this, &MainWindow::setTextFont);
 
     connect(_axialView->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
     connect(_axialView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
     connect(_axialView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
+    connect(_coronalView->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
+    connect(_coronalView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
+    connect(_coronalView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
+    connect(_sagittalView->scene(), &GraphicsScene::itemInserted, toolbox, &ToolBoxWidget::itemInserted);
+    connect(_sagittalView->scene(), &GraphicsScene::itemSelected, toolbox, &ToolBoxWidget::itemSelected);
+    connect(_sagittalView->scene(), &GraphicsScene::textSelected, toolbox, &ToolBoxWidget::textSelected);
     connect(this, &MainWindow::setToolBoxVisible, toolbox, &ToolBoxWidget::setWidgetVisible);
 
     _curvesWidget = new CurvesWidget();
@@ -979,6 +985,36 @@ void MainWindow::userGuide()
 void MainWindow::about()
 {
 
+}
+
+void MainWindow::setLineColor(const QColor& color)
+{
+    _activeView->scene()->setLineColor(color);
+}
+
+void MainWindow::enableFillColor(bool enable)
+{
+    _activeView->scene()->enableFillColor(enable);
+}
+
+void MainWindow::setFillColor(const QColor& color)
+{
+    _activeView->scene()->setFillColor(color);
+}
+
+void MainWindow::setTransparency(int value)
+{
+    _activeView->scene()->setTransparency(value);
+}
+
+void MainWindow::setTextColor(const QColor& color)
+{
+    _activeView->scene()->setTextColor(color);
+}
+
+void MainWindow::setTextFont(const QFont& font)
+{
+    _activeView->scene()->setTextFont(font);
 }
 
 void MainWindow::openFile(const QString& fileName)

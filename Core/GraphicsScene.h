@@ -54,6 +54,7 @@ public:
 
 public slots:
     void editorLostFocus(DiagramTextItem* item);
+
     void setLineColor(const QColor& color);
     void enableFillColor(bool enable);
     void setFillColor(const QColor& color);
