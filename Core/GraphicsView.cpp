@@ -17,6 +17,7 @@ GraphicsView::GraphicsView(View* view, QGraphicsScene* scene, QWidget* parent)
     , _zoomFactor(MAX_ZOOM / 2)
     , _showAnnotation(true)
     , _showCrossLine(false)
+    , _showThreeViewAxes(false)
     , _showLineScale(true)
     , _magnifier(new MagnifierWidget(this))
 {
@@ -57,6 +58,12 @@ void GraphicsView::showAnnotation(bool show)
 void GraphicsView::showCrossLine(bool show)
 {
     _showCrossLine = show;
+    update();
+}
+
+void GraphicsView::showThreeViewAxes(bool show)
+{
+    _showThreeViewAxes = show;
     update();
 }
 
@@ -234,6 +241,10 @@ void GraphicsView::drawForeground(QPainter*, const QRectF&)
     {
         drawCrossLine();
     }
+    if (_showThreeViewAxes)
+    {
+        drawThreeViewAxes();
+    }
     if (_showLineScale)
     {
         drawLineScale();
@@ -324,6 +335,18 @@ void GraphicsView::drawAnnotation()
 }
 
 void GraphicsView::drawCrossLine()
+{
+    QRectF rect = _view->getPixmapItem()->sceneBoundingRect();
+    QPoint topLeft = mapFromScene(rect.topLeft());
+    QPoint center = mapFromScene(rect.center());
+    QPoint bottomRight = mapFromScene(rect.bottomRight());
+    QPainter painter(viewport());
+    painter.setPen(QPen(QBrush(qRgb(255, 50, 50)), 1, Qt::DotLine));
+    painter.drawLine(topLeft.x(), center.y(), bottomRight.x(), center.y());
+    painter.drawLine(center.x(), topLeft.y(), center.x(), bottomRight.y());
+}
+
+void GraphicsView::drawThreeViewAxes()
 {
     QRectF pixmapRect = _view->getPixmapItem()->sceneBoundingRect();
     QPainter painter(viewport());

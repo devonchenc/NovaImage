@@ -666,6 +666,13 @@ void MainWindow::showCrossLine(bool show)
     }
 }
 
+void MainWindow::showThreeViewAxes(bool show)
+{
+    getAxialView()->view()->showThreeViewAxes(show);
+    getCoronalView()->view()->showThreeViewAxes(show);
+    getSagittalView()->view()->showThreeViewAxes(show);
+}
+
 void MainWindow::showScale(bool show)
 {
     if (isViewLinked())

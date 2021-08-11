@@ -41,6 +41,7 @@ void ToolBar::enableButton(bool flag)
     _cineButton->setEnabled(flag);
 
     _sliceButton->setEnabled(flag);
+    _locationButton->setEnabled(flag);
     _imageWindowButton->setEnabled(flag);
     _zoomButton->setEnabled(flag);
     _cursorButton->setEnabled(flag);
@@ -90,6 +91,8 @@ void ToolBar::createButton()
 
     _sliceButton = new ToolButton;
 
+    _locationButton = new ToolButton;
+
     _imageWindowButton = new ToolButton;
     _imageWindowButton->setPopupMode(QToolButton::MenuButtonPopup);
 
@@ -118,6 +121,7 @@ void ToolBar::createButton()
     addWidget(_cineButton);
     addSeparator();
     addWidget(_sliceButton);
+    addWidget(_locationButton);
     addWidget(_imageWindowButton);
     addWidget(_zoomButton);
     addWidget(_cursorButton);
@@ -194,6 +198,10 @@ void ToolBar::createAction()
     _sliceAction = new QAction(tr("Browse slices"), _sliceButton);
     _sliceAction->setObjectName("slice");
     _sliceAction->setIcon(QIcon(":/icon/svg/slice.svg"));
+
+    _locationAction = new QAction(tr("Location"), _locationButton);
+    _locationAction->setObjectName("location");
+    _locationAction->setIcon(QIcon(":/icon/svg/location.svg"));
 
     _imageWindowAction = new QAction(tr("Adjust Window"), _imageWindowButton);
     _imageWindowAction->setObjectName("imagewindow");
@@ -298,6 +306,8 @@ void ToolBar::createAction()
 
     connect(_sliceAction, &QAction::triggered, this, &ToolBar::sliceActionTriggered);
 
+    connect(_locationAction, &QAction::triggered, this, &ToolBar::locationActionTriggered);
+
     connect(_imageWindowAction, &QAction::triggered, this, &ToolBar::imageWindowActionTriggered);
     connect(_ROIWidowAction, &QAction::triggered, this, &ToolBar::ROIWindowActionTriggered);
     connect(_defaultWindowAction, &QAction::triggered, mainWindow->getDocument(), &Document::defaultImageWindow);
@@ -331,6 +341,7 @@ void ToolBar::createAction()
     connect(_textAction, &QAction::triggered, this, &ToolBar::measurementChanged);
 
     _actionVector.push_back(_sliceAction);
+    _actionVector.push_back(_locationAction);
     _actionVector.push_back(_imageWindowAction);
     _actionVector.push_back(_ROIWidowAction);
     _actionVector.push_back(_zoomAction);
@@ -431,6 +442,11 @@ void ToolBar::initButton()
     _sliceButton->setToolTip(tr("Browse slices"));
     _sliceButton->installEventFilter(this);
     _sliceButton->setCurrentAction(_sliceAction);
+
+    _locationButton->setIconByName(":/icon/svg/location.svg");
+    _locationButton->setToolTip(tr("Location"));
+    _locationButton->installEventFilter(this);
+    _locationButton->setCurrentAction(_locationAction);
 
     menu = new QMenu(this);
     menu->addAction(_imageWindowAction);
@@ -538,6 +554,8 @@ void ToolBar::changeEvent(QEvent* event)
 
         _sliceAction->setText(tr("Browse slices"));
 
+        _locationAction->setText(tr("Location"));
+
         _imageWindowAction->setText(tr("Adjust Window"));
         _ROIWidowAction->setText(tr("ROI Window"));
         _defaultWindowAction->setText(tr("Default Window"));
@@ -575,6 +593,7 @@ void ToolBar::changeEvent(QEvent* event)
         _rotateButton->setToolTip(tr("Rotate"));
         _cineButton->setToolTip(tr("Cine"));
         _sliceButton->setToolTip(tr("Browse slices"));
+        _locationButton->setToolTip(tr("Location"));
         _imageWindowButton->setToolTip(tr("Adjust Image Window"));
         _zoomButton->setToolTip(tr("Zoom Image"));
         _cursorButton->setToolTip(tr("Select Item/Move Image"));
@@ -778,6 +797,12 @@ void ToolBar::sliceActionTriggered()
 {
     _sliceButton->setIconByName(":/icon/svg/slice.svg");
     _sliceButton->setMouseHandler(new SliceMouseHandler());
+}
+
+void ToolBar::locationActionTriggered()
+{
+    _locationButton->setIconByName(":/icon/svg/location.svg");
+    _locationButton->setMouseHandler(new LocationMouseHandler());
 }
 
 void ToolBar::imageWindowActionTriggered()

@@ -109,6 +109,7 @@ public slots:
     void fullScreen();
     void showAnnotation(bool show);
     void showCrossLine(bool show);
+    void showThreeViewAxes(bool show);
     void showScale(bool show);
     void showMeasurement(bool show);
     void zoomIn();

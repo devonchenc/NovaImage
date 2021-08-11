@@ -26,7 +26,8 @@ public:
     static void unsetRightButton();
 
 public:
-    virtual void unbounded() {}
+    virtual void active() {}
+    virtual void deactive() {}
 
 protected:
     virtual void press(QMouseEvent* event) { Q_UNUSED(event); }
@@ -51,6 +52,17 @@ protected:
     void move(QMouseEvent* event) override;
 };
 
+class LocationMouseHandler : public MouseHandler
+{
+public:
+    void active() override;
+
+protected:
+    void press(QMouseEvent* event) override;
+
+    void move(QMouseEvent* event) override;
+};
+
 class ImageWindowMouseHandler : public MouseHandler
 {
 protected:
@@ -67,7 +79,7 @@ private:
 class ROIWindowMouseHandler : public MouseHandler
 {
 public:
-    void unbounded() override;
+    void deactive() override;
 
 protected:
     void press(QMouseEvent* event) override;
@@ -92,7 +104,7 @@ protected:
 class SelectMouseHandler : public MouseHandler
 {
 public:
-    void unbounded() override;
+    void deactive() override;
 
 protected:
     void press(QMouseEvent* event) override;
@@ -103,7 +115,7 @@ protected:
 class MoveMouseHandler : public MouseHandler
 {
 public:
-    void unbounded() override;
+    void deactive() override;
 
 protected:
     void press(QMouseEvent* event) override;

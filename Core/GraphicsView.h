@@ -26,6 +26,8 @@ public:
 
     void showCrossLine(bool show);
 
+    void showThreeViewAxes(bool show);
+
     void showLineScale(bool show);
 
     void showMagnifier();
@@ -60,6 +62,8 @@ private:
 
     void drawCrossLine();
 
+    void drawThreeViewAxes();
+
     void drawLineScale();
 
     float calcScale(float pixelSpacing);
@@ -72,6 +76,7 @@ private:
     QString _strValue;
     bool _showAnnotation;
     bool _showCrossLine;
+    bool _showThreeViewAxes;
     bool _showLineScale;
     MagnifierWidget* _magnifier;
 };

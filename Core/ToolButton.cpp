@@ -66,7 +66,7 @@ void ToolButton::setMouseHandler(MouseHandler* handler)
 {
     if (_handler)
     {
-        _handler->unbounded();
+        _handler->deactive();
         delete _handler;
     }
     _handler = handler;
@@ -85,7 +85,7 @@ void ToolButton::unsetLeftMouseButton()
     {
         if (_leftMouseButton->_handler)
         {
-            _leftMouseButton->_handler->unbounded();
+            _leftMouseButton->_handler->deactive();
         }
         _leftMouseButton = nullptr;
     }
@@ -111,7 +111,7 @@ void ToolButton::unsetRightMouseButton()
     {
         if (_rightMouseButton->_handler)
         {
-            _rightMouseButton->_handler->unbounded();
+            _rightMouseButton->_handler->deactive();
         }
         _rightMouseButton = nullptr;
     }

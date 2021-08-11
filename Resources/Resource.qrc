@@ -46,5 +46,6 @@
         <file>svg/link.svg</file>
         <file>svg/imagequality.svg</file>
         <file>svg/fitwindow.svg</file>
+        <file>svg/location.svg</file>
     </qresource>
 </RCC>

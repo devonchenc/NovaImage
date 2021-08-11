@@ -59,6 +59,10 @@ void MouseHandler::handleRelease(QMouseEvent* event)
 void MouseHandler::setLeftButton(ToolButton* button)
 {
     _leftButton = button;
+    if (_leftButton->mouseHandler())
+    {
+        _leftButton->mouseHandler()->active();
+    }
 }
 
 void MouseHandler::unsetLeftButton()
@@ -67,7 +71,7 @@ void MouseHandler::unsetLeftButton()
     {
         if (_leftButton->mouseHandler())
         {
-            _leftButton->mouseHandler()->unbounded();
+            _leftButton->mouseHandler()->deactive();
         }
         _leftButton = nullptr;
     }
@@ -76,6 +80,10 @@ void MouseHandler::unsetLeftButton()
 void MouseHandler::setRightButton(ToolButton* button)
 {
     _rightButton = button;
+    if (_rightButton->mouseHandler())
+    {
+        _rightButton->mouseHandler()->active();
+    }
 }
 
 void MouseHandler::unsetRightButton()
@@ -84,7 +92,7 @@ void MouseHandler::unsetRightButton()
     {
         if (_rightButton->mouseHandler())
         {
-            _rightButton->mouseHandler()->unbounded();
+            _rightButton->mouseHandler()->deactive();
         }
         _rightButton = nullptr;
     }
@@ -109,6 +117,23 @@ void SliceMouseHandler::move(QMouseEvent* event)
     getGlobalDocument()->applyImageWidthAndLevel();
 
     _mousePos = event->pos();
+}
+
+//////////////////////////////////////////////////////////////////////////
+
+void LocationMouseHandler::active()
+{
+    getGlobalWindow()->showThreeViewAxes(true);
+}
+
+void LocationMouseHandler::press(QMouseEvent*)
+{
+    getGlobalActiveView()->view()->setDragMode(QGraphicsView::NoDrag);
+}
+
+void LocationMouseHandler::move(QMouseEvent* event)
+{
+
 }
 
 //////////////////////////////////////////////////////////////////////////
@@ -179,7 +204,7 @@ void ImageWindowMouseHandler::CalcImageWindow(QPoint offset)
 
 //////////////////////////////////////////////////////////////////////////
 
-void ROIWindowMouseHandler::unbounded()
+void ROIWindowMouseHandler::deactive()
 {
     getGlobalActiveView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
@@ -220,7 +245,7 @@ void MagnifierMouseHandler::press(QMouseEvent*)
 
 //////////////////////////////////////////////////////////////////////////
 
-void SelectMouseHandler::unbounded()
+void SelectMouseHandler::deactive()
 {
     getGlobalActiveView()->view()->setDragMode(QGraphicsView::NoDrag);
 }
@@ -237,7 +262,7 @@ void SelectMouseHandler::move(QMouseEvent*)
 
 //////////////////////////////////////////////////////////////////////////
 
-void MoveMouseHandler::unbounded()
+void MoveMouseHandler::deactive()
 {
     getGlobalActiveView()->view()->setDragMode(QGraphicsView::NoDrag);
 }

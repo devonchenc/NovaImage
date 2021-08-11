@@ -59,6 +59,7 @@ private slots:
     void FPS30ActionTriggered();
     void FPS60ActionTriggered();
     void sliceActionTriggered();
+    void locationActionTriggered();
     void imageWindowActionTriggered();
     void ROIWindowActionTriggered();
     void imageWindowButtonTriggered(QAction* action);
@@ -107,6 +108,8 @@ private:
 
     QAction* _sliceAction;
 
+    QAction* _locationAction;
+
     QAction* _imageWindowAction;
     QAction* _ROIWidowAction;
     QAction* _defaultWindowAction;
@@ -149,6 +152,7 @@ private:
     QToolButton* _cineButton;
 
     ToolButton* _sliceButton;
+    ToolButton* _locationButton;
     ToolButton* _imageWindowButton;
     ToolButton* _zoomButton;
     ToolButton* _cursorButton;
