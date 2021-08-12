@@ -105,6 +105,7 @@ public slots:
 
     void singleView();
     void threeView();
+    void fourView();
     void volumeView();
     void fullScreen();
     void showAnnotation(bool show);
@@ -181,6 +182,7 @@ private:
     QAction* _settingsAction;
     QAction* _singleViewAction;
     QAction* _threeViewAction;
+    QAction* _fourViewAction;
     QAction* _volumeViewAction;
     QAction* _linkViewAction;
     QAction* _zoomInAction;

@@ -103,6 +103,7 @@ void MainWindow::imageOpened()
         if (getGlobalImage()->slice() > 1)
         {
             _threeViewAction->setEnabled(true);
+            _fourViewAction->setEnabled(true);
             _volumeViewAction->setEnabled(true);
 
             _toolBar->enableViewAction(true);
@@ -110,6 +111,7 @@ void MainWindow::imageOpened()
         else
         {
             _threeViewAction->setEnabled(false);
+            _fourViewAction->setEnabled(false);
             _volumeViewAction->setEnabled(false);
 
             _toolBar->enableViewAction(false);
@@ -213,6 +215,10 @@ void MainWindow::createActions()
     _threeViewAction->setIcon(QIcon(":/icon/svg/threeview.svg"));
     _threeViewAction->setCheckable(true);
     _threeViewAction->setChecked(false);
+    _fourViewAction = new QAction(tr("Four View"), this);
+    _fourViewAction->setIcon(QIcon(":/icon/svg/fourview.svg"));
+    _fourViewAction->setCheckable(true);
+    _fourViewAction->setChecked(false);
     _volumeViewAction = new QAction(tr("Volume View"), this);
     _volumeViewAction->setIcon(QIcon(":/icon/svg/volumeview.svg"));
     _volumeViewAction->setCheckable(true);
@@ -225,6 +231,7 @@ void MainWindow::createActions()
     QActionGroup* viewGroup = new QActionGroup(this);
     viewGroup->addAction(_singleViewAction);
     viewGroup->addAction(_threeViewAction);
+    viewGroup->addAction(_fourViewAction);
     viewGroup->addAction(_volumeViewAction);
     viewGroup->setExclusive(true);
     connect(viewGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLayout(QAction*)));
@@ -288,6 +295,7 @@ void MainWindow::createActions()
     _viewMenu = menuBar()->addMenu(tr("&View"));
     _viewMenu->addAction(_singleViewAction);
     _viewMenu->addAction(_threeViewAction);
+    _viewMenu->addAction(_fourViewAction);
     _viewMenu->addAction(_volumeViewAction);
     _viewMenu->addAction(_linkViewAction);
     _viewMenu->addSeparator();
@@ -602,6 +610,7 @@ void MainWindow::singleView()
 
     _singleViewAction->setChecked(true);
     _threeViewAction->setChecked(false);
+    _fourViewAction->setChecked(false);
     _volumeViewAction->setChecked(false);
     _toolBar->checkViewAction(0);
 }
@@ -612,8 +621,20 @@ void MainWindow::threeView()
 
     _singleViewAction->setChecked(false);
     _threeViewAction->setChecked(true);
+    _fourViewAction->setChecked(false);
     _volumeViewAction->setChecked(false);
     _toolBar->checkViewAction(1);
+}
+
+void MainWindow::fourView()
+{
+    _layoutManager->fourView();
+
+    _singleViewAction->setChecked(false);
+    _threeViewAction->setChecked(false);
+    _fourViewAction->setChecked(true);
+    _volumeViewAction->setChecked(false);
+    _toolBar->checkViewAction(2);
 }
 
 void MainWindow::volumeView()
@@ -622,8 +643,9 @@ void MainWindow::volumeView()
 
     _singleViewAction->setChecked(false);
     _threeViewAction->setChecked(false);
+    _fourViewAction->setChecked(false);
     _volumeViewAction->setChecked(true);
-    _toolBar->checkViewAction(2);
+    _toolBar->checkViewAction(3);
 }
 
 void MainWindow::fullScreen()
@@ -756,7 +778,8 @@ void MainWindow::setupShortcuts()
 
     _singleViewAction->setShortcut(QKeySequence(Qt::Key_F2));
     _threeViewAction->setShortcut(QKeySequence(Qt::Key_F3));
-    _volumeViewAction->setShortcut(QKeySequence(Qt::Key_F4));
+    _fourViewAction->setShortcut(QKeySequence(Qt::Key_F4));
+    _volumeViewAction->setShortcut(QKeySequence(Qt::Key_F5));
 
     QList<QKeySequence> shortcuts;
     shortcuts << Qt::Key_Plus << Qt::Key_Equal;
@@ -851,6 +874,10 @@ void MainWindow::slectLayout(QAction* action)
     else if (action == _threeViewAction)
     {
         threeView();
+    }
+    else if (action == _fourViewAction)
+    {
+        fourView();
     }
     else if (action == _volumeViewAction)
     {
@@ -1067,6 +1094,7 @@ void MainWindow::changeEvent(QEvent* event)
 
         _singleViewAction->setText(tr("Single View"));
         _threeViewAction->setText(tr("Three View"));
+        _fourViewAction->setText(tr("Four View"));
         _volumeViewAction->setText(tr("Volume View"));
         _linkViewAction->setText(tr("Link View"));
         _zoomInAction->setText(tr("Zoom &In"));

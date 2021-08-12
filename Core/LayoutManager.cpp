@@ -76,6 +76,29 @@ void LayoutManager::threeView()
     _axialView->show();
     _coronalView->show();
     _sagittalView->show();
+    _volumeView->hide();
+
+    _gridLayout->addWidget(_axialView, 0, 0, 2, 1);
+    _gridLayout->addWidget(_coronalView, 0, 1);
+    _gridLayout->addWidget(_sagittalView, 1, 1);
+
+    _gridLayout->setRowStretch(0, 1);
+    _gridLayout->setRowStretch(1, 1);
+    _gridLayout->setRowStretch(2, 0);
+
+    _gridLayout->setColumnStretch(0, 1);
+    _gridLayout->setColumnStretch(1, 1);
+
+    _gridLayout->setSpacing(2);
+}
+
+void LayoutManager::fourView()
+{
+    removeWidget();
+
+    _axialView->show();
+    _coronalView->show();
+    _sagittalView->show();
     _volumeView->show();
 
     _gridLayout->addWidget(_axialView, 0, 0);

@@ -53,6 +53,7 @@ void ToolBar::enableButton(bool flag)
 void ToolBar::enableViewAction(bool flag)
 {
     _threeViewAction->setEnabled(flag);
+    _fourViewAction->setEnabled(flag);
     _volumeViewAction->setEnabled(flag);
 }
 
@@ -60,7 +61,8 @@ void ToolBar::checkViewAction(int type)
 {
     _singleViewAction->setChecked(type == 0);
     _threeViewAction->setChecked(type == 1);
-    _volumeViewAction->setChecked(type == 2);
+    _fourViewAction->setChecked(type == 2);
+    _volumeViewAction->setChecked(type == 3);
 }
 
 void ToolBar::createButton()
@@ -154,6 +156,10 @@ void ToolBar::createAction()
     _threeViewAction->setIcon(QIcon(":/icon/svg/threeview.svg"));
     _threeViewAction->setCheckable(true);
     _threeViewAction->setChecked(false);
+    _fourViewAction = new QAction(tr("Four View"), this);
+    _fourViewAction->setIcon(QIcon(":/icon/svg/fourview.svg"));
+    _fourViewAction->setCheckable(true);
+    _fourViewAction->setChecked(false);
     _volumeViewAction = new QAction(tr("Volume View"), this);
     _volumeViewAction->setIcon(QIcon(":/icon/svg/volumeview.svg"));
     _volumeViewAction->setCheckable(true);
@@ -285,6 +291,7 @@ void ToolBar::createAction()
     connect(_showDockWidgetAction, &QAction::toggled, mainWindow, &MainWindow::showDockWidget);
     connect(_singleViewAction, &QAction::triggered, this, &ToolBar::singleViewActionTriggered);
     connect(_threeViewAction, &QAction::triggered, this, &ToolBar::threeViewActionTriggered);
+    connect(_fourViewAction, &QAction::triggered, this, &ToolBar::fourViewActionTriggered);
     connect(_volumeViewAction, &QAction::triggered, this, &ToolBar::volumeViewActionTriggered);
     connect(_fullScreenAction, &QAction::triggered, mainWindow, &MainWindow::fullScreen);
 
@@ -392,6 +399,7 @@ void ToolBar::initButton()
     menu->addSeparator();
     menu->addAction(_singleViewAction);
     menu->addAction(_threeViewAction);
+    menu->addAction(_fourViewAction);
     menu->addAction(_volumeViewAction);
     menu->addSeparator();
     menu->addAction(_fullScreenAction);
@@ -537,6 +545,7 @@ void ToolBar::changeEvent(QEvent* event)
         _showDockWidgetAction->setText(tr("Dock Widgets"));
         _singleViewAction->setText(tr("Single View"));
         _threeViewAction->setText(tr("Three View"));
+        _fourViewAction->setText(tr("Four View"));
         _volumeViewAction->setText(tr("Volume View"));
         _fullScreenAction->setText(tr("Full Screen Mode"));
         _showAnnotationAction->setText(tr("Annotations"));
@@ -740,6 +749,11 @@ void ToolBar::singleViewActionTriggered()
 void ToolBar::threeViewActionTriggered()
 {
     getGlobalWindow()->threeView();
+}
+
+void ToolBar::fourViewActionTriggered()
+{
+    getGlobalWindow()->fourView();
 }
 
 void ToolBar::volumeViewActionTriggered()

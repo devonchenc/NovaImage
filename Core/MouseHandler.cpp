@@ -123,7 +123,15 @@ void SliceMouseHandler::move(QMouseEvent* event)
 
 void LocationMouseHandler::active()
 {
-    getGlobalWindow()->showThreeViewAxes(true);
+    if (getGlobalImage()->slice() > 1)
+    {
+        getGlobalWindow()->showThreeViewAxes(true);
+    }
+}
+
+void LocationMouseHandler::deactive()
+{
+    getGlobalWindow()->showThreeViewAxes(false);
 }
 
 void LocationMouseHandler::press(QMouseEvent*)

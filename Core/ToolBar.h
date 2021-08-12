@@ -49,6 +49,7 @@ private slots:
     void showInfoButtonClicked();
     void singleViewActionTriggered();
     void threeViewActionTriggered();
+    void fourViewActionTriggered();
     void volumeViewActionTriggered();
     void flipHorizontalActionTriggered();
     void flipVerticalActionTriggered();
@@ -87,6 +88,7 @@ private:
     QAction* _showDockWidgetAction;
     QAction* _singleViewAction;
     QAction* _threeViewAction;
+    QAction* _fourViewAction;
     QAction* _volumeViewAction;
     QAction* _fullScreenAction;
 

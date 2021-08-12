@@ -56,6 +56,7 @@ class LocationMouseHandler : public MouseHandler
 {
 public:
     void active() override;
+    void deactive() override;
 
 protected:
     void press(QMouseEvent* event) override;
