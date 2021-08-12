@@ -25,8 +25,10 @@ LIBS += -L"C:/Program Files/FFTW" -llibfftw3-3
 }
 
 unix{
-INCLUDEPATH += "/home/dchen/dcmtk-3.6.5/install/include"
-LIBS += -L"/home/dchen/dcmtk-3.6.5/install/lib" -ldcmtk
+INCLUDEPATH += "/home/devon/dcmtk-3.6.6/install/include"
+INCLUDEPATH += "/usr/local/include"
+LIBS += -L"/home/devon/dcmtk-3.6.6/install/lib" -ldcmtk
+LIBS += /usr/local/lib/libfftw3.a
 }
 
 DEPENDPATH += .

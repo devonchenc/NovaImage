@@ -11,6 +11,7 @@
 #include <QLineEdit>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <cmath>
 
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
