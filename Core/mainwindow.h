@@ -61,6 +61,9 @@ public:
     bool cine30FPS();
     bool cine60FPS();
 
+    // Set three view axes location
+    void setAxesLocation(QPoint point);
+
 protected:
     void changeEvent(QEvent* event) override;
     void closeEvent(QCloseEvent* event) override;

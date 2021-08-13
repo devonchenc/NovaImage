@@ -134,14 +134,18 @@ void LocationMouseHandler::deactive()
     getGlobalWindow()->showThreeViewAxes(false);
 }
 
-void LocationMouseHandler::press(QMouseEvent*)
+void LocationMouseHandler::press(QMouseEvent* event)
 {
     getGlobalActiveView()->view()->setDragMode(QGraphicsView::NoDrag);
+
+    QPoint point = getGlobalActiveView()->view()->mapToScene(event->pos()).toPoint();
+    getGlobalWindow()->setAxesLocation(point);
 }
 
 void LocationMouseHandler::move(QMouseEvent* event)
 {
-
+    QPoint point = getGlobalActiveView()->view()->mapToScene(event->pos()).toPoint();
+    getGlobalWindow()->setAxesLocation(point);
 }
 
 //////////////////////////////////////////////////////////////////////////

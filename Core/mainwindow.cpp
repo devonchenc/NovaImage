@@ -174,6 +174,30 @@ bool MainWindow::cine60FPS()
     }
 }
 
+void MainWindow::setAxesLocation(QPoint point)
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr)
+        return;
+
+    if (_activeView == _axialView)
+    {
+        image->setSlice(CORONAL_VIEW, point.y());
+        image->setSlice(SAGITTAL_VIEW, point.x());
+    }
+    else if (_activeView == _coronalView)
+    {
+        image->setSlice(AXIAL_VIEW, point.y());
+        image->setSlice(SAGITTAL_VIEW, point.x());
+    }
+    else if (_activeView == _sagittalView)
+    {
+        image->setSlice(AXIAL_VIEW, point.y());
+        image->setSlice(CORONAL_VIEW, point.x());
+    }
+    getGlobalDocument()->applyImageWidthAndLevel();
+}
+
 void MainWindow::initUI()
 {
     createActions();

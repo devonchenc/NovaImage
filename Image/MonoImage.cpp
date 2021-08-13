@@ -168,16 +168,25 @@ bool MonoImage::copyByteToImage(QImage* dstImage)
 
 void MonoImage::setSlice(int slice)
 {
+    if (slice < 0)
+        return;
+
     if (_currentViewType == AXIAL_VIEW)
     {
+        if (slice > _slice)
+            return;
         _currentAxialSlice = slice;
     }
     else if (_currentViewType == CORONAL_VIEW)
     {
+        if (slice > _height)
+            return;
         _currentCoronalSlice = slice;
     }
     else/* if (_currentType == SAGITTAL_VIEW)*/
     {
+        if (slice > _width)
+            return;
         _currentSagittalSlice = slice;
     }
     _imageData->changeSlice(_currentViewType, slice);
@@ -185,16 +194,25 @@ void MonoImage::setSlice(int slice)
 
 void MonoImage::setSlice(int type, int slice)
 {
+    if (slice < 0)
+        return;
+
     if (type == AXIAL_VIEW)
     {
+        if (slice > _slice)
+            return;
         _currentAxialSlice = slice;
     }
     else if (type == CORONAL_VIEW)
     {
+        if (slice > _height)
+            return;
         _currentCoronalSlice = slice;
     }
     else/* if (type == SAGITTAL_VIEW)*/
     {
+        if (slice > _width)
+            return;
         _currentSagittalSlice = slice;
     }
     _imageData->changeSlice(type, slice);
