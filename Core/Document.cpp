@@ -22,7 +22,7 @@
 #include "../Processor/EqualizationProcessor.h"
 #include "../Processor/EnhancementProcessor.h"
 #include "../Processor/LightFieldCorrectionProcessor.h"
-#include "../Widget/RawParameterDialog.h"
+#include "../Dialog/RawParameterDialog.h"
 
 Document::Document(MainWindow* pWindow)
     : QObject(pWindow)

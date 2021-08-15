@@ -34,6 +34,9 @@
     <Filter Include="Diagram">
       <UniqueIdentifier>{ddbda8cd-14eb-42f8-816c-701d3977a230}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dialog">
+      <UniqueIdentifier>{58afb8ad-d315-4ccd-8ccb-197241894911}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image\BaseImage.cpp">
@@ -90,9 +93,6 @@
     <ClCompile Include="Processor\LevelsProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\RawParameterDialog.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Image\RawImage.cpp">
       <Filter>Image</Filter>
     </ClCompile>
@@ -132,9 +132,6 @@
     <ClCompile Include="Notification\NotificationWidget.cpp">
       <Filter>Notification</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\SettingsDialog.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Core\UndoSystem.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -156,9 +153,6 @@
     <ClCompile Include="Diagram\DiagramTextItem.cpp">
       <Filter>Diagram</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\PlotDialog.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Diagram\DiagramPlotItem.cpp">
       <Filter>Diagram</Filter>
     </ClCompile>
@@ -171,9 +165,6 @@
     <ClCompile Include="Widget\ChartView.cpp">
       <Filter>Widget</Filter>
     </ClCompile>
-    <ClCompile Include="Widget\ProgressDialog.cpp">
-      <Filter>Widget</Filter>
-    </ClCompile>
     <ClCompile Include="Core\LayoutManager.cpp">
       <Filter>Core</Filter>
     </ClCompile>
@@ -182,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="Diagram\DiagramImageQualityItem.cpp">
       <Filter>Diagram</Filter>
-    </ClCompile>
-    <ClCompile Include="Widget\ImageQualityDialog.cpp">
-      <Filter>Widget</Filter>
     </ClCompile>
     <ClCompile Include="Widget\ImageQualityChartView.cpp">
       <Filter>Widget</Filter>
@@ -219,6 +207,24 @@
     <ClCompile Include="Processor\LightFieldCorrectionProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Dialog\ImageQualityDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\PlotDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\ProgressDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\RawParameterDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\SettingsDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
+    <ClCompile Include="Dialog\AboutDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -240,9 +246,6 @@
       <Filter>Widget</Filter>
     </QtMoc>
     <QtMoc Include="Widget\ColorButton.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
-    <QtMoc Include="Widget\RawParameterDialog.h">
       <Filter>Widget</Filter>
     </QtMoc>
     <QtMoc Include="Core\Document.h">
@@ -275,9 +278,6 @@
     <QtMoc Include="Notification\NotificationWidget.h">
       <Filter>Notification</Filter>
     </QtMoc>
-    <QtMoc Include="Widget\SettingsDialog.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
     <QtMoc Include="Core\RecentFiles.h">
       <Filter>Core</Filter>
     </QtMoc>
@@ -296,9 +296,6 @@
     <QtMoc Include="Diagram\DiagramTextItem.h">
       <Filter>Diagram</Filter>
     </QtMoc>
-    <QtMoc Include="Widget\PlotDialog.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
     <QtMoc Include="Diagram\DiagramPlotItem.h">
       <Filter>Diagram</Filter>
     </QtMoc>
@@ -311,9 +308,6 @@
     <QtMoc Include="Widget\ChartView.h">
       <Filter>Widget</Filter>
     </QtMoc>
-    <QtMoc Include="Widget\ProgressDialog.h">
-      <Filter>Widget</Filter>
-    </QtMoc>
     <QtMoc Include="Image\ImageReader.h">
       <Filter>Image</Filter>
     </QtMoc>
@@ -322,9 +316,6 @@
     </QtMoc>
     <QtMoc Include="Diagram\DiagramImageQualityItem.h">
       <Filter>Diagram</Filter>
-    </QtMoc>
-    <QtMoc Include="Widget\ImageQualityDialog.h">
-      <Filter>Widget</Filter>
     </QtMoc>
     <QtMoc Include="Widget\ImageQualityChartView.h">
       <Filter>Widget</Filter>
@@ -355,6 +346,24 @@
     </QtMoc>
     <QtMoc Include="Processor\LightFieldCorrectionProcessor.h">
       <Filter>Processor</Filter>
+    </QtMoc>
+    <QtMoc Include="Dialog\ImageQualityDialog.h">
+      <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="Dialog\PlotDialog.h">
+      <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="Dialog\ProgressDialog.h">
+      <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="Dialog\RawParameterDialog.h">
+      <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="Dialog\SettingsDialog.h">
+      <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="Dialog\AboutDialog.h">
+      <Filter>Dialog</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -7,7 +7,7 @@
 #include <QInputDialog>
 #include <QLabel>
 
-#include "ImageQualityChartView.h"
+#include "../Widget/ImageQualityChartView.h"
 #include "../Diagram/DiagramImageQualityItem.h"
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"

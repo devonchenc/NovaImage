@@ -14,6 +14,11 @@ HEADERS += ./Image/DicomImage.h \
     ./Image/ImageDataTemplate.h \
     ./Image/ImageReader.h \
     ./Image/MonoImageProxy.h \
+    ./Dialog/RawParameterDialog.h \
+    ./Dialog/ProgressDialog.h \
+    ./Dialog/SettingsDialog.h \
+    ./Dialog/PlotDialog.h \
+    ./Dialog/ImageQualityDialog.h \
     ./Widget/Peg.h \
     ./Widget/WidgetManager.h \
     ./Widget/ColorButton.h \
@@ -21,11 +26,6 @@ HEADERS += ./Image/DicomImage.h \
     ./Widget/ChartView.h \
     ./Widget/ImageQualityChartView.h \
     ./Widget/ToolBoxWidget.h \
-    ./Widget/RawParameterDialog.h \
-    ./Widget/ProgressDialog.h \
-    ./Widget/SettingsDialog.h \
-    ./Widget/PlotDialog.h \
-    ./Widget/ImageQualityDialog.h \
     ./Widget/LevelsWidget.h \
     ./Widget/HistogramWidget.h \
     ./Widget/CurvesWidget.h \
@@ -76,6 +76,11 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Image/RawImage.cpp \
     ./Image/ScanImage.cpp \
     ./Image/MonoImageProxy.cpp \
+	./Dialog/PlotDialog.cpp \
+    ./Dialog/ImageQualityDialog.cpp \
+    ./Dialog/RawParameterDialog.cpp \
+    ./Dialog/ProgressDialog.cpp \
+    ./Dialog/SettingsDialog.cpp \
     ./Widget/ChartView.cpp \
     ./Widget/ImageQualityChartView.cpp \
     ./Widget/ColorButton.cpp \
@@ -86,11 +91,6 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Widget/LevelsWidget.cpp \
     ./Widget/MagnifierWidget.cpp \
     ./Widget/Peg.cpp \
-    ./Widget/PlotDialog.cpp \
-    ./Widget/ImageQualityDialog.cpp \
-    ./Widget/RawParameterDialog.cpp \
-    ./Widget/ProgressDialog.cpp \
-    ./Widget/SettingsDialog.cpp \
     ./Widget/ToolBoxWidget.cpp \
     ./Widget/WidgetManager.cpp \
     ./Widget/ProcessorShellWidget.cpp \

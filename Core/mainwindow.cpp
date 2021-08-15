@@ -34,7 +34,8 @@
 #include "../Widget/CurvesWidget.h"
 #include "../Widget/LevelsWidget.h"
 #include "../Widget/ProcessorShellWidget.h"
-#include "../Widget/SettingsDialog.h"
+#include "../Dialog/SettingsDialog.h"
+#include "../Dialog/AboutDialog.h"
 #include "../Notification/NotificationLayout.h"
 
 MainWindow::MainWindow(QWidget* parent)
@@ -1042,7 +1043,8 @@ void MainWindow::userGuide()
 
 void MainWindow::about()
 {
-
+    AboutDialog dlg;
+    dlg.exec();
 }
 
 void MainWindow::setLineColor(const QColor& color)

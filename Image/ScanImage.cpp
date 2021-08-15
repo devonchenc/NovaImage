@@ -4,7 +4,7 @@
 
 #include "ImageDataTemplate.h"
 #include "ImageReader.h"
-#include "../Widget/ProgressDialog.h"
+#include "../Dialog/ProgressDialog.h"
 
 ScanImage::ScanImage(const QString& pathName)
     : MonoImage(pathName)

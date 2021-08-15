@@ -5,7 +5,7 @@
 #include <QMenuBar>
 #include <QInputDialog>
 
-#include "ChartView.h"
+#include "../Widget/ChartView.h"
 #include "../Diagram/DiagramPlotItem.h"
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
