@@ -39,3 +39,5 @@ include(NovaImage.pri)
 
 DEFINES  -= UNICODE
 DEFINES  += UMBCS
+
+QMAKE_RPATHDIR += ../lib

@@ -854,7 +854,7 @@ void MainWindow::loadPlugin()
 void MainWindow::loadTranslator()
 {
     _translator = new QTranslator(this);
-    _translator->load("novaimage_zh.qm");
+    _translator->load("novaimage_zh.qm", QCoreApplication::applicationDirPath());
 
     for (int i = 0; i < _vecPlugin.size(); i++)
     {
