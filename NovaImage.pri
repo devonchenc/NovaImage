@@ -19,6 +19,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Dialog/SettingsDialog.h \
     ./Dialog/PlotDialog.h \
     ./Dialog/ImageQualityDialog.h \
+    ./Dialog/AboutDialog.h \
     ./Widget/Peg.h \
     ./Widget/WidgetManager.h \
     ./Widget/ColorButton.h \
@@ -45,7 +46,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Processor/InverseProcessor.h \
     ./Processor/LevelsProcessor.h \
     ./Processor/ThresholdSegmentationProcessor.h \
-	./Processor/LightFieldCorrectionProcessor.h \
+    ./Processor/LightFieldCorrectionProcessor.h \
     ./Core/GlobalFunc.h \
     ./Core/MouseHandler.h \
     ./Core/UndoSystem.h \
@@ -76,11 +77,12 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Image/RawImage.cpp \
     ./Image/ScanImage.cpp \
     ./Image/MonoImageProxy.cpp \
-	./Dialog/PlotDialog.cpp \
+    ./Dialog/PlotDialog.cpp \
     ./Dialog/ImageQualityDialog.cpp \
     ./Dialog/RawParameterDialog.cpp \
     ./Dialog/ProgressDialog.cpp \
     ./Dialog/SettingsDialog.cpp \
+    ./Dialog/AboutDialog.cpp \
     ./Widget/ChartView.cpp \
     ./Widget/ImageQualityChartView.cpp \
     ./Widget/ColorButton.cpp \
@@ -106,7 +108,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Processor/InverseProcessor.cpp \
     ./Processor/LevelsProcessor.cpp \
     ./Processor/ThresholdSegmentationProcessor.cpp \
-	./Processor/LightFieldCorrectionProcessor.cpp \
+    ./Processor/LightFieldCorrectionProcessor.cpp \
     ./Core/Document.cpp \
     ./Core/GlobalFunc.cpp \
     ./Core/GraphicsScene.cpp \
