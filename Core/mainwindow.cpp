@@ -1133,6 +1133,7 @@ void MainWindow::changeEvent(QEvent* event)
         _gammaTransformationAction->setText(tr("&Gamma Transformation"));
         _thresholdSegmentationAction->setText(tr("&Threshold Segmentation"));
         _equalizationAction->setText(tr("&Histogram Equalization"));
+        _lookupTableMenu->setTitle(tr("&Lookup Table"));
         _enhancementAction->setText(tr("Image &Enhancement"));
         _lightFieldCorrectionAction->setText(tr("&Light Field Correction"));
 
