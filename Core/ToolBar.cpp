@@ -201,7 +201,7 @@ void ToolBar::createAction()
     _FPS60Action->setCheckable(true);
     _FPS60Action->setChecked(false);
 
-    _sliceAction = new QAction(tr("Browse slices"), _sliceButton);
+    _sliceAction = new QAction(tr("Browse Slices"), _sliceButton);
     _sliceAction->setObjectName("slice");
     _sliceAction->setIcon(QIcon(":/icon/svg/slice.svg"));
 
@@ -447,7 +447,7 @@ void ToolBar::initButton()
     connect(_cineButton, &QToolButton::clicked, _FPS30Action, &QAction::triggered);
 
     _sliceButton->setIconByName(":/icon/svg/slice.svg");
-    _sliceButton->setToolTip(tr("Browse slices"));
+    _sliceButton->setToolTip(tr("Browse Slices"));
     _sliceButton->installEventFilter(this);
     _sliceButton->setCurrentAction(_sliceAction);
 
@@ -561,7 +561,7 @@ void ToolBar::changeEvent(QEvent* event)
         _rotate180Action->setText(tr("Rotate 180 ") + QString(QChar(0x00B0)));
         _resetTransformation->setText(tr("Reset Transformation"));
 
-        _sliceAction->setText(tr("Browse slices"));
+        _sliceAction->setText(tr("Browse Slices"));
 
         _locationAction->setText(tr("Location"));
 
@@ -601,7 +601,7 @@ void ToolBar::changeEvent(QEvent* event)
         _flipButton->setToolTip(tr("Flip"));
         _rotateButton->setToolTip(tr("Rotate"));
         _cineButton->setToolTip(tr("Cine"));
-        _sliceButton->setToolTip(tr("Browse slices"));
+        _sliceButton->setToolTip(tr("Browse Slices"));
         _locationButton->setToolTip(tr("Location"));
         _imageWindowButton->setToolTip(tr("Adjust Image Window"));
         _zoomButton->setToolTip(tr("Zoom Image"));

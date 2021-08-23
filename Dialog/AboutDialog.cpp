@@ -27,14 +27,14 @@ void AboutDialog::initUI()
 
     QVBoxLayout* vLayout = new QVBoxLayout;
     vLayout->addStretch();
-    vLayout->addWidget(new QLabel(tr("NovaImage")));
+    vLayout->addWidget(new QLabel("NovaImage"));
     vLayout->addStretch();
-    vLayout->addWidget(new QLabel(tr("Version 1.0.0")));
+    vLayout->addWidget(new QLabel("Version 1.0.0"));
     vLayout->addStretch();
-    vLayout->addWidget(new QLabel(tr("Copyright (C) 2021 DevonChen")));
-    vLayout->addWidget(new QLabel(tr("All rights reserved.")));
+    vLayout->addWidget(new QLabel("Copyright (C) 2021 DevonChen"));
+    vLayout->addWidget(new QLabel("All rights reserved."));
     vLayout->addStretch();
-    QLabel* linkLabel = new QLabel(tr("<a href=\"https://github.com/devonchenc/\">https://github.com/devonchenc/"));
+    QLabel* linkLabel = new QLabel("<a href=\"https://github.com/devonchenc/\">https://github.com/devonchenc/");
     linkLabel->setOpenExternalLinks(true);
     vLayout->addWidget(linkLabel);
     vLayout->addStretch();

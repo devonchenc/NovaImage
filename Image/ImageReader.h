@@ -52,7 +52,6 @@ private:
     Type* _buffer;
 };
 
-
 template <class Type>
 ImageReader<Type>::ImageReader(const QString& pathName, int headSize, int pixelCount, int slice, Type* buffer)
     : AbstractReader(pathName, nullptr)

@@ -283,9 +283,9 @@ void MainWindow::createActions()
     _gammaTransformationAction = new QAction(tr("&Gamma Transformation"), this);
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
-    _LUT_rainbowAction = new QAction(tr("&Rainbow"), this);
+    _LUT_rainbowAction = new QAction("&Rainbow", this);
     _LUT_rainbowAction->setCheckable(true);
-    _LUT_seismicAction = new QAction(tr("&Seismic"), this);
+    _LUT_seismicAction = new QAction("&Seismic", this);
     _LUT_seismicAction->setCheckable(true);
     _enhancementAction = new QAction(tr("Image &Enhancement"), this);
     _lightFieldCorrectionAction = new QAction(tr("&Light Field Correction"), this);
