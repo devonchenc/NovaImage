@@ -8,7 +8,6 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsOpacityEffect>
-#include <QTextCodec>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
