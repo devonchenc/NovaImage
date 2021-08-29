@@ -91,18 +91,28 @@ public:
     float   ObjectCenterHeight; // 物体中心高度
     float   HeightOnPCB;        // 物体在PCB板上高度
     float   HeightUnderPCB;     // 物体在PCB板下高度
-    float   ObjectType;
     float   Reserved9;
     float   Reserved10;
+    float   Reserved11;
 
     float   Pitch;              // Pitch of Spiral scan
     int     RotaionNumber;      // Number of turns of Spiral scan
     int     LimitedScanAngle;   // Angle of limited angle scan
     float   ShortScanDistance;  // Detector offset of LFOV scan
-    float   Reserved11;
     float   Reserved12;
+    float   Reserved13;
 
     // Reconstruct
+    int     FeedbackAfterRecon;     // 0:No, 1:Yes
+    int     ReconRegion;            // 0:Full, 1:Region
+    float   ReconWidth;
+    float   ReconHeight;
+    float   Reserved14;
+    float   Reserved15;
+    float   Reserved16;
+    float   Reserved17;
+
+    // Reconstruct Algorithm
     int     Algorithm;          // 0:None, 1:FDK, 2:Iteration
     int     InterationNum;
     float   CenterOffset1;
@@ -118,11 +128,10 @@ public:
     float   DetectorRandomMoveFactor;
     int     OutOfView;
     float   Gamma;
-    int     FeedbackAfterRecon;     // 0:No, 1:Yes
-    float   Reserved13;
-    float   Reserved14;
-    float   Reserved15;
-    float   Reserved16;
+    float   Reserved18;
+    float   Reserved19;
+    float   Reserved20;
+    float   Reserved21;
 
     // Image cropping parameters
     int     CutOrNot;
@@ -132,8 +141,8 @@ public:
     int     CutEndY;
     int     OriginWidth;
     int     OriginHeight;
-    float   Reserved17;
-    float   Reserved18;
+    float   Reserved22;
+    float   Reserved23;
 
     // Motor Position
     int		PositionNum;
@@ -175,7 +184,8 @@ public:
     char	Date[40];           // 操作时间
 
     // Object Information
-    char    ObjectTypeName[40];     // 型号
+    int     ObjectType;         // Type
+    char    ObjectTypeName[40]; // 型号
     char    PartNum[40];        // 零件图号
     char    SerialNum[40];      // 零件编号
     char    LocationNum[40];    // 部位序号
