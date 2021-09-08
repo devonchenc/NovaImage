@@ -41,14 +41,20 @@ class ImageReader : public AbstractReader
 {
 public:
     ImageReader(const QString& pathName, int headSize, int pixelCount, int slice, Type* buffer);
+    ImageReader(const QString& pathName, int headSize, int pixelCount, int slice, int endian, Type* buffer);
 
 protected:
     void run() override;
 
 private:
+    // Convert endian byte order
+    void convertEndian(Type* data);
+
+private:
     int _headSize;
     int _pixelPerSlice;
     int _slice;
+    int _endian;
     Type* _buffer;
 };
 
@@ -58,6 +64,19 @@ ImageReader<Type>::ImageReader(const QString& pathName, int headSize, int pixelC
     , _headSize(headSize)
     , _pixelPerSlice(pixelCount)
     , _slice(slice)
+    , _endian(0)
+    , _buffer(buffer)
+{
+
+}
+
+template <class Type>
+ImageReader<Type>::ImageReader(const QString& pathName, int headSize, int pixelCount, int slice, int endian, Type* buffer)
+    : AbstractReader(pathName, nullptr)
+    , _headSize(headSize)
+    , _pixelPerSlice(pixelCount)
+    , _slice(slice)
+    , _endian(endian)
     , _buffer(buffer)
 {
 
@@ -76,9 +95,9 @@ void ImageReader<Type>::run()
     QMetaObject::invokeMethod(_widget, "setTitle", Qt::QueuedConnection, Q_ARG(const QString&, tr("Loading file...")));
 
     file.seek(_headSize);
-    for (int i = 0; i < _slice; i++)
+    for (int n = 0; n < _slice; n++)
     {
-        qint64 readSize = file.read((char*)(_buffer + i * _pixelPerSlice), sizeof(Type) * _pixelPerSlice);
+        qint64 readSize = file.read((char*)(_buffer + n * _pixelPerSlice), sizeof(Type) * _pixelPerSlice);
         if (readSize != qint64(sizeof(Type)) * qint64(_pixelPerSlice))
         {
             file.close();
@@ -91,7 +110,16 @@ void ImageReader<Type>::run()
         if (_waitForQuit)
             return;
 
-        Type* temp = _buffer + i * _pixelPerSlice;
+        if (_endian == 1 && sizeof(Type) > 1)
+        {
+            // Convert endian byte order
+            for (int i = 0; i < _pixelPerSlice; i++)
+            {
+                convertEndian(_buffer + n * _pixelPerSlice + i);
+            }
+        }
+
+        Type* temp = _buffer + n * _pixelPerSlice;
         for (int i = 1; i < _pixelPerSlice; i++)
         {
             if (_minValue > temp[i])
@@ -104,11 +132,22 @@ void ImageReader<Type>::run()
             }
         }
 
-        int progress = (i + 1) * 100 / _slice;
+        int progress = (n + 1) * 100 / _slice;
         QMetaObject::invokeMethod(_widget, "setProgress", Qt::QueuedConnection, Q_ARG(int, progress));
     }
 
     file.close();
 
     QMetaObject::invokeMethod(_widget, "accept", Qt::QueuedConnection);
+}
+
+template <class Type>
+void ImageReader<Type>::convertEndian(Type* data)
+{
+    for (int i = 0; i < sizeof(Type) / 2; i++)
+    {
+        char temp = ((char*)data)[sizeof(Type) - i - 1];
+        ((char*)data)[sizeof(Type) - i - 1] = ((char*)data)[i];
+        ((char*)data)[i] = temp;
+    }
 }

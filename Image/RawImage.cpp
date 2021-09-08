@@ -6,7 +6,7 @@
 #include "ImageReader.h"
 #include "../Dialog/ProgressDialog.h"
 
-RawImage::RawImage(const QString& pathName, int type, int width, int height, int slice, int headerSize)
+RawImage::RawImage(const QString& pathName, int type, int width, int height, int slice, int headerSize, int endian)
     : MonoImage(pathName)
     , _dataType(type)
     , _headerSize(headerSize)
@@ -19,7 +19,7 @@ RawImage::RawImage(const QString& pathName, int type, int width, int height, int
     _currentSagittalSlice = round(_width / 2.0) - 1;
 
     // Read data
-    if (readData() == false)
+    if (readData(endian) == false)
     {
         _openSucceed = false;
         return;
@@ -107,7 +107,7 @@ bool RawImage::copyToImage(BaseImage* image) const
 }
 
 // Read data
-bool RawImage::readData()
+bool RawImage::readData(int endian)
 {
     if (_width <= 0 || _height <= 0 || _slice <= 0)
         return false;
@@ -119,35 +119,35 @@ bool RawImage::readData()
     {
         _imageData = new ImageDataTemplate<uchar>(_width, _height, _slice);
         uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
-        reader = new ImageReader<uchar>(_pathName, _headerSize, _width * _height, _slice, originalData);
+        reader = new ImageReader<uchar>(_pathName, _headerSize, _width * _height, _slice, endian, originalData);
     }
     break;
     case 1:
     {
         _imageData = new ImageDataTemplate<ushort>(_width, _height, _slice);
         ushort* originalData = static_cast<ushort*>(_imageData->getOriginalData());
-        reader = new ImageReader<ushort>(_pathName, _headerSize, _width * _height, _slice, originalData);
+        reader = new ImageReader<ushort>(_pathName, _headerSize, _width * _height, _slice, endian, originalData);
     }
     break;
     case 2:
     {
         _imageData = new ImageDataTemplate<uint>(_width, _height, _slice);
         uint* originalData = static_cast<uint*>(_imageData->getOriginalData());
-        reader = new ImageReader<uint>(_pathName, _headerSize, _width * _height, _slice, originalData);
+        reader = new ImageReader<uint>(_pathName, _headerSize, _width * _height, _slice, endian, originalData);
     }
     break;
     case 3:
     {
         _imageData = new ImageDataTemplate<float>(_width, _height, _slice);
         float* originalData = static_cast<float*>(_imageData->getOriginalData());
-        reader = new ImageReader<float>(_pathName, _headerSize, _width * _height, _slice, originalData);
+        reader = new ImageReader<float>(_pathName, _headerSize, _width * _height, _slice, endian, originalData);
     }
     break;
     case 4:
     {
         _imageData = new ImageDataTemplate<double>(_width, _height, _slice);
         double* originalData = static_cast<double*>(_imageData->getOriginalData());
-        reader = new ImageReader<double>(_pathName, _headerSize, _width * _height, _slice, originalData);
+        reader = new ImageReader<double>(_pathName, _headerSize, _width * _height, _slice, endian, originalData);
     }
     break;
     }

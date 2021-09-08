@@ -5,7 +5,7 @@
 class RawImage : public MonoImage
 {
 public:
-    RawImage(const QString& pathName, int type, int width, int height, int slice, int headerSize);
+    RawImage(const QString& pathName, int type, int width, int height, int slice, int headerSize, int endian);
     RawImage(const RawImage& src);
     virtual ~RawImage();
 
@@ -22,7 +22,7 @@ public:
 
 private:
     // Read data
-    bool readData();
+    bool readData(int endian);
 
 private:
     int _dataType;
