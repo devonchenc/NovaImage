@@ -144,7 +144,7 @@ void ImageReader<Type>::run()
 template <class Type>
 void ImageReader<Type>::convertEndian(Type* data)
 {
-    for (int i = 0; i < sizeof(Type) / 2; i++)
+    for (size_t i = 0; i < sizeof(Type) / 2; i++)
     {
         char temp = ((char*)data)[sizeof(Type) - i - 1];
         ((char*)data)[sizeof(Type) - i - 1] = ((char*)data)[i];

@@ -262,9 +262,6 @@ void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage*
         int newWidth = int(pow(2, ceil(log2(width))));
         int newHeight = int(pow(2, ceil(log2(height))));
 
-        float maxValue = srcImage->getMaxValue();
-        float minValue = srcImage->getMinValue();
-
         // Variance
         float sigma = width / 16;
         fftw_complex* kernelOut = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * newWidth * newHeight);
