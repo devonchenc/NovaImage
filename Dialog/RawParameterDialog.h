@@ -15,7 +15,6 @@ class RawParameterDialog : public QDialog
 
 public:
     RawParameterDialog(const QString& pathName, QWidget* parent = nullptr);
-    ~RawParameterDialog();
 
 public:
     int dataType() { return _dataType; }

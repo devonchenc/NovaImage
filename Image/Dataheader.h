@@ -105,12 +105,12 @@ public:
     // Reconstruct
     int     FeedbackAfterRecon;     // 0:No, 1:Yes
     int     ReconRegion;            // 0:Full, 1:Region
-    float   ReconWidth;
-    float   ReconHeight;
-    float   Reserved14;
-    float   Reserved15;
-    float   Reserved16;
-    float   Reserved17;
+    float   ReconRegionWidth;
+    float   ReconRegionHeight;
+    float   ReconRegionSlice;
+    int     CTValueClip;
+    float   ClipMin;
+    float   ClipMax;
 
     // Reconstruct Algorithm
     int     Algorithm;          // 0:None, 1:FDK, 2:Iteration

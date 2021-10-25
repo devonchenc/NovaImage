@@ -34,11 +34,6 @@ RawParameterDialog::RawParameterDialog(const QString& pathName, QWidget* parent)
     resize(400, 350);
 }
 
-RawParameterDialog::~RawParameterDialog()
-{
-
-}
-
 void RawParameterDialog::initUI()
 {
     QLabel* nameLabel = new QLabel(tr("File Name:"));
@@ -132,7 +127,7 @@ void RawParameterDialog::initUI()
     connect(acceptButton, &QPushButton::clicked, this, &RawParameterDialog::acceptButtonClicked);
     QPushButton* rejectButton = new QPushButton(tr("Cancel"));
     connect(rejectButton, &QPushButton::clicked, this, &QDialog::reject);
-    QHBoxLayout* hLayout = new QHBoxLayout();
+    QHBoxLayout* hLayout = new QHBoxLayout;
     hLayout->addStretch();
     hLayout->addWidget(acceptButton);
     hLayout->addStretch();
