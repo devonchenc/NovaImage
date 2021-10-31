@@ -35,7 +35,7 @@ public:
 
     float   HorzPixelSpacing;
     float   VertPixelSpacing;
-    int     SliceSpacing;
+    float   SliceSpacing;
     int     Reserved0;
     int     Reserved1;
     int     Reserved2;
@@ -70,7 +70,7 @@ public:
     int     CurrentIndex;
     int     RotateDirection;
     float   RotateAngle;
-    float	RotateStartAngle;   // Start Angle
+    float	RotateStartAngle;
 
     float   StartHeight;
     float   EndHeight;
@@ -87,20 +87,20 @@ public:
     float   DetectorRadius;     // CL扫描探测器运动半径
     float   StageRadius;        // CL扫描样品台运动半径
     float   SourceRadius;       // CL扫描射线源运动半径
+    float   ScanResolution;     // CL扫描分辨率
     float   PCBThickness;       // PCB厚度
     float   ObjectCenterHeight; // 物体中心高度
     float   HeightOnPCB;        // 物体在PCB板上高度
     float   HeightUnderPCB;     // 物体在PCB板下高度
     float   Reserved9;
     float   Reserved10;
-    float   Reserved11;
 
     float   Pitch;              // Pitch of Spiral scan
     int     RotaionNumber;      // Number of turns of Spiral scan
     int     LimitedScanAngle;   // Angle of limited angle scan
     float   ShortScanDistance;  // Detector offset of LFOV scan
+    float   Reserved11;
     float   Reserved12;
-    float   Reserved13;
 
     // Reconstruct
     int     FeedbackAfterRecon;     // 0:No, 1:Yes
@@ -128,10 +128,10 @@ public:
     float   DetectorRandomMoveFactor;
     int     OutOfView;
     float   Gamma;
-    float   Reserved18;
-    float   Reserved19;
-    float   Reserved20;
-    float   Reserved21;
+    float   Reserved13;
+    float   Reserved14;
+    float   Reserved15;
+    float   Reserved16;
 
     // Image cropping parameters
     int     CutOrNot;
@@ -141,8 +141,8 @@ public:
     int     CutEndY;
     int     OriginWidth;
     int     OriginHeight;
-    float   Reserved22;
-    float   Reserved23;
+    float   Reserved17;
+    float   Reserved18;
 
     // Motor Position
     int		PositionNum;
