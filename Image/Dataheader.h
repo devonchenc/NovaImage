@@ -144,6 +144,39 @@ public:
     float   Reserved17;
     float   Reserved18;
 
+    // Inspect parameters
+    int     XStart;
+    int     XEnd;
+    int     YStart;
+    int     YEnd;
+    int     ZStart;
+    int     ZEnd;
+    int     ZCenter;
+    int     SizeMin;
+    int     SizeMax;
+    int     Edge;
+    int     Thickness;
+    float   Threshold;
+    int     Reserved23[30];
+    int     CameraTopLeftX;
+    int     CameraTopLeftY;
+    int     CameraWidth;
+    int     CameraHeight;
+    int     Reserved24[52];
+
+    char	UserName[40];       // 操作人姓名
+    char	Date[40];           // 操作时间
+
+    // Object Information
+    int     ObjectType;         // Type
+    int     SamplePartIndex;    // 样品部位编号
+    int     Reserved25[12];
+    char    BatchNo[40];        // 型号批次
+    char    SampleName[40];     // 样品编号前缀
+    char    SampleID[40];       // 样品唯一ID
+    char    LocationNum[40];    // 部位序号
+    char    Reserved100[400];
+
     // Motor Position
     int		PositionNum;
     int		PositionUnit;
@@ -179,14 +212,4 @@ public:
     float	Position15;
     char	MotionName16[20];
     float	Position16;
-
-    char	UserName[40];       // 操作人姓名
-    char	Date[40];           // 操作时间
-
-    // Object Information
-    int     ObjectType;         // Type
-    char    ObjectTypeName[40]; // 型号
-    char    PartNum[40];        // 零件图号
-    char    SerialNum[40];      // 零件编号
-    char    LocationNum[40];    // 部位序号
 };

@@ -114,7 +114,11 @@ void DiagramPlotItem::drawRect(QPainter* painter)
 
 void DiagramPlotItem::drawPlotIndex(QPainter* painter)
 {
-    QTransform transform = getGlobalActiveView()->view()->transform();
+    QGraphicsScene* graphicsScene = scene();
+    QList<QGraphicsView *> viewList = graphicsScene->views();
+    Q_ASSERT(viewList.size() > 0);
+
+    QTransform transform = viewList[0]->transform();
     QTransform transform2;
     transform2.translate(line().p2().x() + 10, line().p2().y() + 5);
 

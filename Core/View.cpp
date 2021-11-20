@@ -117,6 +117,7 @@ void View::showImage(const QImage* image)
 
     QPixmap pixmap = QPixmap::fromImage(*image);
     _currentImage = _scene->addPixmap(pixmap);
+    _currentImage->setTransformationMode(Qt::SmoothTransformation);
     _currentImage->setZValue(-1.0);
     _scene->update();
 }
