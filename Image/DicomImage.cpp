@@ -66,26 +66,27 @@ DICOMImage::DICOMImage(const QString& pathName)
 DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     : MonoImage()
 {
-    _width = imageVector[0]->width();
-    _height = imageVector[0]->height();
+    std::shared_ptr<DICOMImage> firstImage = imageVector.first();
+    _width = firstImage->width();
+    _height = firstImage->height();
     _slice = 0;
-    int elementSize = imageVector[0]->_imageData->getElementSize();
+    int elementSize = firstImage->_imageData->getElementSize();
 
-    _windowWidth = imageVector[0]->_windowWidth;
-    _windowLevel = imageVector[0]->_windowLevel;
+    _windowWidth = firstImage->_windowWidth;
+    _windowLevel = firstImage->_windowLevel;
 
-    _horzPixelSpacing = imageVector[0]->_horzPixelSpacing;
-    _vertPixelSpacing = imageVector[0]->_vertPixelSpacing;
-    _imagerPixelSpacing = imageVector[0]->_imagerPixelSpacing;
-    _sliceThickness = imageVector[0]->_sliceThickness;
-    _SOD = imageVector[0]->_SOD;
-    _SDD = imageVector[0]->_SDD;
-    _bitsAllocated = imageVector[0]->_bitsAllocated;
-    _bitsStored = imageVector[0]->_bitsStored;
-    _rescaleSlope = imageVector[0]->_rescaleSlope;
-    _rescaleIntercept = imageVector[0]->_rescaleIntercept;
+    _horzPixelSpacing = firstImage->_horzPixelSpacing;
+    _vertPixelSpacing = firstImage->_vertPixelSpacing;
+    _imagerPixelSpacing = firstImage->_imagerPixelSpacing;
+    _sliceThickness = firstImage->_sliceThickness;
+    _SOD = firstImage->_SOD;
+    _SDD = firstImage->_SDD;
+    _bitsAllocated = firstImage->_bitsAllocated;
+    _bitsStored = firstImage->_bitsStored;
+    _rescaleSlope = firstImage->_rescaleSlope;
+    _rescaleIntercept = firstImage->_rescaleIntercept;
 
-    _pathName = imageVector[0]->_pathName;
+    _pathName = firstImage->_pathName;
 
     // Count slice
     for (int i = 0; i < imageVector.size(); i++)

@@ -364,10 +364,10 @@ void DiagramAngleItem::calcAngle()
 void DiagramAngleItem::drawAngleText(QPainter* painter)
 {
     QGraphicsScene* graphicsScene = scene();
-    QList<QGraphicsView *> viewList = graphicsScene->views();
+    QList<QGraphicsView*> viewList = graphicsScene->views();
     Q_ASSERT(viewList.size() > 0);
 
-    QTransform transform = viewList[0]->transform();
+    QTransform transform = viewList.first()->transform();
     QTransform transform2;
     if ((p3().x() > p2().x() && p3().x() - p2().x() > 6 * abs((p3().y() - p2().y()))) ||
             (p1().x() > p2().x() && p1().x() - p2().x() > 6 * abs((p1().y() - p2().y()))))

@@ -446,10 +446,10 @@ void DiagramItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* optio
     }
 
     QGraphicsScene* graphicsScene = scene();
-    QList<QGraphicsView *> viewList = graphicsScene->views();
+    QList<QGraphicsView*> viewList = graphicsScene->views();
     Q_ASSERT(viewList.size() > 0);
 
-    QTransform transform = viewList[0]->transform();
+    QTransform transform = viewList.first()->transform();
     QTransform transform2;
     transform2.translate(boundingRect().right() + 5, boundingRect().center().y() - 25);
 

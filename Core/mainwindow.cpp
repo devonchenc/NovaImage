@@ -1165,10 +1165,26 @@ void MainWindow::dragEnterEvent(QDragEnterEvent* event)
     if (event->mimeData()->hasUrls())
     {
         QList<QUrl> urls = event->mimeData()->urls();
-        QString fileName = urls[0].toLocalFile();
-        if (Document::findImageType(fileName) != IMAGE_FORMAT_UNKNOWN)
+        QString url = urls.first().toLocalFile();
+
+        QFileInfo fileInfo(url);
+        if (fileInfo.isFile())
         {
-            event->acceptProposedAction();
+            if (Document::findImageType(url) != IMAGE_FORMAT_UNKNOWN)
+            {
+                event->acceptProposedAction();
+            }
+        }
+        else if (fileInfo.isDir())
+        {
+            QDir dir(url);
+            QStringList nameFilters;
+            nameFilters << "*.dcm";
+            QStringList fileList = dir.entryList(nameFilters, QDir::Files | QDir::Readable, QDir::Name);
+            if (fileList.isEmpty() == false)
+            {
+                event->acceptProposedAction();
+            }
         }
     }
 }
@@ -1179,6 +1195,15 @@ void MainWindow::dropEvent(QDropEvent* event)
     if (urls.isEmpty())
         return;
 
-    QString fileName = urls[0].toLocalFile();
-    openFile(fileName);
+    QString url = urls.first().toLocalFile();
+
+    QFileInfo fileInfo(url);
+    if (fileInfo.isFile())
+    {
+        openFile(url);
+    }
+    else if (fileInfo.isDir())
+    {
+        _doc->openFolder(url);
+    }
 }
