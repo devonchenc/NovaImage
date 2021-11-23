@@ -96,6 +96,8 @@ public:
 
     virtual int getElementSize() = 0;
 
+    virtual void interpolateData(int index, void* prevData, void* nextData, float ratio) = 0;
+
 public:
     float getMinimumValue() const { return _minValue; }
 

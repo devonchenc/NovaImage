@@ -71,7 +71,6 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     std::shared_ptr<DICOMImage> firstImage = imageVector.first();
     _width = firstImage->width();
     _height = firstImage->height();
-    _slice = 1;
     int elementSize = firstImage->_imageData->getElementSize();
 
     _windowWidth = firstImage->_windowWidth;
@@ -99,7 +98,8 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     _pathName = firstImage->_pathName;
 
     // Count slice
-    for (int i = imageVector.size() - 1; i > 0; i--)
+    int slicesBefore = 0;
+    for (int i = imageVector.size() - 1; i >= 0; i--)
     {
         if (imageVector[i]->width() != _width || imageVector[i]->height() != _height
             || imageVector[i]->slice() != 1 || imageVector[i]->_imageData->getElementSize() != elementSize)
@@ -108,11 +108,18 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
             continue;
         }
 
-        _slice++;
+        slicesBefore++;
     }
 
     // Recalculate the slice number based on the spacing
-    _slice = round(_sliceSpacing / _horzPixelSpacing * (_slice - 1));
+    if (slicesBefore == 1)
+    {
+        _slice = 1;
+    }
+    else
+    {
+        _slice = ceil(_sliceSpacing / _horzPixelSpacing * (slicesBefore - 1));
+    }
 
     if (elementSize == 1)
     {
@@ -127,26 +134,25 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
         _imageData = new ImageDataTemplate<uint>(_width, _height, _slice);
     }
 
-    // Interpolate data
-    int currentSlice = 0;
-    for (int n = 0; n < _slice; n++)
+    // Copy data from first image
+    void* firstSliceData = imageVector.first()->_imageData->getOriginalData();
+    uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
+    memcpy(originalData, firstSliceData, elementSize * _width * _height);
+    // Interpolate image data
+    if (_slice > 1)
     {
-        // TODO
-    //    _imageData->interpolateData();
-    /*    for (int i = 0; i < imageVector.size(); i++)
+        void* lastSliceData = imageVector.last()->_imageData->getOriginalData();
+        uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
+        memcpy(originalData + (_slice - 1) * elementSize * _width * _height, lastSliceData, elementSize * _width * _height);
+
+        float factor = _horzPixelSpacing / _sliceSpacing;
+        for (int n = 1; n < _slice - 1; n++)
         {
-            if (imageVector[i]->width() != _width || imageVector[i]->height() != _height)
-                continue;
-
-            if (imageVector[i]->_imageData->getElementSize() != elementSize)
-                continue;
-
-            int singleSlice = imageVector[i]->slice();
-            void* singleData = imageVector[i]->_imageData->getOriginalData();
-            uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
-            memcpy(originalData + currentSlice * elementSize * _width * _height, singleData, elementSize * _width * _height * singleSlice);
-            currentSlice += singleSlice;
-        }*/
+            float index = n * factor;
+            int integerIndex = floor(index);
+            float ratio = index - integerIndex;
+            _imageData->interpolateData(n, imageVector[integerIndex]->_imageData->getOriginalData(), imageVector[integerIndex + 1]->_imageData->getOriginalData(), ratio);
+        }
     }
 
     _currentAxialSlice = round(_slice / 2.0) - 1;

@@ -67,6 +67,8 @@ public:
 
     int getElementSize() override { return sizeof(Type); }
 
+    void interpolateData(int index, void* prevData, void* nextData, float ratio) override;
+
 protected:
     std::shared_ptr<Type> _originalData;
 
@@ -465,5 +467,18 @@ void ImageDataTemplate<Type>::changeSlice(int type, int slice)
                 _sagittalData[j * _height + i] = _originalData.get()[_width * i + _currentSagittalSlice + offset];
             }
         }
+    }
+}
+
+template <class Type>
+void ImageDataTemplate<Type>::interpolateData(int index, void* prevData, void* nextData, float ratio)
+{
+    assert(prevData);
+    assert(nextData);
+    qint64 offset = index * _width * _height;
+
+    for (int i = 0; i < _pixelPerSlice; i++)
+    {
+        _originalData.get()[i + offset] = Type(round(((Type*)prevData)[i] * (1.0f - ratio) + ((Type*)nextData)[i] * ratio));
     }
 }
