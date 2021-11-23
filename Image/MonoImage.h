@@ -50,11 +50,6 @@ public:
 
     float getValueWithType(int type, int index) const override;
 
-    bool hasPixelSpacing() override { return false; }
-
-    float horzPixelSpacing() override { return 0; }
-    float vertPixelSpacing() override { return 0; }
-
     virtual void initWindowWidthAndLevel() = 0;
 
     void restore() override;

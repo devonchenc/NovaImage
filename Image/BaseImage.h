@@ -33,6 +33,7 @@ public:
 
     virtual float horzPixelSpacing() { return 0; }
     virtual float vertPixelSpacing() { return 0; }
+    virtual float sliceSpacing() { return 0; }
 
     // Create a deep copy of image
     virtual BaseImage* copyImage() const = 0;

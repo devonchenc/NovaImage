@@ -22,6 +22,7 @@ public:
 
     float horzPixelSpacing() override { return _dataHeader.HorzPixelSpacing; }
     float vertPixelSpacing() override { return _dataHeader.VertPixelSpacing; }
+    float sliceSpacing() override { return _dataHeader.SliceSpacing; }
 
     void initWindowWidthAndLevel() override;
 

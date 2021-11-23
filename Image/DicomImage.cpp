@@ -11,10 +11,12 @@ DICOMImage::DICOMImage(const QString& pathName)
     : MonoImage(pathName)
     , _horzPixelSpacing(0)
     , _vertPixelSpacing(0)
+    , _sliceSpacing(0)
     , _imagerPixelSpacing(0)
     , _sliceThickness(0)
     , _SOD(0)
     , _SDD(0)
+    , _imagePositionPatientZ(0)
     , _bitsAllocated(0)
     , _bitsStored(0)
     , _rescaleSlope(0)
@@ -69,7 +71,7 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     std::shared_ptr<DICOMImage> firstImage = imageVector.first();
     _width = firstImage->width();
     _height = firstImage->height();
-    _slice = 0;
+    _slice = 1;
     int elementSize = firstImage->_imageData->getElementSize();
 
     _windowWidth = firstImage->_windowWidth;
@@ -77,28 +79,40 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
 
     _horzPixelSpacing = firstImage->_horzPixelSpacing;
     _vertPixelSpacing = firstImage->_vertPixelSpacing;
+    _sliceSpacing = firstImage->_sliceSpacing;
     _imagerPixelSpacing = firstImage->_imagerPixelSpacing;
     _sliceThickness = firstImage->_sliceThickness;
     _SOD = firstImage->_SOD;
     _SDD = firstImage->_SDD;
+    _imagePositionPatientZ = firstImage->_imagePositionPatientZ;
     _bitsAllocated = firstImage->_bitsAllocated;
     _bitsStored = firstImage->_bitsStored;
     _rescaleSlope = firstImage->_rescaleSlope;
     _rescaleIntercept = firstImage->_rescaleIntercept;
 
+    if (_sliceSpacing == 0 && imageVector.size() > 1)
+    {
+        // Use _imagePositionPatientZ to calculate _sliceSpacing
+        _sliceSpacing = fabs(_imagePositionPatientZ - imageVector[1]->_imagePositionPatientZ);
+    }
+
     _pathName = firstImage->_pathName;
 
     // Count slice
-    for (int i = 0; i < imageVector.size(); i++)
+    for (int i = imageVector.size() - 1; i > 0; i--)
     {
-        if (imageVector[i]->width() != _width || imageVector[i]->height() != _height)
+        if (imageVector[i]->width() != _width || imageVector[i]->height() != _height
+            || imageVector[i]->slice() != 1 || imageVector[i]->_imageData->getElementSize() != elementSize)
+        {
+            imageVector.remove(i);
             continue;
+        }
 
-        if (imageVector[i]->_imageData->getElementSize() != elementSize)
-            continue;
-
-        _slice += imageVector[i]->slice();
+        _slice++;
     }
+
+    // Recalculate the slice number based on the spacing
+    _slice = round(_sliceSpacing / _horzPixelSpacing * (_slice - 1));
 
     if (elementSize == 1)
     {
@@ -113,21 +127,26 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
         _imageData = new ImageDataTemplate<uint>(_width, _height, _slice);
     }
 
-    // Copy data
+    // Interpolate data
     int currentSlice = 0;
-    for (int i = 0; i < imageVector.size(); i++)
+    for (int n = 0; n < _slice; n++)
     {
-        if (imageVector[i]->width() != _width || imageVector[i]->height() != _height)
-            continue;
+        // TODO
+    //    _imageData->interpolateData();
+    /*    for (int i = 0; i < imageVector.size(); i++)
+        {
+            if (imageVector[i]->width() != _width || imageVector[i]->height() != _height)
+                continue;
 
-        if (imageVector[i]->_imageData->getElementSize() != elementSize)
-            continue;
+            if (imageVector[i]->_imageData->getElementSize() != elementSize)
+                continue;
 
-        int singleSlice = imageVector[i]->slice();
-        void* singleData = imageVector[i]->_imageData->getOriginalData();
-        uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
-        memcpy(originalData + currentSlice * elementSize * _width * _height, singleData, elementSize * _width * _height * singleSlice);
-        currentSlice += singleSlice;
+            int singleSlice = imageVector[i]->slice();
+            void* singleData = imageVector[i]->_imageData->getOriginalData();
+            uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
+            memcpy(originalData + currentSlice * elementSize * _width * _height, singleData, elementSize * _width * _height * singleSlice);
+            currentSlice += singleSlice;
+        }*/
     }
 
     _currentAxialSlice = round(_slice / 2.0) - 1;
@@ -174,10 +193,12 @@ DICOMImage::DICOMImage(const DICOMImage& src)
     : MonoImage(src)
     , _horzPixelSpacing(src._horzPixelSpacing)
     , _vertPixelSpacing(src._vertPixelSpacing)
+    , _sliceSpacing(src._sliceSpacing)
     , _imagerPixelSpacing(src._imagerPixelSpacing)
     , _sliceThickness(src._sliceThickness)
     , _SOD(src._SOD)
     , _SDD(src._SDD)
+    , _imagePositionPatientZ(src._imagePositionPatientZ)
     , _bitsAllocated(src._bitsAllocated)
     , _bitsStored(src._bitsStored)
     , _rescaleSlope(src._rescaleSlope)
@@ -195,12 +216,14 @@ DICOMImage& DICOMImage::operator=(const DICOMImage& src)
 
     _horzPixelSpacing = src._horzPixelSpacing;
     _vertPixelSpacing = src._vertPixelSpacing;
+    _sliceSpacing = src._sliceSpacing;
     _imagerPixelSpacing = src._imagerPixelSpacing;
     _sliceThickness = src._sliceThickness;
 
     _SOD = src._SOD;
     _SDD = src._SDD;
 
+    _imagePositionPatientZ = src._imagePositionPatientZ;
     _bitsAllocated = src._bitsAllocated;
     _bitsStored = src._bitsStored;
 
@@ -395,6 +418,25 @@ void DICOMImage::readMoreInfo(DcmDataset* dataset)
     if (condition.good() && tagValue)
     {
         _rescaleIntercept = float(atof(tagValue));
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_SpacingBetweenSlices, tagValue);
+    if (condition.good() && tagValue)
+    {
+        _sliceSpacing = float(atof(tagValue));
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_ImagePositionPatient, tagValue);
+    if (condition.good() && tagValue)
+    {
+        char* pos = strrchr((char*)tagValue, '\\');
+        if (pos)
+        {
+            char* subValue = pos + 1;
+            _imagePositionPatientZ = float(atof(subValue));
+        }
     }
 }
 

@@ -90,7 +90,7 @@ ImageDataTemplate<Type>::ImageDataTemplate(int width, int height, int slice)
     , _currentCoronalSlice(round(height / 2.0) - 1)
     , _currentSagittalSlice(round(width / 2.0) - 1)
 {
-
+    memset(_originalData.get(), 0, sizeof(Type) * _totalPixel);
 }
 
 template <class Type>

@@ -22,6 +22,7 @@ public:
 
     float horzPixelSpacing() override { return _horzPixelSpacing; }
     float vertPixelSpacing() override { return _vertPixelSpacing; }
+    float sliceSpacing() override { return _sliceSpacing; }
 
     void initWindowWidthAndLevel() override;
 
@@ -45,11 +46,15 @@ private:
 private:
     float _horzPixelSpacing;
     float _vertPixelSpacing;
+    float _sliceSpacing;
+
     float _imagerPixelSpacing;      // Detector pixel size
     float _sliceThickness;
 
     float _SOD;
     float _SDD;
+
+    float _imagePositionPatientZ;
 
     ushort _bitsAllocated;
     ushort _bitsStored;
