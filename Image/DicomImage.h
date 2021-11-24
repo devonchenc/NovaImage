@@ -32,6 +32,8 @@ public:
 
     void restore() override;
 
+    QString getDescription() { return _seriesDescription; }
+
 private:
     // Read data
     bool readData();
@@ -61,4 +63,11 @@ private:
 
     float _rescaleSlope;
     float _rescaleIntercept;
+
+    QString _seriesDescription;
+    QString _patientsName;
+
+    QString _studyInstanceUID;
+    QString _seriesInstanceUID;
+    QString _SOPInstanceUID;
 };

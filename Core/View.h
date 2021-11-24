@@ -46,11 +46,13 @@ public:
 
     int imageSlice() const;
 
-    int imageCurrentSlice();
+    int imageCurrentSlice() const;
 
     float getImageValue(int x, int y) const;
     float getImageValue(const QPoint& position) const;
     float getImageValue(qreal x, qreal y) const;
+
+    QString imageDescription() const;
 
     void resetImage();
 

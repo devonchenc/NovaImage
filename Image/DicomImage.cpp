@@ -89,6 +89,13 @@ DICOMImage::DICOMImage(QVector<std::shared_ptr<DICOMImage>>& imageVector)
     _rescaleSlope = firstImage->_rescaleSlope;
     _rescaleIntercept = firstImage->_rescaleIntercept;
 
+    _seriesDescription = firstImage->_seriesDescription;
+    _patientsName = firstImage->_seriesDescription;
+
+    _studyInstanceUID = firstImage->_studyInstanceUID;
+    _seriesInstanceUID = firstImage->_seriesInstanceUID;
+    _SOPInstanceUID = firstImage->_SOPInstanceUID;
+
     if (_sliceSpacing == 0 && imageVector.size() > 1)
     {
         // Use _imagePositionPatientZ to calculate _sliceSpacing
@@ -209,6 +216,11 @@ DICOMImage::DICOMImage(const DICOMImage& src)
     , _bitsStored(src._bitsStored)
     , _rescaleSlope(src._rescaleSlope)
     , _rescaleIntercept(src._rescaleIntercept)
+    , _seriesDescription(src._seriesDescription)
+    , _patientsName(src._patientsName)
+    , _studyInstanceUID(src._studyInstanceUID)
+    , _seriesInstanceUID(src._seriesInstanceUID)
+    , _SOPInstanceUID(src._SOPInstanceUID)
 {
 
 }
@@ -235,6 +247,13 @@ DICOMImage& DICOMImage::operator=(const DICOMImage& src)
 
     _rescaleSlope = src._rescaleSlope;
     _rescaleIntercept = src._rescaleIntercept;
+
+    _seriesDescription = src._seriesDescription;
+    _patientsName = src._seriesDescription;
+
+    _studyInstanceUID = src._studyInstanceUID;
+    _seriesInstanceUID = src._seriesInstanceUID;
+    _SOPInstanceUID = src._SOPInstanceUID;
 
     return *this;
 }
@@ -443,6 +462,41 @@ void DICOMImage::readMoreInfo(DcmDataset* dataset)
             char* subValue = pos + 1;
             _imagePositionPatientZ = float(atof(subValue));
         }
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_SeriesDescription, tagValue);
+    if (condition.good() && tagValue)
+    {
+        _seriesDescription = tagValue;
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_PatientName, tagValue);
+    if (condition.good() && tagValue)
+    {
+        _patientsName = tagValue;
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_StudyInstanceUID, tagValue);
+    if (condition.good() && tagValue)
+    {
+        _studyInstanceUID = tagValue;
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_SeriesInstanceUID, tagValue);
+    if (condition.good() && tagValue)
+    {
+        _seriesInstanceUID = tagValue;
+    }
+
+    tagValue = nullptr;
+    dataset->findAndGetString(DCM_SOPInstanceUID, tagValue);
+    if (condition.good() && tagValue)
+    {
+        _SOPInstanceUID = tagValue;
     }
 }
 

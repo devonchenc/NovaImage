@@ -48,6 +48,8 @@ public:
 
     virtual QImage* getImageEntity() const { return _pImage.get(); }
 
+    virtual QString getDescription() { return QString(); }
+
 public:
     int width() const { return _width; }
 

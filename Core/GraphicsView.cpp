@@ -301,15 +301,17 @@ void GraphicsView::drawAnnotation()
     int pixelsHigh = painter.fontMetrics().height() * 1.1;
     int y = rect().bottom() - 10;
 
+    const int textAreaWidth = 350;
+
     qreal scale = qPow(qreal(2), (_zoomFactor - MAX_ZOOM / 2) / qreal(ZOOM_STEP));
     QString str = QString(tr("Zoom: %1%")).arg(QString::number(scale * 100.0, 'f', 2));
-    painter.drawText(QRect(0, 0, 240, pixelsHigh), Qt::AlignLeft, str);
+    painter.drawText(QRect(0, 0, textAreaWidth, pixelsHigh), Qt::AlignLeft, str);
 
     str = QString(tr("Size: %1%2%3")).arg(_view->imageWidth()).arg(QString(QChar(0x00D7))).arg(_view->imageHeight());
-    painter.drawText(QRect(0, pixelsHigh, 350, pixelsHigh), Qt::AlignLeft, str);
+    painter.drawText(QRect(0, pixelsHigh, textAreaWidth, pixelsHigh), Qt::AlignLeft, str);
 
     str = QString(tr("Slice: %1/%2")).arg(_view->imageCurrentSlice() + 1).arg(_view->imageSlice());
-    painter.drawText(QRect(0, pixelsHigh * 2, 350, pixelsHigh), Qt::AlignLeft, str);
+    painter.drawText(QRect(0, pixelsHigh * 2, textAreaWidth, pixelsHigh), Qt::AlignLeft, str);
 
     float windowLevel = _view->windowLevel();
     float windowWidth = _view->windowWidth();
@@ -327,7 +329,9 @@ void GraphicsView::drawAnnotation()
         decimal = 3;
     }
     str = QString(tr("WL: %1 WW: %2")).arg(QString::number(windowLevel, 'f', decimal)).arg(QString::number(windowWidth, 'f', decimal));
-    painter.drawText(QRect(0, y - pixelsHigh, 400, pixelsHigh), Qt::AlignLeft, str);
+    painter.drawText(QRect(0, y - pixelsHigh, textAreaWidth, pixelsHigh), Qt::AlignLeft, str);
+
+    painter.drawText(QRect(rect().width() - textAreaWidth, 0, textAreaWidth - 5, pixelsHigh), Qt::AlignRight, _view->imageDescription());
 
     painter.setPen(QPen(qRgb(255, 100, 100)));
     painter.drawText(QRect(0, y - pixelsHigh * 2, 600, pixelsHigh), Qt::AlignLeft, _strValue);

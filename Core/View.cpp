@@ -174,7 +174,7 @@ int View::imageSlice() const
     }
 }
 
-int View::imageCurrentSlice()
+int View::imageCurrentSlice() const
 {
     BaseImage* image = getGlobalImage();
     return image->currentSlice(_viewType);
@@ -217,6 +217,12 @@ float View::getImageValue(qreal x, qreal y) const
         + (1 - lambda_x) * lambda_y * v01 + lambda_x * lambda_y * v11;
 
     return value;
+}
+
+QString View::imageDescription() const
+{
+    BaseImage* image = getGlobalImage();
+    return image->getDescription();
 }
 
 void View::resetImage()
