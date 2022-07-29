@@ -45,9 +45,9 @@ protected:
 
 private:
     HistogramWidget* _histogram;
-    QLineEdit* _editMin;
-    QLineEdit* _editMid;
-    QLineEdit* _editMax;
+    QLineEdit* _minEdit;
+    QLineEdit* _midEdit;
+    QLineEdit* _maxEdit;
 
     // Image processor
     LevelsProcessor* _processor;

@@ -21,25 +21,25 @@ LevelsWidget::LevelsWidget(QWidget* parent)
     connect(_histogram, &HistogramWidget::updateMid, this, &LevelsWidget::updateMid);
     connect(_histogram, &HistogramWidget::updateTop, this, &LevelsWidget::updateTop);
 
-    _editMin = new QLineEdit;
-    _editMin->setText("0");
-    _editMin->setMaximumWidth(100);
-    connect(_editMin, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
-    _editMid = new QLineEdit;
-    _editMid->setText("1");
-    _editMid->setMaximumWidth(100);
-    connect(_editMid, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
-    _editMax = new QLineEdit;
-    _editMax->setText("255");
-    _editMax->setMaximumWidth(100);
-    connect(_editMax, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
+    _minEdit = new QLineEdit;
+    _minEdit->setText("0");
+    _minEdit->setMaximumWidth(100);
+    connect(_minEdit, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
+    _midEdit = new QLineEdit;
+    _midEdit->setText("1");
+    _midEdit->setMaximumWidth(100);
+    connect(_midEdit, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
+    _maxEdit = new QLineEdit;
+    _maxEdit->setText("255");
+    _maxEdit->setMaximumWidth(100);
+    connect(_maxEdit, &QLineEdit::editingFinished, this, &LevelsWidget::updateHistogram);
 
     QHBoxLayout* hbox = new QHBoxLayout;
-    hbox->addWidget(_editMin);
+    hbox->addWidget(_minEdit);
     hbox->addStretch();
-    hbox->addWidget(_editMid);
+    hbox->addWidget(_midEdit);
     hbox->addStretch();
-    hbox->addWidget(_editMax);
+    hbox->addWidget(_maxEdit);
 
     QVBoxLayout* layout = new QVBoxLayout();
     layout->addWidget(_histogram);
@@ -67,9 +67,9 @@ void LevelsWidget::init()
     float maxValue = image->getMaxValue();
     float mid = 1.0f;
 
-    _editMin->setText(QString::number(minValue));
-    _editMid->setText(QString::number(mid));
-    _editMax->setText(QString::number(maxValue));
+    _minEdit->setText(QString::number(minValue));
+    _midEdit->setText(QString::number(mid));
+    _maxEdit->setText(QString::number(maxValue));
 
     _histogram->init();
 }
@@ -83,15 +83,15 @@ void LevelsWidget::reset()
         float maxValue = image->getMaxValue();
         float mid = 1.0f;
 
-        _editMin->setText(QString::number(minValue));
-        _editMid->setText(QString::number(mid));
-        _editMax->setText(QString::number(maxValue));
+        _minEdit->setText(QString::number(minValue));
+        _midEdit->setText(QString::number(mid));
+        _maxEdit->setText(QString::number(maxValue));
     }
     else
     {
-        _editMin->setText("0");
-        _editMid->setText("1.0");
-        _editMax->setText("255");
+        _minEdit->setText("0");
+        _midEdit->setText("1.0");
+        _maxEdit->setText("255");
     }
 
     _histogram->reset();
@@ -100,9 +100,9 @@ void LevelsWidget::reset()
 // Levels adjust
 void LevelsWidget::levelsAdjust(float bottom, float mid, float top)
 {
-    _editMin->setText(QString::number(bottom));
-    _editMid->setText(QString::number(mid));
-    _editMax->setText(QString::number(top));
+    _minEdit->setText(QString::number(bottom));
+    _midEdit->setText(QString::number(mid));
+    _maxEdit->setText(QString::number(top));
 
     BaseImage* image = getGlobalImage();
     if (image)
@@ -121,38 +121,38 @@ void LevelsWidget::setParameters(float bottom, float mid, float top)
         float maxValue = image->getMaxValue();
         if (bottom < minValue)
         {
-            _editMin->setText(QString::number(minValue));
+            _minEdit->setText(QString::number(minValue));
         }
         else if (bottom > top)
         {
-            _editMin->setText(QString::number(top));
+            _minEdit->setText(QString::number(top));
         }
         if (top < bottom)
         {
-            _editMax->setText(QString::number(bottom));
+            _maxEdit->setText(QString::number(bottom));
         }
         else if (top > maxValue)
         {
-            _editMax->setText(QString::number(maxValue));
+            _maxEdit->setText(QString::number(maxValue));
         }
     }
     else
     {
         if (bottom < 0)
         {
-            _editMin->setText("0");
+            _minEdit->setText("0");
         }
         else if (bottom > top)
         {
-            _editMin->setText(QString::number(top));
+            _minEdit->setText(QString::number(top));
         }
         if (top < bottom)
         {
-            _editMax->setText(QString::number(bottom));
+            _maxEdit->setText(QString::number(bottom));
         }
         else if (top > 255)
         {
-            _editMax->setText("255");
+            _maxEdit->setText("255");
         }
     }
 
@@ -163,9 +163,9 @@ void LevelsWidget::resetButtonClicked()
 {
     reset();
 
-    float bottom = _editMin->text().toFloat();
-    float mid = _editMid->text().toFloat();
-    float top = _editMax->text().toFloat();
+    float bottom = _minEdit->text().toFloat();
+    float mid = _midEdit->text().toFloat();
+    float top = _maxEdit->text().toFloat();
     levelsAdjust(bottom, mid, top);
 }
 
@@ -178,9 +178,9 @@ void LevelsWidget::apply()
 
 void LevelsWidget::updateHistogram()
 {
-    float bottom = _editMin->text().toFloat();
-    float mid = _editMid->text().toFloat();
-    float top = _editMax->text().toFloat();
+    float bottom = _minEdit->text().toFloat();
+    float mid = _midEdit->text().toFloat();
+    float top = _maxEdit->text().toFloat();
 
     setParameters(bottom, mid, top);
 
@@ -189,28 +189,28 @@ void LevelsWidget::updateHistogram()
 
 void LevelsWidget::updateBottom(float bottom)
 {
-    _editMin->setText(QString::number(bottom));
+    _minEdit->setText(QString::number(bottom));
 
-    float mid = _editMid->text().toFloat();
-    float top = _editMax->text().toFloat();
+    float mid = _midEdit->text().toFloat();
+    float top = _maxEdit->text().toFloat();
     levelsAdjust(bottom, mid, top);
 }
 
 void LevelsWidget::updateMid(float mid)
 {
-    _editMid->setText(QString::number(mid));
+    _midEdit->setText(QString::number(mid));
 
-    float bottom = _editMin->text().toFloat();
-    float top = _editMax->text().toFloat();
+    float bottom = _minEdit->text().toFloat();
+    float top = _maxEdit->text().toFloat();
     levelsAdjust(bottom, mid, top);
 }
 
 void LevelsWidget::updateTop(float top)
 {
-    _editMax->setText(QString::number(top));
+    _maxEdit->setText(QString::number(top));
 
-    float bottom = _editMin->text().toFloat();
-    float mid = _editMid->text().toFloat();
+    float bottom = _minEdit->text().toFloat();
+    float mid = _midEdit->text().toFloat();
     levelsAdjust(bottom, mid, top);
 }
 
