@@ -1,21 +1,15 @@
 ﻿#include <QApplication>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <QPixmap>
-#include <QKeyEvent>
 #include <QDockWidget>
-#include <QHBoxLayout>
-#include <QToolButton>
-#include <QPushButton>
 #include <QMenuBar>
-#include <QToolBar>
-#include <QStatusBar>
 #include <QTranslator>
 #include <QPluginLoader>
 #include <QPrinter>
 #include <QPrintPreviewDialog>
 #include <QMimeData>
 #include <QTimer>
+#include <QCloseEvent>
 #include <QDebug>
 
 #include "mainwindow.h"

@@ -2,11 +2,6 @@
 
 #include "BaseWidget.h"
 
-QT_BEGIN_NAMESPACE
-class QVBoxLayout;
-class QPushButton;
-QT_END_NAMESPACE
-
 class BaseProcessor;
 
 class ProcessorBaseWidget : public BaseWidget
@@ -15,7 +10,7 @@ class ProcessorBaseWidget : public BaseWidget
 
 public:
     ProcessorBaseWidget(BaseProcessor* processor, QWidget* parent = nullptr);
-    virtual ~ProcessorBaseWidget();
+    virtual ~ProcessorBaseWidget() {}
 
 protected:
     virtual void customEvent(QEvent* event);

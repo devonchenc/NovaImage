@@ -5,7 +5,6 @@
 QT_BEGIN_NAMESPACE
 class QWidget;
 class QGridLayout;
-class QVBoxLayout;
 QT_END_NAMESPACE
 
 class LayoutManager : public QObject

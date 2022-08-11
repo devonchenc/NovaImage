@@ -1,7 +1,10 @@
 #pragma once
 
 #include <QGraphicsView>
-#include <QWheelEvent>
+
+QT_BEGIN_NAMESPACE
+class QWheelEvent;
+QT_END_NAMESPACE
 
 #define MAX_ZOOM        1200
 #define ZOOM_STEP       200

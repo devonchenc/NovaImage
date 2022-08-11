@@ -4,6 +4,7 @@
 
 class LevelsProcessor;
 class HistogramWidget;
+
 QT_BEGIN_NAMESPACE
 class QLineEdit;
 QT_END_NAMESPACE

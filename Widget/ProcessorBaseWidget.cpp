@@ -15,11 +15,6 @@ ProcessorBaseWidget::ProcessorBaseWidget(BaseProcessor* processor, QWidget* pare
 
 }
 
-ProcessorBaseWidget::~ProcessorBaseWidget()
-{
-
-}
-
 void ProcessorBaseWidget::customEvent(QEvent* event)
 {
     Q_UNUSED(event);

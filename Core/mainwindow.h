@@ -3,15 +3,7 @@
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
-class QLabel;
 class QAction;
-class QSlider;
-class QMenuBar;
-class QToolBar;
-class QToolButton;
-class QGraphicsScene;
-class QGraphicsView;
-class QGraphicsPixmapItem;
 class QTranslator;
 class QPrinter;
 QT_END_NAMESPACE

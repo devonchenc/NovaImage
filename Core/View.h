@@ -1,7 +1,6 @@
 #pragma once
 
 #include <QFrame>
-#include <QGraphicsScene>
 
 class DiagramItem;
 class GraphicsView;
