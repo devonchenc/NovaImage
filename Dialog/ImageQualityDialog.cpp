@@ -97,10 +97,10 @@ void ImageQualityDialog::initUI()
     _chartView = new ImageQualityChartView(this);
     connect(_chartView, &ImageQualityChartView::sendResult, this, &ImageQualityDialog::updateResult);
 
-    QHBoxLayout* globalLayout = new QHBoxLayout;
-    globalLayout->addWidget(_chartView);
-    globalLayout->addLayout(grid);
-    setLayout(globalLayout);
+    QHBoxLayout* mainLayout = new QHBoxLayout;
+    mainLayout->addWidget(_chartView);
+    mainLayout->addLayout(grid);
+    setLayout(mainLayout);
 }
 
 void ImageQualityDialog::setLineWidth()

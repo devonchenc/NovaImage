@@ -41,7 +41,7 @@ LevelsWidget::LevelsWidget(QWidget* parent)
     hbox->addStretch();
     hbox->addWidget(_maxEdit);
 
-    QVBoxLayout* layout = new QVBoxLayout();
+    QVBoxLayout* layout = new QVBoxLayout;
     layout->addWidget(_histogram);
     layout->addLayout(hbox);
 

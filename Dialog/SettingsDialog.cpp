@@ -46,17 +46,17 @@ void SettingsDialog::initUI()
     connect(acceptButton, &QPushButton::clicked, this, &SettingsDialog::acceptButtonClicked);
     QPushButton* rejectButton = new QPushButton(tr("Cancel"));
     connect(rejectButton, &QPushButton::clicked, this, &QDialog::reject);
-    QHBoxLayout* hLayout = new QHBoxLayout();
+    QHBoxLayout* hLayout = new QHBoxLayout;
     hLayout->addStretch();
     hLayout->addWidget(acceptButton);
     hLayout->addStretch();
     hLayout->addWidget(rejectButton);
     hLayout->addStretch();
 
-    QVBoxLayout* globalLayout = new QVBoxLayout;
-    globalLayout->addWidget(tabWidget);
-    globalLayout->addLayout(hLayout);
-    setLayout(globalLayout);
+    QVBoxLayout* mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(tabWidget);
+    mainLayout->addLayout(hLayout);
+    setLayout(mainLayout);
 }
 
 QWidget* SettingsDialog::createGeneralWidget()

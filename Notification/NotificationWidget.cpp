@@ -105,7 +105,7 @@ void NotificationWidget::initUI(const NotificationParams& params)
     mesLayout->addSpacing(20);
     mesLayout->addWidget(messageLabel);
 
-    QVBoxLayout* messageLayout = new QVBoxLayout();
+    QVBoxLayout* messageLayout = new QVBoxLayout;
     messageLayout->setSpacing(5);
     messageLayout->addItem(titleLayout);
     messageLayout->addLayout(mesLayout);
@@ -132,7 +132,7 @@ void NotificationWidget::initUI(const NotificationParams& params)
                                  NotificationWidgetDetails::ColorToHTML(pressedColor) + ";"
                                                                                         "}");
 
-    QVBoxLayout* buttonsLayout = new QVBoxLayout();
+    QVBoxLayout* buttonsLayout = new QVBoxLayout;
     buttonsLayout->setContentsMargins(0, 0, 0, 0);
     buttonsLayout->setSpacing(5);
     {

@@ -61,10 +61,10 @@ void PlotDialog::initUI()
     QAction* widthAction = menu->addAction(tr("&Line Width"));
     connect(widthAction, &QAction::triggered, this, &PlotDialog::setLineWidth);
 
-    QVBoxLayout* globalLayout = new QVBoxLayout;
-    globalLayout->setMenuBar(menuBar);
-    globalLayout->addWidget(_tabWidget);
-    setLayout(globalLayout);
+    QVBoxLayout* mainLayout = new QVBoxLayout;
+    mainLayout->setMenuBar(menuBar);
+    mainLayout->addWidget(_tabWidget);
+    setLayout(mainLayout);
 }
 
 void PlotDialog::deleteLine()

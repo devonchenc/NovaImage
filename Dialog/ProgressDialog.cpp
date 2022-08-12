@@ -41,7 +41,7 @@ void ProgressDialog::initUI()
     _progressBar->setMinimum(0);
     _progressBar->setMaximum(100);
 
-    QVBoxLayout* vLayout = new QVBoxLayout();
+    QVBoxLayout* vLayout = new QVBoxLayout;
     vLayout->addWidget(_progressBar);
     setLayout(vLayout);
 }
