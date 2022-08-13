@@ -14,11 +14,6 @@ LevelsProcessor::LevelsProcessor(QObject* parent)
 
 }
 
-LevelsProcessor::~LevelsProcessor()
-{
-
-}
-
 void LevelsProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);

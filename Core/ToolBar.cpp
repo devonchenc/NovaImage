@@ -28,10 +28,6 @@ ToolBar::ToolBar(const QString& title, QWidget* parent)
     initButton();
 }
 
-ToolBar::~ToolBar()
-{
-}
-
 void ToolBar::enableButton(bool flag)
 {
     _saveButton->setEnabled(flag);

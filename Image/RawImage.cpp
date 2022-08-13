@@ -57,11 +57,6 @@ RawImage::RawImage(const RawImage& src)
 
 }
 
-RawImage::~RawImage()
-{
-
-}
-
 RawImage& RawImage::operator=(const RawImage& src)
 {
     if (this == &src)

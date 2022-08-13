@@ -45,7 +45,6 @@ class EnhancementProcessor : public BaseProcessor
 
 public:
     EnhancementProcessor(QObject* parent = nullptr);
-    virtual ~EnhancementProcessor();
 
     void initUI() override;
 

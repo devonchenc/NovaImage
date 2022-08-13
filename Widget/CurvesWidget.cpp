@@ -97,11 +97,6 @@ CurvesWidget::CurvesWidget(QWidget* parent)
     _processor->setChannel(_square->getChannel());
 }
 
-CurvesWidget::~CurvesWidget()
-{
-
-}
-
 void CurvesWidget::init()
 {
     _square->setChannel(CURVE_CHANNEL_GRAY);

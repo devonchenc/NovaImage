@@ -98,11 +98,6 @@ GammaTransformationProcessor::GammaTransformationProcessor(QObject* parent)
 
 }
 
-GammaTransformationProcessor::~GammaTransformationProcessor()
-{
-
-}
-
 void GammaTransformationProcessor::initUI()
 {
     GammaTransformationWidget* widget = new GammaTransformationWidget(this);

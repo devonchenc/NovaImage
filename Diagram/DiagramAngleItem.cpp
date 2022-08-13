@@ -49,11 +49,6 @@ DiagramAngleItem::DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu
     setGraphicsEffect(_effect);
 }
 
-DiagramAngleItem::~DiagramAngleItem()
-{
-
-}
-
 void DiagramAngleItem::setEndpointPen(const QPen& pen)
 {
     _endpointPen = pen;

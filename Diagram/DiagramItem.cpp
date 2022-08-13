@@ -47,11 +47,6 @@ DiagramItem::DiagramItem(DiagramType diagramType, QMenu* contextMenu, QGraphicsI
     setGraphicsEffect(_effect);
 }
 
-DiagramItem::~DiagramItem()
-{
-
-}
-
 void DiagramItem::setRectF(const QRectF& rect)
 {
     _polygon.clear();

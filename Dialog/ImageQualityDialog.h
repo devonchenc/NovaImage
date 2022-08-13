@@ -20,7 +20,6 @@ class ImageQualityDialog : public QDialog
 
 public:
     ImageQualityDialog(QWidget* parent = nullptr);
-    ~ImageQualityDialog();
 
     void setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points);
 

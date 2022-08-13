@@ -19,7 +19,6 @@ class CurvesWidget : public BaseWidget
 
 public:
     CurvesWidget(QWidget* parent = nullptr);
-    virtual ~CurvesWidget();
 
 public:
     void init() override;

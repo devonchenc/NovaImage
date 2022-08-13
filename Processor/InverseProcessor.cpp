@@ -9,11 +9,6 @@ InverseProcessor::InverseProcessor(QObject* parent)
 
 }
 
-InverseProcessor::~InverseProcessor()
-{
-
-}
-
 void InverseProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);

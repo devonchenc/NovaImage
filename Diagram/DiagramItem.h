@@ -22,7 +22,6 @@ public:
 
     DiagramItem(QGraphicsItem* parent = nullptr);
     DiagramItem(DiagramType diagramType, QMenu* contextMenu = nullptr, QGraphicsItem* parent = nullptr);
-    ~DiagramItem();
 
     DiagramType diagramType() const { return _diagramType; }
     QPolygonF polygon() const { return _polygon; }

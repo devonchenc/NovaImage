@@ -10,7 +10,6 @@ public:
     GeneralImage();
     GeneralImage(const QString& pathName);
     GeneralImage(const GeneralImage& src);
-    virtual ~GeneralImage();
 
     GeneralImage& operator=(const GeneralImage& src);
 

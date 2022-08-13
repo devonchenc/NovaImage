@@ -14,7 +14,6 @@ class SettingsDialog : public QDialog
 
 public:
     SettingsDialog(QWidget* parent = nullptr);
-    ~SettingsDialog();
 
 signals:
     void changeLanguage(int language);

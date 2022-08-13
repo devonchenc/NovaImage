@@ -10,7 +10,7 @@ public:
     BaseImage();
     BaseImage(const QString& pathName);
     BaseImage(const BaseImage& src);
-    virtual ~BaseImage();
+    virtual ~BaseImage() {}
 
     BaseImage& operator=(const BaseImage& src);
 

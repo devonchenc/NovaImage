@@ -72,11 +72,6 @@ ThresholdSegmentationProcessor::ThresholdSegmentationProcessor(QObject* parent)
 
 }
 
-ThresholdSegmentationProcessor::~ThresholdSegmentationProcessor()
-{
-
-}
-
 void ThresholdSegmentationProcessor::initUI()
 {
     ThresholdSegmentationWidget* widget = new ThresholdSegmentationWidget(this);

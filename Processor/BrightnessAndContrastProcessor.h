@@ -38,7 +38,6 @@ class BrightnessAndContrastProcessor : public BaseProcessor
 {
 public:
     BrightnessAndContrastProcessor(QObject* parent = nullptr);
-    virtual ~BrightnessAndContrastProcessor();
 
     void initUI() override;
 

@@ -30,11 +30,6 @@ ToolBoxWidget::ToolBoxWidget(QWidget* parent)
     initUI();
 }
 
-ToolBoxWidget::~ToolBoxWidget()
-{
-
-}
-
 void ToolBoxWidget::init()
 {
 

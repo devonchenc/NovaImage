@@ -22,7 +22,6 @@ public:
 
     DiagramAngleItem(QGraphicsItem* parent = nullptr);
     DiagramAngleItem(const QPointF& startPoint, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-    ~DiagramAngleItem();
 
     int type() const override { return Type; }
 

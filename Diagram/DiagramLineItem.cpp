@@ -27,11 +27,6 @@ DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphi
     setGraphicsEffect(_effect);
 }
 
-DiagramLineItem::~DiagramLineItem()
-{
-
-}
-
 void DiagramLineItem::setEndpointPen(const QPen& pen)
 {
     _endpointPen = pen;

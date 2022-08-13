@@ -19,11 +19,6 @@ DiagramArrowItem::DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGrap
 
 }
 
-DiagramArrowItem::~DiagramArrowItem()
-{
-
-}
-
 QDomElement DiagramArrowItem::saveToXML(QDomDocument& doc)
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");

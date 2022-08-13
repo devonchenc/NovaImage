@@ -33,7 +33,6 @@ class GammaTransformationProcessor : public BaseProcessor
 {
 public:
     GammaTransformationProcessor(QObject* parent = nullptr);
-    virtual ~GammaTransformationProcessor();
 
     void initUI() override;
 

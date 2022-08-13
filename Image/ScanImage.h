@@ -11,7 +11,6 @@ class ScanImage : public MonoImage
 public:
     ScanImage(const QString& pathName);
     ScanImage(const ScanImage& src);
-    virtual ~ScanImage();
 
     ScanImage& operator=(const ScanImage& src);
 

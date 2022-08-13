@@ -53,11 +53,6 @@ ScanImage::ScanImage(const ScanImage& src)
 
 }
 
-ScanImage::~ScanImage()
-{
-
-}
-
 ScanImage& ScanImage::operator=(const ScanImage& src)
 {
     if (this == &src)

@@ -33,11 +33,6 @@ GeneralImage::GeneralImage(const GeneralImage& src)
     _backupImage = src._backupImage;
 }
 
-GeneralImage::~GeneralImage()
-{
-
-}
-
 GeneralImage& GeneralImage::operator=(const GeneralImage& src)
 {
     if (this == &src)

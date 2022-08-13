@@ -31,11 +31,6 @@ SettingsDialog::SettingsDialog(QWidget* parent)
     resize(400, 200);
 }
 
-SettingsDialog::~SettingsDialog()
-{
-
-}
-
 void SettingsDialog::initUI()
 {
     QTabWidget* tabWidget = new QTabWidget(this);

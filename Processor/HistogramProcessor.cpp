@@ -12,11 +12,6 @@ HistogramProcessor::HistogramProcessor(QObject* parent)
 
 }
 
-HistogramProcessor::~HistogramProcessor()
-{
-
-}
-
 void HistogramProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);

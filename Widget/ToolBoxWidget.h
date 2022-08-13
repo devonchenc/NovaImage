@@ -22,7 +22,6 @@ class ToolBoxWidget : public BaseWidget
 
 public:
     ToolBoxWidget(QWidget* parent = nullptr);
-    virtual ~ToolBoxWidget();
 
 public:
     void init() override;

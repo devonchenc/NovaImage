@@ -6,7 +6,6 @@ class HistogramProcessor : public BaseProcessor
 {
 public:
     HistogramProcessor(QObject* parent = nullptr);
-    virtual ~HistogramProcessor();
 
 protected:
     void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;

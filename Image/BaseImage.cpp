@@ -45,11 +45,6 @@ BaseImage::BaseImage(const BaseImage& src)
     memcpy(_bluePixelNumber, src._bluePixelNumber, sizeof(uint) * 256);
 }
 
-BaseImage::~BaseImage()
-{
-
-}
-
 BaseImage& BaseImage::operator=(const BaseImage& src)
 {
     if (this == &src)

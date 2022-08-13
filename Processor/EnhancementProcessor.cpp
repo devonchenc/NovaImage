@@ -112,11 +112,6 @@ EnhancementProcessor::EnhancementProcessor(QObject* parent)
 
 }
 
-EnhancementProcessor::~EnhancementProcessor()
-{
-
-}
-
 void EnhancementProcessor::initUI()
 {
     EnhancementWidget* widget = new EnhancementWidget(this);

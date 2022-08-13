@@ -9,7 +9,6 @@ class DiagramArrowItem : public DiagramLineItem
 public:
     DiagramArrowItem(QGraphicsItem* parent = nullptr);
     DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-    ~DiagramArrowItem();
 
     QDomElement saveToXML(QDomDocument& doc) override;
 

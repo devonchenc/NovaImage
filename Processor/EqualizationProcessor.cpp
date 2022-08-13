@@ -55,11 +55,6 @@ EqualizationProcessor::EqualizationProcessor(QObject* parent)
 
 }
 
-EqualizationProcessor::~EqualizationProcessor()
-{
-
-}
-
 void EqualizationProcessor::initUI()
 {
     _widget = new EqualizationWidget(this);

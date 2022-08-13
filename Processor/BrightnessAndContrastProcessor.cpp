@@ -74,11 +74,6 @@ BrightnessAndContrastProcessor::BrightnessAndContrastProcessor(QObject* parent)
 
 }
 
-BrightnessAndContrastProcessor::~BrightnessAndContrastProcessor()
-{
-
-}
-
 void BrightnessAndContrastProcessor::initUI()
 {
     BrightnessAndContrastWidget* widget = new BrightnessAndContrastWidget(this);

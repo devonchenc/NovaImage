@@ -14,7 +14,6 @@ class CurvesProcessor : public BaseProcessor
 {
 public:
     CurvesProcessor(QObject* parent = nullptr);
-    virtual ~CurvesProcessor();
 
 protected:
     void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;

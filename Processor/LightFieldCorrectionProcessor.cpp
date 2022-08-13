@@ -88,11 +88,6 @@ LightFieldCorrectionProcessor::LightFieldCorrectionProcessor(QObject* parent)
 
 }
 
-LightFieldCorrectionProcessor::~LightFieldCorrectionProcessor()
-{
-
-}
-
 void LightFieldCorrectionProcessor::initUI()
 {
     LightFieldCorrectionWidget* widget = new LightFieldCorrectionWidget(this);

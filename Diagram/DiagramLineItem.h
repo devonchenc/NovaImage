@@ -21,7 +21,6 @@ public:
     };
 
     DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-    ~DiagramLineItem();
 
     int type() const override { return Type; }
 

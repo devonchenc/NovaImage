@@ -19,7 +19,6 @@ class ToolBar : public QToolBar
 public:
     ToolBar(QWidget* parent = nullptr);
     ToolBar(const QString& title, QWidget* parent = nullptr);
-    virtual ~ToolBar();
 
     QVector<QAction*> actionVector() { return _actionVector; }
 

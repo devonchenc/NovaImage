@@ -10,11 +10,6 @@ CurvesProcessor::CurvesProcessor(QObject* parent)
 
 }
 
-CurvesProcessor::~CurvesProcessor()
-{
-
-}
-
 void CurvesProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);

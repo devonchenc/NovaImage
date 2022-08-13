@@ -13,7 +13,6 @@ class ProcessorShellWidget : public BaseWidget
 
 public:
     ProcessorShellWidget(QWidget* parent = nullptr);
-    virtual ~ProcessorShellWidget();
 
     void setProcessorWidget(QWidget* processorWidget);
 

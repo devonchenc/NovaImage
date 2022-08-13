@@ -9,7 +9,6 @@ class DiagramLengthItem : public DiagramLineItem
 public:
     DiagramLengthItem(QGraphicsItem* parent = nullptr);
     DiagramLengthItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
-    ~DiagramLengthItem();
 
     QDomElement saveToXML(QDomDocument& doc) override;
 

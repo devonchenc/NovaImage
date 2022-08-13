@@ -22,11 +22,6 @@ ProcessorShellWidget::ProcessorShellWidget(QWidget* parent)
     setLayout(_vLayout);
 }
 
-ProcessorShellWidget::~ProcessorShellWidget()
-{
-
-}
-
 void ProcessorShellWidget::setProcessorWidget(QWidget* processorWidget)
 {
     QWidgetItem* item = dynamic_cast<QWidgetItem*>(_vLayout->itemAt(0));

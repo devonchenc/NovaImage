@@ -26,11 +26,6 @@ ImageQualityDialog::ImageQualityDialog(QWidget* parent)
     setStyleSheet("background-color:none");
 }
 
-ImageQualityDialog::~ImageQualityDialog()
-{
-
-}
-
 void ImageQualityDialog::setData(QGraphicsLineItem* lineItem, const QVector<qreal>& points)
 {
     _imageQualityItem = qgraphicsitem_cast<DiagramImageQualityItem*>(lineItem);

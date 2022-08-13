@@ -45,7 +45,6 @@ class LightFieldCorrectionProcessor : public BaseProcessor
 
 public:
     LightFieldCorrectionProcessor(QObject* parent = nullptr);
-    virtual ~LightFieldCorrectionProcessor();
 
     void initUI() override;
 
