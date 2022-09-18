@@ -477,7 +477,7 @@ void ImageDataTemplate<Type>::interpolateData(int index, void* prevData, void* n
     assert(nextData);
     qint64 offset = index * _width * _height;
 
-    for (int i = 0; i < _pixelPerSlice; i++)
+    for (unsigned long i = 0; i < _pixelPerSlice; i++)
     {
         _originalData.get()[i + offset] = Type(round(((Type*)prevData)[i] * (1.0f - ratio) + ((Type*)nextData)[i] * ratio));
     }
