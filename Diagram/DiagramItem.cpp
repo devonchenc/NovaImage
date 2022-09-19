@@ -304,6 +304,7 @@ DiagramItem* DiagramItem::clone()
     cloned->setPen(pen());
     cloned->setBrush(brush());
     cloned->setZValue(zValue());
+	cloned->setTransparency(transparency());
     return cloned;
 }
 
