@@ -17,7 +17,7 @@ public:
     enum { Type = UserType + 10 };
     enum Index
     {
-        Point1, Point2, Point3
+        DragNone = -1, Point1, Point2, Point3, All
     };
 
     DiagramAngleItem(QGraphicsItem* parent = nullptr);
@@ -85,9 +85,8 @@ private:
     QGraphicsOpacityEffect* _effect;
     QMenu* _contextMenu;
     static constexpr qreal closeEnoughDistance = 12;
-    bool _resizeMode = false;
     Index _drawingIndex;
-    Index _dragIndex;
+	Index _dragIndex = DragNone;
     bool _drawingFinished = false;
     int _previousMode;
 };

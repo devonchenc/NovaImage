@@ -17,7 +17,7 @@ public:
     enum { Type = UserType + 12 };
     enum Index
     {
-        Point1, Point2
+        DragNone = -1, Point1, Point2, All
     };
 
     DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
@@ -66,8 +66,7 @@ protected:
     QGraphicsOpacityEffect* _effect;
     QMenu* _contextMenu;
     static constexpr qreal closeEnoughDistance = 12;
-    bool _resizeMode = false;
-    Index _dragIndex;
+    Index _dragIndex = DragNone;
     bool _drawingFinished = false;
     int _previousMode;
 };

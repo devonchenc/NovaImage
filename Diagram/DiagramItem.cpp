@@ -8,6 +8,9 @@
 #include <QPainter>
 #include <QStyleOptionGraphicsItem>
 #include <QGraphicsOpacityEffect>
+#include <QtGlobal>
+#include <QtMath>
+#include <QDebug>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
@@ -172,35 +175,49 @@ void DiagramItem::statisticsInfo()
 
     QVector<float> vecValue;
 
-    QRectF rect = sceneBoundingRect();
-    for (int j = 0; j < rect.height(); j++)
-    {
-        for (int i = 0; i < rect.width(); i++)
-        {
-            int x = i + rect.left();
-            int y = j + rect.top();
-            QPolygonF polygon = _polygon.translated(pos());
-            if (polygon.containsPoint(QPointF(x, y), Qt::OddEvenFill))
-            {
-                if (x >= 0 && x < image->width() && y >= 0 && y < image->height())
-                {
-                    float pixelValue = image->getValue(QPoint(x, y));
-                    sum += pixelValue;
-                    sumOfSquares += pixelValue * pixelValue;
-                    if (pixelValue > maxValue)
-                    {
-                        maxValue = pixelValue;
-                    }
-                    if (pixelValue < minValue)
-                    {
-                        minValue = pixelValue;
-                    }
-                    vecValue.append(pixelValue);
-                }
-                totalPixelCount++;
-            }
-        }
-    }
+	QRectF rect = sceneBoundingRect();
+	for (int j = 0; j < rect.height(); j++)
+	{
+		for (int i = 0; i < rect.width(); i++)
+		{
+			int x = i + rect.left();
+			int y = j + rect.top();
+			QPolygonF polygon = _polygon.translated(pos());
+			if (polygon.containsPoint(QPointF(x, y), Qt::OddEvenFill))
+			{
+				if (x >= 0 && x < image->width() && y >= 0 && y < image->height())
+				{
+					float pixelValue = image->getValue(QPoint(x, y));
+					sum += pixelValue;
+					sumOfSquares += pixelValue * pixelValue;
+					if (pixelValue > maxValue)
+					{
+						maxValue = pixelValue;
+					}
+					if (pixelValue < minValue)
+					{
+						minValue = pixelValue;
+					}
+					vecValue.append(pixelValue);
+				}
+				totalPixelCount++;
+			}
+		}
+	}
+
+	switch (_diagramType)
+	{
+	case Rect:
+		totalPixelCount = qRound(qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0));
+		break;
+	case Circle:
+	case Ellipse:
+		totalPixelCount = qRound(M_PI * qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0) / 4);
+		break;
+	case Rhombus:
+		totalPixelCount = qRound(qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0) / 2);
+		break;
+	}
 
     if (image->hasPixelSpacing())
     {
@@ -296,13 +313,13 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
-    _resizeMode = false;
+    bool resizeMode = false;
     int index = 0;
     foreach(const QPointF& p, resizeHandlePoints())
     {
         if (isCloseEnough(event->pos(), p))
         {
-            _resizeMode = true;
+			resizeMode = true;
             break;
         }
         index++;
@@ -312,8 +329,8 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
 
     _scaleDirection = static_cast<Direction>(index);
 
-    setFlag(GraphicsItemFlag::ItemIsMovable, !_resizeMode);
-    if (!_resizeMode)
+    setFlag(GraphicsItemFlag::ItemIsMovable, !resizeMode);
+    if (!resizeMode)
     {
         QGraphicsPolygonItem::mousePressEvent(event);
     }
@@ -325,7 +342,7 @@ void DiagramItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
-    if (_resizeMode)
+    if (_scaleDirection != NoneDirection)
     {
         prepareGeometryChange();
         _polygon = scaledPolygon(_polygon, _scaleDirection, event->pos());
@@ -345,7 +362,7 @@ void DiagramItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
-    _resizeMode = false;
+	_scaleDirection = NoneDirection;
     statisticsInfo();
 
     QGraphicsPolygonItem::mouseReleaseEvent(event);
@@ -473,6 +490,8 @@ QPolygonF DiagramItem::scaledPolygon(const QPolygonF& old, DiagramItem::Directio
 {
     qreal oldWidth = old.boundingRect().width();
     qreal oldHeight = old.boundingRect().height();
+	if (direction == NoneDirection || direction == All)
+		return old;
 
     qreal scaleWidth, scaleHeight;
     QTransform trans;
@@ -557,14 +576,16 @@ int DiagramItem::changeIndex(int index)
         else if (index == 1)
             newIndex = 3;
         else
-            newIndex *= 2;
+			newIndex *= 2;
     }
     else if (_diagramType == Parallelogram)
     {
-        if (index == 2)
-            newIndex = 6;
-        else if (index == 3)
-            newIndex = 7;
+		if (index == 2)
+			newIndex = 6;
+		else if (index == 3)
+			newIndex = 7;
+		else if (index == 4)
+			newIndex = 8;
     }
     return newIndex;
 }

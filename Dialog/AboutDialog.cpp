@@ -31,7 +31,7 @@ void AboutDialog::initUI()
     vLayout->addStretch();
     vLayout->addWidget(new QLabel("Version 1.0.0"));
     vLayout->addStretch();
-    vLayout->addWidget(new QLabel("Copyright (C) 2021 DevonChen"));
+    vLayout->addWidget(new QLabel("Copyright (C) 2022 DevonChen"));
     vLayout->addWidget(new QLabel("All rights reserved."));
     vLayout->addStretch();
     QLabel* linkLabel = new QLabel("<a href=\"https://github.com/devonchenc/\">https://github.com/devonchenc/");

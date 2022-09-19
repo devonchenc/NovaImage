@@ -18,7 +18,7 @@ public:
     {
         None, Rect, RoundRect, Circle, Ellipse, Rhombus, Parallelogram, Text, Line, Arrow, Plot, ImageQuality, Angle
     };
-    enum Direction { TopLeft = 0, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight };
+    enum Direction { NoneDirection = -1, TopLeft, Top, TopRight, Left, Right, BottomLeft, Bottom, BottomRight, All };
 
     DiagramItem(QGraphicsItem* parent = nullptr);
     DiagramItem(DiagramType diagramType, QMenu* contextMenu = nullptr, QGraphicsItem* parent = nullptr);
@@ -74,8 +74,7 @@ private:
     QMenu* _contextMenu;
     static constexpr qreal resizePointWidth = 5;
     static constexpr qreal closeEnoughDistance = 12;
-    bool _resizeMode = false;
-    Direction _scaleDirection;
+    Direction _scaleDirection = NoneDirection;
     bool _drawingFinished = false;
     int _previousMode;
 

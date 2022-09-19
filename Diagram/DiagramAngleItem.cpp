@@ -157,19 +157,19 @@ void DiagramAngleItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
-    _resizeMode = false;
+    bool resizeMode = false;
     int index = 0;
     foreach (const QPointF& p, resizeHandlePoints())
     {
         if (isCloseEnough(event->pos(), p))
         {
-            _resizeMode = true;
+			resizeMode = true;
             break;
         }
         index++;
     }
 
-    setFlag(GraphicsItemFlag::ItemIsMovable, !_resizeMode);
+    setFlag(GraphicsItemFlag::ItemIsMovable, !resizeMode);
 
     _dragIndex = static_cast<Index>(index);
 
@@ -182,7 +182,7 @@ void DiagramAngleItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
-    if (_resizeMode)
+    if (_dragIndex == Point1 || _dragIndex == Point2 || _dragIndex == Point3)
     {
         prepareGeometryChange();
 
@@ -194,7 +194,7 @@ void DiagramAngleItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
         {
             setLine(QLineF(line().p1(), event->pos()));
         }
-        else
+        else if (_dragIndex == Point3)
         {
             _p3 = event->pos();
         }
@@ -207,7 +207,7 @@ void DiagramAngleItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramAngleItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    _resizeMode = false;
+	_dragIndex = DragNone;
 
     emit itemChanged();
 
