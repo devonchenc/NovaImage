@@ -217,6 +217,8 @@ void DiagramItem::statisticsInfo()
 	case Rhombus:
 		totalPixelCount = qRound(qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0) / 2);
 		break;
+    default:
+        break;
 	}
 
     if (image->hasPixelSpacing())
@@ -363,7 +365,7 @@ void DiagramItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)
         return;
 
-	_scaleDirection = NoneDirection;
+    _scaleDirection = NoneDirection;
     statisticsInfo();
 
     QGraphicsPolygonItem::mouseReleaseEvent(event);
@@ -401,6 +403,8 @@ void DiagramItem::hoverMoveEvent(QGraphicsSceneHoverEvent* event)
             case Right:
                 setCursor(Qt::SizeHorCursor);
                 closeToHandlerPoint = true;
+                break;
+            default:
                 break;
             }
             break;
@@ -554,6 +558,12 @@ QPolygonF DiagramItem::scaledPolygon(const QPolygonF& old, DiagramItem::Directio
         fixPoint = old.boundingRect().bottomRight();
         scaleWidth = (fixPoint.x() - newPos.x()) / oldWidth;
         scaleHeight = 1;
+        break;
+    }
+    default:
+    {
+        scaleWidth = 0;
+        scaleHeight = 0;
         break;
     }
     }
