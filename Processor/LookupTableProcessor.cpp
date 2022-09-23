@@ -79,7 +79,7 @@ bool LookupTableProcessor::loadLUT(const QString& tableName)
 
     qint64 readSize = file.read((char*)_table, sizeof(unsigned char) * _size);
     file.close();
-    if (readSize != sizeof(unsigned char) * _size)
+    if (readSize != qint64(sizeof(unsigned char)) * qint64(_size))
         return false;
 
     return true;

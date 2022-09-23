@@ -42,6 +42,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Processor/EnhancementProcessor.h \
     ./Processor/EqualizationProcessor.h \
     ./Processor/GammaTransformationProcessor.h \
+    ./Processor/LookupTableProcessor.h \
     ./Processor/HistogramProcessor.h \
     ./Processor/InverseProcessor.h \
     ./Processor/LevelsProcessor.h \
@@ -104,6 +105,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Processor/EnhancementProcessor.cpp \
     ./Processor/EqualizationProcessor.cpp \
     ./Processor/GammaTransformationProcessor.cpp \
+    ./Processor/LookupTableProcessor.cpp \
     ./Processor/HistogramProcessor.cpp \
     ./Processor/InverseProcessor.cpp \
     ./Processor/LevelsProcessor.cpp \
