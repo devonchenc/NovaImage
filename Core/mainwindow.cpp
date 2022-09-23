@@ -197,6 +197,10 @@ void MainWindow::initUI()
 {
     createActions();
 
+    createLUTActions();
+
+    setupShortcuts();
+
     // setup toolbar
     createToolbar();
 
@@ -277,16 +281,14 @@ void MainWindow::createActions()
     _gammaTransformationAction = new QAction(tr("&Gamma Transformation"), this);
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
-    _LUT_rainbowAction = new QAction("&Rainbow", this);
-    _LUT_rainbowAction->setCheckable(true);
-    _LUT_seismicAction = new QAction("&Seismic", this);
-    _LUT_seismicAction->setCheckable(true);
+    //_LUT_coolAction = new QAction("&Cool", this);
+    //_LUT_coolAction->setCheckable(true);
+    //_LUT_rainbowAction = new QAction("&Rainbow", this);
+    //_LUT_rainbowAction->setCheckable(true);
+    //_LUT_viridisAction = new QAction("&Viridis", this);
+    //_LUT_viridisAction->setCheckable(true);
     _enhancementAction = new QAction(tr("Image &Enhancement"), this);
     _lightFieldCorrectionAction = new QAction(tr("&Light Field Correction"), this);
-
-    QActionGroup* LUTGroup = new QActionGroup(this);
-    LUTGroup->addAction(_LUT_rainbowAction);
-    LUTGroup->addAction(_LUT_seismicAction);
 
     _userGuideAction = new QAction(tr("&User's Guide"));
     _userGuideAction->setIcon(QIcon(":/icon/svg/guide.svg"));
@@ -337,8 +339,6 @@ void MainWindow::createActions()
     _intensityMenu->addAction(_equalizationAction);
     _intensityMenu->addSeparator();
     _lookupTableMenu = _intensityMenu->addMenu(tr("&Lookup Table"));
-    _lookupTableMenu->addAction(_LUT_rainbowAction);
-    _lookupTableMenu->addAction(_LUT_seismicAction);
 
     _processingMenu->addSeparator();
     _processingMenu->addAction(_thresholdSegmentationAction);
@@ -374,14 +374,33 @@ void MainWindow::createActions()
     connect(_brightnessAndContrastAction, &QAction::triggered, this, &MainWindow::brightnessAndContrast);
     connect(_thresholdSegmentationAction, &QAction::triggered, this, &MainWindow::thresholdSegmentation);
     connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
-    connect(_LUT_rainbowAction, &QAction::triggered, this, &MainWindow::rainbow);
     connect(_enhancementAction, &QAction::triggered, this, &MainWindow::enhancement);
     connect(_lightFieldCorrectionAction, &QAction::triggered, this, &MainWindow::lightFieldCorrection);
 
     connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
     connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
+}
 
-    setupShortcuts();
+void MainWindow::createLUTActions()
+{
+    QDir dir(QCoreApplication::applicationDirPath() + "/LUT");
+    if (!dir.exists())
+        return;
+
+    QStringList nameFilters;
+    nameFilters << "*.lut";
+    QStringList fileList = dir.entryList(nameFilters, QDir::Files | QDir::Readable, QDir::Name);
+    QActionGroup* LUTGroup = new QActionGroup(this);
+    for (int i = 0; i < fileList.size(); i++)
+    {
+        QFileInfo fileInfo(fileList[i]);
+        QAction* action = new QAction(fileInfo.completeBaseName(), this);
+        action->setCheckable(true);
+        LUTGroup->addAction(action);
+        _lookupTableMenu->addAction(action);
+
+        connect(action, &QAction::triggered, this, &MainWindow::LUTTriggered);
+    }
 }
 
 void MainWindow::createToolbar()
@@ -975,9 +994,10 @@ void MainWindow::equalization()
     _doc->equalization();
 }
 
-void MainWindow::rainbow()
+void MainWindow::LUTTriggered()
 {
-
+    QAction* action = qobject_cast<QAction*>(sender());
+    _doc->lookupTable(action->text());
 }
 
 void MainWindow::enhancement()

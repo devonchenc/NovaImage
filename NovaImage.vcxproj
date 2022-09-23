@@ -63,6 +63,7 @@
     <ClCompile Include="Processor\InverseProcessor.cpp" />
     <ClCompile Include="Processor\LevelsProcessor.cpp" />
     <ClCompile Include="Processor\LightFieldCorrectionProcessor.cpp" />
+    <ClCompile Include="Processor\LookupTableProcessor.cpp" />
     <ClCompile Include="Processor\ThresholdSegmentationProcessor.cpp" />
     <ClCompile Include="Widget\ChartView.cpp" />
     <ClCompile Include="Widget\ColorButton.cpp" />
@@ -132,6 +133,7 @@
     <QtMoc Include="Widget\ImageQualityChartView.h" />
     <QtMoc Include="Processor\ThresholdSegmentationProcessor.h" />
     <QtMoc Include="Processor\LightFieldCorrectionProcessor.h" />
+    <ClInclude Include="Processor\LookupTableProcessor.h" />
     <ClInclude Include="Widget\CustomEvent.h" />
     <ClInclude Include="Widget\Peg.h" />
     <QtMoc Include="Widget\ToolBoxWidget.h" />

@@ -12,6 +12,7 @@
 #include "../Widget/ProcessorBaseWidget.h"
 
 BaseProcessor* BaseProcessor::_currentProcessor = nullptr;
+BaseProcessor* BaseProcessor::_tempProcessor = nullptr;
 
 BaseProcessor::BaseProcessor(bool temporary, QObject* parent)
     : QObject(parent)
@@ -20,13 +21,14 @@ BaseProcessor::BaseProcessor(bool temporary, QObject* parent)
     , _processorWidget(nullptr)
     , _temporary(temporary)
 {
-    if (temporary)
+    if (_temporary)
     {
-        if (_currentProcessor && _currentProcessor->isTemporary())
+        // Make sure there is only one temporary Processor
+        if (_tempProcessor)
         {
-            delete _currentProcessor;
+            delete _tempProcessor;
         }
-        _currentProcessor = this;
+        _tempProcessor = this;
     }
 
     connect(this, &BaseProcessor::createWidget, getGlobalWindow(), &MainWindow::createProcessorWidget);

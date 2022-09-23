@@ -67,5 +67,7 @@ private:
     static BaseProcessor* _currentProcessor;
 
     // Indicates whether it is a temporary processor
+    // Old temporary processor will be deleted when creating a new temporary processor
     bool _temporary;
+    static BaseProcessor* _tempProcessor;
 };

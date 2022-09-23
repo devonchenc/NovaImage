@@ -225,6 +225,9 @@
     <ClCompile Include="Dialog\AboutDialog.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
+    <ClCompile Include="Processor\LookupTableProcessor.cpp">
+      <Filter>Processor</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -432,6 +435,9 @@
     </ClInclude>
     <ClInclude Include="Widget\CustomEvent.h">
       <Filter>Widget</Filter>
+    </ClInclude>
+    <ClInclude Include="Processor\LookupTableProcessor.h">
+      <Filter>Processor</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

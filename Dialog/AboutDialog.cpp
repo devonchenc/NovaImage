@@ -29,7 +29,7 @@ void AboutDialog::initUI()
     vLayout->addStretch();
     vLayout->addWidget(new QLabel("NovaImage"));
     vLayout->addStretch();
-    vLayout->addWidget(new QLabel("Version 1.0.0"));
+    vLayout->addWidget(new QLabel("Version 1.0.1"));
     vLayout->addStretch();
     vLayout->addWidget(new QLabel("Copyright (C) 2022 DevonChen"));
     vLayout->addWidget(new QLabel("All rights reserved."));

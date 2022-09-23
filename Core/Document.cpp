@@ -20,6 +20,7 @@
 #include "../Processor/GammaTransformationProcessor.h"
 #include "../Processor/ThresholdSegmentationProcessor.h"
 #include "../Processor/EqualizationProcessor.h"
+#include "../Processor/LookupTableProcessor.h"
 #include "../Processor/EnhancementProcessor.h"
 #include "../Processor/LightFieldCorrectionProcessor.h"
 #include "../Dialog/RawParameterDialog.h"
@@ -89,6 +90,9 @@ bool Document::openFile(const QString& fileName)
 bool Document::openFolder(const QString& pathName)
 {
     QDir dir(pathName);
+    if (!dir.exists())
+        return false;
+
     QStringList nameFilters;
     nameFilters << "*.dcm";
     QStringList fileList = dir.entryList(nameFilters, QDir::Files | QDir::Readable, QDir::Name);
@@ -412,41 +416,6 @@ void Document::negativeImage()
     }
 }
 
-void Document::backup()
-{
-    _undoStack.backup(_image.get());
-}
-
-void Document::undo()
-{
-    if (_undoStack.isEmpty())
-        return;
-
-    _undoStack.undo()->copyToImage(_image.get());
-    repaintView();
-}
-
-void Document::redo()
-{
-    if (_undoStack.isTop())
-        return;
-
-    _undoStack.redo()->copyToImage(_image.get());
-    repaintView();
-}
-
-void Document::restore()
-{
-    if (_image)
-    {
-        _image->restore();
-
-        initViewWindowWidthAndLevel();
-
-        repaintView();
-    }
-}
-
 void Document::brightnessAndContrast()
 {
     if (_image)
@@ -505,6 +474,51 @@ void Document::lightFieldCorrection()
         LightFieldCorrectionProcessor* processor = new LightFieldCorrectionProcessor(this);
         processor->initUI();
         processor->processForView(getImage());
+    }
+}
+
+void Document::lookupTable(const QString& tableName)
+{
+    if (_image)
+    {
+        LookupTableProcessor* processor = new LookupTableProcessor(tableName, this);
+        processor->processForView(getImage());
+        processor->apply();
+    }
+}
+
+void Document::backup()
+{
+    _undoStack.backup(_image.get());
+}
+
+void Document::undo()
+{
+    if (_undoStack.isEmpty())
+        return;
+
+    _undoStack.undo()->copyToImage(_image.get());
+    repaintView();
+}
+
+void Document::redo()
+{
+    if (_undoStack.isTop())
+        return;
+
+    _undoStack.redo()->copyToImage(_image.get());
+    repaintView();
+}
+
+void Document::restore()
+{
+    if (_image)
+    {
+        _image->restore();
+
+        initViewWindowWidthAndLevel();
+
+        repaintView();
     }
 }
 

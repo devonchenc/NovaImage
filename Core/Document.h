@@ -46,7 +46,7 @@ public:
 
     BaseImage* getImage() const { return _image.get(); }
 
-  //  void copyImage(const std::shared_ptr<BaseImage>& image);
+//  void copyImage(const std::shared_ptr<BaseImage>& image);
 
     void repaintView();
     void repaintView(QImage* image, int viewType = 0);
@@ -74,6 +74,20 @@ public:
 
     void negativeImage();
 
+    void brightnessAndContrast();
+
+    void gammaTransformation();
+
+    void thresholdSegmentation();
+
+    void equalization();
+
+    void lookupTable(const QString& tableName);
+
+    void enhancement();
+
+    void lightFieldCorrection();
+
     void backup();
 
 public slots:
@@ -82,13 +96,6 @@ public slots:
     void redo();
 
     void restore();
-
-    void brightnessAndContrast();
-    void gammaTransformation();
-    void thresholdSegmentation();
-    void equalization();
-    void enhancement();
-    void lightFieldCorrection();
 
 private:
     void imageOpened();

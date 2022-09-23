@@ -73,6 +73,8 @@ private:
 
     void createActions();
 
+    void createLUTActions();
+
     void setupShortcuts();
 
     void loadPlugin();
@@ -121,7 +123,7 @@ public slots:
     void brightnessAndContrast();
     void thresholdSegmentation();
     void equalization();
-    void rainbow();
+    void LUTTriggered();
     void enhancement();
     void lightFieldCorrection();
 
@@ -191,8 +193,9 @@ private:
     QAction* _gammaTransformationAction;
     QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
-    QAction* _LUT_rainbowAction;
-    QAction* _LUT_seismicAction;
+    //QAction* _LUT_coolAction;
+    //QAction* _LUT_rainbowAction;
+    //QAction* _LUT_viridisAction;
     QAction* _enhancementAction;
     QAction* _lightFieldCorrectionAction;
 
