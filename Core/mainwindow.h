@@ -127,8 +127,8 @@ public slots:
     void enhancement();
     void lightFieldCorrection();
 
-    void slectLanguage(QAction* action);
-    void slectLanguage(int language);
+    void selectLanguage(QAction* action);
+    void selectLanguage(int language);
 
     void userGuide();
     void about();
@@ -193,9 +193,6 @@ private:
     QAction* _gammaTransformationAction;
     QAction* _thresholdSegmentationAction;
     QAction* _equalizationAction;
-    //QAction* _LUT_coolAction;
-    //QAction* _LUT_rainbowAction;
-    //QAction* _LUT_viridisAction;
     QAction* _enhancementAction;
     QAction* _lightFieldCorrectionAction;
 

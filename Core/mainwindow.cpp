@@ -275,18 +275,12 @@ void MainWindow::createActions()
     languageGroup->addAction(_engAction);
     languageGroup->addAction(_chsAction);
     languageGroup->setExclusive(true);
-    connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(slectLanguage(QAction*)));
+    connect(languageGroup, SIGNAL(triggered(QAction*)), this, SLOT(selectLanguage(QAction*)));
 
     _brightnessAndContrastAction = new QAction(tr("&Brightness/Contrast"), this);
     _gammaTransformationAction = new QAction(tr("&Gamma Transformation"), this);
     _thresholdSegmentationAction = new QAction(tr("&Threshold Segmentation"), this);
     _equalizationAction = new QAction(tr("&Histogram Equalization"), this);
-    //_LUT_coolAction = new QAction("&Cool", this);
-    //_LUT_coolAction->setCheckable(true);
-    //_LUT_rainbowAction = new QAction("&Rainbow", this);
-    //_LUT_rainbowAction->setCheckable(true);
-    //_LUT_viridisAction = new QAction("&Viridis", this);
-    //_LUT_viridisAction->setCheckable(true);
     _enhancementAction = new QAction(tr("Image &Enhancement"), this);
     _lightFieldCorrectionAction = new QAction(tr("&Light Field Correction"), this);
 
@@ -623,7 +617,7 @@ void MainWindow::showDockWidget(bool show)
 void MainWindow::setting()
 {
     SettingsDialog dlg;
-    connect(&dlg, SIGNAL(changeLanguage(int)), this, SLOT(slectLanguage(int)));
+    connect(&dlg, SIGNAL(changeLanguage(int)), this, SLOT(selectLanguage(int)));
     dlg.exec();
 }
 
@@ -882,7 +876,7 @@ void MainWindow::loadTranslator()
     }
 
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-    slectLanguage(settings.value("General/language", 0).toInt());
+    selectLanguage(settings.value("General/language", 0).toInt());
 }
 
 bool MainWindow::querySave()
@@ -1012,19 +1006,19 @@ void MainWindow::lightFieldCorrection()
     _doc->lightFieldCorrection();
 }
 
-void MainWindow::slectLanguage(QAction* action)
+void MainWindow::selectLanguage(QAction* action)
 {
     if (action == _engAction)
     {
-        slectLanguage(0);
+        selectLanguage(0);
     }
     else if(action == _chsAction)
     {
-        slectLanguage(1);
+        selectLanguage(1);
     }
 }
 
-void MainWindow::slectLanguage(int language)
+void MainWindow::selectLanguage(int language)
 {
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     settings.setValue("General/language", language);
