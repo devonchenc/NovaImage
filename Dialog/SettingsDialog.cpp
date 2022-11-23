@@ -60,7 +60,7 @@ QWidget* SettingsDialog::createGeneralWidget()
     _languageComboBox->addItem("English");
     _languageComboBox->addItem(QStringLiteral("中文（简体）"));
     QHBoxLayout* hLayout1 = new QHBoxLayout;
-    hLayout1->addWidget(new QLabel(tr("Language:")));
+    hLayout1->addWidget(new QLabel("Language:"));
     hLayout1->addWidget(_languageComboBox);
 
     MainWindow* mainWindow = getGlobalWindow();
