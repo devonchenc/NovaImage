@@ -5,9 +5,9 @@
 #include <QValueAxis>
 #include <QGraphicsSceneMouseEvent>
 
-Callout::Callout(QChart* chart)
-    : QGraphicsItem(chart)
-    , _chart(chart)
+Callout::Callout(QChart* parent)
+    : QGraphicsItem(parent)
+    , _chart(parent)
 {
 
 }
