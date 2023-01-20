@@ -208,8 +208,8 @@ void LightFieldCorrectionProcessor::processImage(GeneralImage* srcImage, General
             QImage* lightImageEntity = lightImage->getImageEntity();
             if (lightImage->width() != width || lightImage->height() != height || lightImageEntity->depth() /8 != depth)
             {
-                QMessageBox::critical(nullptr, QObject::tr("Light field file error"),
-                    QObject::tr("The light field image size does not match the size of opened file!"), QMessageBox::Ok);
+                QMessageBox::critical(nullptr, tr("Light field file error"),
+                    tr("The light field image size does not match the size of opened file!"), QMessageBox::Ok);
                 return;
             }
 

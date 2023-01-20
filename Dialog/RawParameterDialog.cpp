@@ -197,8 +197,8 @@ void RawParameterDialog::acceptButtonClicked()
 
     if (_expectedSize > _actualSize)
     {
-        QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
-                              QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
+        QMessageBox::critical(nullptr, tr("Open image file error"),
+                              tr("The data size does not match the file information description!"), QMessageBox::Ok);
         return;
     }
     else

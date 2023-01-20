@@ -101,8 +101,8 @@ void ImageReader<Type>::run()
         if (readSize != qint64(sizeof(Type)) * qint64(_pixelPerSlice))
         {
             file.close();
-            QMessageBox::critical(nullptr, QObject::tr("Open image file error"),
-                QObject::tr("The data size does not match the file information description!"), QMessageBox::Ok);
+            QMessageBox::critical(nullptr, tr("Open image file error"),
+                tr("The data size does not match the file information description!"), QMessageBox::Ok);
             QMetaObject::invokeMethod(_widget, "reject", Qt::QueuedConnection);
             return;
         }
