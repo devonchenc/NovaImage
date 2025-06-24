@@ -61,9 +61,6 @@ public:
 
     float windowLevel() { return _windowLevel; }
 
-    void slicePlusOne();
-    void sliceMinusOne();
-
     void slicePlus(int plus);
     void sliceMinus(int minus);
 
@@ -77,7 +74,6 @@ public:
 
     void ROIWindow(const QRectF& rect);
 
-public slots:
     void setSceneMode(int mode);
 
     void setItemType(DiagramItem::DiagramType type);
@@ -97,6 +93,10 @@ public slots:
     void zoomIn();
     void zoomOut();
     void setZoomValueOffset(int offset);
+
+public slots:
+    void slicePlusOne();
+    void sliceMinusOne();
 
     void plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);
     void imageQualityLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth);

@@ -104,7 +104,7 @@ void View::paintEvent(QPaintEvent*)
 
 void View::resizeEvent(QResizeEvent*)
 {
-    fitWindow();
+
 }
 
 void View::showImage(const QImage* image)
@@ -241,26 +241,6 @@ void View::setWindowWidthAndLevel(float windowWidth, float windowLevel)
 {
     _windowWidth = windowWidth;
     _windowLevel = windowLevel;
-}
-
-void View::slicePlusOne()
-{
-    BaseImage* image = getGlobalImage();
-    if (image == nullptr || imageSlice() <= 1)
-        return;
-
-    image->setSlice(_viewType, (image->currentSlice(_viewType) + 1) >= imageSlice() ? 0 : (image->currentSlice(_viewType) + 1));
-    getGlobalDocument()->applyImageWidthAndLevel();
-}
-
-void View::sliceMinusOne()
-{
-    BaseImage* image = getGlobalImage();
-    if (image == nullptr || imageSlice() <= 1)
-        return;
-
-    image->setSlice(_viewType, (image->currentSlice(_viewType) - 1) < 0 ? (imageSlice() - 1) : (image->currentSlice(_viewType) - 1));
-    getGlobalDocument()->applyImageWidthAndLevel();
 }
 
 void View::slicePlus(int plus)
@@ -447,7 +427,7 @@ void View::resetTransformation()
     // Reset translate
     if (_currentImage)
     {
-        view()->setSceneRect(QRectF(0, 0, _currentImage->pixmap().width(), _currentImage->pixmap().height()));
+        _view->setSceneRect(QRectF(0, 0, _currentImage->pixmap().width(), _currentImage->pixmap().height()));
     }
 }
 
@@ -468,37 +448,57 @@ void View::fitWindow()
 
 void View::zoomNormal()
 {
-    view()->zoomNormal();
+    _view->zoomNormal();
 }
 
 void View::zoom2x()
 {
-    view()->zoom2x();
+    _view->zoom2x();
 }
 
 void View::zoom4x()
 {
-    view()->zoom4x();
+    _view->zoom4x();
 }
 
 void View::zoom8x()
 {
-    view()->zoom8x();
+    _view->zoom8x();
 }
 
 void View::zoomIn()
 {
-    view()->zoomIn();
+    _view->zoomIn();
 }
 
 void View::zoomOut()
 {
-    view()->zoomOut();
+    _view->zoomOut();
 }
 
 void View::setZoomValueOffset(int offset)
 {
-    view()->setZoomValueOffset(offset);
+    _view->setZoomValueOffset(offset);
+}
+
+void View::slicePlusOne()
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr || imageSlice() <= 1)
+        return;
+
+    image->setSlice(_viewType, (image->currentSlice(_viewType) + 1) >= imageSlice() ? 0 : (image->currentSlice(_viewType) + 1));
+    getGlobalDocument()->applyImageWidthAndLevel();
+}
+
+void View::sliceMinusOne()
+{
+    BaseImage* image = getGlobalImage();
+    if (image == nullptr || imageSlice() <= 1)
+        return;
+
+    image->setSlice(_viewType, (image->currentSlice(_viewType) - 1) < 0 ? (imageSlice() - 1) : (image->currentSlice(_viewType) - 1));
+    getGlobalDocument()->applyImageWidthAndLevel();
 }
 
 void View::plotLineWidthChanged(QGraphicsLineItem* lineItem, int lineWidth)
@@ -535,8 +535,10 @@ void View::copyItem()
 void View::pasteItem()
 {
     QList<QGraphicsItem*> pasteBoardCopy(cloneItems(pasteBoard));
-    foreach (QGraphicsItem* p, _scene->items())
+    foreach(QGraphicsItem* p, _scene->items())
+    {
         p->setSelected(false);
+    }
 
     foreach (QGraphicsItem* item, pasteBoard)
     {
