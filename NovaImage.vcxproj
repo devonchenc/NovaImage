@@ -111,7 +111,6 @@
     <QtMoc Include="Dialog\AboutDialog.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
-    <QtMoc Include="Image\ImageReader.h" />
     <ClInclude Include="Image\MonoImage.h" />
     <ClInclude Include="Image\MonoImageProxy.h" />
     <ClInclude Include="Image\OldDataheader.h" />
@@ -119,6 +118,9 @@
     <QtMoc Include="Notification\NotificationLayout.h" />
     <QtMoc Include="Notification\NotificationWidget.h" />
     <QtMoc Include="Processor\BaseProcessor.h" />
+    <ClInclude Include="Image\Reader\ImageReader.h" />
+    <QtMoc Include="Image\Reader\AbstractReader.h" />
+    <ClInclude Include="Image\Reader\MultiDicomReader.h" />
     <ClInclude Include="Processor\CLAHE.h" />
     <QtMoc Include="Processor\BrightnessAndContrastProcessor.h" />
     <ClInclude Include="Processor\CurvesProcessor.h" />

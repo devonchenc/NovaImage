@@ -37,6 +37,9 @@
     <Filter Include="Dialog">
       <UniqueIdentifier>{58afb8ad-d315-4ccd-8ccb-197241894911}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Image\Reader">
+      <UniqueIdentifier>{c4dc45b3-626f-4a7e-8244-687d0257427c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Image\BaseImage.cpp">
@@ -311,9 +314,6 @@
     <QtMoc Include="Widget\ChartView.h">
       <Filter>Widget</Filter>
     </QtMoc>
-    <QtMoc Include="Image\ImageReader.h">
-      <Filter>Image</Filter>
-    </QtMoc>
     <QtMoc Include="Core\LayoutManager.h">
       <Filter>Core</Filter>
     </QtMoc>
@@ -367,6 +367,9 @@
     </QtMoc>
     <QtMoc Include="Dialog\AboutDialog.h">
       <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="Image\Reader\AbstractReader.h">
+      <Filter>Image\Reader</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
@@ -438,6 +441,12 @@
     </ClInclude>
     <ClInclude Include="Processor\LookupTableProcessor.h">
       <Filter>Processor</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\Reader\ImageReader.h">
+      <Filter>Image\Reader</Filter>
+    </ClInclude>
+    <ClInclude Include="Image\Reader\MultiDicomReader.h">
+      <Filter>Image\Reader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

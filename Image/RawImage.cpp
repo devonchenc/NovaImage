@@ -3,7 +3,7 @@
 #include <QFile>
 
 #include "ImageDataTemplate.h"
-#include "ImageReader.h"
+#include "Reader/ImageReader.h"
 #include "../Dialog/ProgressDialog.h"
 
 RawImage::RawImage(const QString& pathName, int type, int width, int height, int slice, int headerSize, int endian)

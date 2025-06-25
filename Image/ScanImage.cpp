@@ -3,7 +3,7 @@
 #include <QFile>
 
 #include "ImageDataTemplate.h"
-#include "ImageReader.h"
+#include "Reader/ImageReader.h"
 #include "../Dialog/ProgressDialog.h"
 
 ScanImage::ScanImage(const QString& pathName)

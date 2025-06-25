@@ -4,7 +4,7 @@
 #include <QVBoxLayout>
 #include <QThread>
 
-#include "../Image/ImageReader.h"
+#include "../Image/Reader/ImageReader.h"
 
 ProgressDialog::ProgressDialog(AbstractReader* thread, QWidget* parent)
     : QDialog(parent)

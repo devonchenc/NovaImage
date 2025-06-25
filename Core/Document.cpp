@@ -14,6 +14,7 @@
 #include "../Image/ScanImage.h"
 #include "../Image/DicomImage.h"
 #include "../Image/RawImage.h"
+#include "../Image/Reader/MultiDicomReader.h"
 #include "../Processor/LevelsProcessor.h"
 #include "../Processor/InverseProcessor.h"
 #include "../Processor/BrightnessAndContrastProcessor.h"
@@ -24,6 +25,7 @@
 #include "../Processor/EnhancementProcessor.h"
 #include "../Processor/LightFieldCorrectionProcessor.h"
 #include "../Dialog/RawParameterDialog.h"
+#include "../Dialog/ProgressDialog.h"
 
 Document::Document(MainWindow* pWindow)
     : QObject(pWindow)
@@ -105,30 +107,31 @@ bool Document::openFolder(const QString& pathName)
     }
 
     QVector<std::shared_ptr<DICOMImage>> imageVector;
-    for (int i = 0; i < fileList.size(); i++)
+    AbstractReader* reader = new MultiDicomReader(pathName, fileList, imageVector);
+    ProgressDialog dlg(reader);
+    reader->setWidget(&dlg);
+    reader->start();
+    reader->deleteLater();
+
+    if (dlg.exec() == QDialog::Accepted)
     {
-        QString fileName = dir.absoluteFilePath(fileList[i]);
-        std::shared_ptr<DICOMImage> dicomImage = std::make_shared<DICOMImage>(fileName);
+        _image = std::make_shared<DICOMImage>(imageVector);
 
         // Judge whether open file successfully
-        if (dicomImage->isOpenSucceed() == true)
+        if (_image->isOpenSucceed() == false)
         {
-            imageVector.append(dicomImage);
+            _image = nullptr;
+            return false;
         }
+
+        imageOpened();
+
+        return true;
     }
-
-    _image = std::make_shared<DICOMImage>(imageVector);
-
-    // Judge whether open file successfully
-    if (_image->isOpenSucceed() == false)
+    else
     {
-        _image = nullptr;
         return false;
     }
-
-    imageOpened();
-
-    return true;
 }
 
 int Document::findImageType(const QString& fileName)
