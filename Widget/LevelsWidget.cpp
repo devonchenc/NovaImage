@@ -14,7 +14,7 @@ LevelsWidget::LevelsWidget(QWidget* parent)
 {
     setName(tr("Levels"));
 
-    _histogram = new HistogramWidget();
+    _histogram = new HistogramWidget;
     connect(_histogram, &HistogramWidget::resetControl, this, &LevelsWidget::resetButtonClicked);
     connect(_histogram, &HistogramWidget::apply, this, &LevelsWidget::apply);
     connect(_histogram, &HistogramWidget::updateBottom, this, &LevelsWidget::updateBottom);
@@ -48,14 +48,6 @@ LevelsWidget::LevelsWidget(QWidget* parent)
     setLayout(layout);
 
     _processor = new LevelsProcessor(this);
-}
-
-LevelsWidget::~LevelsWidget()
-{
-    if (_processor)
-    {
-        delete _processor;
-    }
 }
 
 void LevelsWidget::init()

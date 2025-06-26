@@ -11,7 +11,6 @@ LevelsProcessor::LevelsProcessor(QObject* parent)
     , _mid(0)
     , _top(0)
 {
-
 }
 
 void LevelsProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)

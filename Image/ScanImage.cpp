@@ -50,7 +50,6 @@ ScanImage::ScanImage(const ScanImage& src)
     : MonoImage(src)
     , _dataHeader(src._dataHeader)
 {
-
 }
 
 ScanImage& ScanImage::operator=(const ScanImage& src)

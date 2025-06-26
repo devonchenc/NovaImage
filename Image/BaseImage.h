@@ -29,7 +29,7 @@ public:
 
     virtual float getValueWithType(int type, int index) const { Q_UNUSED(type); return getValue(index); }
 
-    virtual bool hasPixelSpacing()  { return false; }
+    virtual bool hasPixelSpacing() const { return false; }
 
     virtual float horzPixelSpacing() { return 0; }
     virtual float vertPixelSpacing() { return 0; }
@@ -44,11 +44,11 @@ public:
 
     virtual void setViewType(int type) { Q_UNUSED(type); }
 
-    virtual int viewType() { return 0; }
+    virtual int viewType() const { return 0; }
 
     virtual QImage* getImageEntity() const { return _pImage.get(); }
 
-    virtual QString getDescription() { return QString(); }
+    virtual QString getDescription() const { return QString(); }
 
 public:
     int width() const { return _width; }

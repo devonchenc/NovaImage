@@ -9,7 +9,6 @@ HistogramProcessor::HistogramProcessor(QObject* parent)
     : BaseProcessor(false, parent)
     , _array(nullptr)
 {
-
 }
 
 void HistogramProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
@@ -93,6 +92,7 @@ void HistogramProcessor::processImage(const MonoImage* srcImage, MonoImage* dstI
 
     int width, height;
     const uchar* byteImage = srcImage->getBYTEImage(width, height);
+    uchar* dstByteImage = dstImage->getBYTEImage(width, height);
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();
 
@@ -115,11 +115,11 @@ void HistogramProcessor::processImage(const MonoImage* srcImage, MonoImage* dstI
             count++;
         }
     }
- /*   if (count == 0)
+    if (count == 0)
     {
         // Convert data to byte
-        srcImage->convertToByte();
-        srcImage->copyByteToImage();
+        dstImage->convertToByte();
+        dstImage->copyByteToImage();
         return;
     }
 
@@ -130,28 +130,28 @@ void HistogramProcessor::processImage(const MonoImage* srcImage, MonoImage* dstI
     {
         if (srcImage->getValue(i) >= actualMax)
         {
-            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 255;
+            dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = 255;
         }
         else if (srcImage->getValue(i) <= actualMin)
         {
-            byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
+            dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = 0;
         }
         else
         {
             int index = round(float(srcImage->getValue(i) - minValue) * (_arrayNum - 1) / (maxValue - minValue));
             if (_array[index])
             {
-                byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] =
+                dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] =
                         round((srcImage->getValue(i) - actualMin) * 255.0f / (actualMax - actualMin));
             }
             else
             {
-                byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
+                dstByteImage[3 * i] = dstByteImage[3 * i + 1] = dstByteImage[3 * i + 2] = 0;
             }
         }
-    }*/
+    }
 
-//    srcImage->copyByteToImage(dstImage);
+    dstImage->copyByteToImage();
 }
 
 void HistogramProcessor::setWindowArray(bool* array, int arrayNum)

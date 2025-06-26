@@ -26,8 +26,6 @@ public:
 
     void setMostRecentFile(const QString& fileName);
 
-    QString strippedName(const QString& fullFileName);
-
     void setMenuEnabled(bool enable);
 
     // returns how many recent files are being remembered

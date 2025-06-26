@@ -47,16 +47,16 @@ MonoImage::MonoImage(const MonoImage& src)
 {
     _imageData = src._imageData->copyImageData();
 
-    _axialProxy = new MonoImageProxy(*src._axialProxy);
+    _axialProxy = std::make_shared<MonoImageProxy>(*src._axialProxy);
 
     if (src._coronalProxy)
     {
-        _coronalProxy = new MonoImageProxy(*src._coronalProxy);
+        _coronalProxy = std::make_shared<MonoImageProxy>(*src._coronalProxy);
     }
 
     if (src._sagittalProxy)
     {
-        _sagittalProxy = new MonoImageProxy(*src._sagittalProxy);
+        _sagittalProxy = std::make_shared<MonoImageProxy>(*src._sagittalProxy);
     }
 
     _pImage = _axialProxy->getImageEntity();
@@ -74,21 +74,6 @@ MonoImage::~MonoImage()
     {
         delete _imageData;
         _imageData = nullptr;
-    }
-    if (_axialProxy)
-    {
-        delete _axialProxy;
-        _axialProxy = nullptr;
-    }
-    if (_coronalProxy)
-    {
-        delete _coronalProxy;
-        _coronalProxy = nullptr;
-    }
-    if (_sagittalProxy)
-    {
-        delete _sagittalProxy;
-        _sagittalProxy = nullptr;
     }
 }
 
@@ -147,7 +132,7 @@ bool MonoImage::copyByteToImage()
     return true;
 }
 
-bool MonoImage::copyByteToImage(QImage* dstImage)
+bool MonoImage::copyByteToImage(QImage* dstImage) const
 {
     if (_currentViewType == AXIAL_VIEW)
     {
@@ -471,11 +456,11 @@ bool MonoImage::saveAsRaw(const QString& fileName)
 
 bool MonoImage::allocateMemory()
 {
-    _axialProxy = new MonoImageProxy(this, _width, _height, AXIAL_VIEW);
+    _axialProxy = std::make_shared<MonoImageProxy>(this, _width, _height, AXIAL_VIEW);
     if (_slice > 1)
     {
-        _coronalProxy = new MonoImageProxy(this, _width, _slice, CORONAL_VIEW);
-        _sagittalProxy = new MonoImageProxy(this, _height, _slice, SAGITTAL_VIEW);
+        _coronalProxy = std::make_shared<MonoImageProxy>(this, _width, _slice, CORONAL_VIEW);
+        _sagittalProxy = std::make_shared<MonoImageProxy>(this, _height, _slice, SAGITTAL_VIEW);
     }
 
     _pImage = _axialProxy->getImageEntity();

@@ -26,7 +26,7 @@ public:
 
     bool copyByteToImage();
 
-    bool copyByteToImage(QImage* dstImage);
+    bool copyByteToImage(QImage* dstImage) const;
 
 public:
     int slice() const override { return _slice; }
@@ -56,7 +56,7 @@ public:
 
     void setViewType(int type) override;
 
-    int viewType() override { return _currentViewType; }
+    int viewType() const override { return _currentViewType; }
 
     QImage* getImageEntity() const override;
 
@@ -83,9 +83,9 @@ protected:
 protected:
     ImageData* _imageData;
 
-    MonoImageProxy* _axialProxy;
-    MonoImageProxy* _coronalProxy;
-    MonoImageProxy* _sagittalProxy;
+    std::shared_ptr<MonoImageProxy> _axialProxy;
+    std::shared_ptr<MonoImageProxy> _coronalProxy;
+    std::shared_ptr<MonoImageProxy> _sagittalProxy;
 
     int _currentViewType;
 

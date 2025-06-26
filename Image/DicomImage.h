@@ -18,7 +18,7 @@ public:
     void setSlice(int slice) override;
     void setSlice(int type, int slice) override;
 
-    bool hasPixelSpacing() override { return true; }
+    bool hasPixelSpacing() const override { return true; }
 
     float horzPixelSpacing() override { return _horzPixelSpacing; }
     float vertPixelSpacing() override { return _vertPixelSpacing; }
@@ -32,7 +32,7 @@ public:
 
     void restore() override;
 
-    QString getDescription() { return _seriesDescription; }
+    QString getDescription() const { return _seriesDescription; }
 
 private:
     // Read data

@@ -43,12 +43,12 @@ GraphicsView* View::view() const
     return _view;
 }
 
-GraphicsScene* View::scene()
+GraphicsScene* View::scene() const
 {
     return _scene;
 }
 
-int View::sceneMode()
+int View::sceneMode() const
 {
     return _scene->mode();
 }

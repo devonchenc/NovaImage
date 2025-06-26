@@ -17,7 +17,7 @@ public:
 public:
     void setSlice(int slice) override;
 
-    bool hasPixelSpacing() override { return true; }
+    bool hasPixelSpacing() const override { return true; }
 
     float horzPixelSpacing() override { return _dataHeader.HorzPixelSpacing; }
     float vertPixelSpacing() override { return _dataHeader.VertPixelSpacing; }

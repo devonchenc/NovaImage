@@ -15,7 +15,6 @@ class LevelsWidget : public BaseWidget
 
 public:
     LevelsWidget(QWidget* parent = nullptr);
-    virtual ~LevelsWidget();
 
 public:
     void init() override;

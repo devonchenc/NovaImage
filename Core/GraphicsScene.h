@@ -36,7 +36,7 @@ public:
 
     void setMode(int mode);
 
-    int mode() { return _mode; }
+    int mode() const { return _mode; }
 
     void setItemType(DiagramItem::DiagramType type);
 

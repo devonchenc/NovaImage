@@ -25,13 +25,13 @@ public:
 
     GraphicsView* view() const;
 
-    GraphicsScene* scene();
+    GraphicsScene* scene() const;
 
-    int sceneMode();
+    int sceneMode() const;
 
     void setViewType(int type) { _viewType = type; }
 
-    int viewType() { return _viewType; }
+    int viewType() const { return _viewType; }
 
     void showImage(const QImage* image);
     
