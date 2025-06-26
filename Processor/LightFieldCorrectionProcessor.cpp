@@ -104,7 +104,7 @@ void LightFieldCorrectionProcessor::typeChanged(int type, QString fileName)
     processForView(getGlobalImage());
 }
 
-void LightFieldCorrectionProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void LightFieldCorrectionProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -243,7 +243,7 @@ void LightFieldCorrectionProcessor::processImage(GeneralImage* srcImage, General
     }
 }
 
-void LightFieldCorrectionProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void LightFieldCorrectionProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);

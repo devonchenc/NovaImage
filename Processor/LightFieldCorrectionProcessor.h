@@ -52,9 +52,9 @@ public slots:
     void typeChanged(int type, QString fileName);
 
 protected:
-    void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
+    void processImage(const GeneralImage* srcImage, GeneralImage* dstImage) override;
 
-    void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
+    void processImage(const MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
     void generateKernel(fftw_complex* kernelOut, int kernelWidth, int kernelHeight, float sigma);

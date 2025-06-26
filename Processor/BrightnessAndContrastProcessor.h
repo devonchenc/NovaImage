@@ -42,9 +42,9 @@ public:
     void initUI() override;
 
 protected:
-    void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
+    void processImage(const GeneralImage* srcImage, GeneralImage* dstImage) override;
 
-    void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
+    void processImage(const MonoImage* srcImage, MonoImage* dstImage) override;
 
 public:
     void setBrightnessAndContrast(int brightness, int contrast);

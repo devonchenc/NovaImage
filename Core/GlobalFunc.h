@@ -22,7 +22,7 @@ View* getGlobalSagittalView();
 BaseImage* getGlobalImage();
 
 void repaintView();
-void repaintView(QImage* image, int viewType = 0);
+void repaintView(const QImage* image, int viewType = 0);
 void repaintView(std::shared_ptr<QImage> dstImage, int viewType = 0);
 void repaintView(std::vector<std::shared_ptr<QImage>> imageVec);
 
@@ -38,7 +38,7 @@ QString colorToString(const QColor& color);
 
 QString polygonToString(const QPolygonF& polygon);
 
-bool copyByteToImage(uchar* byteImage, int width, int height, QImage* pImage);
+bool copyByteToImage(const uchar* byteImage, int width, int height, QImage* pImage);
 
 // Spline function
 float spline(float* x, float* y, int n, float* t, int m, float* z);

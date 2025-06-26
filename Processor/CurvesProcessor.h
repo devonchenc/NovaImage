@@ -16,14 +16,16 @@ public:
     CurvesProcessor(QObject* parent = nullptr);
 
 protected:
-    void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
+    void processImage(const GeneralImage* srcImage, GeneralImage* dstImage) override;
 
-    void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
+    void processImage(const MonoImage* srcImage, MonoImage* dstImage) override;
 
 public:
     void setChannel(int channel) { _channel = channel; }
 
     void setArray(int arrayNum, uint* arrayIntensity, uint* arrayRed, uint* arrayGreen, uint* arrayBlue);
+
+    void processLine(const GeneralImage* srcImage, uchar* srcData, uchar* dstData, int y);
 
 private:
     // Interpolation

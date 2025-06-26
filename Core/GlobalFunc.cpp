@@ -64,7 +64,7 @@ void repaintView()
     }
 }
 
-void repaintView(QImage* image, int viewType)
+void repaintView(const QImage* image, int viewType)
 {
     Document* document = getGlobalDocument();
     if (document)
@@ -147,7 +147,7 @@ QString polygonToString(const QPolygonF& polygon)
     return str;
 }
 
-bool copyByteToImage(uchar* byteImage, int width, int height, QImage* pImage)
+bool copyByteToImage(const uchar* byteImage, int width, int height, QImage* pImage)
 {
     if (byteImage == nullptr || pImage == nullptr)
         return false;

@@ -37,7 +37,7 @@ public:
 
     void setImage(BaseImage* image);
 
-    bool isTemporary() { return _temporary; }
+    bool isTemporary() const { return _temporary; }
 
     // Process image
     void process();
@@ -45,9 +45,9 @@ public:
     void processForView(BaseImage* image);
 
 protected:
-    virtual void processImage(GeneralImage*, GeneralImage*) {}
+    virtual void processImage(const GeneralImage*, GeneralImage*) {}
 
-    virtual void processImage(MonoImage*, MonoImage*) {}
+    virtual void processImage(const MonoImage*, MonoImage*) {}
 
     // virtual void ProcessRegionImage(RegionImage* pImage);
 

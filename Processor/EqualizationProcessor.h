@@ -38,9 +38,9 @@ public slots:
     void valueChanged(int gridSize, int clipLimit);
 
 protected:
-    void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
+    void processImage(const GeneralImage* srcImage, GeneralImage* dstImage) override;
 
-    void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
+    void processImage(const MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
     void RGB2HSV(uchar R, uchar G, uchar B, int& H, float& S, uchar& V);

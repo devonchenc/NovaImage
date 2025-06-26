@@ -14,7 +14,7 @@ LevelsProcessor::LevelsProcessor(QObject* parent)
 
 }
 
-void LevelsProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void LevelsProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -45,7 +45,7 @@ void LevelsProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImag
     }
 }
 
-void LevelsProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void LevelsProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);

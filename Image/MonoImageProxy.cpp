@@ -54,7 +54,7 @@ void MonoImageProxy::copyByteToImage()
     ::copyByteToImage(_byteImage, _width, _height, _pImage.get());
 }
 
-void MonoImageProxy::copyByteToImage(QImage* dstImage)
+void MonoImageProxy::copyByteToImage(QImage* dstImage) const
 {
     ::copyByteToImage(_byteImage, _width, _height, dstImage);
 }

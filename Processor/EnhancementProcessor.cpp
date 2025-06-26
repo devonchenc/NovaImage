@@ -109,7 +109,6 @@ EnhancementProcessor::EnhancementProcessor(QObject* parent)
     , _sobelFactor(0.2f)
     , _laplacianFactor(0.5f)
 {
-
 }
 
 void EnhancementProcessor::initUI()
@@ -135,7 +134,7 @@ void EnhancementProcessor::laplacianChanged(float value)
     processForView(getGlobalImage());
 }
 
-void EnhancementProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void EnhancementProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -192,7 +191,7 @@ void EnhancementProcessor::processImage(GeneralImage* srcImage, GeneralImage* ds
     }
 }
 
-void EnhancementProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void EnhancementProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);

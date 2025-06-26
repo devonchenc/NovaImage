@@ -82,7 +82,7 @@ void BrightnessAndContrastProcessor::initUI()
     emit createWidget(_processorWidget);
 }
 
-void BrightnessAndContrastProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void BrightnessAndContrastProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -119,7 +119,7 @@ void BrightnessAndContrastProcessor::processImage(GeneralImage* srcImage, Genera
     }
 }
 
-void BrightnessAndContrastProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void BrightnessAndContrastProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);

@@ -106,7 +106,7 @@ void GammaTransformationProcessor::initUI()
     emit createWidget(_processorWidget);
 }
 
-void GammaTransformationProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void GammaTransformationProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -131,7 +131,7 @@ void GammaTransformationProcessor::processImage(GeneralImage* srcImage, GeneralI
     }
 }
 
-void GammaTransformationProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void GammaTransformationProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);

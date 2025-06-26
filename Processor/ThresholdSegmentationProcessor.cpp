@@ -100,7 +100,7 @@ void ThresholdSegmentationProcessor::thresholdChanged(int value)
     processForView(getGlobalImage());
 }
 
-void ThresholdSegmentationProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void ThresholdSegmentationProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -134,13 +134,13 @@ void ThresholdSegmentationProcessor::processImage(GeneralImage* srcImage, Genera
     }
 }
 
-void ThresholdSegmentationProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void ThresholdSegmentationProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
 
     int width, height;
-    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
+    const uchar* srcByteImage = srcImage->getBYTEImage(width, height);
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
     float maxValue = srcImage->getMaxValue();

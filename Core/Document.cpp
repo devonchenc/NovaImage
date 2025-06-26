@@ -238,7 +238,7 @@ void Document::repaintView()
     }
 }
 
-void Document::repaintView(QImage* image, int viewType)
+void Document::repaintView(const QImage* image, int viewType)
 {
     if (viewType == 0)
     {

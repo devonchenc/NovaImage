@@ -70,7 +70,7 @@ void EqualizationProcessor::valueChanged(int gridSize, int clipLimit)
     processForView(getGlobalImage());
 }
 
-void EqualizationProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void EqualizationProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -133,13 +133,13 @@ void EqualizationProcessor::processImage(GeneralImage* srcImage, GeneralImage* d
     delete[] H;
 }
 
-void EqualizationProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void EqualizationProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
 
     int width, height;
-    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
+    const uchar* srcByteImage = srcImage->getBYTEImage(width, height);
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
     // Make sure newWidth and newHeight is divisible by _gridSize

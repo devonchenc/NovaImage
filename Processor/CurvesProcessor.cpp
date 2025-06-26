@@ -1,59 +1,105 @@
 #include "CurvesProcessor.h"
 
 #include <cmath>
+#include <QThread>
+#include <QRunnable>
+#include <QThreadPool>
+
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
 CurvesProcessor::CurvesProcessor(QObject* parent)
     : BaseProcessor(false, parent)
 {
-
 }
 
-void CurvesProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+class ImageWorker : public QRunnable
 {
-    assert(srcImage);
-    assert(dstImage);
+public:
+    ImageWorker(CurvesProcessor& processor, const GeneralImage* srcImage, uchar* srcData, uchar* dstData, int yStart, int yEnd)
+        : _processor(processor)
+        , _srcImage(srcImage)
+        , _srcData(srcData)
+        , _dstData(dstData)
+        , _yStart(yStart)
+        , _yEnd(yEnd)
+    {
+    }
 
+    void run() override
+    {
+        for (int y = _yStart; y < _yEnd; y++)
+        {
+            _processor.processLine(_srcImage, _srcData, _dstData, y);
+        }
+    }
+
+private:
+    CurvesProcessor& _processor;
+    const GeneralImage* _srcImage;
+    uchar* _srcData;
+    uchar* _dstData;
+    int _yStart;
+    int _yEnd;
+};
+
+void CurvesProcessor::processLine(const GeneralImage* srcImage, uchar* srcData, uchar* dstData, int y)
+{
     int width = srcImage->width();
-    int height = srcImage->height();
     QImage* imageEntity = srcImage->getImageEntity();
-    uchar* srcData = imageEntity->bits();
-    uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
-
     float variable = 255.0f / float(_arrayNum - 1);
 
     if (_channel == CURVE_CHANNEL_GRAY)
     {
-        for (int j = 0; j < height; j++)
+        for (int i = 0; i < width * depth; i++)
         {
-            for (int i = 0; i < width * depth; i++)
-            {
-                uchar* dstPixel = dstData + j * pitch + i;
-                uchar* srcPixel = srcData + j * pitch + i;
-                *(dstPixel) = interpolation(*srcPixel, _arrayIntensity, _arrayNum, variable);
-            }
+            uchar* dstPixel = dstData + y * pitch + i;
+            uchar* srcPixel = srcData + y * pitch + i;
+            *(dstPixel) = interpolation(*srcPixel, _arrayIntensity, _arrayNum, variable);
         }
     }
     else
     {
-        for (int j = 0; j < height; j++)
+        for (int i = 0; i < width; i++)
         {
-            for (int i = 0; i < width; i++)
-            {
-                uchar* dstPixel = dstData + j * pitch + i * depth;
-                uchar* srcPixel = srcData + j * pitch + i * depth;
-                *(dstPixel) = interpolation(*srcPixel, _arrayBlue, _arrayNum, variable);
-                *(dstPixel + 1) = interpolation(*(srcPixel + 1), _arrayGreen, _arrayNum, variable);
-                *(dstPixel + 2) = interpolation(*(srcPixel + 2), _arrayRed, _arrayNum, variable);
-            }
+            uchar* dstPixel = dstData + y * pitch + i * depth;
+            uchar* srcPixel = srcData + y * pitch + i * depth;
+            *(dstPixel) = interpolation(*srcPixel, _arrayBlue, _arrayNum, variable);
+            *(dstPixel + 1) = interpolation(*(srcPixel + 1), _arrayGreen, _arrayNum, variable);
+            *(dstPixel + 2) = interpolation(*(srcPixel + 2), _arrayRed, _arrayNum, variable);
         }
     }
 }
 
-void CurvesProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void CurvesProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
+{
+    assert(srcImage);
+    assert(dstImage);
+
+    int height = srcImage->height();
+    // bits() performs a deep copy of the shared pixel data of QImage
+    uchar* srcData = srcImage->getImageEntity()->bits();
+    uchar* dstData = dstImage->getImageEntity()->bits();
+
+    // Execute multiple tasks using a thread pool
+    int numThreads = QThread::idealThreadCount();
+    int slice = height / numThreads;
+    for (int i = 0; i < numThreads; ++i)
+    {
+        int yStart = i * slice;
+        int yEnd = (i == numThreads - 1) ? height : (i + 1) * slice;
+
+        ImageWorker* worker = new ImageWorker(*this, srcImage, srcData, dstData, yStart, yEnd);
+
+        QThreadPool::globalInstance()->start(worker);
+    }
+
+    QThreadPool::globalInstance()->waitForDone();
+}
+
+void CurvesProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);

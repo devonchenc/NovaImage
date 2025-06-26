@@ -9,9 +9,9 @@ public:
     ~LookupTableProcessor();
 
 protected:
-    void processImage(GeneralImage* srcImage, GeneralImage* dstImage) override;
+    void processImage(const GeneralImage* srcImage, GeneralImage* dstImage) override;
 
-    void processImage(MonoImage* srcImage, MonoImage* dstImage) override;
+    void processImage(const MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
     bool loadLUT(const QString& tableName);

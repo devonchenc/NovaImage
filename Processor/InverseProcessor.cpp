@@ -9,7 +9,7 @@ InverseProcessor::InverseProcessor(QObject* parent)
 
 }
 
-void InverseProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void InverseProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -36,13 +36,13 @@ void InverseProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstIma
     }
 }
 
-void InverseProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void InverseProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
 
     int width, height;
-    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
+    const uchar* srcByteImage = srcImage->getBYTEImage(width, height);
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();

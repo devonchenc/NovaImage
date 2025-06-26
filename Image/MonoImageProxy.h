@@ -17,7 +17,7 @@ public:
     std::shared_ptr<QImage> getImageEntity() const { return _pImage; }
 
     void copyByteToImage();
-    void copyByteToImage(QImage* dstImage);
+    void copyByteToImage(QImage* dstImage) const;
 
 protected:
     MonoImage* _image;

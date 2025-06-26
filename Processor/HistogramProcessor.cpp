@@ -12,7 +12,7 @@ HistogramProcessor::HistogramProcessor(QObject* parent)
 
 }
 
-void HistogramProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void HistogramProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
 
@@ -86,13 +86,13 @@ void HistogramProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstI
     }
 }
 
-void HistogramProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void HistogramProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
 
     int width, height;
-    uchar* byteImage = srcImage->getBYTEImage(width, height);
+    const uchar* byteImage = srcImage->getBYTEImage(width, height);
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();
 
@@ -115,7 +115,7 @@ void HistogramProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
             count++;
         }
     }
-    if (count == 0)
+ /*   if (count == 0)
     {
         // Convert data to byte
         srcImage->convertToByte();
@@ -149,7 +149,7 @@ void HistogramProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
                 byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = 0;
             }
         }
-    }
+    }*/
 
 //    srcImage->copyByteToImage(dstImage);
 }

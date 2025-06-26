@@ -45,7 +45,7 @@ GeneralImage& GeneralImage::operator=(const GeneralImage& src)
     return *this;
 }
 
-uchar GeneralImage::calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor)
+uchar GeneralImage::calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor) const
 {
     if (color <= bottom)
     {

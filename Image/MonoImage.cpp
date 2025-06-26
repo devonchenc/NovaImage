@@ -18,7 +18,6 @@ MonoImage::MonoImage()
     , _currentCoronalSlice(0)
     , _currentSagittalSlice(0)
 {
-
 }
 
 MonoImage::MonoImage(const QString& pathName)
@@ -33,7 +32,6 @@ MonoImage::MonoImage(const QString& pathName)
     , _currentCoronalSlice(0)
     , _currentSagittalSlice(0)
 {
-
 }
 
 MonoImage::MonoImage(const MonoImage& src)
@@ -372,6 +370,28 @@ void MonoImage::setValue(int index, float value)
 }
 
 uchar* MonoImage::getBYTEImage(int& width, int& height)
+{
+    if (_currentViewType == AXIAL_VIEW)
+    {
+        width = _width;
+        height = _height;
+        return _axialProxy->getBYTEImage();
+    }
+    else if (_currentViewType == CORONAL_VIEW)
+    {
+        width = _width;
+        height = _slice;
+        return _coronalProxy->getBYTEImage();
+    }
+    else/* if (_currentType == SAGITTAL_VIEW)*/
+    {
+        width = _height;
+        height = _slice;
+        return _sagittalProxy->getBYTEImage();
+    }
+}
+
+const uchar* MonoImage::getBYTEImage(int& width, int& height) const
 {
     if (_currentViewType == AXIAL_VIEW)
     {

@@ -1,4 +1,3 @@
-
 #include "BaseProcessor.h"
 
 #include <typeinfo>

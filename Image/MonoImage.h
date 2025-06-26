@@ -65,6 +65,7 @@ public:
 
     // get uchar data
     uchar* getBYTEImage(int& width, int& height);
+    const uchar* getBYTEImage(int& width, int& height) const;
 
     bool convertAllToByte();
 

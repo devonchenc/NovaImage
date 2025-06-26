@@ -25,7 +25,7 @@ LookupTableProcessor::~LookupTableProcessor()
     }
 }
 
-void LookupTableProcessor::processImage(GeneralImage* srcImage, GeneralImage* dstImage)
+void LookupTableProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
@@ -52,13 +52,13 @@ void LookupTableProcessor::processImage(GeneralImage* srcImage, GeneralImage* ds
     }
 }
 
-void LookupTableProcessor::processImage(MonoImage* srcImage, MonoImage* dstImage)
+void LookupTableProcessor::processImage(const MonoImage* srcImage, MonoImage* dstImage)
 {
     assert(srcImage);
     assert(dstImage);
 
     int width, height;
-    uchar* srcByteImage = srcImage->getBYTEImage(width, height);
+    const uchar* srcByteImage = srcImage->getBYTEImage(width, height);
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
 
     for (int i = 0; i < width * height; i++)

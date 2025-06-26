@@ -18,7 +18,7 @@ public:
     QImage* getBackupImage() const { return _backupImage.get(); }
 
     // Calculate new color
-    uchar calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor);
+    uchar calcNewColor(uchar color, float bottom, float mid, float top, int minColor, int maxColor) const;
 
 public:
     // Histogram statistic
