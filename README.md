@@ -1,6 +1,6 @@
 # NovaImage
 
-NovaImage is a cross-platform image processing software which supports viewing common image formats (jpg, png, tiff, gif, etc.) and DICOM images, and supports volume data. NovaImage has built-in rich image processing functions and modules for measurement and labeling, which are convenient and quick to analyze and statistical image information. The software interface is friendly, easy to use, and supports plug-in development.
+NovaImage is a cross-platform image processing application that supports viewing common image formats (JPG, PNG, TIFF, GIF, etc.) as well as DICOM images and volume data. It includes a rich set of built-in image processing features, along with tools for measurement and annotation, making it easy to analyze and extract statistical information from images. The software features a user-friendly interface, is easy to use, and supports plug-in development for extended functionality.
 
 ![UI](Screenshot/UI.jpg)
 
