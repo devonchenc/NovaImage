@@ -3,6 +3,7 @@
 #include <QProgressBar>
 #include <QVBoxLayout>
 #include <QThread>
+#include <QTimer>
 
 #include "../Image/Reader/ImageReader.h"
 
@@ -17,6 +18,12 @@ ProgressDialog::ProgressDialog(AbstractReader* thread, QWidget* parent)
     initUI();
 
     setFixedSize(400, 80);
+
+    // Delay execution of initialization logic until after the dialog is shown
+    QTimer::singleShot(0, this, [this]() {
+        _thread->setWidget(this);
+        _thread->start();
+    });
 }
 
 void ProgressDialog::setTitle(const QString& title)
@@ -32,6 +39,8 @@ void ProgressDialog::setProgress(int progress)
 void ProgressDialog::closeEvent(QCloseEvent*)
 {
     _thread->waitForQuit();
+    _thread->quit();
+    _thread->wait();
 }
 
 void ProgressDialog::initUI()

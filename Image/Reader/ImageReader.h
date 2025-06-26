@@ -39,7 +39,6 @@ ImageReader<Type>::ImageReader(const QString& pathName, int headSize, int pixelC
     , _endian(0)
     , _buffer(buffer)
 {
-
 }
 
 template <class Type>
@@ -51,7 +50,6 @@ ImageReader<Type>::ImageReader(const QString& pathName, int headSize, int pixelC
     , _endian(endian)
     , _buffer(buffer)
 {
-
 }
 
 template <class Type>
@@ -80,8 +78,6 @@ void ImageReader<Type>::run()
 template <class Type>
 void ImageReader<Type>::loadSlice(QFile& file, int index)
 {
-    std::lock_guard<std::mutex> lock(_mutex);
-
     if (_waitForQuit)
         return;
 

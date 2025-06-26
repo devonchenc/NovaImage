@@ -212,11 +212,9 @@ bool ScanImage::readData()
         uchar* originalData = static_cast<uchar*>(_imageData->getOriginalData());
         reader = new ImageReader<uchar>(_pathName, headerSize, _width * _height, _slice, originalData);
     }
-    ProgressDialog dlg(reader);
-    reader->setWidget(&dlg);
-    reader->start();
-    reader->deleteLater();
+    QObject::connect(reader, &QThread::finished, reader, &QObject::deleteLater);
 
+    ProgressDialog dlg(reader);
     if (dlg.exec() == QDialog::Accepted)
     {
         // Get min and max value in data

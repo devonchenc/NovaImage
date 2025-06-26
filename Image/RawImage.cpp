@@ -146,11 +146,9 @@ bool RawImage::readData(int endian)
     }
     break;
     }
-    ProgressDialog dlg(reader);
-    reader->setWidget(&dlg);
-    reader->start();
-    reader->deleteLater();
+    QObject::connect(reader, &QThread::finished, reader, &QObject::deleteLater);
 
+    ProgressDialog dlg(reader);
     if (dlg.exec() == QDialog::Accepted)
     {
         // Get min and max value in data

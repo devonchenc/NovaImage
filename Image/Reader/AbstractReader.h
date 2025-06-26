@@ -23,13 +23,11 @@ public:
 
     void waitForQuit()
     {
-        std::lock_guard<std::mutex> lock(_mutex);
         _waitForQuit = true;
     }
 
     void finished()
     {
-        std::lock_guard<std::mutex> lock(_mutex);
         if (!_waitForQuit)
         {
             QMetaObject::invokeMethod(_widget, "accept", Qt::QueuedConnection);
@@ -42,8 +40,7 @@ public:
 protected:
     QWidget* _widget;
 
-    std::mutex _mutex;
-    bool _waitForQuit;
+    std::atomic<bool> _waitForQuit;
 
     QString _pathName;
 

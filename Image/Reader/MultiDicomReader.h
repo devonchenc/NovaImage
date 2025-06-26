@@ -9,13 +9,12 @@
 class MultiDicomReader : public AbstractReader
 {
 public:
-    MultiDicomReader(const QString& pathName, const QStringList& fileList, QVector<std::shared_ptr<DICOMImage>>& imageVector)
+    MultiDicomReader(const QString& pathName, const QStringList& fileList, std::shared_ptr<QVector<std::shared_ptr<DICOMImage>>> imageVector)
         : AbstractReader(pathName, nullptr)
         , _fileList(fileList)
         , _fileNum(fileList.size())
         , _imageVector(imageVector)
     {
-
     }
 
 protected:
@@ -30,7 +29,6 @@ protected:
 
         QMetaObject::invokeMethod(_widget, "setTitle", Qt::QueuedConnection, Q_ARG(const QString&, tr("Loading DICOM files...")));
 
-        bool status = true;
         for (int n = 0; n < _fileNum; n++)
         {
             readOneDicom(dir, n);
@@ -42,8 +40,6 @@ protected:
 private:
     void readOneDicom(const QDir& dir, int index)
     {
-        std::lock_guard<std::mutex> lock(_mutex);
-
         if (_waitForQuit)
             return;
 
@@ -59,7 +55,7 @@ private:
             return;
         }
 
-        _imageVector.append(dicomImage);
+        _imageVector->append(dicomImage);
 
         int progress = (index + 1) * 100 / _fileNum;
         QMetaObject::invokeMethod(_widget, "setProgress", Qt::QueuedConnection, Q_ARG(int, progress));
@@ -68,5 +64,5 @@ private:
 private:
     const QStringList _fileList;
     const int _fileNum;
-    QVector<std::shared_ptr<DICOMImage>>& _imageVector;
+    std::shared_ptr<QVector<std::shared_ptr<DICOMImage>>> _imageVector;
 };

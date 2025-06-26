@@ -106,16 +106,14 @@ bool Document::openFolder(const QString& pathName)
         closeFile();
     }
 
-    QVector<std::shared_ptr<DICOMImage>> imageVector;
+    std::shared_ptr<QVector<std::shared_ptr<DICOMImage>>> imageVector = std::make_shared<QVector<std::shared_ptr<DICOMImage>>>();
     AbstractReader* reader = new MultiDicomReader(pathName, fileList, imageVector);
-    ProgressDialog dlg(reader);
-    reader->setWidget(&dlg);
-    reader->start();
-    reader->deleteLater();
+    connect(reader, &QThread::finished, reader, &QObject::deleteLater);
 
+    ProgressDialog dlg(reader);
     if (dlg.exec() == QDialog::Accepted)
     {
-        _image = std::make_shared<DICOMImage>(imageVector);
+        _image = std::make_shared<DICOMImage>(*imageVector);
 
         // Judge whether open file successfully
         if (_image->isOpenSucceed() == false)
