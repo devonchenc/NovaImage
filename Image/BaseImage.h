@@ -82,9 +82,9 @@ public:
 
     bool save(const QString& fileName);
 
-    void copyToArray(uchar* array);
+    void copyToArray(uchar* array) const;
 
-    bool copyFromArray(uchar* byteImage, int width, int height);
+    bool copyFromArray(const uchar* byteImage, int width, int height);
 
 protected:
     virtual bool saveAsDcm(const QString& fileName);

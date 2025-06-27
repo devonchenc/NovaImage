@@ -54,7 +54,6 @@ RawImage::RawImage(const RawImage& src)
     , _dataType(src._dataType)
     , _headerSize(src._headerSize)
 {
-
 }
 
 RawImage& RawImage::operator=(const RawImage& src)

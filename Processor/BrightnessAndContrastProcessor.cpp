@@ -89,8 +89,8 @@ void BrightnessAndContrastProcessor::processImage(const GeneralImage* srcImage, 
 
     int width = srcImage->width();
     int height = srcImage->height();
-    QImage* imageEntity = srcImage->getImageEntity();
-    uchar* srcData = imageEntity->bits();
+    const QImage* imageEntity = srcImage->getImageEntity();
+    const uchar* srcData = imageEntity->bits();
     uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
@@ -100,7 +100,7 @@ void BrightnessAndContrastProcessor::processImage(const GeneralImage* srcImage, 
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i;
-            uchar* srcPixel = srcData + j * pitch + i;
+            const uchar* srcPixel = srcData + j * pitch + i;
             float result = (*srcPixel - 127.0f) * (_contrast + 100) / 100.0f + 127.0f;
             result *= (100.0f + _brightness / 2.0f) / 100.0f;
             if (result >= 255)

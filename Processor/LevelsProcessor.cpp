@@ -20,8 +20,8 @@ void LevelsProcessor::processImage(const GeneralImage* srcImage, GeneralImage* d
 
     int width = srcImage->width();
     int height = srcImage->height();
-    QImage* imageEntity = srcImage->getImageEntity();
-    uchar* srcData = imageEntity->bits();
+    const QImage* imageEntity = srcImage->getImageEntity();
+    const uchar* srcData = imageEntity->bits();
     uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
@@ -34,7 +34,7 @@ void LevelsProcessor::processImage(const GeneralImage* srcImage, GeneralImage* d
         for (int i = 0; i < width; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i * depth;
-            uchar* srcPixel = srcData + j * pitch + i * depth;
+            const uchar* srcPixel = srcData + j * pitch + i * depth;
 
             for (int n = 0; n < qMin(depth, 3); n++)
             {

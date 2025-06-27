@@ -111,8 +111,8 @@ void LightFieldCorrectionProcessor::processImage(const GeneralImage* srcImage, G
 
     int width = srcImage->width();
     int height = srcImage->height();
-    QImage* imageEntity = srcImage->getImageEntity();
-    uchar* srcData = imageEntity->bits();
+    const QImage* imageEntity = srcImage->getImageEntity();
+    const uchar* srcData = imageEntity->bits();
     uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
@@ -175,7 +175,7 @@ void LightFieldCorrectionProcessor::processImage(const GeneralImage* srcImage, G
         {
             for (int i = 0; i < width; i++)
             {
-                uchar* srcPixel = srcData + j * pitch + i * depth;
+                const uchar* srcPixel = srcData + j * pitch + i * depth;
                 uchar* dstPixel = dstData + j * pitch + i * depth;
                 float value = imageOut[j * newWidth + i][0] / (newWidth * newHeight);
                 value = srcPixel[0] * 255.0f / value;
@@ -218,7 +218,7 @@ void LightFieldCorrectionProcessor::processImage(const GeneralImage* srcImage, G
             {
                 for (int i = 0; i < width; i++)
                 {
-                    uchar* srcPixel = srcData + j * pitch + i * depth;
+                    const uchar* srcPixel = srcData + j * pitch + i * depth;
                     uchar* dstPixel = dstData + j * pitch + i * depth;
                     uchar* lightPixel = lightData + j * pitch + i * depth;
                     for (int n = 0; n < qMin(depth, 3); n++)

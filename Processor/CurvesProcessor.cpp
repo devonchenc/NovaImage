@@ -43,10 +43,10 @@ private:
     int _yEnd;
 };
 
-void CurvesProcessor::processLine(const GeneralImage* srcImage, uchar* srcData, uchar* dstData, int y)
+void CurvesProcessor::processLine(const GeneralImage* srcImage, const uchar* srcData, uchar* dstData, int y)
 {
     int width = srcImage->width();
-    QImage* imageEntity = srcImage->getImageEntity();
+    const QImage* imageEntity = srcImage->getImageEntity();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
     float variable = 255.0f / float(_arrayNum - 1);
@@ -56,7 +56,7 @@ void CurvesProcessor::processLine(const GeneralImage* srcImage, uchar* srcData, 
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + y * pitch + i;
-            uchar* srcPixel = srcData + y * pitch + i;
+            const uchar* srcPixel = srcData + y * pitch + i;
             *(dstPixel) = interpolation(*srcPixel, _arrayIntensity, _arrayNum, variable);
         }
     }
@@ -65,7 +65,7 @@ void CurvesProcessor::processLine(const GeneralImage* srcImage, uchar* srcData, 
         for (int i = 0; i < width; i++)
         {
             uchar* dstPixel = dstData + y * pitch + i * depth;
-            uchar* srcPixel = srcData + y * pitch + i * depth;
+            const uchar* srcPixel = srcData + y * pitch + i * depth;
             *(dstPixel) = interpolation(*srcPixel, _arrayBlue, _arrayNum, variable);
             *(dstPixel + 1) = interpolation(*(srcPixel + 1), _arrayGreen, _arrayNum, variable);
             *(dstPixel + 2) = interpolation(*(srcPixel + 2), _arrayRed, _arrayNum, variable);

@@ -113,8 +113,8 @@ void GammaTransformationProcessor::processImage(const GeneralImage* srcImage, Ge
 
     int width = srcImage->width();
     int height = srcImage->height();
-    QImage* imageEntity = srcImage->getImageEntity();
-    uchar* srcData = imageEntity->bits();
+    const QImage* imageEntity = srcImage->getImageEntity();
+    const uchar* srcData = imageEntity->bits();
     uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
@@ -124,8 +124,7 @@ void GammaTransformationProcessor::processImage(const GeneralImage* srcImage, Ge
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i;
-            uchar* srcPixel = srcData + j * pitch + i;
-
+            const uchar* srcPixel = srcData + j * pitch + i;
             *(dstPixel) = round(pow(*srcPixel / 255.0f, _gamma) * 255.0f);
         }
     }

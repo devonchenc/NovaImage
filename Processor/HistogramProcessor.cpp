@@ -17,8 +17,8 @@ void HistogramProcessor::processImage(const GeneralImage* srcImage, GeneralImage
 
     int width = srcImage->width();
     int height = srcImage->height();
-    QImage* imageEntity = srcImage->getImageEntity();
-    uchar* srcData = imageEntity->bits();
+    const QImage* imageEntity = srcImage->getImageEntity();
+    const uchar* srcData = imageEntity->bits();
     uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
@@ -59,7 +59,7 @@ void HistogramProcessor::processImage(const GeneralImage* srcImage, GeneralImage
         for (int i = 0; i < width * depth; i++)
         {
             uchar* dstPixel = dstData + j * pitch + i;
-            uchar* srcPixel = srcData + j * pitch + i;
+            const uchar* srcPixel = srcData + j * pitch + i;
 
             if (*srcPixel >= actualMax)
             {

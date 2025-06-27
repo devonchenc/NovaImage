@@ -26,7 +26,6 @@ BaseImage::BaseImage(const QString& pathName)
     , _pathName(pathName)
     , _openSucceed(false)
 {
-
 }
 
 BaseImage::BaseImage(const BaseImage& src)
@@ -108,22 +107,22 @@ bool BaseImage::save(const QString& fileName)
     }
 }
 
-void BaseImage::copyToArray(uchar* array)
+void BaseImage::copyToArray(uchar* array) const
 {
-    uchar* pData = _pImage->bits();
+    const uchar* pData = _pImage->bits();
     int pitch = _pImage->bytesPerLine();
     int depth = _pImage->depth() / 8;
     for (int j = 0; j < _height; j++)
     {
         for (int i = 0; i < _width; i++)
         {
-            uchar* pixel = pData + j * pitch + i * depth;
+            const uchar* pixel = pData + j * pitch + i * depth;
             array[j * _width + i] = *pixel;
         }
     }
 }
 
-bool BaseImage::copyFromArray(uchar* array, int width, int height)
+bool BaseImage::copyFromArray(const uchar* array, int width, int height)
 {
     if (array == nullptr || _pImage == nullptr)
         return false;

@@ -6,7 +6,6 @@ class LookupTableProcessor : public BaseProcessor
 {
 public:
     LookupTableProcessor(const QString& tableName, QObject* parent = nullptr);
-    ~LookupTableProcessor();
 
 protected:
     void processImage(const GeneralImage* srcImage, GeneralImage* dstImage) override;
@@ -17,6 +16,7 @@ private:
     bool loadLUT(const QString& tableName);
 
 private:
+    // 256 bins * 3 channels = 768
     const int _size = 768;
-    unsigned char* _table;
+    std::unique_ptr<unsigned char[]> _table;
 };

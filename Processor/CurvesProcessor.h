@@ -25,7 +25,7 @@ public:
 
     void setArray(int arrayNum, uint* arrayIntensity, uint* arrayRed, uint* arrayGreen, uint* arrayBlue);
 
-    void processLine(const GeneralImage* srcImage, uchar* srcData, uchar* dstData, int y);
+    void processLine(const GeneralImage* srcImage, const uchar* srcData, uchar* dstData, int y);
 
 private:
     // Interpolation

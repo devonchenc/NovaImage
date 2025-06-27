@@ -7,22 +7,18 @@
 #include "../Image/GeneralImage.h"
 #include "../Image/MonoImage.h"
 
+#define HISTOGRAM_BINS      256
+
 LookupTableProcessor::LookupTableProcessor(const QString& tableName, QObject* parent)
     : BaseProcessor(true, parent)
 {
-    _table = new unsigned char[_size];
-    memset(_table, 0, sizeof(unsigned char) * _size);
+    _table = std::make_unique<unsigned char[]>(_size);
+    for (int i = 0; i < _size; ++i)
+    {
+        _table[i] = 0;
+    }
 
     loadLUT(tableName);
-}
-
-LookupTableProcessor::~LookupTableProcessor()
-{
-    if (_table)
-    {
-        delete[] _table;
-        _table = nullptr;
-    }
 }
 
 void LookupTableProcessor::processImage(const GeneralImage* srcImage, GeneralImage* dstImage)
@@ -32,8 +28,8 @@ void LookupTableProcessor::processImage(const GeneralImage* srcImage, GeneralIma
 
     int width = srcImage->width();
     int height = srcImage->height();
-    QImage* imageEntity = srcImage->getImageEntity();
-    uchar* srcData = imageEntity->bits();
+    const QImage* imageEntity = srcImage->getImageEntity();
+    const uchar* srcData = imageEntity->bits();
     uchar* dstData = dstImage->getImageEntity()->bits();
     int pitch = imageEntity->bytesPerLine();
     int depth = imageEntity->depth() / 8;
@@ -43,10 +39,10 @@ void LookupTableProcessor::processImage(const GeneralImage* srcImage, GeneralIma
         for (int i = 0; i < width; i++)
         {
             uchar* pPixel = dstData + j * pitch + i * depth;
-            uchar* pBackupPixel = srcData + j * pitch + i * depth;
+            const uchar* pBackupPixel = srcData + j * pitch + i * depth;
             for (int n = 0; n < qMin(depth, 3); n++)
             {
-                *(pPixel + n) = _table[*(pBackupPixel + n) + (2 - n) * 256];
+                *(pPixel + n) = _table[*(pBackupPixel + n) + (2 - n) * HISTOGRAM_BINS];
             }
         }
     }
@@ -63,8 +59,8 @@ void LookupTableProcessor::processImage(const MonoImage* srcImage, MonoImage* ds
 
     for (int i = 0; i < width * height; i++)
     {
-        dstByteImage[3 * i] = _table[srcByteImage[3 * i] + 512];
-        dstByteImage[3 * i + 1] = _table[srcByteImage[3 * i] + 256];
+        dstByteImage[3 * i] = _table[srcByteImage[3 * i] + HISTOGRAM_BINS * 2];
+        dstByteImage[3 * i + 1] = _table[srcByteImage[3 * i] + HISTOGRAM_BINS];
         dstByteImage[3 * i + 2] = _table[srcByteImage[3 * i]];
     }
 
@@ -77,7 +73,7 @@ bool LookupTableProcessor::loadLUT(const QString& tableName)
     if (!file.open(QIODevice::ReadOnly))
         return false;
 
-    qint64 readSize = file.read((char*)_table, sizeof(unsigned char) * _size);
+    qint64 readSize = file.read(reinterpret_cast<char*>(_table.get()), sizeof(unsigned char) * _size);
     file.close();
     if (readSize != qint64(sizeof(unsigned char)) * qint64(_size))
         return false;
