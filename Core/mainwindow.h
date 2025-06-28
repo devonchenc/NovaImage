@@ -29,16 +29,16 @@ public:
     ~MainWindow() {}
 
 public:
-    Document* getDocument() { return _doc; }
+    Document* getDocument() const { return _doc; }
 
-    View* getAxialView() { return _axialView; }
-    View* getCoronalView() { return _coronalView; }
-    View* getSagittalView() { return _sagittalView; }
+    View* getAxialView() const { return _axialView; }
+    View* getCoronalView() const { return _coronalView; }
+    View* getSagittalView() const { return _sagittalView; }
 
-    View* getActiveView() { return _activeView; }
+    View* getActiveView() const { return _activeView; }
     void setActiveView(View* view);
 
-    bool isViewLinked();
+    bool isViewLinked() const;
 
     void imageOpened();
 
@@ -48,7 +48,7 @@ public:
 
     void levelsAdjust(float bottom, float top);
 
-    LevelsProcessor* getLevelsProcessor();
+    LevelsProcessor* getLevelsProcessor() const;
 
     bool cine30FPS();
     bool cine60FPS();
@@ -163,7 +163,6 @@ private:
     QMenu* _editMenu;
     QMenu* _viewMenu;
     QMenu* _processingMenu;
-    QMenu* _intensityMenu;
     QMenu* _lookupTableMenu;
     QMenu* _helpMenu;
 

@@ -77,7 +77,7 @@ void MainWindow::setActiveView(View* view)
     }
 }
 
-bool MainWindow::isViewLinked()
+bool MainWindow::isViewLinked() const
 {
     return _linkViewAction->isChecked();
 }
@@ -130,7 +130,7 @@ void MainWindow::levelsAdjust(float bottom, float top)
     _levelsWidget->levelsAdjust(bottom, 1.0f, top);
 }
 
-LevelsProcessor* MainWindow::getLevelsProcessor()
+LevelsProcessor* MainWindow::getLevelsProcessor() const
 {
     return _levelsWidget->getProcessor();
 }
@@ -325,15 +325,13 @@ void MainWindow::createActions()
     languageMenu->addAction(_chsAction);
 
     _processingMenu = menuBar()->addMenu(tr("&Image Processing"));
-    _intensityMenu = _processingMenu->addMenu(tr("&Intensity Transformation"));
-    _intensityMenu->addAction(_brightnessAndContrastAction);
-    _intensityMenu->addSeparator();
-    _intensityMenu->addAction(_gammaTransformationAction);
-    _intensityMenu->addSeparator();
-    _intensityMenu->addAction(_equalizationAction);
-    _intensityMenu->addSeparator();
-    _lookupTableMenu = _intensityMenu->addMenu(tr("&Lookup Table"));
-
+    _processingMenu->addAction(_brightnessAndContrastAction);
+    _processingMenu->addSeparator();
+    _processingMenu->addAction(_gammaTransformationAction);
+    _processingMenu->addSeparator();
+    _processingMenu->addAction(_equalizationAction);
+    _processingMenu->addSeparator();
+    _lookupTableMenu = _processingMenu->addMenu(tr("&Lookup Table"));
     _processingMenu->addSeparator();
     _processingMenu->addAction(_thresholdSegmentationAction);
     _processingMenu->addSeparator();
@@ -1136,7 +1134,6 @@ void MainWindow::changeEvent(QEvent* event)
         _prevImageAction->setText(tr("&Prev Image"));
         _nextImageAction->setText(tr("&Next Image"));
 
-        _intensityMenu->setTitle(tr("&Intensity Transformation"));
         _brightnessAndContrastAction->setText(tr("&Brightness/Contrast"));
         _gammaTransformationAction->setText(tr("&Gamma Transformation"));
         _thresholdSegmentationAction->setText(tr("&Threshold Segmentation"));
