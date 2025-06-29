@@ -53,13 +53,13 @@ void ToolBoxWidget::initUI()
     connect(_fillCheckBox, &QCheckBox::stateChanged, this, &ToolBoxWidget::enableFillColor);
     _fillColorButton = new ColorButton(Qt::white);
     connect(_fillColorButton, &ColorButton::clicked, this, &ToolBoxWidget::fillColorButtonTriggered);
-    QHBoxLayout* hLayout = new QHBoxLayout;
-    hLayout->addWidget(_lineLabel);
-    hLayout->addWidget(_lineColorButton);
-    hLayout->addStretch();
-    hLayout->addWidget(_fillCheckBox);
-    hLayout->addWidget(_fillColorButton);
-    hLayout->addStretch();
+    QHBoxLayout* h1Layout = new QHBoxLayout;
+    h1Layout->addWidget(_lineLabel);
+    h1Layout->addWidget(_lineColorButton);
+    h1Layout->addStretch();
+    h1Layout->addWidget(_fillCheckBox);
+    h1Layout->addWidget(_fillColorButton);
+    h1Layout->addStretch();
 
     _transparencyLabel = new QLabel(tr("Transparency:"));
     _transparencySlider = new QSlider(Qt::Orientation::Horizontal);
@@ -87,7 +87,9 @@ void ToolBoxWidget::initUI()
     _fontSizeCombo = new QComboBox;
     _fontSizeCombo->setEditable(true);
     for (int i = 8; i <= 80; i = i + 4)
+    {
         _fontSizeCombo->addItem(QString().setNum(i));
+    }
     QIntValidator* validator = new QIntValidator(2, 64, this);
     _fontSizeCombo->setValidator(validator);
     connect(_fontSizeCombo, SIGNAL(currentIndexChanged(QString)), this, SLOT(fontSizeChanged(QString)));
@@ -127,7 +129,7 @@ void ToolBoxWidget::initUI()
     QVBoxLayout* vLayout = new QVBoxLayout;
     vLayout->addLayout(gridLayout);
     vLayout->addWidget(_lineFrame);
-    vLayout->addLayout(hLayout);
+    vLayout->addLayout(h1Layout);
     vLayout->addLayout(h2Layout);
     vLayout->addLayout(h3Layout);
     vLayout->addLayout(h4Layout);
@@ -273,7 +275,9 @@ void ToolBoxWidget::buttonGroupClicked(int id)
     foreach (QAbstractButton* button, buttons)
     {
         if (clickedButton != button)
+        {
             button->setChecked(false);
+        }
     }
 
     // simply set objButton unchecked if already checked
