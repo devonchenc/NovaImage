@@ -27,7 +27,7 @@ LightFieldCorrectionWidget::LightFieldCorrectionWidget(BaseProcessor* processor,
     QRadioButton* fileButton = new QRadioButton(tr("Select Light Field File"));
     connect(autoButton, &QRadioButton::clicked, this, &LightFieldCorrectionWidget::autoButtonToggled);
     connect(fileButton, &QRadioButton::clicked, this, &LightFieldCorrectionWidget::fileButtonToggled);
-    _radioGroup = new QButtonGroup;
+    _radioGroup = new QButtonGroup(this);
     _radioGroup->addButton(autoButton, 0);
     _radioGroup->addButton(fileButton, 1);
 

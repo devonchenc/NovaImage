@@ -231,6 +231,9 @@
     <ClCompile Include="Processor\LookupTableProcessor.cpp">
       <Filter>Processor</Filter>
     </ClCompile>
+    <ClCompile Include="Dialog\CalibrationDialog.cpp">
+      <Filter>Dialog</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -370,6 +373,9 @@
     </QtMoc>
     <QtMoc Include="Image\Reader\AbstractReader.h">
       <Filter>Image\Reader</Filter>
+    </QtMoc>
+    <QtMoc Include="Dialog\CalibrationDialog.h">
+      <Filter>Dialog</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>

@@ -38,6 +38,7 @@
     <ClCompile Include="Diagram\DiagramPlotItem.cpp" />
     <ClCompile Include="Diagram\DiagramTextItem.cpp" />
     <ClCompile Include="Dialog\AboutDialog.cpp" />
+    <ClCompile Include="Dialog\CalibrationDialog.cpp" />
     <ClCompile Include="Dialog\ImageQualityDialog.cpp" />
     <ClCompile Include="Dialog\PlotDialog.cpp" />
     <ClCompile Include="Dialog\ProgressDialog.cpp" />
@@ -109,6 +110,7 @@
     <QtMoc Include="Dialog\RawParameterDialog.h" />
     <QtMoc Include="Dialog\SettingsDialog.h" />
     <QtMoc Include="Dialog\AboutDialog.h" />
+    <QtMoc Include="Dialog\CalibrationDialog.h" />
     <ClInclude Include="Image\DicomImage.h" />
     <ClInclude Include="Image\ImageData.h" />
     <ClInclude Include="Image\MonoImage.h" />

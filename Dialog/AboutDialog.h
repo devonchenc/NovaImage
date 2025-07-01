@@ -12,14 +12,7 @@ class AboutDialog : public QDialog
 
 public:
     AboutDialog(QWidget* parent = nullptr);
-    ~AboutDialog() {}
-
-public:
-
 
 private:
     void initUI();
-
-private:
-    QLabel* _expectedSizeLabel;
 };

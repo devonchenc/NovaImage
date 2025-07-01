@@ -99,7 +99,7 @@ void RawParameterDialog::initUI()
 
     QRadioButton* littleEndianButton = new QRadioButton(tr("Little-endian byte order"));
     QRadioButton* bigEndianButton = new QRadioButton(tr("Big-endian byte order"));
-    _endianGroup = new QButtonGroup;
+    _endianGroup = new QButtonGroup(this);
     _endianGroup->addButton(littleEndianButton, 0);
     _endianGroup->addButton(bigEndianButton, 1);
 

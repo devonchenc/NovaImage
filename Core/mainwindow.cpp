@@ -29,6 +29,7 @@
 #include "../Widget/LevelsWidget.h"
 #include "../Widget/ProcessorShellWidget.h"
 #include "../Dialog/SettingsDialog.h"
+#include "../Dialog/CalibrationDialog.h"
 #include "../Dialog/AboutDialog.h"
 #include "../Notification/NotificationLayout.h"
 
@@ -1051,7 +1052,12 @@ void MainWindow::lightFieldCorrection()
 
 void MainWindow::calibration()
 {
+    BaseImage* image = getGlobalImage();
+    if (!image)
+        return;
 
+    CalibrationDialog dlg;
+    dlg.exec();
 }
 
 void MainWindow::userGuide()
