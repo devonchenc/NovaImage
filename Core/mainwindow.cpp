@@ -284,6 +284,8 @@ void MainWindow::createActions()
     _enhancementAction = new QAction(tr("Image &Enhancement"), this);
     _lightFieldCorrectionAction = new QAction(tr("&Light Field Correction"), this);
 
+    _calibrationAction = new QAction(tr("&Calibration"));
+
     _userGuideAction = new QAction(tr("&User's Guide"));
     _userGuideAction->setIcon(QIcon(":/icon/svg/guide.svg"));
     _aboutAction = new QAction(tr("&About"));
@@ -339,6 +341,9 @@ void MainWindow::createActions()
     _processingMenu->addSeparator();
     _processingMenu->addAction(_lightFieldCorrectionAction);
 
+    _toolMenu = menuBar()->addMenu(tr("&Tool"));
+    _toolMenu->addAction(_calibrationAction);
+
     _helpMenu = menuBar()->addMenu(tr("&Help"));
     _helpMenu->addAction(_userGuideAction);
     _helpMenu->addSeparator();
@@ -368,6 +373,8 @@ void MainWindow::createActions()
     connect(_equalizationAction, &QAction::triggered, this, &MainWindow::equalization);
     connect(_enhancementAction, &QAction::triggered, this, &MainWindow::enhancement);
     connect(_lightFieldCorrectionAction, &QAction::triggered, this, &MainWindow::lightFieldCorrection);
+
+    connect(_calibrationAction, &QAction::triggered, this, &MainWindow::calibration);
 
     connect(_userGuideAction, &QAction::triggered, this, &MainWindow::userGuide);
     connect(_aboutAction, &QAction::triggered, this, &MainWindow::about);
@@ -962,6 +969,44 @@ void MainWindow::nextImage()
     _doc->openFile(dir.absoluteFilePath(fileNames.at(index + 1)));
 }
 
+void MainWindow::selectLanguage(QAction* action)
+{
+    if (action == _engAction)
+    {
+        selectLanguage(0);
+    }
+    else if (action == _chsAction)
+    {
+        selectLanguage(1);
+    }
+}
+
+void MainWindow::selectLanguage(int language)
+{
+    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+    settings.setValue("General/language", language);
+    if (language == 0)
+    {
+        qApp->removeTranslator(_translator);
+
+        for (int i = 0; i < _vecPluginTranslator.size(); i++)
+        {
+            qApp->removeTranslator(_vecPluginTranslator[i]);
+        }
+        _engAction->setChecked(true);
+    }
+    else if (language == 1)
+    {
+        qApp->installTranslator(_translator);
+
+        for (int i = 0; i < _vecPluginTranslator.size(); i++)
+        {
+            qApp->installTranslator(_vecPluginTranslator[i]);
+        }
+        _chsAction->setChecked(true);
+    }
+}
+
 void MainWindow::gammaTransformation()
 {
     _imageProcessingDockWidget->raise();
@@ -1004,42 +1049,9 @@ void MainWindow::lightFieldCorrection()
     _doc->lightFieldCorrection();
 }
 
-void MainWindow::selectLanguage(QAction* action)
+void MainWindow::calibration()
 {
-    if (action == _engAction)
-    {
-        selectLanguage(0);
-    }
-    else if(action == _chsAction)
-    {
-        selectLanguage(1);
-    }
-}
 
-void MainWindow::selectLanguage(int language)
-{
-    QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-    settings.setValue("General/language", language);
-    if (language == 0)
-    {
-        qApp->removeTranslator(_translator);
-
-        for (int i = 0; i < _vecPluginTranslator.size(); i++)
-        {
-            qApp->removeTranslator(_vecPluginTranslator[i]);
-        }
-        _engAction->setChecked(true);
-    }
-    else if (language == 1)
-    {
-        qApp->installTranslator(_translator);
-
-        for (int i = 0; i < _vecPluginTranslator.size(); i++)
-        {
-            qApp->installTranslator(_vecPluginTranslator[i]);
-        }
-        _chsAction->setChecked(true);
-    }
 }
 
 void MainWindow::userGuide()
@@ -1141,6 +1153,8 @@ void MainWindow::changeEvent(QEvent* event)
         _lookupTableMenu->setTitle(tr("&Lookup Table"));
         _enhancementAction->setText(tr("Image &Enhancement"));
         _lightFieldCorrectionAction->setText(tr("&Light Field Correction"));
+
+        _calibrationAction->setText(tr("&Calibration"));
 
         _userGuideAction->setText(tr("&User's Guide"));
         _aboutAction->setText(tr("&About"));

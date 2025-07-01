@@ -119,6 +119,9 @@ public slots:
     void prevImage();
     void nextImage();
 
+    void selectLanguage(QAction* action);
+    void selectLanguage(int language);
+
     void gammaTransformation();
     void brightnessAndContrast();
     void thresholdSegmentation();
@@ -127,8 +130,7 @@ public slots:
     void enhancement();
     void lightFieldCorrection();
 
-    void selectLanguage(QAction* action);
-    void selectLanguage(int language);
+    void calibration();
 
     void userGuide();
     void about();
@@ -164,6 +166,7 @@ private:
     QMenu* _viewMenu;
     QMenu* _processingMenu;
     QMenu* _lookupTableMenu;
+    QMenu* _toolMenu;
     QMenu* _helpMenu;
 
     QAction* _openAction;
@@ -194,6 +197,8 @@ private:
     QAction* _equalizationAction;
     QAction* _enhancementAction;
     QAction* _lightFieldCorrectionAction;
+
+    QAction* _calibrationAction;
 
     QAction* _userGuideAction;
     QAction* _aboutAction;
