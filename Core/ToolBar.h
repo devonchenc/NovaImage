@@ -20,7 +20,7 @@ public:
     ToolBar(QWidget* parent = nullptr);
     ToolBar(const QString& title, QWidget* parent = nullptr);
 
-    QVector<QAction*> actionVector() { return _actionVector; }
+    const QVector<QAction*>& actionVector() const { return _actionVector; }
 
     void enableButton(bool flag);
 

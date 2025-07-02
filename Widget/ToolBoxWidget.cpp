@@ -325,25 +325,26 @@ void ToolBoxWidget::textColorButtonTriggered()
     emit setTextColor(color);
 }
 
+// Insert event handler
 void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 {
-    if (item->type() == DiagramItem::Type)
-    {
-        DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);
-        _buttonGroup->button(int(diagramitem->diagramType()))->setChecked(false);
-    }
-    else if (item->type() == DiagramTextItem::Type)
-    {
-        _buttonGroup->button(int(DiagramItem::Text))->setChecked(false);
-    }
-    else if (item->type() == DiagramLineItem::Type)
-    {
-        _buttonGroup->button(int(DiagramItem::Line))->setChecked(false);
-    }
-    else if (item->type() == DiagramAngleItem::Type)
-    {
-        _buttonGroup->button(int(DiagramItem::Angle))->setChecked(false);
-    }
+    //if (item->type() == DiagramItem::Type)
+    //{
+    //    DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);
+    //    _buttonGroup->button(int(diagramitem->diagramType()))->setChecked(false);
+    //}
+    //else if (item->type() == DiagramTextItem::Type)
+    //{
+    //    _buttonGroup->button(int(DiagramItem::Text))->setChecked(false);
+    //}
+    //else if (item->type() == DiagramLineItem::Type)
+    //{
+    //    _buttonGroup->button(int(DiagramItem::Line))->setChecked(false);
+    //}
+    //else if (item->type() == DiagramAngleItem::Type)
+    //{
+    //    _buttonGroup->button(int(DiagramItem::Angle))->setChecked(false);
+    //}
 }
 
 void ToolBoxWidget::itemSelected(QGraphicsItem* item)

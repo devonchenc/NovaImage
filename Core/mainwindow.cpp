@@ -120,7 +120,7 @@ void MainWindow::setToolBoxWidgetVisible(bool line, bool text)
     emit setToolBoxVisible(line, text);
 }
 
-QVector<QAction*> MainWindow::mouseActionVector()
+const QVector<QAction*>& MainWindow::mouseActionVector() const
 {
     return _toolBar->actionVector();
 }
@@ -1057,8 +1057,9 @@ void MainWindow::calibration()
     if (!image)
         return;
 
-    CalibrationDialog dlg;
-    dlg.exec();
+    CalibrationDialog* dialog = new CalibrationDialog(this);
+    dialog->setAttribute(Qt::WA_DeleteOnClose);
+    dialog->show();
 }
 
 void MainWindow::userGuide()

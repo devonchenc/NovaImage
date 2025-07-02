@@ -44,7 +44,7 @@ public:
 
     void setToolBoxWidgetVisible(bool line, bool text);
 
-    QVector<QAction*> mouseActionVector();
+    const QVector<QAction*>& mouseActionVector() const;
 
     void levelsAdjust(float bottom, float top);
 
