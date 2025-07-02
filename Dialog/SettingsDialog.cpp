@@ -4,6 +4,7 @@
 #include <QLabel>
 #include <QCheckBox>
 #include <QComboBox>
+#include <QLineEdit>
 #include <QPushButton>
 #include <QRadioButton>
 #include <QButtonGroup>
@@ -20,7 +21,7 @@
 SettingsDialog::SettingsDialog(QWidget* parent)
     : QDialog(parent)
 {
-    setWindowTitle(tr("Preferences"));
+    setWindowTitle(tr("Settings"));
 
     setWindowFlag(Qt::Popup);
 
@@ -36,6 +37,7 @@ void SettingsDialog::initUI()
     QTabWidget* tabWidget = new QTabWidget(this);
     tabWidget->addTab(createGeneralWidget(), tr("General"));
     tabWidget->addTab(createImageWidget(), tr("Image"));
+    tabWidget->addTab(createCalibrationWidget(), tr("Calibration"));
 
     QPushButton* acceptButton = new QPushButton(tr("Accept"));
     connect(acceptButton, &QPushButton::clicked, this, &SettingsDialog::acceptButtonClicked);
@@ -120,6 +122,47 @@ QWidget* SettingsDialog::createImageWidget()
     return imageWidget;
 }
 
+QWidget* SettingsDialog::createCalibrationWidget()
+{
+    _enableCalibrationCheckBox = new QCheckBox(tr("Enable calibration"));
+    QObject::connect(_enableCalibrationCheckBox, &QCheckBox::toggled, [=](bool checked) {
+        _size1Label->setEnabled(checked);
+        _pixelSizeEdit->setEnabled(checked);
+        _size2Label->setEnabled(checked);
+    });
+
+    QVBoxLayout* vLayout = new QVBoxLayout;
+    vLayout->addWidget(_enableCalibrationCheckBox);
+
+    _size1Label = new QLabel(tr("1 pixel = "));
+    _pixelSizeEdit = new QLineEdit;
+    _pixelSizeEdit->setFixedWidth(80);
+    _size2Label = new QLabel(tr("mm"));
+    QDoubleValidator* doubleValidator = new QDoubleValidator(_pixelSizeEdit);
+    _pixelSizeEdit->setValidator(doubleValidator);
+    doubleValidator->setRange(0.0, 1000.0);
+    doubleValidator->setDecimals(7);
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+
+    _size1Label->setEnabled(false);
+    _pixelSizeEdit->setEnabled(false);
+    _size2Label->setEnabled(false);
+
+    int indent = 20;
+    QHBoxLayout* hLayout = new QHBoxLayout;
+    hLayout->addSpacing(indent);
+    hLayout->addWidget(_size1Label);
+    hLayout->addWidget(_pixelSizeEdit);
+    hLayout->addWidget(_size2Label);
+    hLayout->addStretch();
+    vLayout->addLayout(hLayout);
+
+    QWidget* calibrationWidget = new QWidget;
+    calibrationWidget->setLayout(vLayout);
+
+    return calibrationWidget;
+}
+
 void SettingsDialog::loadSettings()
 {
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
@@ -128,6 +171,8 @@ void SettingsDialog::loadSettings()
     QString rightMouseString = settings.value("General/rightMouse", tr("None")).toString();
     bool fitWindow = settings.value("Image/autoFitWindow", 0).toBool();
     int displayWindow = settings.value("Image/displayWindow", 0).toInt();
+    bool enableCalibration = settings.value("Calibration/enable", false).toBool();
+    double pixelSize = settings.value("Calibration/size", 0).toDouble();
 
     _languageComboBox->setCurrentIndex(language);
 
@@ -167,6 +212,8 @@ void SettingsDialog::loadSettings()
 
     _autoFitWindowCheckBox->setChecked(fitWindow);
     _windowGroup->button(displayWindow)->setChecked(true);
+    _enableCalibrationCheckBox->setChecked(enableCalibration);
+    _pixelSizeEdit->setText(QString::number(pixelSize));
 }
 
 void SettingsDialog::acceptButtonClicked()
@@ -175,6 +222,12 @@ void SettingsDialog::acceptButtonClicked()
     int language = settings.value("General/language", 0).toInt();
 
     settings.setValue("General/language", _languageComboBox->currentIndex());
+    if (language != _languageComboBox->currentIndex())
+    {
+        // Change language
+        emit changeLanguage(_languageComboBox->currentIndex());
+    }
+
     MainWindow* mainWindow = getGlobalWindow();
     QVector<QAction*> vec = mainWindow->mouseActionVector();
     if (_leftMouseComboBox->currentIndex() == 0)
@@ -210,11 +263,8 @@ void SettingsDialog::acceptButtonClicked()
     settings.setValue("Image/autoFitWindow", _autoFitWindowCheckBox->isChecked());
     settings.setValue("Image/displayWindow", _windowGroup->checkedId());
 
-    if (language != _languageComboBox->currentIndex())
-    {
-        // Change language
-        emit changeLanguage(_languageComboBox->currentIndex());
-    }
+    settings.setValue("Calibration/enable", _enableCalibrationCheckBox->isChecked());
+    settings.setValue("Calibration/size", _pixelSizeEdit->text());
 
     accept();
 }

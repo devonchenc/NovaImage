@@ -6,6 +6,8 @@ QT_BEGIN_NAMESPACE
 class QComboBox;
 class QCheckBox;
 class QButtonGroup;
+class QLabel;
+class QLineEdit;
 QT_END_NAMESPACE
 
 class SettingsDialog : public QDialog
@@ -25,6 +27,8 @@ private:
 
     QWidget* createImageWidget();
 
+    QWidget* createCalibrationWidget();
+
     void loadSettings();
 
 private slots:
@@ -35,5 +39,9 @@ private:
     QComboBox* _leftMouseComboBox;
     QComboBox* _rightMouseComboBox;
     QCheckBox* _autoFitWindowCheckBox;
+    QCheckBox* _enableCalibrationCheckBox;
+    QLabel* _size1Label;
+    QLineEdit* _pixelSizeEdit;
+    QLabel* _size2Label;
     QButtonGroup* _windowGroup;
 };

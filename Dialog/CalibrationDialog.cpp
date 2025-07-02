@@ -48,7 +48,7 @@ void CalibrationDialog::initUI()
     _systemSizeLabel = new QLabel(tr("1 pixel = mm"));
     _manualSize1Label = new QLabel(tr("1 pixel = "));
     _pixelSizeEdit = new QLineEdit;
-    _pixelSizeEdit->setFixedWidth(60);
+    _pixelSizeEdit->setFixedWidth(80);
     _manualSize2Label = new QLabel(tr("mm"));
     _systemSizeLabel->setEnabled(false);
     _manualSize1Label->setEnabled(false);

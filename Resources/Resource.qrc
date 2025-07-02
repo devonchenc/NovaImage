@@ -48,5 +48,6 @@
         <file>svg/fitwindow.svg</file>
         <file>svg/location.svg</file>
         <file>svg/fourview.svg</file>
+        <file>svg/settings.svg</file>
     </qresource>
 </RCC>

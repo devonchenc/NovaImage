@@ -229,7 +229,8 @@ void MainWindow::createActions()
     _redoAction->setIcon(QIcon(":/icon/svg/redo.svg"));
     _restoreAction = new QAction(tr("R&estore"), this);
     _restoreAction->setIcon(QIcon(":/icon/svg/restore.svg"));
-    _settingsAction = new QAction(tr("&Preferences..."), this);
+    _settingsAction = new QAction(tr("&Settings..."), this);
+    _settingsAction->setIcon(QIcon(":/icon/svg/settings.svg"));
 
     _singleViewAction = new QAction(tr("Single View"), this);
     _singleViewAction->setIcon(QIcon(":/icon/svg/singleview.svg"));
@@ -1140,7 +1141,7 @@ void MainWindow::changeEvent(QEvent* event)
         _undoAction->setText(tr("&Undo"));
         _redoAction->setText(tr("&Redo"));
         _restoreAction->setText(tr("R&estore"));
-        _settingsAction->setText(tr("&Preferences..."));
+        _settingsAction->setText(tr("&Settings..."));
 
         _singleViewAction->setText(tr("Single View"));
         _threeViewAction->setText(tr("Three View"));
