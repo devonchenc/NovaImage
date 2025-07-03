@@ -15,7 +15,7 @@ public:
 
     void setWidth(int lineWidth) { _lineWidth = lineWidth; }
 
-    QDomElement saveToXML(QDomDocument& doc) override;
+    QDomElement saveToXML(QDomDocument& doc) const override;
 
     void loadFromXML(const QDomElement& e) override;
 

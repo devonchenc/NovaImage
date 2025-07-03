@@ -52,7 +52,6 @@ EqualizationProcessor::EqualizationProcessor(QObject* parent)
     , _gridSize(8)
     , _clipLimit(4)
 {
-
 }
 
 void EqualizationProcessor::initUI()

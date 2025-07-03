@@ -22,10 +22,10 @@ public:
 
     int type() const override { return Type; }
 
-    bool contentIsUpdated() { return _contentHasChanged; }
+    bool contentIsUpdated() const { return _contentHasChanged; }
     DiagramTextItem* clone();
 
-    virtual QDomElement saveToXML(QDomDocument& doc);
+    virtual QDomElement saveToXML(QDomDocument& doc) const;
 
     virtual void loadFromXML(const QDomElement& e);
 

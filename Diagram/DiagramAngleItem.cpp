@@ -20,7 +20,9 @@
 
 DiagramAngleItem::DiagramAngleItem(QGraphicsItem* parent)
     : QGraphicsLineItem(QLineF(), parent)
+    , _angle(0)
     , _contextMenu(nullptr)
+    , _drawingIndex(Point1)
     , _previousMode(MOVE_ITEM)
 {
     setFlag(QGraphicsItem::ItemIsMovable, true);

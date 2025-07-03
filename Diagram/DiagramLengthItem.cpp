@@ -22,7 +22,7 @@ DiagramLengthItem::DiagramLengthItem(const QLineF& line, QMenu* contextMenu, QGr
 
 }
 
-QDomElement DiagramLengthItem::saveToXML(QDomDocument& doc)
+QDomElement DiagramLengthItem::saveToXML(QDomDocument& doc) const
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");

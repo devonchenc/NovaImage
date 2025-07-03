@@ -37,11 +37,11 @@ private:
     float interpolation2(float src, uint* array, int arrayNum, float variable1, float variable2);
 
 private:
-    int _channel;
+    int _channel = CURVE_CHANNEL_GRAY;
 
-    int _arrayNum;
-    uint* _arrayIntensity;
-    uint* _arrayRed;
-    uint* _arrayGreen;
-    uint* _arrayBlue;
+    int _arrayNum = 0;
+    uint* _arrayIntensity = nullptr;
+    uint* _arrayRed = nullptr;
+    uint* _arrayGreen = nullptr;
+    uint* _arrayBlue = nullptr;
 };

@@ -358,7 +358,8 @@ void GraphicsView::drawThreeViewAxes()
     QRect viewRect = rect();
     BaseImage* image = getGlobalImage();
 
-    int xOffset, yOffset;
+    int xOffset = 0;
+    int yOffset = 0;
     QColor horzColor, vertColor;
     if (_view->viewType() == AXIAL_VIEW)
     {

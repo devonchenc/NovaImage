@@ -48,5 +48,5 @@ private:
     QPushButton* _closeButton = nullptr;
     QPushButton* _detailsButton = nullptr;
 
-    QGraphicsOpacityEffect* _effect;
+    QGraphicsOpacityEffect* _effect = nullptr;
 };

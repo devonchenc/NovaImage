@@ -47,7 +47,7 @@ private:
     void HSV2RGB(int H, float S, uchar V, uchar& R, uchar& G, uchar& B);
 
 private:
-    EqualizationWidget* _widget;
+    EqualizationWidget* _widget = nullptr;
     int _gridSize;
     int _clipLimit;
 };

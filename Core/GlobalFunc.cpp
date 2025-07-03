@@ -82,7 +82,7 @@ void repaintView(std::shared_ptr<QImage> dstImage, int viewType)
     }
 }
 
-void repaintView(std::vector<std::shared_ptr<QImage>> imageVec)
+void repaintView(const std::vector<std::shared_ptr<QImage>>& imageVec)
 {
     Document* document = getGlobalDocument();
     if (document)
@@ -180,7 +180,7 @@ float spline(float* x, float* y, int n, float* t, int m, float* z)
     float* ddy = new float[n];
     memset(ddy, 0, sizeof(float) * n);
 
-    float h1;
+    float h1 = 0;
     float* s = new float[n];
     float h0 = x[1] - x[0];
     s[0] = 3.0f * (y[1] - y[0]) / (2.0f * h0) - ddy[0] * h0 / 4.0f;

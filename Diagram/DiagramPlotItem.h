@@ -11,13 +11,13 @@ public:
     DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramPlotItem();
 
-    int width() { return _lineWidth; }
+    int width() const { return _lineWidth; }
 
     void setWidth(int lineWidth) { _lineWidth = lineWidth; }
 
-    int plotIndex() { return _plotIndex; }
+    int plotIndex() const { return _plotIndex; }
 
-    QDomElement saveToXML(QDomDocument& doc) override;
+    QDomElement saveToXML(QDomDocument& doc) const override;
 
     void loadFromXML(const QDomElement& e) override;
 

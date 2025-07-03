@@ -17,8 +17,9 @@ public:
         , _slice(slice)
         , _pixelPerSlice(width * height)
         , _totalPixel(_pixelPerSlice * slice)
+        , _minValue(0)
+        , _maxValue(0)
     {
-
     }
 
     ImageData(const ImageData& src)
@@ -30,7 +31,6 @@ public:
         , _minValue(src._minValue)
         , _maxValue(src._maxValue)
     {
-
     }
 
     virtual ~ImageData() {}

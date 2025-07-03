@@ -50,6 +50,10 @@ BaseImage& BaseImage::operator=(const BaseImage& src)
         return *this;
 
     _pImage.reset(new QImage(*src._pImage));
+    _width = src._width;
+    _height = src._height;
+    _windowWidth = src._windowWidth;
+    _windowLevel = src._windowLevel;
 
     memcpy(_grayPixelNumber, src._grayPixelNumber, sizeof(uint) * 256);
     memcpy(_redPixelNumber, src._redPixelNumber, sizeof(uint) * 256);

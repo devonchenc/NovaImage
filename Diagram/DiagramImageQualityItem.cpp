@@ -15,7 +15,6 @@ DiagramImageQualityItem::DiagramImageQualityItem(QGraphicsItem* parent)
     , _leftRatio(1 / 3.0f)
     , _rightRatio(2 / 3.0f)
 {
-
 }
 
 DiagramImageQualityItem::DiagramImageQualityItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
@@ -24,7 +23,6 @@ DiagramImageQualityItem::DiagramImageQualityItem(const QLineF& line, QMenu* cont
     , _leftRatio(1 / 3.0f)
     , _rightRatio(2 / 3.0f)
 {
-
 }
 
 DiagramImageQualityItem::~DiagramImageQualityItem()
@@ -32,7 +30,7 @@ DiagramImageQualityItem::~DiagramImageQualityItem()
     emit itemDeleted();
 }
 
-QDomElement DiagramImageQualityItem::saveToXML(QDomDocument& doc)
+QDomElement DiagramImageQualityItem::saveToXML(QDomDocument& doc) const
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");

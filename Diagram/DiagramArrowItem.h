@@ -10,7 +10,7 @@ public:
     DiagramArrowItem(QGraphicsItem* parent = nullptr);
     DiagramArrowItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
 
-    QDomElement saveToXML(QDomDocument& doc) override;
+    QDomElement saveToXML(QDomDocument& doc) const override;
 
 protected:
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;

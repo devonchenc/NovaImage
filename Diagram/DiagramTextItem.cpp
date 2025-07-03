@@ -25,7 +25,7 @@ DiagramTextItem* DiagramTextItem::clone()
     return cloned;
 }
 
-QDomElement DiagramTextItem::saveToXML(QDomDocument& doc)
+QDomElement DiagramTextItem::saveToXML(QDomDocument& doc) const
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramTextItem");

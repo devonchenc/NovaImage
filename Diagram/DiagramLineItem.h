@@ -32,7 +32,7 @@ public:
 
     void setDrawingFinished(bool finished);
 
-    virtual QDomElement saveToXML(QDomDocument& doc) = 0;
+    virtual QDomElement saveToXML(QDomDocument& doc) const = 0;
 
     virtual void loadFromXML(const QDomElement& e);
 

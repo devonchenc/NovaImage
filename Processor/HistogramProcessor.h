@@ -16,6 +16,6 @@ public:
     void setWindowArray(bool* array, int arrayNum);
 
 private:
-    bool* _array;
-    int _arrayNum;
+    bool* _array = nullptr;
+    int _arrayNum = 0;
 };

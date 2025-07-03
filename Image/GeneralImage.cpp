@@ -29,8 +29,8 @@ GeneralImage::GeneralImage(const QString& pathName)
 
 GeneralImage::GeneralImage(const GeneralImage& src)
     : BaseImage(src)
+    , _backupImage(src._backupImage)
 {
-    _backupImage = src._backupImage;
 }
 
 GeneralImage& GeneralImage::operator=(const GeneralImage& src)

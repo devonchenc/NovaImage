@@ -46,8 +46,8 @@ QRectF Callout::boundingRect() const
 
 void Callout::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
 {
-    Q_UNUSED(option)
-    Q_UNUSED(widget)
+    Q_UNUSED(option);
+    Q_UNUSED(widget);
     QPainterPath path;
     path.addRoundedRect(_rect, 5, 5);
 

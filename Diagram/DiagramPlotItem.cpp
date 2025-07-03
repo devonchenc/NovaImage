@@ -15,7 +15,8 @@ DiagramPlotItem::DiagramPlotItem(QGraphicsItem* parent)
     : DiagramLineItem(QLineF(), nullptr, parent)
     , _lineWidth(1)
 {
-
+    _plotCount++;
+    _plotIndex = _plotCount;
 }
 
 DiagramPlotItem::DiagramPlotItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
@@ -31,7 +32,7 @@ DiagramPlotItem::~DiagramPlotItem()
     emit itemDeleted();
 }
 
-QDomElement DiagramPlotItem::saveToXML(QDomDocument& doc)
+QDomElement DiagramPlotItem::saveToXML(QDomDocument& doc) const
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramLineItem");

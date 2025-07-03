@@ -24,7 +24,7 @@ BaseImage* getGlobalImage();
 void repaintView();
 void repaintView(const QImage* image, int viewType = 0);
 void repaintView(std::shared_ptr<QImage> dstImage, int viewType = 0);
-void repaintView(std::vector<std::shared_ptr<QImage>> imageVec);
+void repaintView(const std::vector<std::shared_ptr<QImage>>& imageVec);
 
 QPointF stringToPointF(const QString& str);
 

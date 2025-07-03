@@ -7,7 +7,6 @@
 
 HistogramProcessor::HistogramProcessor(QObject* parent)
     : BaseProcessor(false, parent)
-    , _array(nullptr)
 {
 }
 
