@@ -107,7 +107,7 @@ void DiagramItem::setTransparency(int value)
     _effect->setOpacity(1.0 - float(value) / 100);
 }
 
-int DiagramItem::transparency()
+int DiagramItem::transparency() const
 {
     return 100 - round(_effect->opacity() * 100);
 }
@@ -117,7 +117,7 @@ void DiagramItem::setDrawingFinished(bool finished)
     _drawingFinished = finished;
 }
 
-QDomElement DiagramItem::saveToXML(QDomDocument& doc)
+QDomElement DiagramItem::saveToXML(QDomDocument& doc) const
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramItem");
@@ -274,7 +274,7 @@ QPixmap DiagramItem::image() const
     return pixmap;
 }
 
-QList<QPointF> DiagramItem::resizeHandlePoints()
+QList<QPointF> DiagramItem::resizeHandlePoints() const
 {
     qreal width = resizePointWidth;
     QRectF rf = QRectF(boundingRect().topLeft() + QPointF(width / 2, width / 2), boundingRect().bottomRight() - QPointF(width / 2, width / 2));
@@ -577,7 +577,7 @@ QPolygonF DiagramItem::scaledPolygon(const QPolygonF& old, DiagramItem::Directio
     return trans.map(old);
 }
 
-int DiagramItem::changeIndex(int index)
+int DiagramItem::changeIndex(int index) const
 {
     int newIndex = index;
     if (_diagramType == Circle || _diagramType == Ellipse || _diagramType == Rhombus)
@@ -587,21 +587,21 @@ int DiagramItem::changeIndex(int index)
         else if (index == 1)
             newIndex = 3;
         else
-			newIndex *= 2;
+            newIndex *= 2;
     }
     else if (_diagramType == Parallelogram)
     {
-		if (index == 2)
-			newIndex = 6;
-		else if (index == 3)
-			newIndex = 7;
-		else if (index == 4)
-			newIndex = 8;
+        if (index == 2)
+            newIndex = 6;
+        else if (index == 3)
+            newIndex = 7;
+        else if (index == 4)
+            newIndex = 8;
     }
     return newIndex;
 }
 
-bool DiagramItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
+bool DiagramItem::isCloseEnough(const QPointF& p1, const QPointF& p2) const
 {
     qreal delta = sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
     return delta < closeEnoughDistance;

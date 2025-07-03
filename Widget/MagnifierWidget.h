@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QWidget>
+#include <QTimer>
 
 class MagnifierWidget : public QWidget
 {
@@ -8,7 +9,6 @@ class MagnifierWidget : public QWidget
 
 public:
     explicit MagnifierWidget(QWidget* parent = nullptr);
-    ~MagnifierWidget();
 
 public:
     void setMagnifyArea(QSize size);
@@ -32,5 +32,5 @@ private:
     int _magnifyTimes;
     QSize _magnifierSize;
     QSize _totalSize;
-    QTimer* _timer;
+    QTimer _timer;
 };

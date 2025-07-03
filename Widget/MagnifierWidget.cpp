@@ -19,20 +19,15 @@ MagnifierWidget::MagnifierWidget(QWidget* parent)
     , _magnifyTimes(8)
     , _magnifierSize((_magnifyAeraSize - QSize(2, 2)) * _magnifyTimes)
     , _totalSize(_magnifyAeraSize + _magnifierSize)
-    , _timer(new QTimer(this))
+    , _timer(this)
 {
     setWindowFlags(Qt::Popup | Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
     setAttribute(Qt::WA_TranslucentBackground);
     setFixedSize(_totalSize);
     setMouseTracking(true);
-    _timer->setInterval(grabInterval);
-    connect(_timer, &QTimer::timeout, this, &MagnifierWidget::updatePosition);
-    _timer->start();
-}
-
-MagnifierWidget::~MagnifierWidget()
-{
-    delete _timer;
+    _timer.setInterval(grabInterval);
+    connect(&_timer, &QTimer::timeout, this, &MagnifierWidget::updatePosition);
+    _timer.start();
 }
 
 void MagnifierWidget::setMagnifyArea(QSize size)

@@ -33,17 +33,17 @@ public:
     QPen pointPen() const;
 
     void setTransparency(int value);
-    int transparency();
+    int transparency() const;
 
     void setCurrentDrawingIndex(Index index) { _drawingIndex = index; }
 
     void setCurrentDrawingPoint(const QPointF& point);
 
-    Index currentDrawingPoint() { return _drawingIndex; }
+    Index currentDrawingPoint() const { return _drawingIndex; }
 
     void setDrawingFinished(bool finished);
 
-    virtual QDomElement saveToXML(QDomDocument& doc);
+    virtual QDomElement saveToXML(QDomDocument& doc) const;
 
     virtual void loadFromXML(const QDomElement& e);
 
@@ -67,9 +67,9 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
 private:
-    QList<QPointF> resizeHandlePoints();
+    QList<QPointF> resizeHandlePoints() const;
 
-    bool isCloseEnough(const QPointF& p1, const QPointF& p2);
+    bool isCloseEnough(const QPointF& p1, const QPointF& p2) const;
 
     void calcAngle();
 
@@ -86,7 +86,7 @@ private:
     QMenu* _contextMenu;
     static constexpr qreal closeEnoughDistance = 12;
     Index _drawingIndex;
-	Index _dragIndex = DragNone;
+    Index _dragIndex = DragNone;
     bool _drawingFinished = false;
     int _previousMode;
 };

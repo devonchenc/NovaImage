@@ -42,7 +42,7 @@ void DiagramLineItem::setTransparency(int value)
     _effect->setOpacity(1.0 - float(value) / 100);
 }
 
-int DiagramLineItem::transparency()
+int DiagramLineItem::transparency() const
 {
     return 100 - round(_effect->opacity() * 100);
 }
@@ -213,12 +213,12 @@ QVariant DiagramLineItem::itemChange(GraphicsItemChange change, const QVariant& 
     return value;
 }
 
-QList<QPointF> DiagramLineItem::resizeHandlePoints()
+QList<QPointF> DiagramLineItem::resizeHandlePoints() const
 {
     return QList<QPointF>{line().p1(), line().p2()};
 }
 
-bool DiagramLineItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
+bool DiagramLineItem::isCloseEnough(const QPointF& p1, const QPointF& p2) const
 {
     qreal delta = sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
     return delta < closeEnoughDistance;

@@ -66,7 +66,7 @@ void DiagramAngleItem::setTransparency(int value)
     _effect->setOpacity(1.0 - float(value) / 100);
 }
 
-int DiagramAngleItem::transparency()
+int DiagramAngleItem::transparency() const
 {
     return 100 - round(_effect->opacity() * 100);
 }
@@ -89,7 +89,7 @@ void DiagramAngleItem::setDrawingFinished(bool finished)
     _drawingFinished = finished;
 }
 
-QDomElement DiagramAngleItem::saveToXML(QDomDocument& doc)
+QDomElement DiagramAngleItem::saveToXML(QDomDocument& doc) const
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
     lineItem.setAttribute("Type", "DiagramAngleItem");
@@ -209,7 +209,7 @@ void DiagramAngleItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramAngleItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-	_dragIndex = DragNone;
+    _dragIndex = DragNone;
 
     emit itemChanged();
 
@@ -330,12 +330,12 @@ QPainterPath DiagramAngleItem::shape() const
     return qt_graphicsItem_shapeFromPath(path, pen());
 }
 
-QList<QPointF> DiagramAngleItem::resizeHandlePoints()
+QList<QPointF> DiagramAngleItem::resizeHandlePoints() const
 {
     return QList<QPointF>{p1(), p2(), p3()};
 }
 
-bool DiagramAngleItem::isCloseEnough(const QPointF& p1, const QPointF& p2)
+bool DiagramAngleItem::isCloseEnough(const QPointF& p1, const QPointF& p2) const
 {
     qreal delta = sqrtf((p1.x() - p2.x()) * (p1.x() - p2.x()) + (p1.y() - p2.y()) * (p1.y() - p2.y()));
     return delta < closeEnoughDistance;

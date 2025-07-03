@@ -28,7 +28,7 @@ public:
     QPen pointPen() const;
 
     void setTransparency(int value);
-    int transparency();
+    int transparency() const;
 
     void setDrawingFinished(bool finished);
 
@@ -57,9 +57,9 @@ protected:
     float length() const;
 
 private:
-    QList<QPointF> resizeHandlePoints();
+    QList<QPointF> resizeHandlePoints() const;
 
-    bool isCloseEnough(const QPointF& p1, const QPointF& p2);
+    bool isCloseEnough(const QPointF& p1, const QPointF& p2) const;
 
 protected:
     QPen _endpointPen;

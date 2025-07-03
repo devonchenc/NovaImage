@@ -33,11 +33,11 @@ public:
     void setRectF(const QRectF& rect);
 
     void setTransparency(int value);
-    int transparency();
+    int transparency() const;
 
     void setDrawingFinished(bool finished);
 
-    virtual QDomElement saveToXML(QDomDocument& doc);
+    virtual QDomElement saveToXML(QDomDocument& doc) const;
 
     virtual void loadFromXML(const QDomElement& e);
 
@@ -61,11 +61,11 @@ protected:
 private:
     QPolygonF scaledPolygon(const QPolygonF& old, Direction direction, const QPointF& newPos);
 
-    int changeIndex(int index);
+    int changeIndex(int index) const;
 
-    QList<QPointF> resizeHandlePoints();
+    QList<QPointF> resizeHandlePoints() const;
 
-    bool isCloseEnough(const QPointF& p1, const QPointF& p2);
+    bool isCloseEnough(const QPointF& p1, const QPointF& p2) const;
 
 private:
     DiagramType _diagramType;
