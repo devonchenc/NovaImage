@@ -134,7 +134,7 @@ void DiagramLineItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-	_dragIndex = DragNone;
+    _dragIndex = DragNone;
 
     emit itemChanged();
 

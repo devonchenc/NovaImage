@@ -70,7 +70,7 @@ public:
     int     CurrentIndex;
     int     RotateDirection;
     float   RotateAngle;
-    float	RotateStartAngle;
+    float   RotateStartAngle;
 
     float   StartHeight;
     float   EndHeight;
@@ -164,8 +164,8 @@ public:
     int     CameraHeight;
     int     Reserved24[52];
 
-    char	UserName[40];       // 操作人姓名
-    char	Date[40];           // 操作时间
+    char    UserName[40];       // 操作人姓名
+    char    Date[40];           // 操作时间
 
     // Object Information
     int     ObjectType;         // Type
@@ -178,38 +178,38 @@ public:
     char    Reserved100[400];
 
     // Motor Position
-    int		PositionNum;
-    int		PositionUnit;
-    char	MotionName1[20];
-    float	Position1;
-    char	MotionName2[20];
-    float	Position2;
-    char	MotionName3[20];
-    float	Position3;
-    char	MotionName4[20];
-    float	Position4;
-    char	MotionName5[20];
-    float	Position5;
-    char	MotionName6[20];
-    float	Position6;
-    char	MotionName7[20];
-    float	Position7;
-    char	MotionName8[20];
-    float	Position8;
-    char	MotionName9[20];
-    float	Position9;
-    char	MotionName10[20];
-    float	Position10;
-    char	MotionName11[20];
-    float	Position11;
-    char	MotionName12[20];
-    float	Position12;
-    char	MotionName13[20];
-    float	Position13;
-    char	MotionName14[20];
-    float	Position14;
-    char	MotionName15[20];
-    float	Position15;
-    char	MotionName16[20];
-    float	Position16;
+    int     PositionNum;
+    int     PositionUnit;
+    char    MotionName1[20];
+    float   Position1;
+    char    MotionName2[20];
+    float   Position2;
+    char    MotionName3[20];
+    float   Position3;
+    char    MotionName4[20];
+    float   Position4;
+    char    MotionName5[20];
+    float   Position5;
+    char    MotionName6[20];
+    float   Position6;
+    char    MotionName7[20];
+    float   Position7;
+    char    MotionName8[20];
+    float   Position8;
+    char    MotionName9[20];
+    float   Position9;
+    char    MotionName10[20];
+    float   Position10;
+    char    MotionName11[20];
+    float   Position11;
+    char    MotionName12[20];
+    float   Position12;
+    char    MotionName13[20];
+    float   Position13;
+    char    MotionName14[20];
+    float   Position14;
+    char    MotionName15[20];
+    float   Position15;
+    char    MotionName16[20];
+    float   Position16;
 };

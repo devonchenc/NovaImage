@@ -82,13 +82,13 @@ void DiagramItem::setRectF(const QRectF& rect)
         break;
     case Rhombus:
         _polygon << QPointF(rect.left(), rect.center().y()) << QPointF(rect.center().x(), rect.bottom())
-                 << QPointF(rect.right(), rect.center().y()) << QPointF(rect.center().x(), rect.top())
-                 << QPointF(rect.left(), rect.center().y());
+            << QPointF(rect.right(), rect.center().y()) << QPointF(rect.center().x(), rect.top())
+            << QPointF(rect.left(), rect.center().y());
         break;
     case Parallelogram:
         _polygon << QPointF(rect.topLeft()) << QPointF(rect.left() + width / 4, rect.bottom())
-                 << QPointF(rect.bottomRight()) << QPointF(rect.right() - width / 4, rect.top())
-                 << QPointF(rect.topLeft());
+            << QPointF(rect.bottomRight()) << QPointF(rect.right() - width / 4, rect.top())
+            << QPointF(rect.topLeft());
         break;
     case None:
     case Text:
@@ -175,51 +175,51 @@ void DiagramItem::statisticsInfo()
 
     QVector<float> vecValue;
 
-	QRectF rect = sceneBoundingRect();
-	for (int j = 0; j < rect.height(); j++)
-	{
-		for (int i = 0; i < rect.width(); i++)
-		{
-			int x = i + rect.left();
-			int y = j + rect.top();
-			QPolygonF polygon = _polygon.translated(pos());
-			if (polygon.containsPoint(QPointF(x, y), Qt::OddEvenFill))
-			{
-				if (x >= 0 && x < image->width() && y >= 0 && y < image->height())
-				{
-					float pixelValue = image->getValue(QPoint(x, y));
-					sum += pixelValue;
-					sumOfSquares += pixelValue * pixelValue;
-					if (pixelValue > maxValue)
-					{
-						maxValue = pixelValue;
-					}
-					if (pixelValue < minValue)
-					{
-						minValue = pixelValue;
-					}
-					vecValue.append(pixelValue);
-				}
-				totalPixelCount++;
-			}
-		}
-	}
+    QRectF rect = sceneBoundingRect();
+    for (int j = 0; j < rect.height(); j++)
+    {
+        for (int i = 0; i < rect.width(); i++)
+        {
+            int x = i + rect.left();
+            int y = j + rect.top();
+            QPolygonF polygon = _polygon.translated(pos());
+            if (polygon.containsPoint(QPointF(x, y), Qt::OddEvenFill))
+            {
+                if (x >= 0 && x < image->width() && y >= 0 && y < image->height())
+                {
+                    float pixelValue = image->getValue(QPoint(x, y));
+                    sum += pixelValue;
+                    sumOfSquares += pixelValue * pixelValue;
+                    if (pixelValue > maxValue)
+                    {
+                        maxValue = pixelValue;
+                    }
+                    if (pixelValue < minValue)
+                    {
+                        minValue = pixelValue;
+                    }
+                    vecValue.append(pixelValue);
+                }
+                totalPixelCount++;
+            }
+        }
+    }
 
-	switch (_diagramType)
-	{
-	case Rect:
-		totalPixelCount = qRound(qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0));
-		break;
-	case Circle:
-	case Ellipse:
-		totalPixelCount = qRound(M_PI * qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0) / 4);
-		break;
-	case Rhombus:
-		totalPixelCount = qRound(qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0) / 2);
-		break;
+    switch (_diagramType)
+    {
+    case Rect:
+        totalPixelCount = qRound(qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0));
+        break;
+    case Circle:
+    case Ellipse:
+        totalPixelCount = qRound(M_PI * qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0) / 4);
+        break;
+    case Rhombus:
+        totalPixelCount = qRound(qMax(rect.width() - 2, 0.0) * qMax(rect.height() - 2, 0.0) / 2);
+        break;
     default:
         break;
-	}
+    }
 
     if (image->hasPixelSpacing())
     {
@@ -283,7 +283,7 @@ QList<QPointF> DiagramItem::resizeHandlePoints() const
     if (_diagramType == Circle || _diagramType == Ellipse || _diagramType == Rhombus)
     {
         return QList<QPointF>{QPointF(centerX, rf.top()), QPointF(rf.left(), centerY),
-                    QPointF(rf.right(), centerY), QPointF(centerX, rf.bottom())};
+            QPointF(rf.right(), centerY), QPointF(centerX, rf.bottom())};
     }
     else if (_diagramType == Parallelogram)
     {
@@ -292,8 +292,8 @@ QList<QPointF> DiagramItem::resizeHandlePoints() const
     else
     {
         return QList<QPointF>{rf.topLeft(), QPointF(centerX, rf.top()), rf.topRight(),
-                    QPointF(rf.left(), centerY), QPointF(rf.right(), centerY),
-                    rf.bottomLeft(), QPointF(centerX, rf.bottom()), rf.bottomRight()};
+            QPointF(rf.left(), centerY), QPointF(rf.right(), centerY),
+            rf.bottomLeft(), QPointF(centerX, rf.bottom()), rf.bottomRight()};
     }
 }
 
@@ -306,7 +306,7 @@ DiagramItem* DiagramItem::clone()
     cloned->setPen(pen());
     cloned->setBrush(brush());
     cloned->setZValue(zValue());
-	cloned->setTransparency(transparency());
+    cloned->setTransparency(transparency());
     return cloned;
 }
 
@@ -322,7 +322,7 @@ void DiagramItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     {
         if (isCloseEnough(event->pos(), p))
         {
-			resizeMode = true;
+            resizeMode = true;
             break;
         }
         index++;
@@ -495,8 +495,8 @@ QPolygonF DiagramItem::scaledPolygon(const QPolygonF& old, DiagramItem::Directio
 {
     qreal oldWidth = old.boundingRect().width();
     qreal oldHeight = old.boundingRect().height();
-	if (direction == NoneDirection || direction == All)
-		return old;
+    if (direction == NoneDirection || direction == All)
+        return old;
 
     qreal scaleWidth, scaleHeight;
     QTransform trans;
@@ -583,20 +583,32 @@ int DiagramItem::changeIndex(int index) const
     if (_diagramType == Circle || _diagramType == Ellipse || _diagramType == Rhombus)
     {
         if (index == 0)
+        {
             newIndex = 1;
+        }
         else if (index == 1)
+        {
             newIndex = 3;
+        }
         else
+        {
             newIndex *= 2;
+        }
     }
     else if (_diagramType == Parallelogram)
     {
         if (index == 2)
+        {
             newIndex = 6;
+        }
         else if (index == 3)
+        {
             newIndex = 7;
+        }
         else if (index == 4)
+        {
             newIndex = 8;
+        }
     }
     return newIndex;
 }

@@ -165,7 +165,7 @@ void DiagramAngleItem::mousePressEvent(QGraphicsSceneMouseEvent* event)
     {
         if (isCloseEnough(event->pos(), p))
         {
-			resizeMode = true;
+            resizeMode = true;
             break;
         }
         index++;
