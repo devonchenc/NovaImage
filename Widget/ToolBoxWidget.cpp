@@ -328,6 +328,7 @@ void ToolBoxWidget::textColorButtonTriggered()
 // Insert event handler
 void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 {
+    Q_UNUSED(item);
     //if (item->type() == DiagramItem::Type)
     //{
     //    DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);

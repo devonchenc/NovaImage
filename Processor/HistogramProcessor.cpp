@@ -90,7 +90,6 @@ void HistogramProcessor::processImage(const MonoImage* srcImage, MonoImage* dstI
     assert(dstImage);
 
     int width, height;
-    const uchar* byteImage = srcImage->getBYTEImage(width, height);
     uchar* dstByteImage = dstImage->getBYTEImage(width, height);
     float maxValue = srcImage->getMaxValue();
     float minValue = srcImage->getMinValue();

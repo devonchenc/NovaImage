@@ -12,14 +12,17 @@ HEADERS += ./Image/DicomImage.h \
     ./Image/GeneralImage.h \
     ./Image/ScanImage.h \
     ./Image/ImageDataTemplate.h \
-    ./Image/ImageReader.h \
     ./Image/MonoImageProxy.h \
+    ./Image/Reader/AbstractReader.h \
+    ./Image/Reader/ImageReader.h \
+    ./Image/Reader/MultiDicomReader.h \
     ./Dialog/RawParameterDialog.h \
     ./Dialog/ProgressDialog.h \
     ./Dialog/SettingsDialog.h \
     ./Dialog/PlotDialog.h \
     ./Dialog/ImageQualityDialog.h \
     ./Dialog/AboutDialog.h \
+    ./Dialog/CalibrationDialog.h \
     ./Widget/Peg.h \
     ./Widget/WidgetManager.h \
     ./Widget/ColorButton.h \
@@ -84,6 +87,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Dialog/ProgressDialog.cpp \
     ./Dialog/SettingsDialog.cpp \
     ./Dialog/AboutDialog.cpp \
+    ./Dialog/CalibrationDialog.cpp \
     ./Widget/ChartView.cpp \
     ./Widget/ImageQualityChartView.cpp \
     ./Widget/ColorButton.cpp \
