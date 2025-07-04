@@ -12,6 +12,9 @@
 #include <QCoreApplication>
 
 #include "../Core/GlobalFunc.h"
+#include "../Core/View.h"
+#include "../Core/GraphicsScene.h"
+#include "../Diagram/DiagramLengthItem.h"
 
 CalibrationDialog::CalibrationDialog(QWidget* parent)
     : QDialog(parent)
@@ -59,7 +62,10 @@ void CalibrationDialog::initUI()
         _actualLengthEdit->setEnabled(checked);
         _actualLength2Label->setEnabled(checked);
 
-        getCurrentLineInfo();
+        if (checked)
+        {
+            getCurrentLineInfo();
+        }
     });
 
     _systemSizeLabel = new QLabel(tr("1 pixel = mm"));
@@ -187,7 +193,18 @@ void CalibrationDialog::loadSettings()
 
 void CalibrationDialog::getCurrentLineInfo()
 {
-    MainWindow* mainWindow = getGlobalWindow();
+    GraphicsScene* scene = getGlobalActiveView()->scene();
+    DiagramLengthItem* item = scene->focusLengthItem();
+    if (item == nullptr)
+        return;
+
+    QLineF line = item->line();
+    QString point1 = "(" + QString::number(line.p1().x()) + ", " + QString::number(line.p1().y()) + ")";
+    _startPositionEdit->setText(point1);
+    QString point2 = "(" + QString::number(line.p2().x()) + ", " + QString::number(line.p2().y()) + ")";
+    _endPositionEdit->setText(point2);
+    QString pixelLength = QString::number(item->pixelLength());
+    _pixelLengthEdit->setText(pixelLength);
 }
 
 void CalibrationDialog::acceptButtonClicked()

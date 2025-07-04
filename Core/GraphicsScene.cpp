@@ -410,7 +410,7 @@ void GraphicsScene::mouseRelease(const QPointF& point)
     update();
 }
 
-QDomElement GraphicsScene::saveToXML(QDomDocument& doc)
+QDomElement GraphicsScene::saveToXML(QDomDocument& doc) const
 {
     QDomElement sceneItem = doc.createElement("GraphicsScene");
     sceneItem.setAttribute("Number", QString::number(items().size() - 1));
@@ -520,6 +520,20 @@ bool GraphicsScene::loadFromFile(const QDomElement& sceneElem)
     }
 
     return true;
+}
+
+DiagramLengthItem* GraphicsScene::focusLengthItem() const
+{
+    //QGraphicsItem* item = focusItem();
+    int size = items().size();
+    QGraphicsItem* item = items().at(0);
+    if (!item)
+        return nullptr;
+    if (item->type() != DiagramLineItem::Type)
+        return nullptr;
+
+    DiagramLengthItem* lengthItem = qgraphicsitem_cast<DiagramLengthItem*>(item);
+    return lengthItem;
 }
 
 void GraphicsScene::itemSelectedChange(QGraphicsItem* item)

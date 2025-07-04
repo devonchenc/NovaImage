@@ -42,7 +42,7 @@ MainWindow::MainWindow(QWidget* parent)
     , _volumeView(new View(this))
     , _activeView(_axialView)
     , _translator(nullptr)
-    , _timer(new QTimer(this))
+    , _timer(this)
 {
     // main area for image display
     QWidget* centerWidget = new QWidget;
@@ -138,34 +138,34 @@ LevelsProcessor* MainWindow::getLevelsProcessor() const
 
 bool MainWindow::cine30FPS()
 {
-    _timer->disconnect();
+    _timer.disconnect();
 
-    if (_timer->isActive() && _timer->interval() == 33)
+    if (_timer.isActive() && _timer.interval() == 33)
     {
-        _timer->stop();
+        _timer.stop();
         return false;
     }
     else
     {
-        connect(_timer, &QTimer::timeout, _activeView, &View::slicePlusOne);
-        _timer->start(33);
+        connect(&_timer, &QTimer::timeout, _activeView, &View::slicePlusOne);
+        _timer.start(33);
         return true;
     }
 }
 
 bool MainWindow::cine60FPS()
 {
-    _timer->disconnect();
+    _timer.disconnect();
 
-    if (_timer->isActive() && _timer->interval() == 17)
+    if (_timer.isActive() && _timer.interval() == 17)
     {
-        _timer->stop();
+        _timer.stop();
         return false;
     }
     else
     {
-        connect(_timer, &QTimer::timeout, _activeView, &View::slicePlusOne);
-        _timer->start(17);
+        connect(&_timer, &QTimer::timeout, _activeView, &View::slicePlusOne);
+        _timer.start(17);
         return true;
     }
 }

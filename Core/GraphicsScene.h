@@ -13,6 +13,7 @@ QT_END_NAMESPACE
 class View;
 class DiagramLineItem;
 class DiagramAngleItem;
+class DiagramLengthItem;
 
 #define NO_DRAG         0
 #define MOVE_ITEM       1
@@ -48,9 +49,11 @@ public:
 
     void mouseRelease(const QPointF& point);
 
-    QDomElement saveToXML(QDomDocument& doc);
+    QDomElement saveToXML(QDomDocument& doc) const;
 
     bool loadFromFile(const QDomElement& sceneElem);
+
+    DiagramLengthItem* focusLengthItem() const;
 
 public slots:
     void editorLostFocus(DiagramTextItem* item);

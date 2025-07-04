@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QMainWindow>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 class QAction;
@@ -219,5 +220,5 @@ private:
 
     RecentFiles* _recentFiles;
 
-    QTimer* _timer;
+    QTimer _timer;
 };

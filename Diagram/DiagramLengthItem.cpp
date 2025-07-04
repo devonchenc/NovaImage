@@ -13,13 +13,11 @@
 DiagramLengthItem::DiagramLengthItem(QGraphicsItem* parent)
     : DiagramLineItem(QLineF(), nullptr, parent)
 {
-
 }
 
 DiagramLengthItem::DiagramLengthItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent)
     : DiagramLineItem(line, contextMenu, parent)
 {
-
 }
 
 QDomElement DiagramLengthItem::saveToXML(QDomDocument& doc) const
@@ -38,6 +36,31 @@ QDomElement DiagramLengthItem::saveToXML(QDomDocument& doc) const
 
     lineItem.appendChild(attribute);
     return lineItem;
+}
+
+float DiagramLengthItem::pixelLength() const
+{
+    float offsetX = line().p1().x() - line().p2().x();
+    float offsetY = line().p1().y() - line().p2().y();
+    return sqrt(offsetX * offsetX + offsetY * offsetY);
+}
+
+std::optional<float> DiagramLengthItem::actualLength() const
+{
+    BaseImage* image = getGlobalImage();
+    if (!image || !image->hasPixelSpacing())
+        return std::nullopt;
+
+    float offsetX = line().p1().x() - line().p2().x();
+    float offsetY = line().p1().y() - line().p2().y();
+
+    float horzPixelSpacing = image->horzPixelSpacing();
+    float vertPixelSpacing = image->vertPixelSpacing();
+    offsetX *= horzPixelSpacing;
+    offsetY *= vertPixelSpacing;
+
+    std::optional<float> length = sqrt(offsetX * offsetX + offsetY * offsetY);
+    return length;
 }
 
 void DiagramLengthItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget)
