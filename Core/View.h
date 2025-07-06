@@ -2,7 +2,7 @@
 
 #include <QFrame>
 
-class DiagramItem;
+class DiagramPolygonItem;
 class GraphicsView;
 class PlotDialog;
 class ImageQualityDialog;
@@ -76,7 +76,7 @@ public:
 
     void setSceneMode(int mode);
 
-    void setItemType(DiagramItem::DiagramType type);
+    void setItemType(DiagramPolygonItem::DiagramType type);
 
     void flipHorizontal();
     void flipVertical();

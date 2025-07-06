@@ -658,59 +658,59 @@ bool ToolBar::eventFilter(QObject* obj, QEvent* event)
     }
 }
 
-void ToolBar::setMeasurementType(DiagramItem::DiagramType type)
+void ToolBar::setMeasurementType(DiagramPolygonItem::DiagramType type)
 {
     switch (type)
     {
-    case DiagramItem::None:
+    case DiagramPolygonItem::None:
         _cursorAction->trigger();
         _cursorButton->triggered(_cursorAction);
         break;
-    case DiagramItem::Line:
+    case DiagramPolygonItem::Line:
         _rulerAction->trigger();
         _measurementButton->triggered(_rulerAction);
         break;
-    case DiagramItem::Arrow:
+    case DiagramPolygonItem::Arrow:
         _arrowAction->trigger();
         _measurementButton->triggered(_arrowAction);
         break;
-    case DiagramItem::Angle:
+    case DiagramPolygonItem::Angle:
         _angleAction->trigger();
         _measurementButton->triggered(_angleAction);
         break;
-    case DiagramItem::Plot:
+    case DiagramPolygonItem::Plot:
         _plotAction->trigger();
         _measurementButton->triggered(_plotAction);
         break;
-    case DiagramItem::ImageQuality:
+    case DiagramPolygonItem::ImageQuality:
         _imageQualityAction->trigger();
         _measurementButton->triggered(_imageQualityAction);
         break;
-    case DiagramItem::Rect:
+    case DiagramPolygonItem::Rect:
         _rectAction->trigger();
         _measurementButton->triggered(_rectAction);
         break;
-    case DiagramItem::RoundRect:
+    case DiagramPolygonItem::RoundRect:
         _roundrectAction->trigger();
         _measurementButton->triggered(_roundrectAction);
         break;
-    case DiagramItem::Circle:
+    case DiagramPolygonItem::Circle:
         _circleAction->trigger();
         _measurementButton->triggered(_circleAction);
         break;
-    case DiagramItem::Ellipse:
+    case DiagramPolygonItem::Ellipse:
         _ellipseAction->trigger();
         _measurementButton->triggered(_ellipseAction);
         break;
-    case DiagramItem::Rhombus:
+    case DiagramPolygonItem::Rhombus:
         _rhombusAction->trigger();
         _measurementButton->triggered(_rhombusAction);
         break;
-    case DiagramItem::Parallelogram:
+    case DiagramPolygonItem::Parallelogram:
         _parallelogramAction->trigger();
         _measurementButton->triggered(_parallelogramAction);
         break;
-    case DiagramItem::Text:
+    case DiagramPolygonItem::Text:
         _textAction->trigger();
         _measurementButton->triggered(_textAction);
         break;
@@ -959,86 +959,86 @@ void ToolBar::measurementChanged()
     if (action == _rulerAction)
     {
         _measurementButton->setIconByName(":/icon/svg/length.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Line);
-        getGlobalCoronalView()->setItemType(DiagramItem::Line);
-        getGlobalSagittalView()->setItemType(DiagramItem::Line);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Line);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Line);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Line);
     }
     else if (action == _arrowAction)
     {
         _measurementButton->setIconByName(":/icon/svg/arrow.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Arrow);
-        getGlobalCoronalView()->setItemType(DiagramItem::Arrow);
-        getGlobalSagittalView()->setItemType(DiagramItem::Arrow);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Arrow);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Arrow);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Arrow);
     }
     else if (action == _angleAction)
     {
         _measurementButton->setIconByName(":/icon/svg/angle.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Angle);
-        getGlobalCoronalView()->setItemType(DiagramItem::Angle);
-        getGlobalSagittalView()->setItemType(DiagramItem::Angle);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Angle);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Angle);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Angle);
     }
     else if (action == _plotAction)
     {
         _measurementButton->setIconByName(":/icon/svg/plot.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Plot);
-        getGlobalCoronalView()->setItemType(DiagramItem::Plot);
-        getGlobalSagittalView()->setItemType(DiagramItem::Plot);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Plot);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Plot);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Plot);
     }
     else if (action == _imageQualityAction)
     {
         _measurementButton->setIconByName(":/icon/svg/imagequality.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::ImageQuality);
-        getGlobalCoronalView()->setItemType(DiagramItem::ImageQuality);
-        getGlobalSagittalView()->setItemType(DiagramItem::ImageQuality);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::ImageQuality);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::ImageQuality);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::ImageQuality);
     }
     else if (action == _rectAction)
     {
         _measurementButton->setIconByName(":/icon/svg/rectangle.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Rect);
-        getGlobalCoronalView()->setItemType(DiagramItem::Rect);
-        getGlobalSagittalView()->setItemType(DiagramItem::Rect);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Rect);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Rect);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Rect);
     }
     else if (action == _roundrectAction)
     {
         _measurementButton->setIconByName(":/icon/svg/roundrect.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::RoundRect);
-        getGlobalCoronalView()->setItemType(DiagramItem::RoundRect);
-        getGlobalSagittalView()->setItemType(DiagramItem::RoundRect);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::RoundRect);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::RoundRect);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::RoundRect);
     }
     else if (action == _circleAction)
     {
         _measurementButton->setIconByName(":/icon/svg/circle.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Circle);
-        getGlobalCoronalView()->setItemType(DiagramItem::Circle);
-        getGlobalSagittalView()->setItemType(DiagramItem::Circle);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Circle);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Circle);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Circle);
     }
     else if (action == _ellipseAction)
     {
         _measurementButton->setIconByName(":/icon/svg/ellipse.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Ellipse);
-        getGlobalCoronalView()->setItemType(DiagramItem::Ellipse);
-        getGlobalSagittalView()->setItemType(DiagramItem::Ellipse);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Ellipse);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Ellipse);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Ellipse);
     }
     else if (action == _rhombusAction)
     {
         _measurementButton->setIconByName(":/icon/svg/rhombus.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Rhombus);
-        getGlobalCoronalView()->setItemType(DiagramItem::Rhombus);
-        getGlobalSagittalView()->setItemType(DiagramItem::Rhombus);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Rhombus);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Rhombus);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Rhombus);
     }
     else if (action == _parallelogramAction)
     {
         _measurementButton->setIconByName(":/icon/svg/parallelogram.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Parallelogram);
-        getGlobalCoronalView()->setItemType(DiagramItem::Parallelogram);
-        getGlobalSagittalView()->setItemType(DiagramItem::Parallelogram);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Parallelogram);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Parallelogram);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Parallelogram);
     }
     else if (action == _textAction)
     {
         _measurementButton->setIconByName(":/icon/svg/text.svg");
-        getGlobalAxialView()->setItemType(DiagramItem::Text);
-        getGlobalCoronalView()->setItemType(DiagramItem::Text);
-        getGlobalSagittalView()->setItemType(DiagramItem::Text);
+        getGlobalAxialView()->setItemType(DiagramPolygonItem::Text);
+        getGlobalCoronalView()->setItemType(DiagramPolygonItem::Text);
+        getGlobalSagittalView()->setItemType(DiagramPolygonItem::Text);
         mainWindow->setToolBoxWidgetVisible(false, true);
     }
     getGlobalAxialView()->setSceneMode(INSERT_ITEM);

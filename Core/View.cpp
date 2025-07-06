@@ -386,7 +386,7 @@ void View::setSceneMode(int mode)
     _scene->setMode(mode);
 }
 
-void View::setItemType(DiagramItem::DiagramType type)
+void View::setItemType(DiagramPolygonItem::DiagramType type)
 {
     _scene->setItemType(type);
 }
@@ -560,9 +560,9 @@ QList<QGraphicsItem*> View::cloneItems(const QList<QGraphicsItem*>& items)
     QHash<QGraphicsItem*, QGraphicsItem*> copyMap;
     foreach (QGraphicsItem* item, items)
     {
-        if (item->type() == DiagramItem::Type)
+        if (item->type() == DiagramPolygonItem::Type)
         {
-            copyMap[item] = qgraphicsitem_cast<DiagramItem*>(item)->clone();
+            copyMap[item] = qgraphicsitem_cast<DiagramPolygonItem*>(item)->clone();
         }
         else if (item->type() == DiagramTextItem::Type)
         {

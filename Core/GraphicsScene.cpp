@@ -25,7 +25,7 @@
 GraphicsScene::GraphicsScene(QMenu* itemMenu, View* parent)
     : QGraphicsScene(parent)
     , _view(parent)
-    , _itemType(DiagramItem::Rect)
+    , _itemType(DiagramPolygonItem::Rect)
     , _itemMenu(itemMenu)
     , _mode(MOVE_ITEM)
     , _enableFill(false)
@@ -34,7 +34,7 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, View* parent)
     , _textColor(Qt::green)
     , _currentDrawingLine(nullptr)
     , _currentDrawingAngle(nullptr)
-    , _currentDrawingItem(nullptr)
+    , _currentDrawingPolygon(nullptr)
 {
     _font.setPointSize(24);
 }
@@ -44,9 +44,9 @@ void GraphicsScene::setLineColor(const QColor& color)
     _lineColor = color;
     foreach (QGraphicsItem* p, selectedItems())
     {
-        if (p->type() == DiagramItem::Type)
+        if (p->type() == DiagramPolygonItem::Type)
         {
-            DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(p);
+            DiagramPolygonItem* item = qgraphicsitem_cast<DiagramPolygonItem*>(p);
             QPen pen = item->pen();
             pen.setColor(color);
             item->setPen(pen);
@@ -73,9 +73,9 @@ void GraphicsScene::enableFillColor(bool enable)
     _enableFill = enable;
     foreach (QGraphicsItem* p, selectedItems())
     {
-        if (p->type() == DiagramItem::Type)
+        if (p->type() == DiagramPolygonItem::Type)
         {
-            DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(p);
+            DiagramPolygonItem* item = qgraphicsitem_cast<DiagramPolygonItem*>(p);
             QBrush brush = item->brush();
             brush.setStyle(_enableFill ? Qt::SolidPattern : Qt::NoBrush);
             item->setBrush(brush);
@@ -93,9 +93,9 @@ void GraphicsScene::setFillColor(const QColor& color)
     _fillColor = color;
     foreach (QGraphicsItem* p, selectedItems())
     {
-        if (p->type() == DiagramItem::Type)
+        if (p->type() == DiagramPolygonItem::Type)
         {
-            DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(p);
+            DiagramPolygonItem* item = qgraphicsitem_cast<DiagramPolygonItem*>(p);
             QBrush brush(_fillColor);
             brush.setStyle(_enableFill ? Qt::SolidPattern : Qt::NoBrush);
             item->setBrush(brush);
@@ -112,9 +112,9 @@ void GraphicsScene::setTransparency(int value)
 {
     foreach(QGraphicsItem* p, selectedItems())
     {
-        if (p->type() == DiagramItem::Type)
+        if (p->type() == DiagramPolygonItem::Type)
         {
-            DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(p);
+            DiagramPolygonItem* item = qgraphicsitem_cast<DiagramPolygonItem*>(p);
             item->setTransparency(value);
         }
         else if (p->type() == DiagramLineItem::Type)
@@ -187,7 +187,7 @@ void GraphicsScene::setMode(int mode)
     _mode = mode;
 }
 
-void GraphicsScene::setItemType(DiagramItem::DiagramType type)
+void GraphicsScene::setItemType(DiagramPolygonItem::DiagramType type)
 {
     _itemType = type;
 }
@@ -227,22 +227,22 @@ void GraphicsScene::mousePress(const QPointF& point)
 
     if (_mode == INSERT_ITEM)
     {
-        if (_itemType <= DiagramItem::Parallelogram)
+        if (_itemType <= DiagramPolygonItem::Parallelogram)
         {
-            _currentDrawingItem = new DiagramItem(_itemType, _itemMenu);
-            _currentDrawingItem->setRectF(QRectF(_startPoint, _startPoint));
+            _currentDrawingPolygon = new DiagramPolygonItem(_itemType, _itemMenu);
+            _currentDrawingPolygon->setRectF(QRectF(_startPoint, _startPoint));
 
             QBrush brush(_fillColor);
             brush.setStyle(_enableFill ? Qt::SolidPattern : Qt::NoBrush);
-            _currentDrawingItem->setBrush(brush);
-            _currentDrawingItem->setPen(QPen(_lineColor, 2));
-            connect(_currentDrawingItem, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
-            connect(_currentDrawingItem, &DiagramItem::itemChanged, this, &GraphicsScene::itemChanged);
-            addItem(_currentDrawingItem);
+            _currentDrawingPolygon->setBrush(brush);
+            _currentDrawingPolygon->setPen(QPen(_lineColor, 2));
+            connect(_currentDrawingPolygon, &DiagramPolygonItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(_currentDrawingPolygon, &DiagramPolygonItem::itemChanged, this, &GraphicsScene::itemChanged);
+            addItem(_currentDrawingPolygon);
             itemChanged();
-            emit itemInserted(_currentDrawingItem);
+            emit itemInserted(_currentDrawingPolygon);
         }
-        else if (_itemType == DiagramItem::Text)
+        else if (_itemType == DiagramPolygonItem::Text)
         {
             DiagramTextItem* textItem = new DiagramTextItem;
             textItem->setFont(_font);
@@ -257,22 +257,22 @@ void GraphicsScene::mousePress(const QPointF& point)
             itemChanged();
             emit itemInserted(textItem);
         }
-        else if (_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow ||
-            _itemType == DiagramItem::Plot || _itemType == DiagramItem::ImageQuality)
+        else if (_itemType == DiagramPolygonItem::Line || _itemType == DiagramPolygonItem::Arrow ||
+            _itemType == DiagramPolygonItem::Plot || _itemType == DiagramPolygonItem::ImageQuality)
         {
-            if (_itemType == DiagramItem::Line)
+            if (_itemType == DiagramPolygonItem::Line)
             {
                 _currentDrawingLine = new DiagramLengthItem(QLineF(_startPoint, _startPoint), _itemMenu);
             }
-            else if (_itemType == DiagramItem::Arrow)
+            else if (_itemType == DiagramPolygonItem::Arrow)
             {
                 _currentDrawingLine = new DiagramArrowItem(QLineF(_startPoint, _startPoint), _itemMenu);
             }
-            else if (_itemType == DiagramItem::Plot)
+            else if (_itemType == DiagramPolygonItem::Plot)
             {
                 _currentDrawingLine = new DiagramPlotItem(QLineF(_startPoint, _startPoint), _itemMenu);
             }
-            else if (_itemType == DiagramItem::ImageQuality)
+            else if (_itemType == DiagramPolygonItem::ImageQuality)
             {
                 _currentDrawingLine = new DiagramImageQualityItem(QLineF(_startPoint, _startPoint), _itemMenu);
             }
@@ -284,7 +284,7 @@ void GraphicsScene::mousePress(const QPointF& point)
             itemChanged();
             emit itemInserted(_currentDrawingLine);
         }
-        else if (_itemType == DiagramItem::Angle)
+        else if (_itemType == DiagramPolygonItem::Angle)
         {
             if (_currentDrawingAngle == nullptr)
             {
@@ -309,8 +309,8 @@ void GraphicsScene::mousePress(const QPointF& point)
 
 void GraphicsScene::mouseMove(const QPointF& point)
 {
-    if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow ||
-        _itemType == DiagramItem::Plot || _itemType == DiagramItem::ImageQuality) && _currentDrawingLine != nullptr)
+    if ((_itemType == DiagramPolygonItem::Line || _itemType == DiagramPolygonItem::Arrow ||
+        _itemType == DiagramPolygonItem::Plot || _itemType == DiagramPolygonItem::ImageQuality) && _currentDrawingLine != nullptr)
     {
         QPointF p1 = _currentDrawingLine->line().p1();
         if (QApplication::keyboardModifiers() == Qt::ShiftModifier)
@@ -330,16 +330,16 @@ void GraphicsScene::mouseMove(const QPointF& point)
             _currentDrawingLine->setLine(QLineF(p1, point));
         }
     }
-    else if (_itemType == DiagramItem::Angle && _currentDrawingAngle != nullptr)
+    else if (_itemType == DiagramPolygonItem::Angle && _currentDrawingAngle != nullptr)
     {
         _currentDrawingAngle->setCurrentDrawingPoint(point);
     }
-    else if (_itemType <= DiagramItem::Parallelogram)
+    else if (_itemType <= DiagramPolygonItem::Parallelogram)
     {
-        if (_currentDrawingItem)
+        if (_currentDrawingPolygon)
         {
-            _currentDrawingItem->setRectF(QRectF(_startPoint, point));
-            _currentDrawingItem->statisticsInfo();
+            _currentDrawingPolygon->setRectF(QRectF(_startPoint, point));
+            _currentDrawingPolygon->statisticsInfo();
         }
     }
 
@@ -348,27 +348,27 @@ void GraphicsScene::mouseMove(const QPointF& point)
 
 void GraphicsScene::mouseRelease(const QPointF& point)
 {
-    if (_itemType <= DiagramItem::Parallelogram)
+    if (_itemType <= DiagramPolygonItem::Parallelogram)
     {
-        if (_currentDrawingItem)
+        if (_currentDrawingPolygon)
         {
             QRectF rect(_startPoint, point);
-            _currentDrawingItem->setRectF(rect);
+            _currentDrawingPolygon->setRectF(rect);
             if (fabs(rect.width()) < MIN_SIZE && fabs(rect.height()) < MIN_SIZE)
             {
-                removeItem(_currentDrawingItem);
-                delete _currentDrawingItem;
+                removeItem(_currentDrawingPolygon);
+                delete _currentDrawingPolygon;
             }
             else
             {
-                _currentDrawingItem->setDrawingFinished(true);
-                _currentDrawingItem->setSelected(true);
+                _currentDrawingPolygon->setDrawingFinished(true);
+                _currentDrawingPolygon->setSelected(true);
             }
-            _currentDrawingItem = nullptr;
+            _currentDrawingPolygon = nullptr;
         }
     }
-    else if ((_itemType == DiagramItem::Line || _itemType == DiagramItem::Arrow ||
-        _itemType == DiagramItem::Plot || _itemType == DiagramItem::ImageQuality) && _currentDrawingLine != nullptr)
+    else if ((_itemType == DiagramPolygonItem::Line || _itemType == DiagramPolygonItem::Arrow ||
+        _itemType == DiagramPolygonItem::Plot || _itemType == DiagramPolygonItem::ImageQuality) && _currentDrawingLine != nullptr)
     {
         QRectF rect = _currentDrawingLine->boundingRect();
         if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
@@ -383,7 +383,7 @@ void GraphicsScene::mouseRelease(const QPointF& point)
         }
         _currentDrawingLine = nullptr;
     }
-    else if (_itemType == DiagramItem::Angle && _currentDrawingAngle != nullptr)
+    else if (_itemType == DiagramPolygonItem::Angle && _currentDrawingAngle != nullptr)
     {
         QRectF rect = _currentDrawingAngle->boundingRect();
         if (rect.width() < MIN_SIZE && rect.height() < MIN_SIZE)
@@ -420,9 +420,9 @@ QDomElement GraphicsScene::saveToXML(QDomDocument& doc) const
     {
         switch (itemList.at(i)->type())
         {
-        case DiagramItem::Type:
+        case DiagramPolygonItem::Type:
         {
-            DiagramItem* item = qgraphicsitem_cast<DiagramItem*>(itemList.at(i));
+            DiagramPolygonItem* item = qgraphicsitem_cast<DiagramPolygonItem*>(itemList.at(i));
             QDomElement lineItem = item->saveToXML(doc);
             sceneItem.appendChild(lineItem);
         }
@@ -468,11 +468,11 @@ bool GraphicsScene::loadFromFile(const QDomElement& sceneElem)
         QString type = diagramElem.attribute("Type");
         if (type == "DiagramItem")
         {
-            DiagramItem* item = new DiagramItem;
+            DiagramPolygonItem* item = new DiagramPolygonItem;
             addItem(item);
             item->loadFromXML(attribute);
-            connect(item, &DiagramItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
-            connect(item, &DiagramItem::itemChanged, this, &GraphicsScene::itemChanged);
+            connect(item, &DiagramPolygonItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
+            connect(item, &DiagramPolygonItem::itemChanged, this, &GraphicsScene::itemChanged);
         }
         else if (type == "DiagramLineItem")
         {
@@ -541,11 +541,11 @@ void GraphicsScene::itemSelectedChange(QGraphicsItem* item, bool selected)
 {
     if (selected)
     {
-        if (item->type() == DiagramItem::Type)
+        if (item->type() == DiagramPolygonItem::Type)
         {
-            DiagramItem* diagramItem = qgraphicsitem_cast<DiagramItem*>(item);
-            _lineColor = diagramItem->pen().color();
-            _fillColor = diagramItem->brush().color();
+            DiagramPolygonItem* polygonItem = qgraphicsitem_cast<DiagramPolygonItem*>(item);
+            _lineColor = polygonItem->pen().color();
+            _fillColor = polygonItem->brush().color();
         }
         else if (item->type() == DiagramLineItem::Type)
         {

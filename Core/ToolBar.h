@@ -10,7 +10,7 @@ QT_END_NAMESPACE
 class ToolButton;
 class MouseHandler;
 
-#include "../Diagram/DiagramItem.h"
+#include "../Diagram/DiagramPolygonItem.h"
 
 class ToolBar : public QToolBar
 {
@@ -41,7 +41,7 @@ protected:
     bool eventFilter(QObject* obj, QEvent* event) override;
 
 public slots:
-    void setMeasurementType(DiagramItem::DiagramType type);
+    void setMeasurementType(DiagramPolygonItem::DiagramType type);
 
 private slots:
     void layoutButtonClicked();

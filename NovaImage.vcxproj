@@ -32,7 +32,7 @@
     <ClCompile Include="Diagram\DiagramAngleItem.cpp" />
     <ClCompile Include="Diagram\DiagramArrowItem.cpp" />
     <ClCompile Include="Diagram\DiagramImageQualityItem.cpp" />
-    <ClCompile Include="Diagram\DiagramItem.cpp" />
+    <ClCompile Include="Diagram\DiagramPolygonItem.cpp" />
     <ClCompile Include="Diagram\DiagramLengthItem.cpp" />
     <ClCompile Include="Diagram\DiagramLineItem.cpp" />
     <ClCompile Include="Diagram\DiagramPlotItem.cpp" />
@@ -97,7 +97,7 @@
     <QtMoc Include="Core\RecentFiles.h" />
     <ClInclude Include="Core\UndoSystem.h" />
     <QtMoc Include="Diagram\DiagramAngleItem.h" />
-    <QtMoc Include="Diagram\DiagramItem.h" />
+    <QtMoc Include="Diagram\DiagramPolygonItem.h" />
     <QtMoc Include="Diagram\DiagramLineItem.h" />
     <QtMoc Include="Diagram\DiagramTextItem.h" />
     <QtMoc Include="Diagram\DiagramPlotItem.h" />

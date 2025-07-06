@@ -1,7 +1,7 @@
 #pragma once
 
 #include "BaseWidget.h"
-#include "../Diagram/DiagramItem.h"
+#include "../Diagram/DiagramPolygonItem.h"
 
 QT_BEGIN_NAMESPACE
 class QButtonGroup;
@@ -31,7 +31,7 @@ public:
     void reset() override;
 
 signals:
-    void setItemType(DiagramItem::DiagramType type);
+    void setItemType(DiagramPolygonItem::DiagramType type);
 
     void setLineColor(const QColor& color);
     void setEnableFillColor(bool enable);
@@ -71,7 +71,7 @@ private:
 
     QGridLayout* createToolButton();
 
-    QWidget* createCellWidget(const QString& text, DiagramItem::DiagramType type);
+    QWidget* createCellWidget(const QString& text, DiagramPolygonItem::DiagramType type);
 
     QToolButton* getToolButton(QWidget* widget);
 

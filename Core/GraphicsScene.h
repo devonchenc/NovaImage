@@ -2,7 +2,7 @@
 
 #include <QGraphicsScene>
 
-#include "../Diagram/DiagramItem.h"
+#include "../Diagram/DiagramPolygonItem.h"
 #include "../Diagram/DiagramTextItem.h"
 
 QT_BEGIN_NAMESPACE
@@ -39,7 +39,7 @@ public:
 
     int mode() const { return _mode; }
 
-    void setItemType(DiagramItem::DiagramType type);
+    void setItemType(DiagramPolygonItem::DiagramType type);
 
     void showMeasurement(bool show);
 
@@ -80,7 +80,7 @@ protected:
 private:
     View* _view;
 
-    DiagramItem::DiagramType _itemType;
+    DiagramPolygonItem::DiagramType _itemType;
     QMenu* _itemMenu;
     int _mode;
     QPointF _startPoint;
@@ -94,5 +94,5 @@ private:
 
     DiagramAngleItem* _currentDrawingAngle;
 
-    DiagramItem* _currentDrawingItem;
+    DiagramPolygonItem* _currentDrawingPolygon;
 };

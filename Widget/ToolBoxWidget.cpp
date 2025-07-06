@@ -191,18 +191,18 @@ QToolButton* ToolBoxWidget::getToolButton(QWidget* widget)
 
 QGridLayout* ToolBoxWidget::createToolButton()
 {
-    _cursorWidget = createCellWidget(tr("Cursor"), DiagramItem::None);
-    _lengthWidget = createCellWidget(tr("Length"), DiagramItem::Line);
-    _arrowWidget = createCellWidget(tr("Arrow"), DiagramItem::Arrow);
-    _angleWidget = createCellWidget(tr("Angle"), DiagramItem::Angle);
-    _plotWidget = createCellWidget(tr("Plot"), DiagramItem::Plot);
-    _rectangleWidget = createCellWidget(tr("Rectangle"), DiagramItem::Rect);
-    _roundRectWidget = createCellWidget(tr("RoundRect"), DiagramItem::RoundRect);
-    _circleWidget = createCellWidget(tr("Circle"), DiagramItem::Circle);
-    _ellipseWidget = createCellWidget(tr("Ellipse"), DiagramItem::Ellipse);
-    _rhombusWidget = createCellWidget(tr("Rhombus"), DiagramItem::Rhombus);
-    _parallelogramWidget = createCellWidget(tr("Parallelogram"), DiagramItem::Parallelogram);
-    _textWidget = createCellWidget(tr("Text"), DiagramItem::Text);
+    _cursorWidget = createCellWidget(tr("Cursor"), DiagramPolygonItem::None);
+    _lengthWidget = createCellWidget(tr("Length"), DiagramPolygonItem::Line);
+    _arrowWidget = createCellWidget(tr("Arrow"), DiagramPolygonItem::Arrow);
+    _angleWidget = createCellWidget(tr("Angle"), DiagramPolygonItem::Angle);
+    _plotWidget = createCellWidget(tr("Plot"), DiagramPolygonItem::Plot);
+    _rectangleWidget = createCellWidget(tr("Rectangle"), DiagramPolygonItem::Rect);
+    _roundRectWidget = createCellWidget(tr("RoundRect"), DiagramPolygonItem::RoundRect);
+    _circleWidget = createCellWidget(tr("Circle"), DiagramPolygonItem::Circle);
+    _ellipseWidget = createCellWidget(tr("Ellipse"), DiagramPolygonItem::Ellipse);
+    _rhombusWidget = createCellWidget(tr("Rhombus"), DiagramPolygonItem::Rhombus);
+    _parallelogramWidget = createCellWidget(tr("Parallelogram"), DiagramPolygonItem::Parallelogram);
+    _textWidget = createCellWidget(tr("Text"), DiagramPolygonItem::Text);
 
     QGridLayout* gridLayout = new QGridLayout;
     gridLayout->addWidget(_cursorWidget, 0, 0);
@@ -221,7 +221,7 @@ QGridLayout* ToolBoxWidget::createToolButton()
     return gridLayout;
 }
 
-QWidget* ToolBoxWidget::createCellWidget(const QString& text, DiagramItem::DiagramType type)
+QWidget* ToolBoxWidget::createCellWidget(const QString& text, DiagramPolygonItem::DiagramType type)
 {
     QString str = QString(":/icon/svg/%1.svg").arg(text);
     QIcon icon(str.toLower());
@@ -284,22 +284,26 @@ void ToolBoxWidget::buttonGroupClicked(int id)
     // simply set objButton unchecked if already checked
     if (!clickedButton->isChecked())
     {
-        emit setItemType(DiagramItem::None);
+        emit setItemType(DiagramPolygonItem::None);
         return;
     }
 
-    if (id == DiagramItem::None)
+    if (id == DiagramPolygonItem::None)
     {
         setWidgetVisible(false, false);
-        emit setItemType(DiagramItem::None);
+        emit setItemType(DiagramPolygonItem::None);
     }
     else
     {
-        if (id == DiagramItem::Text)
+        if (id == DiagramPolygonItem::Text)
+        {
             setWidgetVisible(false, true);
+        }
         else
+        {
             setWidgetVisible(true, false);
-        emit setItemType(DiagramItem::DiagramType(id));
+        }
+        emit setItemType(DiagramPolygonItem::DiagramType(id));
     }
 }
 
@@ -354,13 +358,13 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
     QColor lineColor, fillColor;
     bool hasBrush = false;
     int transparency = 0;
-    if (item->type() == DiagramItem::Type)
+    if (item->type() == DiagramPolygonItem::Type)
     {
-        DiagramItem* diagramItem = qgraphicsitem_cast<DiagramItem*>(item);
-        lineColor = diagramItem->pen().color();
-        fillColor = diagramItem->brush().color();
-        hasBrush = diagramItem->brush().style() != Qt::NoBrush ? true : false;
-        transparency = diagramItem->transparency();
+        DiagramPolygonItem* polygonItem = qgraphicsitem_cast<DiagramPolygonItem*>(item);
+        lineColor = polygonItem->pen().color();
+        fillColor = polygonItem->brush().color();
+        hasBrush = polygonItem->brush().style() != Qt::NoBrush ? true : false;
+        transparency = polygonItem->transparency();
         setWidgetVisible(true, false);
     }
     else if (item->type() == DiagramLineItem::Type)

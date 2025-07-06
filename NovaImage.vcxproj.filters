@@ -147,9 +147,6 @@
     <ClCompile Include="Diagram\DiagramAngleItem.cpp">
       <Filter>Diagram</Filter>
     </ClCompile>
-    <ClCompile Include="Diagram\DiagramItem.cpp">
-      <Filter>Diagram</Filter>
-    </ClCompile>
     <ClCompile Include="Diagram\DiagramLineItem.cpp">
       <Filter>Diagram</Filter>
     </ClCompile>
@@ -234,6 +231,9 @@
     <ClCompile Include="Dialog\CalibrationDialog.cpp">
       <Filter>Dialog</Filter>
     </ClCompile>
+    <ClCompile Include="Diagram\DiagramPolygonItem.cpp">
+      <Filter>Diagram</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="Widget\BaseWidget.h">
@@ -294,9 +294,6 @@
       <Filter>Widget</Filter>
     </QtMoc>
     <QtMoc Include="Diagram\DiagramAngleItem.h">
-      <Filter>Diagram</Filter>
-    </QtMoc>
-    <QtMoc Include="Diagram\DiagramItem.h">
       <Filter>Diagram</Filter>
     </QtMoc>
     <QtMoc Include="Diagram\DiagramLineItem.h">
@@ -376,6 +373,9 @@
     </QtMoc>
     <QtMoc Include="Dialog\CalibrationDialog.h">
       <Filter>Dialog</Filter>
+    </QtMoc>
+    <QtMoc Include="Diagram\DiagramPolygonItem.h">
+      <Filter>Diagram</Filter>
     </QtMoc>
   </ItemGroup>
   <ItemGroup>
