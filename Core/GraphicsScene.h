@@ -65,7 +65,7 @@ public slots:
     void setTextColor(const QColor& color);
     void setTextFont(const QFont& font);
 
-    void itemSelectedChange(QGraphicsItem* item);
+    void itemSelectedChange(QGraphicsItem* item, bool selected);
 
     void itemChanged();
 

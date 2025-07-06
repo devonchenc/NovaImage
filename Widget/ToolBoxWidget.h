@@ -16,6 +16,8 @@ class QToolButton;
 class QSlider;
 QT_END_NAMESPACE
 
+class DiagramLengthItem;
+
 class ToolBoxWidget : public BaseWidget
 {
     Q_OBJECT
@@ -37,6 +39,8 @@ signals:
     void setTransparency(int value);
     void setTextColor(const QColor& color);
     void setTextFont(const QFont& font);
+
+    void lengthItemSelected(const DiagramLengthItem* lengthItem);
 
 public slots:
     void buttonGroupClicked(int id);

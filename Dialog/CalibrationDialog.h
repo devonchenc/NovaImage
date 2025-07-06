@@ -2,6 +2,8 @@
 
 #include <QDialog>
 
+#include "../Diagram/DiagramLengthItem.h"
+
 QT_BEGIN_NAMESPACE
 class QLabel;
 class QLineEdit;
@@ -14,6 +16,9 @@ class CalibrationDialog : public QDialog
 
 public:
     CalibrationDialog(QWidget* parent = nullptr);
+
+public slots:
+    void lengthItemSelected(const DiagramLengthItem* lengthItem);
 
 private:
     void initUI();

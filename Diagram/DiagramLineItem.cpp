@@ -208,9 +208,11 @@ void DiagramLineItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 QVariant DiagramLineItem::itemChange(GraphicsItemChange change, const QVariant& value)
 {
     if (change == QGraphicsItem::ItemSelectedHasChanged)
-        emit itemSelectedChange(this);
+    {
+        emit itemSelectedChange(this, value.toBool());
+    }
 
-    return value;
+    return QGraphicsItem::itemChange(change, value);
 }
 
 QList<QPointF> DiagramLineItem::resizeHandlePoints() const

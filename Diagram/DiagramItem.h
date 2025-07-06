@@ -44,7 +44,7 @@ public:
     void statisticsInfo();
 
 signals:
-    void itemSelectedChange(QGraphicsItem* item);
+    void itemSelectedChange(QGraphicsItem* item, bool selected);
     void itemChanged();
 
 protected:
@@ -56,7 +56,7 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
 private:
     QPolygonF scaledPolygon(const QPolygonF& old, Direction direction, const QPointF& newPos);

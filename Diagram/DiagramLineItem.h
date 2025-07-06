@@ -37,7 +37,7 @@ public:
     virtual void loadFromXML(const QDomElement& e);
 
 signals:
-    void itemSelectedChange(QGraphicsItem* item);
+    void itemSelectedChange(QGraphicsItem* item, bool selected);
     void itemChanged();
 
 protected:
@@ -49,7 +49,7 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent* event) override;
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget = nullptr) override;
     void contextMenuEvent(QGraphicsSceneContextMenuEvent* event) override;
-    QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
+    QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
 protected:
     void drawResizeHandle(QPainter* painter);

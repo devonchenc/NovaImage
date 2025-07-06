@@ -53,7 +53,6 @@ std::optional<float> DiagramLengthItem::actualLength() const
 
     float offsetX = line().p1().x() - line().p2().x();
     float offsetY = line().p1().y() - line().p2().y();
-
     float horzPixelSpacing = image->horzPixelSpacing();
     float vertPixelSpacing = image->vertPixelSpacing();
     offsetX *= horzPixelSpacing;

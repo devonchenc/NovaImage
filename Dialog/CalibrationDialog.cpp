@@ -10,11 +10,11 @@
 #include <QVBoxLayout>
 #include <QSettings>
 #include <QCoreApplication>
+#include <QDoubleValidator>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
 #include "../Core/GraphicsScene.h"
-#include "../Diagram/DiagramLengthItem.h"
 
 CalibrationDialog::CalibrationDialog(QWidget* parent)
     : QDialog(parent)
@@ -115,6 +115,15 @@ void CalibrationDialog::initUI()
     _actualLength1Label = new QLabel(tr("Enter the actual length of the line:"));
     _actualLengthEdit = new QLineEdit;
     _actualLength2Label = new QLabel(tr("mm"));
+    _startPositionEdit->setFixedWidth(100);
+    _endPositionEdit->setFixedWidth(100);
+    _pixelLengthEdit->setFixedWidth(100);
+    _actualLengthEdit->setFixedWidth(100);
+    QDoubleValidator* doubleValidator = new QDoubleValidator(_pixelSizeEdit);
+    _actualLengthEdit->setValidator(doubleValidator);
+    doubleValidator->setRange(0.0, 10000.0);
+    doubleValidator->setDecimals(7);
+    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
     _startPositionLabel->setEnabled(false);
     _startPositionEdit->setEnabled(false);
     _endPositionLabel->setEnabled(false);
@@ -204,6 +213,20 @@ void CalibrationDialog::getCurrentLineInfo()
     QString point2 = "(" + QString::number(line.p2().x()) + ", " + QString::number(line.p2().y()) + ")";
     _endPositionEdit->setText(point2);
     QString pixelLength = QString::number(item->pixelLength());
+    _pixelLengthEdit->setText(pixelLength);
+}
+
+void CalibrationDialog::lengthItemSelected(const DiagramLengthItem* lengthItem)
+{
+    if (lengthItem == nullptr)
+        return;
+
+    QLineF line = lengthItem->line();
+    QString point1 = "(" + QString::number(line.p1().x()) + ", " + QString::number(line.p1().y()) + ")";
+    _startPositionEdit->setText(point1);
+    QString point2 = "(" + QString::number(line.p2().x()) + ", " + QString::number(line.p2().y()) + ")";
+    _endPositionEdit->setText(point2);
+    QString pixelLength = QString::number(lengthItem->pixelLength());
     _pixelLengthEdit->setText(pixelLength);
 }
 

@@ -448,7 +448,7 @@ void MainWindow::createToolbar()
 
 void MainWindow::createToolWidget()
 {
-    ToolBoxWidget* toolbox = new ToolBoxWidget();
+    ToolBoxWidget* toolbox = new ToolBoxWidget;
     _toolboxDockWidget = createDockWidget(toolbox);
 
     connect(toolbox, &ToolBoxWidget::setItemType, _toolBar, &ToolBar::setMeasurementType);
@@ -1057,9 +1057,16 @@ void MainWindow::calibration()
     if (!image)
         return;
 
-    CalibrationDialog* dialog = new CalibrationDialog(this);
-    dialog->setAttribute(Qt::WA_DeleteOnClose);
-    dialog->show();
+    if (!_calibrationDialog)
+    {
+        _calibrationDialog = new CalibrationDialog(this);
+        _calibrationDialog->setAttribute(Qt::WA_DeleteOnClose);
+
+        const ToolBoxWidget* toolbox = qobject_cast<ToolBoxWidget*>(_toolboxDockWidget->widget());
+        connect(toolbox, &ToolBoxWidget::lengthItemSelected, _calibrationDialog, &CalibrationDialog::lengthItemSelected);
+    }
+
+    _calibrationDialog->show();
 }
 
 void MainWindow::userGuide()

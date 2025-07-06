@@ -486,9 +486,11 @@ void DiagramItem::contextMenuEvent(QGraphicsSceneContextMenuEvent* event)
 QVariant DiagramItem::itemChange(GraphicsItemChange change, const QVariant& value)
 {
     if (change == QGraphicsItem::ItemSelectedHasChanged)
-        emit itemSelectedChange(this);
+    {
+        emit itemSelectedChange(this, value.toBool());
+    }
 
-    return value;
+    return QGraphicsItem::itemChange(change, value);;
 }
 
 QPolygonF DiagramItem::scaledPolygon(const QPolygonF& old, DiagramItem::Direction direction, const QPointF& newPos)

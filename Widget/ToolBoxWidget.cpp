@@ -16,6 +16,7 @@
 #include "../Core/GraphicsScene.h"
 #include "../Diagram/DiagramLineItem.h"
 #include "../Diagram/DiagramAngleItem.h"
+#include "../Diagram/DiagramLengthItem.h"
 
 const QSize iconSize = QSize(32, 32);
 
@@ -351,8 +352,8 @@ void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 void ToolBoxWidget::itemSelected(QGraphicsItem* item)
 {
     QColor lineColor, fillColor;
-    bool hasBrush;
-    int transparency;
+    bool hasBrush = false;
+    int transparency = 0;
     if (item->type() == DiagramItem::Type)
     {
         DiagramItem* diagramItem = qgraphicsitem_cast<DiagramItem*>(item);
@@ -370,6 +371,13 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
         hasBrush = false;
         transparency = lineItem->transparency();
         setWidgetVisible(true, false);
+
+        DiagramLengthItem* lengthItem = qgraphicsitem_cast<DiagramLengthItem*>(item);
+        if (lengthItem)
+        {
+            // Notify the calibration dialog
+            emit lengthItemSelected(lengthItem);
+        }
     }
     else if (item->type() == DiagramAngleItem::Type)
     {

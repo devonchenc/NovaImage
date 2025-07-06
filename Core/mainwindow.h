@@ -20,6 +20,7 @@ class RecentFiles;
 class CurvesWidget;
 class LevelsWidget;
 class LevelsProcessor;
+class CalibrationDialog;
 
 class MainWindow : public QMainWindow
 {
@@ -215,6 +216,8 @@ private:
     QVector<QDockWidget*> _vecDockWidget;
     QDockWidget* _toolboxDockWidget;
     QDockWidget* _imageProcessingDockWidget;
+
+    CalibrationDialog* _calibrationDialog = nullptr;
 
     NotificationLayout* _notification;
 
