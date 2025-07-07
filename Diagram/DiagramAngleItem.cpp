@@ -211,7 +211,7 @@ void DiagramAngleItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     _dragIndex = DragNone;
 
-    emit itemChanged();
+    emit itemChanged(this);
 
     QGraphicsLineItem::mouseReleaseEvent(event);
 }

@@ -24,6 +24,10 @@ public:
 
     int type() const override { return Type; }
 
+    // Return start point and end point
+    QPointF p1() const;
+    QPointF p2() const;
+
     void setEndpointPen(const QPen& pen);
     QPen pointPen() const;
 
@@ -38,7 +42,7 @@ public:
 
 signals:
     void itemSelectedChange(QGraphicsItem* item, bool selected);
-    void itemChanged();
+    void itemChanged(QGraphicsItem* item);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;
@@ -52,7 +56,7 @@ protected:
     QVariant itemChange(GraphicsItemChange change, const QVariant& value) override;
 
 protected:
-    void drawResizeHandle(QPainter* painter);
+    void drawResizeHandle(QPainter* painter) const;
 
     float length() const;
 

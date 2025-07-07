@@ -1062,8 +1062,9 @@ void MainWindow::calibration()
         _calibrationDialog = new CalibrationDialog(this);
         _calibrationDialog->setAttribute(Qt::WA_DeleteOnClose);
 
-        const ToolBoxWidget* toolbox = qobject_cast<ToolBoxWidget*>(_toolboxDockWidget->widget());
-        connect(toolbox, &ToolBoxWidget::lengthItemSelected, _calibrationDialog, &CalibrationDialog::lengthItemSelected);
+        connect(_axialView->scene(), &GraphicsScene::lengthItemChanged, _calibrationDialog, &CalibrationDialog::lengthItemSelected);
+        connect(_coronalView->scene(), &GraphicsScene::lengthItemChanged, _calibrationDialog, &CalibrationDialog::lengthItemSelected);
+        connect(_sagittalView->scene(), &GraphicsScene::lengthItemChanged, _calibrationDialog, &CalibrationDialog::lengthItemSelected);
     }
 
     _calibrationDialog->show();

@@ -27,6 +27,16 @@ DiagramLineItem::DiagramLineItem(const QLineF& line, QMenu* contextMenu, QGraphi
     setGraphicsEffect(_effect);
 }
 
+QPointF DiagramLineItem::p1() const
+{
+    return line().p1() + pos();
+}
+
+QPointF DiagramLineItem::p2() const
+{
+    return line().p2() + pos();
+}
+
 void DiagramLineItem::setEndpointPen(const QPen& pen)
 {
     _endpointPen = pen;
@@ -136,7 +146,7 @@ void DiagramLineItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
     _dragIndex = DragNone;
 
-    emit itemChanged();
+    emit itemChanged(this);
 
     QGraphicsLineItem::mouseReleaseEvent(event);
 }
@@ -227,7 +237,7 @@ bool DiagramLineItem::isCloseEnough(const QPointF& p1, const QPointF& p2) const
 }
 
 // Draw resize handles
-void DiagramLineItem::drawResizeHandle(QPainter* painter)
+void DiagramLineItem::drawResizeHandle(QPainter* painter) const
 {
     qreal resizePointWidth = 6;
     painter->setPen(_endpointPen);

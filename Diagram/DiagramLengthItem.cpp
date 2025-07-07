@@ -97,7 +97,7 @@ QString DiagramLengthItem::lengthString() const
     return str;
 }
 
-void DiagramLengthItem::drawLengthText(QPainter* painter)
+void DiagramLengthItem::drawLengthText(QPainter* painter) const
 {
     QGraphicsScene* graphicsScene = scene();
     QList<QGraphicsView*> viewList = graphicsScene->views();

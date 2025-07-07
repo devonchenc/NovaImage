@@ -45,7 +45,7 @@ public:
 
 signals:
     void itemSelectedChange(QGraphicsItem* item, bool selected);
-    void itemChanged();
+    void itemChanged(QGraphicsItem* item);
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override;

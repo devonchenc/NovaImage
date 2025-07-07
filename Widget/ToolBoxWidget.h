@@ -40,8 +40,6 @@ signals:
     void setTextColor(const QColor& color);
     void setTextFont(const QFont& font);
 
-    void lengthItemSelected(const DiagramLengthItem* lengthItem);
-
 public slots:
     void buttonGroupClicked(int id);
 

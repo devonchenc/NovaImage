@@ -375,13 +375,6 @@ void ToolBoxWidget::itemSelected(QGraphicsItem* item)
         hasBrush = false;
         transparency = lineItem->transparency();
         setWidgetVisible(true, false);
-
-        DiagramLengthItem* lengthItem = qgraphicsitem_cast<DiagramLengthItem*>(item);
-        if (lengthItem)
-        {
-            // Notify the calibration dialog
-            emit lengthItemSelected(lengthItem);
-        }
     }
     else if (item->type() == DiagramAngleItem::Type)
     {

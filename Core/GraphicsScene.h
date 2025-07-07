@@ -35,7 +35,7 @@ public:
     // utilities
     void deleteItems(const QList<QGraphicsItem*>& items);
 
-    void setMode(int mode);
+    void setMode(int mode) { _mode = mode; }
 
     int mode() const { return _mode; }
 
@@ -67,12 +67,15 @@ public slots:
 
     void itemSelectedChange(QGraphicsItem* item, bool selected);
 
-    void itemChanged();
+    void itemChanged(QGraphicsItem* item);
+    void textItemChanged();
 
 signals:
     void itemInserted(QGraphicsItem* item);
     void itemSelected(QGraphicsItem* item);
     void textSelected(QGraphicsItem* item);
+
+    void lengthItemChanged(const DiagramLengthItem* lengthItem);
 
 protected:
     void keyPressEvent(QKeyEvent* keyEvent) override;
@@ -90,9 +93,11 @@ private:
     QColor _textColor;
     QFont _font;
 
-    DiagramLineItem* _currentDrawingLine;
+    DiagramLineItem* _currentDrawingLine = nullptr;
 
-    DiagramAngleItem* _currentDrawingAngle;
+    DiagramAngleItem* _currentDrawingAngle = nullptr;
 
-    DiagramPolygonItem* _currentDrawingPolygon;
+    DiagramPolygonItem* _currentDrawingPolygon = nullptr;
+
+    QGraphicsItem* _lastGraphicsItem = nullptr;
 };

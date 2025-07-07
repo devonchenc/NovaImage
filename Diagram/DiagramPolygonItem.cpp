@@ -359,7 +359,7 @@ void DiagramPolygonItem::mouseMoveEvent(QGraphicsSceneMouseEvent* event)
 
 void DiagramPolygonItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
 {
-    emit itemChanged();
+    emit itemChanged(this);
 
     GraphicsScene* scene = qobject_cast<GraphicsScene*>(this->scene());
     if (scene->mode() != MOVE_ITEM && scene->mode() != MOVE_ITEM_TEMP)

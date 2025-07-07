@@ -11,7 +11,7 @@ public:
     DiagramImageQualityItem(const QLineF& line, QMenu* contextMenu, QGraphicsItem* parent = nullptr);
     ~DiagramImageQualityItem();
 
-    int width() { return _lineWidth; }
+    int width() const { return _lineWidth; }
 
     void setWidth(int lineWidth) { _lineWidth = lineWidth; }
 
@@ -19,8 +19,8 @@ public:
 
     void loadFromXML(const QDomElement& e) override;
 
-    float leftRatio() { return _leftRatio; }
-    float rightRatio() { return _rightRatio; }
+    float leftRatio() const { return _leftRatio; }
+    float rightRatio() const { return _rightRatio; }
 
 public slots:
     void setLeftRatio(float ratio);
@@ -34,7 +34,7 @@ protected:
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* event) override;
 
 private:
-    void drawRect(QPainter* painter);
+    void drawRect(QPainter* painter) const;
 
 private:
     int _lineWidth;

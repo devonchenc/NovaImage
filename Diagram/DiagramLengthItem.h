@@ -24,5 +24,5 @@ protected:
 private:
     QString lengthString() const;
 
-    void drawLengthText(QPainter* painter);
+    void drawLengthText(QPainter* painter) const;
 };

@@ -32,9 +32,6 @@ GraphicsScene::GraphicsScene(QMenu* itemMenu, View* parent)
     , _lineColor(qRgb(0, 255, 55))
     , _fillColor(Qt::white)
     , _textColor(Qt::green)
-    , _currentDrawingLine(nullptr)
-    , _currentDrawingAngle(nullptr)
-    , _currentDrawingPolygon(nullptr)
 {
     _font.setPointSize(24);
 }
@@ -179,12 +176,7 @@ void GraphicsScene::deleteItems(const QList<QGraphicsItem*>& items)
         removeItem(item);
         delete item;
     }
-    itemChanged();
-}
-
-void GraphicsScene::setMode(int mode)
-{
-    _mode = mode;
+    itemChanged(nullptr);
 }
 
 void GraphicsScene::setItemType(DiagramPolygonItem::DiagramType type)
@@ -239,7 +231,8 @@ void GraphicsScene::mousePress(const QPointF& point)
             connect(_currentDrawingPolygon, &DiagramPolygonItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
             connect(_currentDrawingPolygon, &DiagramPolygonItem::itemChanged, this, &GraphicsScene::itemChanged);
             addItem(_currentDrawingPolygon);
-            itemChanged();
+            itemChanged(_currentDrawingPolygon);
+
             emit itemInserted(_currentDrawingPolygon);
         }
         else if (_itemType == DiagramPolygonItem::Text)
@@ -252,9 +245,10 @@ void GraphicsScene::mousePress(const QPointF& point)
             textItem->setPos(_startPoint);
             connect(textItem, &DiagramTextItem::lostFocus, this, &GraphicsScene::editorLostFocus);
             connect(textItem, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
-            connect(textItem->document(), &QTextDocument::contentsChanged, this, &GraphicsScene::itemChanged);
+            connect(textItem->document(), &QTextDocument::contentsChanged, this, &GraphicsScene::textItemChanged);
             addItem(textItem);
-            itemChanged();
+            itemChanged(textItem);
+
             emit itemInserted(textItem);
         }
         else if (_itemType == DiagramPolygonItem::Line || _itemType == DiagramPolygonItem::Arrow ||
@@ -281,7 +275,8 @@ void GraphicsScene::mousePress(const QPointF& point)
             connect(_currentDrawingLine, &DiagramLineItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
             connect(_currentDrawingLine, &DiagramLineItem::itemChanged, this, &GraphicsScene::itemChanged);
             addItem(_currentDrawingLine);
-            itemChanged();
+            itemChanged(_currentDrawingLine);
+
             emit itemInserted(_currentDrawingLine);
         }
         else if (_itemType == DiagramPolygonItem::Angle)
@@ -295,7 +290,8 @@ void GraphicsScene::mousePress(const QPointF& point)
                 connect(_currentDrawingAngle, &DiagramAngleItem::itemSelectedChange, this, &GraphicsScene::itemSelectedChange);
                 connect(_currentDrawingAngle, &DiagramAngleItem::itemChanged, this, &GraphicsScene::itemChanged);
                 addItem(_currentDrawingAngle);
-                itemChanged();
+                itemChanged(_currentDrawingAngle);
+
                 emit itemInserted(_currentDrawingAngle);
             }
             else
@@ -515,7 +511,7 @@ bool GraphicsScene::loadFromFile(const QDomElement& sceneElem)
             item->loadFromXML(attribute);
             connect(item, &DiagramTextItem::lostFocus, this, &GraphicsScene::editorLostFocus);
             connect(item, &DiagramTextItem::textSelectedChange, this, &GraphicsScene::textSelected);
-            connect(item->document(), &QTextDocument::contentsChanged, this, &GraphicsScene::itemChanged);
+            connect(item->document(), &QTextDocument::contentsChanged, this, &GraphicsScene::textItemChanged);
         }
     }
 
@@ -526,14 +522,12 @@ DiagramLengthItem* GraphicsScene::focusLengthItem() const
 {
     if (items().size() == 0)
         return nullptr;
-    QGraphicsItem* item = focusItem();
-    //QGraphicsItem* item = items().at(0);
-    if (!item)
+    if (!_lastGraphicsItem)
         return nullptr;
-    if (item->type() != DiagramLineItem::Type)
+    if (_lastGraphicsItem->type() != DiagramLineItem::Type)
         return nullptr;
 
-    DiagramLengthItem* lengthItem = qgraphicsitem_cast<DiagramLengthItem*>(item);
+    DiagramLengthItem* lengthItem = qgraphicsitem_cast<DiagramLengthItem*>(_lastGraphicsItem);
     return lengthItem;
 }
 
@@ -541,6 +535,8 @@ void GraphicsScene::itemSelectedChange(QGraphicsItem* item, bool selected)
 {
     if (selected)
     {
+        _lastGraphicsItem = item;
+
         if (item->type() == DiagramPolygonItem::Type)
         {
             DiagramPolygonItem* polygonItem = qgraphicsitem_cast<DiagramPolygonItem*>(item);
@@ -564,7 +560,19 @@ void GraphicsScene::itemSelectedChange(QGraphicsItem* item, bool selected)
     }
 }
 
-void GraphicsScene::itemChanged()
+void GraphicsScene::itemChanged(QGraphicsItem* item)
+{
+    getGlobalDocument()->setModified(true);
+
+    DiagramLengthItem* lengthItem = qgraphicsitem_cast<DiagramLengthItem*>(item);
+    if (lengthItem)
+    {
+        // Notify the calibration dialog
+        emit lengthItemChanged(lengthItem);
+    }
+}
+
+void GraphicsScene::textItemChanged()
 {
     getGlobalDocument()->setModified(true);
 }
@@ -578,7 +586,7 @@ void GraphicsScene::keyPressEvent(QKeyEvent* keyEvent)
             removeItem(item);
             delete item;
         }
-        itemChanged();
+        itemChanged(nullptr);
         update();
     }
 

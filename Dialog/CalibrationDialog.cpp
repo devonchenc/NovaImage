@@ -68,7 +68,7 @@ void CalibrationDialog::initUI()
         }
     });
 
-    _systemSizeLabel = new QLabel(tr("1 pixel = mm"));
+    _systemSizeLabel = new QLabel(tr("1 pixel = ") + " mm");
     _manualSize1Label = new QLabel(tr("1 pixel = "));
     _pixelSizeEdit = new QLineEdit;
     _pixelSizeEdit->setFixedWidth(80);
@@ -197,7 +197,7 @@ void CalibrationDialog::loadSettings()
 {
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     double pixelSize = settings.value("Calibration/size", 0).toDouble();
-    _pixelSizeEdit->setText(QString::number(pixelSize));
+    _systemSizeLabel->setText(tr("1 pixel = ") + QString::number(pixelSize) + " mm");
 }
 
 void CalibrationDialog::getCurrentLineInfo()
@@ -221,10 +221,9 @@ void CalibrationDialog::lengthItemSelected(const DiagramLengthItem* lengthItem)
     if (lengthItem == nullptr)
         return;
 
-    QLineF line = lengthItem->line();
-    QString point1 = "(" + QString::number(line.p1().x()) + ", " + QString::number(line.p1().y()) + ")";
+    QString point1 = "(" + QString::number(lengthItem->p1().x()) + ", " + QString::number(lengthItem->p1().y()) + ")";
     _startPositionEdit->setText(point1);
-    QString point2 = "(" + QString::number(line.p2().x()) + ", " + QString::number(line.p2().y()) + ")";
+    QString point2 = "(" + QString::number(lengthItem->p2().x()) + ", " + QString::number(lengthItem->p2().y()) + ")";
     _endPositionEdit->setText(point2);
     QString pixelLength = QString::number(lengthItem->pixelLength());
     _pixelLengthEdit->setText(pixelLength);

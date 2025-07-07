@@ -93,7 +93,7 @@ void DiagramImageQualityItem::mouseReleaseEvent(QGraphicsSceneMouseEvent* event)
     DiagramLineItem::mouseReleaseEvent(event);
 }
 
-void DiagramImageQualityItem::drawRect(QPainter* painter)
+void DiagramImageQualityItem::drawRect(QPainter* painter) const
 {
     if (_lineWidth <= 1)
         return;
