@@ -75,7 +75,7 @@ public:
     std::shared_ptr<QImage> getSagittalImage() const;
 
 protected:
-    bool saveAsRaw(const QString& fileName) override;
+    bool saveAsRaw(const QString& fileName) const override;
 
 protected:
     bool allocateMemory();

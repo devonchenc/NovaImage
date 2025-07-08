@@ -163,7 +163,7 @@ void ThresholdSegmentationProcessor::processImage(const MonoImage* srcImage, Mon
     dstImage->copyByteToImage();
 }
 
-int ThresholdSegmentationProcessor::findOtsuThreshold(uint* grayPixelArray, int pixelNumber)
+int ThresholdSegmentationProcessor::findOtsuThreshold(const uint* grayPixelArray, int pixelNumber) const
 {
     const int grayscale = 256;
 

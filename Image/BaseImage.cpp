@@ -95,7 +95,7 @@ QRgb BaseImage::getPixel(int x, int y) const
     return _pImage->pixel(QPoint(x, y));
 }
 
-bool BaseImage::save(const QString& fileName)
+bool BaseImage::save(const QString& fileName) const
 {
     if (fileName.endsWith("dcm", Qt::CaseInsensitive))
     {
@@ -152,7 +152,7 @@ bool BaseImage::copyFromArray(const uchar* array, int width, int height)
     return true;
 }
 
-bool BaseImage::saveAsDcm(const QString& fileName)
+bool BaseImage::saveAsDcm(const QString& fileName) const
 {
     Uint8* buffer = new Uint8[_width * _height];
     for (int j = 0; j < _height; j++)
@@ -195,7 +195,7 @@ bool BaseImage::saveAsDcm(const QString& fileName)
     return condition.good();
 }
 
-bool BaseImage::saveAsRaw(const QString& fileName)
+bool BaseImage::saveAsRaw(const QString& fileName) const
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly))

@@ -179,7 +179,7 @@ int Document::findImageType(const QString& fileName)
     return IMAGE_FORMAT_UNKNOWN;
 }
 
-bool Document::saveAs(const QString& fileName)
+bool Document::saveAs(const QString& fileName) const
 {
     if (_image)
     {
@@ -357,6 +357,27 @@ void Document::loadGraphicsItems()
             getSagittalView()->loadGraphicsItem(sceneElem);
         }
     }
+}
+
+void Document::loadCalibrationInfo()
+{
+    QString str = _image->getPathName();
+    int index = str.lastIndexOf('.');
+    QString fileName = str.left(index) + ".xml";
+
+    QFile file(fileName);
+    if (!file.open(QIODevice::ReadOnly))
+        return;
+
+    QDomDocument doc;
+    if (!doc.setContent(&file))
+    {
+        file.close();
+        return;
+    }
+    file.close();
+
+    //QDomNodeList domList = doc.elementsByTagName("Calibration");
 }
 
 void Document::defaultImageWindow()

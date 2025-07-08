@@ -71,7 +71,12 @@ void CalibrationDialog::initUI()
     _systemSizeLabel = new QLabel(tr("1 pixel = ") + " mm");
     _manualSize1Label = new QLabel(tr("1 pixel = "));
     _pixelSizeEdit = new QLineEdit;
-    _pixelSizeEdit->setFixedWidth(80);
+    _pixelSizeEdit->setFixedWidth(100);
+    QDoubleValidator* doubleValidator1 = new QDoubleValidator(_pixelSizeEdit);
+    _pixelSizeEdit->setValidator(doubleValidator1);
+    doubleValidator1->setRange(0.0, 10000.0);
+    doubleValidator1->setDecimals(7);
+    doubleValidator1->setNotation(QDoubleValidator::StandardNotation);
     _manualSize2Label = new QLabel(tr("mm"));
     _systemSizeLabel->setEnabled(false);
     _manualSize1Label->setEnabled(false);
@@ -119,11 +124,11 @@ void CalibrationDialog::initUI()
     _endPositionEdit->setFixedWidth(100);
     _pixelLengthEdit->setFixedWidth(100);
     _actualLengthEdit->setFixedWidth(100);
-    QDoubleValidator* doubleValidator = new QDoubleValidator(_pixelSizeEdit);
-    _actualLengthEdit->setValidator(doubleValidator);
-    doubleValidator->setRange(0.0, 10000.0);
-    doubleValidator->setDecimals(7);
-    doubleValidator->setNotation(QDoubleValidator::StandardNotation);
+    QDoubleValidator* doubleValidator2 = new QDoubleValidator(_actualLengthEdit);
+    _actualLengthEdit->setValidator(doubleValidator2);
+    doubleValidator2->setRange(0.0, 10000.0);
+    doubleValidator2->setDecimals(7);
+    doubleValidator2->setNotation(QDoubleValidator::StandardNotation);
     _startPositionLabel->setEnabled(false);
     _startPositionEdit->setEnabled(false);
     _endPositionLabel->setEnabled(false);
@@ -207,25 +212,24 @@ void CalibrationDialog::getCurrentLineInfo()
     if (item == nullptr)
         return;
 
-    QLineF line = item->line();
-    QString point1 = "(" + QString::number(line.p1().x()) + ", " + QString::number(line.p1().y()) + ")";
+    QString point1 = "(" + QString::number(item->p1().x()) + ", " + QString::number(item->p1().y()) + ")";
     _startPositionEdit->setText(point1);
-    QString point2 = "(" + QString::number(line.p2().x()) + ", " + QString::number(line.p2().y()) + ")";
+    QString point2 = "(" + QString::number(item->p2().x()) + ", " + QString::number(item->p2().y()) + ")";
     _endPositionEdit->setText(point2);
     QString pixelLength = QString::number(item->pixelLength());
     _pixelLengthEdit->setText(pixelLength);
 }
 
-void CalibrationDialog::lengthItemSelected(const DiagramLengthItem* lengthItem)
+void CalibrationDialog::lengthItemSelected(const DiagramLengthItem* item)
 {
-    if (lengthItem == nullptr)
+    if (item == nullptr)
         return;
 
-    QString point1 = "(" + QString::number(lengthItem->p1().x()) + ", " + QString::number(lengthItem->p1().y()) + ")";
+    QString point1 = "(" + QString::number(item->p1().x()) + ", " + QString::number(item->p1().y()) + ")";
     _startPositionEdit->setText(point1);
-    QString point2 = "(" + QString::number(lengthItem->p2().x()) + ", " + QString::number(lengthItem->p2().y()) + ")";
+    QString point2 = "(" + QString::number(item->p2().x()) + ", " + QString::number(item->p2().y()) + ")";
     _endPositionEdit->setText(point2);
-    QString pixelLength = QString::number(lengthItem->pixelLength());
+    QString pixelLength = QString::number(item->pixelLength());
     _pixelLengthEdit->setText(pixelLength);
 }
 

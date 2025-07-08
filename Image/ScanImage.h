@@ -19,9 +19,9 @@ public:
 
     bool hasPixelSpacing() const override { return true; }
 
-    float horzPixelSpacing() override { return _dataHeader.HorzPixelSpacing; }
-    float vertPixelSpacing() override { return _dataHeader.VertPixelSpacing; }
-    float sliceSpacing() override { return _dataHeader.SliceSpacing; }
+    float horzPixelSpacing() const override { return _dataHeader.HorzPixelSpacing; }
+    float vertPixelSpacing() const override { return _dataHeader.VertPixelSpacing; }
+    float sliceSpacing() const override { return _dataHeader.SliceSpacing; }
 
     void initWindowWidthAndLevel() override;
 
@@ -34,7 +34,7 @@ public:
     DataHeader& getDataHeader()     { return _dataHeader; }
 
 protected:
-    bool saveAsDcm(const QString& fileName) override;
+    bool saveAsDcm(const QString& fileName) const override;
 
 private:
     // Read data header

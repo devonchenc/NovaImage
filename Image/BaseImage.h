@@ -31,9 +31,9 @@ public:
 
     virtual bool hasPixelSpacing() const { return false; }
 
-    virtual float horzPixelSpacing() { return 0; }
-    virtual float vertPixelSpacing() { return 0; }
-    virtual float sliceSpacing() { return 0; }
+    virtual float horzPixelSpacing() const { return 0; }
+    virtual float vertPixelSpacing() const { return 0; }
+    virtual float sliceSpacing() const { return 0; }
 
     // Create a deep copy of image
     virtual BaseImage* copyImage() const = 0;
@@ -50,11 +50,6 @@ public:
 
     virtual QString getDescription() const { return QString(); }
 
-public:
-    int width() const { return _width; }
-
-    int height() const { return _height; }
-
     virtual int slice() const { return 1; }
 
     virtual void setSlice(int slice) { Q_UNUSED(slice); }
@@ -63,33 +58,38 @@ public:
     virtual int currentSlice() const { return 0; }
     virtual int currentSlice(int type) const { Q_UNUSED(type); return 0; }
 
-    float windowWidth() { return _windowWidth; }
+public:
+    int width() const { return _width; }
 
-    float windowLevel() { return _windowLevel; }
+    int height() const { return _height; }
 
-    bool isOpenSucceed()            { return _openSucceed; }
+    float windowWidth() const { return _windowWidth; }
 
-    QString getPathName() const     { return _pathName; }
+    float windowLevel() const { return _windowLevel; }
+
+    bool isOpenSucceed() const { return _openSucceed; }
+
+    QString getPathName() const { return _pathName; }
 
     // Get each channel's pixel array
-    uint* getGrayPixelArray()       { return _grayPixelNumber; }
-    uint* getRedPixelArray()        { return _redPixelNumber; }
-    uint* getGreenPixelArray()      { return _greenPixelNumber; }
-    uint* getBluePixelArray()       { return _bluePixelNumber; }
+    const uint* getGrayPixelArray() const { return _grayPixelNumber; }
+    const uint* getRedPixelArray() const { return _redPixelNumber; }
+    const uint* getGreenPixelArray() const { return _greenPixelNumber; }
+    const uint* getBluePixelArray() const { return _bluePixelNumber; }
 
     QRgb getPixel(const QPoint& position) const;
     QRgb getPixel(int x, int y) const;
 
-    bool save(const QString& fileName);
+    bool save(const QString& fileName) const;
 
     void copyToArray(uchar* array) const;
 
     bool copyFromArray(const uchar* byteImage, int width, int height);
 
 protected:
-    virtual bool saveAsDcm(const QString& fileName);
+    virtual bool saveAsDcm(const QString& fileName) const;
 
-    virtual bool saveAsRaw(const QString& fileName);
+    virtual bool saveAsRaw(const QString& fileName) const;
 
 protected:
     std::shared_ptr<QImage> _pImage;

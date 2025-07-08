@@ -73,7 +73,7 @@ void ScanImage::setSlice(int slice)
     copyByteToImage();
 }
 
-bool ScanImage::saveAsDcm(const QString& fileName)
+bool ScanImage::saveAsDcm(const QString& fileName) const
 {
     Q_UNUSED(fileName);
     return true;

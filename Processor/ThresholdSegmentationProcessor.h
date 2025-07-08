@@ -51,7 +51,7 @@ protected:
     void processImage(const MonoImage* srcImage, MonoImage* dstImage) override;
 
 private:
-    int findOtsuThreshold(uint* grayPixelArray, int pixelNumber);
+    int findOtsuThreshold(const uint* grayPixelArray, int pixelNumber) const;
 
 private:
     int _threshold;

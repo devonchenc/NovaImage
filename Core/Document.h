@@ -40,7 +40,7 @@ public:
 
     bool openFolder(const QString& pathName);
 
-    bool saveAs(const QString& fileName);
+    bool saveAs(const QString& fileName) const;
 
     void closeFile();
 
@@ -53,13 +53,17 @@ public:
     void repaintView(std::shared_ptr<QImage> dstImage, int viewType = 0);
     void repaintView(std::vector<std::shared_ptr<QImage>> imageVec);
 
-    bool modified() { return _modified; }
+    bool modified() const { return _modified; }
 
     void setModified(bool flag);
 
+    // Save graphics items to xml file
     void saveGraphicsItems();
 
+    // Load graphics items from xml file
     void loadGraphicsItems();
+
+    void loadCalibrationInfo();
 
     static int findImageType(const QString& fileName);
 

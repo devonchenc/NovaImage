@@ -18,7 +18,7 @@ public:
     CalibrationDialog(QWidget* parent = nullptr);
 
 public slots:
-    void lengthItemSelected(const DiagramLengthItem* lengthItem);
+    void lengthItemSelected(const DiagramLengthItem* item);
 
 private:
     void initUI();

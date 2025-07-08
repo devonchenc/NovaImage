@@ -789,7 +789,7 @@ void CurveSquare::removeAllPegs()
 }
 
 // Generate histogram
-bool CurveSquare::generateHistogram(uint* pArray)
+bool CurveSquare::generateHistogram(const uint* pArray)
 {
     for (int i = 0; i < _size - 1; i++)
     {

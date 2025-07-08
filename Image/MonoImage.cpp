@@ -441,7 +441,7 @@ std::shared_ptr<QImage> MonoImage::getSagittalImage() const
     return _sagittalProxy->getImageEntity();
 }
 
-bool MonoImage::saveAsRaw(const QString& fileName)
+bool MonoImage::saveAsRaw(const QString& fileName) const
 {
     QFile file(fileName);
     if (!file.open(QFile::WriteOnly))

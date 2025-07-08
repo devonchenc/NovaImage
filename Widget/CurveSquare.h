@@ -36,19 +36,19 @@ public:
     void reverse();
 
     // Generate histogram
-    bool generateHistogram(uint* pArray);
+    bool generateHistogram(const uint* pArray);
 
-    int getSize()       { return _size; }
+    int getSize() const { return _size; }
 
-    int getArraySize()  { return _arraySize; }
+    int getArraySize() const { return _arraySize; }
 
-    int getChannel()    { return _channel; }
+    int getChannel() const { return _channel; }
 
     void setChannel(int channel);
 
     void setCurveOrLinear(bool curveOrLinear);
 
-    bool getCurveOrLinear() { return _curveOrLinear; }
+    bool getCurveOrLinear() const { return _curveOrLinear; }
 
     PegArray& getIntensityPegsArray() { return _pegsIntensity; }
 

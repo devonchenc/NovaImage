@@ -504,7 +504,7 @@ void HistogramWidget::copySelectArray(bool* array, int arrayNum)
 
 void HistogramWidget::generateHistogram()
 {
-    BaseImage* image = getGlobalImage();
+    const BaseImage* image = getGlobalImage();
     if (image == nullptr)
         return;
 
