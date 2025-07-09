@@ -293,25 +293,26 @@ void Document::setModified(bool flag)
 
 void Document::saveGraphicsItems()
 {
-    QString str = _image->getPathName();
-    int index = str.lastIndexOf('.');
-    QString fileName = str.left(index) + ".xml";
-
-    QFile file(fileName);
-    if (!file.open(QIODevice::WriteOnly))
-        return;
-
-    QDomDocument doc("NovaImage");
-    QDomElement root = doc.createElement("Views");
-    doc.appendChild(root);
+    QDomDocument doc;
+    QDomElement root;
+    if (!getConfigXml(doc, root))
+        return;   
 
     getAxialView()->saveGraphicsItem(doc, root);
     getCoronalView()->saveGraphicsItem(doc, root);
     getSagittalView()->saveGraphicsItem(doc, root);
 
+    // Write the modified document back to the file
+    QString fileName = getImageConfigPathName();
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        return;
+    }
+
     QTextStream txtOutput(&file);
     txtOutput.setCodec("UTF-8");
-    txtOutput << doc.toString();
+    txtOutput << doc.toString(4);
     file.close();
 
     _modified = false;
@@ -335,10 +336,10 @@ void Document::loadGraphicsItems()
     }
     file.close();
 
-    QDomNodeList domList = doc.elementsByTagName("View");
-    for (int i = 0; i < domList.size(); i++)
+    QDomNodeList nodeList = doc.elementsByTagName("View");
+    for (int i = 0; i < nodeList.size(); i++)
     {
-        QDomElement viewElem = domList.at(i).toElement();
+        QDomElement viewElem = nodeList.at(i).toElement();
         QDomElement sceneElem = viewElem.firstChild().toElement();
         if (sceneElem.isNull())
             break;
@@ -357,6 +358,44 @@ void Document::loadGraphicsItems()
             getSagittalView()->loadGraphicsItem(sceneElem);
         }
     }
+}
+
+void Document::saveCalibrationInfo(float size) const
+{
+    QDomDocument doc;
+    QDomElement root;
+    if (!getConfigXml(doc, root))
+        return;
+
+    QDomNodeList nodeList = root.elementsByTagName("Calibration");
+    if (nodeList.isEmpty())
+    {
+        // If no calibration node exists, append one
+        QDomElement newNode = doc.createElement("Calibration");
+        QDomText text = doc.createTextNode("This is new content" + QString::number(size));
+        newNode.appendChild(text);
+        root.appendChild(newNode);
+    }
+    else
+    {
+        // If calibration node exists, modify it
+        QDomElement calibrationElem = nodeList.at(0).toElement();
+        QDomNode oldNode = calibrationElem.firstChild();
+        oldNode.setNodeValue("This is new content" + QString::number(size));
+    }
+
+    // Write the modified document back to the file
+    QString fileName = getImageConfigPathName();
+    QFile file(fileName);
+    if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+    {
+        return;
+    }
+
+    QTextStream txtOutput(&file);
+    txtOutput.setCodec("UTF-8");
+    txtOutput << doc.toString(4);
+    file.close();
 }
 
 void Document::loadCalibrationInfo()
@@ -599,6 +638,45 @@ void Document::initViewWindowWidthAndLevel()
         getCoronalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
         getSagittalView()->setWindowWidthAndLevel(windowWidth, windowLevel);
     }
+}
+
+QString Document::getImageConfigPathName() const
+{
+    QString str = _image->getPathName();
+    int index = str.lastIndexOf('.');
+    return str.left(index) + ".xml";
+}
+
+bool Document::getConfigXml(QDomDocument& doc, QDomElement& root) const
+{
+    QString fileName = getImageConfigPathName();
+    QFile file(fileName);
+    if (file.exists())
+    {
+        // If the file exists, try to open and parse it
+        if (!file.open(QIODevice::WriteOnly))
+            return false;
+
+        if (!doc.setContent(&file))
+        {
+            file.close();
+            return false;
+        }
+        file.close();
+
+        // Get the root element
+        root = doc.documentElement();
+        if (root.isNull())
+            return false;
+    }
+    else
+    {
+        // If the file does not exist, create a new document and root element
+        doc.appendChild(doc.createProcessingInstruction("xml", "version=\"1.0\" encoding=\"UTF-8\""));
+        root = doc.createElement("Config");
+        doc.appendChild(root);
+    }
+    return true;
 }
 
 View* Document::getActiveView() const

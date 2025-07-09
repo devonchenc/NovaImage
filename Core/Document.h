@@ -11,6 +11,8 @@
 class MainWindow;
 class View;
 class BaseImage;
+class QDomDocument;
+class QDomElement;
 
 enum ENUM_IMAGE_FORMAT
 {
@@ -33,7 +35,6 @@ class Document : public QObject
 
 public:
     Document(MainWindow* pWindow);
-    ~Document() {}
 
 public:
     bool openFile(const QString& fileName);
@@ -62,6 +63,8 @@ public:
 
     // Load graphics items from xml file
     void loadGraphicsItems();
+
+    void saveCalibrationInfo(float size) const;
 
     void loadCalibrationInfo();
 
@@ -105,6 +108,10 @@ private:
     void imageOpened();
 
     void initViewWindowWidthAndLevel();
+
+    QString getImageConfigPathName() const;
+
+    bool getConfigXml(QDomDocument& doc, QDomElement& root) const;
 
     View* getActiveView() const;
 

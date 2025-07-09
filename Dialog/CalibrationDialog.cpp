@@ -15,6 +15,7 @@
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
 #include "../Core/GraphicsScene.h"
+#include "../Core/Document.h"
 
 CalibrationDialog::CalibrationDialog(QWidget* parent)
     : QDialog(parent)
@@ -32,7 +33,7 @@ CalibrationDialog::CalibrationDialog(QWidget* parent)
 
 void CalibrationDialog::initUI()
 {
-    QCheckBox* enableCheckBox = new QCheckBox(tr("Enable Calibration"));
+    _enableCheckBox = new QCheckBox(tr("Enable Calibration"));
 
     QRadioButton* radio1 = new QRadioButton(tr("Use system default calibration"));
     QRadioButton* radio2 = new QRadioButton(tr("Enter pixel size manually"));
@@ -84,7 +85,7 @@ void CalibrationDialog::initUI()
     _manualSize2Label->setEnabled(false);
 
     QVBoxLayout* mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(enableCheckBox);
+    mainLayout->addWidget(_enableCheckBox);
 
     int indent = 20;
     for (QRadioButton* radio : { radio1, radio2, radio3 })
@@ -167,7 +168,7 @@ void CalibrationDialog::initUI()
     mainLayout->addStretch();
     mainLayout->addLayout(h4Layout);
 
-    QObject::connect(enableCheckBox, &QCheckBox::toggled, [=](bool checked) {
+    QObject::connect(_enableCheckBox, &QCheckBox::toggled, [=](bool checked) {
         radio1->setEnabled(checked);
         radio2->setEnabled(checked);
         radio3->setEnabled(checked);
@@ -209,6 +210,11 @@ void CalibrationDialog::getCurrentLineInfo()
 {
     GraphicsScene* scene = getGlobalActiveView()->scene();
     DiagramLengthItem* item = scene->focusLengthItem();
+    setWidgetText(item);
+}
+
+void CalibrationDialog::setWidgetText(const DiagramLengthItem* item)
+{
     if (item == nullptr)
         return;
 
@@ -222,22 +228,22 @@ void CalibrationDialog::getCurrentLineInfo()
 
 void CalibrationDialog::lengthItemSelected(const DiagramLengthItem* item)
 {
-    if (item == nullptr)
-        return;
-
-    QString point1 = "(" + QString::number(item->p1().x()) + ", " + QString::number(item->p1().y()) + ")";
-    _startPositionEdit->setText(point1);
-    QString point2 = "(" + QString::number(item->p2().x()) + ", " + QString::number(item->p2().y()) + ")";
-    _endPositionEdit->setText(point2);
-    QString pixelLength = QString::number(item->pixelLength());
-    _pixelLengthEdit->setText(pixelLength);
+    setWidgetText(item);
 }
 
 void CalibrationDialog::acceptButtonClicked()
 {
-    if (_setAsSystemLabel->isChecked())
+    Document* document = getGlobalDocument();
+    if (!document && _enableCheckBox->isChecked())
     {
-        QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-        //settings.setValue("Calibration/size", _pixelSizeEdit->text());
+        document->saveCalibrationInfo(0.02);
+
+        if (_setAsSystemLabel->isChecked())
+        {
+            QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+            //settings.setValue("Calibration/size", _pixelSizeEdit->text());
+        }
     }
+
+    accept();
 }

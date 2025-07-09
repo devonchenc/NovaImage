@@ -5,6 +5,7 @@
 #include "../Diagram/DiagramLengthItem.h"
 
 QT_BEGIN_NAMESPACE
+class QCheckBox;
 class QLabel;
 class QLineEdit;
 class QCheckBox;
@@ -27,10 +28,13 @@ private:
 
     void getCurrentLineInfo();
 
+    void setWidgetText(const DiagramLengthItem* item);
+
 private slots:
     void acceptButtonClicked();
 
 private:
+    QCheckBox* _enableCheckBox;
     QLabel* _systemSizeLabel;
     QLabel* _manualSize1Label;
     QLineEdit* _pixelSizeEdit;
