@@ -6,6 +6,7 @@
 
 QT_BEGIN_NAMESPACE
 class QCheckBox;
+class QButtonGroup;
 class QLabel;
 class QLineEdit;
 class QCheckBox;
@@ -35,6 +36,7 @@ private slots:
 
 private:
     QCheckBox* _enableCheckBox;
+    QButtonGroup* _radioGroup;
     QLabel* _systemSizeLabel;
     QLabel* _manualSize1Label;
     QLineEdit* _pixelSizeEdit;

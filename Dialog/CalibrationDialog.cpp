@@ -41,10 +41,10 @@ void CalibrationDialog::initUI()
     radio1->setEnabled(false);
     radio2->setEnabled(false);
     radio3->setEnabled(false);
-    QButtonGroup* buttonGroup = new QButtonGroup(this);
-    buttonGroup->addButton(radio1, 0);
-    buttonGroup->addButton(radio2, 1);
-    buttonGroup->addButton(radio3, 1);
+    _radioGroup = new QButtonGroup(this);
+    _radioGroup->addButton(radio1, 0);
+    _radioGroup->addButton(radio2, 1);
+    _radioGroup->addButton(radio3, 1);
 
     connect(radio1, &QRadioButton::toggled, this, [=](bool checked) {
         _systemSizeLabel->setEnabled(checked);
@@ -234,9 +234,23 @@ void CalibrationDialog::lengthItemSelected(const DiagramLengthItem* item)
 void CalibrationDialog::acceptButtonClicked()
 {
     Document* document = getGlobalDocument();
-    if (!document && _enableCheckBox->isChecked())
+    if (document && _enableCheckBox->isChecked())
     {
-        document->saveCalibrationInfo(0.02);
+        if (_radioGroup->checkedId() == 0)
+        {
+            QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
+            double pixelSize = settings.value("Calibration/size", 0).toDouble();
+            document->saveCalibrationInfo(pixelSize);
+        }
+        else if (_radioGroup->checkedId() == 1)
+        {
+            double pixelSize = _pixelSizeEdit->text().toDouble();
+            document->saveCalibrationInfo(pixelSize);
+        }
+        else if (_radioGroup->checkedId() == 2)
+        {
+
+        }
 
         if (_setAsSystemLabel->isChecked())
         {

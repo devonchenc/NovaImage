@@ -1060,7 +1060,6 @@ void MainWindow::calibration()
     if (!_calibrationDialog)
     {
         _calibrationDialog = new CalibrationDialog(this);
-        _calibrationDialog->setAttribute(Qt::WA_DeleteOnClose);
 
         connect(_axialView->scene(), &GraphicsScene::lengthItemChanged, _calibrationDialog, &CalibrationDialog::lengthItemSelected);
         connect(_coronalView->scene(), &GraphicsScene::lengthItemChanged, _calibrationDialog, &CalibrationDialog::lengthItemSelected);

@@ -360,7 +360,7 @@ void Document::loadGraphicsItems()
     }
 }
 
-void Document::saveCalibrationInfo(float size) const
+void Document::saveCalibrationInfo(double size) const
 {
     QDomDocument doc;
     QDomElement root;
@@ -381,7 +381,7 @@ void Document::saveCalibrationInfo(float size) const
         // If calibration node exists, modify it
         QDomElement calibrationElem = nodeList.at(0).toElement();
         QDomNode oldNode = calibrationElem.firstChild();
-        oldNode.setNodeValue("This is new content" + QString::number(size));
+        oldNode.setNodeValue(QString::number(size));
     }
 
     // Write the modified document back to the file
@@ -654,7 +654,7 @@ bool Document::getConfigXml(QDomDocument& doc, QDomElement& root) const
     if (file.exists())
     {
         // If the file exists, try to open and parse it
-        if (!file.open(QIODevice::WriteOnly))
+        if (!file.open(QIODevice::ReadOnly))
             return false;
 
         if (!doc.setContent(&file))
