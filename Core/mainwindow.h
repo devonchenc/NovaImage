@@ -28,14 +28,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget* parent = nullptr);
-    ~MainWindow()
-    {
-        if (_calibrationDialog)
-        {
-            delete _calibrationDialog;
-            _calibrationDialog = nullptr;
-        }
-    }
+    ~MainWindow() {}
 
 public:
     Document* getDocument() const { return _doc; }

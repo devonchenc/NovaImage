@@ -360,7 +360,7 @@ void Document::loadGraphicsItems()
     }
 }
 
-void Document::saveCalibrationInfo(double size) const
+void Document::saveCalibrationInfo(float size) const
 {
     QDomDocument doc;
     QDomElement root;
@@ -372,7 +372,7 @@ void Document::saveCalibrationInfo(double size) const
     {
         // If no calibration node exists, append one
         QDomElement newNode = doc.createElement("Calibration");
-        QDomText text = doc.createTextNode("This is new content" + QString::number(size));
+        QDomText text = doc.createTextNode(QString::number(size));
         newNode.appendChild(text);
         root.appendChild(newNode);
     }
@@ -416,7 +416,13 @@ void Document::loadCalibrationInfo()
     }
     file.close();
 
-    //QDomNodeList domList = doc.elementsByTagName("Calibration");
+    QDomElement root = doc.documentElement();
+    QDomElement calibration = root.firstChildElement("Calibration");
+    if (calibration.isNull())
+        return;
+
+    float pixelSize = calibration.text().toFloat();
+    _image->setCalibrationSpacing(pixelSize);
 }
 
 void Document::defaultImageWindow()
@@ -614,6 +620,8 @@ void Document::imageOpened()
     }
 
     loadGraphicsItems();
+
+    loadCalibrationInfo();
 
     _mainWindow->imageOpened();
 }

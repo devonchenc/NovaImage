@@ -44,7 +44,7 @@ void CalibrationDialog::initUI()
     _radioGroup = new QButtonGroup(this);
     _radioGroup->addButton(radio1, 0);
     _radioGroup->addButton(radio2, 1);
-    _radioGroup->addButton(radio3, 1);
+    _radioGroup->addButton(radio3, 2);
 
     connect(radio1, &QRadioButton::toggled, this, [=](bool checked) {
         _systemSizeLabel->setEnabled(checked);
@@ -202,7 +202,7 @@ void CalibrationDialog::initUI()
 void CalibrationDialog::loadSettings()
 {
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-    double pixelSize = settings.value("Calibration/size", 0).toDouble();
+    float pixelSize = settings.value("Calibration/size", 0).toFloat();
     _systemSizeLabel->setText(tr("1 pixel = ") + QString::number(pixelSize) + " mm");
 }
 
@@ -236,26 +236,30 @@ void CalibrationDialog::acceptButtonClicked()
     Document* document = getGlobalDocument();
     if (document && _enableCheckBox->isChecked())
     {
+        float pixelSize = 0;
         if (_radioGroup->checkedId() == 0)
         {
             QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-            double pixelSize = settings.value("Calibration/size", 0).toDouble();
+            pixelSize = settings.value("Calibration/size", 0).toFloat();
             document->saveCalibrationInfo(pixelSize);
         }
         else if (_radioGroup->checkedId() == 1)
         {
-            double pixelSize = _pixelSizeEdit->text().toDouble();
+            pixelSize = _pixelSizeEdit->text().toFloat();
             document->saveCalibrationInfo(pixelSize);
         }
         else if (_radioGroup->checkedId() == 2)
         {
-
+            float pixelLength = _pixelLengthEdit->text().toFloat();
+            float actualLength = _actualLengthEdit->text().toFloat();
+            pixelSize = actualLength / pixelLength;
+            document->saveCalibrationInfo(pixelSize);
         }
 
         if (_setAsSystemLabel->isChecked())
         {
             QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
-            //settings.setValue("Calibration/size", _pixelSizeEdit->text());
+            settings.setValue("Calibration/size", pixelSize);
         }
     }
 

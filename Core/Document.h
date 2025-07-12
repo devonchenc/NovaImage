@@ -64,7 +64,7 @@ public:
     // Load graphics items from xml file
     void loadGraphicsItems();
 
-    void saveCalibrationInfo(double size) const;
+    void saveCalibrationInfo(float size) const;
 
     void loadCalibrationInfo();
 

@@ -281,7 +281,7 @@ void View::sliceMinus(int minus)
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
-void View::saveGraphicsItem(QDomDocument& doc, QDomElement& root)
+void View::saveGraphicsItem(QDomDocument& doc, QDomElement& root) const
 {
     if (_scene->items().size() <= 1)
         return;

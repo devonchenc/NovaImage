@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include <memory>
+#include <optional>
 #include <QString>
 #include <QImage>
 
@@ -77,6 +78,8 @@ public:
     const uint* getGreenPixelArray() const { return _greenPixelNumber; }
     const uint* getBluePixelArray() const { return _bluePixelNumber; }
 
+    void setCalibrationSpacing(float spacing) { _calibrationSpacing = spacing; }
+
     QRgb getPixel(const QPoint& position) const;
     QRgb getPixel(int x, int y) const;
 
@@ -98,6 +101,8 @@ protected:
 
     float _windowWidth;
     float _windowLevel;
+
+    std::optional<float> _calibrationSpacing;
 
     QString _pathName;
 
