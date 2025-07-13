@@ -79,6 +79,7 @@ public:
     const uint* getBluePixelArray() const { return _bluePixelNumber; }
 
     void setCalibrationSpacing(float spacing) { _calibrationSpacing = spacing; }
+    std::optional<float> getCalibrationSpacing() { return _calibrationSpacing; }
 
     QRgb getPixel(const QPoint& position) const;
     QRgb getPixel(int x, int y) const;

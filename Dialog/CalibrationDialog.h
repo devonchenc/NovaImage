@@ -35,6 +35,7 @@ private slots:
     void acceptButtonClicked();
 
 private:
+    QLabel* _currentCalibrationLabel;
     QCheckBox* _enableCheckBox;
     QButtonGroup* _radioGroup;
     QLabel* _systemSizeLabel;

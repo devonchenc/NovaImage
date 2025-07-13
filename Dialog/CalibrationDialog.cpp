@@ -11,11 +11,13 @@
 #include <QSettings>
 #include <QCoreApplication>
 #include <QDoubleValidator>
+#include <QMessageBox>
 
 #include "../Core/GlobalFunc.h"
 #include "../Core/View.h"
 #include "../Core/GraphicsScene.h"
 #include "../Core/Document.h"
+#include "../Image/BaseImage.h"
 
 CalibrationDialog::CalibrationDialog(QWidget* parent)
     : QDialog(parent)
@@ -28,11 +30,12 @@ CalibrationDialog::CalibrationDialog(QWidget* parent)
 
     loadSettings();
 
-    resize(400, 240);
+    resize(450, 360);
 }
 
 void CalibrationDialog::initUI()
 {
+    _currentCalibrationLabel = new QLabel;
     _enableCheckBox = new QCheckBox(tr("Enable Calibration"));
 
     QRadioButton* radio1 = new QRadioButton(tr("Use system default calibration"));
@@ -85,6 +88,8 @@ void CalibrationDialog::initUI()
     _manualSize2Label->setEnabled(false);
 
     QVBoxLayout* mainLayout = new QVBoxLayout;
+    mainLayout->addWidget(_currentCalibrationLabel);
+    mainLayout->addStretch();
     mainLayout->addWidget(_enableCheckBox);
 
     int indent = 20;
@@ -101,7 +106,7 @@ void CalibrationDialog::initUI()
     h1Layout->addSpacing(indent * 2);
     h1Layout->addWidget(_systemSizeLabel);
     h1Layout->addStretch();
-    mainLayout->insertLayout(2, h1Layout);
+    mainLayout->insertLayout(4, h1Layout);
 
     QHBoxLayout* h2Layout = new QHBoxLayout;
     h2Layout->addSpacing(indent * 2);
@@ -109,7 +114,7 @@ void CalibrationDialog::initUI()
     h2Layout->addWidget(_pixelSizeEdit);
     h2Layout->addWidget(_manualSize2Label);
     h2Layout->addStretch();
-    mainLayout->insertLayout(4, h2Layout);
+    mainLayout->insertLayout(6, h2Layout);
 
     _startPositionLabel = new QLabel(tr("Line start position:"));
     _startPositionEdit = new QLineEdit;
@@ -204,6 +209,20 @@ void CalibrationDialog::loadSettings()
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     float pixelSize = settings.value("Calibration/size", 0).toFloat();
     _systemSizeLabel->setText(tr("1 pixel = ") + QString::number(pixelSize) + " mm");
+
+    BaseImage* image = getGlobalImage();
+    if (!image)
+        return;
+
+    std::optional<float> calibrationSize = image->getCalibrationSpacing();
+    if (calibrationSize)
+    {
+        _currentCalibrationLabel->setText(tr("Current image pixel size: ") + QString::number(calibrationSize.value()) + " mm");
+    }
+    else
+    {
+        _currentCalibrationLabel->setText(tr("Current image is uncalibrated."));
+    }
 }
 
 void CalibrationDialog::getCurrentLineInfo()
@@ -252,6 +271,16 @@ void CalibrationDialog::acceptButtonClicked()
         {
             float pixelLength = _pixelLengthEdit->text().toFloat();
             float actualLength = _actualLengthEdit->text().toFloat();
+            if (pixelLength <= 0)
+            {
+                QMessageBox::critical(nullptr, tr("Invalid parameter"), tr("The pixel length must be greater than 0!"), QMessageBox::Ok);
+                return;
+            }
+            if (actualLength <= 0)
+            {
+                QMessageBox::critical(nullptr, tr("Invalid parameter"), tr("The actual length must be greater than 0!"), QMessageBox::Ok);
+                return;
+            }
             pixelSize = actualLength / pixelLength;
             document->saveCalibrationInfo(pixelSize);
         }
