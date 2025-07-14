@@ -30,11 +30,11 @@ public:
 
     virtual float getValueWithType(int type, int index) const { Q_UNUSED(type); return getValue(index); }
 
-    virtual bool hasPixelSpacing() const { return false; }
+    virtual bool hasPixelSpacing() const { return _calibrationSpacing.has_value(); }
 
-    virtual float horzPixelSpacing() const { return 0; }
-    virtual float vertPixelSpacing() const { return 0; }
-    virtual float sliceSpacing() const { return 0; }
+    virtual float horzPixelSpacing() const;
+    virtual float vertPixelSpacing() const;
+    virtual float sliceSpacing() const;
 
     // Create a deep copy of image
     virtual BaseImage* copyImage() const = 0;

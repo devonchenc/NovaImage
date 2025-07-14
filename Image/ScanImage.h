@@ -19,9 +19,9 @@ public:
 
     bool hasPixelSpacing() const override { return true; }
 
-    float horzPixelSpacing() const override { return _dataHeader.HorzPixelSpacing; }
-    float vertPixelSpacing() const override { return _dataHeader.VertPixelSpacing; }
-    float sliceSpacing() const override { return _dataHeader.SliceSpacing; }
+    float horzPixelSpacing() const override;
+    float vertPixelSpacing() const override;
+    float sliceSpacing() const override;
 
     void initWindowWidthAndLevel() override;
 

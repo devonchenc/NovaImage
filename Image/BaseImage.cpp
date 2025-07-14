@@ -85,6 +85,21 @@ float BaseImage::getValue(float x, float y) const
     return value;
 }
 
+float BaseImage::horzPixelSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : 0;
+}
+
+float BaseImage::vertPixelSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : 0;
+}
+
+float BaseImage::sliceSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : 0;
+}
+
 QRgb BaseImage::getPixel(const QPoint& position) const
 {
     return _pImage->pixel(position);

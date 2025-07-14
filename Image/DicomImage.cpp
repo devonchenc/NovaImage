@@ -222,7 +222,6 @@ DICOMImage::DICOMImage(const DICOMImage& src)
     , _seriesInstanceUID(src._seriesInstanceUID)
     , _SOPInstanceUID(src._SOPInstanceUID)
 {
-
 }
 
 DICOMImage& DICOMImage::operator=(const DICOMImage& src)
@@ -270,6 +269,21 @@ void DICOMImage::setSlice(int type, int slice)
     MonoImage::setSlice(type, slice);
 
     rescaleArray(type);
+}
+
+float DICOMImage::horzPixelSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : _horzPixelSpacing;
+}
+
+float DICOMImage::vertPixelSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : _vertPixelSpacing;
+}
+
+float DICOMImage::sliceSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : _sliceSpacing;
 }
 
 void DICOMImage::initWindowWidthAndLevel()

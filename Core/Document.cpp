@@ -421,6 +421,7 @@ void Document::loadCalibrationInfo()
     if (calibration.isNull())
         return;
 
+    // Set image calibration spacing
     float pixelSize = calibration.text().toFloat();
     _image->setCalibrationSpacing(pixelSize);
 }

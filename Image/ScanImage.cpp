@@ -73,10 +73,19 @@ void ScanImage::setSlice(int slice)
     copyByteToImage();
 }
 
-bool ScanImage::saveAsDcm(const QString& fileName) const
+float ScanImage::horzPixelSpacing() const
 {
-    Q_UNUSED(fileName);
-    return true;
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : _dataHeader.HorzPixelSpacing;
+}
+
+float ScanImage::vertPixelSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : _dataHeader.VertPixelSpacing;
+}
+
+float ScanImage::sliceSpacing() const
+{
+    return _calibrationSpacing.has_value() ? _calibrationSpacing.value() : _dataHeader.SliceSpacing;
 }
 
 void ScanImage::initWindowWidthAndLevel()
@@ -106,6 +115,12 @@ bool ScanImage::copyToImage(BaseImage* image) const
 
     *destImage = *this;
 
+    return true;
+}
+
+bool ScanImage::saveAsDcm(const QString& fileName) const
+{
+    Q_UNUSED(fileName);
     return true;
 }
 
