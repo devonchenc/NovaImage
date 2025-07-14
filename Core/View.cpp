@@ -281,18 +281,59 @@ void View::sliceMinus(int minus)
     getGlobalDocument()->applyImageWidthAndLevel();
 }
 
-void View::saveGraphicsItem(QDomDocument& doc, QDomElement& root) const
+void View::removeGraphicsSceneElements(QDomElement& parentElement) const
+{
+    QDomNode child = parentElement.firstChild();
+    while (!child.isNull())
+    {
+        QDomNode next = child.nextSibling();
+        if (child.isElement())
+        {
+            QDomElement elem = child.toElement();
+            if (elem.tagName() == "GraphicsScene")
+            {
+                parentElement.removeChild(child);
+            }
+        }
+        child = next;
+    }
+}
+
+bool View::saveGraphicsItem(QDomDocument& doc, QDomElement& root) const
 {
     if (_scene->items().size() <= 1)
-        return;
+        return true;
 
-    QDomElement viewItem = doc.createElement("View");
-    viewItem.setAttribute("Type", QString::number(_viewType));
+    // Find existing view type = _viewType
+    QDomNodeList viewNodes = root.elementsByTagName("View");
+    bool found = false;
+
+    QDomElement viewItem;
+    for (int i = 0; i < viewNodes.count(); ++i)
+    {
+        viewItem = viewNodes.at(i).toElement();
+        if (viewItem.attribute("Type") == QString::number(_viewType))
+        {
+            found = true;
+            removeGraphicsSceneElements(viewItem);
+            break;
+        }
+    }
+
+    if (!found)
+    {
+        // Create new element
+        viewItem = doc.createElement("View");
+        viewItem.setAttribute("Type", QString::number(_viewType));
+    }
 
     QDomElement sceneItem = _scene->saveToXML(doc);
-    viewItem.appendChild(sceneItem);
+    QDomNode sceneNode = viewItem.appendChild(sceneItem);
+    if (sceneNode.isNull())
+        return false;
 
-    root.appendChild(viewItem);
+    QDomNode viewNode = root.appendChild(viewItem);
+    return !viewNode.isNull();
 }
 
 void View::loadGraphicsItem(const QDomElement& sceneElem)

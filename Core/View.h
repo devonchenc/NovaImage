@@ -64,7 +64,7 @@ public:
     void slicePlus(int plus);
     void sliceMinus(int minus);
 
-    void saveGraphicsItem(QDomDocument& doc, QDomElement& root) const;
+    bool saveGraphicsItem(QDomDocument& doc, QDomElement& root) const;
 
     void loadGraphicsItem(const QDomElement& sceneElem);
 
@@ -118,6 +118,8 @@ private:
     QList<QGraphicsItem*> cloneItems(const QList<QGraphicsItem*>& items);
 
     QVector<qreal> calcPlotData(QGraphicsLineItem* lineItem, int lineWidth);
+
+    void removeGraphicsSceneElements(QDomElement& parentElement) const;
 
 private:
     GraphicsScene* _scene;

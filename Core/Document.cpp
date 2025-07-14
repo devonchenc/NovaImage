@@ -296,7 +296,7 @@ void Document::saveGraphicsItems()
     QDomDocument doc;
     QDomElement root;
     if (!getConfigXml(doc, root))
-        return;   
+        return;
 
     getAxialView()->saveGraphicsItem(doc, root);
     getCoronalView()->saveGraphicsItem(doc, root);
