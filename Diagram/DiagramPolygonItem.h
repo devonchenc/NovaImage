@@ -41,6 +41,7 @@ public:
 
     virtual void loadFromXML(const QDomElement& e);
 
+    // Generates statistical information
     void statisticsInfo();
 
 signals:

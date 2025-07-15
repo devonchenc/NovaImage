@@ -33,7 +33,6 @@ Document::Document(MainWindow* pWindow)
     , _image(nullptr)
     , _modified(false)
 {
-
 }
 
 bool Document::openFile(const QString& fileName)

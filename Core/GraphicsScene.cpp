@@ -412,7 +412,7 @@ QDomElement GraphicsScene::saveToXML(QDomDocument& doc) const
     sceneItem.setAttribute("Number", QString::number(items().size() - 1));
 
     QList<QGraphicsItem*> itemList = items();
-    for (int i = 0; i < itemList.size(); i++)
+    for (int i = itemList.size() - 1; i >= 0; i--)
     {
         switch (itemList.at(i)->type())
         {
