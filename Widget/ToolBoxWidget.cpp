@@ -334,22 +334,22 @@ void ToolBoxWidget::textColorButtonTriggered()
 void ToolBoxWidget::itemInserted(QGraphicsItem* item)
 {
     Q_UNUSED(item);
-    //if (item->type() == DiagramItem::Type)
+    //if (item->type() == DiagramPolygonItem::Type)
     //{
-    //    DiagramItem* diagramitem = qgraphicsitem_cast<DiagramItem*>(item);
+    //    DiagramPolygonItem* diagramitem = qgraphicsitem_cast<DiagramPolygonItem*>(item);
     //    _buttonGroup->button(int(diagramitem->diagramType()))->setChecked(false);
     //}
     //else if (item->type() == DiagramTextItem::Type)
     //{
-    //    _buttonGroup->button(int(DiagramItem::Text))->setChecked(false);
+    //    _buttonGroup->button(int(DiagramPolygonItem::Text))->setChecked(false);
     //}
     //else if (item->type() == DiagramLineItem::Type)
     //{
-    //    _buttonGroup->button(int(DiagramItem::Line))->setChecked(false);
+    //    _buttonGroup->button(int(DiagramPolygonItem::Line))->setChecked(false);
     //}
     //else if (item->type() == DiagramAngleItem::Type)
     //{
-    //    _buttonGroup->button(int(DiagramItem::Angle))->setChecked(false);
+    //    _buttonGroup->button(int(DiagramPolygonItem::Angle))->setChecked(false);
     //}
 }
 

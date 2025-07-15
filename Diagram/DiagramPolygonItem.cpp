@@ -120,7 +120,7 @@ void DiagramPolygonItem::setDrawingFinished(bool finished)
 QDomElement DiagramPolygonItem::saveToXML(QDomDocument& doc) const
 {
     QDomElement lineItem = doc.createElement("GraphicsItem");
-    lineItem.setAttribute("Type", "DiagramItem");
+    lineItem.setAttribute("Type", "DiagramPolygonItem");
 
     QDomElement attribute = doc.createElement("Attribute");
     attribute.setAttribute("DiagramType", QString::number(_diagramType));

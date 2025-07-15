@@ -84,7 +84,7 @@ void DiagramLineItem::loadFromXML(const QDomElement& e)
 /*
 DiagramLineItem* DiagramLineItem::clone()
 {
-    DiagramItem* cloned = new DiagramItem(_diagramType, pen().color(), brush().color(), _contextMenu, nullptr);
+    DiagramLineItem* cloned = new DiagramLineItem(_diagramType, pen().color(), brush().color(), _contextMenu, nullptr);
     cloned->_polygon = _polygon;
     cloned->setPos(scenePos());
     cloned->setPolygon(_polygon);

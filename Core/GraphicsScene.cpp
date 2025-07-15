@@ -462,7 +462,7 @@ bool GraphicsScene::loadFromFile(const QDomElement& sceneElem)
             break;
 
         QString type = diagramElem.attribute("Type");
-        if (type == "DiagramItem")
+        if (type == "DiagramPolygonItem")
         {
             DiagramPolygonItem* item = new DiagramPolygonItem;
             addItem(item);
