@@ -233,14 +233,20 @@ void CalibrationDialog::getCurrentLineInfo()
 void CalibrationDialog::setWidgetText(const DiagramLengthItem* item)
 {
     if (item == nullptr)
-        return;
-
-    QString point1 = "(" + QString::number(item->p1().x()) + ", " + QString::number(item->p1().y()) + ")";
-    _startPositionEdit->setText(point1);
-    QString point2 = "(" + QString::number(item->p2().x()) + ", " + QString::number(item->p2().y()) + ")";
-    _endPositionEdit->setText(point2);
-    QString pixelLength = QString::number(item->pixelLength());
-    _pixelLengthEdit->setText(pixelLength);
+    {
+        _startPositionEdit->clear();
+        _endPositionEdit->clear();
+        _pixelLengthEdit->clear();
+    }
+    else
+    {
+        QString point1 = "(" + QString::number(item->p1().x()) + ", " + QString::number(item->p1().y()) + ")";
+        _startPositionEdit->setText(point1);
+        QString point2 = "(" + QString::number(item->p2().x()) + ", " + QString::number(item->p2().y()) + ")";
+        _endPositionEdit->setText(point2);
+        QString pixelLength = QString::number(item->pixelLength());
+        _pixelLengthEdit->setText(pixelLength);
+    }
 }
 
 void CalibrationDialog::lengthItemSelected(const DiagramLengthItem* item)

@@ -57,9 +57,9 @@ public:
 
     void setWindowWidthAndLevel(float windowWidth, float windowLevel);
 
-    float windowWidth() { return _windowWidth; }
+    float windowWidth() const { return _windowWidth; }
 
-    float windowLevel() { return _windowLevel; }
+    float windowLevel() const { return _windowLevel; }
 
     void slicePlus(int plus);
     void sliceMinus(int minus);

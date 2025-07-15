@@ -229,6 +229,7 @@ void View::resetImage()
 {
     if (_currentImage)
     {
+        _scene->resetDiagramItems();
         _scene->clear();
         _currentImage = nullptr;
     }

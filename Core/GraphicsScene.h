@@ -55,6 +55,8 @@ public:
 
     DiagramLengthItem* focusLengthItem() const;
 
+    void resetDiagramItems();
+
 public slots:
     void editorLostFocus(DiagramTextItem* item);
 

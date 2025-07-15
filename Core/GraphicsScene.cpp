@@ -531,6 +531,14 @@ DiagramLengthItem* GraphicsScene::focusLengthItem() const
     return lengthItem;
 }
 
+void GraphicsScene::resetDiagramItems()
+{
+    _currentDrawingLine = nullptr;
+    _currentDrawingAngle = nullptr;
+    _currentDrawingPolygon = nullptr;
+    _lastGraphicsItem = nullptr;
+}
+
 void GraphicsScene::itemSelectedChange(QGraphicsItem* item, bool selected)
 {
     if (selected)
