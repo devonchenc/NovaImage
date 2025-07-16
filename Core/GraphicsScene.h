@@ -36,7 +36,6 @@ public:
     void deleteItems(const QList<QGraphicsItem*>& items);
 
     void setMode(int mode) { _mode = mode; }
-
     int mode() const { return _mode; }
 
     void setItemType(DiagramPolygonItem::DiagramType type);

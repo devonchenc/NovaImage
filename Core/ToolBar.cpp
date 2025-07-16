@@ -349,8 +349,8 @@ void ToolBar::createAction()
     _actionVector.push_back(_ROIWidowAction);
     _actionVector.push_back(_zoomAction);
     _actionVector.push_back(_magnifierAction);
-    _actionVector.push_back(_moveAction);
     _actionVector.push_back(_cursorAction);
+    _actionVector.push_back(_moveAction);
     _actionVector.push_back(_rulerAction);
     _actionVector.push_back(_arrowAction);
     _actionVector.push_back(_angleAction);
