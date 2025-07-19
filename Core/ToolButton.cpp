@@ -93,11 +93,6 @@ void ToolButton::unsetLeftMouseButton()
     updateAllButtonsIcon();
 }
 
-ToolButton* ToolButton::leftMouseButton()
-{
-    return _leftMouseButton;
-}
-
 void ToolButton::setRightMouseButton(ToolButton* toolButton)
 {
     unsetRightMouseButton();
@@ -117,11 +112,6 @@ void ToolButton::unsetRightMouseButton()
     }
     MouseHandler::unsetRightButton();
     updateAllButtonsIcon();
-}
-
-ToolButton* ToolButton::rightMouseButton()
-{
-    return _rightMouseButton;
 }
 
 void ToolButton::updateAllButtonsIcon()

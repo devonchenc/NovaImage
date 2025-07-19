@@ -29,7 +29,7 @@ public:
     void setMenuEnabled(bool enable);
 
     // returns how many recent files are being remembered
-    int numberOfRecentFilesToSave();
+    int numberOfRecentFilesToSave() const;
 
     void resetText();
 

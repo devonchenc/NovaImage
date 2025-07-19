@@ -6,10 +6,6 @@ class BaseWidget;
 
 class WidgetManager
 {
-private:
-    WidgetManager() {}
-    ~WidgetManager() {}
-
 public:
     static WidgetManager* getInstance();
     static void cleanUp();
@@ -19,6 +15,10 @@ public:
     void init();
 
     void reset();
+
+private:
+    WidgetManager() {}
+    ~WidgetManager() {}
 
 private:
     static WidgetManager* _instance;

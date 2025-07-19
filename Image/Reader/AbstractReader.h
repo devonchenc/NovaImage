@@ -34,8 +34,8 @@ public:
         }
     }
 
-    float minValue() { return _minValue; }
-    float maxValue() { return _maxValue; }
+    float minValue() const { return _minValue; }
+    float maxValue() const { return _maxValue; }
 
 protected:
     QWidget* _widget;

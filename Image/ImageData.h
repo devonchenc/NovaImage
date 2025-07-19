@@ -94,7 +94,7 @@ public:
 
     virtual void changeSlice(int type, int slice) = 0;
 
-    virtual int getElementSize() = 0;
+    virtual int getElementSize() const = 0;
 
     virtual void interpolateData(int index, void* prevData, void* nextData, float ratio) = 0;
 

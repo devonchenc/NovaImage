@@ -38,6 +38,7 @@ public:
     void resetMatrix();
 
     QGraphicsPixmapItem* getPixmapItem() { return _currentImage; }
+    const QGraphicsPixmapItem* getPixmapItem() const { return _currentImage; }
 
     int imageWidth() const;
 

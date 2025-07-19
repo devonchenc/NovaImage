@@ -17,17 +17,17 @@ public:
     RawParameterDialog(const QString& pathName, QWidget* parent = nullptr);
 
 public:
-    int dataType() { return _dataType; }
+    int dataType() const { return _dataType; }
 
-    int width() { return _width; }
+    int width() const { return _width; }
 
-    int height() { return _height; }
+    int height() const { return _height; }
 
-    int slice() { return _slice; }
+    int slice() const { return _slice; }
 
-    int headerSize() { return _headerSize; }
+    int headerSize() const { return _headerSize; }
 
-    int endian() { return _endian; }
+    int endian() const { return _endian; }
 
 private:
     void initUI();

@@ -17,25 +17,25 @@ public:
 
     void setCurrentAction(QAction* action);
 
-    QAction* currentAction()        { return _currentAction; }
+    QAction* currentAction() const { return _currentAction; }
 
     void activeAction(QAction* action, bool leftMouseButton = true);
 
     void setMouseHandler(MouseHandler* handler);
 
-    MouseHandler* mouseHandler()    { return _handler; }
+    MouseHandler* mouseHandler() const { return _handler; }
 
     static void setLeftMouseButton(ToolButton* toolButton);
 
     static void unsetLeftMouseButton();
 
-    static ToolButton* leftMouseButton();
+    static ToolButton* leftMouseButton() { return _leftMouseButton; }
 
     static void setRightMouseButton(ToolButton* toolButton);
 
     static void unsetRightMouseButton();
 
-    static ToolButton* rightMouseButton();
+    static ToolButton* rightMouseButton() { return _rightMouseButton; }
 
 private:
     static void updateAllButtonsIcon();

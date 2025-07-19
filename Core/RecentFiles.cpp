@@ -120,7 +120,7 @@ void RecentFiles::setMenuEnabled(bool enable)
     _recentMenuTriggeredAction->setEnabled(enable);
 }
 
-int RecentFiles::numberOfRecentFilesToSave()
+int RecentFiles::numberOfRecentFilesToSave() const
 {
     QSettings settings(QCoreApplication::applicationDirPath() + "/Config.ini", QSettings::IniFormat);
     return settings.value(recentFileCount, 6).toInt();

@@ -65,7 +65,7 @@ public:
 
     void changeSlice(int type, int slice) override;
 
-    int getElementSize() override { return sizeof(Type); }
+    int getElementSize() const override { return sizeof(Type); }
 
     void interpolateData(int index, void* prevData, void* nextData, float ratio) override;
 

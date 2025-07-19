@@ -15,9 +15,9 @@ public:
 
     BaseImage* redo();
 
-    bool isEmpty() { return _currentIndex < 1; }
+    bool isEmpty() const { return _currentIndex < 1; }
 
-    bool isTop() { return _currentIndex + 1 == _imageStack.length(); }
+    bool isTop() const { return _currentIndex + 1 == _imageStack.length(); }
 
     void reset();
 
