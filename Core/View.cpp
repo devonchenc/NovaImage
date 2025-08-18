@@ -477,13 +477,12 @@ void View::fitWindow()
 {
     if (_currentImage)
     {
-        QRectF rect = this->rect();
+        QRectF viewRect = _view->rect();
         qreal imageWidth = _currentImage->pixmap().width();
         qreal imageHeight = _currentImage->pixmap().height();
+        qreal ratio = qMin(viewRect.width() / imageWidth, viewRect.height() / imageHeight);
 
-        qreal ratio = qMin(rect.width() / imageWidth, rect.height() / imageHeight);
-
-        int value = log2(ratio) * ZOOM_STEP + MAX_ZOOM / 2;
+        int value = std::floor(log2(ratio) * ZOOM_STEP + MAX_ZOOM / 2);
         _view->setZoomValue(value);
     }
 }
