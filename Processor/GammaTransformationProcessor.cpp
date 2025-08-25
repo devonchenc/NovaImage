@@ -125,7 +125,7 @@ void GammaTransformationProcessor::processImage(const GeneralImage* srcImage, Ge
         {
             uchar* dstPixel = dstData + j * pitch + i;
             const uchar* srcPixel = srcData + j * pitch + i;
-            *(dstPixel) = round(pow(*srcPixel / 255.0f, _gamma) * 255.0f);
+            *(dstPixel) = round(pow(*srcPixel / 255.0f, 1.0f / _gamma) * 255.0f);
         }
     }
 }
@@ -153,7 +153,7 @@ void GammaTransformationProcessor::processImage(const MonoImage* srcImage, MonoI
 
     for (int i = 0; i < width * height; i++)
     {
-        float dstValue = pow((srcImage->getValue(i) - minValue) / gap, _gamma) * gap + minValue;
+        float dstValue = pow((srcImage->getValue(i) - minValue) / gap, 1.0f / _gamma) * gap + minValue;
         dstImage->setValue(i, dstValue);
         byteImage[3 * i] = byteImage[3 * i + 1] = byteImage[3 * i + 2] = uchar((dstValue - minValue) * variable);
     }

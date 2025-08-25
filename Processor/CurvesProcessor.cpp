@@ -86,6 +86,12 @@ void CurvesProcessor::processImage(const GeneralImage* srcImage, GeneralImage* d
     // Execute multiple tasks using a thread pool
     int numThreads = QThread::idealThreadCount();
     int slice = height / numThreads;
+    if (slice == 0)
+    {
+        numThreads = 1;
+        slice = height;
+    }
+
     for (int i = 0; i < numThreads; ++i)
     {
         int yStart = i * slice;
