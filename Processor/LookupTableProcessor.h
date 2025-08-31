@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include "BaseProcessor.h"
 
 class LookupTableProcessor : public BaseProcessor

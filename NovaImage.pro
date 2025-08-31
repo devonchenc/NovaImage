@@ -3,7 +3,7 @@
 # ------------------------------------------------------
 QT       += core gui widgets printsupport charts xml
 
-CONFIG += qt thread debug c++11
+CONFIG += qt thread debug c++17
 
 TARGET = NovaImage
 TEMPLATE = app

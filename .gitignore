@@ -42,3 +42,13 @@
 *.out
 *.app
 *.opendb
+
+# Directories with generated files
+.moc/
+.obj/
+.pch/
+.rcc/
+.uic/
+.vs/
+out/
+/build*/

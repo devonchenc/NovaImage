@@ -10,4 +10,4 @@ NovaImage is a cross-platform image processing application that supports viewing
 - [DCMTK 3.6.9](https://www.dcmtk.org/)
 - [FFTW 3.3](http://www.fftw.org/)
 
-- IDE: Qt Creator 4.11.1/Visual Studio 2017
+- IDE: Qt Creator 4.11.1/Visual Studio 2022

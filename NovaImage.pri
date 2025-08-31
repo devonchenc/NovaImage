@@ -67,7 +67,7 @@ HEADERS += ./Image/DicomImage.h \
     ./Notification/NotificationLayout.h \
     ./Notification/NotificationWidget.h \
     ./Diagram/DiagramAngleItem.h \
-    ./Diagram/DiagramItem.h \
+    ./Diagram/DiagramPolygonItem.h \
     ./Diagram/DiagramLineItem.h \
     ./Diagram/DiagramTextItem.h \
     ./Diagram/DiagramPlotItem.h \
@@ -132,7 +132,7 @@ SOURCES += ./Image/BaseImage.cpp \
     ./Notification/NotificationWidget.cpp \
     ./Diagram/DiagramAngleItem.cpp \
     ./Diagram/DiagramArrowItem.cpp \
-    ./Diagram/DiagramItem.cpp \
+    ./Diagram/DiagramPolygonItem.cpp \
     ./Diagram/DiagramLengthItem.cpp \
     ./Diagram/DiagramLineItem.cpp \
     ./Diagram/DiagramPlotItem.cpp \
